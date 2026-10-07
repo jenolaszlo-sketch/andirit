@@ -377,8 +377,26 @@ changes the architectural laws. Effort: S (days), M (weeks), L (longer).
 
 ### Tier B — query surface
 
-- **Name-pattern candidate search (M)** — bounded prefix/pattern candidates
-  with explicit truncation; Solo ranks results.
+- **Name-pattern candidate search (M, landed)** — bounded prefix/pattern
+  candidates with explicit truncation; Solo ranks results.
+
+### Milestone 8A — dogfood query ergonomics (in progress)
+
+Composable, store-neutral query additions proven against C# and Elixir
+graphs before Erlang strains the extraction seam:
+
+- bounded name/prefix candidate search (already landed as Tier B above);
+- deterministic symbol discovery with language, kind, container, and
+  project scoping plus explicit truncation;
+- source-location to enclosing-symbol lookup bridging diffs into graph
+  identities;
+- symbols and declarations by file or project;
+- C# and Elixir dogfood plus recorded evidence on the traversal-policy
+  versus answer-filter question (see the evidence-quality ADR).
+
+Bounded source excerpts remain deferred: hash validation and snapshot
+mismatch detection pull harder on repository semantics than the query
+additions above.
 
 ### Tier C — strategic
 
@@ -525,9 +543,11 @@ Workspace experiment exit criteria:
 Avoid fuzzy symbol selection in Hetu core. Return explicit candidates and let
 Solo rank them.
 
-Before leaving this milestone, review the vocabulary and plugin contract using
-real C#, TypeScript, and Python examples. Do not start generator work until the
-model survives that review.
+Before leaving this milestone, review the vocabulary and plugin contract
+against real C# and at least two structurally different non-C# languages
+before generator work. Elixir plus Erlang satisfy this if the
+extraction-profile seam survives; no specific further language is required
+without a consumer use case.
 
 ## Later opportunities
 
