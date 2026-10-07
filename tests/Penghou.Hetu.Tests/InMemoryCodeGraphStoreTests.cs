@@ -48,7 +48,7 @@ public sealed class InMemoryCodeGraphStoreTests
                 referrer.Id,
                 target.Id,
                 CodeEdgeKinds.References,
-                new CodeEvidence(CodeEvidenceKind.Semantic, "tests"))]));
+                new CodeEvidence(EvidenceQuality.Resolved, "tests"))]));
         await store.CompleteIndexRunAsync(
             new(repositoryId, runId, started, CodeIndexRunStatus.Completed, started.AddSeconds(1), [pluginId]),
             new(repositoryId, runId, []));

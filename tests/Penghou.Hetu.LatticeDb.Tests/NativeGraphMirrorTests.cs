@@ -149,7 +149,7 @@ public sealed class NativeGraphMirrorTests
                 source.Id,
                 CodeGraphDirection.Outgoing,
                 [CodeEdgeKinds.Calls],
-                [CodeEvidenceKind.Semantic],
+                [EvidenceQuality.Resolved],
                 maxDepth: 5,
                 maxNodes: 10,
                 maxEdges: 10);
@@ -279,7 +279,7 @@ public sealed class NativeGraphMirrorTests
             Assert.Equal(pair.First.Kind, pair.Second.Kind);
             Assert.Equal(pair.First.SourceId, pair.Second.SourceId);
             Assert.Equal(pair.First.TargetId, pair.Second.TargetId);
-            Assert.Equal(pair.First.Evidence.Kind, pair.Second.Evidence.Kind);
+            Assert.Equal(pair.First.Evidence.Quality, pair.Second.Evidence.Quality);
         }
     }
 
@@ -301,7 +301,7 @@ public sealed class NativeGraphMirrorTests
             source,
             target,
             kind,
-            new CodeEvidence(CodeEvidenceKind.Semantic, "mirror"));
+            new CodeEvidence(EvidenceQuality.Resolved, "mirror"));
 
     private static string TemporaryDatabasePath() =>
         Path.Combine(Path.GetTempPath(), $"hetu-mirror-{Guid.NewGuid():N}.ltdb");

@@ -1018,7 +1018,7 @@ public sealed class InMemoryCodeGraphStore :
         var selectedKinds = query.EdgeKinds
             .Select(kind => kind.Value)
             .ToHashSet(StringComparer.Ordinal);
-        var selectedEvidence = query.EvidenceKinds.ToHashSet();
+        var selectedEvidence = query.EvidenceQualities.ToHashSet();
         var visited = new HashSet<string>(StringComparer.Ordinal)
         {
             query.StartNodeId.Value
@@ -1050,7 +1050,7 @@ public sealed class InMemoryCodeGraphStore :
                     .DistinctBy(edge => edge.Id.Value)
                     .Count(edge =>
                         (selectedKinds.Count == 0 || selectedKinds.Contains(edge.Kind.Value)) &&
-                        (selectedEvidence.Count == 0 || selectedEvidence.Contains(edge.Evidence.Kind)));
+                        (selectedEvidence.Count == 0 || selectedEvidence.Contains(edge.Evidence.Quality)));
                 if (omitted > 0)
                 {
                     truncated = true;
@@ -1064,7 +1064,7 @@ public sealed class InMemoryCodeGraphStore :
                 .Where(edge => selectedKinds.Count == 0 ||
                     selectedKinds.Contains(edge.Kind.Value))
                 .Where(edge => selectedEvidence.Count == 0 ||
-                    selectedEvidence.Contains(edge.Evidence.Kind))
+                    selectedEvidence.Contains(edge.Evidence.Quality))
                 .DistinctBy(edge => edge.Id.Value)
                 .OrderBy(edge => edge.Kind.Value, StringComparer.Ordinal)
                 .ThenBy(edge => edge.SourceId.Value, StringComparer.Ordinal)

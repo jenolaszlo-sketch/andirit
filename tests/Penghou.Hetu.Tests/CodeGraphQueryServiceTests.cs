@@ -21,8 +21,8 @@ public sealed class CodeGraphQueryServiceTests
             [target, semanticCaller, heuristicCaller],
             edges:
             [
-                Edge("semantic", semanticCaller.Id, target.Id, CodeEvidenceKind.Semantic),
-                Edge("heuristic", heuristicCaller.Id, target.Id, CodeEvidenceKind.Heuristic)
+                Edge("semantic", semanticCaller.Id, target.Id, EvidenceQuality.Resolved),
+                Edge("heuristic", heuristicCaller.Id, target.Id, EvidenceQuality.Inferred)
             ]));
         await CompleteAsync(store, repositoryId, runId, pluginId, started);
         var queries = new CodeGraphQueryService(store);
@@ -30,11 +30,76 @@ public sealed class CodeGraphQueryServiceTests
         var callers = await queries.FindCallersAsync(
             repositoryId,
             target.Id,
-            new CodeGraphQueryOptions(evidenceKinds: [CodeEvidenceKind.Semantic]));
+            new CodeGraphQueryOptions(evidenceQualities: [EvidenceQuality.Resolved]));
 
         Assert.Equal([target.Id, semanticCaller.Id], callers.Nodes.Select(node => node.Id));
         Assert.Single(callers.Edges);
-        Assert.Equal(CodeEvidenceKind.Semantic, callers.Edges[0].Evidence.Kind);
+        Assert.Equal(EvidenceQuality.Resolved, callers.Edges[0].Evidence.Quality);
+    }
+
+    [Fact]
+    public async Task ResolvedOnlyTraversal_DoesNotCrossStructuralContainment()
+    {
+        // Current contract: EvidenceQualities filters every traversed edge,
+        // not just answer edges. A resolved-only traversal therefore cannot
+        // cross structural containment to reach a resolved call. This pins
+        // the known limitation tracked as an open question in
+        // docs/evidence-quality-and-provider-strategy.md (traversal policy
+        // vs answer filter): navigation and matching share one filter today.
+        var store = new InMemoryCodeGraphStore();
+        var repositoryId = new CodeRepositoryId("repo:traversal-filter");
+        var runId = new CodeIndexRunId("run:traversal-filter");
+        var pluginId = new CodePluginId("plugin:traversal-filter");
+        var started = DateTimeOffset.UtcNow;
+        await store.UpsertRepositoryAsync(new(repositoryId));
+        await store.StoreIndexRunAsync(new(repositoryId, runId, started, plugins: [pluginId]));
+
+        var file = new CodeGraphNode(
+            new CodeNodeId("node:file"),
+            CodeNodeKinds.File,
+            "Service.cs",
+            "src/Service.cs");
+        var caller = Node("caller", "Example.Service");
+        var callee = Node("callee", "Example.Repository");
+        await store.StageIndexUnitAsync(new(
+            new CodeFactOrigin(repositoryId, pluginId, "1.0.0", runId, new("unit:filter")),
+            [file, caller, callee],
+            edges:
+            [
+                new CodeGraphEdge(
+                    new CodeEdgeId("edge:declares"),
+                    file.Id,
+                    caller.Id,
+                    CodeEdgeKinds.Declares,
+                    new CodeEvidence(EvidenceQuality.Structural, "tests")),
+                Edge("calls", caller.Id, callee.Id, EvidenceQuality.Resolved)
+            ]));
+        await CompleteAsync(store, repositoryId, runId, pluginId, started);
+
+        var resolvedOnly = await store.TraverseAsync(
+            repositoryId,
+            new CodeGraphTraversalQuery(
+                file.Id,
+                CodeGraphDirection.Outgoing,
+                evidenceQualities: [EvidenceQuality.Resolved],
+                maxDepth: 5,
+                maxNodes: 100,
+                maxEdges: 250));
+
+        Assert.DoesNotContain(resolvedOnly.Nodes, node => node.Id == callee.Id);
+        Assert.Empty(resolvedOnly.Edges);
+
+        var unfiltered = await store.TraverseAsync(
+            repositoryId,
+            new CodeGraphTraversalQuery(
+                file.Id,
+                CodeGraphDirection.Outgoing,
+                maxDepth: 5,
+                maxNodes: 100,
+                maxEdges: 250));
+
+        Assert.Contains(unfiltered.Nodes, node => node.Id == callee.Id);
+        Assert.Contains(unfiltered.Edges, edge => edge.Kind == CodeEdgeKinds.Calls);
     }
 
     [Fact]
@@ -127,7 +192,7 @@ public sealed class CodeGraphQueryServiceTests
                 fileNode.Id,
                 symbolA.Id,
                 CodeEdgeKinds.Declares,
-                new CodeEvidence(CodeEvidenceKind.Semantic, "test", location: declarationA.Location))]));
+                new CodeEvidence(EvidenceQuality.Structural, "test", location: declarationA.Location))]));
         await CompleteAsync(store, repositoryId, runId, pluginId, started);
         var queries = new CodeGraphQueryService(store);
 
@@ -466,7 +531,7 @@ public sealed class CodeGraphQueryServiceTests
             source,
             target,
             kind,
-            new CodeEvidence(CodeEvidenceKind.Semantic, "tests"));
+            new CodeEvidence(EvidenceQuality.Resolved, "tests"));
 
     private static ValueTask CompleteAsync(
         ICodeGraphStore store,
@@ -482,12 +547,12 @@ public sealed class CodeGraphQueryServiceTests
         string id,
         CodeNodeId source,
         CodeNodeId target,
-        CodeEvidenceKind evidenceKind) => new(
+        EvidenceQuality evidenceQuality) => new(
             new CodeEdgeId($"edge:{id}"),
             source,
             target,
             CodeEdgeKinds.Calls,
-            new CodeEvidence(evidenceKind, "tests", confidence:
-                evidenceKind == CodeEvidenceKind.Heuristic ? 0.9 : null));
+            new CodeEvidence(evidenceQuality, "tests", confidence:
+                evidenceQuality == EvidenceQuality.Inferred ? 0.9 : null));
 }
 

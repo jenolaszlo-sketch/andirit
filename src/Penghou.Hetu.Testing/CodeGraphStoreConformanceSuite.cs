@@ -712,7 +712,7 @@ public static class CodeGraphStoreConformanceSuite
             source,
             target,
             kind ?? CodeEdgeKinds.Calls,
-            new CodeEvidence(CodeEvidenceKind.Semantic, "conformance"));
+            new CodeEvidence(EvidenceQuality.Resolved, "conformance"));
 
     private static CodeIndexUnitReplacement Replacement(
         CodeRepositoryId repositoryId,

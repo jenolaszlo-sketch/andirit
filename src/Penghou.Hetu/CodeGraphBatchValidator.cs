@@ -38,7 +38,10 @@ public sealed class CodeGraphBatchValidator
                 errors);
         }
         foreach (var edge in batch.Edges)
+        {
             CheckProperties(edge.Id.Value, edge.Properties, limits, errors);
+            CheckEvidenceQuality(edge, errors);
+        }
 
         return errors.Take(MaxReportedErrors).ToArray();
     }
@@ -73,6 +76,23 @@ public sealed class CodeGraphBatchValidator
                 $"batch.{factKind}.duplicate",
                 $"Batch contains duplicate {factKind} identity.",
                 duplicate));
+        }
+    }
+
+    private static void CheckEvidenceQuality(
+        CodeGraphEdge edge,
+        ICollection<CodeGraphValidationError> errors)
+    {
+        // A structural parser knows an invocation name, not its target.
+        // Only resolved evidence may claim a `calls` relationship.
+        if (edge.Kind == CodeEdgeKinds.Calls &&
+            edge.Evidence.Quality != EvidenceQuality.Resolved)
+        {
+            errors.Add(new CodeGraphValidationError(
+                CodeGraphValidationErrorKind.InvalidProperty,
+                "edge.evidence.calls-requires-resolved",
+                "A 'calls' edge requires resolved evidence; structural invocations use 'invokes-name'.",
+                edge.Id.Value));
         }
     }
 

@@ -43,7 +43,7 @@ public sealed class GraphSemanticsTests
             new CodeNodeId("node:method:callee"),
             CodeEdgeKinds.Calls,
             new CodeEvidence(
-                CodeEvidenceKind.Semantic,
+                EvidenceQuality.Resolved,
                 "roslyn",
                 location: new CodeLocation(
                     "src/Caller.cs",

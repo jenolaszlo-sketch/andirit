@@ -11,5 +11,7 @@ public enum CodeGraphCapabilities
     Types = 1 << 4,
     Inheritance = 1 << 5,
     Imports = 1 << 6,
-    DataFlow = 1 << 7
+    DataFlow = 1 << 7,
+    Declarations = 1 << 8,
+    Diagnostics = 1 << 9
 }

@@ -128,10 +128,10 @@ internal sealed class NativeGraphMirror
     {
         ArgumentNullException.ThrowIfNull(transaction);
         ArgumentNullException.ThrowIfNull(query);
-        if (query.EvidenceKinds.Count != 0)
+        if (query.EvidenceQualities.Count != 0)
         {
             throw new ArgumentException(
-                "Native traversal cannot filter by evidence kind.",
+                "Native traversal cannot filter by evidence quality.",
                 nameof(query));
         }
 

@@ -1154,7 +1154,7 @@ public sealed class CSharpCodeGraphPluginTests
             .ToArray();
         Assert.Equal(3, packageEdges.Length);
         Assert.All(packageEdges, edge =>
-            Assert.Equal(CodeEvidenceKind.Syntax, edge.Evidence.Kind));
+            Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality));
         Assert.Contains(packageEdges, edge => edge.TargetId == newtonsoft.Id);
     }
 
@@ -1420,7 +1420,7 @@ public sealed class CSharpCodeGraphPluginTests
             extracted.Edges,
             edge => edge.Kind == CodeEdgeKinds.ExercisedBy && edge.SourceId == add.Id);
         Assert.Equal(addWorks.Id, exercised.TargetId);
-        Assert.Equal(CodeEvidenceKind.Semantic, exercised.Evidence.Kind);
+        Assert.Equal(EvidenceQuality.Derived, exercised.Evidence.Quality);
         // Plain helper methods are not tests, so they never exercise anything.
         Assert.DoesNotContain(
             extracted.Edges,
@@ -1824,6 +1824,64 @@ public sealed class CSharpCodeGraphPluginTests
             var entry = unit.Coverage.Single(value => value.RelationshipKind == kind);
             Assert.Equal(CodeRelationshipCoverageState.Unavailable, entry.State);
         }
+    }
+
+    [Fact]
+    public void Plugin_AdvertisesCapabilitiesMatchingEmittedFacts()
+    {
+        var capabilities = new CSharpCodeGraphPlugin().Capabilities;
+
+        Assert.True(capabilities.HasFlag(CodeGraphCapabilities.Syntax));
+        Assert.True(capabilities.HasFlag(CodeGraphCapabilities.Symbols));
+        Assert.True(capabilities.HasFlag(CodeGraphCapabilities.References));
+        Assert.True(capabilities.HasFlag(CodeGraphCapabilities.Calls));
+        Assert.True(capabilities.HasFlag(CodeGraphCapabilities.Types));
+        Assert.True(capabilities.HasFlag(CodeGraphCapabilities.Inheritance));
+        Assert.True(capabilities.HasFlag(CodeGraphCapabilities.Imports));
+        Assert.True(capabilities.HasFlag(CodeGraphCapabilities.Declarations));
+        Assert.True(capabilities.HasFlag(CodeGraphCapabilities.Diagnostics));
+    }
+
+    [Fact]
+    public async Task ExtractAsync_EvidenceQualitiesMatchEdgeSemantics()
+    {
+        var extracted = await ExtractAsync(
+            ("src/Calc.cs", """
+                namespace Example;
+                public class Calculator
+                {
+                    public int Add(int a, int b) => a + b;
+                }
+                """),
+            ("src/Service.cs", """
+                namespace Example;
+                public class Service
+                {
+                    public int Run() => new Calculator().Add(1, 2);
+                }
+                """));
+
+        Assert.Contains(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.Calls);
+        Assert.All(
+            extracted.Edges.Where(edge => edge.Kind == CodeEdgeKinds.Calls),
+            edge => Assert.Equal(EvidenceQuality.Resolved, edge.Evidence.Quality));
+        Assert.All(
+            extracted.Edges.Where(edge =>
+                edge.Kind == CodeEdgeKinds.Declares || edge.Kind == CodeEdgeKinds.Contains),
+            edge => Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality));
+        Assert.All(
+            extracted.Edges.Where(edge => edge.Kind == CodeEdgeKinds.ExercisedBy),
+            edge => Assert.Equal(EvidenceQuality.Derived, edge.Evidence.Quality));
+        Assert.DoesNotContain(
+            extracted.Edges,
+            edge => edge.Evidence.Quality == EvidenceQuality.Inferred);
+
+        var validator = new CodeGraphBatchValidator();
+        Assert.All(
+            extracted.Batches,
+            batch => Assert.DoesNotContain(
+                validator.Validate(batch, new CodeGraphBatchLimits()),
+                error => error.Code == "edge.evidence.calls-requires-resolved"));
     }
 
     private static Task<Extraction> ExtractAsync(

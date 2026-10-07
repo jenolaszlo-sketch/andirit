@@ -52,7 +52,7 @@ public sealed class SerializationTests
                     symbolNodeId,
                     CodeEdgeKinds.Declares,
                     new CodeEvidence(
-                        CodeEvidenceKind.Semantic,
+                        EvidenceQuality.Resolved,
                         "roslyn",
                         "5.0",
                         new CodeLocation("src/Widget.cs", 2, 1, 5, 2)))
@@ -82,8 +82,8 @@ public sealed class SerializationTests
         Assert.IsType<CodeNumberProperty>(
             restored.Nodes.Single().Properties["weight"]);
         Assert.Equal(
-            CodeEvidenceKind.Semantic,
-            restored.Edges.Single().Evidence.Kind);
+            EvidenceQuality.Resolved,
+            restored.Edges.Single().Evidence.Quality);
         Assert.True(restored.CompletesIndexUnit);
     }
 

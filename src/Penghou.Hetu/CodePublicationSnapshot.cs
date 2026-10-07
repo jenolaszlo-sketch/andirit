@@ -28,7 +28,7 @@ public sealed record CodeSnapshotOptions
 /// </summary>
 public sealed record CodePublicationSnapshot
 {
-    public const int CurrentSchemaVersion = 1;
+    public const int CurrentSchemaVersion = 2;
 
     private static JsonSerializerOptions HashOptions => CodeJsonDefaults.Options;
 

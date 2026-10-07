@@ -6,6 +6,29 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Phase 1 of the evidence-quality and provider strategy
+(`docs/evidence-quality-and-provider-strategy.md`):
+
+- `CodeEvidenceKind` (`Syntax/Semantic/Heuristic/AiInferred`) is replaced by
+  `EvidenceQuality` (`Structural/Resolved/Derived/Inferred`). Resolved means
+  resolved-by-the-named-provider in its analysis context, not universally
+  exact. Confidence remains forbidden on deterministic evidence and allowed
+  on inferred evidence.
+- New `invokes-name` edge kind for structural invocation evidence. `calls`
+  is reserved for resolved calls: the batch validator rejects a `calls`
+  edge without resolved evidence
+  (`edge.evidence.calls-requires-resolved`).
+- The C# plugin now honestly reports references, calls, inheritance,
+  imports, declarations, and diagnostics capabilities (new
+  `Declarations`/`Diagnostics` capability bits). Declarations, containment,
+  and package/project-structure edges are structural evidence;
+  `exercised-by` is derived evidence.
+- `CodeGraphQueryOptions` and `CodeGraphTraversalQuery` filter on
+  `EvidenceQualities` instead of evidence kinds.
+- Persistence versions bump (`LatticeCodeGraphStore` and publication
+  snapshots move to schema 2): older files and snapshots are rejected
+  rather than reinterpreted. Preview releases may revise public contracts.
+
 ## 0.2.0-preview.6
 
 - Test-to-production mapping: the C# plugin marks projects that reference an

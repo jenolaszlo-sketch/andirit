@@ -174,7 +174,7 @@ public sealed record CodeGraphTraversalQuery
         CodeNodeId startNodeId,
         CodeGraphDirection direction = CodeGraphDirection.Outgoing,
         IReadOnlyCollection<CodeEdgeKind>? edgeKinds = null,
-        IReadOnlyCollection<CodeEvidenceKind>? evidenceKinds = null,
+        IReadOnlyCollection<EvidenceQuality>? evidenceQualities = null,
         int maxDepth = 1,
         int maxNodes = 100,
         int maxEdges = 250)
@@ -192,7 +192,7 @@ public sealed record CodeGraphTraversalQuery
 
         Direction = direction;
         EdgeKinds = edgeKinds?.Distinct().ToArray() ?? [];
-        EvidenceKinds = evidenceKinds?.Distinct().ToArray() ?? [];
+        EvidenceQualities = evidenceQualities?.Distinct().ToArray() ?? [];
         MaxDepth = maxDepth;
         MaxNodes = maxNodes;
         MaxEdges = maxEdges;
@@ -201,7 +201,7 @@ public sealed record CodeGraphTraversalQuery
     public CodeNodeId StartNodeId { get; }
     public CodeGraphDirection Direction { get; }
     public IReadOnlyCollection<CodeEdgeKind> EdgeKinds { get; }
-    public IReadOnlyCollection<CodeEvidenceKind> EvidenceKinds { get; }
+    public IReadOnlyCollection<EvidenceQuality> EvidenceQualities { get; }
     public int MaxDepth { get; }
     public int MaxNodes { get; }
     public int MaxEdges { get; }

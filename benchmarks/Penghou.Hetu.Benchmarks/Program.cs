@@ -111,7 +111,7 @@ public class LatticeStoreBenchmarks
             nodes[index].Id,
             nodes[index + 1].Id,
             CodeEdgeKinds.Calls,
-            new(CodeEvidenceKind.Semantic, "benchmark"))).ToArray();
+            new(EvidenceQuality.Resolved, "benchmark"))).ToArray();
         return new(
             new CodeFactOrigin(_repositoryId, _pluginId, "1.0.0", runId, new("unit:benchmark")),
             nodes,

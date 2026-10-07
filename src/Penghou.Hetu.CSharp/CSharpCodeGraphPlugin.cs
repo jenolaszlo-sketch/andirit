@@ -33,7 +33,13 @@ public sealed partial class CSharpCodeGraphPlugin : ICodeGraphPlugin
     public CodeGraphCapabilities Capabilities =>
         CodeGraphCapabilities.Syntax |
         CodeGraphCapabilities.Symbols |
-        CodeGraphCapabilities.Types;
+        CodeGraphCapabilities.Types |
+        CodeGraphCapabilities.References |
+        CodeGraphCapabilities.Calls |
+        CodeGraphCapabilities.Inheritance |
+        CodeGraphCapabilities.Imports |
+        CodeGraphCapabilities.Declarations |
+        CodeGraphCapabilities.Diagnostics;
 
     public bool CanHandle(string path) =>
         FileExtensions.Any(extension =>

@@ -45,6 +45,12 @@ public static class CodeEdgeKinds
     public static readonly CodeEdgeKind Declares = new("declares");
     public static readonly CodeEdgeKind References = new("references");
     public static readonly CodeEdgeKind Calls = new("calls");
+    /// <summary>
+    /// Structural invocation evidence: the source invokes something with this
+    /// name. Unlike <see cref="Calls"/>, it does not imply a resolved target
+    /// and must carry structural evidence.
+    /// </summary>
+    public static readonly CodeEdgeKind InvokesName = new("invokes-name");
     public static readonly CodeEdgeKind Implements = new("implements");
     public static readonly CodeEdgeKind Inherits = new("inherits");
     public static readonly CodeEdgeKind Imports = new("imports");

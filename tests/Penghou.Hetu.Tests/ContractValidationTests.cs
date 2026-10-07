@@ -69,20 +69,99 @@ public sealed class ContractValidationTests
     {
         Assert.Throws<ArgumentException>(() =>
             new CodeEvidence(
-                CodeEvidenceKind.Semantic,
+                EvidenceQuality.Resolved,
                 "roslyn",
                 confidence: 0.99));
     }
 
     [Fact]
-    public void Evidence_AllowsBoundedConfidenceForHeuristics()
+    public void Evidence_AllowsBoundedConfidenceForInferredFacts()
     {
         var evidence = new CodeEvidence(
-            CodeEvidenceKind.Heuristic,
+            EvidenceQuality.Inferred,
             "hetu-test",
             confidence: 0.75);
 
         Assert.Equal(0.75, evidence.Confidence);
+    }
+
+    [Fact]
+    public void Evidence_RejectsConfidenceForDerivedFacts()
+    {
+        Assert.Throws<ArgumentException>(() =>
+            new CodeEvidence(
+                EvidenceQuality.Derived,
+                "hetu-test",
+                confidence: 0.5));
+    }
+
+    [Fact]
+    public void CallsEdge_WithStructuralEvidence_FailsValidation()
+    {
+        var edge = new CodeGraphEdge(
+            new CodeEdgeId("edge:calls:one"),
+            new CodeNodeId("node:caller"),
+            new CodeNodeId("node:callee"),
+            CodeEdgeKinds.Calls,
+            new CodeEvidence(EvidenceQuality.Structural, "tree-sitter"));
+        var batch = new CodeGraphBatch(
+            new CodeFactOrigin(
+                new CodeRepositoryId("repo:test"),
+                new CodePluginId("plugin:test"),
+                "1.0.0",
+                new CodeIndexRunId("run:one"),
+                new CodeIndexUnitId("unit:one")),
+            edges: [edge]);
+
+        var errors = new CodeGraphBatchValidator().Validate(batch, new CodeGraphBatchLimits());
+
+        Assert.Contains(errors, error => error.Code == "edge.evidence.calls-requires-resolved");
+    }
+
+    [Fact]
+    public void CallsEdge_WithResolvedEvidence_PassesValidation()
+    {
+        var edge = new CodeGraphEdge(
+            new CodeEdgeId("edge:calls:one"),
+            new CodeNodeId("node:caller"),
+            new CodeNodeId("node:callee"),
+            CodeEdgeKinds.Calls,
+            new CodeEvidence(EvidenceQuality.Resolved, "roslyn"));
+        var batch = new CodeGraphBatch(
+            new CodeFactOrigin(
+                new CodeRepositoryId("repo:test"),
+                new CodePluginId("plugin:test"),
+                "1.0.0",
+                new CodeIndexRunId("run:one"),
+                new CodeIndexUnitId("unit:one")),
+            edges: [edge]);
+
+        var errors = new CodeGraphBatchValidator().Validate(batch, new CodeGraphBatchLimits());
+
+        Assert.DoesNotContain(errors, error => error.Code == "edge.evidence.calls-requires-resolved");
+    }
+
+    [Fact]
+    public void EvidenceQuality_IsDeterministicOnlyForNonProbabilisticQualities()
+    {
+        Assert.True(EvidenceQuality.Structural.IsDeterministic());
+        Assert.True(EvidenceQuality.Resolved.IsDeterministic());
+        Assert.True(EvidenceQuality.Derived.IsDeterministic());
+        Assert.False(EvidenceQuality.Inferred.IsDeterministic());
+    }
+
+    [Fact]
+    public void EvidenceQuality_NumericValuesArePersistenceCompatibilityOnly()
+    {
+        // Numeric values preserve the previous Syntax/Semantic/Heuristic/
+        // AiInferred encoding so persisted payloads keep decoding. They are
+        // not strength levels: Derived (2) is not stronger than Resolved (1).
+        // Consumers must use IsDeterministic or set membership, never
+        // ordinal comparison.
+        Assert.Equal(0, (int)EvidenceQuality.Structural);
+        Assert.Equal(1, (int)EvidenceQuality.Resolved);
+        Assert.Equal(2, (int)EvidenceQuality.Derived);
+        Assert.Equal(3, (int)EvidenceQuality.Inferred);
     }
 
     [Fact]

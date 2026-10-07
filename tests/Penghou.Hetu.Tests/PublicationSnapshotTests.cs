@@ -189,7 +189,7 @@ public sealed class PublicationSnapshotTests
             source,
             target,
             CodeEdgeKinds.Calls,
-            new CodeEvidence(CodeEvidenceKind.Semantic, "snapshot"));
+            new CodeEvidence(EvidenceQuality.Resolved, "snapshot"));
 
     private static CodeSourceManifest Source(string path, string plugin = "plugin:snapshot") =>
         new(new CodePluginId(plugin), "1.0.0", path, "sha256:test");

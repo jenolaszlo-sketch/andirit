@@ -34,7 +34,7 @@ public sealed class LatticeCodeGraphStore :
     ICodeGraphStoreHealthCheck,
     IDisposable
 {
-    public const int CurrentSchemaVersion = 1;
+    public const int CurrentSchemaVersion = 2;
 
     private const string MetadataLabel = "HetuMetadata";
     private const string RepositoryLabel = "HetuRepository";
@@ -198,7 +198,7 @@ public sealed class LatticeCodeGraphStore :
         {
             ThrowIfDisposed();
             if (_nativeTraversal &&
-                query.EvidenceKinds.Count == 0 &&
+                query.EvidenceQualities.Count == 0 &&
                 _mirrors.TryGetValue(repositoryId.Value, out var mirror))
             {
                 return TranslateNative(() =>

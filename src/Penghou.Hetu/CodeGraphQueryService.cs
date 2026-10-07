@@ -7,7 +7,7 @@ public sealed record CodeGraphQueryOptions
         int maxDepth = 1,
         int maxNodes = 100,
         int maxEdges = 250,
-        IReadOnlyCollection<CodeEvidenceKind>? evidenceKinds = null)
+        IReadOnlyCollection<EvidenceQuality>? evidenceQualities = null)
     {
         if (maxDepth < 0)
             throw new ArgumentOutOfRangeException(nameof(maxDepth));
@@ -18,13 +18,13 @@ public sealed record CodeGraphQueryOptions
         MaxDepth = maxDepth;
         MaxNodes = maxNodes;
         MaxEdges = maxEdges;
-        EvidenceKinds = evidenceKinds?.Distinct().ToArray() ?? [];
+        EvidenceQualities = evidenceQualities?.Distinct().ToArray() ?? [];
     }
 
     public int MaxDepth { get; }
     public int MaxNodes { get; }
     public int MaxEdges { get; }
-    public IReadOnlyCollection<CodeEvidenceKind> EvidenceKinds { get; }
+    public IReadOnlyCollection<EvidenceQuality> EvidenceQualities { get; }
 }
 
 /// <summary>An exact qualified-name lookup that preserves ambiguity.</summary>
@@ -565,7 +565,7 @@ public sealed class CodeGraphQueryService
             projectNode.Id,
             CodeGraphDirection.Outgoing,
             CodeGraphTraversalPresets.Containment,
-            options.EvidenceKinds,
+            options.EvidenceQualities,
             options.MaxDepth,
             options.MaxNodes,
             options.MaxEdges);
@@ -620,7 +620,7 @@ public sealed class CodeGraphQueryService
             seed,
             CodeGraphDirection.Incoming,
             CodeGraphTraversalPresets.ImpactSet,
-            options.EvidenceKinds,
+            options.EvidenceQualities,
             options.MaxDepth,
             options.MaxNodes,
             options.MaxEdges)).ToArray();
@@ -714,7 +714,7 @@ public sealed class CodeGraphQueryService
                 nodeId,
                 direction,
                 edgeKinds,
-                options.EvidenceKinds,
+                options.EvidenceQualities,
                 options.MaxDepth,
                 options.MaxNodes,
                 options.MaxEdges),
@@ -739,7 +739,7 @@ public sealed class CodeGraphQueryService
                 nodeId,
                 direction,
                 edgeKinds,
-                options.EvidenceKinds,
+                options.EvidenceQualities,
                 options.MaxDepth,
                 options.MaxNodes,
                 options.MaxEdges),

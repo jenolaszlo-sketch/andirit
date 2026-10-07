@@ -108,7 +108,7 @@ public sealed partial class CSharpCodeGraphPlugin
                     packageId,
                     ProjectLocation(),
                     discriminator: $"package:{package.Name}",
-                    evidenceKind: CodeEvidenceKind.Syntax);
+                    evidenceQuality: EvidenceQuality.Structural);
             }
         }
 
@@ -132,7 +132,8 @@ public sealed partial class CSharpCodeGraphPlugin
                 CodeEdgeKinds.Contains,
                 ProjectNodeId(project.Path),
                 id,
-                new CodeLocation(source.Path, 1, 1, 1, 1));
+                new CodeLocation(source.Path, 1, 1, 1, 1),
+                evidenceQuality: EvidenceQuality.Structural);
         }
 
         public void AddDeclarations(
@@ -234,7 +235,8 @@ public sealed partial class CSharpCodeGraphPlugin
                     CodeEdgeKinds.ExercisedBy,
                     production,
                     test,
-                    location ?? ProjectLocation());
+                    location ?? ProjectLocation(),
+                    evidenceQuality: EvidenceQuality.Derived);
                 CountEmitted(CodeEdgeKinds.ExercisedBy.Value, test);
             }
         }
@@ -329,7 +331,8 @@ public sealed partial class CSharpCodeGraphPlugin
                 _fileNodes[path],
                 nodeId,
                 location,
-                declarationId.Value);
+                declarationId.Value,
+                EvidenceQuality.Structural);
 
             var containing = symbol.ContainingSymbol;
             if (containing is not null &&
@@ -338,7 +341,12 @@ public sealed partial class CSharpCodeGraphPlugin
             {
                 var containingId = NodeId("symbol", ScopedSymbolKey(containing));
                 if (_nodes.ContainsKey(containingId.Value))
-                    AddEdge(CodeEdgeKinds.Contains, containingId, nodeId, location);
+                    AddEdge(
+                        CodeEdgeKinds.Contains,
+                        containingId,
+                        nodeId,
+                        location,
+                        evidenceQuality: EvidenceQuality.Structural);
             }
 
         }
@@ -371,7 +379,7 @@ public sealed partial class CSharpCodeGraphPlugin
             CodeNodeId target,
             CodeLocation location,
             string? discriminator = null,
-            CodeEvidenceKind evidenceKind = CodeEvidenceKind.Semantic,
+            EvidenceQuality evidenceQuality = EvidenceQuality.Resolved,
             IReadOnlyDictionary<string, CodePropertyValue>? properties = null)
         {
             var id = new CodeEdgeId(
@@ -382,7 +390,7 @@ public sealed partial class CSharpCodeGraphPlugin
                 target,
                 kind,
                 new CodeEvidence(
-                    evidenceKind,
+                    evidenceQuality,
                     plugin.Id.Value,
                     plugin.Version,
                     location),
