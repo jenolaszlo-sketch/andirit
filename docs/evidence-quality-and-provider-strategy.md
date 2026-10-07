@@ -616,6 +616,26 @@ Implementation notes, 3A (Elixir, landed):
 - Rebuild recipe, verification checklist, and upgrade policy live in
   `src/Penghou.Hetu.TreeSitter/native/grammar-pins.md`.
 
+### Phase 3B: Erlang as an adversarial test of the profile seam (planned)
+
+Phase 3A stays closed; dogfood Elixir first. Erlang is not added to extend
+the language list but to try to break the extraction-profile abstraction
+with a materially different language structure. Watch areas: function
+name/arity identity, `-module`/`-import`/`-behaviour`/spec/record/macro
+attributes, remote (`mod:fun`) versus local calls, multi-clause functions
+as one identity, guards, anonymous functions, `receive`/`spawn`/message
+constructs, preprocessor syntax, and whether the control-form stoplist
+generalizes or degenerates into per-language special casing.
+
+The harsher success criterion: Erlang should add only a grammar descriptor,
+a native grammar artifact, an Erlang extraction profile, and fixtures/tests
+— plus small generic abstractions genuinely discovered by the second
+language. If it requires changes to Hetu core, changes to Tree-sitter
+generic plumbing, or Elixir-specific conditionals in shared code, the seam
+was not right. Two real languages are enough evidence to generalize; one is
+not. Further languages (TypeScript, Python, ...) wait for an actual
+Penghou/Solo use case, not list length.
+
 ### Phase 4: Semantic enrichment
 
 After dogfooding:
