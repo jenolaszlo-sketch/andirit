@@ -891,7 +891,8 @@ public sealed class CodeIndexingService
     /// plugins. Deferred plugins run in phase 2 so a takeover executes once
     /// over the union of sources.
     /// </summary>
-    private HashSet<string> FindDeferredPluginIds(IReadOnlyList<ICodeGraphPlugin> executing)    {
+    private HashSet<string> FindDeferredPluginIds(IReadOnlyList<ICodeGraphPlugin> executing)
+    {
         var executingIds = executing.Select(plugin => plugin.Id).ToHashSet();
         var deferred = new HashSet<string>(StringComparer.Ordinal);
         foreach (var plugin in executing)
