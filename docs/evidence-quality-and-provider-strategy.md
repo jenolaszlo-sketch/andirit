@@ -560,6 +560,34 @@ No provider-selection or Tree-sitter behavior is introduced in this phase.
 4. Record requested and actual provider when fallback occurs.
 5. Add indexing/provider failure taxonomy.
 
+Implementation notes (landed):
+
+- Preference is an ordered list per language (`CodeLanguageProviderMap`),
+  not numeric priority. Referenced identities must be registered; explicit
+  configuration is exhaustive per language (an unlisted claimant still
+  throws). `CanHandle(path)` remains the final per-path filter.
+- Default policy is `OnUnavailable`: `UnsupportedLanguage`,
+  `ProviderUnavailable`, and `VersionMismatch` may fall back;
+  `ProjectLoadFailure`, `ParseFailure`, `SemanticModelUnavailable`,
+  provider crashes, and partial results fail loudly unless the caller opts
+  into `OnFailure`. Cancellation and live-source conflicts never fall back.
+- Takeover runs the next provider over the union of sources, deletes the
+  failed provider's staged and previously published units, rewrites plan
+  manifests to the recovering runner, and records the full attempt history
+  with the classified reason and lost capabilities. A takeover runner must
+  emit complete facts for every supplied source, including ones flagged
+  `Unchanged` against the previous owner's history.
+- Published units whose owner holds no path in the new state are collected
+  at completion, so a recovered preferred provider displaces fallback units
+  without manual reporting.
+- Plan-time ordered selection is silent by design: it is deterministic from
+  configuration plus `CanHandle`, with no failure and no downgrade. Only
+  run-time fallback deviations record `CodeProviderSelection` events, and
+  every non-preferred execution happens inside exactly one such event.
+  Fallback chains visit each runner at most once in map order and terminate
+  deterministically; cross-language runner sharing is not supported by
+  planning (it stays ambiguous) and terminates safely if misconfigured.
+
 ### Phase 3: Tree-sitter
 
 1. Add isolated `Penghou.Hetu.TreeSitter`.

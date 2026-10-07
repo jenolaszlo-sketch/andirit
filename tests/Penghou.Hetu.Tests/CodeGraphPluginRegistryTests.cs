@@ -53,10 +53,129 @@ public sealed class CodeGraphPluginRegistryTests
         ]));
     }
 
+    [Fact]
+    public void Resolve_WithoutMap_PreservesStrictAmbiguity()
+    {
+        var registry = new CodeGraphPluginRegistry(
+        [
+            new FakePlugin("plugin:first", "csharp", ".cs"),
+            new FakePlugin("plugin:second", "csharp", ".cs")
+        ]);
+
+        Assert.Throws<CodeGraphPluginSelectionException>(() =>
+            registry.Resolve("Example.cs"));
+    }
+
+    [Fact]
+    public void Resolve_WithMap_SelectsPreferredCandidate()
+    {
+        var registry = new CodeGraphPluginRegistry(
+        [
+            new FakePlugin("plugin:fallback", "csharp", ".cs"),
+            new FakePlugin("plugin:preferred", "csharp", ".cs")
+        ],
+        Map("csharp", "plugin:preferred", "plugin:fallback"));
+
+        Assert.Equal(
+            "plugin:preferred",
+            registry.Resolve("Example.cs")!.Id.Value);
+    }
+
+    [Fact]
+    public void Resolve_WithMap_SkipsPreferredWhenItDeclinesThePath()
+    {
+        var registry = new CodeGraphPluginRegistry(
+        [
+            new FakePlugin(
+                "plugin:preferred",
+                "csharp",
+                ".cs",
+                canHandle: path => !path.EndsWith(".g.cs", StringComparison.Ordinal)),
+            new FakePlugin("plugin:fallback", "csharp", ".cs")
+        ],
+        Map("csharp", "plugin:preferred", "plugin:fallback"));
+
+        Assert.Equal(
+            "plugin:preferred",
+            registry.Resolve("Example.cs")!.Id.Value);
+        Assert.Equal(
+            "plugin:fallback",
+            registry.Resolve("Generated.g.cs")!.Id.Value);
+    }
+
+    [Fact]
+    public void Resolve_WithMap_RejectsUnlistedCandidateForMappedLanguage()
+    {
+        var registry = new CodeGraphPluginRegistry(
+        [
+            new FakePlugin("plugin:preferred", "csharp", ".cs"),
+            new FakePlugin("plugin:unlisted", "csharp", ".cs")
+        ],
+        Map("csharp", "plugin:preferred"));
+
+        Assert.Throws<CodeGraphPluginSelectionException>(() =>
+            registry.Resolve("Example.cs"));
+    }
+
+    [Fact]
+    public void Resolve_WithMap_KeepsLegacyBehaviorForUnmappedLanguages()
+    {
+        var registry = new CodeGraphPluginRegistry(
+        [
+            new FakePlugin("plugin:preferred", "csharp", ".cs"),
+            new FakePlugin("plugin:first", "typescript", ".ts"),
+            new FakePlugin("plugin:second", "typescript", ".ts")
+        ],
+        Map("csharp", "plugin:preferred"));
+
+        Assert.Equal(
+            "plugin:preferred",
+            registry.Resolve("Example.cs")!.Id.Value);
+        Assert.Throws<CodeGraphPluginSelectionException>(() =>
+            registry.Resolve("Example.ts"));
+    }
+
+    [Fact]
+    public void Registry_RejectsMapEntriesForUnregisteredPlugins()
+    {
+        Assert.Throws<ArgumentException>(() => new CodeGraphPluginRegistry(
+            [new FakePlugin("plugin:only", "csharp", ".cs")],
+            Map("csharp", "plugin:only", "plugin:missing")));
+    }
+
+    [Fact]
+    public void TryGetFallback_ReturnsNextProviderInOrder()
+    {
+        var preferred = new FakePlugin("plugin:preferred", "csharp", ".cs");
+        var registry = new CodeGraphPluginRegistry(
+            [preferred, new FakePlugin("plugin:fallback", "csharp", ".cs")],
+            Map("csharp", "plugin:preferred", "plugin:fallback"));
+
+        Assert.True(registry.TryGetFallback(preferred, out var fallback));
+        Assert.Equal("plugin:fallback", fallback!.Id.Value);
+        Assert.False(registry.TryGetFallback(fallback, out _));
+    }
+
+    [Fact]
+    public void TryGetFallback_ReturnsFalseWithoutMapEntry()
+    {
+        var registry = new CodeGraphPluginRegistry(
+            [new FakePlugin("plugin:only", "csharp", ".cs")]);
+
+        Assert.False(registry.TryGetFallback(registry.Plugins[0], out _));
+    }
+
+    private static CodeLanguageProviderMap Map(string language, params string[] providerIds) =>
+        new(new Dictionary<string, IReadOnlyList<CodePluginId>>
+        {
+            [language] = providerIds.Select(id => new CodePluginId(id)).ToArray()
+        });
+
     private sealed class FakePlugin(
         string id,
         string language,
-        string extension) : ICodeGraphPlugin
+        string extension,
+        Func<string, bool>? canHandle = null) : ICodeGraphPlugin
     {
         public CodePluginId Id { get; } = new(id);
         public string Version => "1.0.0";
@@ -65,6 +184,7 @@ public sealed class CodeGraphPluginRegistryTests
         public CodeGraphCapabilities Capabilities => CodeGraphCapabilities.Syntax;
 
         public bool CanHandle(string path) =>
+            canHandle?.Invoke(path) ??
             path.EndsWith(extension, StringComparison.OrdinalIgnoreCase);
 
         public ValueTask<ICodeGraphExtractionSession> CreateSessionAsync(

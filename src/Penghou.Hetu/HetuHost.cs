@@ -13,6 +13,7 @@ public sealed class HetuHostBuilder
     [
         new FileSystemCodeRepositoryProvider()
     ];
+    private readonly Dictionary<string, List<CodePluginId>> _providerOrders = new(StringComparer.Ordinal);
     private Func<ICodeGraphStore>? _storeFactory;
     private CodeIndexingOptions? _indexingOptions;
     private bool _built;
@@ -37,6 +38,35 @@ public sealed class HetuHostBuilder
     {
         ArgumentNullException.ThrowIfNull(plugin);
         _plugins.Add(plugin);
+        return this;
+    }
+
+    /// <summary>
+    /// Configures preferred-first provider order for a language. The first
+    /// identity is preferred; later identities are eligible fallbacks subject
+    /// to the indexing fallback policy. Calling again for a language replaces
+    /// its order. Referenced identities must be registered with
+    /// <see cref="AddPlugin"/> before <see cref="Build"/>.
+    /// </summary>
+    public HetuHostBuilder WithLanguageProviders(
+        string language,
+        params CodePluginId[] providerIds)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(language);
+        ArgumentNullException.ThrowIfNull(providerIds);
+        if (providerIds.Length == 0)
+            throw new ArgumentException(
+                "A language must list at least one provider.",
+                nameof(providerIds));
+        if (providerIds.Any(id => id is null))
+            throw new ArgumentException(
+                "Provider identities cannot contain null entries.",
+                nameof(providerIds));
+        _providerOrders[language] = providerIds.Distinct().ToList();
+        if (_providerOrders[language].Count != providerIds.Length)
+            throw new ArgumentException(
+                $"Language '{language}' lists a provider more than once.",
+                nameof(providerIds));
         return this;
     }
 
@@ -69,7 +99,13 @@ public sealed class HetuHostBuilder
             throw new InvalidOperationException("A HetuHostBuilder can build only one host.");
 
         // Validate registration sets before acquiring an owned store resource.
-        var pluginRegistry = new CodeGraphPluginRegistry(_plugins);
+        var pluginRegistry = new CodeGraphPluginRegistry(
+            _plugins,
+            new CodeLanguageProviderMap(
+                _providerOrders.ToDictionary(
+                    pair => pair.Key,
+                    pair => (IReadOnlyList<CodePluginId>)pair.Value.AsReadOnly(),
+                    StringComparer.Ordinal)));
         var repositoryRegistry = new CodeRepositoryProviderRegistry(_repositoryProviders);
         _built = true;
         var store = _storeFactory?.Invoke() ?? new InMemoryCodeGraphStore();

@@ -33,7 +33,14 @@ public enum CodeIndexRunStatus
     Cancelled = 3
 }
 
-/// <summary>Records one indexing attempt without retaining source content.</summary>
+/// <summary>
+/// Records one indexing attempt without retaining source content.
+/// <see cref="CodeIndexRunManifest.Plugins"/> names the plugins eligible to
+/// contribute staged facts for the run (executing plugins plus their
+/// configured fallback candidates, which stores require upfront). It must
+/// not be read as the executed set: actual execution comes from indexing
+/// diagnostics, provider-selection events, and published unit origins.
+/// </summary>
 public sealed record CodeIndexRunManifest
 {
     public CodeIndexRunManifest(

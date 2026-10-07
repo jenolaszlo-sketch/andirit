@@ -6,6 +6,31 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Phase 2: explicit language-provider priority and fallback
+(`docs/evidence-quality-and-provider-strategy.md`):
+
+- New `CodeLanguageProviderMap` (language to preferred-first plugin order,
+  no numeric priorities), configured with `WithLanguageProviders` on
+  `HetuHostBuilder`/`HetuBuilder`. Without a map the strict registry
+  contract is unchanged: zero matches select nothing, several throw
+  `CodeGraphPluginSelectionException`.
+- New `CodePluginFailureKind` taxonomy and `CodePluginFailureException` for
+  classified provider failures, plus `ProviderFallbackPolicy`
+  (`None`/`OnUnavailable`/`OnFailure`, default `OnUnavailable`). Fallback
+  handles unavailable capability, never suspicious analysis, cancellation,
+  or live-source conflicts.
+- Fallback executes the next configured provider over the union of sources,
+  discards the failed provider's staged and previously published units,
+  rewrites plan manifests to the recovering runner, and records a
+  `CodeProviderSelection` event (full attempt history, classified reason,
+  lost capabilities — never reduced to an evidence-quality transition).
+- Cross-run ownership hygiene: published units whose owner holds no path in
+  the new state are collected at completion (e.g. fallback units after the
+  preferred provider recovers).
+- Fallback targets of executing plugins are deferred to a sequential phase
+  so a takeover runs once; `calls`-style honesty rules from Phase 1 apply to
+  every attempt. Store and snapshot schema versions are unchanged.
+
 Phase 1 of the evidence-quality and provider strategy
 (`docs/evidence-quality-and-provider-strategy.md`):
 
