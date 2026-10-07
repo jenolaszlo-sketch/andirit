@@ -47,6 +47,7 @@ semantic milestones and first-release invariants.
 | `Penghou.Hetu.Abstractions` | Parser-independent graph vocabulary, evidence, extraction sessions, and sinks |
 | `Penghou.Hetu` | Indexing orchestration, validation, in-memory storage, and query services |
 | `Penghou.Hetu.CSharp` | Roslyn-based C# extraction plugin |
+| `Penghou.Hetu.TreeSitter` | Tree-sitter structural extraction plugin (Elixir through a pinned native grammar) |
 | `Penghou.Hetu.LatticeDb` | Embedded LatticeDB graph-store provider |
 | `Penghou.Hetu.Testing` | Reusable graph-store and plugin contract tests |
 
@@ -243,6 +244,36 @@ scope metadata. Repeated references retain deterministic first evidence, and
 the extractor avoids inventing transitive inheritance or unresolved `var`
 references.
 
+## Tree-sitter structural extraction
+
+`Penghou.Hetu.TreeSitter` proves Hetu can ingest a non-.NET language without
+changing the graph model. It embeds the Tree-sitter runtime through managed
+bindings and ships a pinned `tree-sitter-elixir` native grammar per runtime
+(see `src/Penghou.Hetu.TreeSitter/native/grammar-pins.md` for the pin and the
+rebuild procedure), so indexing stays offline and reproducible:
+
+```csharp
+await using var host = new HetuHostBuilder()
+    .AddTreeSitterElixirPlugin()
+    .UseLatticeStore("C:/data/hetu/my-app.ltdb")
+    .Build();
+
+await host.IndexRepositoryAsync(
+    new CodeRepositoryDescriptor(
+        new CodeRepositoryId("repo:my-app"),
+        "C:/src/my-app"),
+    new CodeIndexRunId("run:initial"));
+```
+
+The Elixir profile emits structural evidence only: modules and functions as
+declarations with containment, aliases and imports as import edges, and
+invocation names through `invokes-name` edges that never claim a resolved
+target. There are no `calls` or `references` edges, no type information, and
+no semantic resolution of any kind. Malformed regions keep their valid facts
+and report `elixir.parse-error` with partial coverage instead of failing the
+run. Grammar identity, ABI, and capabilities are recorded on the plugin's
+`Grammar` descriptor, and the expected ABI is validated at load.
+
 ## Provider-neutral queries
 
 `CodeGraphQueryService` provides exact symbol and declaration lookup plus
@@ -402,7 +433,7 @@ become a general memory store or workflow engine.
 - runtime AI parsing or plugin generation;
 - embeddings or vector search;
 - automatic plugin or NuGet downloading;
-- LSP, SCIP, or Tree-sitter integration;
+- LSP or SCIP integration;
 - AI-generated architectural labels or component clustering;
 - generated non-C# language packages.
 

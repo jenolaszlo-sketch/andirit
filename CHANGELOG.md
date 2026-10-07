@@ -6,6 +6,27 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Phase 3A: Tree-sitter structural extraction for Elixir
+(`docs/evidence-quality-and-provider-strategy.md`):
+
+- New `Penghou.Hetu.TreeSitter` package with a Tree-sitter Elixir plugin
+  (`penghou.hetu.tree-sitter.elixir`, language `elixir`, `.ex`/`.exs`).
+  Native runtime via the `TreeSitter.DotNet` binding; the official
+  `tree-sitter-elixir` grammar (v0.3.5, ABI 14) ships pinned per runtime
+  (`win-x64`, `linux-x64`, `osx-arm64`) with no runtime downloads. See
+  `src/Penghou.Hetu.TreeSitter/native/grammar-pins.md`.
+- The Elixir profile emits structural evidence only: module/function
+  declarations with containment, alias/import edges, and invocation names
+  through `invokes-name`. Never `calls`, `references`, or type information.
+  Malformed regions keep valid facts and report `elixir.parse-error` with
+  partial coverage.
+- Grammar identity (source, version, commit, ABI, capabilities) is recorded
+  on the plugin's `TreeSitterGrammarDescriptor`; the pinned ABI is validated
+  at load (`VersionMismatch` otherwise), and unsupported runtimes report
+  `ProviderUnavailable`.
+- No Tree-sitter, binding, or native concept appears in the package's public
+  API surfaced contracts.
+
 Phase 2: explicit language-provider priority and fallback
 (`docs/evidence-quality-and-provider-strategy.md`):
 

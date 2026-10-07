@@ -599,6 +599,23 @@ Implementation notes (landed):
 7. Support partial parsing and diagnostics.
 8. Verify that no Tree-sitter-native type leaks into Hetu abstractions.
 
+Implementation notes, 3A (Elixir, landed):
+
+- Managed runtime via the `TreeSitter.DotNet` binding (exact NuGet pin);
+  the official `elixir-lang/tree-sitter-elixir` grammar at v0.3.5
+  (`e2d9e6e0e76b0c436fa48a0b8c32a031d0cbdf49`, ABI 14) ships as per-RID
+  natives built from its generated `parser.c` plus `scanner.c`. The
+  on-demand community language pack was rejected: it downloads grammars at
+  runtime with unpinned revisions.
+- The Elixir grammar mirrors the Elixir AST, so modules, definitions,
+  aliases, and invocations all arrive as `call` nodes; the profile is a
+  small adapter over target identifiers, with a stoplist for control forms
+  (`if`, `for`, `fn`, `when`, ...) that must never become `invokes-name`.
+- Definition heads are visited for structure but never treated as
+  invocations; module attributes (`@moduledoc`, `@spec`, ...) are skipped.
+- Rebuild recipe, verification checklist, and upgrade policy live in
+  `src/Penghou.Hetu.TreeSitter/native/grammar-pins.md`.
+
 ### Phase 4: Semantic enrichment
 
 After dogfooding:

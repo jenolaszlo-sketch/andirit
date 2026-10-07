@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <!--
+      Defaults to the repository package version so local runs track
+      Directory.Build.props. CI passes the exact packed version explicitly.
+    -->
+    <SmokerPackageVersion Condition="'$(SmokerPackageVersion)' == ''">$(Version)</SmokerPackageVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Penghou.Hetu.TreeSitter" Version="$(SmokerPackageVersion)" />
+  </ItemGroup>
+
+</Project>

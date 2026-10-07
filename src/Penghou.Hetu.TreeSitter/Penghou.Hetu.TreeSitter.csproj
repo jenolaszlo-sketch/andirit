@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Penghou.Hetu.Abstractions\Penghou.Hetu.Abstractions.csproj" />
+    <ProjectReference Include="..\Penghou.Hetu\Penghou.Hetu.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TreeSitter.DotNet" Version="1.3.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>Penghou.Hetu.TreeSitter</PackageId>
+    <Title>Penghou Hetu Tree-sitter Plugin</Title>
+    <Authors>Penghou.Hetu contributors</Authors>
+    <Description>Tree-sitter structural code extraction for Penghou.Hetu. Elixir support through a pinned native grammar; broader language coverage follows the same provider pattern.</Description>
+    <PackageTags>tree-sitter;code-analysis;knowledge-graph;elixir;parsing</PackageTags>
+    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-hetu</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/jenolaszlo-sketch/penghou-hetu</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IsPackable>true</IsPackable>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <!--
+    Pinned grammar natives ship inside this package per runtime identifier.
+    They are also copied to the build output so tests and hosts resolve them
+    without additional probing configuration. See native/grammar-pins.md for
+    the rebuild procedure when a grammar pin changes.
+  -->
+  <!-- One explicit entry per runtime: new grammar pins extend this list. -->
+  <ItemGroup>
+    <Content Include="runtimes/win-x64/native/*" CopyToOutputDirectory="PreserveNewest" Pack="true" PackagePath="runtimes/win-x64/native" />
+    <Content Include="runtimes/linux-x64/native/*" CopyToOutputDirectory="PreserveNewest" Pack="true" PackagePath="runtimes/linux-x64/native" />
+    <Content Include="runtimes/osx-arm64/native/*" CopyToOutputDirectory="PreserveNewest" Pack="true" PackagePath="runtimes/osx-arm64/native" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
