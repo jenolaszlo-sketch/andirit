@@ -6,6 +6,21 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Milestone 8A: dogfood query ergonomics (in progress):
+
+- Deterministic symbol discovery (`CodeSymbolDiscoveryQuery`) scoped by
+  name pattern, node kind, language, containing symbol, or project, with
+  explicit truncation; Solo ranks the candidates.
+- Source-location to enclosing-symbol lookup bridging file positions into
+  graph identities.
+- Symbols by file/project and declarations by project alongside the existing
+  declarations-by-file surface. No new store contracts: all three compose
+  traversal, lookup, and declaration primitives.
+- Elixir symbol nodes now carry the `language` property so discovery
+  filters apply uniformly; Elixir declarations cover whole definitions.
+  C# and Elixir dogfood plus traversal-policy evidence in
+  `tests/Penghou.Hetu.TreeSitter.Tests/QueryDogfoodTests.cs`.
+
 Phase 3A: Tree-sitter structural extraction for Elixir
 (`docs/evidence-quality-and-provider-strategy.md`):
 

@@ -13,6 +13,7 @@ public sealed class RuntimePublicApiContractTests
         var expected = new[]
         {
             "Penghou.Hetu.CodeAffectedTestsResult",
+            "Penghou.Hetu.CodeEnclosingSymbolResult",
             "Penghou.Hetu.CodeGraphBatchValidator",
             "Penghou.Hetu.CodeGraphDirection",
             "Penghou.Hetu.CodeGraphIngestionDiagnostics",
@@ -55,6 +56,8 @@ public sealed class RuntimePublicApiContractTests
             "Penghou.Hetu.CodeProviderSelection",
             "Penghou.Hetu.CodePublicationSnapshot",
             "Penghou.Hetu.CodePublicationSnapshotException",
+            "Penghou.Hetu.CodeSymbolDiscoveryQuery",
+            "Penghou.Hetu.CodeSymbolDiscoveryResult",
             "Penghou.Hetu.ProviderFallbackPolicy",
             "Penghou.Hetu.ProviderFallbackPolicyExtensions",
             "Penghou.Hetu.CodeQueryOperations",

@@ -240,7 +240,7 @@ public sealed class TreeSitterElixirPluginTests
         var packageVersion = typeof(TreeSitterElixirPlugin).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion.Split('+', 2)[0];
-        Assert.Equal($"{packageVersion}+v0.3.5.abi14.p1", plugin.Version);
+        Assert.Equal($"{packageVersion}+v0.3.5.abi14.p2", plugin.Version);
     }
 
     [Fact]

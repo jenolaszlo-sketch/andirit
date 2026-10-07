@@ -12,6 +12,11 @@ public static class CodeQueryOperations
     public const string Declarations = "declarations";
     public const string ResolveSymbols = "resolve-symbols";
     public const string DeclarationsInFile = "declarations-in-file";
+    public const string SymbolsInFile = "symbols-in-file";
+    public const string SymbolsInProject = "symbols-in-project";
+    public const string DeclarationsInProject = "declarations-in-project";
+    public const string SymbolDiscovery = "symbol-discovery";
+    public const string EnclosingSymbol = "enclosing-symbol";
     public const string PublicSurface = "public-surface";
     public const string ImpactSets = "impact-sets";
     public const string AffectedTests = "affected-tests";

@@ -497,6 +497,279 @@ public sealed class CodeGraphQueryService
     }
 
     /// <summary>
+    /// Discovers symbols by name pattern, kind, language, container, or
+    /// project without requiring an exact qualified name. Scoped queries
+    /// traverse containment; unscoped queries require a name pattern and
+    /// delegate to bounded name-pattern search. Results are deterministically
+    /// ordered with explicit truncation; Solo ranks the candidates.
+    /// </summary>
+    public async ValueTask<CodeSymbolDiscoveryResult> FindSymbolsAsync(
+        CodeRepositoryId repositoryId,
+        CodeSymbolDiscoveryQuery query,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(repositoryId);
+        ArgumentNullException.ThrowIfNull(query);
+
+        if (query.ContainerId is not null || query.ProjectPath is not null)
+            return await FindSymbolsInScopeAsync(repositoryId, query, options, cancellationToken)
+                .ConfigureAwait(false);
+
+        var matches = await _store.FindNodesByNamePatternAsync(
+            repositoryId,
+            query.NamePattern!,
+            query.MaxResults,
+            cancellationToken).ConfigureAwait(false);
+        var symbols = matches.Candidates
+            .Where(node => MatchesDiscoveryKind(node, query.NodeKinds, symbolBearingOnly: true))
+            .Where(node => MatchesLanguage(node, query.Languages))
+            .OrderBy(node => node.QualifiedName is null)
+            .ThenBy(node => node.QualifiedName, StringComparer.Ordinal)
+            .ThenBy(node => node.Id.Value, StringComparer.Ordinal)
+            .ToArray();
+        return new(
+            symbols.Take(query.MaxResults).ToArray(),
+            matches.Truncated || symbols.Length > query.MaxResults);
+    }
+
+    /// <summary>
+    /// Returns the symbol whose declaration most tightly encloses a source
+    /// position, bridging diffs and diagnostics into graph identities.
+    /// Returns null when no declaration contains the position.
+    /// </summary>
+    public async ValueTask<CodeEnclosingSymbolResult?> FindEnclosingSymbolAsync(
+        CodeRepositoryId repositoryId,
+        string sourcePath,
+        int line,
+        int column,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(repositoryId);
+        ArgumentException.ThrowIfNullOrWhiteSpace(sourcePath);
+        if (line < 1)
+            throw new ArgumentOutOfRangeException(nameof(line));
+        if (column < 1)
+            throw new ArgumentOutOfRangeException(nameof(column));
+
+        var declarations = await GetDeclarationsInFileAsync(
+            repositoryId,
+            sourcePath,
+            null,
+            cancellationToken).ConfigureAwait(false);
+        var enclosing = declarations
+            .Where(declaration => ContainsPosition(declaration.Location, line, column))
+            .OrderBy(declaration => SpanSize(declaration.Location))
+            .ThenByDescending(declaration => declaration.Location.StartLine)
+            .ThenByDescending(declaration => declaration.Location.StartColumn)
+            .ThenBy(declaration => declaration.Id.Value, StringComparer.Ordinal)
+            .FirstOrDefault();
+        if (enclosing is null)
+            return null;
+
+        var symbol = await _store.FindSymbolAsync(
+            repositoryId,
+            enclosing.SymbolId,
+            cancellationToken).ConfigureAwait(false);
+        return symbol is null ? null : new(symbol, enclosing);
+    }
+
+    /// <summary>
+    /// Returns the symbol-bearing nodes declared in one file, ordered by
+    /// qualified name. Complements declarations-in-file with the symbols a
+    /// file contributes to discovery.
+    /// </summary>
+    public async ValueTask<IReadOnlyList<CodeGraphNode>> GetSymbolsInFileAsync(
+        CodeRepositoryId repositoryId,
+        string sourcePath,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(repositoryId);
+        var fileNode = await FindFileNodeAsync(repositoryId, sourcePath, cancellationToken)
+            .ConfigureAwait(false);
+        if (fileNode is null)
+            return [];
+
+        var traversal = await TraverseAsync(
+            repositoryId,
+            fileNode.Id,
+            CodeGraphDirection.Outgoing,
+            CodeGraphTraversalPresets.Declarations,
+            options ?? new(maxDepth: 1, maxNodes: 500, maxEdges: 1000),
+            cancellationToken).ConfigureAwait(false);
+        return traversal.Nodes
+            .Where(node => node.SymbolId is not null)
+            .OrderBy(node => node.QualifiedName is null)
+            .ThenBy(node => node.QualifiedName, StringComparer.Ordinal)
+            .ThenBy(node => node.Id.Value, StringComparer.Ordinal)
+            .ToArray();
+    }
+
+    /// <summary>
+    /// Returns the symbol-bearing nodes transitively contained in one
+    /// project, ordered by qualified name and bounded by the query options.
+    /// </summary>
+    public async ValueTask<IReadOnlyList<CodeGraphNode>> GetSymbolsInProjectAsync(
+        CodeRepositoryId repositoryId,
+        string projectPath,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(repositoryId);
+        var projectNode = await FindProjectNodeAsync(repositoryId, projectPath, cancellationToken)
+            .ConfigureAwait(false);
+        if (projectNode is null)
+            return [];
+
+        var traversal = await TraverseAsync(
+            repositoryId,
+            projectNode.Id,
+            CodeGraphDirection.Outgoing,
+            [CodeEdgeKinds.Contains, CodeEdgeKinds.Declares],
+            options ?? new(maxDepth: 3, maxNodes: 2000, maxEdges: 4000),
+            cancellationToken).ConfigureAwait(false);
+        return traversal.Nodes
+            .Where(node => node.Id != projectNode.Id && node.SymbolId is not null)
+            .OrderBy(node => node.QualifiedName is null)
+            .ThenBy(node => node.QualifiedName, StringComparer.Ordinal)
+            .ThenBy(node => node.Id.Value, StringComparer.Ordinal)
+            .ToArray();
+    }
+
+    /// <summary>
+    /// Returns every declaration in one project ordered by path and position,
+    /// bounded by the query options.
+    /// </summary>
+    public async ValueTask<IReadOnlyList<CodeGraphDeclaration>> GetDeclarationsInProjectAsync(
+        CodeRepositoryId repositoryId,
+        string projectPath,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        var symbols = await GetSymbolsInProjectAsync(repositoryId, projectPath, options, cancellationToken)
+            .ConfigureAwait(false);
+        var declarations = new List<CodeGraphDeclaration>();
+        foreach (var symbolId in symbols
+                     .Where(node => node.SymbolId is not null)
+                     .Select(node => node.SymbolId!)
+                     .Distinct())
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            declarations.AddRange(await _store.GetDeclarationsAsync(
+                repositoryId,
+                symbolId,
+                cancellationToken).ConfigureAwait(false));
+        }
+
+        return declarations
+            .OrderBy(declaration => declaration.Location.Path, StringComparer.Ordinal)
+            .ThenBy(declaration => declaration.Location.StartLine)
+            .ThenBy(declaration => declaration.Location.StartColumn)
+            .ToArray();
+    }
+
+    private async ValueTask<CodeSymbolDiscoveryResult> FindSymbolsInScopeAsync(
+        CodeRepositoryId repositoryId,
+        CodeSymbolDiscoveryQuery query,
+        CodeGraphQueryOptions? options,
+        CancellationToken cancellationToken)
+    {
+        CodeNodeId container;
+        if (query.ContainerId is not null)
+        {
+            container = query.ContainerId;
+        }
+        else
+        {
+            var projectNode = await FindProjectNodeAsync(
+                repositoryId,
+                query.ProjectPath!,
+                cancellationToken).ConfigureAwait(false);
+            if (projectNode is null)
+                return new([], false);
+            container = projectNode.Id;
+        }
+
+        options ??= new(maxDepth: 5, maxNodes: 1000, maxEdges: 2000);
+        var traversal = await _store.TraverseAsync(
+            repositoryId,
+            new CodeGraphTraversalQuery(
+                container,
+                CodeGraphDirection.Outgoing,
+                [CodeEdgeKinds.Contains, CodeEdgeKinds.Declares],
+                options.EvidenceQualities,
+                options.MaxDepth,
+                options.MaxNodes,
+                options.MaxEdges),
+            cancellationToken).ConfigureAwait(false);
+        var symbols = traversal.Nodes
+            .Where(node => node.Id != container)
+            .Where(node => MatchesDiscoveryKind(node, query.NodeKinds, symbolBearingOnly: true))
+            .Where(node => MatchesLanguage(node, query.Languages))
+            .Where(node => query.NamePattern is null ||
+                (node.QualifiedName is not null &&
+                    node.QualifiedName.Contains(query.NamePattern, StringComparison.OrdinalIgnoreCase)) ||
+                node.Name.Contains(query.NamePattern, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(node => node.QualifiedName is null)
+            .ThenBy(node => node.QualifiedName, StringComparer.Ordinal)
+            .ThenBy(node => node.Id.Value, StringComparer.Ordinal)
+            .ToArray();
+        return new(
+            symbols.Take(query.MaxResults).ToArray(),
+            traversal.Truncated || symbols.Length > query.MaxResults);
+    }
+
+    private static bool MatchesDiscoveryKind(
+        CodeGraphNode node,
+        IReadOnlyCollection<CodeNodeKind> kinds,
+        bool symbolBearingOnly) =>
+        kinds.Count > 0
+            ? kinds.Contains(node.Kind)
+            : !symbolBearingOnly || node.SymbolId is not null;
+
+    private static bool MatchesLanguage(CodeGraphNode node, IReadOnlyCollection<string> languages)
+    {
+        if (languages.Count == 0)
+            return true;
+        return node.Properties.TryGetValue(CodePropertyKeys.Language, out var value) &&
+            value is CodeTextProperty text &&
+            languages.Contains(text.Value);
+    }
+
+    private async ValueTask<CodeGraphNode?> FindFileNodeAsync(
+        CodeRepositoryId repositoryId,
+        string sourcePath,
+        CancellationToken cancellationToken)
+    {
+        var fileNodes = await _store.FindNodesByQualifiedNameAsync(
+            repositoryId,
+            sourcePath,
+            cancellationToken).ConfigureAwait(false);
+        return fileNodes.FirstOrDefault(node => node.Kind == CodeNodeKinds.File);
+    }
+
+    private async ValueTask<CodeGraphNode?> FindProjectNodeAsync(
+        CodeRepositoryId repositoryId,
+        string projectPath,
+        CancellationToken cancellationToken)
+    {
+        var projectNodes = await _store.FindNodesByQualifiedNameAsync(
+            repositoryId,
+            projectPath,
+            cancellationToken).ConfigureAwait(false);
+        return projectNodes.FirstOrDefault(node => node.Kind == CodeNodeKinds.Project);
+    }
+
+    private static bool ContainsPosition(CodeLocation location, int line, int column) =>
+        (line > location.StartLine || (line == location.StartLine && column >= location.StartColumn)) &&
+        (line < location.EndLine || (line == location.EndLine && column < location.EndColumn));
+
+    private static long SpanSize(CodeLocation location) =>
+        ((long)(location.EndLine - location.StartLine) * 1_000_000L) +
+        (location.EndColumn - location.StartColumn);
+
+    /// <summary>
     /// Returns all nodes with public accessibility that are transitively
     /// contained in the specified project, bounded by the query options.
     /// </summary>

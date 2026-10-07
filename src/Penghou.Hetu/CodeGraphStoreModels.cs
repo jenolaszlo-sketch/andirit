@@ -367,3 +367,78 @@ public sealed record CodeGraphIngestionDiagnostics(
     int EdgesReceived,
     int RejectedFacts,
     IReadOnlyList<string> WarningCodes);
+
+/// <summary>
+/// Deterministic symbol discovery request. Scoping dimensions compose:
+/// <list type="bullet">
+/// <item>A container (or project) scopes discovery to its transitive
+/// containment instead of scanning names.</item>
+/// <item>A name pattern delegates to bounded name-pattern search.</item>
+/// <item>Kind and language filters apply after scoping, never as a scan.
+/// </item>
+/// </list>
+/// At least one of <see cref="CodeSymbolDiscoveryQuery.NamePattern"/>,
+/// <see cref="CodeSymbolDiscoveryQuery.ContainerId"/>, or
+/// <see cref="CodeSymbolDiscoveryQuery.ProjectPath"/> is required; container
+/// and project must not combine. Solo ranks the returned candidates.
+/// </summary>
+public sealed record CodeSymbolDiscoveryQuery
+{
+    public CodeSymbolDiscoveryQuery(
+        string? namePattern = null,
+        IReadOnlyCollection<CodeNodeKind>? nodeKinds = null,
+        IReadOnlyCollection<string>? languages = null,
+        CodeNodeId? containerId = null,
+        string? projectPath = null,
+        int maxResults = CodeNamePatternResult.DefaultMaxResults)
+    {
+        if (string.IsNullOrWhiteSpace(namePattern) && containerId is null && string.IsNullOrWhiteSpace(projectPath))
+        {
+            throw new ArgumentException(
+                "Discovery requires a name pattern, a container, or a project path.",
+                nameof(namePattern));
+        }
+        if (containerId is not null && !string.IsNullOrWhiteSpace(projectPath))
+        {
+            throw new ArgumentException(
+                "Discovery accepts either a container or a project path, not both.",
+                nameof(containerId));
+        }
+        if (maxResults < 1 || maxResults > CodeNamePatternResult.AbsoluteMaxResults)
+            throw new ArgumentOutOfRangeException(nameof(maxResults));
+
+        NamePattern = string.IsNullOrWhiteSpace(namePattern) ? null : namePattern;
+        NodeKinds = nodeKinds?.Distinct().ToArray() ?? [];
+        Languages = languages?.Select(language =>
+            {
+                ArgumentException.ThrowIfNullOrWhiteSpace(language, nameof(languages));
+                return language;
+            }).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray() ?? [];
+        ContainerId = containerId;
+        ProjectPath = string.IsNullOrWhiteSpace(projectPath) ? null : projectPath;
+        MaxResults = maxResults;
+    }
+
+    /// <summary>Gets the optional case-insensitive substring pattern.</summary>
+    public string? NamePattern { get; }
+    /// <summary>Gets the optional node-kind filter. Unset means symbol-bearing nodes.</summary>
+    public IReadOnlyCollection<CodeNodeKind> NodeKinds { get; }
+    /// <summary>Gets the optional language filter matched against the <c>language</c> property.</summary>
+    public IReadOnlyCollection<string> Languages { get; }
+    /// <summary>Gets the optional containing node scoping discovery to its containment.</summary>
+    public CodeNodeId? ContainerId { get; }
+    /// <summary>Gets the optional project path scoping discovery to one project.</summary>
+    public string? ProjectPath { get; }
+    /// <summary>Gets the maximum candidates; excess sets <see cref="CodeSymbolDiscoveryResult.Truncated"/>.</summary>
+    public int MaxResults { get; }
+}
+
+/// <summary>Deterministically ordered discovery candidates with truncation.</summary>
+public sealed record CodeSymbolDiscoveryResult(
+    IReadOnlyList<CodeGraphNode> Symbols,
+    bool Truncated);
+
+/// <summary>The symbol whose declaration most tightly encloses a source position.</summary>
+public sealed record CodeEnclosingSymbolResult(
+    CodeGraphNode Symbol,
+    CodeGraphDeclaration Declaration);

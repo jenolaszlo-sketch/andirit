@@ -693,6 +693,16 @@ queries would weaken the evidence vocabulary. The current single-filter
 behavior is pinned by
 `ResolvedOnlyTraversal_DoesNotCrossStructuralContainment`.
 
+Dogfood evidence (Milestone 8A, Elixir + C#): a resolved-only neighborhood
+from an Elixir module reaches nothing, while the unfiltered traversal
+reaches functions and `invokes-name` targets and the resolved C# side keeps
+working through the same API
+(`QueryDogfoodTests.Dogfood_StructuralContainmentStopsResolvedOnlyTraversal`).
+So the limitation is real on mixed graphs, but so far it presents as
+"queries must name the evidence they accept" rather than as a defect
+demanding the split. The split stays unjustified until a consumer needs a
+semantically constrained answer reachable only across weaker edges.
+
 ---
 
 ## Decision Summary

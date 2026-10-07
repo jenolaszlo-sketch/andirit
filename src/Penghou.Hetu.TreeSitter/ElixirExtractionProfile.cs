@@ -14,7 +14,10 @@ namespace Penghou.Hetu;
 /// <c>calls</c> or <c>references</c>: an invocation records only the invoked
 /// name through <c>invokes-name</c>, and imported modules become plain
 /// declaration-less nodes that later converge with real declarations only
-/// when identifier schemes match exactly.
+/// when identifier schemes match exactly. Declared symbols carry the
+/// language property so discovery filters apply uniformly; unresolved name
+/// nodes deliberately do not, since the language of an unresolved name is
+/// unknowable.
 /// </summary>
 internal sealed class ElixirExtractionProfile
 {
@@ -22,8 +25,11 @@ internal sealed class ElixirExtractionProfile
     /// Extraction-logic revision, folded into the plugin version so profile
     /// fixes invalidate previous indexes even when the grammar pin is
     /// unchanged. Bump on any change to emitted facts.
+    /// Revision history:
+    /// 1: initial structural extraction.
+    /// 2: declarations cover whole definitions (enclosing-symbol support).
     /// </summary>
-    internal const int ProfileRevision = 1;
+    internal const int ProfileRevision = 2;
 
     private static readonly HashSet<string> ModuleTargets = new(StringComparer.Ordinal)
     {
@@ -186,8 +192,19 @@ internal sealed class ElixirExtractionProfile
         var symbolId = new CodeSymbolId($"elixir:{Hash($"module\n{qualified}")}");
         var nodeId = new CodeNodeId($"elixir:symbol:{Hash($"module\n{qualified}")}");
         var location = Location(name.Node);
-        AddNode(new CodeGraphNode(nodeId, CodeNodeKinds.Type, shortName, qualified, symbolId));
-        AddDeclaration(symbolId, nodeId, location);
+        AddNode(new CodeGraphNode(
+            nodeId,
+            CodeNodeKinds.Type,
+            shortName,
+            qualified,
+            symbolId,
+            new Dictionary<string, CodePropertyValue>
+            {
+                [CodePropertyKeys.Language] = new CodeTextProperty("elixir")
+            }));
+        // The declaration covers the whole definition so enclosing-symbol
+        // queries resolve body positions; edges keep the precise name span.
+        AddDeclaration(symbolId, nodeId, Location(node));
         AddEdge(CodeEdgeKinds.Declares, scope.FileNode, nodeId, location, $"declares:{nodeId.Value}");
         if (scope.ModuleNode is not null)
             AddEdge(CodeEdgeKinds.Contains, scope.ModuleNode, nodeId, location, $"contains:{nodeId.Value}");
@@ -210,8 +227,19 @@ internal sealed class ElixirExtractionProfile
         var symbolId = new CodeSymbolId($"elixir:{Hash($"function\n{qualified}")}");
         var nodeId = new CodeNodeId($"elixir:symbol:{Hash($"function\n{qualified}")}");
         var location = Location(name.Node);
-        AddNode(new CodeGraphNode(nodeId, CodeNodeKinds.Callable, name.Text, qualified, symbolId));
-        AddDeclaration(symbolId, nodeId, location);
+        AddNode(new CodeGraphNode(
+            nodeId,
+            CodeNodeKinds.Callable,
+            name.Text,
+            qualified,
+            symbolId,
+            new Dictionary<string, CodePropertyValue>
+            {
+                [CodePropertyKeys.Language] = new CodeTextProperty("elixir")
+            }));
+        // The declaration covers the whole definition so enclosing-symbol
+        // queries resolve body positions; edges keep the precise name span.
+        AddDeclaration(symbolId, nodeId, Location(node));
         AddEdge(CodeEdgeKinds.Declares, scope.FileNode, nodeId, location, $"declares:{nodeId.Value}");
         var owner = scope.ModuleNode ?? scope.FileNode;
         if (owner != nodeId)
