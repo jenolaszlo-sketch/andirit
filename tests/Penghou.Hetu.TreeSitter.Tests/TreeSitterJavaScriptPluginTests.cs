@@ -36,6 +36,16 @@ public sealed class TreeSitterJavaScriptPluginTests
         join("a", "b");
         """;
 
+    private const string PrototypeSource = """
+        class Base {}
+        function Legacy() {}
+        class Derived extends Base {}
+        Child.prototype = Object.create(Base.prototype);
+        Other.prototype = new Base();
+        util.inherits(Legacy, Base);
+        Object.setPrototypeOf(Proto.prototype, Base.prototype);
+        """;
+
     private const string BrokenSource = """
         export class Broken {
           run() {
@@ -106,6 +116,34 @@ public sealed class TreeSitterJavaScriptPluginTests
         Assert.DoesNotContain(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.References);
         Assert.All(extracted.Edges, edge =>
             Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality));
+    }
+
+    [Fact]
+    public async Task ExtractAsync_DerivesPrototypeInheritanceAsDerivedEvidence()
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterJavaScriptPlugin(),
+            ("src/legacy.js", PrototypeSource));
+
+        var inherits = extracted.Edges.Where(edge => edge.Kind == CodeEdgeKinds.Inherits).ToArray();
+
+        // ES6 `extends` is a grammar-level fact and stays structural.
+        Assert.Contains(
+            inherits,
+            edge => SourceName(extracted, edge) == "Derived" &&
+                TargetName(extracted, edge) == "Base" &&
+                edge.Evidence.Quality == EvidenceQuality.Structural);
+
+        // Prototype idioms are recognized patterns, never presented as
+        // structural or resolved facts.
+        foreach (var child in new[] { "Child", "Other", "Legacy", "Proto" })
+        {
+            Assert.Contains(
+                inherits,
+                edge => SourceName(extracted, edge) == child &&
+                    TargetName(extracted, edge) == "Base" &&
+                    edge.Evidence.Quality == EvidenceQuality.Derived);
+        }
     }
 
     [Fact]
@@ -192,6 +230,9 @@ public sealed class TreeSitterJavaScriptPluginTests
 
     private static string InvokedName(Extraction extracted, CodeGraphEdge edge) =>
         extracted.Nodes.Single(node => node.Id == edge.TargetId).Name;
+
+    private static string SourceName(Extraction extracted, CodeGraphEdge edge) =>
+        extracted.Nodes.Single(node => node.Id == edge.SourceId).Name;
 
     private static string? TargetName(Extraction extracted, CodeGraphEdge edge) =>
         extracted.Nodes.Single(node => node.Id == edge.TargetId).QualifiedName;

@@ -177,6 +177,15 @@ public sealed class TreeSitterElixirPluginTests
             extracted.Result.RelationshipCoverage,
             coverage => coverage.RelationshipKind == CodeEdgeKinds.Calls.Value &&
                 coverage.State == CodeRelationshipCoverageState.NotProduced);
+        // Kinds the Elixir profile never emits are reported explicitly.
+        Assert.Contains(
+            extracted.Result.RelationshipCoverage,
+            coverage => coverage.RelationshipKind == CodeEdgeKinds.Inherits.Value &&
+                coverage.State == CodeRelationshipCoverageState.NotProduced);
+        Assert.Contains(
+            extracted.Result.RelationshipCoverage,
+            coverage => coverage.RelationshipKind == CodeEdgeKinds.Implements.Value &&
+                coverage.State == CodeRelationshipCoverageState.NotProduced);
     }
 
     [Fact]

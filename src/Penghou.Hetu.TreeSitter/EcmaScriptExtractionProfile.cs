@@ -27,6 +27,25 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     /// </summary>
     internal const int ProfileRevision = 1;
 
+    // Kinds both grammars can emit. `implements` exists only in TypeScript, so
+    // JavaScript reports it as not-produced rather than claiming an empty set.
+    private static readonly CodeEdgeKind[] SharedRelationshipKinds =
+    [
+        CodeEdgeKinds.Contains,
+        CodeEdgeKinds.Declares,
+        CodeEdgeKinds.Imports,
+        CodeEdgeKinds.InvokesName,
+        CodeEdgeKinds.Inherits
+    ];
+
+    /// <summary>Relationship kinds the TypeScript grammar can emit.</summary>
+    internal static readonly IReadOnlyList<CodeEdgeKind> TypeScriptRelationshipKinds =
+        [.. SharedRelationshipKinds, CodeEdgeKinds.Implements];
+
+    /// <summary>Relationship kinds the JavaScript grammar can emit.</summary>
+    internal static readonly IReadOnlyList<CodeEdgeKind> JavaScriptRelationshipKinds =
+        [.. SharedRelationshipKinds];
+
     private readonly string _path;
     private readonly string _language;
     private readonly string _providerId;
@@ -78,12 +97,19 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
             case "class_declaration":
             case "abstract_class_declaration":
                 if (TryEmitNamed(node, node.ChildByFieldName("name"), scope, CodeNodeKinds.Type, "class", out var classScope))
+                {
+                    EmitHeritage(node, classScope.OwnerNode);
                     WalkChildren(node, classScope);
+                }
                 else
+                {
                     WalkChildren(node, scope);
+                }
+
                 return;
             case "interface_declaration":
-                TryEmitNamed(node, node.ChildByFieldName("name"), scope, CodeNodeKinds.Interface, "interface", out _);
+                if (TryEmitNamed(node, node.ChildByFieldName("name"), scope, CodeNodeKinds.Interface, "interface", out var interfaceScope))
+                    EmitHeritage(node, interfaceScope.OwnerNode);
                 return;
             case "type_alias_declaration":
                 TryEmitNamed(node, node.ChildByFieldName("name"), scope, CodeNodeKinds.Type, "type", out _);
@@ -116,11 +142,16 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
                 HandleDeclarator(node, scope);
                 return;
             case "call_expression":
+                TryEmitPrototypeCall(node, scope);
                 EmitCall(node, scope);
                 WalkChildren(node, scope);
                 return;
             case "new_expression":
                 EmitNew(node, scope);
+                WalkChildren(node, scope);
+                return;
+            case "assignment_expression":
+                TryEmitPrototypeAssignment(node, scope);
                 WalkChildren(node, scope);
                 return;
             default:
@@ -213,6 +244,155 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         var nodeId = new CodeNodeId($"{_language}:invoked:{Hash(target)}");
         AddNode(new CodeGraphNode(nodeId, CodeNodeKinds.Callable, target));
         AddEdge(CodeEdgeKinds.InvokesName, scope.OwnerNode, nodeId, Location(locationNode), $"invokes:{nodeId.Value}");
+    }
+
+    /// <summary>
+    /// Emits structural <c>inherits</c>/<c>implements</c> from class or
+    /// interface heritage. TypeScript wraps heritage in explicit clauses;
+    /// JavaScript places the base type directly under <c>class_heritage</c>.
+    /// Expression bases (mixins) carry no stable name and are skipped rather
+    /// than guessed.
+    /// </summary>
+    private void EmitHeritage(TreeSitterSyntaxNode definition, CodeNodeId owner)
+    {
+        var heritage = FindChild(definition, "class_heritage")
+            ?? FindChild(definition, "extends_type_clause");
+        if (heritage is null)
+            return;
+
+        foreach (var clause in heritage.NamedChildren)
+        {
+            switch (clause.Type)
+            {
+                case "extends_clause":
+                    if (clause.ChildByFieldName("value") is { } value && HeritageName(value) is { } baseName)
+                        EmitHeritageEdge(CodeEdgeKinds.Inherits, owner, baseName, value, EvidenceQuality.Structural);
+                    break;
+                case "extends_type_clause":
+                    foreach (var type in clause.NamedChildren)
+                    {
+                        if (HeritageName(type) is { } interfaceName)
+                            EmitHeritageEdge(CodeEdgeKinds.Inherits, owner, interfaceName, type, EvidenceQuality.Structural);
+                    }
+
+                    break;
+                case "implements_clause":
+                    foreach (var type in clause.NamedChildren)
+                    {
+                        if (HeritageName(type) is { } implementedName)
+                            EmitHeritageEdge(CodeEdgeKinds.Implements, owner, implementedName, type, EvidenceQuality.Structural);
+                    }
+
+                    break;
+                default:
+                    // JavaScript: the base type sits directly under class_heritage.
+                    if (HeritageName(clause) is { } directBase)
+                        EmitHeritageEdge(CodeEdgeKinds.Inherits, owner, directBase, clause, EvidenceQuality.Structural);
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Recognizes the well-known prototype-inheritance idioms. These are not
+    /// grammar-level inheritance, so they are emitted as <c>Derived</c>
+    /// evidence: Hetu computed them deterministically from an exact syntax
+    /// pattern, never as resolved or structural fact.
+    /// </summary>
+    private void TryEmitPrototypeAssignment(TreeSitterSyntaxNode node, Scope scope)
+    {
+        var left = node.ChildByFieldName("left");
+        var right = node.ChildByFieldName("right");
+        if (PrototypeOwner(left) is { } child && PrototypeBase(right) is { } parent)
+            EmitHeritageEdge(CodeEdgeKinds.Inherits, scope.OwnerNode, parent, node, EvidenceQuality.Derived, child);
+    }
+
+    private void TryEmitPrototypeCall(TreeSitterSyntaxNode node, Scope scope)
+    {
+        var target = CalleeName(node.ChildByFieldName("function"));
+        var arguments = node.ChildByFieldName("arguments")?.NamedChildren;
+        if (arguments is not { Count: >= 2 })
+            return;
+
+        if (target == "util.inherits")
+        {
+            if (HeritageName(arguments[0]) is { } child && HeritageName(arguments[1]) is { } parent)
+                EmitHeritageEdge(CodeEdgeKinds.Inherits, scope.OwnerNode, parent, node, EvidenceQuality.Derived, child);
+        }
+        else if (target == "Object.setPrototypeOf")
+        {
+            if (PrototypeOwner(arguments[0]) is { } child && PrototypeOwner(arguments[1]) is { } parent)
+                EmitHeritageEdge(CodeEdgeKinds.Inherits, scope.OwnerNode, parent, node, EvidenceQuality.Derived, child);
+        }
+    }
+
+    private void EmitHeritageEdge(
+        CodeEdgeKind kind,
+        CodeNodeId defaultOwner,
+        string targetName,
+        TreeSitterSyntaxNode locationNode,
+        EvidenceQuality quality,
+        string? sourceName = null)
+    {
+        var source = sourceName is null ? defaultOwner : StructuralTypeNode(sourceName);
+        var target = StructuralTypeNode(targetName);
+        AddEdge(kind, source, target, Location(locationNode), $"{kind.Value}:{source.Value}:{target.Value}", quality);
+    }
+
+    /// <summary>
+    /// Resolves a heritage type name to a declaration-less type node whose
+    /// identity matches a same-named class declared in the same scope, so the
+    /// edge converges when the base type is indexed here.
+    /// </summary>
+    private CodeNodeId StructuralTypeNode(string name)
+    {
+        var nodeId = new CodeNodeId($"{_language}:symbol:{Hash($"class\n{name}")}");
+        AddNode(new CodeGraphNode(nodeId, CodeNodeKinds.Type, ShortName(name), name));
+        return nodeId;
+    }
+
+    private static string? HeritageName(TreeSitterSyntaxNode? node) =>
+        node?.Type switch
+        {
+            "identifier" or "type_identifier" => BoundedText(node),
+            "member_expression" => MemberName(node),
+            _ => null
+        };
+
+    private static string? PrototypeOwner(TreeSitterSyntaxNode? node)
+    {
+        if (node is null || node.Type != "member_expression")
+            return null;
+        var property = node.ChildByFieldName("property");
+        if (property is null || BoundedText(property) != "prototype")
+            return null;
+        return HeritageName(node.ChildByFieldName("object"));
+    }
+
+    private static string? PrototypeBase(TreeSitterSyntaxNode? node)
+    {
+        if (node is null)
+            return null;
+        if (node.Type == "new_expression")
+            return HeritageName(node.ChildByFieldName("constructor"));
+        if (node.Type == "call_expression" && CalleeName(node.ChildByFieldName("function")) == "Object.create")
+        {
+            var first = node.ChildByFieldName("arguments")?.NamedChildren.FirstOrDefault();
+            return PrototypeOwner(first) ?? HeritageName(first);
+        }
+
+        return null;
+    }
+
+    private static TreeSitterSyntaxNode? FindChild(TreeSitterSyntaxNode node, string type)
+    {
+        foreach (var child in node.NamedChildren)
+        {
+            if (child.Type == type)
+                return child;
+        }
+
+        return null;
     }
 
     private bool TryEmitNamed(
@@ -348,7 +528,13 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         _result.Declarations[id.Value] = new CodeGraphDeclaration(id, symbolId, nodeId, location);
     }
 
-    private void AddEdge(CodeEdgeKind kind, CodeNodeId source, CodeNodeId target, CodeLocation location, string discriminator)
+    private void AddEdge(
+        CodeEdgeKind kind,
+        CodeNodeId source,
+        CodeNodeId target,
+        CodeLocation location,
+        string discriminator,
+        EvidenceQuality quality = EvidenceQuality.Structural)
     {
         var id = new CodeEdgeId(
             $"{_language}:{Hash($"{kind.Value}\n{source.Value}\n{target.Value}\n{discriminator}\n{location.StartLine}:{location.StartColumn}:{location.EndLine}:{location.EndColumn}")}");
@@ -358,7 +544,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
                 target,
                 kind,
                 new CodeEvidence(
-                    EvidenceQuality.Structural,
+                    quality,
                     _providerId,
                     _providerVersion,
                     location))))

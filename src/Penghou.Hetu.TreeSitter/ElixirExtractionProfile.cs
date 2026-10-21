@@ -31,6 +31,15 @@ internal sealed class ElixirExtractionProfile : ITreeSitterExtractionProfile
     /// </summary>
     internal const int ProfileRevision = 2;
 
+    /// <summary>Relationship kinds the Elixir profile actually emits.</summary>
+    internal static readonly IReadOnlyList<CodeEdgeKind> ProducedRelationshipKinds =
+    [
+        CodeEdgeKinds.Contains,
+        CodeEdgeKinds.Declares,
+        CodeEdgeKinds.Imports,
+        CodeEdgeKinds.InvokesName
+    ];
+
     public string LanguageKey => "elixir";
 
     public int Revision => ProfileRevision;

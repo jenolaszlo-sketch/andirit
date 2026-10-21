@@ -54,6 +54,7 @@ public sealed class TreeSitterJavaScriptPlugin : ICodeGraphPlugin
             context,
             JavaScriptPluginId,
             JavaScriptPluginVersion,
+            EcmaScriptExtractionProfile.JavaScriptRelationshipKinds,
             static _ => TreeSitterGrammarRegistry.JavaScript,
             static path => new EcmaScriptExtractionProfile(
                 path,

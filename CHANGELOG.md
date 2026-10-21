@@ -23,11 +23,19 @@ Phase 3B: Tree-sitter structural extraction for TypeScript and JavaScript
 - One `EcmaScriptExtractionProfile` serves both languages: classes,
   interfaces, namespaces, type aliases, enums, functions, methods, and
   arrow/function-expression callables as declarations with containment;
-  ES module `import`, re-export, and CommonJS `require` as import edges; and
-  `call_expression`/`new_expression` names through `invokes-name`. Never
-  `calls`, `references`, or type information; JSX elements are not
-  invocations. Malformed regions keep valid facts and report
-  `<language>.parse-error` with partial coverage.
+  ES module `import`, re-export, and CommonJS `require` as import edges;
+  `call_expression`/`new_expression` names through `invokes-name`; and
+  `inherits`/`implements` from class and interface heritage (TypeScript) and
+  `extends` (JavaScript). Never `calls`, `references`, or type information;
+  JSX elements are not invocations. Malformed regions keep valid facts and
+  report `<language>.parse-error` with partial coverage.
+- Class/interface heritage is `Structural`. The common prototype-inheritance
+  idioms (`X.prototype = Object.create(Y.prototype)`, `X.prototype = new Y()`,
+  `util.inherits(X, Y)`, `Object.setPrototypeOf(X.prototype, Y.prototype)`)
+  are recognized and emitted as `inherits` with `Derived` evidence, never
+  structural or resolved. Relationship coverage is now profile-driven so
+  `inherits`/`implements` report `Produced` for TypeScript and `NotProduced`
+  for Elixir and (for `implements`) JavaScript.
 - The shared extraction session, grammar-version scaffolding, and
   profile interface were factored out of the Elixir plugin so the second
   language added a grammar descriptor and a profile rather than new session

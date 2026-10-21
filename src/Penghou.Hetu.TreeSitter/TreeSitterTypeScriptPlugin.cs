@@ -60,6 +60,7 @@ public sealed class TreeSitterTypeScriptPlugin : ICodeGraphPlugin
             context,
             TypeScriptPluginId,
             TypeScriptPluginVersion,
+            EcmaScriptExtractionProfile.TypeScriptRelationshipKinds,
             static path => path.EndsWith(".tsx", StringComparison.OrdinalIgnoreCase)
                 ? TreeSitterGrammarRegistry.Tsx
                 : TreeSitterGrammarRegistry.TypeScript,

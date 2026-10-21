@@ -14,11 +14,31 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
+    /// <summary>
+    /// Every normalized relationship kind a Tree-sitter provider may report.
+    /// Kinds a provider does not produce are reported as
+    /// <see cref="CodeRelationshipCoverageState.NotProduced"/> rather than
+    /// omitted, so consumers can tell "no such relationship exists" from
+    /// "this provider does not emit that kind".
+    /// </summary>
+    private static readonly CodeEdgeKind[] CoverageKinds =
+    [
+        CodeEdgeKinds.Contains,
+        CodeEdgeKinds.Declares,
+        CodeEdgeKinds.Imports,
+        CodeEdgeKinds.InvokesName,
+        CodeEdgeKinds.Inherits,
+        CodeEdgeKinds.Implements,
+        CodeEdgeKinds.Calls,
+        CodeEdgeKinds.References
+    ];
+
     private readonly CodeGraphPluginContext _context;
     private readonly CodePluginId _pluginId;
     private readonly string _pluginVersion;
     private readonly Func<string, TreeSitterGrammarDescriptor> _grammarForPath;
     private readonly Func<string, ITreeSitterExtractionProfile> _profileForPath;
+    private readonly HashSet<CodeEdgeKind> _producedRelationshipKinds;
     private readonly Dictionary<string, TreeSitterSessionParser> _parsers = new(StringComparer.Ordinal);
     private bool _disposed;
 
@@ -26,12 +46,14 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
         CodeGraphPluginContext context,
         CodePluginId pluginId,
         string pluginVersion,
+        IReadOnlyList<CodeEdgeKind> producedRelationshipKinds,
         Func<string, TreeSitterGrammarDescriptor> grammarForPath,
         Func<string, ITreeSitterExtractionProfile> profileForPath)
     {
         _context = context;
         _pluginId = pluginId;
         _pluginVersion = pluginVersion;
+        _producedRelationshipKinds = [.. producedRelationshipKinds];
         _grammarForPath = grammarForPath;
         _profileForPath = profileForPath;
     }
@@ -149,15 +171,13 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
         var state = partial
             ? CodeRelationshipCoverageState.Partial
             : CodeRelationshipCoverageState.Produced;
-        var relationshipCoverage = new List<CodeRelationshipCoverage>
+        var relationshipCoverage = new List<CodeRelationshipCoverage>(CoverageKinds.Length);
+        foreach (var kind in CoverageKinds)
         {
-            Coverage(CodeEdgeKinds.Contains, coverage, state),
-            Coverage(CodeEdgeKinds.Declares, coverage, state),
-            Coverage(CodeEdgeKinds.Imports, coverage, state),
-            Coverage(CodeEdgeKinds.InvokesName, coverage, state),
-            new(CodeEdgeKinds.Calls.Value, CodeRelationshipCoverageState.NotProduced, 0, 0),
-            new(CodeEdgeKinds.References.Value, CodeRelationshipCoverageState.NotProduced, 0, 0)
-        };
+            relationshipCoverage.Add(_producedRelationshipKinds.Contains(kind)
+                ? Coverage(kind, coverage, state)
+                : new(kind.Value, CodeRelationshipCoverageState.NotProduced, 0, 0));
+        }
 
         return new CodeGraphExtractionResult(
             obsolete,

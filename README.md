@@ -271,12 +271,16 @@ await host.IndexRepositoryAsync(
 ```
 
 Every profile emits structural evidence only: modules, classes, interfaces,
-and functions as declarations with containment, imports as import edges, and
+and functions as declarations with containment, imports as import edges,
 invocation names through `invokes-name` edges that never claim a resolved
-target. There are no `calls` or `references` edges and no semantic resolution
-of any kind. Malformed regions keep their valid facts and report
-`<language>.parse-error` with partial coverage instead of failing the run.
-Grammar identity, ABI, and capabilities are recorded on each plugin's
+target, and `inherits`/`implements` from TypeScript/JavaScript class and
+interface heritage. The common JavaScript prototype-inheritance idioms
+(`Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`) are
+recognized and emitted as `inherits` with `Derived` evidence — never
+structural or resolved. There are no `calls` or `references` edges and no
+semantic resolution of any kind. Malformed regions keep their valid facts and
+report `<language>.parse-error` with partial coverage instead of failing the
+run. Grammar identity, ABI, and capabilities are recorded on each plugin's
 `Grammar` descriptor, and the expected ABI is validated at load.
 
 ## Provider-neutral queries

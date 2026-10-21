@@ -56,6 +56,7 @@ public sealed class TreeSitterElixirPlugin : ICodeGraphPlugin
             context,
             ElixirPluginId,
             ElixirPluginVersion,
+            ElixirExtractionProfile.ProducedRelationshipKinds,
             static _ => TreeSitterGrammarRegistry.Elixir,
             static path => new ElixirExtractionProfile(path)));
     }

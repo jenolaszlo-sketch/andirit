@@ -661,9 +661,18 @@ Implementation notes (landed):
   assertions parse), so the TypeScript plugin selects its grammar per
   extension; `Language` and the `language` node property stay `typescript`
   for both so discovery filters remain useful.
-- Not yet emitted, and deliberately out of this slice: `inherits`/`implements`
-  from class heritage, interface member signatures, field/property nodes, and
-  control-flow constructs. `calls` and `references` remain `NotProduced`.
+- Structural `inherits`/`implements` land from class and interface heritage:
+  `extends` (TypeScript and JavaScript) and `implements`/interface `extends`
+  (TypeScript). Expression bases such as mixins carry no stable name and are
+  skipped rather than guessed.
+- The common prototype-inheritance idioms (`X.prototype = Object.create(Y.prototype)`,
+  `X.prototype = new Y()`, `util.inherits(X, Y)`,
+  `Object.setPrototypeOf(X.prototype, Y.prototype)`) are recognized
+  deterministically and emitted as `inherits` with `Derived` evidence — never
+  structural or resolved, because they are patterns, not grammar constructs.
+  `implements` is not-produced for JavaScript, which has no such syntax.
+- Still out of this slice: interface member signatures, field/property nodes,
+  and control-flow constructs. `calls` and `references` remain `NotProduced`.
 
 ### Phase 4: Semantic enrichment
 

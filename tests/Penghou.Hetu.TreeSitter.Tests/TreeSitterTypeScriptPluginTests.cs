@@ -60,6 +60,14 @@ public sealed class TreeSitterTypeScriptPluginTests
         }
         """;
 
+    private const string HeritageSource = """
+        class Base {}
+        interface I1 {}
+        interface I2 {}
+        class Child extends Base implements I1, I2 {}
+        interface I3 extends I1 {}
+        """;
+
     private const string BrokenSource = """
         export class Broken {
           run() {
@@ -162,6 +170,34 @@ public sealed class TreeSitterTypeScriptPluginTests
             Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality));
         Assert.All(extracted.Edges, edge =>
             Assert.Equal("penghou.hetu.tree-sitter.typescript", edge.Evidence.Provider));
+    }
+
+    [Fact]
+    public async Task ExtractAsync_EmitsStructuralHeritage()
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/heritage.ts", HeritageSource));
+
+        var inherits = extracted.Edges.Where(edge => edge.Kind == CodeEdgeKinds.Inherits).ToArray();
+        var implements = extracted.Edges.Where(edge => edge.Kind == CodeEdgeKinds.Implements).ToArray();
+
+        Assert.Contains(inherits, edge => SourceName(extracted, edge) == "Child" && TargetName(extracted, edge) == "Base");
+        Assert.Contains(inherits, edge => SourceName(extracted, edge) == "I3" && TargetName(extracted, edge) == "I1");
+        Assert.Contains(implements, edge => SourceName(extracted, edge) == "Child" && TargetName(extracted, edge) == "I1");
+        Assert.Contains(implements, edge => SourceName(extracted, edge) == "Child" && TargetName(extracted, edge) == "I2");
+
+        Assert.All(inherits.Concat(implements), edge =>
+            Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality));
+
+        Assert.Contains(
+            extracted.Result.RelationshipCoverage,
+            coverage => coverage.RelationshipKind == CodeEdgeKinds.Inherits.Value &&
+                coverage.State == CodeRelationshipCoverageState.Produced);
+        Assert.Contains(
+            extracted.Result.RelationshipCoverage,
+            coverage => coverage.RelationshipKind == CodeEdgeKinds.Implements.Value &&
+                coverage.State == CodeRelationshipCoverageState.Produced);
     }
 
     [Fact]
@@ -324,6 +360,9 @@ public sealed class TreeSitterTypeScriptPluginTests
 
     private static string InvokedName(Extraction extracted, CodeGraphEdge edge) =>
         extracted.Nodes.Single(node => node.Id == edge.TargetId).Name;
+
+    private static string SourceName(Extraction extracted, CodeGraphEdge edge) =>
+        extracted.Nodes.Single(node => node.Id == edge.SourceId).Name;
 
     private static string? TargetName(Extraction extracted, CodeGraphEdge edge) =>
         extracted.Nodes.Single(node => node.Id == edge.TargetId).QualifiedName;
