@@ -6,7 +6,7 @@ releases may still revise public contracts.
 
 ## Unreleased
 
-Milestone 8A: dogfood query ergonomics (in progress):
+Milestone 8A: dogfood query ergonomics:
 
 - Deterministic symbol discovery (`CodeSymbolDiscoveryQuery`) scoped by
   name pattern, node kind, language, containing symbol, or project, with

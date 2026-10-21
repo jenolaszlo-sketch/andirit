@@ -397,7 +397,12 @@ changes the architectural laws. Effort: S (days), M (weeks), L (longer).
 - **Name-pattern candidate search (M, landed)** — bounded prefix/pattern
   candidates with explicit truncation; Solo ranks results.
 
-### Milestone 8A — dogfood query ergonomics (in progress)
+### Milestone 8A — dogfood query ergonomics (complete)
+
+Status: **complete on `main` (unreleased)**. All five query additions landed
+and are exercised by provider-neutral tests and the C#/Elixir dogfood
+(`tests/Penghou.Hetu.Tests/CodeGraphDiscoveryTests.cs`,
+`tests/Penghou.Hetu.TreeSitter.Tests/QueryDogfoodTests.cs`).
 
 Composable, store-neutral query additions proven against C# and Elixir
 graphs before Erlang strains the extraction seam:
