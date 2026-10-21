@@ -1,5 +1,22 @@
 # Penghou.Hetu Roadmap
 
+## Future resource-provider integration — 2026-10-02
+
+Reference: [resource-abstractions architecture](../Penghou/docs/resource-abstractions-architecture.md).
+After RA-5, assess an optional IO-backed implementation of the existing
+repository-source contract. Keep code graph, repository and snapshot semantics
+in Hetu; the immediate correction does not migrate this project.
+
+- [ ] Map explicit workspace/view/invocation identities and bounded reads/pages.
+  Preserve incomplete and authorized-view coverage: excluded/unscanned resources
+  must not become evidence of deletion.
+- [ ] **VFS-2/8/9, deferred consumers:** accept proven snapshot, filtered or Git
+  views without claiming that a live Local scan is a coherent snapshot.
+- [ ] Qualify differences in stream/buffer APIs, entry/file limits, path equality
+  and version identity before replacing any current repository provider.
+
+Handoffs cite the canonical RA/VFS gates and the concrete provider guarantees.
+
 ## Objective
 
 Build a local-first, language-neutral code knowledge graph that gives Solo and
@@ -622,3 +639,38 @@ preview: a schema change ships with a schema-versioned export/import path
 export/import) so hosts re-index or import instead of running mixed-version
 binaries against one file. The health check reports the on-disk version to
 make the mismatch actionable before any write is attempted.
+
+## V2 — Evidence-driven workflow evolution (deferred)
+
+Status: **future work after V1; not a current release gate**. Added 2026-09-26.
+V2.1/V2.2/V2.3 name cross-project delivery stages, not package or IR versions.
+Existing near-term priorities and completed work retain their current status.
+
+Architecture and shared acceptance gates: [reviewed V2 specification](../Penghou.Guihua/docs/evidence-driven-workflow-evolution-v2.md).
+Cross-repository links assume sibling checkouts.
+
+### V2.1/V2.2 — Revision-bound context and impact evidence
+
+- [ ] Supply exact repository/publication, query/version, source-revision and
+  extraction-strength references when a host evaluates a repair or candidate.
+  Preserve bounded traversal, truncation, stale/missing publication and
+  unsupported-capability diagnostics.
+- [ ] Allow the host to compare candidate publications and retain which code
+  observations informed evaluation or a transition preview, without publishing
+  an unselected candidate as the accepted workspace.
+- [ ] Make incomplete structural coverage explicit. Hetu impact neighborhoods
+  may inform application policy but never replace Fuwen/Zhinu data, control,
+  validation or external-effect dependency analysis.
+
+Gate: a candidate/repair explanation is reproducible at its publication, while
+missing or truncated graph coverage cannot assert that unrelated workflow work
+is safe to reuse.
+
+### V2.3 and later — Context drift inputs
+
+- [ ] Expose publication changes as evidence for host-controlled reconsideration
+  of a contextual preference. Code similarity alone must not establish
+  equivalent tasks, causal improvement or authority to reuse an artifact.
+
+This extends existing publication/query seams only when the consumer needs
+them. Hetu does not store workflow reputation, choose winners or learn topology.
