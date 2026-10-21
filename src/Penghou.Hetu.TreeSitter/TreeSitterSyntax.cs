@@ -58,6 +58,15 @@ internal sealed class TreeSitterSyntaxNode
     internal IReadOnlyList<TreeSitterSyntaxNode> NamedChildren =>
         _namedChildren ??= Wrap(_node.NamedChildren);
 
+    /// <summary>Gets the named child bound to a grammar field, if present.</summary>
+    internal TreeSitterSyntaxNode? ChildByFieldName(string name)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        return _node.GetChildForField(name) is { } child
+            ? new TreeSitterSyntaxNode(child)
+            : null;
+    }
+
     private static IReadOnlyList<TreeSitterSyntaxNode> Wrap(IReadOnlyList<TreeSitterApi.Node> nodes)
     {
         var wrapped = new TreeSitterSyntaxNode[nodes.Count];

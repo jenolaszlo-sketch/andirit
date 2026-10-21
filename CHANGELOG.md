@@ -6,6 +6,33 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Phase 3B: Tree-sitter structural extraction for TypeScript and JavaScript
+(`docs/evidence-quality-and-provider-strategy.md`):
+
+- New `TreeSitterTypeScriptPlugin` (`penghou.hetu.tree-sitter.typescript`,
+  language `typescript`, `.ts`/`.mts`/`.cts`/`.tsx`) and
+  `TreeSitterJavaScriptPlugin` (`penghou.hetu.tree-sitter.javascript`,
+  language `javascript`, `.js`/`.mjs`/`.cjs`/`.jsx`). Registration helpers
+  `AddTreeSitterTypeScriptPlugin` and `AddTreeSitterJavaScriptPlugin` were
+  added to `HetuHostBuilderExtensions`.
+- `.tsx` uses the sibling `tree-sitter-tsx` grammar because JSX changes how
+  type assertions parse; JavaScript uses `tree-sitter-javascript`. All three
+  grammar pins (versions, commits, ABI) are recorded on the plugins'
+  `Grammar` descriptors and in `native/grammar-pins.md`. TypeScript and
+  JavaScript natives are supplied by the pinned `TreeSitter.DotNet` binding.
+- One `EcmaScriptExtractionProfile` serves both languages: classes,
+  interfaces, namespaces, type aliases, enums, functions, methods, and
+  arrow/function-expression callables as declarations with containment;
+  ES module `import`, re-export, and CommonJS `require` as import edges; and
+  `call_expression`/`new_expression` names through `invokes-name`. Never
+  `calls`, `references`, or type information; JSX elements are not
+  invocations. Malformed regions keep valid facts and report
+  `<language>.parse-error` with partial coverage.
+- The shared extraction session, grammar-version scaffolding, and
+  profile interface were factored out of the Elixir plugin so the second
+  language added a grammar descriptor and a profile rather than new session
+  logic; Elixir behavior and identities are unchanged.
+
 Milestone 8A: dogfood query ergonomics:
 
 - Deterministic symbol discovery (`CodeSymbolDiscoveryQuery`) scoped by

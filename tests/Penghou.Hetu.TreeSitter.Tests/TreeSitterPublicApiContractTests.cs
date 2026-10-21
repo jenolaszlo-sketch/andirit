@@ -17,6 +17,8 @@ public sealed class TreeSitterPublicApiContractTests
         {
             "Penghou.Hetu.TreeSitter.HetuHostBuilderExtensions",
             "Penghou.Hetu.TreeSitterElixirPlugin",
+            "Penghou.Hetu.TreeSitterJavaScriptPlugin",
+            "Penghou.Hetu.TreeSitterTypeScriptPlugin",
             "Penghou.Hetu.TreeSitterGrammarDescriptor"
         }.Order(StringComparer.Ordinal).ToArray();
 

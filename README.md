@@ -47,7 +47,7 @@ semantic milestones and first-release invariants.
 | `Penghou.Hetu.Abstractions` | Parser-independent graph vocabulary, evidence, extraction sessions, and sinks |
 | `Penghou.Hetu` | Indexing orchestration, validation, in-memory storage, and query services |
 | `Penghou.Hetu.CSharp` | Roslyn-based C# extraction plugin |
-| `Penghou.Hetu.TreeSitter` | Tree-sitter structural extraction plugin (Elixir through a pinned native grammar) |
+| `Penghou.Hetu.TreeSitter` | Tree-sitter structural extraction plugins (Elixir, TypeScript, and JavaScript) |
 | `Penghou.Hetu.LatticeDb` | Embedded LatticeDB graph-store provider |
 | `Penghou.Hetu.Testing` | Reusable graph-store and plugin contract tests |
 
@@ -246,15 +246,20 @@ references.
 
 ## Tree-sitter structural extraction
 
-`Penghou.Hetu.TreeSitter` proves Hetu can ingest a non-.NET language without
+`Penghou.Hetu.TreeSitter` proves Hetu can ingest non-.NET languages without
 changing the graph model. It embeds the Tree-sitter runtime through managed
-bindings and ships a pinned `tree-sitter-elixir` native grammar per runtime
-(see `src/Penghou.Hetu.TreeSitter/native/grammar-pins.md` for the pin and the
-rebuild procedure), so indexing stays offline and reproducible:
+bindings and exposes one structural plugin per language: Elixir, TypeScript
+(`.ts`/`.mts`/`.cts`/`.tsx`), and JavaScript (`.js`/`.mjs`/`.cjs`/`.jsx`). All
+grammar pins, including which natives ship with the package and which come
+from the pinned `TreeSitter.DotNet` binding, are recorded in
+`src/Penghou.Hetu.TreeSitter/native/grammar-pins.md`, so indexing stays
+offline and reproducible:
 
 ```csharp
 await using var host = new HetuHostBuilder()
     .AddTreeSitterElixirPlugin()
+    .AddTreeSitterTypeScriptPlugin()
+    .AddTreeSitterJavaScriptPlugin()
     .UseLatticeStore("C:/data/hetu/my-app.ltdb")
     .Build();
 
@@ -265,13 +270,13 @@ await host.IndexRepositoryAsync(
     new CodeIndexRunId("run:initial"));
 ```
 
-The Elixir profile emits structural evidence only: modules and functions as
-declarations with containment, aliases and imports as import edges, and
+Every profile emits structural evidence only: modules, classes, interfaces,
+and functions as declarations with containment, imports as import edges, and
 invocation names through `invokes-name` edges that never claim a resolved
-target. There are no `calls` or `references` edges, no type information, and
-no semantic resolution of any kind. Malformed regions keep their valid facts
-and report `elixir.parse-error` with partial coverage instead of failing the
-run. Grammar identity, ABI, and capabilities are recorded on the plugin's
+target. There are no `calls` or `references` edges and no semantic resolution
+of any kind. Malformed regions keep their valid facts and report
+`<language>.parse-error` with partial coverage instead of failing the run.
+Grammar identity, ABI, and capabilities are recorded on each plugin's
 `Grammar` descriptor, and the expected ABI is validated at load.
 
 ## Provider-neutral queries

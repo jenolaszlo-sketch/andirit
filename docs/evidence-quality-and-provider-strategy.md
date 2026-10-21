@@ -4,7 +4,9 @@
 Accepted
 
 Phase 1 (evidence and capability correctness) is implemented and enforced by
-tests. Phases 2–4 remain planned work.
+tests; Phase 2 (explicit provider selection) and Phase 3A/3B (Tree-sitter
+structural extraction for Elixir, TypeScript, and JavaScript) are implemented.
+Phase 4 (semantic enrichment) remains planned.
 
 ## Context
 
@@ -616,7 +618,7 @@ Implementation notes, 3A (Elixir, landed):
 - Rebuild recipe, verification checklist, and upgrade policy live in
   `src/Penghou.Hetu.TreeSitter/native/grammar-pins.md`.
 
-### Phase 3B: TypeScript/JavaScript as an adversarial test of the profile seam (planned)
+### Phase 3B: TypeScript/JavaScript as an adversarial test of the profile seam (landed)
 
 Phase 3A stays closed; dogfood Elixir first. TypeScript is not added to
 extend the language list but to try to break the extraction-profile
@@ -639,6 +641,29 @@ Tree-sitter generic plumbing, or Elixir-specific conditionals in shared
 code, the seam was not right. Two real languages are enough evidence to
 generalize; one is not. Further languages (Python, Go, Rust, ...) wait for
 an actual Penghou/Solo use case, not list length.
+
+Implementation notes (landed):
+
+- The seam held: the second language added `TreeSitterGrammarRegistry`
+  descriptors, one shared `EcmaScriptExtractionProfile`, two thin public
+  plugins, and no per-language conditionals in shared code. The generic
+  `TreeSitterExtractionSession`, `ITreeSitterExtractionProfile`, and
+  `TreeSitterPluginSupport` were extracted from the Elixir session so file
+  iteration, decoding, bounded batch emission, unit identity, coverage, and
+  parser lifetimes are language-neutral.
+- The TypeScript and JavaScript natives already ship inside the pinned
+  `TreeSitter.DotNet` binding (all RIDs), so none were checked in and no
+  cross-toolchain build was needed; `TreeSitterNative` resolves them through
+  the same runtime path as the Elixir native. The load-time ABI check still
+  fails closed, and `native/grammar-pins.md` records the binding-vendored
+  pins with the re-verification step for a binding upgrade.
+- `.tsx` needs the sibling `tree-sitter-tsx` grammar (JSX changes how type
+  assertions parse), so the TypeScript plugin selects its grammar per
+  extension; `Language` and the `language` node property stay `typescript`
+  for both so discovery filters remain useful.
+- Not yet emitted, and deliberately out of this slice: `inherits`/`implements`
+  from class heritage, interface member signatures, field/property nodes, and
+  control-flow constructs. `calls` and `references` remain `NotProduced`.
 
 ### Phase 4: Semantic enrichment
 

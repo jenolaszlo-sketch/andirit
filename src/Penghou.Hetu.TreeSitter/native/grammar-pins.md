@@ -10,12 +10,26 @@ index on that runtime, and the plugin reports the gap as
 
 ## Pinned grammars
 
-| Language | Grammar | Source | Version | Commit | ABI | Capabilities |
-| --- | --- | --- | --- | --- | --- | --- |
-| elixir | tree-sitter-elixir | https://github.com/elixir-lang/tree-sitter-elixir | v0.3.5 | `e2d9e6e0e76b0c436fa48a0b8c32a031d0cbdf49` | 14 | Syntax, Declarations, Imports, Diagnostics |
+| Language | Grammar | Source | Version | Commit | ABI | Natives | Capabilities |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| elixir | tree-sitter-elixir | https://github.com/elixir-lang/tree-sitter-elixir | v0.3.5 | `e2d9e6e0e76b0c436fa48a0b8c32a031d0cbdf49` | 14 | checked in | Syntax, Declarations, Imports, Diagnostics |
+| typescript (`.ts`/`.mts`/`.cts`) | tree-sitter-typescript | https://github.com/tree-sitter/tree-sitter-typescript | v0.23.2 | `75b3874edb2dc714fb1fd77a32013d0f8699989f` | 14 | binding | Syntax, Declarations, Imports, Diagnostics |
+| typescript (`.tsx`) | tree-sitter-tsx | https://github.com/tree-sitter/tree-sitter-typescript | v0.23.2 | `75b3874edb2dc714fb1fd77a32013d0f8699989f` | 14 | binding | Syntax, Declarations, Imports, Diagnostics |
+| javascript (`.js`/`.mjs`/`.cjs`/`.jsx`) | tree-sitter-javascript | https://github.com/tree-sitter/tree-sitter-javascript | v0.25.0 | `58404d8cf191d69f2674a8fd507bd5776f46cb11` | 15 | binding | Syntax, Declarations, Imports, Diagnostics |
 
-The grammar is Apache-2.0, matching this repository's license; the managed
+All grammars are permissively licensed (Elixir Apache-2.0, TypeScript and
+JavaScript MIT), matching this repository's license; the managed
 `TreeSitter.DotNet` runtime dependency is MIT.
+
+The TypeScript and JavaScript grammars come from the same grammar repositories
+and commits that the pinned `TreeSitter.DotNet` package vendors, so their
+natives are resolved from that package's `runtimes/<rid>/native` folder rather
+than checked in here. A `TreeSitter.DotNet` upgrade can therefore change those
+grammar revisions behind an unchanged `Penghou.Hetu.TreeSitter` version: the
+load-time ABI check still fails closed on a mismatch, but the recorded version
+and commit above must be re-verified against the binding's
+`tree-sitter-native/` submodule SHAs (and updated together) whenever the
+binding is upgraded.
 
 The managed parsing runtime comes from the `TreeSitter.DotNet` NuGet
 dependency (exact version in the project file). The expected grammar ABI is
@@ -33,6 +47,10 @@ deterministic, exactly like any other pinned native dependency. The recipe
 below is the upgrade path, not a build-time step.
 
 ## Rebuild procedure
+
+This procedure applies to the checked-in Elixir native. The TypeScript and
+JavaScript natives are supplied by the `TreeSitter.DotNet` binding and have no
+separate rebuild step in this repository.
 
 Check out the pinned commit (tags move less than branches; prefer a tag):
 

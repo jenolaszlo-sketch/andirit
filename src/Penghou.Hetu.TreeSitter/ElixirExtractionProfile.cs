@@ -19,7 +19,7 @@ namespace Penghou.Hetu;
 /// nodes deliberately do not, since the language of an unresolved name is
 /// unknowable.
 /// </summary>
-internal sealed class ElixirExtractionProfile
+internal sealed class ElixirExtractionProfile : ITreeSitterExtractionProfile
 {
     /// <summary>
     /// Extraction-logic revision, folded into the plugin version so profile
@@ -30,6 +30,10 @@ internal sealed class ElixirExtractionProfile
     /// 2: declarations cover whole definitions (enclosing-symbol support).
     /// </summary>
     internal const int ProfileRevision = 2;
+
+    public string LanguageKey => "elixir";
+
+    public int Revision => ProfileRevision;
 
     private static readonly HashSet<string> ModuleTargets = new(StringComparer.Ordinal)
     {
@@ -59,15 +63,18 @@ internal sealed class ElixirExtractionProfile
     };
 
     private readonly string _path;
-    private readonly ElixirExtractionResult _result;
+    private readonly TreeSitterExtractionResult _result;
 
     internal ElixirExtractionProfile(string path)
     {
         _path = path;
-        _result = new ElixirExtractionResult();
+        _result = new TreeSitterExtractionResult();
     }
 
-    internal ElixirExtractionResult Extract(TreeSitterSyntaxNode root, CodeNodeId fileNodeId)
+    public TreeSitterExtractionResult Extract(
+        TreeSitterSyntaxNode root,
+        CodeNodeId fileNodeId,
+        string path)
     {
         Walk(root, new ElixirScope(null, fileNodeId, fileNodeId));
         return _result;
@@ -423,12 +430,4 @@ internal sealed class ElixirExtractionProfile
 
     /// <summary>Lexical scope while walking one file: module, callable, and file owners.</summary>
     private sealed record ElixirScope(string? Module, CodeNodeId ModuleNode, CodeNodeId FileNode, CodeNodeId? CallableNode = null);
-
-    internal sealed class ElixirExtractionResult
-    {
-        internal Dictionary<string, CodeGraphNode> Nodes { get; } = new(StringComparer.Ordinal);
-        internal Dictionary<string, CodeGraphDeclaration> Declarations { get; } = new(StringComparer.Ordinal);
-        internal Dictionary<string, CodeGraphEdge> Edges { get; } = new(StringComparer.Ordinal);
-        internal Dictionary<CodeEdgeKind, int> EdgeCounts { get; } = new();
-    }
 }

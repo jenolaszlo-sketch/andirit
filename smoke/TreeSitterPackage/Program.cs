@@ -4,46 +4,94 @@
 // RID assets resolve and parse through the real NuGet layout rather than a
 // repository build output. Run with:
 //   dotnet run -p:RestoreSources="<feed>;<nuget.org>" [-p:SmokerPackageVersion=<ver>]
+using System.Security.Cryptography;
 using System.Text;
 using Penghou.Hetu;
 
-var plugin = new TreeSitterElixirPlugin();
-Check(plugin.Id.Value == "penghou.hetu.tree-sitter.elixir", "plugin identity");
-Check(plugin.Language == "elixir", "language");
-Check(plugin.Grammar.GrammarId == "tree-sitter-elixir", "grammar id");
-Check(plugin.Grammar.AbiVersion == 14, "grammar ABI");
-Console.WriteLine($"provider version: {plugin.Version}");
-
-const string Source = """
+// Elixir's native is checked into the package; TypeScript and JavaScript
+// natives come from the TreeSitter.DotNet dependency. All three must resolve
+// and parse in a packed consumer.
+var elixirPlugin = new TreeSitterElixirPlugin();
+var elixir = await RunAsync(
+    elixirPlugin,
+    "lib/smoke.ex",
+    """
     defmodule Smoke.Test do
       def run(x), do: x
     end
-    """;
-var context = new CodeGraphPluginContext(
-    new CodeRepositoryId("repo:smoke"),
-    "memory://smoke",
-    new CodeIndexRunId("run:smoke"),
-    [
-        new CodeGraphSource(
-            "lib/smoke.ex",
-            $"sha256:{Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(Source)))}",
-            _ => new ValueTask<Stream>(new MemoryStream(Encoding.UTF8.GetBytes(Source))))
-    ]);
-var sink = new CollectingSink();
-await using (var session = await plugin.CreateSessionAsync(context))
+    """);
+Check(elixirPlugin.Id.Value == "penghou.hetu.tree-sitter.elixir", "elixir plugin identity");
+Check(elixirPlugin.Language == "elixir", "elixir language");
+Check(elixirPlugin.Grammar.GrammarId == "tree-sitter-elixir", "elixir grammar id");
+Check(elixirPlugin.Grammar.AbiVersion == 14, "elixir grammar ABI");
+Check(!elixir.Result.WarningCodes.Contains("elixir.parse-error"), "elixir no parse diagnostics");
+Check(elixir.Nodes.Any(node => node.Kind == CodeNodeKinds.Type && node.QualifiedName == "Smoke.Test"), "elixir module node");
+Check(elixir.Nodes.Any(node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Smoke.Test.run/1"), "elixir function node");
+CheckStructural(elixir, "elixir");
+Console.WriteLine($"elixir provider version: {elixirPlugin.Version}");
+
+var typeScriptPlugin = new TreeSitterTypeScriptPlugin();
+var typeScript = await RunAsync(
+    typeScriptPlugin,
+    "src/smoke.ts",
+    "export class Smoke { run(): number { return 1; } }");
+Check(typeScriptPlugin.Id.Value == "penghou.hetu.tree-sitter.typescript", "typescript plugin identity");
+Check(typeScriptPlugin.Language == "typescript", "typescript language");
+Check(typeScriptPlugin.Grammar.GrammarId == "tree-sitter-typescript", "typescript grammar id");
+Check(typeScriptPlugin.Grammar.AbiVersion == 14, "typescript grammar ABI");
+Check(!typeScript.Result.WarningCodes.Contains("typescript.parse-error"), "typescript no parse diagnostics");
+Check(typeScript.Nodes.Any(node => node.Kind == CodeNodeKinds.Type && node.QualifiedName == "Smoke"), "typescript class node");
+Check(typeScript.Nodes.Any(node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Smoke.run"), "typescript method node");
+CheckStructural(typeScript, "typescript");
+Console.WriteLine($"typescript provider version: {typeScriptPlugin.Version}");
+
+var javaScriptPlugin = new TreeSitterJavaScriptPlugin();
+var javaScript = await RunAsync(
+    javaScriptPlugin,
+    "src/smoke.js",
+    "const fs = require(\"node:fs\");\nexport function main() { return fs.readFileSync(\"x\"); }");
+Check(javaScriptPlugin.Id.Value == "penghou.hetu.tree-sitter.javascript", "javascript plugin identity");
+Check(javaScriptPlugin.Language == "javascript", "javascript language");
+Check(javaScriptPlugin.Grammar.GrammarId == "tree-sitter-javascript", "javascript grammar id");
+Check(javaScriptPlugin.Grammar.AbiVersion == 15, "javascript grammar ABI");
+Check(!javaScript.Result.WarningCodes.Contains("javascript.parse-error"), "javascript no parse diagnostics");
+Check(javaScript.Nodes.Any(node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "main"), "javascript function node");
+Check(
+    javaScript.Edges.Any(edge => edge.Kind == CodeEdgeKinds.Imports && javaScript.Nodes.Single(node => node.Id == edge.TargetId).QualifiedName == "node:fs"),
+    "javascript require import");
+CheckStructural(javaScript, "javascript");
+Console.WriteLine($"javascript provider version: {javaScriptPlugin.Version}");
+
+Console.WriteLine("PASS: packed Tree-sitter providers resolved and parsed.");
+return 0;
+
+static void CheckStructural(Extraction extraction, string language)
 {
-    var result = await session.ExtractAsync(sink);
-    Check(!result.WarningCodes.Contains("elixir.parse-error"), "no parse diagnostics");
+    Check(extraction.Edges.All(edge => edge.Evidence.Quality == EvidenceQuality.Structural), $"{language} structural evidence only");
+    Check(extraction.Edges.All(edge => edge.Kind != CodeEdgeKinds.Calls), $"{language} no resolved calls");
+    Check(extraction.Edges.All(edge => edge.Kind != CodeEdgeKinds.References), $"{language} no references");
 }
 
-var nodes = sink.Batches.SelectMany(batch => batch.Nodes).ToArray();
-var edges = sink.Batches.SelectMany(batch => batch.Edges).ToArray();
-Check(nodes.Any(node => node.Kind == CodeNodeKinds.Type && node.QualifiedName == "Smoke.Test"), "module node");
-Check(nodes.Any(node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Smoke.Test.run/1"), "function node");
-Check(edges.All(edge => edge.Evidence.Quality == EvidenceQuality.Structural), "structural evidence only");
-Check(edges.All(edge => edge.Kind != CodeEdgeKinds.Calls), "no resolved calls");
-Console.WriteLine($"PASS: {nodes.Length} nodes, {edges.Length} edges from the packed Tree-sitter provider.");
-return 0;
+static async Task<Extraction> RunAsync(ICodeGraphPlugin plugin, string path, string source)
+{
+    var context = new CodeGraphPluginContext(
+        new CodeRepositoryId("repo:smoke"),
+        "memory://smoke",
+        new CodeIndexRunId("run:smoke"),
+        [
+            new CodeGraphSource(
+                path,
+                $"sha256:{Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(source)))}",
+                _ => new ValueTask<Stream>(new MemoryStream(Encoding.UTF8.GetBytes(source))))
+        ]);
+    var sink = new CollectingSink();
+    await using var session = await plugin.CreateSessionAsync(context);
+    var result = await session.ExtractAsync(sink);
+    return new(
+        sink.Batches.SelectMany(batch => batch.Nodes).ToArray(),
+        sink.Batches.SelectMany(batch => batch.Edges).ToArray(),
+        result);
+}
 
 static void Check(bool condition, string name)
 {
@@ -52,7 +100,12 @@ static void Check(bool condition, string name)
         Environment.Exit(1);
 }
 
-sealed class CollectingSink : ICodeGraphSink
+internal sealed record Extraction(
+    IReadOnlyList<CodeGraphNode> Nodes,
+    IReadOnlyList<CodeGraphEdge> Edges,
+    CodeGraphExtractionResult Result);
+
+internal sealed class CollectingSink : ICodeGraphSink
 {
     public CodeGraphBatchLimits Limits { get; } = new();
     public List<CodeGraphBatch> Batches { get; } = [];

@@ -595,11 +595,12 @@ Reserve `Penghou.Hetu.Generator` for deterministic plugin generation from
 grammars and declarative mappings. AI may help author those inputs, but runtime
 AI parsing and arbitrary generated runtime code remain out of scope.
 
-TypeScript/JavaScript is the planned second structural provider (Phase 3B),
-with a concrete consumer in the Astro/TypeScript `website` repository.
-Potential later packages include Python, Java, Go, and Rust plugins. Their
-design must validate the shared vocabulary rather than copy C# semantics
-mechanically.
+TypeScript/JavaScript landed as the second structural provider in the
+`Penghou.Hetu.TreeSitter` package (Phase 3B), with a concrete consumer in the
+Astro/TypeScript `website` repository. `Penghou.Hetu.Generator` remains
+reserved for later. Potential later packages include Python, Java, Go, and
+Rust plugins. Their design must validate the shared vocabulary rather than
+copy C# semantics mechanically.
 
 ## Engineering health
 
