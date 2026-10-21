@@ -405,7 +405,7 @@ and are exercised by provider-neutral tests and the C#/Elixir dogfood
 `tests/Penghou.Hetu.TreeSitter.Tests/QueryDogfoodTests.cs`).
 
 Composable, store-neutral query additions proven against C# and Elixir
-graphs before Erlang strains the extraction seam:
+graphs before TypeScript/JavaScript strains the extraction seam:
 
 - bounded name/prefix candidate search (already landed as Tier B above);
 - deterministic symbol discovery with language, kind, container, and
@@ -567,7 +567,7 @@ Solo rank them.
 
 Before leaving this milestone, review the vocabulary and plugin contract
 against real C# and at least two structurally different non-C# languages
-before generator work. Elixir plus Erlang satisfy this if the
+before generator work. Elixir plus TypeScript/JavaScript satisfy this if the
 extraction-profile seam survives; no specific further language is required
 without a consumer use case.
 
@@ -595,9 +595,11 @@ Reserve `Penghou.Hetu.Generator` for deterministic plugin generation from
 grammars and declarative mappings. AI may help author those inputs, but runtime
 AI parsing and arbitrary generated runtime code remain out of scope.
 
-Potential future packages include TypeScript, Python, Java, Go, and Rust
-plugins. Their design must validate the shared vocabulary rather than copy C#
-semantics mechanically.
+TypeScript/JavaScript is the planned second structural provider (Phase 3B),
+with a concrete consumer in the Astro/TypeScript `website` repository.
+Potential later packages include Python, Java, Go, and Rust plugins. Their
+design must validate the shared vocabulary rather than copy C# semantics
+mechanically.
 
 ## Engineering health
 
