@@ -304,7 +304,12 @@ interface bodies contribute identifier-named method and property signatures as
 `callable`/`property` declarations with `contains` edges and
 `readonly`/`optional` modifier metadata; computed, string, numeric, index, call,
 and construct signatures are not emitted, and overload signatures keep one
-physical declaration each. The common
+physical declaration each. Class declarations bind their source path, and class
+methods, accessors, overload signatures, and identifier-named class fields
+become owner-derived `callable`/`property` members with written modifier and
+accessibility metadata, so unrelated same-name classes and members never merge;
+computed, string, numeric, `#private`, and auto-accessor fields are not emitted,
+and field initializer invocations attribute to the field. The common
 JavaScript prototype-inheritance idioms
 (`Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`) are
 recognized and emitted as `inherits` with `Derived` evidence — never

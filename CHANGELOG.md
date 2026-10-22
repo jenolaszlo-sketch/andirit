@@ -6,6 +6,37 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Phase 0: ECMAScript class identity and class members (EC-3A/3B/3C):
+
+- Class declarations now bind the source path like interfaces, and class
+  members derive identity from the owning class node plus member kind and
+  static/instance ownership, so same-name classes in separate modules, members
+  of unrelated classes, static versus instance members, methods versus
+  accessors, and class/interface collisions can never silently converge.
+  Nested class declarations retain their owner; duplicate same-file class
+  declarations still converge by name with one declaration each, documented as
+  a limitation because structural extraction cannot verify declaration
+  merging. Top-level functions, enums, namespaces, imports, and invocation
+  placeholders keep the previous name-based model.
+- Name-based heritage targets are file-scoped: a written base name converges
+  with a same-file top-level class declaration but never with a class in
+  another file, and `implements` targets stay declaration-less.
+- TypeScript `public_field_definition` and JavaScript `field_definition` nodes
+  now emit `property` members with exact declarations, `contains`/`declares`
+  edges, and written metadata: sorted `modifiers` (`abstract`, `declare`,
+  `optional`, `override`, `readonly`, `static`) and an explicitly written
+  `access` keyword without fabricated defaults. Field initializer invocations
+  attribute to the field instead of the class. Computed, string, numeric, and
+  `#private` names and `accessor` auto-accessor fields are skipped; accessors
+  remain callable members. Partial recovery emits no fabricated members.
+- The shared ECMAScript extraction-profile revision moves to 3 (identity) and
+  then 4 (fields). Effective plugin versions fold it, so previous unit
+  manifests invalidate and re-extract. New class identity, class member, and
+  lifecycle test suites cover collisions, nesting, heritage placeholders,
+  modifiers, initializers, unsupported members, partial parsing, deterministic
+  repetition, exact member and enclosing-symbol queries, member/class rename
+  and removal, file deletion, and same-name classes across modules.
+
 Phase 0: TypeScript interface member coverage:
 
 - Interface bodies now emit identifier-named method signatures as `callable`

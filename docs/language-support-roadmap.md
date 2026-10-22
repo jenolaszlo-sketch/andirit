@@ -45,9 +45,14 @@ questions and scoped fixtures attached to each advertised feature.
 1. Keep a stable feature inventory and distinguish implementation inspected in
    code from behavior asserted in fixtures. Document current omissions before
    enlarging support claims.
-2. Prioritize useful TypeScript/JavaScript member coverage: interface signatures,
-   enum members, fields/properties, parameters, generic parameters, and callable
-   identity/ownership. A parser recognizing these constructs is insufficient.
+2. Prioritize useful TypeScript/JavaScript member coverage. Interface
+   signatures, ordinary class methods/accessors/overload signatures, and
+   identifier-named class fields landed with EC-M and EC-3A/3B (2026-10-22),
+   alongside path-scoped class/interface identities and owner-derived member
+   identities. Still open: enum members, parameters, generic parameters,
+   anonymous-class/class-expression ownership, and stable overload identities.
+   A parser recognizing a construct is insufficient; the matrix records the
+   verified subset and limitations.
 3. Design module/export/alias semantics and type relationships before promising a
    complete public surface or dependency graph. `require("literal")` imports and
    re-export source observations do not establish CommonJS/ESM export binding.
