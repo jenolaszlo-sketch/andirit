@@ -6,6 +6,20 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Phase 0 capability correction (language feature matrix):
+
+- The TypeScript, TSX and JavaScript descriptors now advertise the
+  `Inheritance` capability, matching the structural `inherits`/`implements`
+  and Derived prototype `inherits` edges they already emit. Elixir
+  deliberately does not advertise `Inheritance` because it emits no such
+  facts. New `TreeSitterCapabilityContractTests` bind each advertised flag to
+  produced relationship coverage and preserve the Structural/Derived evidence
+  distinction.
+- Capability flags are live plugin metadata and changed no emitted facts, so
+  no extraction-profile revision was bumped. Plugin versions continue to fold
+  package, grammar, ABI and extraction-profile components, so previous index
+  manifests invalidate when any component changes.
+
 Phase 3B: Tree-sitter structural extraction for TypeScript and JavaScript
 (`docs/evidence-quality-and-provider-strategy.md`):
 

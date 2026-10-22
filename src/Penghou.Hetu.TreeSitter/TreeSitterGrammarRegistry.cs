@@ -10,6 +10,19 @@ internal static class TreeSitterGrammarRegistry
         CodeGraphCapabilities.Diagnostics;
 
     /// <summary>
+    /// Capabilities of the ECMAScript profiles (TypeScript, TSX, JavaScript).
+    /// They emit structural <c>inherits</c> (class/interface heritage and
+    /// JavaScript <c>extends</c>) and TypeScript additionally <c>implements</c>;
+    /// the recognized JavaScript prototype idioms are <c>inherits</c> with
+    /// <c>Derived</c> evidence. This is heritage syntax, not resolved type
+    /// binding, but it is real emitted relationship coverage, so the
+    /// Inheritance capability is advertised. Elixir emits no inheritance facts
+    /// and deliberately keeps <see cref="StructuralCapabilities"/>.
+    /// </summary>
+    private const CodeGraphCapabilities EcmaScriptCapabilities =
+        StructuralCapabilities | CodeGraphCapabilities.Inheritance;
+
+    /// <summary>
     /// The official Elixir grammar. Rebuild procedure and upgrade policy live
     /// in <c>native/grammar-pins.md</c>; a pin change must also ship rebuilt
     /// per-RID natives in <c>runtimes/</c>.
@@ -40,7 +53,7 @@ internal static class TreeSitterGrammarRegistry
         abiVersion: 14,
         nativeLibrary: "tree-sitter-typescript",
         languageFunction: "tree_sitter_typescript",
-        capabilities: StructuralCapabilities);
+        capabilities: EcmaScriptCapabilities);
 
     /// <summary>
     /// The TSX grammar for <c>.tsx</c>, from the same pinned
@@ -57,7 +70,7 @@ internal static class TreeSitterGrammarRegistry
         abiVersion: 14,
         nativeLibrary: "tree-sitter-tsx",
         languageFunction: "tree_sitter_tsx",
-        capabilities: StructuralCapabilities);
+        capabilities: EcmaScriptCapabilities);
 
     /// <summary>
     /// The official JavaScript grammar for <c>.js</c>/<c>.mjs</c>/<c>.cjs</c>
@@ -73,7 +86,7 @@ internal static class TreeSitterGrammarRegistry
         abiVersion: 15,
         nativeLibrary: "tree-sitter-javascript",
         languageFunction: "tree_sitter_javascript",
-        capabilities: StructuralCapabilities);
+        capabilities: EcmaScriptCapabilities);
 
     internal static TreeSitterGrammarDescriptor ForLanguage(string language) =>
         language switch

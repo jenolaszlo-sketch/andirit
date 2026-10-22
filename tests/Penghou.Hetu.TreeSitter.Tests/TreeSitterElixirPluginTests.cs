@@ -159,6 +159,9 @@ public sealed class TreeSitterElixirPluginTests
         Assert.True(plugin.Capabilities.HasFlag(CodeGraphCapabilities.Declarations));
         Assert.True(plugin.Capabilities.HasFlag(CodeGraphCapabilities.Imports));
         Assert.True(plugin.Capabilities.HasFlag(CodeGraphCapabilities.Diagnostics));
+        // Elixir emits no inheritance facts; advertising the capability
+        // without corresponding output would be a false claim.
+        Assert.False(plugin.Capabilities.HasFlag(CodeGraphCapabilities.Inheritance));
         Assert.False(plugin.Capabilities.HasFlag(CodeGraphCapabilities.References));
         Assert.False(plugin.Capabilities.HasFlag(CodeGraphCapabilities.Calls));
 

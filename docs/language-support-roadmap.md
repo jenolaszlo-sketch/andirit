@@ -51,10 +51,12 @@ questions and scoped fixtures attached to each advertised feature.
 3. Design module/export/alias semantics and type relationships before promising a
    complete public surface or dependency graph. `require("literal")` imports and
    re-export source observations do not establish CommonJS/ESM export binding.
-4. Audit capability declarations against actual output: ECMAScript profiles emit
-   heritage while their current descriptors omit the `Inheritance` capability.
-   Record a future correction with appropriate version invalidation and tests;
-   this documentation does not change the flags.
+4. Capability declarations were audited against actual output and corrected
+   (2026-10-22): TypeScript, TSX and JavaScript now advertise `Inheritance`,
+   and Elixir does not. Contract tests bind each flag to emitted relationship
+   coverage; live capability metadata changes no persisted facts, and the
+   effective plugin version still invalidates indexes when a package, grammar,
+   ABI or extraction-profile component changes.
 5. Preserve C# resolved calls/references and project-unit behavior, and retain its
    documented host-runtime references and lightweight project-model limitations.
    Do not expand enum-member or generic-parameter claims beyond emitted nodes.

@@ -262,14 +262,22 @@ dispatch and emitted kinds, not the absence of a test name.
    not expanded into bound references. Parameters, specs/attributes, `defstruct`,
    `defimpl`, anonymous-function identities and macro expansion are not modeled.
    Definition heads/control forms are not fabricated invocations.
-8. **Broad capability metadata needs a follow-up audit.** C# advertises Syntax,
-   Symbols, Types, References, Calls, Inheritance, Imports, Declarations and
-   Diagnostics. All current Tree-sitter descriptors advertise only Syntax,
-   Declarations, Imports and Diagnostics, even though TS/JS profiles emit
-   inheritance and TS implementation edges. This discrepancy is recorded, not
-   fixed here. Neither a missing flag nor an emitted edge proves full feature
-   coverage. Profile/grammar/package version invalidation should be reviewed
-   whenever emitted behavior changes; this task changes no versions or flags.
+8. **Capability metadata was corrected against actual output (2026-10-22).**
+   C# advertises Syntax, Symbols, Types, References, Calls, Inheritance,
+   Imports, Declarations and Diagnostics. The ECMAScript descriptors
+   (TypeScript, TSX and JavaScript) now advertise `Inheritance` because their
+   profiles emit structural `inherits`/`implements` and Derived prototype
+   `inherits` edges. Elixir keeps Syntax, Declarations, Imports and Diagnostics
+   because it emits no inheritance facts; the flag is not advertised without
+   output. `TreeSitterCapabilityContractTests` binds each advertised flag to
+   produced relationship coverage and keeps Structural/Derived evidence
+   distinct. Capability flags are live plugin metadata, not persisted
+   publication facts: the correction changes no emitted facts, so it bumps no
+   extraction-profile revision. Effective plugin versions still fold package,
+   grammar, ABI and extraction-profile components, and the existing planner
+   version comparison invalidates previous unit manifests when any component
+   changes. Neither a missing flag nor an emitted edge proves full feature
+   coverage.
 
 ### Grammar and verification boundaries
 
@@ -463,9 +471,10 @@ by this documentation task.
 - How should feature fixture claims be versioned and bound to publications,
   effective fallback capabilities and per-unit coverage without retroactive claims?
   What are the unknown/unsupported and compatibility rules?
-- How should the TS/JS capability mismatch and profile-version discipline be
-  corrected in future implementation work? Do not change runtime behavior to
-  make an aspirational table look complete.
+- The TS/JS capability mismatch was corrected on 2026-10-22 (finding 8);
+  profile-version discipline remains: emitted-behavior changes must keep
+  bumping the extraction-profile revision so previous indexes invalidate. Do
+  not change runtime behavior to make an aspirational table look complete.
 - The ADR's traversal-policy versus answer-filter split stays deferred:
   evidence filters currently apply to every traversed edge. A resolved-only
   traversal cannot cross structural containment. Catalog entries do not change it.
