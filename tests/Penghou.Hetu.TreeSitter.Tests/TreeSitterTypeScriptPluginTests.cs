@@ -598,7 +598,7 @@ public sealed class TreeSitterTypeScriptPluginTests
         var packageVersion = typeof(TreeSitterTypeScriptPlugin).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion.Split('+', 2)[0];
-        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p2", plugin.Version);
+        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p3", plugin.Version);
     }
 
     [Fact]
@@ -790,14 +790,14 @@ public sealed class TreeSitterTypeScriptPluginTests
             var initial = await planner.CreatePlanAsync(source);
             var item = Assert.Single(initial.Items);
             Assert.Equal(CodeIndexPlanStatus.New, item.Status);
-            Assert.EndsWith(".p2", item.Manifest.PluginVersion, StringComparison.Ordinal);
+            Assert.EndsWith(".p3", item.Manifest.PluginVersion, StringComparison.Ordinal);
 
-            // A previous publication from the older extraction-profile
-            // revision must re-extract even though plugin identity and content
-            // are unchanged: emitted interface facts changed with the profile.
+            // A previous publication from an older extraction-profile revision
+            // must re-extract even though plugin identity and content are
+            // unchanged: emitted facts and identities changed with the profile.
             var previous = new CodeSourceManifest(
                 item.Manifest.PluginId,
-                item.Manifest.PluginVersion.Replace(".p2", ".p1", StringComparison.Ordinal),
+                PreviousProfileVersion(item.Manifest.PluginVersion),
                 item.Manifest.SourcePath,
                 item.Manifest.SourceHash);
             var replanned = await planner.CreatePlanAsync(source, [previous]);
@@ -810,6 +810,19 @@ public sealed class TreeSitterTypeScriptPluginTests
         {
             directory.Delete(recursive: true);
         }
+    }
+
+    private static string PreviousProfileVersion(string version)
+    {
+        const string marker = ".p";
+        var start = version.LastIndexOf(marker, StringComparison.Ordinal);
+        Assert.True(start > 0, $"Version '{version}' has no profile revision suffix.");
+        var revision = int.Parse(
+            version[(start + marker.Length)..],
+            System.Globalization.CultureInfo.InvariantCulture);
+        Assert.True(revision > 0);
+        return version[..(start + marker.Length)] +
+            (revision - 1).ToString(System.Globalization.CultureInfo.InvariantCulture);
     }
 
     private static string? Modifiers(CodeGraphNode node) =>

@@ -28,8 +28,12 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     ///    property signatures with modifiers, declarations, and containment
     ///    (path-scoped identities; see docs/ecmascript-symbol-identity.md).
     ///    JavaScript shares the revision and re-extracts with unchanged facts.
+    /// 3: class declarations are path-scoped and class members use
+    ///    owner-derived identities (methods, accessors, overload signatures);
+    ///    interface member signatures migrate to owner-derived identity and
+    ///    heritage placeholders become file-scoped.
     /// </summary>
-    internal const int ProfileRevision = 2;
+    internal const int ProfileRevision = 3;
 
     // Kinds both grammars can emit. `implements` exists only in TypeScript, so
     // JavaScript reports it as not-produced rather than claiming an empty set.
@@ -100,7 +104,15 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
                 return;
             case "class_declaration":
             case "abstract_class_declaration":
-                if (TryEmitNamed(node, node.ChildByFieldName("name"), scope, CodeNodeKinds.Type, "class", out var classScope))
+                if (TryEmitNamed(
+                    node,
+                    node.ChildByFieldName("name"),
+                    scope,
+                    CodeNodeKinds.Type,
+                    "class",
+                    out var classScope,
+                    fileScoped: true,
+                    owner: ScopeOwner.Class))
                 {
                     EmitHeritage(node, classScope.OwnerNode);
                     WalkChildren(node, classScope);
@@ -119,7 +131,8 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
                     CodeNodeKinds.Interface,
                     "interface",
                     out var interfaceScope,
-                    fileScoped: true))
+                    fileScoped: true,
+                    owner: ScopeOwner.Interface))
                 {
                     EmitHeritage(node, interfaceScope.OwnerNode);
                     EmitInterfaceMembers(node, interfaceScope);
@@ -142,16 +155,55 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
                 return;
             case "function_declaration":
             case "generator_function_declaration":
-                if (TryEmitNamed(node, node.ChildByFieldName("name"), scope, CodeNodeKinds.Callable, "callable", out var functionScope))
+                if (TryEmitNamed(
+                    node,
+                    node.ChildByFieldName("name"),
+                    scope,
+                    CodeNodeKinds.Callable,
+                    "callable",
+                    out var functionScope,
+                    owner: ScopeOwner.Callable))
+                {
                     WalkChildren(node, functionScope);
+                }
                 else
+                {
                     WalkChildren(node, scope);
+                }
+
                 return;
             case "method_definition":
-                if (TryEmitNamed(node, node.ChildByFieldName("name"), scope, CodeNodeKinds.Callable, "callable", out var methodScope))
+                if (scope.Owner == ScopeOwner.Class)
+                {
+                    HandleClassMethod(node, scope, walkBody: true);
+                    return;
+                }
+
+                // Object-literal and class-expression methods keep the
+                // previous name-based callable form until they have an
+                // identified owner declaration to derive identity from.
+                if (TryEmitNamed(
+                    node,
+                    node.ChildByFieldName("name"),
+                    scope,
+                    CodeNodeKinds.Callable,
+                    "callable",
+                    out var methodScope,
+                    owner: ScopeOwner.Callable))
+                {
                     WalkChildren(node, methodScope);
+                }
                 else
+                {
                     WalkChildren(node, scope);
+                }
+
+                return;
+            case "method_signature":
+                // A class-body overload signature belongs to its class; a
+                // signature in a type literal is unowned and emits no facts.
+                if (scope.Owner == ScopeOwner.Class)
+                    HandleClassMethod(node, scope, walkBody: false);
                 return;
             case "variable_declarator":
                 HandleDeclarator(node, scope);
@@ -199,7 +251,14 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     {
         var value = node.ChildByFieldName("value");
         if (value is not null && IsFunctionValue(value) &&
-            TryEmitNamed(node, node.ChildByFieldName("name"), scope, CodeNodeKinds.Callable, "callable", out var callableScope))
+            TryEmitNamed(
+                node,
+                node.ChildByFieldName("name"),
+                scope,
+                CodeNodeKinds.Callable,
+                "callable",
+                out var callableScope,
+                owner: ScopeOwner.Callable))
         {
             WalkChildren(value, callableScope);
             return;
@@ -355,13 +414,17 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     }
 
     /// <summary>
-    /// Resolves a heritage type name to a declaration-less type node whose
-    /// identity matches a same-named class declared in the same scope, so the
-    /// edge converges when the base type is indexed here.
+    /// Resolves a heritage type name to a declaration-less type node. The
+    /// identity binds the source path, so a written base name converges with a
+    /// same-file top-level class declaration but never with an unrelated class
+    /// in another file. Interface targets and namespaced declarations remain
+    /// separate candidate nodes: structural extraction does not resolve names
+    /// across declaration kinds, and a converged target is not a semantic
+    /// resolution claim.
     /// </summary>
     private CodeNodeId StructuralTypeNode(string name)
     {
-        var nodeId = new CodeNodeId($"{_language}:symbol:{Hash($"class\n{name}")}");
+        var nodeId = new CodeNodeId($"{_language}:symbol:{Hash($"class\n{_path}\n{name}")}");
         AddNode(new CodeGraphNode(nodeId, CodeNodeKinds.Type, ShortName(name), name));
         return nodeId;
     }
@@ -417,17 +480,18 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         CodeNodeKind kind,
         string discriminator,
         out Scope childScope,
-        bool fileScoped = false)
+        bool fileScoped = false,
+        ScopeOwner owner = ScopeOwner.Other)
     {
         childScope = scope;
         if (nameNode is null || BoundedText(nameNode) is not { } name)
             return false;
 
         // Identity hashes the discriminator, the lexical qualified name, and
-        // — for interfaces — the source path. TypeScript interface merging is
-        // semantic and cannot be verified structurally, so same-name
-        // interfaces from separate modules must not silently converge.
-        // See docs/ecmascript-symbol-identity.md.
+        // — for file-scoped declarations (classes, interfaces) — the source
+        // path. Declaration merging is semantic and cannot be verified
+        // structurally, so same-name declarations from separate modules must
+        // not silently converge. See docs/ecmascript-symbol-identity.md.
         var qualified = Qualify(scope.Container, name);
         var identity = fileScoped ? $"{_path}\n{qualified}" : qualified;
         var hash = Hash($"{discriminator}\n{identity}");
@@ -447,8 +511,104 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         AddEdge(CodeEdgeKinds.Declares, scope.FileNode, nodeId, location, $"declares:{nodeId.Value}");
         if (scope.OwnerNode != nodeId)
             AddEdge(CodeEdgeKinds.Contains, scope.OwnerNode, nodeId, location, $"contains:{nodeId.Value}");
-        childScope = new Scope(qualified, nodeId, scope.FileNode);
+        childScope = new Scope(qualified, nodeId, scope.FileNode, owner);
         return true;
+    }
+
+    /// <summary>
+    /// Emits one named class method, accessor, or method overload signature.
+    /// Identity is owner-derived — the owning class node identity plus member
+    /// kind, static or instance ownership, and the written name — so unrelated
+    /// same-named classes, static and instance members, and methods versus
+    /// accessors never converge. A method overload signature and its
+    /// implementation share one callable symbol with one physical declaration
+    /// each; accessors stay callable members, never fields. Computed, string,
+    /// numeric, and private names are skipped rather than guessed.
+    /// </summary>
+    private void HandleClassMethod(TreeSitterSyntaxNode node, Scope classScope, bool walkBody)
+    {
+        var nameNode = node.ChildByFieldName("name");
+        if (nameNode is not { Type: "property_identifier" } || BoundedText(nameNode) is not { } name)
+            return;
+
+        var (isStatic, isAccessor) = MethodShape(node);
+        var memberScope = EmitClassMember(
+            node,
+            classScope,
+            CodeNodeKinds.Callable,
+            isAccessor ? "accessor" : "method",
+            name,
+            nameNode,
+            isStatic,
+            ScopeOwner.Callable);
+        if (walkBody)
+            WalkChildren(node, memberScope);
+    }
+
+    /// <summary>
+    /// Emits one class member with owner-derived identity:
+    /// <c>sha256(member-kind + "\n" + owner-node-id + "\n" + ownership +
+    /// "\n" + written-name)</c>. The declaration covers the whole member so
+    /// enclosing-symbol queries resolve bodies and initializers, while edges
+    /// keep the precise name span.
+    /// </summary>
+    private Scope EmitClassMember(
+        TreeSitterSyntaxNode definition,
+        Scope classScope,
+        CodeNodeKind kind,
+        string memberKind,
+        string name,
+        TreeSitterSyntaxNode nameNode,
+        bool isStatic,
+        ScopeOwner memberScopeOwner)
+    {
+        var ownership = isStatic ? "static" : "instance";
+        var hash = Hash($"{memberKind}\n{classScope.OwnerNode.Value}\n{ownership}\n{name}");
+        var symbolId = new CodeSymbolId($"{_language}:{hash}");
+        var nodeId = new CodeNodeId($"{_language}:symbol:{hash}");
+        var qualified = Qualify(classScope.Container, name);
+        var location = Location(nameNode);
+        AddNode(new CodeGraphNode(nodeId, kind, name, qualified, symbolId, LanguageProperties()));
+        AddDeclaration(symbolId, nodeId, Location(definition));
+        AddEdge(CodeEdgeKinds.Declares, classScope.FileNode, nodeId, location, $"declares:{nodeId.Value}");
+        AddEdge(CodeEdgeKinds.Contains, classScope.OwnerNode, nodeId, location, $"contains:{nodeId.Value}");
+        return new Scope(qualified, nodeId, classScope.FileNode, memberScopeOwner);
+    }
+
+    /// <summary>
+    /// Gets the written static and accessor shape of a class method definition
+    /// or signature. The JavaScript grammar lexes <c>static get</c> before a
+    /// newline as a single token, so a written static getter is detected from
+    /// that token as well.
+    /// </summary>
+    private static (bool IsStatic, bool IsAccessor) MethodShape(TreeSitterSyntaxNode node)
+    {
+        var isStatic = false;
+        var isAccessor = false;
+        foreach (var child in node.Children)
+        {
+            if (child.IsNamed)
+                continue;
+            switch (child.Text)
+            {
+                case "get" or "set":
+                    isAccessor = true;
+                    break;
+                case "static":
+                    isStatic = true;
+                    break;
+                default:
+                    if (child.Text.StartsWith("static", StringComparison.Ordinal))
+                    {
+                        isStatic = true;
+                        isAccessor = true;
+                    }
+
+                    break;
+            }
+        }
+
+        return (isStatic, isAccessor);
     }
 
     /// <summary>
@@ -497,12 +657,13 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     }
 
     /// <summary>
-    /// Emits one interface member signature. Identity is path-scoped with an
-    /// interface-specific discriminator, so a signature never converges with a
-    /// same-named class member or function; repeated signatures of one name
-    /// stay one symbol with one physical declaration each. The declaration
-    /// covers the whole signature so enclosing-symbol queries resolve it,
-    /// while edges keep the precise name span.
+    /// Emits one interface member signature. Identity is owner-derived —
+    /// <c>sha256(kind + "\n" + owner-node-id + "\n" + written-name)</c> — so a
+    /// signature never converges with a same-named class member or function;
+    /// repeated signatures of one name stay one symbol with one physical
+    /// declaration each. The declaration covers the whole signature so
+    /// enclosing-symbol queries resolve it, while edges keep the precise name
+    /// span.
     /// </summary>
     private void TryEmitInterfaceMember(
         TreeSitterSyntaxNode member,
@@ -518,7 +679,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         }
 
         var qualified = Qualify(interfaceScope.Container, name);
-        var hash = Hash($"{discriminator}\n{_path}\n{qualified}");
+        var hash = Hash($"{discriminator}\n{interfaceScope.OwnerNode.Value}\n{name}");
         var symbolId = new CodeSymbolId($"{_language}:{hash}");
         var nodeId = new CodeNodeId($"{_language}:symbol:{hash}");
         var location = Location(nameNode);
@@ -691,5 +852,27 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(value)));
 
     /// <summary>Lexical scope while walking one file: container, owner, and file nodes.</summary>
-    private sealed record Scope(string? Container, CodeNodeId OwnerNode, CodeNodeId FileNode);
+    /// <param name="Container">Lexical container path used for display names.</param>
+    /// <param name="OwnerNode">Node that owns declarations made in this scope.</param>
+    /// <param name="FileNode">File node every declaration is attached to.</param>
+    /// <param name="Owner">
+    /// What kind of declaration owns this scope. Class scopes turn class-body
+    /// members into owner-derived member identities.
+    /// </param>
+    private sealed record Scope(
+        string? Container,
+        CodeNodeId OwnerNode,
+        CodeNodeId FileNode,
+        ScopeOwner Owner = ScopeOwner.File);
+
+    /// <summary>What kind of declaration owns one lexical scope.</summary>
+    private enum ScopeOwner
+    {
+        File,
+        Class,
+        Interface,
+        Callable,
+        /// <summary>Type aliases, enums, namespaces, and other owners.</summary>
+        Other
+    }
 }
