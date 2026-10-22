@@ -8,6 +8,14 @@ tests; Phase 2 (explicit provider selection) and Phase 3A/3B (Tree-sitter
 structural extraction for Elixir, TypeScript, and JavaScript) are implemented.
 Phase 4 (semantic enrichment) remains planned.
 
+The [language support roadmap](language-support-roadmap.md) and permanent
+[feature matrix](language-feature-matrix.md) complement this accepted decision.
+Their expansion phases are separate from this ADR's implementation sequence.
+The matrix audits actual per-feature output and records gaps without superseding
+the evidence, plugin, fallback or grammar-pinning decisions here. Structural
+profiles emit structural observations and may also emit explicitly `Derived`
+pattern relationships (the prototype patterns below); neither implies resolution.
+
 ## Context
 
 `Penghou.Hetu` already has the main architectural separation required for multi-language code analysis:
@@ -623,10 +631,11 @@ Implementation notes, 3A (Elixir, landed):
 Phase 3A stays closed; dogfood Elixir first. TypeScript is not added to
 extend the language list but to try to break the extraction-profile
 abstraction with a materially different language structure, and it has a
-concrete consumer in the Astro/TypeScript `website` repository. The
-`tree-sitter-typescript` grammars cover `.ts`/`.tsx` and plain `.js`/`.jsx`,
-so one descriptor family serves both. Watch areas: brace/class/interface/
-namespace/enum/type-alias declarations, decorators, generics,
+concrete consumer in the Astro/TypeScript `website` repository.
+TypeScript/TSX and JavaScript/JSX use distinct pinned grammars with shared
+ECMAScript syntax ancestry; the registry selects TypeScript or TSX for the
+TypeScript plugin and JavaScript for the JavaScript plugin. Watch areas:
+brace/class/interface/namespace/enum/type-alias declarations, decorators, generics,
 `import`/`export` forms (named, default, namespace, type-only, re-export),
 CommonJS `require`/`module.exports` versus ESM, JSX elements versus
 invocations, arrow functions and function expressions as callables, and

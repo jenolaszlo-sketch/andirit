@@ -380,7 +380,10 @@ changes the architectural laws. Effort: S (days), M (weeks), L (longer).
   queries without turning arbitrary attribute payloads into an unbounded
   property channel.
 - **Literal values for enums/constants (S, landed)** — constant field values
-  as bounded `constant-value` properties.
+  as bounded `constant-value` properties. Scope clarification from the
+  [language audit](docs/language-feature-matrix.md): the current declaration
+  selector does not emit enum-member nodes; this historical item must not be
+  read as verified enum-member/value coverage.
 - **Package-reference nodes (M, landed)** — `PackageReference` items become bounded
   syntax-evidence external dependency nodes with version and unexpanded
   condition metadata; do not claim evaluated MSBuild semantics.
@@ -571,6 +574,75 @@ before generator work. Elixir plus TypeScript/JavaScript satisfy this if the
 extraction-profile seam survives; no specific further language is required
 without a consumer use case.
 
+## Milestone 8B — Language Feature Catalog and Phased Language Expansion
+
+Status: **design documented; extraction improvements and new-language plugins
+remain future work**. The initial catalog is an audit, not a runtime capability
+release. Milestone 8A remains complete; the Solo dogfood and Marang integration
+gates retain their priority and are not expanded or marked complete here.
+
+Objective: establish a maintainable, evidence-based feature inventory before
+adding the next language. The approved strategy is in the
+[language support roadmap](docs/language-support-roadmap.md); the permanent
+[feature catalog and audited matrix](docs/language-feature-matrix.md) records
+applicability, graph mappings, actual extraction, evidence and verification gaps.
+
+Phase 0 establishes that foundation across C#, TypeScript, JavaScript and Elixir.
+Prioritize TS/JS declaration/member/module coverage and honest capability
+reporting, preserve C# semantic extraction and its documented limitations, and
+maintain Elixir structural support. Useful mappings and feature-level verification
+expectations must be recorded before another language is added.
+
+Expansion order, subject to a recorded consumer-driven reprioritization:
+
+1. Phase 1: Python, then Java; useful structural extraction first, semantic
+   enrichment as separate feature-specific milestones.
+2. Phase 2: Go, then Rust; explicit embedding/receiver/trait/implementation-block
+   semantics and honest implicit-interface and macro boundaries.
+3. Phase 3: Kotlin, including extensions, properties, companions, top-level
+   declarations and sealed types, reusing suitable Java concepts.
+
+The nine-language target includes the four existing languages. The five planned
+languages have no supported plugin yet; there are no dates or release promises.
+Deferred candidates, separate SQL/shell consideration, and parked Erlang are
+recorded in the language roadmap, not promoted to commitments here.
+
+Capability and evidence requirements:
+
+- Preserve `CodeGraphCapabilities`, extensible kinds/properties, and
+  `CodeRelationshipCoverage`/`CodeRelationshipCoverageState`; feature inventory
+  complements broad capabilities and actual published coverage.
+- Keep applicability, representability, extraction and evidence independent.
+  `Resolved`, `Structural`, `Derived` and `Inferred` are classifications, not a
+  confidence ranking; no syntax/name match can create a resolved call.
+- Define future catalog/version/plugin/grammar/dialect/effective-capability
+  binding to an exact publication. Upgrading a plugin cannot upgrade old graphs'
+  capability claims. Persistence design and implementation remain future work.
+
+Documentation deliverables: the two linked design documents, README support
+summary, this milestone, and targeted consistency/cross-reference corrections.
+
+Exit criteria for the foundation and subsequent separately implemented support:
+
+- The catalog has stable IDs, useful graph mappings, explicit unresolved choices,
+  applicability for planned languages and an audited four-language baseline.
+- Phase 0 gaps have scoped consumer questions, prioritized changes and fixture
+  expectations; parser recognition and planned support are never called verified.
+- Every subsequently advertised feature has deterministic positive/negative
+  fixtures for nodes, declarations, edges, properties, evidence, partial and
+  ambiguous cases, repeat extraction and stale-fact removal. Automated feature
+  conformance is future work, not delivered by these documents.
+- Actual plugin capabilities, emitted facts and publication coverage remain
+  attributable and honest, including absent/partial/unavailable results.
+- Expansion preserves the architectural laws and broader Solo/Marang priorities;
+  vocabulary changes are justified by useful repository questions.
+
+Explicit non-goals of this design task: parser/grammar additions, new extractors
+or semantic providers, public APIs or a feature-ID enum, vocabulary migrations,
+storage schemas, catalog loading/persistence, runtime capability changes,
+extractor refactoring, or a new test framework. Generated plugins remain reserved
+future work, not a prerequisite or a newly delivered capability.
+
 ## Later opportunities
 
 ### Deterministic architectural analysis
@@ -598,9 +670,11 @@ AI parsing and arbitrary generated runtime code remain out of scope.
 TypeScript/JavaScript landed as the second structural provider in the
 `Penghou.Hetu.TreeSitter` package (Phase 3B), with a concrete consumer in the
 Astro/TypeScript `website` repository. `Penghou.Hetu.Generator` remains
-reserved for later. Potential later packages include Python, Java, Go, and
-Rust plugins. Their design must validate the shared vocabulary rather than
-copy C# semantics mechanically.
+reserved for later. The approved expansion sequence is recorded in
+[Milestone 8B](#milestone-8b--language-feature-catalog-and-phased-language-expansion)
+and the [language roadmap](docs/language-support-roadmap.md). It does not require
+generator work or select parser technology. New plugins must validate the shared
+vocabulary rather than copy C# semantics mechanically.
 
 ## Engineering health
 

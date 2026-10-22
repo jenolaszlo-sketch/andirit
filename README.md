@@ -55,6 +55,32 @@ The future `Penghou.Hetu.Generator` project is reserved for deterministic
 generation of language plugins from grammars and declarative graph mappings.
 It is intentionally outside the first milestone.
 
+## Language Support
+
+| Language | Provider | Current status | Roadmap |
+| --- | --- | --- | --- |
+| C# | Roslyn | Existing semantic extraction with documented limitations | Maintain/enhance |
+| TypeScript | Tree-sitter | Existing structural extraction | Phase 0 improvement |
+| JavaScript | Tree-sitter | Existing structural extraction | Phase 0 improvement |
+| Elixir | Tree-sitter | Existing structural extraction | Maintain |
+| Python | TBD | Planned | Phase 1 |
+| Java | TBD | Planned | Phase 1 |
+| Go | TBD | Planned | Phase 2 |
+| Rust | TBD | Planned | Phase 2 |
+| Kotlin | TBD | Planned | Phase 3 |
+
+Planned languages cannot yet be indexed through a supported Hetu plugin.
+Structural support extracts a useful documented subset from syntax. Semantic
+support resolves selected symbols and relationships in a provider's analysis
+context; it is feature-specific, not a claim of complete language coverage.
+
+Support varies by feature and provider. Evidence quality distinguishes structural
+observations, resolved bindings, deterministic derivations, and inferred claims:
+an invocation name is not a resolved call. See the audited
+[feature matrix](docs/language-feature-matrix.md) for current omissions and the
+[language roadmap](docs/language-support-roadmap.md) for phases and deferred
+candidates. The roadmap makes no implementation-date or release commitment.
+
 ## Runtime foundation
 
 The current runtime supports deterministic plugin registration, strict bounded
@@ -270,11 +296,11 @@ await host.IndexRepositoryAsync(
     new CodeIndexRunId("run:initial"));
 ```
 
-Every profile emits structural evidence only: modules, classes, interfaces,
-and functions as declarations with containment, imports as import edges,
-invocation names through `invokes-name` edges that never claim a resolved
-target, and `inherits`/`implements` from TypeScript/JavaScript class and
-interface heritage. The common JavaScript prototype-inheritance idioms
+Profiles emit documented subsets of structural declarations, containment,
+imports, and invocation names through `invokes-name` edges that never claim a
+resolved target. TypeScript/JavaScript class extension and TypeScript interface
+heritage contribute structural `inherits`/`implements` edges. The common
+JavaScript prototype-inheritance idioms
 (`Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`) are
 recognized and emitted as `inherits` with `Derived` evidence — never
 structural or resolved. There are no `calls` or `references` edges and no
