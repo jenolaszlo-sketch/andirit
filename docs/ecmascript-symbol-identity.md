@@ -85,7 +85,7 @@ members use owner-derived identity:
 class declaration: {language}:symbol:{sha256("class" + "\n" + path + "\n" + lexical-qualified-name)}
 class member:      {language}:symbol:{sha256(member-kind + "\n" + class-node-id + "\n" + ownership + "\n" + written-name)}
 
-member kinds: method | accessor
+member kinds: method | accessor | field
 ownership:    instance | static
 ```
 
@@ -118,6 +118,10 @@ Resulting behavior (fixture-verified in
 - **Method overload signatures** in a class produce one callable whose
   declaration list holds one record per signature, including the
   implementation.
+- **Class fields** are owner-derived `property` members with member kind
+  `field`, so a field never converges with a same-named method, accessor, or
+  field of another class, and static fields stay distinct from instance
+  fields. Field initializer invocations are attributed to the field node.
 - **Nested class declarations** retain their containing callable as owner and
   derive identities from it.
 - **Duplicate class declarations in one file** converge to one symbol with one
@@ -156,8 +160,9 @@ represented as one symbol.
 ## Index invalidation
 
 Interface facts changed with EC-M, so the shared ECMAScript extraction profile
-revision moved from 1 to 2. Class and member identities change with EC-3A,
-moving it from 2 to 3. The TypeScript and JavaScript plugin versions fold the
+revision moved from 1 to 2; class and member identities changed with EC-3A
+(revision 2 to 3); and identifier-named class fields were added with EC-3B
+(revision 3 to 4). The TypeScript and JavaScript plugin versions fold the
 revision, so previous unit manifests invalidate and both providers re-extract;
 JavaScript shares the profile and re-extracts with whatever facts its grammar
 supports. Capability-flag corrections from the same task series changed no
@@ -170,7 +175,8 @@ facts and therefore bumped no revision.
 - A getter and setter pair with one name converge to one callable symbol with
   one physical declaration each; accessor semantics are not modeled.
 - `abstract_method_signature` declarations in abstract classes emit no facts,
-  and neither do computed, string, numeric, or `#private` member names.
+  and neither do computed, string, numeric, or `#private` member names or
+  `accessor` auto-accessor fields.
 - Top-level functions, enums, namespaces, imports, and invocation
   placeholders remain name-based and converge across files.
 - Interface accessibility, `static`, `async`, accessor (`get`/`set`) and

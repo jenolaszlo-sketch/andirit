@@ -32,8 +32,11 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     ///    owner-derived identities (methods, accessors, overload signatures);
     ///    interface member signatures migrate to owner-derived identity and
     ///    heritage placeholders become file-scoped.
+    /// 4: identifier-named class fields emit `property` members with
+    ///    declarations, containment, and written modifier metadata; their
+    ///    initializer invocations are attributed to the field.
     /// </summary>
-    internal const int ProfileRevision = 3;
+    internal const int ProfileRevision = 4;
 
     // Kinds both grammars can emit. `implements` exists only in TypeScript, so
     // JavaScript reports it as not-produced rather than claiming an empty set.
@@ -204,6 +207,18 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
                 // signature in a type literal is unowned and emits no facts.
                 if (scope.Owner == ScopeOwner.Class)
                     HandleClassMethod(node, scope, walkBody: false);
+                return;
+            case "public_field_definition":
+            case "field_definition":
+                if (scope.Owner == ScopeOwner.Class)
+                {
+                    HandleClassField(node, scope);
+                    return;
+                }
+
+                // A class-expression field has no identified owner yet: keep
+                // observing its nested syntax under the enclosing scope.
+                WalkChildren(node, scope);
                 return;
             case "variable_declarator":
                 HandleDeclarator(node, scope);
@@ -527,6 +542,11 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     /// </summary>
     private void HandleClassMethod(TreeSitterSyntaxNode node, Scope classScope, bool walkBody)
     {
+        // A member the parser only recovered partially is not understood
+        // structure: skip it rather than emit a fragment.
+        if (node.HasError)
+            return;
+
         var nameNode = node.ChildByFieldName("name");
         if (nameNode is not { Type: "property_identifier" } || BoundedText(nameNode) is not { } name)
             return;
@@ -540,9 +560,116 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
             name,
             nameNode,
             isStatic,
+            LanguageProperties(),
             ScopeOwner.Callable);
         if (walkBody)
             WalkChildren(node, memberScope);
+    }
+
+    /// <summary>
+    /// Emits one named class field from a TypeScript
+    /// <c>public_field_definition</c> or JavaScript <c>field_definition</c>.
+    /// Fields are <c>property</c> members with owner-derived identity: member
+    /// kind <c>field</c> plus static or instance ownership, so a field never
+    /// converges with a same-named method, accessor, or field of another
+    /// class. Computed, string, numeric, and <c>#private</c> names and
+    /// <c>accessor</c> auto-accessors are skipped rather than guessed.
+    /// Initializer invocations are attributed to the field, never to the
+    /// class or an unrelated enclosing callable.
+    /// </summary>
+    private void HandleClassField(TreeSitterSyntaxNode node, Scope classScope)
+    {
+        // A member the parser only recovered partially is not understood
+        // structure: skip it rather than emit a fragment.
+        if (node.HasError)
+            return;
+
+        // TypeScript names the field with `name`; JavaScript uses `property`.
+        var nameNode = node.ChildByFieldName("name") ?? node.ChildByFieldName("property");
+        if (nameNode is not { Type: "property_identifier" } || BoundedText(nameNode) is not { } name)
+            return;
+        // `accessor x` declares an auto-accessor whose accessor semantics this
+        // slice does not model as an ordinary field.
+        if (HasToken(node, "accessor"))
+            return;
+
+        var memberScope = EmitClassMember(
+            node,
+            classScope,
+            CodeNodeKinds.Property,
+            "field",
+            name,
+            nameNode,
+            HasToken(node, "static"),
+            FieldProperties(node),
+            ScopeOwner.Other);
+        WalkChildren(node, memberScope);
+    }
+
+    /// <summary>
+    /// Gets bounded written metadata for one class field through the existing
+    /// property contract: <c>modifiers</c> holds sorted written keywords
+    /// (<c>abstract</c>, <c>declare</c>, <c>optional</c>, <c>override</c>,
+    /// <c>readonly</c>, <c>static</c>) and <c>access</c> holds an explicitly
+    /// written accessibility keyword. No default accessibility is fabricated.
+    /// </summary>
+    private Dictionary<string, CodePropertyValue> FieldProperties(TreeSitterSyntaxNode node)
+    {
+        var properties = LanguageProperties();
+        var modifiers = new SortedSet<string>(StringComparer.Ordinal);
+        foreach (var child in node.Children)
+        {
+            if (!child.IsNamed)
+            {
+                switch (child.Text)
+                {
+                    case "?":
+                        modifiers.Add("optional");
+                        break;
+                    case "readonly":
+                        modifiers.Add("readonly");
+                        break;
+                    case "static":
+                        modifiers.Add("static");
+                        break;
+                    case "abstract":
+                        modifiers.Add("abstract");
+                        break;
+                    case "declare":
+                        modifiers.Add("declare");
+                        break;
+                }
+
+                continue;
+            }
+
+            switch (child.Type)
+            {
+                case "accessibility_modifier":
+                    if (BoundedText(child) is { } access)
+                        properties[CodePropertyKeys.Access] = new CodeTextProperty(access);
+                    break;
+                case "override_modifier":
+                    modifiers.Add("override");
+                    break;
+            }
+        }
+
+        if (modifiers.Count > 0)
+            properties[CodePropertyKeys.Modifiers] = new CodeTextProperty(string.Join(" ", modifiers));
+        return properties;
+    }
+
+    /// <summary>Gets whether the node carries an anonymous token with this exact text.</summary>
+    private static bool HasToken(TreeSitterSyntaxNode node, string text)
+    {
+        foreach (var child in node.Children)
+        {
+            if (!child.IsNamed && string.Equals(child.Text, text, StringComparison.Ordinal))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -560,6 +687,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         string name,
         TreeSitterSyntaxNode nameNode,
         bool isStatic,
+        IReadOnlyDictionary<string, CodePropertyValue> properties,
         ScopeOwner memberScopeOwner)
     {
         var ownership = isStatic ? "static" : "instance";
@@ -568,7 +696,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         var nodeId = new CodeNodeId($"{_language}:symbol:{hash}");
         var qualified = Qualify(classScope.Container, name);
         var location = Location(nameNode);
-        AddNode(new CodeGraphNode(nodeId, kind, name, qualified, symbolId, LanguageProperties()));
+        AddNode(new CodeGraphNode(nodeId, kind, name, qualified, symbolId, properties));
         AddDeclaration(symbolId, nodeId, Location(definition));
         AddEdge(CodeEdgeKinds.Declares, classScope.FileNode, nodeId, location, $"declares:{nodeId.Value}");
         AddEdge(CodeEdgeKinds.Contains, classScope.OwnerNode, nodeId, location, $"contains:{nodeId.Value}");
