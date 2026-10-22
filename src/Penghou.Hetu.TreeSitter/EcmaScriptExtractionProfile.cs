@@ -24,8 +24,12 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     /// unchanged. Bump on any change to emitted facts.
     /// Revision history:
     /// 1: initial structural extraction for TypeScript and JavaScript.
+    /// 2: TypeScript interface declarations and identifier-named method and
+    ///    property signatures with modifiers, declarations, and containment
+    ///    (path-scoped identities; see docs/ecmascript-symbol-identity.md).
+    ///    JavaScript shares the revision and re-extracts with unchanged facts.
     /// </summary>
-    internal const int ProfileRevision = 1;
+    internal const int ProfileRevision = 2;
 
     // Kinds both grammars can emit. `implements` exists only in TypeScript, so
     // JavaScript reports it as not-produced rather than claiming an empty set.
@@ -108,8 +112,19 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
 
                 return;
             case "interface_declaration":
-                if (TryEmitNamed(node, node.ChildByFieldName("name"), scope, CodeNodeKinds.Interface, "interface", out var interfaceScope))
+                if (TryEmitNamed(
+                    node,
+                    node.ChildByFieldName("name"),
+                    scope,
+                    CodeNodeKinds.Interface,
+                    "interface",
+                    out var interfaceScope,
+                    fileScoped: true))
+                {
                     EmitHeritage(node, interfaceScope.OwnerNode);
+                    EmitInterfaceMembers(node, interfaceScope);
+                }
+
                 return;
             case "type_alias_declaration":
                 TryEmitNamed(node, node.ChildByFieldName("name"), scope, CodeNodeKinds.Type, "type", out _);
@@ -401,15 +416,23 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         Scope scope,
         CodeNodeKind kind,
         string discriminator,
-        out Scope childScope)
+        out Scope childScope,
+        bool fileScoped = false)
     {
         childScope = scope;
         if (nameNode is null || BoundedText(nameNode) is not { } name)
             return false;
 
+        // Identity hashes the discriminator, the lexical qualified name, and
+        // — for interfaces — the source path. TypeScript interface merging is
+        // semantic and cannot be verified structurally, so same-name
+        // interfaces from separate modules must not silently converge.
+        // See docs/ecmascript-symbol-identity.md.
         var qualified = Qualify(scope.Container, name);
-        var symbolId = new CodeSymbolId($"{_language}:{Hash($"{discriminator}\n{qualified}")}");
-        var nodeId = new CodeNodeId($"{_language}:symbol:{Hash($"{discriminator}\n{qualified}")}");
+        var identity = fileScoped ? $"{_path}\n{qualified}" : qualified;
+        var hash = Hash($"{discriminator}\n{identity}");
+        var symbolId = new CodeSymbolId($"{_language}:{hash}");
+        var nodeId = new CodeNodeId($"{_language}:symbol:{hash}");
         var location = Location(nameNode);
         AddNode(new CodeGraphNode(
             nodeId,
@@ -426,6 +449,119 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
             AddEdge(CodeEdgeKinds.Contains, scope.OwnerNode, nodeId, location, $"contains:{nodeId.Value}");
         childScope = new Scope(qualified, nodeId, scope.FileNode);
         return true;
+    }
+
+    /// <summary>
+    /// Emits identifier-named method and property signatures declared directly
+    /// in an interface body. These are declarations, not executable code:
+    /// nothing here emits invocations, calls, references, or resolved type
+    /// relations. Unsupported members (computed, string, numeric, or private
+    /// names and call, construct, or index signatures) are skipped rather than
+    /// guessed, member type expressions are not traversed, and signatures the
+    /// parser only recovered partially emit no facts.
+    /// </summary>
+    private void EmitInterfaceMembers(TreeSitterSyntaxNode definition, Scope interfaceScope)
+    {
+        if (definition.ChildByFieldName("body") is not { } body)
+            return;
+
+        var children = body.Children;
+        for (var index = 0; index < children.Count; index++)
+        {
+            var member = children[index];
+            CodeNodeKind kind;
+            string discriminator;
+            switch (member.Type)
+            {
+                case "method_signature":
+                    kind = CodeNodeKinds.Callable;
+                    discriminator = "interface-method";
+                    break;
+                case "property_signature":
+                    kind = CodeNodeKinds.Property;
+                    discriminator = "interface-property";
+                    break;
+                default:
+                    continue;
+            }
+
+            // A member the parser only recovered partially — or one directly
+            // followed by an error or missing sibling — is not understood
+            // structure: skip it rather than emit a fragment.
+            var next = index + 1 < children.Count ? children[index + 1] : null;
+            if (member.HasError || next is { IsError: true } or { IsMissing: true })
+                continue;
+
+            TryEmitInterfaceMember(member, interfaceScope, kind, discriminator);
+        }
+    }
+
+    /// <summary>
+    /// Emits one interface member signature. Identity is path-scoped with an
+    /// interface-specific discriminator, so a signature never converges with a
+    /// same-named class member or function; repeated signatures of one name
+    /// stay one symbol with one physical declaration each. The declaration
+    /// covers the whole signature so enclosing-symbol queries resolve it,
+    /// while edges keep the precise name span.
+    /// </summary>
+    private void TryEmitInterfaceMember(
+        TreeSitterSyntaxNode member,
+        Scope interfaceScope,
+        CodeNodeKind kind,
+        string discriminator)
+    {
+        var nameNode = member.ChildByFieldName("name");
+        if (nameNode is not { Type: "property_identifier" } ||
+            BoundedText(nameNode) is not { } name)
+        {
+            return;
+        }
+
+        var qualified = Qualify(interfaceScope.Container, name);
+        var hash = Hash($"{discriminator}\n{_path}\n{qualified}");
+        var symbolId = new CodeSymbolId($"{_language}:{hash}");
+        var nodeId = new CodeNodeId($"{_language}:symbol:{hash}");
+        var location = Location(nameNode);
+        AddNode(new CodeGraphNode(
+            nodeId,
+            kind,
+            name,
+            qualified,
+            symbolId,
+            MemberProperties(member)));
+        AddDeclaration(symbolId, nodeId, Location(member));
+        AddEdge(CodeEdgeKinds.Declares, interfaceScope.FileNode, nodeId, location, $"declares:{nodeId.Value}");
+        AddEdge(CodeEdgeKinds.Contains, interfaceScope.OwnerNode, nodeId, location, $"contains:{nodeId.Value}");
+    }
+
+    /// <summary>
+    /// Gets bounded written modifier metadata for an interface member through
+    /// the existing <c>modifiers</c> property contract: the anonymous
+    /// <c>?</c> marker becomes <c>optional</c> and the <c>readonly</c> token
+    /// becomes <c>readonly</c>. Other keywords are not recorded in this slice.
+    /// </summary>
+    private Dictionary<string, CodePropertyValue> MemberProperties(TreeSitterSyntaxNode member)
+    {
+        var properties = LanguageProperties();
+        var modifiers = new SortedSet<string>(StringComparer.Ordinal);
+        foreach (var child in member.Children)
+        {
+            if (child.IsNamed)
+                continue;
+            switch (child.Text)
+            {
+                case "?":
+                    modifiers.Add("optional");
+                    break;
+                case "readonly":
+                    modifiers.Add("readonly");
+                    break;
+            }
+        }
+
+        if (modifiers.Count > 0)
+            properties[CodePropertyKeys.Modifiers] = new CodeTextProperty(string.Join(" ", modifiers));
+        return properties;
     }
 
     private static string? CalleeName(TreeSitterSyntaxNode? node)

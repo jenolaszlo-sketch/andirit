@@ -6,6 +6,30 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Phase 0: TypeScript interface member coverage:
+
+- Interface bodies now emit identifier-named method signatures as `callable`
+  nodes and property signatures as `property` nodes with `contains`/`declares`
+  edges, exact source locations, and `readonly`/`optional` `modifiers` from the
+  written `?` and `readonly` tokens. Computed, string, numeric, and private
+  member names and call/construct/index signatures are skipped rather than
+  guessed; partially recovered signatures emit no facts.
+- Interface declarations and their members use path-scoped symbol identities
+  with interface-specific discriminators (`interface`, `interface-method`,
+  `interface-property`), so unrelated same-name interfaces in separate modules
+  stay distinct and a signature never converges with a same-named class member.
+  Same-name interfaces in one file still converge by name, and method overloads
+  remain one callable symbol with one physical declaration per signature. The
+  design and remaining limitations are recorded in
+  `docs/ecmascript-symbol-identity.md`.
+- The shared ECMAScript extraction-profile revision moves to 2. Effective
+  plugin versions fold it, so previous TypeScript and JavaScript unit manifests
+  invalidate and re-extract; JavaScript emits unchanged facts. New TypeScript
+  fixtures cover members, modifiers, overloads, duplicate names, module
+  separation, unsupported members, partial parsing, deterministic repetition,
+  incremental stale-fact removal, exact declaration/containment queries, and
+  plugin-version invalidation.
+
 Phase 0 capability correction (language feature matrix):
 
 - The TypeScript, TSX and JavaScript descriptors now advertise the

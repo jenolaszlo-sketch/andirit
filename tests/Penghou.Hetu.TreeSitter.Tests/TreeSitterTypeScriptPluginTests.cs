@@ -75,6 +75,49 @@ public sealed class TreeSitterTypeScriptPluginTests
           }
         """;
 
+    private const string InterfaceSource = """
+        export interface Shape {
+          area(): number;
+          readonly id: string;
+          timeout?: number;
+          readonly cache?: string;
+        }
+        """;
+
+    private const string InterfaceOverloadSource = """
+        interface Parser {
+          parse(input: string): string;
+          parse(input: number): number;
+        }
+        """;
+
+    private const string DuplicateMemberSource = """
+        interface Reader {
+          read(): string;
+        }
+        interface Writer {
+          read(): string;
+        }
+        """;
+
+    private const string UnsupportedMemberSource = """
+        interface Unsupported {
+          [key: string]: unknown;
+          (value: string): number;
+          new (): Unsupported;
+          [Symbol.iterator](): Iterator<string>;
+          "literal-name": number;
+          0: number;
+        }
+        """;
+
+    private const string BrokenInterfaceSource = """
+        export interface Broken {
+          ok(): number;
+          bad(
+        }
+        """;
+
     [Fact]
     public async Task ExtractAsync_ModelsClassesInterfacesAndContainment()
     {
@@ -201,6 +244,251 @@ public sealed class TreeSitterTypeScriptPluginTests
     }
 
     [Fact]
+    public async Task ExtractAsync_ModelsInterfaceMembersWithContainmentAndLocations()
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/shape.ts", InterfaceSource));
+
+        var shape = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Interface && node.QualifiedName == "Shape");
+        var area = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Shape.area");
+        var id = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Property && node.QualifiedName == "Shape.id");
+        var timeout = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Property && node.QualifiedName == "Shape.timeout");
+        var cache = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Property && node.QualifiedName == "Shape.cache");
+
+        foreach (var member in new[] { area, id, timeout, cache })
+        {
+            Assert.NotNull(member.SymbolId);
+            Assert.Contains(
+                extracted.Edges,
+                edge => edge.Kind == CodeEdgeKinds.Contains &&
+                    edge.SourceId == shape.Id &&
+                    edge.TargetId == member.Id);
+            Assert.Contains(
+                extracted.Edges,
+                edge => edge.Kind == CodeEdgeKinds.Declares &&
+                    edge.TargetId == member.Id);
+        }
+
+        // The member declaration covers the written signature with an exact
+        // source location; the containment edge keeps the precise name span.
+        var areaDeclaration = Assert.Single(
+            extracted.Declarations,
+            declaration => declaration.SymbolId == area.SymbolId);
+        Assert.Equal("src/shape.ts", areaDeclaration.Location.Path);
+        Assert.Equal(2, areaDeclaration.Location.StartLine);
+        Assert.Equal(3, areaDeclaration.Location.StartColumn);
+
+        var areaEdge = Assert.Single(
+            extracted.Edges,
+            edge => edge.Kind == CodeEdgeKinds.Contains &&
+                edge.SourceId == shape.Id &&
+                edge.TargetId == area.Id);
+        Assert.Equal(2, areaEdge.Evidence.Location!.StartLine);
+        Assert.Equal(3, areaEdge.Evidence.Location.StartColumn);
+        Assert.Equal(7, areaEdge.Evidence.Location.EndColumn);
+
+        // Signatures are declarations, never invocations.
+        Assert.DoesNotContain(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.InvokesName);
+        Assert.DoesNotContain(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.Calls);
+        Assert.DoesNotContain(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.References);
+        Assert.All(extracted.Edges, edge =>
+            Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality));
+        Assert.DoesNotContain(extracted.Result.WarningCodes, code => code == "typescript.parse-error");
+    }
+
+    [Fact]
+    public async Task ExtractAsync_RecordsOptionalAndReadonlyInterfaceModifiers()
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/shape.ts", InterfaceSource));
+
+        var area = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Shape.area");
+        var id = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Property && node.QualifiedName == "Shape.id");
+        var timeout = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Property && node.QualifiedName == "Shape.timeout");
+        var cache = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Property && node.QualifiedName == "Shape.cache");
+
+        Assert.Null(Modifiers(area));
+        Assert.Equal("readonly", Modifiers(id));
+        Assert.Equal("optional", Modifiers(timeout));
+        Assert.Equal("optional readonly", Modifiers(cache));
+    }
+
+    [Fact]
+    public async Task ExtractAsync_KeepsEveryInterfaceMethodOverloadSignature()
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/parser.ts", InterfaceOverloadSource));
+
+        // Name-derived identity converges the overloads into one callable;
+        // every physical signature keeps its own declaration and location.
+        var parse = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Parser.parse");
+        var declarations = extracted.Declarations
+            .Where(declaration => declaration.SymbolId == parse.SymbolId)
+            .OrderBy(declaration => declaration.Location.StartLine)
+            .ToArray();
+
+        Assert.Equal(2, declarations.Length);
+        Assert.Equal([2, 3], declarations.Select(declaration => declaration.Location.StartLine));
+        Assert.All(declarations, declaration =>
+            Assert.Equal(3, declaration.Location.StartColumn));
+        Assert.NotEqual(declarations[0].Location, declarations[1].Location);
+
+        var contains = extracted.Edges
+            .Where(edge => edge.Kind == CodeEdgeKinds.Contains && edge.TargetId == parse.Id)
+            .ToArray();
+        Assert.Equal(2, contains.Length);
+        Assert.Equal(
+            [2, 3],
+            contains.Select(edge => edge.Evidence.Location!.StartLine).Order());
+    }
+
+    [Fact]
+    public async Task ExtractAsync_KeepsIdenticallyNamedMembersOnDistinctInterfaces()
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/reader.ts", DuplicateMemberSource));
+
+        var readerRead = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Reader.read");
+        var writerRead = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Writer.read");
+
+        Assert.NotEqual(readerRead.Id, writerRead.Id);
+        Assert.NotEqual(readerRead.SymbolId, writerRead.SymbolId);
+    }
+
+    [Fact]
+    public async Task ExtractAsync_KeepsSameNameInterfacesInSeparateModulesDistinct()
+    {
+        const string module = """
+            export interface Shape {
+              area(): number;
+            }
+            """;
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/a.ts", module),
+            ("src/b.ts", module));
+
+        // Interface identity binds the source path: unrelated modules that
+        // both declare `Shape` must not silently merge.
+        var shapes = extracted.Nodes
+            .Where(node => node.Kind == CodeNodeKinds.Interface && node.QualifiedName == "Shape")
+            .ToArray();
+        var areas = extracted.Nodes
+            .Where(node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Shape.area")
+            .ToArray();
+
+        Assert.Equal(2, shapes.Length);
+        Assert.Equal(2, shapes.Select(shape => shape.Id).Distinct().Count());
+        Assert.Equal(2, areas.Length);
+        Assert.Equal(2, areas.Select(area => area.Id).Distinct().Count());
+        Assert.Equal(
+            2,
+            extracted.Declarations.Count(declaration =>
+                shapes.Any(shape => shape.SymbolId == declaration.SymbolId)));
+        Assert.Equal(
+            2,
+            extracted.Declarations.Count(declaration =>
+                areas.Any(area => area.SymbolId == declaration.SymbolId)));
+    }
+
+    [Fact]
+    public async Task ExtractAsync_SkipsComputedAndUnsupportedInterfaceMemberNames()
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/unsupported.ts", UnsupportedMemberSource));
+
+        var unsupported = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Interface && node.QualifiedName == "Unsupported");
+
+        // Computed, string, numeric, index, call, and construct members are
+        // unsupported: they emit no nodes, declarations, or containment.
+        Assert.DoesNotContain(extracted.Nodes, node =>
+            node.QualifiedName is not null &&
+            node.QualifiedName.StartsWith("Unsupported.", StringComparison.Ordinal));
+        Assert.DoesNotContain(
+            extracted.Edges,
+            edge => edge.Kind == CodeEdgeKinds.Contains && edge.SourceId == unsupported.Id);
+        Assert.DoesNotContain(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.InvokesName);
+        Assert.DoesNotContain(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.Calls);
+        Assert.DoesNotContain(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.References);
+        Assert.DoesNotContain(extracted.Result.WarningCodes, code => code == "typescript.parse-error");
+    }
+
+    [Fact]
+    public async Task ExtractAsync_PreservesValidInterfaceFactsFromPartialFiles()
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/broken-interface.ts", BrokenInterfaceSource));
+
+        Assert.Contains("typescript.parse-error", extracted.Result.WarningCodes);
+
+        // The interface and its valid signature survive recovery; the
+        // partially recovered signature emits no fragment facts.
+        Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Interface && node.QualifiedName == "Broken");
+        Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Broken.ok");
+        Assert.DoesNotContain(
+            extracted.Nodes,
+            node => node.QualifiedName == "Broken.bad");
+
+        Assert.All(extracted.Edges, edge =>
+            Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality));
+    }
+
+    [Fact]
+    public async Task ExtractAsync_RepeatsInterfaceFactsDeterministically()
+    {
+        var first = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/shape.ts", InterfaceSource),
+            ("src/parser.ts", InterfaceOverloadSource),
+            ("src/broken-interface.ts", BrokenInterfaceSource));
+        var second = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/broken-interface.ts", BrokenInterfaceSource),
+            ("src/parser.ts", InterfaceOverloadSource),
+            ("src/shape.ts", InterfaceSource));
+
+        Assert.Equal(JsonSerializer.Serialize(first.Nodes), JsonSerializer.Serialize(second.Nodes));
+        Assert.Equal(JsonSerializer.Serialize(first.Declarations), JsonSerializer.Serialize(second.Declarations));
+        Assert.Equal(JsonSerializer.Serialize(first.Edges), JsonSerializer.Serialize(second.Edges));
+    }
+
+    [Fact]
     public async Task ExtractAsync_TsxTreatsJsxAsStructureNotInvocation()
     {
         var extracted = await TreeSitterTestSupport.ExtractAsync(
@@ -310,7 +598,7 @@ public sealed class TreeSitterTypeScriptPluginTests
         var packageVersion = typeof(TreeSitterTypeScriptPlugin).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion.Split('+', 2)[0];
-        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p1", plugin.Version);
+        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p2", plugin.Version);
     }
 
     [Fact]
@@ -358,6 +646,176 @@ public sealed class TreeSitterTypeScriptPluginTests
             directory.Delete(recursive: true);
         }
     }
+
+    [Fact]
+    public async Task IndexAsync_RemovesStaleInterfaceMembersOnReindex()
+    {
+        var directory = Directory.CreateTempSubdirectory("hetu-ts-interface-");
+        try
+        {
+            var src = Directory.CreateDirectory(Path.Combine(directory.FullName, "src"));
+            var path = Path.Combine(src.FullName, "shape.ts");
+            await File.WriteAllTextAsync(path, """
+                export interface Shape {
+                  area(): number;
+                  perimeter(): number;
+                }
+                """);
+            var repositoryId = new CodeRepositoryId("repo:ts-interface");
+            var store = new InMemoryCodeGraphStore();
+            var indexing = new CodeIndexingService(
+                new CodeRepositoryProviderRegistry([new FileSystemCodeRepositoryProvider()]),
+                new CodeGraphPluginRegistry([new TreeSitterTypeScriptPlugin()]),
+                store);
+            var descriptor = new CodeRepositoryDescriptor(repositoryId, directory.FullName);
+
+            var first = await indexing.IndexAsync(descriptor, new CodeIndexRunId("run:first"));
+            Assert.Equal(CodeIndexRunStatus.Completed, first.Diagnostics.Status);
+            var queries = new CodeGraphQueryService(store);
+            var shapeId = (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape"))
+                .Candidates.Single().Id;
+            Assert.Single(
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape.perimeter")).Candidates);
+            Assert.Single(
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape.area")).Candidates);
+
+            await File.WriteAllTextAsync(path, """
+                export interface Shape {
+                  area(): number;
+                }
+                """);
+            var second = await indexing.IndexAsync(descriptor, new CodeIndexRunId("run:second"));
+            Assert.Equal(CodeIndexRunStatus.Completed, second.Diagnostics.Status);
+
+            // The removed member leaves no node, declaration, or edge behind.
+            Assert.Empty(
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape.perimeter")).Candidates);
+            var area = Assert.Single(
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape.area")).Candidates);
+            var declarations = await queries.FindDeclarationsAsync(repositoryId, area.SymbolId!);
+            Assert.Single(declarations);
+            Assert.Equal("src/shape.ts", declarations[0].Location.Path);
+
+            var view = (await queries.OpenLatestPublicationAsync(repositoryId))!;
+            var neighborhood = await view.GetNeighborhoodAsync(
+                shapeId,
+                options: new CodeGraphQueryOptions(maxDepth: 2, maxNodes: 100, maxEdges: 200));
+            Assert.DoesNotContain(
+                neighborhood.Result.Nodes,
+                node => node.QualifiedName == "Shape.perimeter");
+            Assert.Contains(
+                neighborhood.Result.Nodes,
+                node => node.QualifiedName == "Shape.area");
+        }
+        finally
+        {
+            directory.Delete(recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task IndexAsync_AnswersExactInterfaceDeclarationAndContainmentQueries()
+    {
+        var directory = Directory.CreateTempSubdirectory("hetu-ts-interface-query-");
+        try
+        {
+            var src = Directory.CreateDirectory(Path.Combine(directory.FullName, "src"));
+            await File.WriteAllTextAsync(Path.Combine(src.FullName, "shape.ts"), InterfaceSource);
+            var repositoryId = new CodeRepositoryId("repo:ts-interface-query");
+            var store = new InMemoryCodeGraphStore();
+            var indexing = new CodeIndexingService(
+                new CodeRepositoryProviderRegistry([new FileSystemCodeRepositoryProvider()]),
+                new CodeGraphPluginRegistry([new TreeSitterTypeScriptPlugin()]),
+                store);
+            var result = await indexing.IndexAsync(
+                new CodeRepositoryDescriptor(repositoryId, directory.FullName),
+                new CodeIndexRunId("run:ts-interface-query"));
+            Assert.Equal(CodeIndexRunStatus.Completed, result.Diagnostics.Status);
+
+            var queries = new CodeGraphQueryService(store);
+            var shape = Assert.Single(
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape")).Candidates);
+            var area = Assert.Single(
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape.area")).Candidates);
+            Assert.Equal(CodeNodeKinds.Interface, shape.Kind);
+            Assert.Equal(CodeNodeKinds.Callable, area.Kind);
+
+            // Exact physical declarations for the file: the interface plus
+            // its four members.
+            var declarations = await queries.GetDeclarationsInFileAsync(repositoryId, "src/shape.ts");
+            Assert.Equal(5, declarations.Count);
+            var areaDeclaration = Assert.Single(
+                declarations,
+                declaration => declaration.SymbolId == area.SymbolId);
+            Assert.Equal("src/shape.ts", areaDeclaration.Location.Path);
+            Assert.Equal(2, areaDeclaration.Location.StartLine);
+            Assert.Equal(3, areaDeclaration.Location.StartColumn);
+
+            // Containment connects the interface to every member.
+            var view = (await queries.OpenLatestPublicationAsync(repositoryId))!;
+            var neighborhood = await view.GetNeighborhoodAsync(
+                shape.Id,
+                options: new CodeGraphQueryOptions(maxDepth: 1, maxNodes: 100, maxEdges: 200));
+            Assert.Contains(
+                neighborhood.Result.Nodes,
+                node => node.Kind == CodeNodeKinds.Callable && node.QualifiedName == "Shape.area");
+            Assert.Contains(
+                neighborhood.Result.Nodes,
+                node => node.Kind == CodeNodeKinds.Property && node.QualifiedName == "Shape.id");
+            Assert.Contains(
+                neighborhood.Result.Nodes,
+                node => node.Kind == CodeNodeKinds.Property && node.QualifiedName == "Shape.cache");
+        }
+        finally
+        {
+            directory.Delete(recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task Plan_InvalidatesPreviousExtractionProfileRevisions()
+    {
+        var directory = Directory.CreateTempSubdirectory("hetu-ts-plan-");
+        try
+        {
+            await File.WriteAllTextAsync(Path.Combine(directory.FullName, "shape.ts"), InterfaceSource);
+            var plugin = new TreeSitterTypeScriptPlugin();
+            var providers = new CodeRepositoryProviderRegistry([new FileSystemCodeRepositoryProvider()]);
+            var repository = new CodeRepositoryDescriptor(
+                new CodeRepositoryId("repo:ts-plan"),
+                directory.FullName);
+            var planner = new CodeIndexPlanner(new CodeGraphPluginRegistry([plugin]));
+            await using var source = await providers.OpenAsync(repository);
+
+            var initial = await planner.CreatePlanAsync(source);
+            var item = Assert.Single(initial.Items);
+            Assert.Equal(CodeIndexPlanStatus.New, item.Status);
+            Assert.EndsWith(".p2", item.Manifest.PluginVersion, StringComparison.Ordinal);
+
+            // A previous publication from the older extraction-profile
+            // revision must re-extract even though plugin identity and content
+            // are unchanged: emitted interface facts changed with the profile.
+            var previous = new CodeSourceManifest(
+                item.Manifest.PluginId,
+                item.Manifest.PluginVersion.Replace(".p2", ".p1", StringComparison.Ordinal),
+                item.Manifest.SourcePath,
+                item.Manifest.SourceHash);
+            var replanned = await planner.CreatePlanAsync(source, [previous]);
+
+            var changed = Assert.Single(replanned.Items);
+            Assert.Equal(CodeIndexPlanStatus.Changed, changed.Status);
+            Assert.Equal(item.Manifest.SourceHash, changed.Manifest.SourceHash);
+        }
+        finally
+        {
+            directory.Delete(recursive: true);
+        }
+    }
+
+    private static string? Modifiers(CodeGraphNode node) =>
+        node.Properties.TryGetValue(CodePropertyKeys.Modifiers, out var value)
+            ? ((CodeTextProperty)value).Value
+            : null;
 
     private static string InvokedName(Extraction extracted, CodeGraphEdge edge) =>
         extracted.Nodes.Single(node => node.Id == edge.TargetId).Name;

@@ -299,7 +299,12 @@ await host.IndexRepositoryAsync(
 Profiles emit documented subsets of structural declarations, containment,
 imports, and invocation names through `invokes-name` edges that never claim a
 resolved target. TypeScript/JavaScript class extension and TypeScript interface
-heritage contribute structural `inherits`/`implements` edges. The common
+heritage contribute structural `inherits`/`implements` edges. TypeScript
+interface bodies contribute identifier-named method and property signatures as
+`callable`/`property` declarations with `contains` edges and
+`readonly`/`optional` modifier metadata; computed, string, numeric, index, call,
+and construct signatures are not emitted, and overload signatures keep one
+physical declaration each. The common
 JavaScript prototype-inheritance idioms
 (`Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`) are
 recognized and emitted as `inherits` with `Derived` evidence — never

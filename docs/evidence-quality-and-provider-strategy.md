@@ -680,8 +680,13 @@ Implementation notes (landed):
   deterministically and emitted as `inherits` with `Derived` evidence — never
   structural or resolved, because they are patterns, not grammar constructs.
   `implements` is not-produced for JavaScript, which has no such syntax.
-- Still out of this slice: interface member signatures, field/property nodes,
-  and control-flow constructs. `calls` and `references` remain `NotProduced`.
+- Still out of this slice: interface member signatures were added later
+  (2026-10-22). TypeScript interface bodies now emit identifier-named method
+  (`callable`) and property (`property`) signatures with declarations,
+  containment, exact locations, and `readonly`/`optional` modifier metadata;
+  computed, string, numeric, index, call, and construct signatures are skipped
+  rather than guessed. Class fields/properties and control-flow constructs stay
+  out of scope, and `calls` and `references` remain `NotProduced`.
 
 ### Phase 4: Semantic enrichment
 

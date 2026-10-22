@@ -6,6 +6,12 @@ Implementation baseline: `5a5e38749570bad36630485d462f9ac92ade39a9` on canonical
 assertions at that revision, not a new test run or a guarantee about another
 publication. Update the baseline and evidence anchors when claims change.
 
+Post-audit implementation updates, 2026-10-22: ECMAScript inheritance
+capabilities corrected (finding 8) and TypeScript interface member signatures
+extracted (finding 1, extended by finding 2). The affected cells below state
+the corrected, fixture-verified coverage; the audit baseline still describes
+the original inspection revision.
+
 The [language roadmap](language-support-roadmap.md) records priorities. This
 catalog contains **46 features** chosen for useful repository questions rather
 than grammar completeness. Language-specific candidates are evaluation topics,
@@ -140,21 +146,21 @@ even if the enclosing construct's node or callback-body facts survive.
 | `declaration.namespace` | A:V/S | A:V/S | N:NA/- | N:NA/- | CS-D, EC-D |
 | `declaration.class` | A:V/S | A:V/S | A:V/S | N:NA/- | CS-D, EC-D |
 | `declaration.struct` | A:P/S | N:NA/- | N:NA/- | A:NI/- | CS-D; Elixir defstruct has no dedicated mapping |
-| `declaration.interface` | A:V/S | A:P/S | N:NA/- | A:P/S | CS-R, EC-D, EL-D (protocol subset) |
+| `declaration.interface` | A:V/S | A:V/S | N:NA/- | A:P/S | CS-R, EC-D, EC-M, EL-D (protocol subset) |
 | `declaration.trait` | N:NA/- | N:NA/- | N:NA/- | N:NA/- | Construct definition above |
 | `declaration.enum` | A:P/S | A:V/S | N:NA/- | N:NA/- | CS-D, CS-P, EC-D |
 | `declaration.enum-member` | A:NI/- | A:NI/- | N:NA/- | N:NA/- | CS-D selector, EC-D dispatch |
 | `declaration.type-alias` | A:NI/- | A:V/S | N:NA/- | A:NI/- | CS-D, EC-D, EL-D (@type skipped) |
-| `declaration.callable` | A:V/S | A:V/S | A:V/S | A:V/S | CS-D, EC-D, EL-D |
+| `declaration.callable` | A:V/S | A:V/S | A:V/S | A:V/S | CS-D, EC-D, EC-M, EL-D |
 | `declaration.constructor` | A:V/S | A:P/S | A:V/S | N:NA/- | CS-R, EC-D |
 | `declaration.field` | A:V/S | A:NI/- | A:NI/- | A:NI/- | CS-D, EC-D, EL-D |
-| `declaration.property` | A:V/S | A:NI/- | A:NI/- | N:NA/- | CS-D, EC-D |
+| `declaration.property` | A:V/S | A:V/S | A:NI/- | N:NA/- | CS-D, EC-M (interface property signatures only) |
 | `declaration.parameter` | A:V/S | A:NI/- | A:NI/- | A:NI/- | CS-D, EC-D, EL-D |
 | `declaration.nested` | A:V/S | A:V/S | A:P/S | A:P/S | CS-R local functions, EC-D Geometry/helper, EL-D |
 | `declaration.generic-parameter` | A:NI/- | A:NI/- | N:NA/- | N:NA/- | CS-D, EC-D |
 | `declaration.anonymous-function` | A:NI/- | A:P/S | A:P/S | A:NI/- | CS-D, EC-D HandleDeclarator, EL-D stoplist |
-| `declaration.merged` | A:V/S | A:P/S | N:NA/- | A:P/S | CS-D partials; EC-D/EL-D name-derived identities |
-| `relationship.contains` | A:V/S | A:V/S | A:V/S | A:V/S | CS-D, EC-D, EL-D |
+| `declaration.merged` | A:V/S | A:P/S | N:NA/- | A:P/S | CS-D partials; EC-D/EC-M name-derived identities; EL-D |
+| `relationship.contains` | A:V/S | A:V/S | A:V/S | A:V/S | CS-D, EC-D, EC-M, EL-D |
 | `relationship.declares` | A:V/S | A:V/S | A:P/S | A:V/S | CS-D, EC-D, EL-D |
 | `relationship.inherits` | A:V/R | A:V/S | A:V/S,D | N:NA/- | CS-R, EC-H |
 | `relationship.implements` | A:V/R | A:V/S | N:NA/- | A:NI/- | CS-R, EC-H; EL-D no defimpl mapping |
@@ -178,7 +184,7 @@ even if the enclosing construct's node or callback-body facts survive.
 | `go.implicit-interface` | N:NA/- | N:NA/- | N:NA/- | N:NA/- | Go-specific feature scope |
 | `language.macro-boundary` | N:NA/- | N:NA/- | N:NA/- | A:P/S | EL-D macro definition treated as callable; no expansion |
 | `language.annotation` | A:V/S,R | N:NA/- | N:NA/- | C:NI/- | CS-P/CS-R; EL-D attributes skipped |
-| `callable.overload` | A:V/S,R | A:P/S | N:NA/- | A:P/S | CS-D/CS-R; EC-D name-only identity; EL-D arity |
+| `callable.overload` | A:V/S,R | A:P/S | N:NA/- | A:P/S | CS-D/CS-R; EC-M one name-based symbol with per-signature declarations; EL-D arity |
 | `callable.extension` | A:P/S,R | N:NA/- | N:NA/- | N:NA/- | CS-R resolved extension calls; no receiver-role property |
 | `kotlin.companion-object` | N:NA/- | N:NA/- | N:NA/- | N:NA/- | Kotlin-specific feature scope |
 | `type.sealed` | A:P/S | N:NA/- | N:NA/- | N:NA/- | CS-P modifiers; no permitted-subtype model |
@@ -206,27 +212,40 @@ dispatch and emitted kinds, not the absence of a test name.
 | EC-D | [EcmaScriptExtractionProfile.Walk/TryEmitNamed/HandleDeclarator](../src/Penghou.Hetu.TreeSitter/EcmaScriptExtractionProfile.cs) | [TypeScript tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterTypeScriptPluginTests.cs): `ExtractAsync_ModelsClassesInterfacesAndContainment`, `ExtractAsync_TreatsArrowAndFunctionExpressionsAsCallables` asserts `render` (arrow); [JavaScript tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterJavaScriptPluginTests.cs): `ExtractAsync_ModelsClassesFunctionsAndContainment` asserts constructor, methods, and `helper` (function expression). |
 | EC-I | Same profile: HandleExport, EmitImport, TryEmitRequire, EmitCall, EmitNew | Same TS tests: `ExtractAsync_EmitsImportsAndStructuralInvocationsOnly`, `ExtractAsync_TsxTreatsJsxAsStructureNotInvocation`; same JS tests: `ExtractAsync_TreatsRequireAndImportAsImportsAndOtherCallsAsInvocations`. |
 | EC-H | Same profile: EmitHeritage, HeritageName, prototype handlers, StructuralTypeNode | Same TS tests: `ExtractAsync_EmitsStructuralHeritage`; same JS tests: `ExtractAsync_DerivesPrototypeInheritanceAsDerivedEvidence`. |
+| EC-M | Same profile: EmitInterfaceMembers/TryEmitInterfaceMember/MemberProperties; path-scoped interface identity recorded in [ECMAScript symbol identity](ecmascript-symbol-identity.md) | Same TS tests: `ExtractAsync_ModelsInterfaceMembersWithContainmentAndLocations`, `ExtractAsync_RecordsOptionalAndReadonlyInterfaceModifiers`, `ExtractAsync_KeepsEveryInterfaceMethodOverloadSignature`, `ExtractAsync_KeepsIdenticallyNamedMembersOnDistinctInterfaces`, `ExtractAsync_KeepsSameNameInterfacesInSeparateModulesDistinct`, `ExtractAsync_SkipsComputedAndUnsupportedInterfaceMemberNames`, `ExtractAsync_PreservesValidInterfaceFactsFromPartialFiles`, `ExtractAsync_RepeatsInterfaceFactsDeterministically`, `IndexAsync_RemovesStaleInterfaceMembersOnReindex`, `IndexAsync_AnswersExactInterfaceDeclarationAndContainmentQueries`, `Plan_InvalidatesPreviousExtractionProfileRevisions`. |
 | EL-D | [ElixirExtractionProfile](../src/Penghou.Hetu.TreeSitter/ElixirExtractionProfile.cs): module/function target sets, Walk, TryEmitModule/Function | [Elixir tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterElixirPluginTests.cs): `ExtractAsync_ModelsModulesFunctionsAndContainment`; protocol/macro branches lack dedicated output assertions. |
 | EL-I | Same profile: ImportTargets, TryEmitImport/Invocation, attribute and control-form skipping | Same Elixir tests: `ExtractAsync_EmitsImportsAndStructuralInvocationsOnly`, `ExtractAsync_ScopesScriptInvocationsToTheirFile`, `ExtractAsync_ReportsCapabilitiesHonestly`. |
 
 ### Audit findings and priority gaps
 
-1. **TypeScript declarations are a useful subset.** Classes, interfaces, aliases,
-   enums, namespaces, functions and methods have nodes and physical declarations.
-   Interfaces return immediately after heritage: members are not visited.
-   Aliases return after their name; union/intersection/type-expression components
-   are not extracted. Enum bodies are walked but no enum-member handler exists.
-   Fields/properties, parameters and generic parameters have no node emission.
-   The TS fixture contains a constructor, field and parameter-property syntax;
-   only JS has a dedicated constructor assertion. None proves member completeness.
-2. **Callable ownership and merging need design.** Variable declarators with an
-   arrow/function/generator value receive named callables. Inline callbacks do
-   not; their body invocations remain attributed to the surrounding scope.
-   Method definitions become callables, including constructors/accessors, without
-   a property model. ECMAScript symbol IDs hash discriminator plus qualified name,
-   without file/module or signature context: name convergence is not verified
-   declaration merging or overload-safe identity. Anonymous classes/functions and
-   declaration-only signatures have no general independent-symbol contract.
+1. **TypeScript declarations are a useful subset; interface members landed
+   (2026-10-22).** Classes, interfaces, aliases, enums, namespaces, functions
+   and methods have nodes and physical declarations. Identifier-named interface
+   method signatures now emit `callable` nodes and property signatures emit
+   `property` nodes, each with `contains`/`declares` edges, exact source
+   locations and `readonly`/`optional` `modifiers`; method overloads keep one
+   physical declaration per signature (`EC-M`). Computed, string, numeric and
+   private member names and call/construct/index signatures are not emitted, nor
+   are class fields, parameters and generic parameters. Aliases return after
+   their name; union/intersection/type-expression components are not extracted.
+   Enum bodies are walked but no enum-member handler exists. The TS fixture
+   contains a constructor, field and parameter-property syntax; only JS has a
+   dedicated constructor assertion.
+2. **Symbol identity has a recorded interface amendment.** Variable declarators
+   with an arrow/function/generator value receive named callables. Inline
+   callbacks do not; their body invocations remain attributed to the surrounding
+   scope. Method definitions become callables, including constructors/accessors,
+   without a property model. Interface declarations and their method/property
+   members now bind the source path and interface-specific discriminators, so
+   unrelated same-name interfaces in separate modules stay distinct and a
+   signature never converges with a same-named class member; same-name
+   interfaces in one file still converge by name (merging is not verified), and
+   overloads remain one symbol with one declaration per signature. Classes,
+   functions, enums, namespaces, imports and placeholders keep the original
+   discriminator-plus-lexical-name identity, including its cross-file
+   convergence limitation. See
+   [ECMAScript symbol identity](ecmascript-symbol-identity.md). Anonymous
+   classes/functions still have no independent-symbol contract.
 3. **Heritage targets are names.** `HeritageName` accepts identifiers,
    type-identifiers and member expressions; generic/qualified grammar shapes and
    mixin/expression bases are not comprehensively handled. Targets are
@@ -294,8 +313,10 @@ Existing language tests assert partial-file recovery, repeated deterministic
 extraction and batch validity; Elixir also asserts undecodable-unit clearing,
 and C# asserts stale-call removal on rebinding and incremental project cleanup.
 There is no feature-by-feature conformance suite proving all cells. Negative
-dynamic heritage, module collisions, complete export forms, TS prototype
-patterns, and per-feature stale-fact removal remain verification work.
+dynamic heritage, complete export forms, and TS prototype patterns remain
+verification work; interface module collisions, partial interface recovery,
+deterministic repetition and interface-member stale-fact removal now have
+focused TS fixtures (`EC-M`).
 
 ## Planned-language applicability and intended coverage
 
@@ -461,9 +482,13 @@ by this documentation task.
 - How should generic parameters, bounded type expressions, signature roles,
   Rust impl ownership, embedding, extensions and companion access be normalized?
   Keep C# returns/accepts unproduced until their cross-language meaning is agreed.
-- What are stable ECMAScript module-scoped/overload identities and legitimate
-  declaration-merging rules? How should heritage placeholders connect to
-  interface identities without pretending syntax establishes semantic binding?
+- Stable ECMAScript module-scoped/overload identities remain open beyond the
+  2026-10-22 interface amendment: classes, functions and enums still converge
+  across files, and overloads still share one name-derived symbol. Legitimate
+  declaration-merging rules are not verified structurally. See
+  [ECMAScript symbol identity](ecmascript-symbol-identity.md). Heritage
+  placeholders still connect by name and must not pretend syntax establishes
+  semantic binding.
 - What export/re-export/CommonJS and alias facts answer real consumer queries?
   Which properties preserve written names and which require authoritative binding?
 - What analysis context and evidence justify Go satisfaction, Python dynamic
