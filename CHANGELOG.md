@@ -6,6 +6,21 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Phase 0: ECMAScript heritage target identity correction (EC-3D):
+
+- Written `extends` and `implements` names now use file-scoped declaration-less
+  `type` nodes in the `language:heritage-target:` identity namespace. Their
+  spelling and relationship provenance remain available, and same-name class
+  or interface declarations stay separate. Heritage edges remain Structural;
+  recognized prototype-pattern edges remain Derived.
+- The Tree-sitter profile cannot bind heritage names semantically. Revision 5
+  changes both ECMAScript plugin versions so p4 manifests invalidate and units
+  re-extract. Ordinary reindexing removes old heritage targets and edges.
+- The GLM review's three minor observations are documented without expanding
+  implementation scope: static-block calls are attributed to the class node,
+  decorator calls to the decorated member node, and repeated same-name members
+  with the same kind and ownership converge while retaining each declaration.
+
 Phase 0: ECMAScript class identity and class members (EC-3A/3B/3C):
 
 - Class declarations now bind the source path like interfaces, and class
@@ -18,9 +33,8 @@ Phase 0: ECMAScript class identity and class members (EC-3A/3B/3C):
   a limitation because structural extraction cannot verify declaration
   merging. Top-level functions, enums, namespaces, imports, and invocation
   placeholders keep the previous name-based model.
-- Name-based heritage targets are file-scoped: a written base name converges
-  with a same-file top-level class declaration but never with a class in
-  another file, and `implements` targets stay declaration-less.
+- Heritage targets use separate file-scoped declaration-less identities, so
+  written base and interface names never converge with same-name declarations.
 - TypeScript `public_field_definition` and JavaScript `field_definition` nodes
   now emit `property` members with exact declarations, `contains`/`declares`
   edges, and written metadata: sorted `modifiers` (`abstract`, `declare`,
@@ -29,13 +43,14 @@ Phase 0: ECMAScript class identity and class members (EC-3A/3B/3C):
   attribute to the field instead of the class. Computed, string, numeric, and
   `#private` names and `accessor` auto-accessor fields are skipped; accessors
   remain callable members. Partial recovery emits no fabricated members.
-- The shared ECMAScript extraction-profile revision moves to 3 (identity) and
-  then 4 (fields). Effective plugin versions fold it, so previous unit
-  manifests invalidate and re-extract. New class identity, class member, and
-  lifecycle test suites cover collisions, nesting, heritage placeholders,
+- The shared ECMAScript extraction-profile revision moved to 3 (identity),
+  4 (fields), and 5 (heritage identity correction). Effective plugin versions
+  fold it, so previous unit manifests invalidate and re-extract. Class identity,
+  member, lifecycle, and heritage regression tests cover collisions, nesting,
   modifiers, initializers, unsupported members, partial parsing, deterministic
   repetition, exact member and enclosing-symbol queries, member/class rename
-  and removal, file deletion, and same-name classes across modules.
+  and removal, stale-edge cleanup, file deletion, and same-name classes across
+  modules.
 
 Phase 0: TypeScript interface member coverage:
 

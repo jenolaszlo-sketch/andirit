@@ -6,12 +6,13 @@ Implementation baseline: `5a5e38749570bad36630485d462f9ac92ade39a9` on canonical
 assertions at that revision, not a new test run or a guarantee about another
 publication. Update the baseline and evidence anchors when claims change.
 
-Post-audit implementation updates, 2026-10-22: ECMAScript inheritance
-capabilities corrected (finding 8); TypeScript interface member signatures
-extracted (EC-M); and ECMAScript class identity scoped with class members and
-ordinary TypeScript/JavaScript class fields extracted (EC-3A/3B, findings 1-3).
-The affected cells below state the corrected, fixture-verified coverage; the
-audit baseline still describes the original inspection revision.
+Post-audit implementation updates, 2026-10-22 to 2026-10-23: ECMAScript
+inheritance capabilities corrected (finding 8); TypeScript interface member
+signatures extracted (EC-M); ECMAScript class identity scoped with class
+members and ordinary class fields extracted (EC-3A/3B, findings 1-3); and
+heritage targets moved to a separate declaration-less identity namespace
+(EC-3D, F01). The affected cells below state the corrected coverage; the audit
+baseline still describes the original inspection revision.
 
 The [language roadmap](language-support-roadmap.md) records priorities. This
 catalog contains **46 features** chosen for useful repository questions rather
@@ -79,7 +80,7 @@ The common conformance requirements below apply to every row.
 | --- | --- | --- | --- | --- |
 | `declaration.module` | Module/package/crate boundaries for navigation and ownership. | L: `project`, `file`, `namespace`, or `type` with declarations; module identity convention undecided. | S for written structure; package/crate/module are not interchangeable. | Multiple files/modules; explicit versus implicit boundaries; dynamic names omitted. |
 | `declaration.namespace` | Named scopes for qualified symbol discovery. | E: `namespace`, `contains`, `declares`. | S; lexical nesting is not dependency or import binding. | Nested and file-scoped namespaces; exact qualified names. |
-| `declaration.class` | Class identities for member discovery and impact. | L: `type`, declarations, `contains`; no universal class discriminator. | S declarations; semantic identity may use provider binding. Do not infer class semantics from every `type`. | Named/nested/abstract classes; reject unnamed identities without a convention. |
+| `declaration.class` | Class identities for member discovery and impact. | L: `type`, declarations, `contains`; no universal class discriminator. | S declarations; semantic identity may use provider binding. Do not infer class semantics from every `type`. Same-kind, same-name class members of one owner can share identity while preserving physical declarations. | Named/nested/abstract classes; reject unnamed identities without a convention. |
 | `declaration.struct` | Value/record-like aggregate owners where the language has structs. | L: `type`; struct/value semantics need a convention. | S; do not equate Java classes with Go/Rust/C# structs. | Named structs, fields, receiver/implementation ownership. |
 | `declaration.interface` | Explicit contract declarations for implementation discovery. | L: `interface`; Elixir protocols currently use `type`. | S declarations; protocol equivalence is limited and implementation is separate. | Contract node, member signatures, declared heritage; protocol cases separate. |
 | `declaration.trait` | Reusable trait contracts for Rust comprehension. | ?: assess `interface`/`type` plus a discriminator before extending vocabulary. | S declaration; trait definitions do not prove implementations. | Required/default members and bounds; negative implementation case. |
@@ -102,14 +103,14 @@ The common conformance requirements below apply to every row.
 | --- | --- | --- | --- | --- |
 | `relationship.contains` | Owner/member hierarchy for bounded navigation. | E: `contains`. | S; containment is not a resolved dependency. | Smallest indexed owner, no self-edge, nested and top-level cases. |
 | `relationship.declares` | File-to-symbol link for locating physical definitions. | E: `declares` plus physical declarations. | S; one symbol may have multiple occurrences. | Exact file/location links, partial symbols, deletion of one occurrence. |
-| `relationship.inherits` | Explicit base relationships for impact and implementations. | L: `inherits`; multi-base order and generic arguments not modeled. | S for written heritage, R for bound base identities; D for pattern-derived cases. No guessed dynamic bases or automatic transitive closure. | Class/interface extension, multiple bases, expression bases and missing targets. |
-| `relationship.implements` | Explicit interface adoption for implementation queries. | L: `implements`; no proof that all runtime obligations hold from syntax alone. | S written assertion or R authoritative binding. Implicit satisfaction requires separate analysis. | Class/struct adoption, interface extension classified as inheritance. |
+| `relationship.inherits` | Explicit base relationships for impact and implementations. | L: `inherits`; multi-base order and generic arguments not modeled. | S for written heritage, R for bound base identities; D for pattern-derived cases. Tree-sitter keeps written names in file-scoped declaration-less candidates because it does not resolve inheritance targets. | Class/interface extension, multiple bases, expression bases and missing targets. |
+| `relationship.implements` | Explicit interface adoption for implementation queries. | L: `implements`; no proof that all runtime obligations hold from syntax alone. | S written assertion or R authoritative binding. Tree-sitter keeps written names in declaration-less candidates; implicit satisfaction requires separate analysis. | Class/struct adoption, interface extension classified as inheritance. |
 | `relationship.trait-implementation` | Trait/type/implementation association for Rust navigation. | ?: assess `implements` plus implementation-block ownership. | S explicit block; R binding requires analysis context; bounds/blanket impls not guessed. | Inherent versus trait impls, associated members, conditional/blanket impls. |
 | `module.import` | Written dependency/import scope for repository navigation. | L: `imports`; C# `import-alias`, `import-static`, `import-global`, `import-scope`. | S source target or R bound namespace/type; import spelling does not bind exported symbols. | Named/default/type-only/side-effect and scoped imports, missing/external targets. |
 | `module.export` | Public exports and re-exports for module consumers. | X: export/re-export binding representation to design; `imports` alone is insufficient. | S syntax observations; R only if target binding established. | Local/default/star/renamed/re-export forms, cycles and unresolved sources. |
 | `relationship.depends-on` | Project/package dependencies for architecture and impact. | L: `depends-on`, `project`/`package`, `package-version`, `package-condition`. | S declared packages; current C# project links use R in its constructed context. No evaluated conditions or transitive closure. | Internal/missing/cyclic projects, conditional/versionless packages, caps. |
 | `relationship.calls` | Bound caller/callee for impact and test selection. | E: `calls`. | R only, relative to named semantic context; no name matching or complete runtime dispatch claim. | Overloads, constructors, generic/extension/interface dispatch, unresolved/ambiguous/external negatives. |
-| `relationship.invokes-name` | Unbound invocation spelling for structural comprehension. | E: `invokes-name` to declaration-less `callable`. | S only; a matching node name cannot become a resolved call. | Simple/member/new forms; exclude JSX/control forms and unnameable dynamic targets. |
+| `relationship.invokes-name` | Unbound invocation spelling for structural comprehension. | E: `invokes-name` to declaration-less `callable`. | S only; a matching node name cannot become a resolved call. Tree-sitter attributes static-block calls to the class node and decorator calls to the decorated member node. | Simple/member/new forms; exclude JSX/control forms and unnameable dynamic targets. |
 | `relationship.references` | Symbol usage for change impact. | E: `references`. | R for current C# output; any future structural convention must be explicit and cannot imply binding. | Smallest owner, repeated-use evidence, external/ambiguous omissions. |
 | `type.reference` | Uses of types in declarations/expressions for API impact. | L: current C# uses `references`; no dedicated type-use role, `returns`/`accepts` remain unproduced. | R bound type uses or explicitly unbound S names; generic syntax alone is insufficient. | Parameter/return/base/attribute type sites, unresolved `var`, generic arguments. |
 | `relationship.alias` | Import/type aliases to follow names to targets. | L: C# import alias properties; general alias binding is undecided. | S alias spelling or R target binding, distinguished explicitly. | Renamed imports, namespace/type aliases, shadowing and ambiguous targets. |
@@ -118,13 +119,13 @@ The common conformance requirements below apply to every row.
 
 | Stable identifier | Meaning and repository use | B: representation | Required evidence and known limits | Feature fixture expectations |
 | --- | --- | --- | --- | --- |
-| `javascript.prototype-inheritance` | Legacy prototype relationships for impact. | L: `inherits` between name-based `type` placeholders. | D exact patterns, never R; shadowed builtins and runtime mutation are not analyzed. | `Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`; dynamic/shadowed negatives. |
+| `javascript.prototype-inheritance` | Legacy prototype relationships for impact. | L: `inherits` between file-scoped declaration-less `heritage-target` type nodes. | D exact patterns, never R; Tree-sitter does not resolve target names, and runtime mutation is not analyzed. | `Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`; dynamic/shadowed negatives. |
 | `javascript.commonjs` | CommonJS dependency/public surface discovery. | L: literal `require` uses `imports`; export graph needs `module.export` design. | S written patterns; no runtime module evaluation or loader binding. | Literal/dynamic `require`, `exports`, `module.exports`, aliases and reassignment. |
 | `type.union` | Alternatives in types for API comprehension. | ?: type-expression summary or bounded relationships to design. | S syntax or R bound components; alias node alone is insufficient. | Named/inline unions, nesting, dynamic-language comparable forms assessed separately. |
 | `type.intersection` | Combined type constraints for API comprehension. | ?: bounded type-expression representation to design. | S syntax or R bound components; do not manufacture inheritance. | Intersection components and negative inheritance assertions. |
 | `type.mapped` | TypeScript computed type members for API discovery. | ?: retain bounded declaration-level description versus computed members. | S pattern; R expansion requires authoritative type analysis. | Key remapping/optional modifiers; no invented expanded fields. |
 | `type.conditional` | TypeScript conditional type dependencies. | ?: bounded type-expression representation to design. | S written condition; no guessed evaluated branch. | Branches, `infer`, distributive cases, unsupported evaluation. |
-| `language.decorator` | Python/TS/dialect-JS decorators for entry points and wiring. | L: `attributes` property can hold bounded names; application/target semantics undecided. | S written decorator; R bound identity only with context, never assumed runtime effects. | Class/member/function targets, aliases, factories and dynamic expressions. |
+| `language.decorator` | Python/TS/dialect-JS decorators for entry points and wiring. | L: `attributes` property can hold bounded names; application/target semantics undecided. | S written decorator; R bound identity only with context, never assumed runtime effects. TypeScript decorator-factory calls are also emitted as `invokes-name` from the decorated member node. | Class/member/function targets, aliases, factories and dynamic expressions. |
 | `go.embedding` | Promoted member origins and embedded-type dependencies. | ?: explicit embedding role beyond `field`/`references` to design. | S embedded declaration; promotion and method sets require analysis. | Value/pointer embeds, collisions, transitive promotion negatives. |
 | `go.implicit-interface` | Implicit implementation discovery. | L: `implements` can carry a result; method-set/context contract undecided. | R authoritative method-set analysis or documented D derivation, never syntax-only proof. | Pointer/value receivers, package visibility, generic constraints, negative satisfaction. |
 | `language.macro-boundary` | Rust/Elixir macro declarations versus generated facts. | ?: invocation/declaration observations possible; expansion provenance design required. | S boundary; no claim about generated declarations from unexpanded syntax. | Macro definition/use, expansion unavailable, cfg/context and stale generated facts. |
@@ -163,7 +164,7 @@ even if the enclosing construct's node or callback-body facts survive.
 | `declaration.merged` | A:V/S | A:P/S | N:NA/- | A:P/S | CS-D partials; EC-D/EC-M/EC-C name-derived identities; EL-D |
 | `relationship.contains` | A:V/S | A:V/S | A:V/S | A:V/S | CS-D, EC-D, EC-M, EC-C, EL-D |
 | `relationship.declares` | A:V/S | A:V/S | A:P/S | A:V/S | CS-D, EC-D, EL-D |
-| `relationship.inherits` | A:V/R | A:V/S | A:V/S,D | N:NA/- | CS-R, EC-H, EC-C |
+| `relationship.inherits` | A:V/R | A:V/S | A:V/S,D | N:NA/- | CS-R, EC-H, EC-C, EC-3D |
 | `relationship.implements` | A:V/R | A:V/S | N:NA/- | A:NI/- | CS-R, EC-H; EL-D no defimpl mapping |
 | `relationship.trait-implementation` | N:NA/- | N:NA/- | N:NA/- | N:NA/- | Rust-specific feature scope |
 | `module.import` | A:V/R | A:V/S | A:V/S | A:V/S | CS-R imports; EC-I; EL-I |
@@ -493,9 +494,9 @@ by this documentation task.
   namespaces still converge across files, overloads still share one name-derived
   symbol, and class-expression members keep the name-based form. Legitimate
   declaration-merging rules are not verified structurally. See
-  [ECMAScript symbol identity](ecmascript-symbol-identity.md). Heritage
-  placeholders connect by file-scoped name and must not pretend syntax
-  establishes semantic binding.
+  [ECMAScript symbol identity](ecmascript-symbol-identity.md). Written heritage
+  targets use separate file-scoped candidates; Tree-sitter does not resolve
+  their identities to declarations.
 - What export/re-export/CommonJS and alias facts answer real consumer queries?
   Which properties preserve written names and which require authoritative binding?
 - What analysis context and evidence justify Go satisfaction, Python dynamic

@@ -1,9 +1,10 @@
 # ECMAScript symbol identity for TypeScript and JavaScript
 
 Status: design note recorded **2026-10-22**, extended by EC-3 class identity
-and class-member extraction. It documents the audited identity model, the
-interface amendment, the class/member identity policy, and the resulting
-limitations. It adds no graph vocabulary and does not change C# semantics.
+and class-member extraction and EC-3D heritage target identity. It documents
+the audited identity model, the interface amendment, the class/member and
+heritage identity policies, and the resulting limitations. It adds no graph
+vocabulary and does not change C# semantics.
 
 ## Audited model
 
@@ -130,21 +131,28 @@ Resulting behavior (fixture-verified in
   remains a documented limitation.
 - **Unrelated edits** do not move class or member identities.
 
-## Heritage placeholders
+## Heritage target identities
 
-Name-based heritage targets are now file-scoped too:
+Every written class or interface heritage name uses a file-scoped,
+declaration-less type candidate:
 
 ```text
-{language}:symbol:{sha256("class" + "\n" + path + "\n" + written-target-name)}
+{language}:heritage-target:{sha256(path + "\n" + written-target-name)}
 ```
 
-A written base name converges with a same-file top-level class declaration
-(including when the declaration appears later in the file, because the
-symbol-bearing fact replaces the placeholder under the same identity). It
-never converges with a class in another file. Interface targets and namespaced
-declarations remain separate declaration-less candidate nodes: structural
-extraction does not resolve a name across declaration kinds or scopes, and a
-converged target is same-file name convergence, not semantic resolution.
+The dedicated `heritage-target` ID namespace cannot collide with declared
+`{language}:symbol:` identities. The node preserves the written name and
+qualified name. Its path and name make the candidate deterministic and keep
+same-spelled targets in different files separate. Targets with the same
+written name in one file share a candidate node; each relationship retains its
+own source location and evidence quality.
+
+Tree-sitter does not resolve inheritance targets semantically. Structural
+`extends` and `implements` edges therefore point to these candidates
+even when a class or interface with the same name is declared in the file.
+Recognized JavaScript prototype patterns use the same candidate identities for
+their written child and parent names and retain `Derived` evidence. A
+candidate identity records syntax and provenance; it does not claim binding.
 
 ## Explicitly out of scope
 
@@ -161,9 +169,10 @@ represented as one symbol.
 
 Interface facts changed with EC-M, so the shared ECMAScript extraction profile
 revision moved from 1 to 2; class and member identities changed with EC-3A
-(revision 2 to 3); and identifier-named class fields were added with EC-3B
-(revision 3 to 4). The TypeScript and JavaScript plugin versions fold the
-revision, so previous unit manifests invalidate and both providers re-extract;
+(revision 2 to 3); identifier-named class fields were added with EC-3B
+(revision 3 to 4); and declaration-less heritage target identities changed
+with EC-3D (revision 4 to 5). The TypeScript and JavaScript plugin versions fold
+the revision, so p4 unit manifests invalidate and both providers re-extract.
 JavaScript shares the profile and re-extracts with whatever facts its grammar
 supports. Capability-flag corrections from the same task series changed no
 facts and therefore bumped no revision.
@@ -179,6 +188,16 @@ facts and therefore bumped no revision.
   `accessor` auto-accessor fields.
 - Top-level functions, enums, namespaces, imports, and invocation
   placeholders remain name-based and converge across files.
+- Tree-sitter does not bind written `extends` or `implements` names to
+  declarations. Heritage relationships remain structural candidates, so a
+  declaration class does not gain dependents through a same-spelled target.
+- Invocations inside class `static { }` blocks are attributed to the class
+  node, reflecting lexical ownership rather than class-level execution.
+- Calls inside decorators are attributed to the decorated member node and keep
+  structural invocation evidence; decorator effects are not inferred.
+- Same-owner, same-name class members with the same member kind and
+  static/instance ownership converge to one node while retaining one physical
+  declaration per occurrence. Duplicate-member diagnostics are not produced.
 - Interface accessibility, `static`, `async`, accessor (`get`/`set`) and
   `override` keywords are not recorded; only `readonly` and the optional `?`
   marker reach the existing `modifiers` property as `readonly` and `optional`.
