@@ -11,8 +11,10 @@ inheritance capabilities corrected (finding 8); TypeScript interface member
 signatures extracted (EC-M); ECMAScript class identity scoped with class
 members and ordinary class fields extracted (EC-3A/3B, findings 1-3); and
 heritage targets moved to a separate declaration-less identity namespace
-(EC-3D, F01). The affected cells below state the corrected coverage; the audit
-baseline still describes the original inspection revision.
+(EC-3D, F01). EC-5 adds file-level TypeScript/JavaScript variable declarations
+and is documented in `docs/evidence/ec5-variable-declarations-handoff.md`.
+The affected cells below state the corrected coverage; the audit baseline
+still describes the original inspection revision.
 
 The [language roadmap](language-support-roadmap.md) records priorities. This
 catalog contains **46 features** chosen for useful repository questions rather
@@ -89,13 +91,13 @@ The common conformance requirements below apply to every row.
 | `declaration.type-alias` | Named type synonym for navigation. | L: `type` declaration; alias target meaning remains separate. | S name; no inferred target binding or expanded type expression. | Alias node plus separate positive/negative target assertions. |
 | `declaration.callable` | Functions/methods for lookup and caller analysis. | E: `callable`, declarations, `contains`. | S declaration; overload identity and receiver ownership are provider-specific. | Top-level/member/local/generator forms and signature collisions. |
 | `declaration.constructor` | Construction entry points and initialization impact. | L: `callable`; no common constructor-kind property. | S explicit declaration, R bound constructor calls; implicit constructors may have no indexed declaration. | Explicit/static/implicit cases and initializer calls checked separately. |
-| `declaration.field` | Stored members for state and reference discovery. | E: `field`, declarations, `contains`, applicable `access`/`modifiers`/`constant-value`. | S structure; computed runtime assignments do not prove declarations. | Static/instance/private/constant fields; exclude arbitrary assignments. |
+| `declaration.field` | Stored members and named file-level variables for state and reference discovery. | E: `field`, declarations, `contains`, applicable `access`/`modifiers`/`constant-value`; EC-5 uses `field` for simple top-level variables. | S structure; written `const` does not imply immutable values; computed runtime assignments do not prove declarations. | Static/instance/private/class fields and top-level variables; exclude arbitrary assignments and unsupported binding patterns. |
 | `declaration.property` | Accessor-backed or declared properties for public-surface queries. | L: `property`; language accessor/descriptor semantics vary. | S declarations; do not relabel every method or assignment a property. | Get/set/indexer/auto forms; JS descriptors require explicit separate scope. |
 | `declaration.parameter` | Callable inputs for signature navigation. | L: `parameter`, containment; typing not implied by node presence. | S named parameter; destructuring, receiver and default arguments need scoped rules. | Names/positions/owners, defaults, destructuring and unsupported patterns. |
 | `declaration.nested` | Nested owners to connect source locations to enclosing symbols. | E: declarations plus `contains` and qualified names. | S; anonymous callbacks need identity before claiming independent ownership. | Nested types/functions; enclosing-symbol lookup in their bodies. |
 | `declaration.generic-parameter` | Type parameters and constraints for generic API comprehension. | X: evaluate a `type-parameter` kind or explicit properties/relationships. | S written parameters; resolved instantiation is a different feature. | Type/method parameters, shadowing, constraints; no guessed specialization. |
 | `declaration.anonymous-function` | Lambda/function-expression identities and body ownership. | L: `callable`; stable anonymous identity/locations need design. | S; visiting a callback body does not create an independent callable. | Named variable values, inline callbacks, repeated identical bodies and edits. |
-| `declaration.merged` | One symbol with several physical declarations. | L: one symbol/node, multiple `CodeGraphDeclaration` records. | Provider identity must establish the merge; same spelling alone is insufficient. | C# partial files, TS compatible/incompatible merging, same name across modules. |
+| `declaration.merged` | One symbol with several physical declarations. | L: one symbol/node, multiple `CodeGraphDeclaration` records. | Same-file same-name ECMAScript variables share a structural candidate identity and retain each occurrence's declaration metadata; this does not verify legal declaration merging. | C# partial files, TS compatible/incompatible merging, same name across modules, conflicting same-file variable modifiers. |
 
 ### Relationships (13)
 
@@ -107,7 +109,7 @@ The common conformance requirements below apply to every row.
 | `relationship.implements` | Explicit interface adoption for implementation queries. | L: `implements`; no proof that all runtime obligations hold from syntax alone. | S written assertion or R authoritative binding. Tree-sitter keeps written names in declaration-less candidates; implicit satisfaction requires separate analysis. | Class/struct adoption, interface extension classified as inheritance. |
 | `relationship.trait-implementation` | Trait/type/implementation association for Rust navigation. | ?: assess `implements` plus implementation-block ownership. | S explicit block; R binding requires analysis context; bounds/blanket impls not guessed. | Inherent versus trait impls, associated members, conditional/blanket impls. |
 | `module.import` | Written dependency/import scope for repository navigation. | L: `imports`; C# `import-alias`, `import-static`, `import-global`, `import-scope`. | S source target or R bound namespace/type; import spelling does not bind exported symbols. | Named/default/type-only/side-effect and scoped imports, missing/external targets. |
-| `module.export` | Public exports and re-exports for module consumers. | X: export/re-export binding representation to design; `imports` alone is insufficient. | S syntax observations; R only if target binding established. | Local/default/star/renamed/re-export forms, cycles and unresolved sources. |
+| `module.export` | Public exports and re-exports for module consumers. | X: export/re-export binding representation remains to design; EC-5 retains a direct written `export` modifier on supported variable declarations only. | S syntax observation; no export-binding relationship or resolved module surface. R only if target binding is established. | Local/default/star/renamed/re-export forms, cycles, unresolved sources, and distinction between a declaration modifier and an export binding. |
 | `relationship.depends-on` | Project/package dependencies for architecture and impact. | L: `depends-on`, `project`/`package`, `package-version`, `package-condition`. | S declared packages; current C# project links use R in its constructed context. No evaluated conditions or transitive closure. | Internal/missing/cyclic projects, conditional/versionless packages, caps. |
 | `relationship.calls` | Bound caller/callee for impact and test selection. | E: `calls`. | R only, relative to named semantic context; no name matching or complete runtime dispatch claim. | Overloads, constructors, generic/extension/interface dispatch, unresolved/ambiguous/external negatives. |
 | `relationship.invokes-name` | Unbound invocation spelling for structural comprehension. | E: `invokes-name` to declaration-less `callable`. | S only; a matching node name cannot become a resolved call. Tree-sitter attributes static-block calls to the class node and decorator calls to the decorated member node. | Simple/member/new forms; exclude JSX/control forms and unnameable dynamic targets. |
@@ -155,20 +157,20 @@ even if the enclosing construct's node or callback-body facts survive.
 | `declaration.type-alias` | A:NI/- | A:V/S | N:NA/- | A:NI/- | CS-D, EC-D, EL-D (@type skipped) |
 | `declaration.callable` | A:V/S | A:V/S | A:V/S | A:V/S | CS-D, EC-D, EC-M, EC-C, EL-D |
 | `declaration.constructor` | A:V/S | A:P/S | A:V/S | N:NA/- | CS-R, EC-D |
-| `declaration.field` | A:V/S | A:V/S | A:V/S | A:NI/- | CS-D, EC-F (class fields), EL-D |
+| `declaration.field` | A:V/S | A:V/S | A:V/S | A:NI/- | CS-D, EC-F (class fields), EC-5 (file-level variables), EL-D |
 | `declaration.property` | A:V/S | A:V/S | A:V/S | N:NA/- | CS-D, EC-M, EC-F (interface signatures and class fields) |
 | `declaration.parameter` | A:V/S | A:NI/- | A:NI/- | A:NI/- | CS-D, EC-D, EL-D |
 | `declaration.nested` | A:V/S | A:V/S | A:P/S | A:P/S | CS-R local functions, EC-D Geometry/helper, EL-D |
 | `declaration.generic-parameter` | A:NI/- | A:NI/- | N:NA/- | N:NA/- | CS-D, EC-D |
 | `declaration.anonymous-function` | A:NI/- | A:P/S | A:P/S | A:NI/- | CS-D, EC-D HandleDeclarator, EL-D stoplist |
-| `declaration.merged` | A:V/S | A:P/S | N:NA/- | A:P/S | CS-D partials; EC-D/EC-M/EC-C name-derived identities; EL-D |
-| `relationship.contains` | A:V/S | A:V/S | A:V/S | A:V/S | CS-D, EC-D, EC-M, EC-C, EL-D |
-| `relationship.declares` | A:V/S | A:V/S | A:P/S | A:V/S | CS-D, EC-D, EL-D |
+| `declaration.merged` | A:V/S | A:P/S | A:P/S | A:P/S | CS-D partials; EC-D/EC-M/EC-C/EC-5 name-derived identities and physical occurrences; EL-D |
+| `relationship.contains` | A:V/S | A:V/S | A:V/S | A:V/S | CS-D, EC-D, EC-M, EC-C, EC-5, EL-D |
+| `relationship.declares` | A:V/S | A:V/S | A:V/S | A:V/S | CS-D, EC-D, EC-5, EL-D |
 | `relationship.inherits` | A:V/R | A:V/S | A:V/S,D | N:NA/- | CS-R, EC-H, EC-C, EC-3D |
 | `relationship.implements` | A:V/R | A:V/S | N:NA/- | A:NI/- | CS-R, EC-H; EL-D no defimpl mapping |
 | `relationship.trait-implementation` | N:NA/- | N:NA/- | N:NA/- | N:NA/- | Rust-specific feature scope |
 | `module.import` | A:V/R | A:V/S | A:V/S | A:V/S | CS-R imports; EC-I; EL-I |
-| `module.export` | N:NA/- | A:P/S | A:P/S | A:NI/- | EC-I handles declarations/source only; EL-D |
+| `module.export` | N:NA/- | A:P/S | A:P/S | A:NI/- | EC-I source observations; EC-5 direct variable modifier only, no binding; EL-D |
 | `relationship.depends-on` | A:V/S,R | A:NI/- | A:NI/- | A:NI/- | CS-P; EC-D/EL-D only imports |
 | `relationship.calls` | A:V/R | A:NI/- | A:NI/- | A:NI/- | CS-R; EC-I/EL-I negative assertions |
 | `relationship.invokes-name` | A:NI/- | A:V/S | A:V/S | A:V/S | CS-R; EC-I, EL-I |
@@ -217,6 +219,7 @@ dispatch and emitted kinds, not the absence of a test name.
 | EC-M | Same profile: EmitInterfaceMembers/TryEmitInterfaceMember/MemberProperties; path-scoped interface identity recorded in [ECMAScript symbol identity](ecmascript-symbol-identity.md) | Same TS tests: `ExtractAsync_ModelsInterfaceMembersWithContainmentAndLocations`, `ExtractAsync_RecordsOptionalAndReadonlyInterfaceModifiers`, `ExtractAsync_KeepsEveryInterfaceMethodOverloadSignature`, `ExtractAsync_KeepsIdenticallyNamedMembersOnDistinctInterfaces`, `ExtractAsync_KeepsSameNameInterfacesInSeparateModulesDistinct`, `ExtractAsync_SkipsComputedAndUnsupportedInterfaceMemberNames`, `ExtractAsync_PreservesValidInterfaceFactsFromPartialFiles`, `ExtractAsync_RepeatsInterfaceFactsDeterministically`, `IndexAsync_RemovesStaleInterfaceMembersOnReindex`, `IndexAsync_AnswersExactInterfaceDeclarationAndContainmentQueries`, `Plan_InvalidatesPreviousExtractionProfileRevisions`. |
 | EC-C | Same profile: path-scoped class identity, EmitClassMember/HandleClassMethod/MethodShape, file-scoped StructuralTypeNode; policy in [ECMAScript symbol identity](ecmascript-symbol-identity.md) | [Class identity tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaClassIdentityTests.cs): `ExtractAsync_KeepsSameNameClassesAndMethodsDistinctAcrossTypeScriptModules`, `ExtractAsync_KeepsSameNameClassesAndMethodsDistinctAcrossJavaScriptModules`, `ExtractAsync_KeepsSameNameMembersOnUnrelatedClassesDistinct`, `ExtractAsync_KeepsStaticAndInstanceMethodsWithTheSameNameDistinct`, `ExtractAsync_KeepsMethodsAndAccessorsWithTheSameNameDistinct`, `ExtractAsync_KeepsJavaScriptStaticAccessorsAndInstanceMethodsDistinct`, `ExtractAsync_HandlesJavaScriptCombinedStaticGetToken`, `ExtractAsync_KeepsSameNameClassAndInterfaceDistinct`, `ExtractAsync_NestedClassDeclarationsRetainTheirOwnerAndIdentity`, `ExtractAsync_ConvergesDuplicateClassDeclarationsInOneFileWithSeparateDeclarations`, `ExtractAsync_KeepsClassIdentityStableAcrossUnrelatedEdits`, `ExtractAsync_HeritageTargetConvergesWithSameFileClassDeclaration`, `ExtractAsync_HeritagePlaceholdersStayFileScoped`, `ExtractAsync_ImplementsTargetStaysDeclarationLess`; [lifecycle tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaClassLifecycleTests.cs): `IndexAsync_KeepsSameNameClassesDistinctThroughQueries`. |
 | EC-F | Same profile: HandleClassField/FieldProperties (TypeScript `public_field_definition`, JavaScript `field_definition`) | [Class member tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaClassMemberTests.cs): `ExtractAsync_ModelsTypeScriptClassFieldsWithContainmentAndLocations`, `ExtractAsync_RecordsTypeScriptFieldModifiersAndAccess`, `ExtractAsync_ModelsJavaScriptClassFields`, `ExtractAsync_KeepsFieldAndMethodWithTheSameNameDistinct`, `ExtractAsync_AttributesInitializerInvocationsToTheField`, `ExtractAsync_SkipsComputedPrivateAndAccessorFields`, `ExtractAsync_PreservesValidClassFactsFromPartialFiles`, `ExtractAsync_RepeatsClassMemberFactsDeterministically`, `IndexAsync_AnswersExactClassMemberAndEnclosingSymbolQueries`; [lifecycle tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaClassLifecycleTests.cs): `IndexAsync_RemovesRenamedAndRemovedClassMembers`, `IndexAsync_RemovesFactsForRenamedClasses`, `IndexAsync_RemovesClassFactsWhenSourceFileIsDeleted`. |
+| EC-5 | Same profile: `HandleVariableDeclaration` for file-level `lexical_declaration`/`variable_declaration`; `field` identity is path-scoped and discriminator-specific. | [Variable tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaVariableTests.cs): `ExtractAsync_ModelsTypeScriptFileVariablesWithWrittenModifiersAndLocations`, `ExtractAsync_ModelsJavaScriptVariablesThroughMjsPipeline`, `ExtractAsync_KeepsVariableIdentitiesFileScopedKindScopedAndDeterministic`, `ExtractAsync_SkipsLocalDestructuredAndMalformedBindings`; [publication tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaVariableLifecycleTests.cs): `IndexAsync_PublishesAndReplacesVariableFactsAcrossIncrementalChanges`, `IndexAsync_IndexesMjsVariablesThroughTheJavaScriptPipeline`; revision invalidation is covered by `TreeSitterTypeScriptPluginTests.Plan_InvalidatesPreviousExtractionProfileRevisions`. |
 | EL-D | [ElixirExtractionProfile](../src/Penghou.Hetu.TreeSitter/ElixirExtractionProfile.cs): module/function target sets, Walk, TryEmitModule/Function | [Elixir tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterElixirPluginTests.cs): `ExtractAsync_ModelsModulesFunctionsAndContainment`; protocol/macro branches lack dedicated output assertions. |
 | EL-I | Same profile: ImportTargets, TryEmitImport/Invocation, attribute and control-form skipping | Same Elixir tests: `ExtractAsync_EmitsImportsAndStructuralInvocationsOnly`, `ExtractAsync_ScopesScriptInvocationsToTheirFile`, `ExtractAsync_ReportsCapabilitiesHonestly`. |
 
@@ -233,7 +236,12 @@ dispatch and emitted kinds, not the absence of a test name.
    accessibility metadata (`EC-F`). Computed, string, numeric and private
    member names, call/construct/index signatures, `accessor` auto-accessor
    fields, and `abstract_method_signature` declarations are not emitted, nor
-   are parameters and generic parameters. Aliases return after their name;
+   are parameters and generic parameters. EC-5 additionally emits simple,
+   named file-level variable declarators as `field` nodes in TypeScript and
+   JavaScript, with physical declaration spans, file containment, written
+   `const`/`let`/`var`, and direct `export` metadata. Function/block locals,
+   destructuring, type resolution, constant evaluation and export binding are
+   excluded. Aliases return after their name;
    union/intersection/type-expression components are not extracted. Enum bodies
    are walked but no enum-member handler exists.
 2. **Symbol identity has recorded interface and class amendments.** Variable
@@ -265,13 +273,15 @@ dispatch and emitted kinds, not the absence of a test name.
    fixture. Arbitrary mutations, shadowed builtins, dynamic bases and runtime
    prototype state are not resolved. A structural plugin can therefore contain
    both S and D facts; “all Tree-sitter facts are Structural” is inaccurate.
-5. **Imports are not exports or package dependencies.** ESM source strings and
-   literal `require` produce imports to placeholder `type` nodes. Import binding
-   names/type-only flags are not retained. Exported declarations are traversed;
-   re-export source strings become imports, and specifiers/default/public export
-   bindings are not modeled. `module.exports`/`exports` assignments have no export
-   handler. Dynamic `require` cannot establish an import. No Tree-sitter profile
-   emits semantic calls, references, or `depends-on` relationships.
+5. **Imports are not export bindings or package dependencies.** ESM source
+   strings and literal `require` produce imports to placeholder `type` nodes.
+   Import binding names/type-only flags are not retained. EC-5 preserves the
+   direct written `export` modifier on supported file-level variable
+   declarations, but re-export source strings become imports, and
+   specifiers/default/public export bindings are not modeled. `module.exports`/
+   `exports` assignments have no export handler. Dynamic `require` cannot
+   establish an import. No Tree-sitter profile emits semantic calls,
+   references, or `depends-on` relationships.
 6. **C# preserves its semantic strengths and limits.** Project-aware Roslyn
    provides internal/cross-project calls, references, explicit heritage and scoped
    imports. Generic calls normalize to definitions; this does not emit generic

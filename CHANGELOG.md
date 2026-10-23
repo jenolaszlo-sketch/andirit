@@ -6,6 +6,24 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Phase 0: ECMAScript file-level variable declarations (EC-5):
+
+- TypeScript and JavaScript now emit named top-level `const`, `let`, and `var`
+  declarators as `field` nodes with file containment/declaration edges, exact
+  physical declarator locations, and existing `modifiers` metadata. Directly
+  written `export` is retained as a modifier; export lists, bindings, type
+  resolution, constant evaluation, local scopes, and destructuring remain
+  unsupported. Function-valued variables retain the previous callable
+  projection, and initializer calls keep their prior lexical attribution.
+- Variable identities use the `variable` discriminator and source path plus
+  written name. Duplicate same-file occurrences share a candidate node while
+  each physical declaration preserves its location and written metadata; this
+  does not claim declaration merging. The shared ECMAScript profile moves to
+  revision 6 so p5 source units invalidate and re-extract.
+- Deterministic TypeScript/JavaScript fixtures, incremental published-graph
+  tests, and the EC-4 website commit comparison are recorded in
+  `docs/evidence/ec5-variable-declarations-handoff.md`.
+
 Phase 0: ECMAScript heritage target identity correction (EC-3D):
 
 - Written `extends` and `implements` names now use file-scoped declaration-less

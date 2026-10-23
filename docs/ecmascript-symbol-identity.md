@@ -131,6 +131,50 @@ Resulting behavior (fixture-verified in
   remains a documented limitation.
 - **Unrelated edits** do not move class or member identities.
 
+## EC-5: file-level variable declarations
+
+The shared TypeScript/JavaScript profile emits named top-level
+`lexical_declaration` and `variable_declaration` declarators as `field` nodes.
+Only simple identifier bindings are accepted; block/function locals and
+destructuring are skipped. The identity is:
+
+```text
+{language}:symbol:{sha256("variable" + "\n" + source-path + "\n" + written-name)}
+```
+
+The `variable` discriminator separates these declarations from classes,
+interfaces, callables, aliases, and owner-derived class members. The source
+path keeps same-named variables in different files distinct. No physical
+offset is included, so unrelated edits preserve identity; renaming the
+variable or moving it to another file changes identity.
+
+Each `variable_declarator` produces its own `CodeGraphDeclaration` span, even
+when a statement contains multiple declarators or same-file declarations
+repeat a name. Same-file same-name variables converge on one candidate symbol
+with one physical declaration per occurrence. This is an identity policy, not
+a claim that the language permits or semantically merges the declarations.
+Each physical declaration retains its own `language` and `modifiers`
+properties. If repeated occurrences disagree, the shared symbol's `modifiers`
+contains only keywords common to every occurrence (and may be absent), while
+the per-declaration properties retain the exact written modifiers.
+
+The existing `modifiers` property records the written declaration keyword
+`const`, `let`, or `var`, plus `export` only for a direct `export const/let/var`
+declaration. `const` does not imply an immutable initializer value. Export
+lists, default expressions, re-export binding, and module relationships remain
+unmodeled. No export-binding edge is emitted.
+
+Variable declarations use file `declares` and `contains` edges and exact
+structural locations. Initializer invocation ownership retains the existing
+lexical behavior. A variable initialized with a function/arrow expression
+continues to receive the pre-existing separate `callable` projection; EC-5
+adds the variable field identity and does not reinterpret that expression as
+a function declaration.
+
+Profile revision 6 changes the TypeScript and JavaScript plugin versions so
+previous `.p5` source units re-extract. Ordinary source-unit replacement
+removes renamed, removed, and deleted variable facts without a graph migration.
+
 ## Heritage target identities
 
 Every written class or interface heritage name uses a file-scoped,

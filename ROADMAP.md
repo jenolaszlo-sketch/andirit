@@ -669,8 +669,13 @@ AI parsing and arbitrary generated runtime code remain out of scope.
 
 TypeScript/JavaScript landed as the second structural provider in the
 `Penghou.Hetu.TreeSitter` package (Phase 3B), with a concrete consumer in the
-Astro/TypeScript `website` repository. `Penghou.Hetu.Generator` remains
-reserved for later. The approved expansion sequence is recorded in
+Astro/TypeScript `website` repository. EC-5 now records named file-level
+TypeScript/JavaScript variables as `field` declarations with direct written
+`export` metadata; it does not model export bindings, local variables, or
+resolved types. The exact revision and real-repository evidence are recorded
+in `docs/evidence/ec5-variable-declarations-handoff.md`.
+`Penghou.Hetu.Generator` remains reserved for later. The approved expansion
+sequence is recorded in
 [Milestone 8B](#milestone-8b--language-feature-catalog-and-phased-language-expansion)
 and the [language roadmap](docs/language-support-roadmap.md). It does not require
 generator work or select parser technology. New plugins must validate the shared

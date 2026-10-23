@@ -60,8 +60,8 @@ It is intentionally outside the first milestone.
 | Language | Provider | Current status | Roadmap |
 | --- | --- | --- | --- |
 | C# | Roslyn | Existing semantic extraction with documented limitations | Maintain/enhance |
-| TypeScript | Tree-sitter | Existing structural extraction | Phase 0 improvement |
-| JavaScript | Tree-sitter | Existing structural extraction | Phase 0 improvement |
+| TypeScript | Tree-sitter | Structural subset includes file-level named variables (EC-5); exports are written modifiers, not bindings | Phase 0 improvement |
+| JavaScript | Tree-sitter | Structural subset includes file-level named variables (EC-5); exports are written modifiers, not bindings | Phase 0 improvement |
 | Elixir | Tree-sitter | Existing structural extraction | Maintain |
 | Python | TBD | Planned | Phase 1 |
 | Java | TBD | Planned | Phase 1 |

@@ -33,8 +33,8 @@ plugin. Recognizing a file extension or obtaining a grammar is not support.
 | 3 | Kotlin | Test extension functions, properties, companion objects, top-level declarations, sealed types, and Kotlin-specific semantics. Reuse suitable Java mappings without assuming Kotlin is Java with different syntax. |
 
 Phase 0 must establish a usable foundation before another language is added.
-Creating these documents completes the initial design inventory; it does not
-complete Phase 0 improvements or implement any expansion phase.
+The initial design inventory and EC-5 variable subset are complete; other
+Phase 0 improvements and all expansion phases remain open.
 
 ## Phase 0 foundation and improvement queue
 
@@ -49,8 +49,11 @@ questions and scoped fixtures attached to each advertised feature.
    signatures, ordinary class methods/accessors/overload signatures, and
    identifier-named class fields landed with EC-M and EC-3A/3B (2026-10-22),
    alongside path-scoped class/interface identities and owner-derived member
-   identities. Still open: enum members, parameters, generic parameters,
-   anonymous-class/class-expression ownership, and stable overload identities.
+   identities. EC-5 adds file-level simple variable declarators as `field`
+   nodes with written `const`/`let`/`var` and direct `export` metadata. It does
+   not add export binding or type resolution. Still open: enum members,
+   parameters, generic parameters, anonymous-class/class-expression
+   ownership, and stable overload identities.
    A parser recognizing a construct is insufficient; the matrix records the
    verified subset and limitations.
 3. Design module/export/alias semantics and type relationships before promising a
