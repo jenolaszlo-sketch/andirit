@@ -383,7 +383,7 @@ public sealed class TreeSitterEcmaClassIdentityTests
     }
 
     [Fact]
-    public async Task ExtractAsync_HeritageTargetConvergesWithSameFileClassDeclaration()
+    public async Task ExtractAsync_HeritageTargetStaysDeclarationlessBesideSameNameClass()
     {
         var extracted = await TreeSitterTestSupport.ExtractAsync(
             new TreeSitterTypeScriptPlugin(),
@@ -394,13 +394,59 @@ public sealed class TreeSitterEcmaClassIdentityTests
 
         var baseClass = Assert.Single(
             extracted.Nodes,
-            node => node.Kind == CodeNodeKinds.Type && node.QualifiedName == "Base");
+            node => node.Kind == CodeNodeKinds.Type &&
+                node.QualifiedName == "Base" &&
+                node.SymbolId is not null);
         var inherits = Assert.Single(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.Inherits);
+        var target = Assert.Single(extracted.Nodes, node => node.Id == inherits.TargetId);
 
-        // The written `extends Base` converges with the same-file class
-        // declaration; this is same-file name convergence, not resolution.
-        Assert.Equal(baseClass.Id, inherits.TargetId);
-        Assert.NotNull(Assert.Single(extracted.Nodes, node => node.Id == inherits.TargetId).SymbolId);
+        Assert.Equal("Base", target.Name);
+        Assert.Equal("Base", target.QualifiedName);
+        Assert.Null(target.SymbolId);
+        Assert.NotEqual(baseClass.Id, target.Id);
+        Assert.DoesNotContain(extracted.Declarations, declaration => declaration.SymbolNodeId == target.Id);
+        Assert.Equal(EvidenceQuality.Structural, inherits.Evidence.Quality);
+    }
+
+    [Fact]
+    public async Task ExtractAsync_ShadowedHeritageTargetDoesNotConvergeWithOuterClass()
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/heritage-shadow.ts", """
+                class Base {}
+                function create() {
+                  class Base {}
+                  class Derived extends Base {}
+                  return Derived;
+                }
+                """));
+
+        var topLevelBase = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Type &&
+                node.QualifiedName == "Base" &&
+                node.SymbolId is not null);
+        var nestedBase = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Type &&
+                node.QualifiedName == "create.Base" &&
+                node.SymbolId is not null);
+        var derived = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Type &&
+                node.QualifiedName == "create.Derived" &&
+                node.SymbolId is not null);
+        var inherits = Assert.Single(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.Inherits);
+        var target = Assert.Single(extracted.Nodes, node => node.Id == inherits.TargetId);
+
+        Assert.Equal(derived.Id, inherits.SourceId);
+        Assert.Equal("Base", target.Name);
+        Assert.Equal("Base", target.QualifiedName);
+        Assert.Null(target.SymbolId);
+        Assert.NotEqual(topLevelBase.Id, target.Id);
+        Assert.NotEqual(nestedBase.Id, target.Id);
+        Assert.DoesNotContain(extracted.Declarations, declaration => declaration.SymbolNodeId == target.Id);
         Assert.Equal(EvidenceQuality.Structural, inherits.Evidence.Quality);
     }
 
@@ -417,6 +463,8 @@ public sealed class TreeSitterEcmaClassIdentityTests
             .ToArray();
         Assert.Equal(2, placeholders.Length);
         Assert.Equal(2, placeholders.Select(node => node.Id).Distinct().Count());
+        Assert.All(placeholders, node =>
+            Assert.StartsWith("typescript:heritage-target:", node.Id.Value, StringComparison.Ordinal));
         Assert.All(placeholders, node => Assert.Null(node.SymbolId));
 
         var inherits = extracted.Edges.Where(edge => edge.Kind == CodeEdgeKinds.Inherits).ToArray();

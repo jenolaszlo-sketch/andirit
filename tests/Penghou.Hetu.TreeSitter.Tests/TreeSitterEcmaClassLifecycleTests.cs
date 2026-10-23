@@ -8,6 +8,112 @@ namespace Penghou.Hetu.TreeSitter.Tests;
 public sealed class TreeSitterEcmaClassLifecycleTests
 {
     [Fact]
+    public async Task IndexAsync_PublishedShadowedHeritageDoesNotImpactSameNameClass()
+    {
+        var directory = Directory.CreateTempSubdirectory("hetu-ts-lifecycle-heritage-shadow-");
+        try
+        {
+            var src = Directory.CreateDirectory(Path.Combine(directory.FullName, "src"));
+            var path = Path.Combine(src.FullName, "shadow.ts");
+            await File.WriteAllTextAsync(path, """
+                class Base {}
+                function create() {
+                  class Base {}
+                  class Derived extends Base {}
+                  return Derived;
+                }
+                """);
+            var (repositoryId, store, indexing) = CreateService();
+            var descriptor = new CodeRepositoryDescriptor(repositoryId, directory.FullName);
+            var queries = new CodeGraphQueryService(store);
+
+            var indexed = await indexing.IndexAsync(descriptor, new CodeIndexRunId("run:heritage-shadow"));
+            Assert.Equal(CodeIndexRunStatus.Completed, indexed.Diagnostics.Status);
+
+            var topLevelBase = Assert.Single(
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Base")).Candidates,
+                node => node.SymbolId is not null);
+            var nestedBase = Assert.Single(
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "create.Base")).Candidates);
+            var derived = Assert.Single(
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "create.Derived")).Candidates);
+            var neighborhood = await queries.GetNeighborhoodAsync(
+                repositoryId,
+                derived.Id,
+                [CodeEdgeKinds.Inherits],
+                new CodeGraphQueryOptions(maxDepth: 1, maxNodes: 20, maxEdges: 20));
+            var edge = Assert.Single(neighborhood.Edges);
+            var target = Assert.Single(neighborhood.Nodes, node => node.Id == edge.TargetId);
+
+            Assert.Equal(derived.Id, edge.SourceId);
+            Assert.Equal("Base", target.Name);
+            Assert.Equal("Base", target.QualifiedName);
+            Assert.Null(target.SymbolId);
+            Assert.NotEqual(topLevelBase.Id, target.Id);
+            Assert.NotEqual(nestedBase.Id, target.Id);
+            Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality);
+            Assert.Equal("src/shadow.ts", edge.Evidence.Location?.Path);
+
+            var topLevelImpact = await queries.GetImpactSetAsync(repositoryId, topLevelBase.Id);
+            Assert.DoesNotContain(topLevelImpact.Nodes, node => node.Id == derived.Id);
+            var targetImpact = await queries.GetImpactSetAsync(repositoryId, target.Id);
+            Assert.Contains(targetImpact.Nodes, node => node.Id == derived.Id);
+        }
+        finally
+        {
+            directory.Delete(recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task IndexAsync_OrdinaryReindexReplacesHeritageEdgesAndTargets()
+    {
+        var directory = Directory.CreateTempSubdirectory("hetu-ts-lifecycle-heritage-reindex-");
+        try
+        {
+            var src = Directory.CreateDirectory(Path.Combine(directory.FullName, "src"));
+            var path = Path.Combine(src.FullName, "child.ts");
+            await File.WriteAllTextAsync(path, "class Child extends OldBase implements OldContract {}");
+            var (repositoryId, store, indexing) = CreateService();
+            var descriptor = new CodeRepositoryDescriptor(repositoryId, directory.FullName);
+            var queries = new CodeGraphQueryService(store);
+
+            var first = await indexing.IndexAsync(descriptor, new CodeIndexRunId("run:heritage-first"));
+            Assert.Equal(CodeIndexRunStatus.Completed, first.Diagnostics.Status);
+            var child = Assert.Single(
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Child")).Candidates);
+            var firstNeighborhood = await queries.GetNeighborhoodAsync(
+                repositoryId,
+                child.Id,
+                [CodeEdgeKinds.Inherits, CodeEdgeKinds.Implements],
+                new CodeGraphQueryOptions(maxDepth: 1, maxNodes: 20, maxEdges: 20));
+            Assert.Contains(firstNeighborhood.Edges, edge => edge.Kind == CodeEdgeKinds.Inherits);
+            Assert.Contains(firstNeighborhood.Edges, edge => edge.Kind == CodeEdgeKinds.Implements);
+            Assert.Contains(firstNeighborhood.Nodes, node => node.Name == "OldBase" && node.SymbolId is null);
+            Assert.Contains(firstNeighborhood.Nodes, node => node.Name == "OldContract" && node.SymbolId is null);
+
+            await File.WriteAllTextAsync(path, "class Child extends NewBase {}");
+            var second = await indexing.IndexAsync(descriptor, new CodeIndexRunId("run:heritage-second"));
+            Assert.Equal(CodeIndexRunStatus.Completed, second.Diagnostics.Status);
+
+            var currentNeighborhood = await queries.GetNeighborhoodAsync(
+                repositoryId,
+                child.Id,
+                [CodeEdgeKinds.Inherits, CodeEdgeKinds.Implements],
+                new CodeGraphQueryOptions(maxDepth: 1, maxNodes: 20, maxEdges: 20));
+            var currentEdge = Assert.Single(currentNeighborhood.Edges);
+            Assert.Equal(CodeEdgeKinds.Inherits, currentEdge.Kind);
+            Assert.Contains(currentNeighborhood.Nodes, node => node.Name == "NewBase" && node.SymbolId is null);
+            Assert.DoesNotContain(currentNeighborhood.Nodes, node => node.Name is "OldBase" or "OldContract");
+            Assert.DoesNotContain(currentNeighborhood.Edges, edge => edge.Kind == CodeEdgeKinds.Implements);
+        }
+        finally
+        {
+            directory.Delete(recursive: true);
+        }
+    }
+
+    [Fact]
     public async Task IndexAsync_RemovesRenamedAndRemovedClassMembers()
     {
         var directory = Directory.CreateTempSubdirectory("hetu-ts-lifecycle-members-");

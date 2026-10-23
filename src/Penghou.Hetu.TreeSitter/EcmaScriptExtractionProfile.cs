@@ -35,8 +35,11 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     /// 4: identifier-named class fields emit `property` members with
     ///    declarations, containment, and written modifier metadata; their
     ///    initializer invocations are attributed to the field.
+    /// 5: written heritage names use declaration-less identities in a
+    ///    separate namespace from declared symbols, preventing name-only
+    ///    convergence with same-file declarations.
     /// </summary>
-    internal const int ProfileRevision = 4;
+    internal const int ProfileRevision = 5;
 
     // Kinds both grammars can emit. `implements` exists only in TypeScript, so
     // JavaScript reports it as not-produced rather than claiming an empty set.
@@ -429,17 +432,15 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     }
 
     /// <summary>
-    /// Resolves a heritage type name to a declaration-less type node. The
-    /// identity binds the source path, so a written base name converges with a
-    /// same-file top-level class declaration but never with an unrelated class
-    /// in another file. Interface targets and namespaced declarations remain
-    /// separate candidate nodes: structural extraction does not resolve names
-    /// across declaration kinds, and a converged target is not a semantic
-    /// resolution claim.
+    /// Creates a declaration-less type node for a written heritage name. A
+    /// dedicated identity namespace and source path keep it separate from
+    /// declared symbols and candidates in other files. The node preserves the
+    /// written name; the relationship preserves its source location and
+    /// evidence quality. Tree-sitter does not bind heritage names semantically.
     /// </summary>
     private CodeNodeId StructuralTypeNode(string name)
     {
-        var nodeId = new CodeNodeId($"{_language}:symbol:{Hash($"class\n{_path}\n{name}")}");
+        var nodeId = new CodeNodeId($"{_language}:heritage-target:{Hash($"{_path}\n{name}")}");
         AddNode(new CodeGraphNode(nodeId, CodeNodeKinds.Type, ShortName(name), name));
         return nodeId;
     }

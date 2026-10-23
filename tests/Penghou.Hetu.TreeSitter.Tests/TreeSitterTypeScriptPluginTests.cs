@@ -536,10 +536,12 @@ public sealed class TreeSitterTypeScriptPluginTests
         var first = await TreeSitterTestSupport.ExtractAsync(
             new TreeSitterTypeScriptPlugin(),
             ("src/widget.ts", TypeScriptSource),
-            ("src/broken.ts", BrokenSource));
+            ("src/broken.ts", BrokenSource),
+            ("src/heritage.ts", "class Child extends Base implements Contract {}"));
         var second = await TreeSitterTestSupport.ExtractAsync(
             new TreeSitterTypeScriptPlugin(),
             ("src/broken.ts", BrokenSource),
+            ("src/heritage.ts", "class Child extends Base implements Contract {}"),
             ("src/widget.ts", TypeScriptSource));
 
         Assert.Equal(JsonSerializer.Serialize(first.Nodes), JsonSerializer.Serialize(second.Nodes));
@@ -598,7 +600,7 @@ public sealed class TreeSitterTypeScriptPluginTests
         var packageVersion = typeof(TreeSitterTypeScriptPlugin).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion.Split('+', 2)[0];
-        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p4", plugin.Version);
+        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p5", plugin.Version);
     }
 
     [Fact]
@@ -790,7 +792,7 @@ public sealed class TreeSitterTypeScriptPluginTests
             var initial = await planner.CreatePlanAsync(source);
             var item = Assert.Single(initial.Items);
             Assert.Equal(CodeIndexPlanStatus.New, item.Status);
-            Assert.EndsWith(".p4", item.Manifest.PluginVersion, StringComparison.Ordinal);
+            Assert.EndsWith(".p5", item.Manifest.PluginVersion, StringComparison.Ordinal);
 
             // A previous publication from an older extraction-profile revision
             // must re-extract even though plugin identity and content are

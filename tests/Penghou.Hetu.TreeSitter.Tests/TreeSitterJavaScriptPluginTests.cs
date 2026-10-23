@@ -127,12 +127,27 @@ public sealed class TreeSitterJavaScriptPluginTests
 
         var inherits = extracted.Edges.Where(edge => edge.Kind == CodeEdgeKinds.Inherits).ToArray();
 
-        // ES6 `extends` is a grammar-level fact and stays structural.
-        Assert.Contains(
+        // ES6 extends is a grammar-level fact. Its written base remains a
+        // declaration-less candidate even beside a same-name declaration.
+        var baseClass = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Type &&
+                node.QualifiedName == "Base" &&
+                node.SymbolId is not null);
+        var derivedClass = Assert.Single(
+            extracted.Nodes,
+            node => node.Kind == CodeNodeKinds.Type &&
+                node.QualifiedName == "Derived" &&
+                node.SymbolId is not null);
+        var structuralEdge = Assert.Single(
             inherits,
             edge => SourceName(extracted, edge) == "Derived" &&
                 TargetName(extracted, edge) == "Base" &&
                 edge.Evidence.Quality == EvidenceQuality.Structural);
+        var baseTarget = Assert.Single(extracted.Nodes, node => node.Id == structuralEdge.TargetId);
+        Assert.Equal(derivedClass.Id, structuralEdge.SourceId);
+        Assert.NotEqual(baseClass.Id, baseTarget.Id);
+        Assert.Null(baseTarget.SymbolId);
 
         // Prototype idioms are recognized patterns, never presented as
         // structural or resolved facts.
@@ -144,6 +159,14 @@ public sealed class TreeSitterJavaScriptPluginTests
                     TargetName(extracted, edge) == "Base" &&
                     edge.Evidence.Quality == EvidenceQuality.Derived);
         }
+
+        Assert.All(
+            inherits.Where(edge => edge.Evidence.Quality == EvidenceQuality.Derived),
+            edge =>
+            {
+                Assert.Null(extracted.Nodes.Single(node => node.Id == edge.SourceId).SymbolId);
+                Assert.Null(extracted.Nodes.Single(node => node.Id == edge.TargetId).SymbolId);
+            });
     }
 
     [Fact]
@@ -167,10 +190,12 @@ public sealed class TreeSitterJavaScriptPluginTests
         var first = await TreeSitterTestSupport.ExtractAsync(
             new TreeSitterJavaScriptPlugin(),
             ("src/store.js", JavaScriptSource),
-            ("src/broken.js", BrokenSource));
+            ("src/broken.js", BrokenSource),
+            ("src/legacy.js", PrototypeSource));
         var second = await TreeSitterTestSupport.ExtractAsync(
             new TreeSitterJavaScriptPlugin(),
             ("src/broken.js", BrokenSource),
+            ("src/legacy.js", PrototypeSource),
             ("src/store.js", JavaScriptSource));
 
         Assert.Equal(JsonSerializer.Serialize(first.Nodes), JsonSerializer.Serialize(second.Nodes));
@@ -226,7 +251,7 @@ public sealed class TreeSitterJavaScriptPluginTests
         var packageVersion = typeof(TreeSitterJavaScriptPlugin).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion.Split('+', 2)[0];
-        Assert.Equal($"{packageVersion}+v0.25.0.abi15.p4", plugin.Version);
+        Assert.Equal($"{packageVersion}+v0.25.0.abi15.p5", plugin.Version);
     }
 
     private static string InvokedName(Extraction extracted, CodeGraphEdge edge) =>
