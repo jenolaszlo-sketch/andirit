@@ -33,8 +33,23 @@ plugin. Recognizing a file extension or obtaining a grammar is not support.
 | 3 | Kotlin | Test extension functions, properties, companion objects, top-level declarations, sealed types, and Kotlin-specific semantics. Reuse suitable Java mappings without assuming Kotlin is Java with different syntax. |
 
 Phase 0 must establish a usable foundation before another language is added.
-The initial design inventory and EC-5 variable subset are complete; other
-Phase 0 improvements and all expansion phases remain open.
+The initial design inventory and the ECMAScript increments EC-3D, EC-4, and
+EC-5 are complete; other Phase 0 improvements and all expansion phases remain
+open.
+
+### ECMAScript milestone closure (2026-10-23)
+
+| Milestone | Status | Scope and evidence |
+| --- | --- | --- |
+| EC-3D heritage target identity correction | Closed: **VERIFIED WITH QUALIFICATIONS** | The original false heritage binding was corrected and independently verified. Verification is preserved on `review/ec3-glm-q2` at `1287590ee0c46bd863873d30baea633c3b04ef13` (`docs/reviews/ec3-glm-q2-heritage-remediation-verification.md`). |
+| EC-4 real-repository qualification | Closed: **USEFUL WITH QUALIFICATIONS** | Real-repository evaluation of `jenolaszlo-sketch/website@f9cca1773a32bb517e624cc380e1f6d14e0cc317` with source-grounded verification. The report is preserved on `review/ec4-real-repository-qualification` at `1fbc113`; its consumer lookup guidance is incorporated into `docs/consumer-guidance-qualified-name-lookup.md`. |
+| EC-5 file-level variable declarations | Closed: **VERIFIED WITH QUALIFICATIONS** | Independent GLM qualification reproduced 21/21 website declarations discovered, 11/11 directly exported, zero false positives or false negatives within the evaluated subset, 18/18 adversarial probes passed, an authentic p5→p6 migration, and byte-identical pre-existing invocation relationships; no material correctness defects were reported. The report is preserved on `review/ec5-glm-q1` at `1cad44ba11838bcefe54ed1f45e2f9b5bafcbba4`. Closure corrections were documentation-only and test-only; `docs/evidence/ec5-closure.md` records them and the accepted limitations. |
+| EC-6 | **Design pending, implementation not authorized** | Not defined by this roadmap; no scope, language, or schedule is committed. |
+| Astro (`.astro`) support and other language expansion | Separate future work | Not part of EC-5; `.astro` files remain unindexed, and the expansion phases below remain the only approved sequence. |
+
+Closure is scoped to the recorded snapshots, supported extensions, pinned
+grammars, and evaluated subsets. It does not imply complete TypeScript or
+JavaScript language support.
 
 ## Phase 0 foundation and improvement queue
 

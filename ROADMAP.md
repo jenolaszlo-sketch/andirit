@@ -581,6 +581,18 @@ remain future work**. The initial catalog is an audit, not a runtime capability
 release. Milestone 8A remains complete; the Solo dogfood and Marang integration
 gates retain their priority and are not expanded or marked complete here.
 
+Phase 0 ECMAScript milestone status (2026-10-23): EC-3D closed **VERIFIED WITH
+QUALIFICATIONS** (heritage target identity correction independently verified),
+EC-4 closed **USEFUL WITH QUALIFICATIONS** (real-repository qualification with
+source-grounded verification), and EC-5 closed **VERIFIED WITH QUALIFICATIONS**
+(file-level variable declarations independently qualified by GLM; 21/21 website
+declarations, 11/11 directly exported, 18/18 adversarial probes, authentic
+p5→p6 migration, unchanged pre-existing invocation facts). EC-6 is **design
+pending, implementation not authorized**, and Astro (`.astro`) support remains
+separate future work. Closure records, preserved review bindings, and accepted
+limitations are in `docs/evidence/ec5-closure.md` and the
+[language roadmap](docs/language-support-roadmap.md#ecmascript-milestone-closure-2026-10-23).
+
 Objective: establish a maintainable, evidence-based feature inventory before
 adding the next language. The approved strategy is in the
 [language support roadmap](docs/language-support-roadmap.md); the permanent
@@ -669,11 +681,15 @@ AI parsing and arbitrary generated runtime code remain out of scope.
 
 TypeScript/JavaScript landed as the second structural provider in the
 `Penghou.Hetu.TreeSitter` package (Phase 3B), with a concrete consumer in the
-Astro/TypeScript `website` repository. EC-5 now records named file-level
+Astro/TypeScript `website` repository. EC-5 records named file-level
 TypeScript/JavaScript variables as `field` declarations with direct written
-`export` metadata; it does not model export bindings, local variables, or
-resolved types. The exact revision and real-repository evidence are recorded
-in `docs/evidence/ec5-variable-declarations-handoff.md`.
+`export` metadata; it does not model export bindings, local variables, ambient
+`declare` declarations, or resolved types, and it reuses the generic `field`
+node kind with ownership and declaration metadata distinguishing module
+variables from class members. The exact revision and real-repository evidence
+are recorded in `docs/evidence/ec5-variable-declarations-handoff.md`; the
+independent qualification and closure disposition are recorded in
+`docs/evidence/ec5-closure.md`.
 `Penghou.Hetu.Generator` remains reserved for later. The approved expansion
 sequence is recorded in
 [Milestone 8B](#milestone-8b--language-feature-catalog-and-phased-language-expansion)

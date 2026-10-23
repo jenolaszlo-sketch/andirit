@@ -23,6 +23,16 @@ Phase 0: ECMAScript file-level variable declarations (EC-5):
 - Deterministic TypeScript/JavaScript fixtures, incremental published-graph
   tests, and the EC-4 website commit comparison are recorded in
   `docs/evidence/ec5-variable-declarations-handoff.md`.
+- EC-5 closure (2026-10-23): independent GLM qualification (EC5-GLM-Q1)
+  reported no material correctness defects. Closure corrections are
+  documentation- and test-only and change no emitted fact: the identity-hash
+  casing statement now says lowercase hexadecimal, the variable location
+  assertion derives its expectation from the fixture instead of the checkout's
+  line endings, and the reuse of the generic `field` node kind plus the
+  exclusion of ambient `declare` declarations are recorded as accepted
+  limitations. EC-4's consumer lookup guidance is incorporated into
+  `docs/consumer-guidance-qualified-name-lookup.md`; the closure record is
+  `docs/evidence/ec5-closure.md`.
 
 Phase 0: ECMAScript heritage target identity correction (EC-3D):
 

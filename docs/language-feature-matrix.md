@@ -13,8 +13,14 @@ members and ordinary class fields extracted (EC-3A/3B, findings 1-3); and
 heritage targets moved to a separate declaration-less identity namespace
 (EC-3D, F01). EC-5 adds file-level TypeScript/JavaScript variable declarations
 and is documented in `docs/evidence/ec5-variable-declarations-handoff.md`.
-The affected cells below state the corrected coverage; the audit baseline
-still describes the original inspection revision.
+Milestone status: EC-3D closed **VERIFIED WITH QUALIFICATIONS**, EC-4 closed
+**USEFUL WITH QUALIFICATIONS**, and EC-5 closed **VERIFIED WITH QUALIFICATIONS**
+after independent GLM qualification; the EC-5 closure corrections and accepted
+`field`-kind and ambient-`declare` limitations are recorded in
+`docs/evidence/ec5-closure.md`. EC-6 remains design pending; implementation is
+not authorized, and Astro (`.astro`) support remains separate future work. The
+affected cells below state the corrected coverage; the audit baseline still
+describes the original inspection revision.
 
 The [language roadmap](language-support-roadmap.md) records priorities. This
 catalog contains **46 features** chosen for useful repository questions rather
@@ -91,7 +97,7 @@ The common conformance requirements below apply to every row.
 | `declaration.type-alias` | Named type synonym for navigation. | L: `type` declaration; alias target meaning remains separate. | S name; no inferred target binding or expanded type expression. | Alias node plus separate positive/negative target assertions. |
 | `declaration.callable` | Functions/methods for lookup and caller analysis. | E: `callable`, declarations, `contains`. | S declaration; overload identity and receiver ownership are provider-specific. | Top-level/member/local/generator forms and signature collisions. |
 | `declaration.constructor` | Construction entry points and initialization impact. | L: `callable`; no common constructor-kind property. | S explicit declaration, R bound constructor calls; implicit constructors may have no indexed declaration. | Explicit/static/implicit cases and initializer calls checked separately. |
-| `declaration.field` | Stored members and named file-level variables for state and reference discovery. | E: `field`, declarations, `contains`, applicable `access`/`modifiers`/`constant-value`; EC-5 uses `field` for simple top-level variables. | S structure; written `const` does not imply immutable values; computed runtime assignments do not prove declarations. | Static/instance/private/class fields and top-level variables; exclude arbitrary assignments and unsupported binding patterns. |
+| `declaration.field` | Stored members and named file-level variables for state and reference discovery. | E: `field`, declarations, `contains`, applicable `access`/`modifiers`/`constant-value`; EC-5 reuses `field` for simple top-level variables, while ECMAScript class fields are `property` members with member-kind `field`. | S structure; written `const` does not imply immutable values; computed runtime assignments do not prove declarations; ambient `declare` variables are outside the EC-5 subset. | Static/instance/private/class fields and top-level variables; exclude arbitrary assignments and unsupported binding patterns. |
 | `declaration.property` | Accessor-backed or declared properties for public-surface queries. | L: `property`; language accessor/descriptor semantics vary. | S declarations; do not relabel every method or assignment a property. | Get/set/indexer/auto forms; JS descriptors require explicit separate scope. |
 | `declaration.parameter` | Callable inputs for signature navigation. | L: `parameter`, containment; typing not implied by node presence. | S named parameter; destructuring, receiver and default arguments need scoped rules. | Names/positions/owners, defaults, destructuring and unsupported patterns. |
 | `declaration.nested` | Nested owners to connect source locations to enclosing symbols. | E: declarations plus `contains` and qualified names. | S; anonymous callbacks need identity before claiming independent ownership. | Nested types/functions; enclosing-symbol lookup in their bodies. |
@@ -240,8 +246,8 @@ dispatch and emitted kinds, not the absence of a test name.
    named file-level variable declarators as `field` nodes in TypeScript and
    JavaScript, with physical declaration spans, file containment, written
    `const`/`let`/`var`, and direct `export` metadata. Function/block locals,
-   destructuring, type resolution, constant evaluation and export binding are
-   excluded. Aliases return after their name;
+   ambient `declare` declarations, destructuring, type resolution, constant
+   evaluation and export binding are excluded. Aliases return after their name;
    union/intersection/type-expression components are not extracted. Enum bodies
    are walked but no enum-member handler exists.
 2. **Symbol identity has recorded interface and class amendments.** Variable
