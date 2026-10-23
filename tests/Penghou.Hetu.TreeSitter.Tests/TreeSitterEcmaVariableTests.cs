@@ -48,8 +48,14 @@ public sealed class TreeSitterEcmaVariableTests
             declaration => declaration.SymbolId == projects.SymbolId);
         Assert.Equal("src/data.ts", projectsDeclaration.Location.Path);
         Assert.Equal(4, projectsDeclaration.Location.StartLine);
-        Assert.Equal(14, projectsDeclaration.Location.StartColumn);
-        Assert.Equal(source.Split('\n')[3].Length, projectsDeclaration.Location.EndColumn);
+
+        const string projectsDeclarator = "projects: Project[] = []";
+        var projectsDeclaratorColumn =
+            source.Split('\n')[3].IndexOf(projectsDeclarator, StringComparison.Ordinal) + 1;
+        Assert.Equal(projectsDeclaratorColumn, projectsDeclaration.Location.StartColumn);
+        Assert.Equal(
+            projectsDeclaratorColumn + projectsDeclarator.Length,
+            projectsDeclaration.Location.EndColumn);
 
         var first = Variable(variables, "first");
         var second = Variable(variables, "second");
