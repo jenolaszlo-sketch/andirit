@@ -1,0 +1,951 @@
+{
+  "nodeCounts": {
+    "callable": 38,
+    "file": 9,
+    "interface": 10,
+    "property": 38,
+    "type": 12
+  },
+  "edgeCounts": {
+    "contains": 62,
+    "declares": 62,
+    "imports": 9,
+    "inherits": 1,
+    "invokes-name": 101
+  },
+  "evidenceCounts": {
+    "contains/Structural": 62,
+    "declares/Structural": 62,
+    "imports/Structural": 9,
+    "inherits/Structural": 1,
+    "invokes-name/Structural": 101
+  },
+  "orderedDeclarations": [
+    {
+      "symbol": "Status",
+      "kind": "type",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:1.8-6.14"
+    },
+    {
+      "symbol": "StatusDefinition.label",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:10.3-10.16"
+    },
+    {
+      "symbol": "StatusDefinition.description",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:11.3-11.22"
+    },
+    {
+      "symbol": "ProjectRef",
+      "kind": "interface",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:111.8-114.2"
+    },
+    {
+      "symbol": "ProjectRef.label",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:112.3-112.16"
+    },
+    {
+      "symbol": "ProjectRef.href",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:113.3-113.15"
+    },
+    {
+      "symbol": "RuntimeLayer",
+      "kind": "interface",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:116.8-124.2"
+    },
+    {
+      "symbol": "RuntimeLayer.key",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:117.3-117.14"
+    },
+    {
+      "symbol": "RuntimeLayer.name",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:118.3-118.15"
+    },
+    {
+      "symbol": "RuntimeLayer.plain",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:119.3-119.16"
+    },
+    {
+      "symbol": "RuntimeLayer.detail",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:120.3-120.17"
+    },
+    {
+      "symbol": "RuntimeLayer.projects",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:121.3-121.25"
+    },
+    {
+      "symbol": "RuntimeLayer.adjunct",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:123.3-123.20"
+    },
+    {
+      "symbol": "SupportingPrimitive",
+      "kind": "interface",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:200.8-202.2"
+    },
+    {
+      "symbol": "SupportingPrimitive.note",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:201.3-201.15"
+    },
+    {
+      "symbol": "Category",
+      "kind": "interface",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:54.8-59.2"
+    },
+    {
+      "symbol": "Category.key",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:55.3-55.14"
+    },
+    {
+      "symbol": "Category.label",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:56.3-56.16"
+    },
+    {
+      "symbol": "Category.description",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:57.3-57.22"
+    },
+    {
+      "symbol": "Category.order",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:58.3-58.16"
+    },
+    {
+      "symbol": "StatusDefinition",
+      "kind": "interface",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:8.8-12.2"
+    },
+    {
+      "symbol": "StatusDefinition.key",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/ecosystem.ts:9.3-9.14"
+    },
+    {
+      "symbol": "formatDate",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/format.ts:1.8-8.2"
+    },
+    {
+      "symbol": "formatDateISO",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/format.ts:10.8-12.2"
+    },
+    {
+      "symbol": "withBase",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/paths.ts:12.8-15.2"
+    },
+    {
+      "symbol": "BreadcrumbItem",
+      "kind": "interface",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:102.8-105.2"
+    },
+    {
+      "symbol": "BreadcrumbItem.name",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:103.3-103.15"
+    },
+    {
+      "symbol": "BreadcrumbItem.path",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:104.3-104.15"
+    },
+    {
+      "symbol": "breadcrumbNode",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:107.8-117.2"
+    },
+    {
+      "symbol": "graph",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:119.8-124.2"
+    },
+    {
+      "symbol": "personNode",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:18.8-31.2"
+    },
+    {
+      "symbol": "websiteNode",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:33.8-44.2"
+    },
+    {
+      "symbol": "profilePageNode",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:46.8-54.2"
+    },
+    {
+      "symbol": "Site",
+      "kind": "type",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:5.1-5.29"
+    },
+    {
+      "symbol": "ProjectSchemaInput",
+      "kind": "interface",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:56.8-63.2"
+    },
+    {
+      "symbol": "ProjectSchemaInput.name",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:57.3-57.15"
+    },
+    {
+      "symbol": "ProjectSchemaInput.tagline",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:58.3-58.18"
+    },
+    {
+      "symbol": "ProjectSchemaInput.summary",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:59.3-59.18"
+    },
+    {
+      "symbol": "ProjectSchemaInput.repository",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:60.3-60.22"
+    },
+    {
+      "symbol": "ProjectSchemaInput.version",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:61.3-61.19"
+    },
+    {
+      "symbol": "ProjectSchemaInput.path",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:62.3-62.15"
+    },
+    {
+      "symbol": "softwareSourceCodeNode",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:65.8-78.2"
+    },
+    {
+      "symbol": "abs",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:7.1-10.2"
+    },
+    {
+      "symbol": "BlogPostSchemaInput",
+      "kind": "interface",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:80.8-86.2"
+    },
+    {
+      "symbol": "BlogPostSchemaInput.title",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:81.3-81.16"
+    },
+    {
+      "symbol": "BlogPostSchemaInput.description",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:82.3-82.22"
+    },
+    {
+      "symbol": "BlogPostSchemaInput.date",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:83.3-83.13"
+    },
+    {
+      "symbol": "BlogPostSchemaInput.updated",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:84.3-84.17"
+    },
+    {
+      "symbol": "BlogPostSchemaInput.path",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:85.3-85.15"
+    },
+    {
+      "symbol": "blogPostingNode",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/lib/schema.ts:88.8-100.2"
+    },
+    {
+      "symbol": "NavItem",
+      "kind": "interface",
+      "language": "typescript",
+      "location": "src/lib/site.ts:12.8-15.2"
+    },
+    {
+      "symbol": "NavItem.label",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/site.ts:13.3-13.16"
+    },
+    {
+      "symbol": "NavItem.href",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/site.ts:14.3-14.15"
+    },
+    {
+      "symbol": "FounderProfile",
+      "kind": "interface",
+      "language": "typescript",
+      "location": "src/lib/site.ts:28.8-36.2"
+    },
+    {
+      "symbol": "FounderProfile.name",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/site.ts:29.3-29.15"
+    },
+    {
+      "symbol": "FounderProfile.role",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/site.ts:30.3-30.15"
+    },
+    {
+      "symbol": "FounderProfile.years",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/site.ts:31.3-31.16"
+    },
+    {
+      "symbol": "FounderProfile.bio",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/site.ts:32.3-32.14"
+    },
+    {
+      "symbol": "FounderProfile.focus",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/site.ts:33.3-33.18"
+    },
+    {
+      "symbol": "FounderProfile.github",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/site.ts:34.3-34.17"
+    },
+    {
+      "symbol": "FounderProfile.linkedin",
+      "kind": "property",
+      "language": "typescript",
+      "location": "src/lib/site.ts:35.3-35.26"
+    },
+    {
+      "symbol": "GET",
+      "kind": "callable",
+      "language": "typescript",
+      "location": "src/pages/robots.txt.ts:4.14-19.2"
+    }
+  ],
+  "invocations": [
+    {
+      "from": "astro.config.mjs",
+      "target": "defineConfig",
+      "location": "astro.config.mjs:13.16-25.3"
+    },
+    {
+      "from": "astro.config.mjs",
+      "target": "sitemap",
+      "location": "astro.config.mjs:21.5-23.7"
+    },
+    {
+      "from": "astro.config.mjs",
+      "target": "page.includes",
+      "location": "astro.config.mjs:22.26-22.47"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.object",
+      "location": "src/content.config.ts:4.22-7.3"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:5.10-5.20"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:6.8-6.18"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "defineCollection",
+      "location": "src/content.config.ts:9.18-40.3"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "glob",
+      "location": "src/content.config.ts:10.11-10.77"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.object",
+      "location": "src/content.config.ts:11.11-39.5"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:12.11-12.21"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:13.11-13.21"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:14.14-14.24"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:15.14-15.24"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.enum",
+      "location": "src/content.config.ts:16.13-22.7"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.enum",
+      "location": "src/content.config.ts:23.15-31.7"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:32.17-32.27"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.array",
+      "location": "src/content.config.ts:33.15-33.34"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:33.23-33.33"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:34.14-34.24"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.array",
+      "location": "src/content.config.ts:35.15-35.36"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.boolean",
+      "location": "src/content.config.ts:36.15-36.26"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.number",
+      "location": "src/content.config.ts:37.12-37.22"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.boolean",
+      "location": "src/content.config.ts:38.12-38.23"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "defineCollection",
+      "location": "src/content.config.ts:42.17-54.3"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "glob",
+      "location": "src/content.config.ts:43.11-43.76"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.object",
+      "location": "src/content.config.ts:44.11-53.5"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:45.12-45.22"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:46.18-46.28"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.coerce.date",
+      "location": "src/content.config.ts:47.11-47.26"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.coerce.date",
+      "location": "src/content.config.ts:48.14-48.29"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.array",
+      "location": "src/content.config.ts:49.15-49.34"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:49.23-49.33"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.array",
+      "location": "src/content.config.ts:50.11-50.30"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:50.19-50.29"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.array",
+      "location": "src/content.config.ts:51.15-51.36"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.boolean",
+      "location": "src/content.config.ts:52.12-52.23"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "defineCollection",
+      "location": "src/content.config.ts:56.20-67.3"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "glob",
+      "location": "src/content.config.ts:57.11-57.79"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.object",
+      "location": "src/content.config.ts:58.11-66.5"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.coerce.date",
+      "location": "src/content.config.ts:59.11-59.26"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:60.12-60.22"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:61.14-61.24"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.array",
+      "location": "src/content.config.ts:62.15-62.34"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:62.23-62.33"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:63.15-63.25"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.array",
+      "location": "src/content.config.ts:64.15-64.36"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.boolean",
+      "location": "src/content.config.ts:65.12-65.23"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "defineCollection",
+      "location": "src/content.config.ts:69.20-77.3"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "glob",
+      "location": "src/content.config.ts:70.11-70.79"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.object",
+      "location": "src/content.config.ts:71.11-76.5"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:72.12-72.22"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:73.14-73.24"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.number",
+      "location": "src/content.config.ts:74.12-74.22"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.boolean",
+      "location": "src/content.config.ts:75.12-75.23"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "defineCollection",
+      "location": "src/content.config.ts:79.18-91.3"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "glob",
+      "location": "src/content.config.ts:80.11-80.77"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.object",
+      "location": "src/content.config.ts:81.11-90.5"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:82.12-82.22"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.enum",
+      "location": "src/content.config.ts:83.11-83.71"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:84.15-84.25"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:85.14-85.24"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.array",
+      "location": "src/content.config.ts:86.15-86.34"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.string",
+      "location": "src/content.config.ts:86.23-86.33"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.array",
+      "location": "src/content.config.ts:87.12-87.33"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.number",
+      "location": "src/content.config.ts:88.12-88.22"
+    },
+    {
+      "from": "src/content.config.ts",
+      "target": "z.boolean",
+      "location": "src/content.config.ts:89.12-89.23"
+    },
+    {
+      "from": "src/lib/ecosystem.ts",
+      "target": "Object.fromEntries",
+      "location": "src/lib/ecosystem.ts:50.64-52.2"
+    },
+    {
+      "from": "src/lib/ecosystem.ts",
+      "target": "STATUSES.map",
+      "location": "src/lib/ecosystem.ts:51.3-51.49"
+    },
+    {
+      "from": "src/lib/ecosystem.ts",
+      "target": "Object.fromEntries",
+      "location": "src/lib/ecosystem.ts:107.58-109.2"
+    },
+    {
+      "from": "src/lib/ecosystem.ts",
+      "target": "CATEGORIES.map",
+      "location": "src/lib/ecosystem.ts:108.3-108.57"
+    },
+    {
+      "from": "formatDate",
+      "target": "Intl.DateTimeFormat",
+      "location": "src/lib/format.ts:2.10-7.5"
+    },
+    {
+      "from": "formatDateISO",
+      "target": "date.toISOString",
+      "location": "src/lib/format.ts:11.10-11.28"
+    },
+    {
+      "from": "src/lib/paths.ts",
+      "target": "rawBase.replace",
+      "location": "src/lib/paths.ts:2.37-2.64"
+    },
+    {
+      "from": "withBase",
+      "target": "path.startsWith",
+      "location": "src/lib/paths.ts:13.32-13.53"
+    },
+    {
+      "from": "withBase",
+      "target": "path.startsWith",
+      "location": "src/lib/paths.ts:13.8-13.28"
+    },
+    {
+      "from": "abs",
+      "target": "withBase",
+      "location": "src/lib/schema.ts:8.24-8.38"
+    },
+    {
+      "from": "abs",
+      "target": "URL",
+      "location": "src/lib/schema.ts:9.17-9.44"
+    },
+    {
+      "from": "personNode",
+      "target": "Boolean",
+      "location": "src/lib/schema.ts:20.33-20.47"
+    },
+    {
+      "from": "personNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:24.12-24.39"
+    },
+    {
+      "from": "personNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:28.10-28.30"
+    },
+    {
+      "from": "websiteNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:36.12-36.34"
+    },
+    {
+      "from": "websiteNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:38.10-38.24"
+    },
+    {
+      "from": "websiteNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:41.22-41.49"
+    },
+    {
+      "from": "websiteNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:42.23-42.50"
+    },
+    {
+      "from": "profilePageNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:49.12-49.44"
+    },
+    {
+      "from": "profilePageNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:50.10-50.30"
+    },
+    {
+      "from": "profilePageNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:52.26-52.53"
+    },
+    {
+      "from": "softwareSourceCodeNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:68.12-68.49"
+    },
+    {
+      "from": "softwareSourceCodeNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:71.10-71.33"
+    },
+    {
+      "from": "softwareSourceCodeNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:75.22-75.49"
+    },
+    {
+      "from": "softwareSourceCodeNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:76.23-76.50"
+    },
+    {
+      "from": "blogPostingNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:91.12-91.46"
+    },
+    {
+      "from": "blogPostingNode",
+      "target": "entry.date.toISOString",
+      "location": "src/lib/schema.ts:94.20-94.44"
+    },
+    {
+      "from": "blogPostingNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:96.10-96.31"
+    },
+    {
+      "from": "blogPostingNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:97.23-97.44"
+    },
+    {
+      "from": "blogPostingNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:98.22-98.49"
+    },
+    {
+      "from": "breadcrumbNode",
+      "target": "items.map",
+      "location": "src/lib/schema.ts:110.22-115.8"
+    },
+    {
+      "from": "breadcrumbNode",
+      "target": "abs",
+      "location": "src/lib/schema.ts:114.13-114.33"
+    },
+    {
+      "from": "GET",
+      "target": "withBase",
+      "location": "src/pages/robots.txt.ts:5.23-5.53"
+    },
+    {
+      "from": "GET",
+      "target": "URL",
+      "location": "src/pages/robots.txt.ts:6.26-6.52"
+    },
+    {
+      "from": "GET",
+      "target": "Response",
+      "location": "src/pages/robots.txt.ts:16.10-18.5"
+    }
+  ],
+  "imports": [
+    {
+      "from": "astro.config.mjs",
+      "module": "@astrojs/sitemap",
+      "location": "astro.config.mjs:2.1"
+    },
+    {
+      "from": "astro.config.mjs",
+      "module": "astro/config",
+      "location": "astro.config.mjs:1.1"
+    },
+    {
+      "from": "src/content.config.ts",
+      "module": "astro/loaders",
+      "location": "src/content.config.ts:2.1"
+    },
+    {
+      "from": "src/content.config.ts",
+      "module": "astro:content",
+      "location": "src/content.config.ts:1.1"
+    },
+    {
+      "from": "src/lib/schema.ts",
+      "module": "./paths",
+      "location": "src/lib/schema.ts:3.1"
+    },
+    {
+      "from": "src/lib/schema.ts",
+      "module": "node:url",
+      "location": "src/lib/schema.ts:1.1"
+    },
+    {
+      "from": "src/lib/schema.ts",
+      "module": "./site",
+      "location": "src/lib/schema.ts:2.1"
+    },
+    {
+      "from": "src/pages/robots.txt.ts",
+      "module": "astro",
+      "location": "src/pages/robots.txt.ts:1.1"
+    },
+    {
+      "from": "src/pages/robots.txt.ts",
+      "module": "../lib/paths",
+      "location": "src/pages/robots.txt.ts:2.1"
+    }
+  ]
+}

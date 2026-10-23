@@ -1,0 +1,47 @@
+{
+  "exactLookupProjectRef": {
+    "candidateCount": 2,
+    "candidates": [
+      {
+        "id": "typescript:heritage-target:6175ac9c5117bf85ea38e145ca18754eb45eb131f367ecd158c9c453cc35895d",
+        "kind": "type",
+        "name": "ProjectRef",
+        "qualifiedName": "ProjectRef",
+        "symbolId": null,
+        "declared": false
+      },
+      {
+        "id": "typescript:symbol:03239c22fed230cca8f6d62adef0321ada73b04e96a2be6844b02d65fecb8e6f",
+        "kind": "interface",
+        "name": "ProjectRef",
+        "qualifiedName": "ProjectRef",
+        "symbolId": "typescript:03239c22fed230cca8f6d62adef0321ada73b04e96a2be6844b02d65fecb8e6f",
+        "declared": true
+      }
+    ]
+  },
+  "supportingPrimitiveHeritage": [
+    {
+      "kind": "inherits",
+      "target": "typescript:heritage-target:6175ac9c5117bf85ea38e145ca18754eb45eb131f367ecd158c9c453cc35895d",
+      "evidenceQuality": "Structural",
+      "location": "src/lib/ecosystem.ts:200.46"
+    }
+  ],
+  "impactSetOfDeclaredProjectRef": {
+    "seededNode": "typescript:symbol:03239c22fed230cca8f6d62adef0321ada73b04e96a2be6844b02d65fecb8e6f",
+    "nodeCount": 1,
+    "names": [
+      "ProjectRef"
+    ]
+  },
+  "impactSetOfHeritageTarget": {
+    "seededNode": "typescript:heritage-target:6175ac9c5117bf85ea38e145ca18754eb45eb131f367ecd158c9c453cc35895d",
+    "nodeCount": 2,
+    "names": [
+      "ProjectRef",
+      "SupportingPrimitive"
+    ]
+  },
+  "note": "The declared interface ProjectRef and the declaration-less heritage-target node share one displayed name; exact lookup must preserve both, and the declared interface must not gain dependents through the same-spelled candidate."
+}

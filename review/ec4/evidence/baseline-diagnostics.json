@@ -1,0 +1,92 @@
+{
+  "status": "Completed",
+  "publication": {
+    "repositoryId": "repo:website-ec4",
+    "indexRunId": "run:ec4-baseline",
+    "snapshotIdentity": null,
+    "isConsistentSnapshot": false
+  },
+  "counts": {
+    "filesDiscovered": 78,
+    "filesNew": 9,
+    "filesChanged": 0,
+    "filesUnchanged": 0,
+    "filesDeleted": 0,
+    "filesUnsupported": 69,
+    "directoriesExcluded": 0,
+    "depthLimited": 0,
+    "reparsePointsSkipped": 0,
+    "sourceBytesRead": 35810,
+    "pluginsExecuted": 2,
+    "indexUnitsCompleted": 9,
+    "indexUnitsDeleted": 0,
+    "nodesProduced": 109,
+    "declarationsProduced": 62,
+    "edgesProduced": 235,
+    "rejectedFacts": 0,
+    "unresolvedRelationships": 0
+  },
+  "durations": {
+    "planningMs": 34.2937,
+    "extractionMs": 102.4042,
+    "persistenceMs": 8.6318,
+    "wallMs": 167.7142
+  },
+  "plugins": [
+    {
+      "pluginId": "penghou.hetu.tree-sitter.javascript",
+      "pluginVersion": "0.2.0-preview.6+v0.25.0.abi15.p5",
+      "status": "Completed",
+      "durationMs": 57.7877,
+      "sourcesSupplied": 1,
+      "sourcesExamined": 1,
+      "sourcesContributingFacts": 1,
+      "unresolvedRelationships": 0,
+      "warnings": []
+    },
+    {
+      "pluginId": "penghou.hetu.tree-sitter.typescript",
+      "pluginVersion": "0.2.0-preview.6+v0.23.2.abi14.p5",
+      "status": "Completed",
+      "durationMs": 27.1389,
+      "sourcesSupplied": 8,
+      "sourcesExamined": 8,
+      "sourcesContributingFacts": 7,
+      "unresolvedRelationships": 0,
+      "warnings": []
+    }
+  ],
+  "providerSelections": [],
+  "warnings": [],
+  "aggregate": {
+    "nodeKinds": {
+      "callable": 38,
+      "file": 9,
+      "interface": 10,
+      "property": 38,
+      "type": 12
+    },
+    "edgeKinds": {
+      "contains": 62,
+      "declares": 62,
+      "imports": 9,
+      "inherits": 1,
+      "invokes-name": 101
+    },
+    "evidenceByKind": {
+      "contains/Structural": 62,
+      "declares/Structural": 62,
+      "imports/Structural": 9,
+      "inherits/Structural": 1,
+      "invokes-name/Structural": 101
+    },
+    "declarationKindsByNodeKind": {
+      "interface": 10,
+      "type": 2,
+      "property": 38,
+      "callable": 12
+    },
+    "symbolBearingNodes": 62,
+    "declarations": 62
+  }
+}
