@@ -15,6 +15,10 @@ node from one hash:
 {language}:symbol:{sha256(discriminator + "\n" + lexical-qualified-name)}
 ```
 
+Every hash in this document and in the published graph is rendered as lowercase
+hexadecimal (`Convert.ToHexStringLower`); the formulas never produce uppercase
+output.
+
 - `lexical-qualified-name` is built while walking one file (`Namespace.Member`).
   It has no file, module, signature, or type component.
 - Discriminators are `class`, `interface`, `type`, `enum`, `namespace`, and
@@ -135,18 +139,36 @@ Resulting behavior (fixture-verified in
 
 The shared TypeScript/JavaScript profile emits named top-level
 `lexical_declaration` and `variable_declaration` declarators as `field` nodes.
-Only simple identifier bindings are accepted; block/function locals and
-destructuring are skipped. The identity is:
+Only simple identifier bindings are accepted; block/function locals,
+destructuring, and ambient `declare` declarations are skipped. The identity is:
 
 ```text
-{language}:symbol:{sha256("variable" + "\n" + source-path + "\n" + written-name)}
+hash      = sha256("variable" + "\n" + source-path + "\n" + written-name)
+symbol ID = {language}:{hash}
+node ID   = {language}:symbol:{hash}
 ```
 
+`hash` is lowercase hexadecimal like every other identity in this document.
 The `variable` discriminator separates these declarations from classes,
 interfaces, callables, aliases, and owner-derived class members. The source
 path keeps same-named variables in different files distinct. No physical
 offset is included, so unrelated edits preserve identity; renaming the
 variable or moving it to another file changes identity.
+
+File-level variables reuse the existing generic `field` node kind (accepted
+limitation EC5-GLM-F3). Class fields are owner-derived `property` members whose
+member-kind discriminator is `field`, so a file-level variable and a class
+field never share identity, but the node kind alone does not tell them apart.
+Consumers must use ownership (`contains` from the file node versus the class
+node) and the `variable` symbol discriminator to distinguish a module variable
+from a class member. The representation is deliberate: a dedicated node kind
+would be a public-contract change and is not justified by any observed
+consumer-visible failure.
+
+Ambient declarations such as `declare const externalValue: string;` are outside
+this subset (accepted limitation EC5-GLM-F4). The profile does not model
+ambient or global scopes anywhere, so an ambient declaration emits no variable
+fact; this is a deliberate boundary, not a partial extraction.
 
 Each `variable_declarator` produces its own `CodeGraphDeclaration` span, even
 when a statement contains multiple declarators or same-file declarations

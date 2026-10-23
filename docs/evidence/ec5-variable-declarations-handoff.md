@@ -19,10 +19,16 @@ The existing `field` node kind represents named file-level variables. No public 
 For language key `language`, source path `path`, and written binding name `name`, the symbol and node IDs are derived as follows:
 
 ```text
-hash = uppercase-hex(SHA256(UTF8("variable\n" + path + "\n" + name)))
+hash = lowercase-hex(SHA256(UTF8("variable\n" + path + "\n" + name)))
 symbol ID = language + ":" + hash
 node ID   = language + ":symbol:" + hash
 ```
+
+Hash output is lowercase hexadecimal; the implementation renders it with
+`Convert.ToHexStringLower` (`EcmaScriptExtractionProfile.Hash`), and every
+published identity in this report is lowercase. An earlier revision of this
+sentence said "uppercase-hex"; that wording was wrong (EC5-GLM-F1) and was
+corrected during EC-5 closure without changing identity formatting.
 
 The `variable` discriminator prevents collision with callable, type, interface, class-member, and heritage identities. The source path separates same-named variables in different files. The identity excludes source offsets, so unrelated edits preserve it. Rename or file move changes it.
 
@@ -44,7 +50,7 @@ Supported and exercised forms:
 - Existing supported TypeScript extensions `.ts`, `.mts`, `.cts`, and `.tsx`; JavaScript `.js` and `.mjs` pipeline behavior. EC-5 adds no extension support.
 - A function/arrow-valued variable remains a variable field and also keeps the pre-existing callable projection. It is not reclassified as a function declaration.
 
-The implementation skips function-local and block-local bindings, object/array destructuring, malformed/incomplete declarators, anonymous default-export expressions, and unsupported binding forms. It does not resolve export lists, re-exports, imports to exports, variable references, types, constant values, or runtime object properties. It does not parse `.astro` files.
+The implementation skips function-local and block-local bindings, object/array destructuring, ambient `declare` declarations, malformed/incomplete declarators, anonymous default-export expressions, and unsupported binding forms. It does not resolve export lists, re-exports, imports to exports, variable references, types, constant values, or runtime object properties. It does not parse `.astro` files.
 
 Relevant production changes are in `src/Penghou.Hetu.TreeSitter/EcmaScriptExtractionProfile.cs`. Focused fixtures are in `tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaVariableTests.cs` and `TreeSitterEcmaVariableLifecycleTests.cs`; existing TypeScript/JavaScript plugin tests assert the p6 versions.
 
@@ -94,7 +100,8 @@ Incremental published-graph tests confirm stable IDs on unchanged indexing and e
 
 ## G. Known limitations
 
-- Only simple identifier bindings at file level are emitted. Local scopes and destructuring remain out of scope.
+- Only simple identifier bindings at file level are emitted. Local scopes, destructuring, and ambient `declare` declarations remain out of scope. `declare const externalValue: string;` is not part of the supported subset (accepted limitation EC5-GLM-F4); ambient/global-scope modeling is not implemented anywhere in the profile.
+- File-level variables reuse the existing generic `field` node kind (accepted limitation EC5-GLM-F3). A class field is a `property` node whose member-kind discriminator is `field`, and its identity never converges with a file-level variable. Consumers that need to distinguish a module variable from a class member must use ownership (`contains` from the file node versus the class node) and the `variable` symbol identity discriminator rather than the node kind alone. The underlying representation is unchanged.
 - Same-file duplicate names share one candidate node. Each occurrence is retained physically, but consumers must not infer semantic declaration merging; conflicting modifiers are only exact at the per-declaration property level.
 - Written direct `export` is observable, but export specifiers, default exports, re-exports, and module binding resolution are not modeled.
 - No variable-reference, type, constant-value, or dataflow semantics are inferred.
