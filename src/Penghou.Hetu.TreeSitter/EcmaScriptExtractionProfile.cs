@@ -38,8 +38,10 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     /// 5: written heritage names use declaration-less identities in a
     ///    separate namespace from declared symbols, preventing name-only
     ///    convergence with same-file declarations.
+    /// 6: named file-level variable declarators emit path-scoped field
+    ///    declarations with written declaration-keyword and export metadata.
     /// </summary>
-    internal const int ProfileRevision = 5;
+    internal const int ProfileRevision = 6;
 
     // Kinds both grammars can emit. `implements` exists only in TypeScript, so
     // JavaScript reports it as not-produced rather than claiming an empty set.
@@ -88,11 +90,11 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         CodeNodeId fileNodeId,
         string path)
     {
-        Walk(root, new Scope(null, fileNodeId, fileNodeId));
+        WalkChildren(root, new Scope(null, fileNodeId, fileNodeId), isFileLevel: true);
         return _result;
     }
 
-    private void Walk(TreeSitterSyntaxNode node, Scope scope)
+    private void Walk(TreeSitterSyntaxNode node, Scope scope, bool isFileLevel = false)
     {
         // Error and missing nodes are recovery artifacts, not understood
         // structure: skip the subtree but keep visiting valid siblings. The
@@ -103,7 +105,12 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         switch (node.Type)
         {
             case "export_statement":
-                HandleExport(node, scope);
+                HandleExport(node, scope, isFileLevel);
+                return;
+            case "lexical_declaration":
+            case "variable_declaration":
+                HandleVariableDeclaration(node, scope, isFileLevel, isExported: false);
+                WalkChildren(node, scope);
                 return;
             case "import_statement":
                 EmitImport(node, scope);
@@ -245,12 +252,22 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         }
     }
 
-    private void HandleExport(TreeSitterSyntaxNode node, Scope scope)
+    private void HandleExport(TreeSitterSyntaxNode node, Scope scope, bool isFileLevel)
     {
         var declaration = node.ChildByFieldName("declaration");
         if (declaration is not null)
         {
-            Walk(declaration, scope);
+            if (isFileLevel &&
+                (declaration.Type is "lexical_declaration" or "variable_declaration"))
+            {
+                HandleVariableDeclaration(declaration, scope, isFileLevel, isExported: true);
+                WalkChildren(declaration, scope);
+            }
+            else
+            {
+                Walk(declaration, scope, isFileLevel);
+            }
+
             return;
         }
 
@@ -263,6 +280,115 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         }
 
         WalkChildren(node, scope);
+    }
+
+    /// <summary>
+    /// Emits one independently discoverable declaration for each simple,
+    /// named declarator in a file-level <c>const</c>, <c>let</c>, or
+    /// <c>var</c> declaration. The existing declarator walk remains
+    /// responsible for callable-valued variables and initializer invocation
+    /// attribution.
+    /// </summary>
+    private void HandleVariableDeclaration(
+        TreeSitterSyntaxNode declaration,
+        Scope scope,
+        bool isFileLevel,
+        bool isExported)
+    {
+        if (!isFileLevel || scope.Owner != ScopeOwner.File)
+            return;
+
+        string? keyword = null;
+        foreach (var child in declaration.Children)
+        {
+            if (!child.IsNamed && (child.Text is "const" or "let" or "var"))
+            {
+                keyword = child.Text;
+                break;
+            }
+        }
+
+        if (keyword is null)
+            return;
+
+        foreach (var declarator in declaration.NamedChildren)
+        {
+            if (declarator.Type != "variable_declarator" || declarator.HasError)
+                continue;
+
+            var nameNode = declarator.ChildByFieldName("name");
+            if (nameNode is not { Type: "identifier" } || BoundedText(nameNode) is not { } name)
+                continue;
+
+            var value = declarator.ChildByFieldName("value");
+            if (value is { IsError: true } or { IsMissing: true } ||
+                (value is null && HasToken(declarator, "=")) ||
+                (keyword == "const" && value is null))
+            {
+                continue;
+            }
+
+            // Top-level variable identities are scoped by source path and
+            // discriminator. This separates modules and all unrelated symbol
+            // kinds without using physical offsets or claiming binding.
+            var hash = Hash($"variable\n{_path}\n{name}");
+            var symbolId = new CodeSymbolId($"{_language}:{hash}");
+            var nodeId = new CodeNodeId($"{_language}:symbol:{hash}");
+            var properties = LanguageProperties();
+            var modifiers = new SortedSet<string>(StringComparer.Ordinal) { keyword };
+            if (isExported)
+                modifiers.Add("export");
+            properties[CodePropertyKeys.Modifiers] = new CodeTextProperty(string.Join(" ", modifiers));
+
+            // Physical declarations retain their own syntax metadata. If
+            // duplicate same-file declarations disagree, the shared symbol
+            // advertises only modifiers written on every occurrence.
+            var declarationProperties = new Dictionary<string, CodePropertyValue>(properties, StringComparer.Ordinal);
+            if (_result.Nodes.TryGetValue(nodeId.Value, out var existing) && existing.SymbolId is not null)
+            {
+                var commonModifiers = new SortedSet<string>(modifiers, StringComparer.Ordinal);
+                if (existing.Properties.TryGetValue(CodePropertyKeys.Modifiers, out var existingModifiers))
+                {
+                    commonModifiers.IntersectWith(
+                        ((CodeTextProperty)existingModifiers).Value.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+                }
+                else
+                {
+                    commonModifiers.Clear();
+                }
+
+                var commonProperties = LanguageProperties();
+                if (commonModifiers.Count > 0)
+                {
+                    commonProperties[CodePropertyKeys.Modifiers] =
+                        new CodeTextProperty(string.Join(" ", commonModifiers));
+                }
+
+                _result.Nodes[nodeId.Value] = new CodeGraphNode(
+                    nodeId,
+                    CodeNodeKinds.Field,
+                    name,
+                    name,
+                    symbolId,
+                    commonProperties);
+            }
+            else
+            {
+                AddNode(new CodeGraphNode(
+                    nodeId,
+                    CodeNodeKinds.Field,
+                    name,
+                    name,
+                    symbolId,
+                    properties));
+            }
+
+            AddDeclaration(symbolId, nodeId, Location(declarator), declarationProperties);
+            var nameLocation = Location(nameNode);
+            AddEdge(CodeEdgeKinds.Declares, scope.FileNode, nodeId, nameLocation, $"declares:{nodeId.Value}");
+            if (scope.OwnerNode != nodeId)
+                AddEdge(CodeEdgeKinds.Contains, scope.OwnerNode, nodeId, nameLocation, $"contains:{nodeId.Value}");
+        }
     }
 
     private void HandleDeclarator(TreeSitterSyntaxNode node, Scope scope)
@@ -926,10 +1052,10 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
             node.EndRow + 1,
             node.EndColumn + 1);
 
-    private void WalkChildren(TreeSitterSyntaxNode node, Scope scope)
+    private void WalkChildren(TreeSitterSyntaxNode node, Scope scope, bool isFileLevel = false)
     {
         foreach (var child in node.NamedChildren)
-            Walk(child, scope);
+            Walk(child, scope, isFileLevel);
     }
 
     private void AddNode(CodeGraphNode node)
@@ -947,11 +1073,15 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         _result.Nodes[node.Id.Value] = node;
     }
 
-    private void AddDeclaration(CodeSymbolId symbolId, CodeNodeId nodeId, CodeLocation location)
+    private void AddDeclaration(
+        CodeSymbolId symbolId,
+        CodeNodeId nodeId,
+        CodeLocation location,
+        IReadOnlyDictionary<string, CodePropertyValue>? properties = null)
     {
         var id = new CodeDeclarationId(
             $"{_language}:{Hash($"{symbolId.Value}\n{_path}\n{location.StartLine}:{location.StartColumn}:{location.EndLine}:{location.EndColumn}")}");
-        _result.Declarations[id.Value] = new CodeGraphDeclaration(id, symbolId, nodeId, location);
+        _result.Declarations[id.Value] = new CodeGraphDeclaration(id, symbolId, nodeId, location, properties);
     }
 
     private void AddEdge(
