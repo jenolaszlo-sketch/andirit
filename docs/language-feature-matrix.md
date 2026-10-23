@@ -251,15 +251,19 @@ dispatch and emitted kinds, not the absence of a test name.
    cross-file convergence limitation. See
    [ECMAScript symbol identity](ecmascript-symbol-identity.md). Anonymous
    classes/functions still have no independent-symbol contract.
-3. **Heritage targets are names.** `HeritageName` accepts identifiers,
-   type-identifiers and member expressions; generic/qualified grammar shapes and
-   mixin/expression bases are not comprehensively handled. Targets are
-   declaration-less `type` nodes, now file-scoped: a written base name converges
-   with a same-file top-level class declaration but never with a class in
-   another file, and `implements` targets remain declaration-less even when the
-   interface is declared in the same file. Namespace qualification is not
-   semantic binding. Do not assume TS `implements` reaches the declared
-   interface or that this is a complete implementation graph.
+3. **Heritage targets are names.** EC-3D is closed with F01 corrected and
+   independently verified with qualifications. Heritage identifiers and
+   member-expression names produce declaration-less type candidates keyed by
+   file path and written name in a namespace distinct from declared symbols.
+   Even a same-file declaration with the same name remains separate; repeated
+   same-file, same-name heritage occurrences share the candidate and retain
+   per-edge locations and evidence. Generic arguments are not included in the
+   candidate name, so extends Base<string> yields the name-subset candidate
+   Base. Namespace qualification preserves written syntax and does not resolve
+   binding; dynamic or unsupported expression bases do not produce guessed
+   targets. Four bounded P3 qualifications and the real-repository reindex
+   requirement are recorded in the
+   [EC-3D GLM Q2 preservation checkpoint](reviews/ec3-glm-q2-heritage-remediation-preservation-checkpoint.md).
 4. **Prototype inheritance is derived.** Four JS patterns have assertions for D
    edges; the same shared code is available to TS without a dedicated TS pattern
    fixture. Arbitrary mutations, shadowed builtins, dynamic bases and runtime

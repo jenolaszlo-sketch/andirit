@@ -154,6 +154,18 @@ Recognized JavaScript prototype patterns use the same candidate identities for
 their written child and parent names and retain `Derived` evidence. A
 candidate identity records syntax and provenance; it does not claim binding.
 
+Exact-name and name-pattern queries can return both a declared symbol and a
+same-named declaration-less heritage candidate. Consumers that need declarations
+must filter lookup candidates to entries with a SymbolId, or use an existing
+declared-symbol query that already applies that filter. Inspect the lookup's
+ambiguity result; do not assume SingleOrDefault succeeds for a same-named
+heritage target. The candidate is a structural name observation, not a
+declaration binding.
+
+Generic arguments are outside the current heritage-name subset. For example,
+extends Base<string> produces the candidate name Base; extraction does not
+resolve the generic type argument or perform semantic type binding.
+
 ## Explicitly out of scope
 
 Changing the identity of top-level functions, enums, namespaces, imports,
