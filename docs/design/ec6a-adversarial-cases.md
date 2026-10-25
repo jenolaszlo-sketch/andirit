@@ -335,8 +335,9 @@ fixtures (D-08).
 **Sketch** `import { x } from '@/lib/x';` with `paths` configured in
 `tsconfig.json`.
 
-**Expected facts** Bare specifier → no edge; counted external/unresolved by
-policy. A future explicit policy level may resolve it; it must then parse
+**Expected facts** Non-relative specifier → no edge; counted
+`external-targets` (§6.2.3). A future explicit policy level may resolve it;
+it must then parse
 only the declared config subset, embed a config identity in provenance, and
 invalidate on config changes (D-09). No configuration is read today.
 
