@@ -25,6 +25,8 @@ public static class CodeNodeKinds
     public static readonly CodeNodeKind Property = new("property");
     public static readonly CodeNodeKind Field = new("field");
     public static readonly CodeNodeKind Parameter = new("parameter");
+    /// <summary>One written exported name in an owning module.</summary>
+    public static readonly CodeNodeKind Export = new("export");
 }
 
 /// <summary>An extensible normalized edge classification.</summary>
@@ -60,4 +62,6 @@ public static class CodeEdgeKinds
     public static readonly CodeEdgeKind Returns = new("returns");
     public static readonly CodeEdgeKind Accepts = new("accepts");
     public static readonly CodeEdgeKind ExercisedBy = new("exercised-by");
+    /// <summary>A module file exposes a written exported name.</summary>
+    public static readonly CodeEdgeKind Exports = new("exports");
 }

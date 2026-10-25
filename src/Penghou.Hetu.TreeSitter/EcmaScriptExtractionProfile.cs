@@ -46,8 +46,10 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     /// 8: EC-6B-R1 corrective pass: escaped specifiers are rejected without
     ///    truncation and `type` binding names are no longer treated as an
     ///    inline type-only modifier; emitted resolver facts changed (D-16).
+    /// 9: publish accepted structural export entries and per-occurrence
+    ///    `exports` edges from the internal syntax observations.
     /// </summary>
-    internal const int ProfileRevision = 8;
+    internal const int ProfileRevision = 9;
 
     // Kinds both grammars can emit. `implements` exists only in TypeScript, so
     // JavaScript reports it as not-produced rather than claiming an empty set.
@@ -84,7 +86,11 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         _path = path;
         _language = languageKey;
         _providerId = providerId.Value;
-        _providerVersion = providerVersion;
+        // p9 adds export facts without changing the existing extraction facts.
+        // Keep their evidence version at p8 so a p8→p9 re-index is byte-identical
+        // for existing facts; the session/unit origin still uses p9 to invalidate
+        // old publications. Export edges derive their own exports1 provider version.
+        _providerVersion = ExistingFactProviderVersion(providerVersion);
         _result = new TreeSitterExtractionResult();
     }
 
@@ -99,6 +105,12 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     {
         WalkChildren(root, new Scope(null, fileNodeId, fileNodeId), isFileLevel: true);
         _result.ExportObservations.Sort(EcmaScriptExportObservation.SourceOrderComparer);
+        EcmaScriptExportGraphPublisher.Publish(
+            _path,
+            _language,
+            fileNodeId,
+            _providerVersion,
+            _result);
         return _result;
     }
 
@@ -1308,6 +1320,19 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
             node.StartColumn + 1,
             node.EndRow + 1,
             node.EndColumn + 1);
+
+    private static string ExistingFactProviderVersion(string pluginVersion)
+    {
+        const string currentRevision = ".p9";
+        const string existingFactRevision = ".p8";
+        if (!pluginVersion.EndsWith(currentRevision, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "The p9 ECMAScript profile requires a p9 plugin version while preserving p8 evidence for existing facts.");
+        }
+
+        return string.Concat(pluginVersion.AsSpan(0, pluginVersion.Length - currentRevision.Length), existingFactRevision);
+    }
 
     private void WalkChildren(TreeSitterSyntaxNode node, Scope scope, bool isFileLevel = false)
     {

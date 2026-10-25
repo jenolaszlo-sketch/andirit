@@ -38,4 +38,8 @@ public static class CodePropertyKeys
     public const string ResolutionPolicy = "resolution-policy";
     public const string ResolutionRule = "resolution-rule";
     public const string TypeOnly = "type-only";
+    public const string ExportKind = "export-kind";
+    public const string ExportVia = "export-via";
+    public const string LocalName = "local-name";
+    public const string NamespaceProjection = "namespace-projection";
 }
