@@ -351,6 +351,41 @@ public sealed class TreeSitterModuleResolutionTests
         Assert.Equal(3, coverage.UnsupportedTargets);
     }
 
+    // EC6B-GLM-Q1 probe 18: rejected path forms never resolve at the capture
+    // level; single-dot segments normalize deterministically.
+    [Fact]
+    public async Task ExtractAsync_RejectedPathFormsNeverResolveAtCaptureLevel()
+    {
+        const string importer = """
+            import './a\b';
+            import './x?raw';
+            import './y#frag';
+            import './a//b';
+            import '/abs/x';
+            import './a/';
+            import './';
+            import './a/./b';
+            """;
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/page.ts", importer),
+            ("src/a/b.ts", "export const b = 1;"));
+
+        var edge = Assert.Single(
+            extracted.Edges,
+            candidate => candidate.Kind == CodeEdgeKinds.ResolvesTo);
+        Assert.Equal("./a/./b", Text(edge, CodePropertyKeys.Specifier));
+        Assert.Equal("src/a/b.ts", extracted.Nodes.Single(node => node.Id == edge.TargetId).QualifiedName);
+
+        var coverage = Assert.Single(
+            extracted.Result.RelationshipCoverage,
+            item => item.RelationshipKind == CodeEdgeKinds.ResolvesTo.Value);
+        Assert.Equal(8, coverage.Candidates);
+        Assert.Equal(7, coverage.UnsupportedTargets);
+        Assert.Equal(0, coverage.UnresolvedTargets);
+        Assert.Equal(0, coverage.ExternalTargets);
+    }
+
     // EC6B-GLM-F02: escaped specifiers are rejected, never truncated into a
     // resolves-to edge.
     [Fact]
