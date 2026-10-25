@@ -1,9 +1,11 @@
 # EC-6A: Adversarial cases for cross-file resolution
 
-**Status:** design artifact for EC-6A. Companion to
+**Status:** design artifact for EC-6A, reconciled under EC6-A1. Companion to
 [ec6a-cross-file-resolution-architecture.md](ec6a-cross-file-resolution-architecture.md).
-All graph facts below are **expected proposals**, not implemented behavior.
-**Baseline:** `558f8ac` (EC6-A0).
+Graph facts below are expected behavior of the design, not implemented;
+`resolves-to` facts and AC-41–AC-53 are required EC-6B acceptance fixtures
+(the F02/F05/F09 corrections), while `exports`/`binds` facts remain
+proposals. **Baseline:** `558f8ac` (EC6-A0).
 
 Conventions used in every case:
 
@@ -11,13 +13,18 @@ Conventions used in every case:
 - `S(F, name)` is the declared symbol node the EC-5/EC-3 profile emits for a
   declaration of `name` in `F` (path-scoped for classes, interfaces,
   variables; name-based for top-level functions, types, enums, namespaces).
-- `resolves-to`, `exports`, and `binds` are the proposed Resolved edge kinds
-  from §7 of the architecture document; `imports`/`invokes-name`/`inherits`
-  remain the unchanged Structural observations.
+- `resolves-to` is the owner-accepted EC-6B edge kind; `exports` and `binds`
+  are the proposed EC-6C/D kinds from §7 of the architecture document;
+  `imports`/`invokes-name`/`inherits` remain the unchanged Structural
+  observations.
 - "No fact" always means: no edge is emitted and coverage counts record the
   reason. Absence is never proof of absence of the real dependency.
 - Invalidation is described relative to the plugin-execution model of the
-  architecture document §9.2.
+  architecture document §9.2; staging order and staged-vs-published
+  semantics are normative in §9.1.1–§9.1.3.
+- Expected **published-graph** results are stated for each lifecycle case;
+  unless a case says otherwise, they hold on both graph stores and queries
+  never observe staged facts.
 
 ---
 
@@ -552,6 +559,183 @@ count. Honest: the module dependency is verified, the binding is not.
 
 ---
 
+## 11. Lifecycle acceptance fixtures (F02, EC-6B required)
+
+These five cases pin the normative staging/replacement contract of
+architecture §9.1.1–§9.1.3. "Previous publication" names a completed
+publication used as the starting state; every case asserts the exact
+published graph before and after, on both stores.
+
+### AC-41 — Target deletion
+
+**Sketch** Published state: `a.ts` contains `import { x } from './b';`,
+`b.ts` exists. Delete `b.ts`; `a.ts` is unchanged.
+
+**Expected published graph**
+
+- File node `M(b)` is absent; `a.ts`'s structural `imports` placeholder for
+  `./b` remains unchanged (Structural).
+- No `resolves-to` edge from `M(a)`; any previous edge to `M(b)` is gone
+  with the resolution-unit replacement.
+- Coverage: `resolves-to` unresolved target count increases by one.
+
+**Lifecycle** Plugin executes (deletion classifies the plan); the obsolete
+file unit for `M(b)` is staged after the rebuilt resolution unit; validation
+passes because no surviving edge references the deleted node
+(architecture §9.1.3). No stale edge is queryable in the same run.
+
+### AC-42 — Target addition
+
+**Sketch** Starting from the AC-41 published state, add `b.ts` back with the
+same content while `a.ts` is unchanged.
+
+**Expected published graph**
+
+- The new file node `M(b)` appears in the same atomic publication as the
+  `resolves-to` edge from `M(a)` to `M(b)`.
+- Edge properties include `specifier: ./b`,
+  `resolution-rule: extension-substitution` (or `exact` for a specifier
+  naming the full filename), `resolution-policy: relative-v1`.
+
+**Lifecycle** New item classifies the plugin as executing; the target unit
+is staged before the resolution unit (step 1 before step 4), so endpoint
+validation passes.
+
+### AC-43 — Empty resolution replacement
+
+**Sketch** Published state: `a.ts` imports `./b` and the `resolves-to` edge
+exists. Remove the import statement from `a.ts` (both files remain).
+
+**Expected published graph**
+
+- No `resolves-to` edge exists; the resolution unit is still published and
+  may be empty.
+- Structural facts of `a.ts` reflect the edit; no stale resolver edge
+  survives.
+
+**Lifecycle** The rebuilt resolution unit completes with a zero-edge batch
+and replaces the previous unit (GLM probe P2). If instead *all* files of the
+plugin are deleted, the empty unit is displaced by ownership hygiene
+(architecture §9.1.3, F10) — pinned separately in EC-6E.
+
+### AC-44 — Resolution failure after per-file staging
+
+**Sketch** Inject a resolver failure (test seam) after the per-file loop has
+staged `a.ts`'s and `b.ts`'s file units, before the resolution unit
+completes.
+
+**Expected published graph**
+
+- The run reaches `Failed`; staged facts are discarded; the previous
+  publication — including the previous resolution unit — is byte-identical
+  to its state before the run and fully queryable.
+- No partial `resolves-to` edge set is ever visible.
+
+**Lifecycle** Failure propagates through plugin execution
+(`CodeIndexingLifecycle.cs:471-492`); the store retains the prior
+publication (`failed-run-discards-staged-graph`).
+
+### AC-45 — Cancellation before publication
+
+**Sketch** Cancel the indexing token after file units are staged and before
+run completion.
+
+**Expected published graph**
+
+- The run reaches `Cancelled`; staged facts are discarded; the previous
+  publication (including the previous resolution unit) is retained.
+- A cancellation is never converted into an empty or partial resolution
+  unit.
+
+**Lifecycle** The resolver observes the token between modules and before
+batch emission (architecture §9.4.2); conformance
+`cancelled-run-discards-staged-graph` holds on both stores.
+
+---
+
+## 12. Edge identity and multiplicity fixtures (F09, EC-6B required)
+
+These cases pin architecture §7.1.1. All ids follow the existing formula:
+
+```text
+{language}:{sha256(kind \n source \n target \n discriminator \n
+                   startLine:startColumn:endLine:endColumn)}
+```
+
+### AC-46 — Two imports, same target, different specifiers
+
+**Sketch** In `use.ts`: `import { a } from './m';` and
+`import { b } from './m.ts';`.
+
+**Expected facts** Two `resolves-to` edges with the same source `M(use)` and
+target `M(m)`, distinct ids because the discriminator includes the raw
+specifier; properties record `specifier: ./m` and `specifier: ./m.ts`, each
+with its own `resolution-rule` (`extension-substitution` and `exact`).
+
+### AC-47 — Two imports, identical specifiers, distinct locations
+
+**Sketch** In `use.ts`: `import { first } from './shared';` and
+`import { second } from './shared';` on different lines.
+
+**Expected facts** Two distinct edges; the discriminator is identical, the
+location input differs. Both are returned by outgoing traversal with their
+own evidence locations.
+
+### AC-48 — Same target imported from different files
+
+**Sketch** `a.ts` and `b.ts` both contain `import './m';`.
+
+**Expected facts** Two `resolves-to` edges with distinct sources and the same
+target; incoming traversal to `M(m)` returns both.
+
+### AC-49 — One of two same-target imports removed
+
+**Sketch** Start from AC-47; delete the second import statement (and nothing
+else).
+
+**Expected published graph** Exactly one `resolves-to` edge remains; its id
+is byte-identical to the surviving edge's id in the previous publication.
+The removed occurrence's id is gone with the unit replacement.
+
+### AC-50 — Import location shifted by source edits
+
+**Sketch** Start from AC-47; insert a comment line above both imports.
+
+**Expected published graph** Both edge ids change because the location input
+changed; the facts (source, target, specifier, policy, rule) are unchanged.
+Occurrence-anchored identity is the documented behavior
+(architecture §7.1.1 rule 4); no stale edge survives the replacement.
+
+### AC-51 — Deterministic repeated extraction
+
+**Sketch** Extract the same sources twice in independent runs with identical
+plugin/resolver versions and policy.
+
+**Expected facts** Byte-identical edge ids, properties, batching order, and
+coverage counts. Re-indexing unchanged sources is a no-op returning the
+previous publication (`PluginsExecuted = 0`).
+
+### AC-52 — LF/CRLF identity
+
+**Sketch** The same logical file content with LF and with CRLF line endings,
+in two otherwise identical runs.
+
+**Expected facts** Identical edge ids in both runs: Tree-sitter rows and
+columns are unaffected by `\r` (it belongs to the preceding row), so the
+location input is identical (architecture §7.1.1 rule 5).
+
+### AC-53 — Identity collision rejection
+
+**Sketch** A resolver defect that produces two different facts under one
+edge id (differing target or properties with identical identity inputs).
+
+**Expected facts** The run fails loudly: `batch.edge.duplicate` at batch
+validation, `replacement.edge.duplicate` within a unit, or the cross-unit
+`graph.edge.conflict` when properties differ; the previous publication is
+retained. Nothing is silently merged or dropped.
+
+---
+
 ## Summary of design responses
 
 | Challenge | Response |
@@ -565,6 +749,8 @@ count. Honest: the module dependency is verified, the binding is not.
 | Type-only | Explicit syntax recorded; value import of type-only export refused |
 | Missing/unusual modules | Unresolved/external/unsupported counts; never a fabricated node or edge |
 | Deletion/rename | Existing unit replacement + plugin-execution invalidation; resolution unit fully rebuilt |
+| Lifecycle (delete/add/empty/failure/cancel) | Ordered staging then atomic publication; staged facts never visible; prior publication retained on failure or cancellation; AC-41–AC-45 |
+| Multiplicity and identity | Occurrence-anchored ids over (kind, source, target, discriminator, span); distinct written facts coexist; collisions rejected loudly; AC-46–AC-53 |
 | Policy/config change | Version-stamped provenance and version-driven re-extraction; no mixed-version publication |
 | Partial/failed runs | Nothing partial ever becomes visible; `Partial` coverage states; prior publication retained |
 | Cross-plugin and non-ECMAScript modules | Explicit documented boundaries; EC-6F measures the recall cost |
