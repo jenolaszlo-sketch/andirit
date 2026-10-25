@@ -1,8 +1,12 @@
 # EC-6A: Implementation roadmap for cross-file resolution
 
-**Status:** design artifact for EC-6A. Milestones below are **proposals**.
-Implementation is not authorized; EC-6B must not begin before an independent
-design review accepts this architecture.
+**Status:** design artifact for EC-6A, reconciled under EC6-A1. The
+independent review EC6-GLM-AR1 returned READY WITH QUALIFICATIONS and the
+owner accepted the EC-6B decisions and the F02/F04/F05/F09 corrections
+([owner-acceptance record](../decisions/ec6a-owner-acceptance.md)); the review
+gate on EC-6B is therefore satisfied. Milestones beyond EC-6B remain
+**proposals**, and **implementation authorization is a separate owner
+decision — this task did not start EC-6B**.
 **Baseline:** `558f8ac` (EC6-A0).
 Companion documents:
 [architecture](ec6a-cross-file-resolution-architecture.md),
@@ -21,7 +25,7 @@ Every milestone in this roadmap is:
 
 | Milestone | Goal | New graph vocabulary | Profile revision | Size | Depends on |
 | --- | --- | --- | --- | --- | --- |
-| EC-6B | Module-resolution contracts + conservative local module resolution | `resolves-to` + 5 property keys | p6 → p7 | S | EC-6A design review |
+| EC-6B | Module-resolution contracts + conservative local module resolution | `resolves-to` + 5 property keys (accepted) | p6 → p7 | S | EC6-A1 owner acceptance (satisfied) |
 | EC-6C | Export surface a module owns by itself | `exports` + 4 property keys | p7 → p8 | S–M | EC-6B |
 | EC-6D | Re-export/star closure + import binding | `binds` + 3 property keys | p8 → p9 | M | EC-6C |
 | EC-6E | Incremental publication and durability qualification | none | none (unless a defect fix changes facts) | S (verification-heavy) | EC-6D |
@@ -98,27 +102,35 @@ is answerable offline for a single language's files.
 
 **Scope (in).**
 
-- Proposed constants `CodeEdgeKinds.ResolvesTo`, property keys `Specifier`,
-  `ModuleReference`, `ResolutionPolicy`, `ResolutionRule`, `TypeOnly`.
+- Accepted constants (A4): `CodeEdgeKinds.ResolvesTo`; property keys
+  `Specifier`, `ModuleReference`, `ResolutionPolicy`, `ResolutionRule`,
+  `TypeOnly`.
 - Internal seam `ITreeSitterModuleResolver` in the shared Tree-sitter
   session; `EcmaScriptModuleResolver` implementation (module resolution
   only) in the TreeSitter package; module-shape capture for import sites and
-  re-export-from sites (statement forms only).
-- Policy `relative-v1`: normalization, escape refusal, ordered extension
-  substitution, directory index, inventory restriction to the plugin's
-  decodable sources (architecture §6).
+  re-export-from sites (statement forms only) — A1.
+- Owner-accepted policy `relative-v1` exactly as architecture §6.2:
+  normalization, the input classification table, root-escape refusal, the
+  ordered suffix list (including `.d.ts`), directory index, and inventory
+  restricted to the plugin's decodable sources (A2/A7, F04).
 - Resolution unit `{language}:modules` (edges only, always re-emitted when
   the session runs; empty completion clears it otherwise), owned by the
-  existing plugin.
-- Resolver evidence identity and versioning (architecture §8); profile
-  revision p6 → p7.
-- Coverage kinds `resolves-to` with the counting table of architecture
+  existing plugin; full rebuild on any relevant change (A5, F02).
+- The normative emission order and staged-vs-published semantics of
+  architecture §9.1.1–§9.1.3 (F02), the determinism/cancellation/failure
+  contract of §9.4 (F05), and the `resolves-to` identity contract of §7.1.1
+  (F09).
+- Resolver evidence identity `penghou.hetu.tree-sitter.ecmascript-module-
+  resolver` and version `{packageVersion}+resolver{ResolverRevision}.{policy}`
+  (A3, architecture §8); profile revision p6 → p7.
+- Coverage kind `resolves-to` with the counting table of architecture
   §12.2.
-- Docs and handoff.
+- Consumer documentation of the mandated `Resolved` sentence and the
+  absence semantics (D-20), and the handoff.
 
 **Scope (out).** `exports`/`binds` edges; export tables; name resolution of
 any kind; `tsconfig`; `.js`→`.ts` substitution; CJS bindings; cross-plugin
-resolution.
+resolution; preset or query changes; degradation numbers.
 
 **Deterministic fixtures (positive).**
 
@@ -126,33 +138,52 @@ resolution.
 2. `../lib/util` → `lib/util.ts` (normalization).
 3. `./dir` → `dir/index.ts` (directory index).
 4. `./b.ts` → exact rule.
-5. `import type { T } from './t'` → `type-only: true`, `module-reference:
+5. `./types` → `types.d.ts` (declaration suffix in the ordered list; AC-40).
+6. `import type { T } from './t'` → `type-only: true`, `module-reference:
    import-type`.
-6. `const x = require('./c.mjs')` (JavaScript plugin) → `module-reference:
+7. `const x = require('./c.mjs')` (JavaScript plugin) → `module-reference:
    require`, no binding.
-7. `export { x } from './m'` and `export * from './m'` → module edges with
-   `module-reference` `export-from` / `export-star`.
-8. Two importers, same specifier, different directories → two distinct
+8. `export { x } from './m'`, `export type { T } from './m'`, and `export *
+   from './m'` → module edges with `module-reference` `export-from` /
+   `export-type-from` / `export-star`.
+9. Two importers, same specifier, different directories → two distinct
    `resolves-to` edges (the EC-4 D3 defect fixed at the module level).
-9. Determinism: two extractions of identical input produce identical edge
-   ids; repeated indexing is a no-op returning the previous publication.
-10. Self-import (`./self`) → InternalTargets counting.
+10. Determinism: two extractions of identical input produce identical edge
+    ids; repeated indexing is a no-op returning the previous publication
+    (AC-51).
+11. Self-import (`./self`) → InternalTargets counting; every other resolved
+    target → CrossProjectTargets.
+12. Two same-target occurrences in one file with distinct specifiers and
+    distinct locations → separate edges with the §7.1.1 identity inputs
+    (AC-46, AC-47).
 
 **Fixtures (negative).**
 
 1. `./nope` missing → no edge, unresolved count.
 2. `../../../outside` escaping root → no edge, unsupported count.
-3. `node:fs`, `zod`, `https://…` → no edge, external count.
+3. `node:fs`, `zod`, `https://…`, `@/alias` → no edge, external count.
 4. `./config.json`, `./x.astro` → unsupported count.
-5. dynamic `import('./' + x)`, template `require` → no edge, unsupported.
-6. A `.ts` specifier that names a JavaScript-owned file → unresolved
-   (per-plugin inventory), no edge.
+5. `./x.js` where only `x.ts` exists → no edge, unresolved count (D-08).
+6. `./`, `./a//b`, `./a/` → no edge, unsupported count.
+7. `.\a`, `./a\b` → no edge, unsupported count.
+8. `./x?raw`, `./x#frag` → no edge, unsupported count.
+9. `.` and `..` bare → no edge, external count.
+10. `/abs/x` → no edge, unsupported count.
+11. A specifier over 256 chars → no edge, unsupported count, no retained
+    text.
+12. dynamic `import('./' + x)`, template `require` → no edge, unsupported.
+13. A `.ts` specifier that names a JavaScript-owned file → unresolved
+    (per-plugin inventory), no edge (AC-39).
+14. `./Lib/x` where the file is `lib/x.ts` → unresolved (ordinal
+    comparison, no filesystem probe).
 
-**Failure cases.** Invalid specifier bounds (>256 chars) dropped as today;
-undecodable source contributes no inventory entry; parse-error run marks
-resolver kinds `Partial`; endpoint validation must never reject a resolution
-unit (targets exist because file units were staged first — assert this in a
-lifecycle fixture).
+**Failure cases.** Undecodable source contributes no inventory entry;
+parse-error runs mark resolver kinds `Partial`; endpoint validation must
+never reject a correct resolution unit because file units are staged first
+(AC-41/AC-42); a resolver failure after per-file staging retains the prior
+publication (AC-44); cancellation before publication retains the prior
+publication and never emits a partial unit (AC-45); identity collisions fail
+loudly (AC-53). The full taxonomy is architecture §9.4.3.
 
 **Acceptance criteria.**
 
@@ -163,15 +194,52 @@ lifecycle fixture).
   unchanged sources; the diff is exactly the new `resolves-to` edges and
   their coverage).
 - No `exports`/`binds` edges are emitted (negative assertion).
+- F02: lifecycle fixtures AC-41–AC-45 pass on both stores; staging order is
+  asserted by a wrong-order rejection test (resolution unit before file
+  units fails with `graph.edge.endpoint-missing`).
+- F04: every row of the architecture §6.2.3 classification table has a
+  fixture or an explicitly documented exclusion; no contradictory
+  unresolved/unsupported outcome remains.
+- F05: determinism is asserted by byte-identical repeated extraction and a
+  cancellation fixture; the resolver observes the token between
+  files/modules and before batch emission.
+- F09: identity fixtures AC-46–AC-53 pass; every emitted edge's id is
+  recomputed independently from `(kind, source, target, discriminator,
+  span)`.
+- Evidence: every `resolves-to` edge is `Resolved`, carries the resolver
+  provider id/version, and the mandated policy sentence appears in consumer
+  docs and the identity doc; no pre-existing fact changes quality.
 - Coverage invariants hold; `UnresolvedRelationships` semantics documented
   and tested.
 - Docs updated; handoff committed.
 
+**EC-6B acceptance matrix.** Every row is normative; "architecture §" points
+to the exact rule, and each row names its fixture family and review gate.
+
+| Capability | Exact input | Expected output | Evidence | Provenance | Identity | Negative cases | Lifecycle | Required test | Review gate |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Relative exact match | `./b.ts`, `../lib/util.ts` in inventory | `resolves-to` with `resolution-rule: exact` | `Resolved` | resolver provider + `relative-v1` + raw specifier | §7.1.1 inputs; span = statement | missing → unresolved | replacement removes stale ids | positive fixture 4 | EC6-A1 acceptance; EC-6B review |
+| Extension substitution | extensionless path, ordered suffixes | first matching `<path><suffix>` edge with `extension-substitution` | `Resolved` | same | suffix order is policy, recorded per edge | `./x.js` only `.ts` → unresolved (D-08); no arbitrary fallback | target add/delete AC-41/42 | positives 1, 5; negative 5 | EC-6B review |
+| Directory index | extensionless dir, no file match | `<dir>/index<suffix>` edge with `directory-index` | `Resolved` | same | file-before-index precedence | missing index → unresolved; `package.json` never read | target add/delete | positive 3 | EC-6B review |
+| Re-export module reference | `export … from './m'`, `export * from './m'`, `export * as ns from './m'` | module edge with matching `module-reference`; no export/binding facts in EC-6B | `Resolved` | same | statement span | unresolved target → no edge | full rebuild triggers | positive 8 | EC-6B review |
+| Type-only forms | `import type … from`, `export type … from` | module edge with `type-only: true` | `Resolved` | same | presence-only property (absent otherwise) | value/type mismatch cases stay EC-6D | n/a | positive 6 | EC-6B review |
+| Literal `require` | `require('./c.mjs')` in JavaScript plugin | module edge with `module-reference: require`; no binding | `Resolved` | same | call-expression span | dynamic/template require → unsupported | n/a | positive 7; negative 12 | EC-6B review |
+| External specifiers | bare, `node:`, URL, alias | no edge; `external-targets` | n/a | n/a | n/a | none needed | n/a | negative 3 | EC-6B review |
+| Rejected/unsupported syntax | escape, absolute, `//`, `\`, `?`, `#`, overlong, out-of-policy extension | no edge; `unsupported-targets` | n/a | n/a | no text retained for overlong | all rows of §6.2.3 | n/a | negatives 2, 4, 6–11 | EC-6B review |
+| Unresolved targets | policy match absent | no edge; `unresolved-targets` | n/a | n/a | n/a | cross-plugin and case-mismatch variants | unresolved becomes resolved on add (AC-42) | negatives 1, 13, 14; positive by AC-42 | EC-6B review |
+| Identity and multiplicity | repeated/aliased imports, shared targets | distinct deterministic edges per written occurrence | `Resolved` | same | §7.1.1 exact inputs and location conventions | collision → loud failure (AC-53) | removal/shift fixtures AC-49/50 | AC-46–AC-53 | EC-6B review |
+| Lifecycle and publication | add/delete/empty/fail/cancel sequences | staged facts invisible; published graph exactly per AC-41–AC-45 | `Resolved` where emitted | unit origin and run provenance | replacement removes stale ids | wrong order rejected loudly | AC-41–AC-45 on both stores | lifecycle fixtures | EC-6B review + EC-6E qualification |
+| Coverage accounting | every captured site | §12.2 counters; `EdgesEmitted == Internal + CrossProject` | n/a | n/a | n/a | non-produced kinds report nothing | counts recomputed per rebuild | coverage fixture per outcome | EC-6B review |
+| Determinism | identical inputs twice | byte-identical ids, properties, order, counts | `Resolved` | same | stable under byte-identical content | LF/CRLF equivalence | no-op reindex returns prior publication | AC-51, AC-52 | EC-6B review |
+
 **Independent review.** Adversarial probes must include: specifier
-normalization edge cases, escape refusal, ordering of substitution versus
-index, inventory scope, unit replacement after deletion, failed-run
-retention, evidence/provider/version assertions, and a byte-level audit that
-no pre-existing fact moved. Verdict recorded on a preserved review branch.
+normalization edge cases, the full classification table, escape refusal,
+ordering of substitution versus index, inventory scope, case-only mismatch,
+overlong behavior, unit replacement after deletion, empty replacement,
+failed-run retention, cancellation before publication, wrong-order rejection,
+evidence/provider/version assertions, identity/occurrence multiplicity,
+LF/CRLF stability, collision rejection, and a byte-level audit that no
+pre-existing fact moved. Verdict recorded on a preserved review branch.
 
 ---
 
@@ -194,6 +262,12 @@ consults another module's table in this milestone — but it does emit the
   re-exports.
 - Unique-local-declaration rule and its ambiguity handling (dual projection
   → no edge; architecture §7.3).
+- **F01 gate (from EC6-GLM-AR1):** before any `exports` edge targets a
+  name-based symbol kind (function, type, enum, namespace), this milestone's
+  design must adopt one of GLM's options — carry an explicit declaring
+  module property (recommended `exported-from`), restrict eligibility to
+  path-scoped kinds, or migrate identities — with fixtures proving
+  attribution. Unattributed name-based targets must not ship.
 - Coverage kind `exports`; profile revision p7 → p8.
 
 **Scope (out).** Named re-export and star chains (`export-via: re-export` /
@@ -259,6 +333,14 @@ default, and namespace imports with explicit type-only semantics.
 - Binding algorithm and type/value rules (architecture §7.4).
 - `export-via` values `re-export` and `star` and their `via-module`
   properties.
+- **F07 gate:** specify whether star-derived `exports` edges preserve the
+  source export's `type-only` flag and how namespace re-exports interact
+  with type-only syntax (O-04), with fixtures; conservative refusal is
+  acceptable.
+- **F01 gate carries here:** no `binds` edge may target a converged
+  name-based node unless EC-6C's attribution decision makes the edge
+  attributable; order-independent star closure and the brief's cycle
+  example must be fixtures (GLM §G).
 - Coverage kinds `binds`; profile revision p8 → p9.
 
 **Scope (out).** CJS bindings; export of imported bindings; dynamic module
@@ -332,6 +414,9 @@ fact (no revision bump unless a defect fix changes them).
 - Bounds: a synthetic fixture near the degradation limit validates the
   policy of architecture §12.1 (warning code + coverage honesty, no silent
   truncation, no stale edges).
+- **F10 fixture:** all files of a plugin deleted — the empty resolution unit
+  is displaced by cross-run ownership hygiene and no resolver fact survives
+  (architecture §9.1.3).
 - Conformance additions only if a store behavior proves unspecified; any
   such addition must itself pass both stores.
 
@@ -409,7 +494,8 @@ These are recorded so milestones do not accidentally absorb them:
 ## Sequencing and review gates
 
 ```text
-EC-6A design review ──accept──► EC-6B ──review──► EC-6C ──review──►
+EC-6A design review (EC6-GLM-AR1: READY WITH QUALIFICATIONS) ──accept──►
+EC6-A1 owner acceptance ──authorize──► EC-6B ──review──► EC-6C ──review──►
 EC-6D ──review──► EC-6E ──review──► EC-6F ──review──► closure
 ```
 

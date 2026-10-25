@@ -1,12 +1,17 @@
 # EC-6A: Decision register
 
-**Status:** design artifact for EC-6A. Every entry is a **proposal** awaiting
-independent design review and, where marked, owner approval. None is
-implemented.
-**Baseline:** `558f8ac` (EC6-A0).
+**Status:** design artifact for EC-6A, reconciled under EC6-A1. Entries marked
+**OWNER ACCEPTED** are decided for the named scope; every other entry remains
+a proposal awaiting its gate. None is implemented.
+**Baseline:** `558f8ac` (EC6-A0). Acceptance record:
+[ec6a-owner-acceptance.md](../decisions/ec6a-owner-acceptance.md).
 
 Status vocabulary:
 
+- **OWNER ACCEPTED** — validated by the independent review and accepted by
+  the owner for the named milestone scope; implementable without further
+  approval. The scope column is exact: acceptance does not extend to later
+  milestones.
 - **RECOMMENDED** — the architecture document recommends this; the design
   reviewer should accept or reject it with rationale.
 - **OWNER APPROVAL REQUIRED** — touches public vocabulary, evidence meaning,
@@ -14,31 +19,110 @@ Status vocabulary:
   design-review acceptance alone.
 - **DEFERRED** — deliberately excluded from EC-6B–F; recorded so later work
   starts from a decision, not an accident.
-- **OPEN** — not yet resolved; listed for the design review to close or
-  carry forward.
+- **OPEN** — not yet resolved; listed for its gate to close or carry forward.
 
 | ID | Decision | Status | Milestone |
 | --- | --- | --- | --- |
-| D-01 | Resolver placement | RECOMMENDED | EC-6B |
-| D-02 | Module identity | RECOMMENDED | EC-6B |
-| D-03 | Evidence quality of resolver facts | RECOMMENDED + OWNER APPROVAL REQUIRED | EC-6B |
-| D-04 | Edge kind vocabulary | RECOMMENDED + OWNER APPROVAL REQUIRED | EC-6B/C/D |
-| D-05 | Name-based symbol targets and dual projections | RECOMMENDED + OWNER APPROVAL REQUIRED | EC-6C |
+| D-01 | Resolver placement | OWNER ACCEPTED (EC-6B) | EC-6B |
+| D-02 | Module identity | OWNER ACCEPTED (EC-6B) | EC-6B |
+| D-03 | Evidence quality of resolver facts | OWNER ACCEPTED (EC-6B, `resolves-to`); `exports`/`binds` gate | EC-6B / EC-6C/D |
+| D-04 | Edge kind vocabulary | OWNER ACCEPTED (EC-6B subset: `resolves-to`); later kinds proposed | EC-6B/C/D |
+| D-05 | Name-based symbol targets and dual projections | RECOMMENDED + OWNER APPROVAL REQUIRED (F01 correction mandatory) | EC-6C |
 | D-06 | Export of imported bindings | DEFERRED | post-6F |
 | D-07 | Import binding rules and type-only semantics | RECOMMENDED | EC-6D |
 | D-08 | `.js` → `.ts` extension substitution | DEFERRED | post-6F |
 | D-09 | `tsconfig` paths/baseUrl/module modes | DEFERRED | post-6F |
-| D-10 | CommonJS surfaces and `require` bindings | RECOMMENDED (boundary) / DEFERRED (modeling) | EC-6B (edges) / post-6F |
+| D-10 | CommonJS surfaces and `require` bindings | OWNER ACCEPTED (EC-6B module edge) / DEFERRED (modeling) | EC-6B / post-6F |
 | D-11 | Anonymous default exports | DEFERRED | post-6F |
-| D-12 | Resolution unit identity and ownership | RECOMMENDED | EC-6B |
-| D-13 | Invalidation model | RECOMMENDED | EC-6B, qualified in EC-6E |
-| D-14 | Coverage counting | RECOMMENDED | EC-6B |
-| D-15 | Query surface changes | RECOMMENDED (none) + OWNER APPROVAL REQUIRED (impact) | EC-6B–F |
-| D-16 | Version and invalidation identity | RECOMMENDED | EC-6B |
-| D-17 | Bounds and degradation | RECOMMENDED + OWNER APPROVAL REQUIRED | EC-6E |
-| D-18 | Cross-plugin TypeScript↔JavaScript resolution | RECOMMENDED (defer) + OWNER APPROVAL REQUIRED | EC-6F (measure) |
-| D-19 | Property vocabulary discipline | RECOMMENDED + OWNER APPROVAL REQUIRED | EC-6B–D |
-| D-20 | Consumer meaning of missing resolver facts | RECOMMENDED | EC-6B–F |
+| D-12 | Resolution unit identity and ownership | OWNER ACCEPTED (EC-6B) | EC-6B |
+| D-13 | Invalidation model | OWNER ACCEPTED (EC-6B, qualified in EC-6E) | EC-6B |
+| D-14 | Coverage counting | OWNER ACCEPTED (EC-6B; §12.2 normative) | EC-6B |
+| D-15 | Query surface changes | OWNER ACCEPTED (no changes; impact stays closed) | EC-6B–F |
+| D-16 | Version and invalidation identity | OWNER ACCEPTED (EC-6B) | EC-6B |
+| D-17 | Bounds and degradation | OWNER APPROVAL REQUIRED (numbers) | EC-6E |
+| D-18 | Cross-plugin TypeScript↔JavaScript resolution | OWNER ACCEPTED (deferred scope; measured in EC-6F) | EC-6F |
+| D-19 | Property vocabulary discipline | OWNER ACCEPTED (EC-6B key subset) | EC-6B–D |
+| D-20 | Consumer meaning of missing resolver facts | OWNER ACCEPTED (EC-6B–F) | EC-6B–F |
+
+---
+
+## EC6-A1 owner acceptance (2026-10-25)
+
+**Evidence.** Independent review `EC6-GLM-AR1` (`review/ec6-glm-ar1`, tip
+`c66ed60`; `docs/reviews/ec6-glm-ar1-architecture-review.md` and
+`docs/reviews/ec6-glm-ar1-decision-reconciliation.md`; executed probes
+P1–P6) returned READY WITH QUALIFICATIONS with no P0/P1 findings. The owner
+accepted the reviewed architecture with four documentation corrections
+(F02/F04/F05/F09). Binding record:
+[ec6a-owner-acceptance.md](../decisions/ec6a-owner-acceptance.md). This
+section records decisions; it does not convert deferred items into resolved
+ones.
+
+### Accepted decisions and exact scope
+
+| ID | Accepted scope (exact) |
+| --- | --- |
+| D-01 | Resolution runs as a pass inside the existing Tree-sitter extraction session, after the relevant per-file extraction units, behind internal `ITreeSitterModuleResolver` with an ECMAScript implementation; relationships are emitted into the stable plugin-owned unit `{language}:modules`. No new core graph-resolution phase. A later parser-independent or cross-plugin layer remains an option, not a requirement |
+| D-02 | Module target is the existing file node; no new module node kinds, no changes to existing file identities; EC-6B supports only the conservative repository-local relative subset |
+| D-03 | `Resolved` for a successfully established `resolves-to` edge under the declared policy, with the mandated meaning sentence and resolver/policy/version provenance. A matching filename alone never justifies `Resolved`; when policy conditions fail, no edge is emitted. `exports`/`binds` classification remains at its EC-6C/EC-6D gates (F12) |
+| D-04 | EC-6B adds only `resolves-to` (importing/re-exporting file → resolved target file). No new public node kinds; no `exports`/`binds` during EC-6B; later vocabulary remains proposed |
+| D-10 | Literal `require('./m')` yields a `resolves-to` module edge (`module-reference: require`); CommonJS export/binding modeling remains deferred |
+| D-12/D-13 | One stable `{language}:modules` unit per plugin, edges only, always re-emitted when the plugin executes (empty completion included); full rebuild on any relevant indexed-input or resolution-policy change; no dependency-level incremental optimization in EC-6B — correctness and deterministic replacement take precedence |
+| D-14 | The §12.2 counting table is normative; resolver kinds join the Tree-sitter coverage list; no new coverage fields |
+| D-15 | Existing impact presets stay unchanged; adding `resolves-to` must not silently expand impact interpretation; existing structural `imports` remain available |
+| D-16 | A single emitted-fact revision governs resolver-fact changes; provider version `{packageVersion}+resolver{ResolverRevision}.{policy}` changes in lockstep; no second invalidation axis |
+| D-18 | EC-6B operates within the source inventory of the owning Tree-sitter plugin; cross-plugin TS/JS resolution is not claimed; missing out-of-inventory targets are never represented as verified source dependencies; limitation documented and measured in EC-6F |
+| D-19 | EC-6B property keys `specifier`, `module-reference`, `resolution-policy`, `resolution-rule`, `type-only` accepted; values bounded; further keys proposed |
+| D-20 | Absence of a resolver edge means "not verified under the active policy", never "no dependency exists"; the sentence is required in consumer documentation |
+
+### GLM finding dispositions
+
+| Finding | Disposition | Normative location |
+| --- | --- | --- |
+| F02 staging/replacement ordering | Reconciled: emission order, staged-vs-published facts, lifecycle scenarios | architecture §9.1.1–§9.1.3; AC-41–AC-45 |
+| F04 normalization/classification | Reconciled: normative normalization, ordered matching, input classification table | architecture §6.2; roadmap EC-6B fixtures |
+| F05 cancellation/determinism/failure | Reconciled: determinism, token handling, failure taxonomy, reused resource limits | architecture §9.4; AC-45, AC-51, AC-52 |
+| F09 identity/multiplicity | Reconciled for `resolves-to`; full per-kind contract gated at EC-6C/D | architecture §7.1.1; AC-46–AC-53 |
+| F01 name-based attribution | Deferred with a mandatory correction at EC-6C/D (below) | D-05; roadmap F01 gates |
+| F03, F08, F11 | No issue found; recorded, no action | GLM review |
+| F06 coverage persistence | Deferred to platform work (below) | — |
+| F07 star type-only propagation | Deferred to the EC-6D design (below) | O-04 |
+| F10 all-files-deleted | Deferred fixture to EC-6E | architecture §9.1.3 |
+| F12 export/binding evidence gates | Preserved: classification settled at EC-6C/D under preconditions | architecture §8; D-03 |
+
+### Deferred decisions with future gates
+
+| Item | Original source | Reason deferred | Required milestone | Blocking condition | Evidence for acceptance |
+| --- | --- | --- | --- | --- | --- |
+| F01 attribution of converged name-based identities | GLM F01; D-05; O-02 | EC-6B emits no export/binding facts; attribution needs its own design | EC-6C design; EC-6D for `binds` | Any `exports`/`binds` edge targeting a converged kind | Chosen option (declaring-module property or eligibility restriction) plus fixtures proving attribution |
+| Export binding attribution and eligibility | Task-deferred list | Requires F01 | EC-6C/D | Shipping export/bind facts | Same as F01 |
+| Distinct export/bind identities (full F09 contract) | GLM F09 | Kinds not in EC-6B | EC-6C/D | Any `exports`/`binds` edge | Per-kind discriminator contract plus alias/collision fixtures |
+| F07 star/re-export type-only propagation; O-04 representation | GLM F07 | EC-6D scope | EC-6D design | Star/namespace re-export emission | Fixtures, or a documented conservative refusal |
+| Re-export cycle closure completeness | GLM §G | EC-6D scope | EC-6D design | Star/re-export closure shipping | Cycle and order-independence fixtures; under-approximation documented |
+| Export of imported bindings; anonymous defaults; CJS binding semantics | D-06, D-10 (modeling), D-11 | Separable identity work; dynamic export objects | post-6F | Milestone authorized | Design plus fixtures |
+| `.js`→`.ts` substitution (`relative-v2`) | D-08 | Mode semantics not emulated | post-6F | Policy extension authorized | Policy design, fixtures; recall measured in EC-6F |
+| `tsconfig` paths/baseUrl/module modes | D-09 | Distinct trust/bounds/invalidation capability | post-6F | Explicit opt-in design exists | Config identity and config-hash invalidation fixtures |
+| D-17 numbers and degradation order; O-07 | Register; GLM | Needs measurement; no invented benchmarks | EC-6E | Large-repository qualification | Fixture near the limit plus owner acceptance of numbers |
+| F06 / persisted coverage diagnostics | GLM F06 | Coverage exists only in extraction results | post-6F platform work | Consumer need | Additive API design |
+| F10 all-files-deleted lifecycle | GLM F10 | Qualification | EC-6E | EC-6E | Fixture passes on both stores |
+| Measured performance limits; full incremental and durability qualification | R-05; EC-6E scope | Measurement | EC-6E/EC-6F | Qualification | Evidence report with commands and counts |
+| Cross-plugin resolution (D-18 evolution) | Register | Requires core-assisted ordering/visibility | post-6F | Owner authorization | Design with ordering guarantees; F11 constraint respected |
+| Query conveniences, preset/impact changes, optimized dependency tracking | D-15; post-6F candidates | No measured consumer need | post-6F | Explicit decision | Additive API review |
+| Identity migration for name-based symbols | D-05 consequence; roadmap post-6F item 6 | Re-extraction milestone of its own | post-6F | F01 option 3 chosen | Migration design and evidence |
+
+### Open-question dispositions under EC6-A1
+
+| ID | Disposition |
+| --- | --- |
+| O-01 | CLOSED: `Resolved` accepted for `resolves-to` with the mandated wording; `Derived` remains recorded as the fallback for later kinds |
+| O-02 | Carried to EC-6C/D: must be settled with F01 before `exports`/`binds` ship |
+| O-03 | Carried to EC-6B implementation (documented and tested there) |
+| O-04 | Carried to the EC-6D design (F07), conservative refusal acceptable |
+| O-05 | Partially closed: `resolves-to` accepted (A4); `exports`/`binds` names remain owner items at their milestones |
+| O-06 | CLOSED: distinct resolver provider id accepted as A3 provenance |
+| O-07 | Owner item at EC-6E (numbers and preference order) |
+| O-08 | Carried to EC-6D implementation |
+| O-09 | Carried to EC-6D implementation |
 
 ---
 
@@ -113,6 +197,11 @@ it or select `Derived`; the choice applies uniformly to `resolves-to`,
 consumer guidance. Owner approval required because it changes what
 `Resolved` means for a structural provider.
 
+**EC6-A1 disposition.** Accepted by the owner for `resolves-to` with the
+mandated policy sentence (architecture §8). The `Derived` alternative remains
+recorded and would change no structure if later selected for other kinds;
+`exports`/`binds` classification stays open under F12.
+
 ## D-04 — Edge kind vocabulary
 
 **Decision (recommended).** Three additive kinds: `resolves-to` (module
@@ -127,6 +216,10 @@ properties.
 as EC-4 recommended; three focused kinds keep presets and evidence policies
 precise and let consumers opt in per question. Owner approval required
 because kinds are public vocabulary.
+
+**EC6-A1 disposition.** The owner accepted only the EC-6B subset —
+`resolves-to`. The `exports`/`binds` names and semantics remain proposals
+gated at EC-6C/EC-6D with F01/F07/F12 conditions.
 
 **Consequences.** Traversal presets do not change automatically (D-15).
 
@@ -153,6 +246,11 @@ something EC-6 creates. Ambiguity is reported, never guessed.
 identity alone) to attribute a module surface. Identity migration is a
 separate milestone (roadmap post-EC-6F item 6). Owner approval required
 because it accepts a visible truthfulness tradeoff.
+
+**EC6-A1 disposition.** Not accepted for EC-6B (no export or binding facts).
+The F01 correction (declaring-module attribution or eligibility restriction)
+is mandatory before any `exports`/`binds` edge targets a converged name-based
+kind; the deferred-gates table above records the acceptance evidence.
 
 ## D-06 — Export of imported bindings
 
@@ -234,6 +332,10 @@ reporting and strands units on partial reporting failure); per-module units
 **Rationale.** Stable id + full replacement is the existing unit contract
 (`src/Penghou.Hetu/CodeGraphStoreModels.cs:142-168`); edges-only content
 minimizes validation surface and needs no new node kinds.
+
+**EC6-A1 disposition.** Accepted (A5): full rebuild of the plugin-owned
+`{language}:modules` unit on any relevant indexed-input or policy change;
+no dependency-level incremental optimization in EC-6B.
 
 ## D-13 — Invalidation model
 
@@ -324,12 +426,22 @@ and no cross-plugin source visibility; making this work requires the core
 phase or shared-scope work of D-01 alternatives, which should be justified
 by measured consumer need.
 
+**EC6-A1 disposition.** The owner acknowledged the per-plugin scope
+limitation (A7): EC-6B operates within the owning plugin's source inventory,
+missing out-of-inventory targets are never represented as verified source
+dependencies, and the limitation is documented and measured in EC-6F.
+
 ## D-19 — Property vocabulary discipline
 
 **Decision (recommended).** New keys are added to `CodePropertyKeys` with
 documented value sets; all values bounded; no new consumer-facing property
 filters in EC-6B–F; property growth is reviewed like kind growth. Owner
 approval required for the vocabulary set in architecture §7.2.
+
+**EC6-A1 disposition.** The owner accepted the EC-6B key subset —
+`specifier`, `module-reference`, `resolution-policy`, `resolution-rule`,
+`type-only` — as public vocabulary; later keys remain proposals at their
+milestones.
 
 ## D-20 — Consumer meaning of missing resolver facts
 
@@ -349,8 +461,8 @@ misread.
 
 | ID | Risk | Mitigation |
 | --- | --- | --- |
-| R-01 | `Resolved` claim challenged as overstatement for a policy-based resolver | D-03 is review-critical; fallback `Derived` is designed-in and uniform; owner decides |
-| R-02 | Name-based symbol convergence makes export attribution ambiguous for common kinds | AC-01b documented and asserted; consumers use edges, not symbol identity alone; identity migration tracked |
+| R-01 | `Resolved` claim challenged as overstatement for a policy-based resolver | Closed for EC-6B: owner accepted `Resolved` with the mandated policy sentence (A3, §D of the GLM review); the `Derived` fallback stays recorded for later kinds |
+| R-02 | Name-based symbol convergence makes export attribution ambiguous for common kinds | F01 correction mandatory at EC-6C/D (declaring-module attribution or eligibility restriction) before `exports`/`binds` ship; AC-01b documented; identity migration tracked |
 | R-03 | Per-plugin scope (D-18) depresses real-world recall | EC-6F measures; docs state limits; cross-plugin is a designed next step |
 | R-04 | Policy `relative-v1` diverges from TypeScript behavior in edge cases | Ordered policy table + explicit deviation list; each extension gets its own policy level and fixtures |
 | R-05 | Full re-resolution cost on very large repositories | Bounds + degradation policy (D-17); EC-6E validates; dependency tracking deferred |
@@ -362,22 +474,22 @@ misread.
 
 ## Open questions for the design review
 
-| ID | Question | Carried to |
+| ID | Question | Status / carried to |
 | --- | --- | --- |
-| O-01 | Accept `Resolved` (D-03) or select `Derived`? Exact wording for consumer docs? | design review — blocking |
-| O-02 | Should `exports` include name-based symbol kinds at all, or exclude them until identity migration? | design review / owner |
-| O-03 | Should `UnresolvedRelationships` include all unresolved categories (including mismatch), or only module-not-found? | EC-6B implementation |
-| O-04 | Should star-derived per-name edges exist, or is one star marker plus consumer traversal preferable? | design review (EC-6D scope) |
-| O-05 | Final kind names (`resolves-to`/`exports`/`binds`) versus alternatives (`import-target`, `imports-symbol`) | owner (vocabulary) |
-| O-06 | Resolver provider id distinct from plugin id (recommended) or shared with version suffix? | design review |
-| O-07 | Degradation order and guidance limit (D-17) — exact numbers and preference order | owner / EC-6E |
+| O-01 | Accept `Resolved` (D-03) or select `Derived`? Exact wording for consumer docs? | CLOSED by EC6-A1: `Resolved` accepted for `resolves-to` with the mandated sentence; `Derived` recorded as the fallback for later kinds |
+| O-02 | Should `exports` include name-based symbol kinds at all, or exclude them until identity migration? | Carried to EC-6C/D with F01 (no exports in EC-6B) |
+| O-03 | Should `UnresolvedRelationships` include all unresolved categories (including mismatch), or only module-not-found? | EC-6B implementation (documented and tested there) |
+| O-04 | Should star-derived per-name edges exist, or is one star marker plus consumer traversal preferable? | EC-6D design (F07; conservative refusal acceptable) |
+| O-05 | Final kind names (`resolves-to`/`exports`/`binds`) versus alternatives (`import-target`, `imports-symbol`) | Partially closed: `resolves-to` accepted (A4); `exports`/`binds` names at their milestones |
+| O-06 | Resolver provider id distinct from plugin id (recommended) or shared with version suffix? | CLOSED by EC6-A1: distinct provider id accepted as A3 provenance |
+| O-07 | Degradation order and guidance limit (D-17) — exact numbers and preference order | Owner item at EC-6E |
 | O-08 | Should `type-only` be tri-state (explicit type-only / explicit value / unspecified) instead of presence-only? | EC-6D implementation |
 | O-09 | Should `via-module` selection under multi-path star convergence be first-ordinal (proposed) or omitted? | EC-6D implementation |
 
 ## Owner approval summary
 
-Approval is required for: D-03 (evidence meaning), D-04 and D-19 (public
-vocabulary), D-05 and O-02 (representation truthfulness tradeoff), D-15
-(query semantics, especially impact), D-17 (large-repository behavior),
-D-18 (scope limitation), and any eventual decision to implement the
-post-EC-6F candidates.
+Satisfied for EC-6B by EC6-A1: D-01–D-04 (EC-6B scope), D-10 (module-edge
+boundary), D-12–D-16, D-18, D-19 (EC-6B key subset), D-20. Still required at
+their gates: D-05 and O-02 with F01 (EC-6C/D), D-07 and O-04/O-08/O-09
+(EC-6D), D-17 and O-07 numbers (EC-6E), and any eventual decision to
+implement the post-EC-6F candidates.
