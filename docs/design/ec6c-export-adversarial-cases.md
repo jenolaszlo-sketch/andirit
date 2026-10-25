@@ -1,5 +1,100 @@
 # EC6C-D0: Export representation adversarial cases
 
+## Current EC6C-A1 structural acceptance matrix
+
+**Status:** This matrix is the normative Track A syntax/test contract. It supersedes conflicting expectations in historical C01–C35; those cases remain as design history and are not evidence that a p9 implementation exists.
+
+The shared contract in the architecture addendum defines E(path,name) for entry identity and O(file,entry,exportedName,form,localName-presence/localName,typeOnly,projection,UTF-16 span) for occurrence-edge identity. Every emitted relationship is kind exports with Structural evidence, provider penghou.hetu.tree-sitter.ecmascript-export-surface, provider version packageVersion+exports1.local-v1, and Evidence.Location at the token span of the public exported name. It is owned and replaced in the file unit. No row emits exported-as. For every omitted syntax form, positive-only semantics apply.
+
+### Syntax allowlist
+
+| Category | A1 disposition | Expected fact and projection | Fixture and gate |
+| --- | --- | --- | --- |
+| Direct variable declaration | Supported for simple identifier declarators. | Entry per public name; direct named occurrence; value projection. | A01 and multi-declarator variant; exact name span. |
+| Direct class declaration | Supported. | Entry and direct occurrence; both projection. | A01b; one class source occurrence. |
+| Direct function declaration | Supported, including each direct overload signature that carries an unambiguous exported name. | One entry; one Structural occurrence per written declaration site; value projection. No overload grouping. | A01c and duplicate-site case; no declaration records joined. |
+| Interface and type alias | Supported as direct declarations. | Type projection per occurrence. | A05/A07; no binding claim. |
+| Enum | Supported as a direct TypeScript declaration. | Both projection per occurrence; no merge resolution. | A01d; no compiler analysis. |
+| Namespace/module declaration | Direct non-ambient syntax may produce a name occurrence; projection is unknown. | Name entry and Structural occurrence only. | A01e; nested namespace exports excluded. |
+| Local named export list | Supported when exported-name token is exact. | Entry and local-list occurrence; explicit local-name; projection unknown unless explicit type-only. | A02/A03/A06/A10. |
+| Local alias | Supported. | Entry is keyed by public alias; local-name is written local spelling; no binding. | A02/A03/A14. |
+| Multiple declarators | Supported only for simple identifier declarators with exact name nodes. | One occurrence per public identifier token. | A01 multi-name fixture; destructuring is excluded. |
+| Named and anonymous default declarations | Supported when parser provides exact default token. | Entry name default; function value, class both; optional declared name remains syntax metadata only. | A08 and named default variant. |
+| Default expression | Supported as a default value occurrence. | Entry default; expression projection value; no declaration identity. | A09. |
+| Explicit type-only export | Supported when grammar exposes the modifier. | type-only=true and projection type on that occurrence. | A05/A06. |
+| Identifier named type | Supported as an identifier; not a modifier. | No type-only flag; local-list projection unknown absent an explicit modifier. | A06; grammar-shape regression. |
+| Simple quoted and Unicode name | Supported when literal needs no escapes and meets the approved bound. | Canonical public string value is entry name; exact source token is occurrence span. | A19 and string-name fixture. |
+| Repeated, overloaded, or merged direct declaration sites | Supported only as separate syntactic observations when each site independently has an exact export name. | One shared module/name entry; separate occurrence edges. No semantic merge/overload classification or attribution. | A04/A07; distinct spans and IDs. |
+| Imported local alias exported by a local list | Supported Structural-only. | Same local-list observation as any export list; no remote origin, import binding or declaration edge. | A10; distinguish no from-clause from named re-export. |
+| Named re-export | Excluded. | No export entry or exports edge for the re-export form. Existing module dependency fact may remain. | A11. |
+| Star re-export | Excluded. | No name entry or exports edge. | A12. |
+| Namespace re-export | Excluded. | No name entry or exports edge. | A12. |
+| Ambient declaration | Unsupported in A1. | No entry or occurrence, even if a name is visible. | A17; absence is not negative evidence. |
+| Destructuring export | Unsupported in A1. | No entry for names discovered only by pattern analysis. | A17. |
+| CommonJS forms | Unsupported in A1. | No export facts for module.exports or exports.name. | A17. |
+| TypeScript export equals | Unsupported in A1. | No export facts. Existing module-specifier observations remain governed by their own contract. | A17. |
+| Nested namespace export | Unsupported as module-level export. | No module export entry for nested member. The outer exported namespace may be observed by its direct declaration. | A17. |
+| Parser-recovered malformed syntax | Error/missing subtrees are unsupported; valid sibling nodes may still emit positive facts. | No fact for a recovered occurrence whose name/span cannot be established; no completeness claim. | A17. |
+| Escaped, empty, control, or over-bound name | Unsupported; never truncate or normalize into a different name. | No entry and no occurrence. | A29 for bound decision; string escape and empty-name fixtures. |
+
+### A01–A29 implementation-ready cases
+
+| ID | Fixture or operation | Expected entry and occurrences | Projection, provenance, publication and required assertion |
+| --- | --- | --- | --- |
+| A01 | export const count = 1; | E(path,count); one direct named O at the count token. | value; Structural; file unit. Assert ID, Kind export, Name/QN count, null SymbolId, edge provider/version/location/properties. |
+| A02 | const value = 1; export { value as current }; | E(path,current); one local occurrence at current with local-name value. | unknown; Structural; no declaration link. Assert alias is the entry name and source spelling remains occurrence metadata. |
+| A03 | export { value as first }; export { value as second }; | E(path,first), E(path,second); two occurrence IDs with local-name value. | unknown; each span Structural. Assert distinct entries, no edge collapse, no exported-as. |
+| A04 | export { left as result }; export { right as result }; | One E(path,result); two occurrence edges at separate result tokens. | unknown for each; Structural. Assert duplicate slot has two edges, neither chosen as binding. |
+| A05 | export type { Item as Shape }; | E(path,Shape); one local occurrence at Shape. | type-only=true; projection type; Structural. Assert explicit modifier differs from normal local export. |
+| A06 | const type = 1; export { type }; export type { Item }; | Entries type and Item; one occurrence each. | type is not a modifier: first has no type-only and projection unknown; Item is type-only/type. Assert grammar distinguishes identifier from modifier. |
+| A07 | export interface Item {}; export const Item = {}; | One E(path,Item); two direct occurrences at distinct spans. | interface contributes type; const contributes value. No aggregate on entry. Assert one slot, two projections, no claim either occurrence binds imports. |
+| A08 | export default function () {}; | E(path,default); one occurrence at default token. | value; Structural; no local-name or declaration association. Assert no synthetic declaration. |
+| A09 | export default makeValue(); | E(path,default); one occurrence at default token. | value; Structural; no declaration association. Assert expression does not create a declaration node. |
+| A10 | import { remote as local } from "./other"; export { local as publicName }; | E(path,publicName); one local-list occurrence with local-name local. | unknown, or type for explicit type-only local list; Structural. No via-module or remote target on export edge. Assert no declaration binding and no re-export classification; existing import/resolves-to facts remain independent. |
+| A11 | export { original as alias } from "./other"; | No export entry and no exports edge for this syntax. | The existing resolver may still emit resolves-to for the specifier. Assert public alias and remote source name are absent from Track A graph and no resolver identity changes. |
+| A12 | export * from "./other"; export * as ns from "./other"; | No export entry or exports edge for either form. | Existing module dependency observations remain separate. Assert no claim of export completeness. |
+| A13 | Remove the only supported export occurrence from an indexed file. | Completed replacement removes its old occurrence and now-unreferenced entry. | No export coverage marker is created; unrelated file facts remain. Assert exact unit replacement in both stores. |
+| A14 | Rename export { value as before } to export { value as after }. | E(path,before) is removed if unreferenced; E(path,after) is added; occurrence ID changes. | Same local spelling; Structural. Assert old entry is absent and any declaration identity remains unchanged. |
+| A15 | Remove one of two duplicate result occurrences. | E(path,result) remains; removed edge disappears; unchanged sibling edge ID remains. | Structural. Assert multiplicity is occurrence-based and exact surviving fact is stable. |
+| A16 | Index a valid file with no supported exports. | No export entry or exports edge. | Meaning is “no supported occurrence recorded”; no complete-empty status. Assert old export facts clear on completed replacement. |
+| A17 | Mix supported syntax with re-export, ambient, destructuring, nested export, or malformed subtrees. | Emit only error-free allowlisted occurrences with exact names/spans; emit none for unsupported forms. | Every emitted fact Structural. Assert valid siblings survive parse recovery where available and omitted forms imply no absence. |
+| A18 | Generate the same complete occurrence fact twice; then inject same ID with a different property or evidence location. | Exact duplicate is idempotent; conflicting same-ID fact fails before insertion/completion. | No conflict is resolved by traversal order. Assert prior published file unit survives failure in both stores. |
+| A19 | /*😀*/ export const 名 = 1; | E(path,名) hashes the exact name; O location begins after the supplementary scalar using UTF-16 columns. | value; Structural. Assert UTF-16, one-based, end-exclusive span; entry hash unaffected by preceding text. |
+| A20 | Re-extract the same source once with LF and once with CRLF. | Entry and occurrence IDs remain equal when path and logical line/column source are otherwise identical. | Structural. Assert raw source-byte differences do not enter occurrence identity. |
+| A21 | Extract identical path and bytes repeatedly and with reversed internal enumeration. | Same entry/edge IDs and complete facts. | Structural. Assert graph fact set deterministic and exact duplicates coalesce only as specified. |
+| A22 | Fail after staging some exports or cancel before file-unit completion. | No partial new publication; prior complete unit remains visible. | Assert atomic retention in both InMemory and LatticeDb; this is a future qualification, not an A1 runtime result. |
+| A23 | Close and reopen durable LatticeDb after successful p9 publication. | Same export nodes, edges, IDs, properties and evidence locations reappear. | Assert round-trip equality and valid endpoints; no schema migration. |
+| A24 | Seed a durable publication with the accepted p8 extractor, then index unchanged sources using p9. | Both ECMAScript plugins invalidate; only supported export facts are added. | Existing node, declaration, structural-edge and unchanged resolves-to IDs remain byte-identical; resolver2.relative-v1 remains unchanged; reopen and compare. |
+| A25 | Query an existing declared symbol named Item after an export entry Item is added. | Exact QualifiedName lookup may return both declaration and export entry, sorted by node ID. Module traversal filtered to exports retrieves entries/occurrences. | Existing candidate API already preserves declaration-less nodes and has no node-kind filter. Assert old candidate IDs remain, added Kind=export is explicit, SymbolId filtering keeps declaration navigation stable, Truncated is checked, FindReferences and presets stay unchanged. |
+| A26 | Run every Track A syntax case. | No exported-as edge exists in any unit. | All export relationships are Structural; none is Resolved, Derived or Inferred. Assert provider identity/version and no declaration attribution. |
+| A27 | Index from-clause re-export forms alongside ordinary imports. | No Track A export facts for re-export statements; resolver may publish its existing file-level resolves-to fact. | Assert resolver2.relative-v1 evidence, edge IDs and properties remain unchanged when inputs are unchanged. |
+| A28 | Explain a nonempty, empty, omitted, unsupported or truncated result to a consumer. | Nonempty is a set of observed supported occurrences; empty is no supported occurrence recorded; omitted forms and additional effective exports remain unknown. | Update consumer guidance. Assert docs reject complete-surface, valid-binding and declaration-origin inference; truncated traversal is explicitly partial. |
+| A29 | Test names at the selected 256-unit boundary and one unit beyond, including supplementary scalars. | Accepted name receives E(path,name); over-bound name emits no entry/edge and is not truncated. | **PROPOSED — OWNER DECISION REQUIRED:** select Unicode scalar values (recommended) or UTF-16 code units as the unit before fixing the expected boundary fixture. |
+
+### Independent-review disposition
+
+- F01 (coverage visibility): accepted positive-only scope; no completeness counters or marker.
+- F02 (namespace-slot ambiguity): accepted correction; facets are per occurrence and unknown remains unknown.
+- F03 (same-file merged path-scoped target): Track B only; no Track A attribution.
+- F04 (name-converged Derived target): Track B only; no Track A attribution.
+- F05 (module-scope lookup): deferred to Track B.
+- F06 (missing remote source name): bounded by excluding all re-export entries.
+- F07 (EC-6A decision history): corrected in the owner record and decision register.
+- F08 (exact-name candidates): accepted additive candidate behavior under existing all-node lookup and consumer guidance; declaration navigation remains SymbolId based.
+- F09 (TryAdd collision suppression): accepted fail-before-insert requirement for future export emission.
+
+No A01–A29 implementation tests ran during EC6C-A1. The cases specify future tests and are not runtime qualification.
+
+---
+
+## Historical EC6C-D0 adversarial cases
+
+C01–C35 below are retained as the original design review matrix. They are historical D0 predictions, not current Track A acceptance tests where they conflict with the A1 matrix above. Their original wording is preserved for traceability.
+
+---
+
+> Historical EC6C-D0 content follows. Preserve it for rationale and traceability; the EC6C-A1 contract above controls wherever the text conflicts.
+
 **Status:** design-only counterexample matrix for the recommended export model
 in [ec6c-export-representation-architecture.md](ec6c-export-representation-architecture.md).
 It does not implement or execute the model. Cases marked **executable** are

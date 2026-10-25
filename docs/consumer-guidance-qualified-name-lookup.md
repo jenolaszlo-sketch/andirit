@@ -77,5 +77,34 @@ recorded example), and the two nodes stay separate under one displayed name.
    observations with provenance, not as symbols.
 4. Report evidence quality alongside every relationship you surface.
 5. A `modifiers` value containing `export` records directly written syntax on a
-   supported declaration (currently EC-5 file-level variables). It is not a
-   resolved export binding, and no export relationship is emitted.
+   supported declaration; it is not a resolved export binding. The accepted
+   EC6C-A1 contract adds Structural `exports` relationships for allowlisted
+   occurrences to module/name entries, with no declaration link or completeness
+   claim. This remains a future implementation contract.
+
+
+## EC6C-A1: Structural export observations
+
+Owner-accepted direction as of 25 October 2026; implementation is not yet authorized.
+
+Track A introduces export-entry nodes with Kind=export, Name and QualifiedName equal to the written exported name, and no SymbolId. An exports edge connects the owning file node to one entry for each supported written occurrence. The edge is Structural, has the exact public-name token in Evidence.Location, and carries syntax-only form, local-name, type-only and namespace-projection properties.
+
+### Exact-name lookup
+
+FindSymbolsByQualifiedNameAsync matches all nodes with the exact QualifiedName; it does not filter by Kind or SymbolId. Its ambiguity-preserving behavior already includes declaration-less graph candidates. A matching export entry therefore appears as an additional candidate, ordered with all other nodes by Id. It is not a declaration. Filter Kind=export to select an entry; filter SymbolId presence or node kind before declaration navigation. FindDeclarationsAsync remains SymbolId-based and cannot treat the entry as a declaration.
+
+The accepted Track A contract explicitly permits this additive candidate. Existing candidate IDs are preserved. No existing API guarantees that the result is declaration-only. Broad name-pattern searches remain node-kind/symbol-bearing dependent; do not use them as a complete export query.
+
+### Per-module traversal
+
+Find the module’s file node, then call GetNeighborhoodAsync with the exports edge kind. The API traverses both directions; select returned edges whose source is the file node and whose kind is exports. Read the target entry, each edge’s Structural evidence and properties, and the exact source token location. The traversal is bounded; check Truncated. If true, the result is only a subset of observed facts. No paging or completeness API is added in A1.
+
+### Meaning and exclusions
+
+This is a positive-only inventory. Nonempty means the returned supported occurrences were observed. Empty means no supported occurrence was recorded. It does not mean that the module has no exports, that all export syntax is understood, or that any declaration or runtime binding is valid. Track A excludes named/star/namespace re-export entries, CommonJS and export-equals facts, and all declaration attribution.
+
+A local export list after an imported local binding is still a Structural local-list observation. It has no remote source name, remote target or declaration binding. This is distinct from a re-export statement with a from clause, which is excluded.
+
+FindReferencesAsync continues to traverse references only. Impact and dependency presets do not include exports. Generic unfiltered neighborhoods can expose the new edge only as a graph fact; consumers should request the exports kind explicitly.
+
+The earlier practical rule about export modifiers described the graph before EC6C-A1. A modifier is still direct syntax and not a binding; in A1, an allowlisted occurrence also produces the Structural file-to-entry exports relationship described above.
