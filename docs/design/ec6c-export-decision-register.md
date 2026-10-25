@@ -1,5 +1,46 @@
 # EC6C-D0: Export representation decision register
 
+## Current decision status: EC6C-A1 owner reconciliation
+
+**Status:** This EC6C-A1 section is authoritative for Track A. The EC6C-D0 decision-by-decision text below is preserved as the original proposal, not as current owner approval. D0 “RECOMMENDED” decisions were not owner acceptance. The owner’s accepted direction is limited to the structural-only scope recorded in docs/decisions/ec6c-track-a-owner-acceptance.md.
+
+### Correction to EC-6A decision history
+
+The EC6C-D0 §2 table overstated prior EC-6A approval. The EC-6A owner record, §3, explicitly lists the following as “not accepted”:
+
+- EC-6A D-05 name-based export targets. F01/O-02 remains an implementation gate: no export/bind edge may target a converged declaration kind until identity/attribution is resolved. This was not prior acceptance of the D0 entry representation or its attribution model.
+- EC-6A D-06 export of imported bindings.
+- EC-6A D-11 anonymous default export edges/binding targets.
+
+EC-6C-A1 makes new, bounded decisions: it accepts module/name surface entries without declaration targets, supports a name-only default entry with Structural evidence, and allows a local export-list observation even if its local value is imported. These decisions do not retroactively amend EC-6A. D-06 remote binding, the D-10 CommonJS scope boundary, and D-11 declaration/binding edges remain deferred.
+
+### D-EC6C-01 through D-EC6C-14 dispositions
+
+| Decision | D0 proposal and AR1 assessment | Owner disposition in A1 | Accepted Track A correction | Deferred work / prerequisite | Further owner approval |
+| --- | --- | --- | --- | --- | --- |
+| D-EC6C-01 Representation | Export entry plus exports and exported-as; AR1 accepted model with qualifications. | ACCEPTED, structurally limited. | File-to-entry Structural exports only; entry is a name slot, not a declaration. | All exported-as remains Track B. | No additional decision for structure. |
+| D-EC6C-02 Name identity | Module path + exported name, occurrence-independent; AR1 required namespace refinement and a defined bound. | ACCEPTED with one OPEN boundary. | Exact formula in architecture; identity excludes declaration, import and occurrence. Unicode is ordinal, case-sensitive, unnormalized. | Maximum remains 256 as D0 proposed; count unit needs decision. | **PROPOSED — OWNER DECISION REQUIRED:** count Unicode scalar values (recommended) or UTF-16 code units. |
+| D-EC6C-03 Occurrence identity | One span-anchored edge per written occurrence; AR1 found missing re-export source name and silent TryAdd risk. | ACCEPTED with re-export scope narrowed. | Canonical tuple includes edge kind, file, entry, written public name, form, local-name presence/value, type-only state, per-occurrence projection and span; conflict fails before insert. | Future re-export identity adds remote source name/specifier in EC-6D design. | No further decision for local Track A forms. |
+| D-EC6C-04 Attribution eligibility | D0 allowed direct Resolved, local lookup and name-converged Derived; AR1 found merge and scope defects. | DEFERRED / NOT ACCEPTED for implementation. | No exported-as relationship at all in Track A. | Physical target uniqueness, lexical scope table, merge/overload rules, namespace checks and evidence contract need a separate Track B design. | Yes, a new Track B owner decision. |
+| D-EC6C-05 Evidence/provider | D0 proposed Structural for exports, distinct export resolver for attribution; AR1 accepted provider separation but challenged edge claims. | ACCEPTED for structural provider only. | Structural; provider penghou.hetu.tree-sitter.ecmascript-export-surface; version packageVersion+exports1.local-v1. This is an extraction provider, not an attribution resolver. | No attribution provider or Resolved/Derived export evidence in A1. | No additional Track A decision; Track B provider/evidence acceptance later. |
+| D-EC6C-06 Namespace | D0 stored union export-space on entry; AR1 found shared slot ambiguous as a binding. | ACCEPTED with correction. | No namespace field on entry; namespace-projection is per occurrence: type/value/both/unknown. Explicit type-only is separately true only on grammar evidence. | EC-6D binding must select a compatible occurrence projection; unknown is not proof. | No additional decision for this projection contract. |
+| D-EC6C-07 Default | D0 emitted default entry for all forms and sometimes attribution; AR1 found prior EC-6A D-11 was not accepted. | ACCEPTED as a new A1 surface decision. | Named/anonymous supported defaults emit Structural entry default; expression/function is value, directly declared class is both; no declaration relationship. | EC-6A D-11 remains historically unaccepted for edges/binding targets; A1 is a new name-slot allowance. | No additional decision for name-only Track A default. |
+| D-EC6C-08 Ownership/publication | D0 placed facts in the file unit; AR1 found feasible but untested. | ACCEPTED in principle. | Entries and occurrences live in the owning per-file unit; existing atomic completion/replacement and endpoint validation apply. | Both-store lifecycle and authentic migration tests are future qualification gates. | No additional decision; implementation must pass gates. |
+| D-EC6C-09 Remote/import surface | D0 emitted remote and imported-local entries; AR1 found D-06 status overstated and missing remote source name. | REVISED. | Named/star/namespace re-export facts excluded. A local list remains a Structural local observation even for imported local values; no remote name or binding is asserted. | Remote provenance, binding, closure and cycles move to EC-6D. | No further decision for local-list observation; re-export inclusion requires a new EC-6D decision. |
+| D-EC6C-10 Query visibility | D0 relied on existing traversals and exact-name; AR1 found added candidates and missing coverage visibility. | ACCEPTED with documented additive candidate behavior. | Qualified-name query returns matching nodes of all kinds; Kind=export is a declaration-less candidate; traversal from file filtered to exports enumerates the module observations. No new API. | Consumers check candidate kind/SymbolId and Truncated; no complete inventory query in A1. | No further decision; consumer-guidance doc is updated. |
+| D-EC6C-11 Version/migration | D0 proposed profile p9 in both plugins, exports1.local-v1, unchanged resolver and no identity migration. | ACCEPTED as a future implementation contract. | Both plugins p9; provider version packageVersion+exports1.local-v1; resolver2.relative-v1 unchanged; no existing identity migration. | Authentic durable p8-to-p9 migration must preserve all existing facts. | No further decision; migration is an implementation gate. |
+| D-EC6C-12 Coverage | D0 proposed counters including optional deferred count; AR1 found counters unavailable to graph consumers. | REJECTED for A1. | Positive-only meaning; add no per-file coverage system, export counters or completeness marker. | Effective surface and omission classification are later design/implementation work. | No further decision; absence text is normative. |
+| D-EC6C-13 Unattributable/absence | D0 kept names without attribution and described absence semantics; AR1 found reasons unqueryable. | ACCEPTED with positive-only narrowing. | A returned entry is observed syntax; empty means no supported occurrence recorded. All A1 entries have no declaration attribution by scope. | Do not expose “unresolved attribution” counts because attribution is not attempted. | No further decision. |
+| D-EC6C-14 EC-6D boundary | D0 reserved import binding and closure; AR1 required namespace and no Derived promotion. | ACCEPTED. | EC-6D independently resolves binding and matches projections; no Track A fact is binding proof. | Re-exports, star closure, cycles, conflicts, remote origin, cross-file ownership. | EC-6D requires a separate design/owner decision. |
+
+### Historical D0 sections retained
+
+The alternative comparison and D0 reasoning remain useful historical context. In the sections below, D0 recommendations concerning export-space on the entry, coverage counters, any exported-as edge, declaration resolution, default attribution, and remote re-export entries are superseded by the table above. EC-6A status labels are corrected above. No historical finding is rewritten.
+
+---
+
+> Historical EC6C-D0 content follows. Preserve it for rationale and traceability; the EC6C-A1 contract above controls wherever the text conflicts.
+
 **Status:** design decision register for EC6C-D0. It records recommendations,
 alternatives, evidence and owner-approval requirements. It does not record owner
 approval that has not been given. The previously proposed file-to-declaration
@@ -28,13 +69,13 @@ rejected alternative, not a settled contract.
 | EC-6A A1: resolution pass inside the Tree-sitter session; no core resolution phase | ACCEPTED | Export facts remain plugin-local; no new core phase |
 | EC-6A A2: module/file identity; no new module node kinds | ACCEPTED | Export entries are new nodes, but module identity stays the file node; no module node kind |
 | EC-6A A3: `Resolved` for `resolves-to` with the mandated sentence | ACCEPTED | Unchanged; EC-6C attribution has its own bounded meaning |
-| EC-6A A4: EC-6B vocabulary only | ACCEPTED | EC-6C vocabulary is new and requires its own acceptance |
+| EC-6A A4: EC-6B vocabulary only | ACCEPTED with milestone gate | EC6C-A1 explicitly accepts the additive export/export-entry vocabulary for Track A; Track B vocabulary remains deferred |
 | EC-6A A5/A6/A7: rebuild, presets, per-plugin scope | ACCEPTED | Per-file export facts; presets unchanged; plugin-local |
-| EC-6A D-05: `exports` may target name-based symbols under the F01 gate | ACCEPTED with gate | This design **supersedes the representation** and satisfies the gate; owner approval required |
-| EC-6A D-06: imported-binding exports emit no `exports` edge | ACCEPTED boundary | Reconciled by D-EC6C-09 (surface entry vs declaration binding) |
+| EC-6A D-05: name-based export targets | NOT ACCEPTED | EC-6A owner record §3 explicitly lists D-05 targets as not accepted; F01/O-02 remains a gate. A1 separately accepts name slots with no declaration-target edge. |
+| EC-6A D-06: export of imported bindings | DEFERRED | EC-6A owner record §3 and §7 leave this unaccepted/deferred. A1 local-list observations do not establish imported binding. |
 | EC-6A D-10: CJS binding deferred | ACCEPTED | Unchanged; unsupported in EC-6C |
-| EC-6A D-11: anonymous default exports produce no export edge/binding target | ACCEPTED boundary | Reconciled by D-EC6C-07 (a `default` surface entry with no declaration/binding is not a forbidden edge to a declaration) |
-| EC-6A F12: direct capture may be Resolved; scope resolution needs a documented module-scope model; name-match-only binding forbidden | ACCEPTED gate | Satisfied by D-EC6C-04/05 |
+| EC-6A D-11: anonymous default export declaration/binding target | DEFERRED | EC-6A did not accept a default declaration/binding target. A1 newly accepts only a Structural name-only entry called default; no retroactive EC-6A change. |
+| EC-6A F12: direct-capture and scope-resolution attribution gate; name-match-only binding forbidden | ACCEPTED gate | A1 emits no attribution; the gate remains mandatory for Track B and no name match is sufficient |
 | EC-6B identity, UTF-16 columns, occurrence anchoring, atomic publication, no identity migration | ACCEPTED | Preserved; no redefinition |
 | EC-6B provider/policy `resolves-to` semantics | ACCEPTED | Unchanged |
 

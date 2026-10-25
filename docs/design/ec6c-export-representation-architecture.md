@@ -1,5 +1,208 @@
 # EC6C-D0: Export representation architecture
 
+## Current normative contract: EC6C-A1 (owner accepted direction)
+
+**Status:** Current structural Track A contract. This addendum controls over conflicting EC6C-D0 recommendations below. The original alternative analysis and rationale remain as history. Independent evidence: EC6C-GLM-AR1 by GPT-6 in Codex runtime, preserved at commit 49a01393375a345cefe0ca30b1f58fee1fe24e04 (tree 827f83f38221548c168e272700410a9da6cb525f). The review ID is not GLM model attribution.
+
+### 1. Question and scope
+
+Track A answers only: “Which exported names were directly observed in supported syntax in this module?” It records positive syntax facts. It does not enumerate the module’s effective export surface, establish runtime validity, resolve a name to a declaration, or infer a future import binding.
+
+Accepted graph shape:
+
+~~~text
+module file --exports--> export-name entry
+~~~
+
+The entry is a written exported-name slot owned by that module. It is not a declaration, symbol, or verified binding. Each accepted written occurrence has its own Structural edge. Track A emits no exported-as edge and no declaration-binding relationship under any evidence quality.
+
+### 2. Vocabulary and node facts
+
+Add node kind export and edge kind exports. An export entry has:
+
+- Id calculated by the module-and-name formula below.
+- Name and QualifiedName equal to the canonical exported name.
+- No SymbolId.
+- Existing language property.
+- No entry-level export-space property.
+
+The occurrence edge runs from the owning file node to the entry. It carries Structural evidence from the export-surface extractor, the source-name span in Evidence.Location, and the following occurrence facts as applicable:
+
+- export-kind: named or default.
+- export-via: direct, local, or expression.
+- local-name: only when the supported syntax writes a local name.
+- type-only: present and true only when the grammar identifies an explicit type-only modifier.
+- namespace-projection: exactly one of type, value, both, unknown.
+
+Properties describe syntax captured at that occurrence; they do not attach a declaration. No via-module fact is emitted in A1 because re-export statements are outside scope. Imported local export lists remain local-list occurrences and have no remote provenance.
+
+### 3. Entry identity and exported-name validation
+
+The canonical entry formula is:
+
+~~~text
+{language}:export:{lowercase-hex(SHA-256(UTF-8(modulePath + LF + exportedName)))}
+~~~
+
+- language is the plugin’s established lowercase key, exactly javascript or typescript.
+- modulePath is the file node’s repository-relative POSIX path after the existing path normalization contract; it is never absolute or host-dependent.
+- exportedName is the actual public name: identifier spelling as written, the unescaped string value for supported quoted names, or the literal name default for a default export.
+- UTF-8 is encoded without a byte-order mark. Hash output is lowercase hexadecimal, matching the accepted graph identity convention.
+- Names compare ordinally and case-sensitively. Do not normalize Unicode. A source spelling that normalizes differently remains distinct.
+- Quoted names with no escape sequence and valid non-ASCII names are supported when otherwise within the accepted bound. Escaped names, empty names, all-whitespace names, control-containing names, undecodable source, and over-bound names are unsupported and emit no export entry. They are never truncated or replaced.
+
+**PROPOSED — OWNER DECISION REQUIRED:** EC6C-D0 proposed a 256-character maximum without defining the unit. Recommendation: retain the bound and count Unicode scalar values in exportedName, excluding the quote characters. The alternative is to count UTF-16 code units, which rejects some names containing supplementary scalars. This count changes the supported syntax boundary and is not recorded as approved until the owner chooses. The acceptance matrix tests both sides of the selected bound.
+
+The entry ID does not depend on declaration node identity, source occurrence, import binding, inferred runtime semantics, or source location. Moving an occurrence in the same module leaves the entry ID unchanged. Renaming the export or moving the module changes the corresponding ID. Adding another occurrence of the same exported name reuses the entry in that module.
+
+### 4. Namespace observations
+
+Namespace evidence belongs to each occurrence edge, never to the shared entry. This avoids claiming that a name slot has both spaces merely because one occurrence or another might contribute a facet.
+
+- namespace-projection is a syntax observation, not a resolved binding.
+- Direct supported declarations have a projection only when their grammar node establishes it: variable/function and JavaScript value exports are value; interface and type-alias declarations are type; class and enum declarations are both.
+- A normal local export list has unknown projection because establishing the local binding’s namespace would require the deferred binding analysis.
+- An explicit type-only export list has type projection and type-only=true.
+- A default expression has value projection. A directly written default class declaration has both; a default function declaration has value.
+- Namespace declarations, ambiguous forms, unsupported/recovered nodes, and any form for which syntax does not establish a facet use unknown or are excluded by the syntax allowlist. Never infer from a same-name graph node.
+- If two or more written sites feed one entry, preserve one projection per occurrence. The entry itself carries no union projection. Repeated sites can be read together as observations, but their union is not an effective-surface completeness claim.
+
+A future EC-6D binding must independently establish its target and match the use against a specific type/value observation. Unknown cannot satisfy a verified binding. A shared entry ID is stable when additional occurrences or facets appear; it is not sufficient binding evidence.
+
+### 5. Occurrence identity and exact source span
+
+Use the accepted edge identity layout without changing core identity semantics:
+
+~~~text
+{language}:sha256(
+  "exports\n" +
+  fileNodeId + "\n" +
+  entryNodeId + "\n" +
+  exportedName + "\n" +
+  exportKind + "\n" +
+  exportVia + "\n" +
+  localNamePresent + "\n" +
+  localNameOrEmpty + "\n" +
+  typeOnlyTrueOrFalse + "\n" +
+  namespaceProjection + "\n" +
+  startLine:startColumn:endLine:endColumn)
+~~~
+
+Hash input is UTF-8 without a BOM; output is lowercase hexadecimal. The controlled form and boolean strings have fixed lowercase spellings. Local-name-present is a separate 0/1 discriminator so absence cannot collide with a literal name. A supported name cannot contain control characters or LF; module paths already reject them, so the newline-separated encoding is unambiguous for this allowlist. The file node ID and target entry ID bind the occurrence to the owning module and public name. Re-export specifiers are excluded from this revision and do not appear in the formula.
+
+The Evidence.Location span is the token range that writes the exported name, not the statement or declaration body:
+
+- A direct named export uses the declaration name token.
+- A local export list uses the public alias token when present, otherwise the local export-name token.
+- A default export uses the default keyword token.
+- If the supported grammar cannot identify that exact token span, omit that occurrence.
+
+Lines and columns are one-based; columns count UTF-16 code units; the end is exclusive. This is the EC-6B accepted convention. LF and CRLF render the same positions for otherwise identical text. Supplementary scalars before an occurrence count as two UTF-16 code units for its column.
+
+The occurrence ID changes when its written span, form, local name, explicit type-only state, or projection changes. Relocating a statement changes the edge ID but not the entry ID. Alias rename changes the entry ID and edge ID. Removing one duplicate occurrence removes that edge while preserving the shared entry and unchanged sibling edge. Two different spans on one line remain distinct.
+
+### 6. Collision behavior
+
+The existing Tree-sitter helper inserts edges into an ID-keyed dictionary with TryAdd, which may discard a collision before publication validation. Track A requires a guard before insertion:
+
+1. Construct the full expected edge and identity from the canonical tuple above.
+2. If the ID is unused, insert the edge.
+3. If the ID already exists and all edge fields, evidence fields, location, and properties are identical, treat it as an idempotent duplicate from repeated visitation of the same source occurrence.
+4. If any field differs, fail the file extraction with an identity-collision error before completing its source unit. Do not keep either conflicting version by enumeration order and do not fabricate a replacement fact.
+5. On failure or cancellation, existing staged-unit semantics retain the prior completed publication; the incomplete replacement is not published.
+
+A real distinct source occurrence must have a distinct token span or a distinguishing input in the canonical tuple. This invariant is required for both stores and for future edge kinds; it does not authorize a core identity redesign.
+
+### 7. Positive-only consumer contract
+
+Track A adds no per-file completeness marker and no export coverage counter. Existing run-level extraction coverage is not a queryable per-file export inventory. Do not use UnresolvedRelationships as an export signal.
+
+A consumer may conclude, from a returned entry and Structural occurrence, that a supported written export name was observed at that source position with the recorded syntax form and namespace observation. It may not conclude that all exports were found, that the module has no other exports, that a binding is valid, that a declaration was established, or that an import can bind to the entry.
+
+Interpretation is fixed:
+
+- Nonempty result: these supported occurrences were observed; additional supported, unsupported, partial, or remote exports may exist.
+- Empty result: no supported export occurrence was recorded. It is not evidence of an empty module.
+- Unsupported syntax or recovered source: omitted facts remain absent and no completeness implication is available. Valid supported siblings may still be recorded if the parser exposes them as error-free syntax.
+- Duplicate names: one module/name entry can have multiple occurrence edges. No occurrence is selected as the binding.
+- Unattributed name: all Track A entries are unbound by design; absence of an attribution edge is not an extraction outcome.
+- Effective export surface: deferred, including star closure, re-exported names, remote bindings, conflicts and cycles.
+
+Consumers must inspect bounded traversal truncation. A truncated neighborhood is only a returned subset of positive observations. No query method or completeness property is added in A1.
+
+### 8. Re-export and imported-binding boundary
+
+The following produce no A1 export entry or exports edge:
+
+- Named re-export with a from clause.
+- Star re-export.
+- Namespace re-export.
+- Remote re-export target or closure.
+- CommonJS export assignment or object assignment.
+- TypeScript export equals.
+- Nested namespace export as a module-level export.
+
+The independent module resolver may continue to publish its existing resolves-to edge for a written module specifier. That is a file dependency, not an export-name or remote binding fact; resolver2.relative-v1 and its evidence claim do not change.
+
+An imported local binding followed by a local export list is different syntax. A1 records the local list’s written public name as Structural, with local-name and namespace-projection unknown (or type when an explicit type-only modifier is present). It emits no declaration relationship, no remote module, and no assertion that the local binding exists. The source form is local, has no from-clause, and is not reclassified as a named re-export. If parser recovery prevents the local export-name token from being established, omit it.
+
+### 9. Query compatibility
+
+Existing FindSymbolsByQualifiedNameAsync matches all published nodes with an exact QualifiedName and sorts candidates by node ID; it does not filter by node kind or SymbolId. Accepted consumer guidance already warns that declaration-less syntax nodes may be candidates. Export entries therefore use QualifiedName=exportedName and Kind=export; they are additional declaration-less candidates. This is an additive candidate set, not a declaration result guarantee. Existing declaration navigation is by SymbolId and FindDeclarationsAsync; export entries have no SymbolId and cannot be passed off as declarations.
+
+To enumerate a module’s observed names, find the file node and request its neighborhood filtered to outgoing exports facts (the current neighborhood API traverses both directions, so callers filter direction/source in the returned edges). Read the attached entry nodes, occurrence properties and evidence locations; check the traversal’s Truncated flag. Exact-name lookup can also discover an entry by its exported name but may return declarations and other declaration-less candidates with that name; filter by Kind and never use SingleOrDefault as binding proof.
+
+FindReferencesAsync remains restricted to references. Existing impact and dependency presets remain closed and unchanged. Generic neighborhood queries may show exports only when callers request that kind or an unfiltered neighborhood; this is additive. No query API change is required for this module-scoped use.
+
+### 10. Syntax allowlist
+
+The full per-case acceptance matrix is in the current EC6C-A1 section of ec6c-export-adversarial-cases.md. Its boundary is:
+
+- Supported when the parser exposes an unambiguous public name and occurrence token: direct exported variables, classes, functions, interfaces, type aliases and enums; simple local export lists and aliases; separate supported default declarations and expressions; simple quoted names and Unicode names; repeated, overload or merge sites only as independent written occurrences; multi-declarator statements only when every exported identifier token is exact.
+- Imported local alias exported by a local list: supported Structural-only as described in §8.
+- namespace-projection for namespaces and local lists without explicit type-only syntax is unknown, not guessed.
+- Deferred/unsupported: destructuring; ambient declarations; CommonJS; export equals; nested namespace exports; parser-error/missing-node occurrences; escaped names; empty/control/over-bound names; all three re-export forms. The exact treatment for any newer grammar form requires a later owner-approved matrix change.
+
+This is not compiler-level export support. No overload grouping, declaration merge resolution, name lookup or type checker is introduced.
+
+### 11. Publication, p9 and evidence provider
+
+Each export entry node and all its exports edges belong to the owning per-file unit. Both edge endpoints are in that unit. The existing transaction validates the prospective graph and atomically publishes completed replacements. Empty completion removes prior export facts from that file while retaining unrelated file facts; deletion removes the file unit. Failure, cancellation or identity collision leaves the previous publication intact. Track A adds no export-resolution unit and no coverage unit.
+
+Set the shared ECMAScript extraction profile to p9 in both JavaScript and TypeScript plugins. Their effective plugin versions already include the profile revision, and the planner compares plugin versions; p9 therefore invalidates both plugin outputs without changing resolver2.relative-v1. No existing node, declaration, structural edge, or unchanged resolves-to identity migrates.
+
+Structural export evidence remains Structural. Source inspection confirms CodeEvidence accepts a provider identifier and opaque nonempty version, while the indexing planner separately versions the plugin; the existing module resolver is also a distinct provider with its own revision. Use provider penghou.hetu.tree-sitter.ecmascript-export-surface and provider version packageVersion+exports1.local-v1 for these new occurrence edges. This is a structural syntax provider, not a resolver or attribution provider. The p9 plugin version is the reindex/invalidation control; exports1.local-v1 records the surface model revision. No exported-as provider is created in Track A.
+
+Before release, qualify an authentic durable p8 seed reindexed by p9. Assert unchanged IDs for pre-existing facts, both JS/TS plugin invalidation, only supported export additions, correct empty/change/delete replacement, and persistence after close/reopen. These are future implementation gates, not evidence produced by A1.
+
+### 12. Track B and EC-6D
+
+Track B remains DESIGN REMEDIATION REQUIRED. All exported-as relationships and declaration attribution are deferred: direct span attribution, local-scope lookup, Resolved and Derived export claims, occurrence-specific declaration targets, name-converged nodes, import binding, overload/merge attribution, and identity migration. A unique graph name does not establish a unique physical declaration. Derived does not repair that identity.
+
+EC-6D may later use an export entry as a binding endpoint only after it independently establishes the exported binding and matches type/value use against occurrence-level projections. It may not treat an entry ID, a local name, or Derived evidence as declaration proof. Re-export closure, star conflicts, cycles, remote origins, and cross-file dependency ownership require a separate design.
+
+### 13. Supersession map for the historical EC6C-D0 text below
+
+The original D0 alternative analysis is retained unchanged as historical reasoning. The following D0 proposals are superseded by this A1 contract:
+
+| D0 area/decision | A1 disposition |
+| --- | --- |
+| Alternative B wording that includes exported-as | Export-entry plus Structural exports accepted; exported-as deferred to Track B. |
+| §5.1 and §5.3 entry export-space union | Remove export-space from the entry. Record per-occurrence namespace-projection. |
+| §5.3 256-character bound | Unit was unspecified; 256 Unicode scalar values is proposed and awaits owner decision. |
+| §5.3 occurrence discriminator | Replace its fields with §5 above; add observed projection and collision guard. |
+| §6 coverage and §9.1 counters | Replaced with positive-only interpretation; no export completeness/counter API in A1. |
+| §7–§8 attribution/provider rules | Deferred; no exported-as, Resolved, or Derived export fact. |
+| §8 structural provider | Use the export-surface Structural provider/version in §11. |
+| §10 query claim | Reconcile against current all-kind candidate query and declaration-less consumer guidance in §9. |
+| §13 named/star/namespace re-export entries | Excluded in A1; existing module resolves-to remains independent. |
+| §14–§15 attribution and completeness examples | Historical proposal only; read with A1 scope and absence semantics. |
+| §16 disposable syntax probe | D0-recorded only; it is not executed or runtime proof for A1. |
+
+---
+
+> Historical EC6C-D0 content follows. Preserve it for rationale and traceability; the EC6C-A1 contract above controls wherever the text conflicts.
+
 **Status:** design artifact for EC6C-D0. It proposes an export representation for
 EC-6C; it does not authorize or contain production code. The previously
 proposed `exports` edge model was **not** accepted for EC-6C, and this design
