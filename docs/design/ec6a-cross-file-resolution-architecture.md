@@ -506,9 +506,12 @@ the identity inputs. For EC-6B's only new kind the normative inputs are:
 | location | the written statement span: the import/export-from statement node, or the `require('./m')` call expression node |
 
 Location conventions are the existing profile's: one-based lines, one-based
-**byte** columns (Tree-sitter columns are byte offsets within a
-`\n`-delimited row; `TreeSitterSyntax.cs:39-50`), end-exclusive
-(`CodeLocation.cs:3-35`). Consequences, which the EC-6B fixtures must assert:
+**UTF-16 code-unit** columns (the pinned `TreeSitter.DotNet` binding parses
+the decoded .NET string as UTF-16LE, so Tree-sitter row columns count UTF-16
+code units rather than UTF-8 bytes; `TreeSitterSyntax.cs:39-50`),
+end-exclusive (`CodeLocation.cs:3-35`). EC-6B-R1 corrected the earlier "byte
+columns" wording; the emitted coordinate behavior is unchanged and
+remains deterministic. Consequences, which the EC-6B fixtures must assert:
 
 1. Each written module-reference site emits at most one `resolves-to` edge;
    two identical specifiers at distinct source locations differ in the
@@ -949,7 +952,7 @@ Resolve(inventory, shapes, policy):
 EC-6B executes only the module-resolution path: no export table is built, no
 binding step runs, and no `exports`/`binds` fact exists (A4). The
 table/binding lines remain the EC-6C/D plan and are inactive until the
-`.p7`-next milestones.
+`.p8`-next milestones.
 
 All iteration is over ordinal-sorted paths and source-ordered shapes; the
 final edge list is sorted by (kind, source, target, edge id) before emission.

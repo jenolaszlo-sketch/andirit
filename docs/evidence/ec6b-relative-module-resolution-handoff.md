@@ -74,9 +74,12 @@ target file node. Its `Resolved` evidence has this exact scope:
 
 > The target was verified under the declared resolution policy and the indexed source inventory of this publication. This does not establish equivalence with TypeScript compiler, bundler, or runtime resolution.
 
-Provider: `penghou.hetu.tree-sitter.ecmascript-module-resolver`. The initial
-provider version is
-`{packageVersion}+resolver1.relative-v1`. Edges record the raw written
+Provider: `penghou.hetu.tree-sitter.ecmascript-module-resolver`. The EC-6B
+initial provider version was `{packageVersion}+resolver1.relative-v1`;
+EC-6B-R1 raised the resolver revision to 2 and the effective profile to p8
+because emitted resolver facts changed (see the
+[remediation evidence](ec6b-r1-relative-module-resolution-remediation/README.md)).
+Edges record the raw written
 specifier, module-reference form, policy, matching rule, and `type-only: true`
 only for explicit type-only syntax.
 
@@ -88,8 +91,11 @@ The edge id follows the accepted formula:
 
 The discriminator is
 `resolves-to:{module-reference}:{raw-specifier-text}`. The span is the
-statement or literal `require` call, with one-based lines, one-based byte
-columns, and an exclusive end. Properties are not identity inputs. Separate
+statement or literal `require` call, with one-based lines, one-based UTF-16
+code-unit columns, and an exclusive end. (The original text said "byte
+columns"; EC-6B-R1 corrected the wording — see
+[the remediation evidence](ec6b-r1-relative-module-resolution-remediation/README.md).)
+Properties are not identity inputs. Separate
 occurrences remain separate; moving a statement changes its id; LF and CRLF
 preserve ids for the same logical source. Duplicate identities fail the pass.
 No imported name is claimed to bind to a declaration.

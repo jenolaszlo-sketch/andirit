@@ -23,6 +23,25 @@ Phase 0: conservative ECMAScript relative module resolution (EC-6B):
   per-file units, including an empty replacement; atomic publication retains
   the prior graph on failure or cancellation. Impact presets and structural
   `imports` facts are unchanged. No export or import-symbol binding is claimed.
+- EC-6B-R1 corrective pass (independent review EC6B-GLM-Q1):
+  - Escaped module specifiers are rejected instead of being truncated at the
+    first grammar fragment, so `'./a\b'` and `'./caf\u00e9'` can no longer
+    produce a false `resolves-to` edge; the sites count as unsupported and
+    retain no specifier text.
+  - A binding literally named `type` is no longer classified as a TypeScript
+    type modifier; genuine statement-level and inline type-only syntax keeps
+    `type-only: true`.
+  - Consumer documentation and the resolved contract now state the actual
+    evidence coordinate system: one-based UTF-16 code-unit columns, not UTF-8
+    byte columns. Emitted identities are unchanged.
+  - The nested literal `require` inside `export =` is documented and pinned by
+    a regression test: the outer form stays unsupported while the `require`
+    call is a separate captured site.
+  - Because emitted resolver facts changed, the effective ECMAScript profile
+    advances p7 → p8 and the resolver revision 1 → 2, so existing p6/p7
+    publications re-extract under the accepted single invalidation axis
+    (D-16). Unaffected source identities and facts are unchanged.
+  - Evidence: [`ec6b-r1-relative-module-resolution-remediation`](docs/evidence/ec6b-r1-relative-module-resolution-remediation/README.md).
 - The shared ECMAScript profile advances from p6 to p7. The implementation
   policy and consumer limits are documented in
   [`ecmascript-module-resolution.md`](docs/ecmascript-module-resolution.md);
