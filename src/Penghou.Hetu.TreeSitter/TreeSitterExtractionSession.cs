@@ -26,6 +26,7 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
         CodeEdgeKinds.Contains,
         CodeEdgeKinds.Declares,
         CodeEdgeKinds.Imports,
+        CodeEdgeKinds.ResolvesTo,
         CodeEdgeKinds.InvokesName,
         CodeEdgeKinds.Inherits,
         CodeEdgeKinds.Implements,
@@ -38,6 +39,7 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
     private readonly string _pluginVersion;
     private readonly Func<string, TreeSitterGrammarDescriptor> _grammarForPath;
     private readonly Func<string, ITreeSitterExtractionProfile> _profileForPath;
+    private readonly ITreeSitterModuleResolver? _moduleResolver;
     private readonly HashSet<CodeEdgeKind> _producedRelationshipKinds;
     private readonly Dictionary<string, TreeSitterSessionParser> _parsers = new(StringComparer.Ordinal);
     private bool _disposed;
@@ -48,7 +50,8 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
         string pluginVersion,
         IReadOnlyList<CodeEdgeKind> producedRelationshipKinds,
         Func<string, TreeSitterGrammarDescriptor> grammarForPath,
-        Func<string, ITreeSitterExtractionProfile> profileForPath)
+        Func<string, ITreeSitterExtractionProfile> profileForPath,
+        ITreeSitterModuleResolver? moduleResolver = null)
     {
         _context = context;
         _pluginId = pluginId;
@@ -56,6 +59,7 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
         _producedRelationshipKinds = [.. producedRelationshipKinds];
         _grammarForPath = grammarForPath;
         _profileForPath = profileForPath;
+        _moduleResolver = moduleResolver;
     }
 
     public async ValueTask<CodeGraphExtractionResult> ExtractAsync(
@@ -67,9 +71,11 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
         var examined = 0;
         var contributing = 0;
         var partial = false;
+        var resolutionPartial = false;
         var warnings = new HashSet<string>(StringComparer.Ordinal);
         var coverage = new Dictionary<CodeEdgeKind, (int Candidates, int Emitted)>();
         var obsolete = new List<CodeIndexUnitId>();
+        var moduleFiles = new List<TreeSitterModuleFile>();
 
         foreach (var source in _context.Sources.OrderBy(s => s.Path, StringComparer.Ordinal))
         {
@@ -97,6 +103,7 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
             {
                 // Undecodable sources contribute no facts, but their previous
                 // unit must not linger: stage an empty completion to clear it.
+                resolutionPartial = true;
                 warnings.Add($"{language}.undecodable-source");
                 await sink.WriteBatchAsync(
                     new CodeGraphBatch(
@@ -122,8 +129,11 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
             if (document.Root.HasError)
             {
                 partial = true;
+                resolutionPartial = true;
                 warnings.Add($"{language}.parse-error");
             }
+            if (_moduleResolver is not null)
+                moduleFiles.Add(new(source.Path, fileNodeId, extraction.ModuleReferences.ToArray()));
 
             var origin = UnitOrigin(source.Path, language, source.ContentHash);
             var nodes = extraction.Nodes.Values.Prepend(fileNode).ToArray();
@@ -160,6 +170,24 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
             }
         }
 
+        TreeSitterModuleResolutionResult? moduleResolution = null;
+        if (_moduleResolver is not null)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            moduleResolution = _moduleResolver.Resolve(moduleFiles, cancellationToken);
+            var origin = ModuleUnitOrigin(_moduleResolver.Language);
+            await WriteChunksAsync(
+                moduleResolution.Edges,
+                sink.Limits.MaxEdges,
+                values => new CodeGraphBatch(origin, edges: values),
+                sink,
+                cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            await sink.WriteBatchAsync(
+                new CodeGraphBatch(origin, completesIndexUnit: true),
+                cancellationToken).ConfigureAwait(false);
+        }
+
         foreach (var change in _context.Changes
                      .Where(c => c.Kind == CodeGraphSourceChangeKind.Deleted)
                      .OrderBy(c => c.Path, StringComparer.Ordinal))
@@ -174,15 +202,39 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
         var relationshipCoverage = new List<CodeRelationshipCoverage>(CoverageKinds.Length);
         foreach (var kind in CoverageKinds)
         {
-            relationshipCoverage.Add(_producedRelationshipKinds.Contains(kind)
-                ? Coverage(kind, coverage, state)
-                : new(kind.Value, CodeRelationshipCoverageState.NotProduced, 0, 0));
+            if (!_producedRelationshipKinds.Contains(kind))
+            {
+                relationshipCoverage.Add(new(kind.Value, CodeRelationshipCoverageState.NotProduced, 0, 0));
+                continue;
+            }
+
+            if (kind == CodeEdgeKinds.ResolvesTo && moduleResolution is not null)
+            {
+                relationshipCoverage.Add(new(
+                    kind.Value,
+                    resolutionPartial
+                        ? CodeRelationshipCoverageState.Partial
+                        : CodeRelationshipCoverageState.Produced,
+                    edgesEmitted: moduleResolution.Edges.Count,
+                    unresolvedTargets: moduleResolution.UnresolvedTargets,
+                    candidates: moduleResolution.Candidates,
+                    internalTargets: moduleResolution.InternalTargets,
+                    crossProjectTargets: moduleResolution.CrossProjectTargets,
+                    externalTargets: moduleResolution.ExternalTargets,
+                    ambiguousTargets: moduleResolution.AmbiguousTargets,
+                    unsupportedTargets: moduleResolution.UnsupportedTargets));
+            }
+            else
+            {
+                relationshipCoverage.Add(Coverage(kind, coverage, state));
+            }
         }
 
         return new CodeGraphExtractionResult(
             obsolete,
             sourcesExamined: examined,
             sourcesContributingFacts: contributing,
+            unresolvedRelationships: moduleResolution?.UnresolvedTargets ?? 0,
             warningCodes: warnings.Order(StringComparer.Ordinal).ToArray(),
             relationshipCoverage: relationshipCoverage);
     }
@@ -219,6 +271,14 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
             path,
             contentHash);
 
+    private CodeFactOrigin ModuleUnitOrigin(string language) =>
+        new(
+            _context.RepositoryId,
+            _pluginId,
+            _pluginVersion,
+            _context.IndexRunId,
+            new CodeIndexUnitId($"{language}:modules"));
+
     private static CodeRelationshipCoverage Coverage(
         CodeEdgeKind kind,
         IReadOnlyDictionary<CodeEdgeKind, (int Candidates, int Emitted)> coverage,
@@ -246,6 +306,7 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
     {
         for (var index = 0; index < values.Count; index += chunkSize)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var chunk = values.Skip(index).Take(chunkSize).ToArray();
             await sink.WriteBatchAsync(batch(chunk), cancellationToken).ConfigureAwait(false);
         }

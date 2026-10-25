@@ -54,6 +54,8 @@ public static class CodeEdgeKinds
     public static readonly CodeEdgeKind Implements = new("implements");
     public static readonly CodeEdgeKind Inherits = new("inherits");
     public static readonly CodeEdgeKind Imports = new("imports");
+    /// <summary>A verified module-file target under a declared resolution policy.</summary>
+    public static readonly CodeEdgeKind ResolvesTo = new("resolves-to");
     public static readonly CodeEdgeKind DependsOn = new("depends-on");
     public static readonly CodeEdgeKind Returns = new("returns");
     public static readonly CodeEdgeKind Accepts = new("accepts");

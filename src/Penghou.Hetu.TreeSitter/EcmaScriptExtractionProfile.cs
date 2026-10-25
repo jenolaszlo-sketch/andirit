@@ -7,8 +7,9 @@ namespace Penghou.Hetu;
 /// Maps TypeScript and JavaScript syntax (as exposed by the pinned
 /// <c>tree-sitter-typescript</c>/<c>tree-sitter-javascript</c> grammars) onto
 /// Hetu graph facts. The two grammars share a common ancestry, so one profile
-/// serves both: declarations, containment, imports, and structural invocation
-/// names are observed from syntax and never resolved.
+/// serves both: declarations, containment, structural imports, and invocation
+/// names are observed from syntax. Module-reference shapes are captured for
+/// the plugin-local resolver; the profile itself does not resolve them.
 ///
 /// Everything emitted is structural evidence. The profile never emits
 /// <c>calls</c> or <c>references</c>: invocations record the invoked name
@@ -40,8 +41,10 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     ///    convergence with same-file declarations.
     /// 6: named file-level variable declarators emit path-scoped field
     ///    declarations with written declaration-keyword and export metadata.
+    /// 7: ECMAScript module-reference shapes feed the plugin-local
+    ///    relative-v1 resolver and its `resolves-to` resolution unit.
     /// </summary>
-    internal const int ProfileRevision = 6;
+    internal const int ProfileRevision = 7;
 
     // Kinds both grammars can emit. `implements` exists only in TypeScript, so
     // JavaScript reports it as not-produced rather than claiming an empty set.
@@ -50,6 +53,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         CodeEdgeKinds.Contains,
         CodeEdgeKinds.Declares,
         CodeEdgeKinds.Imports,
+        CodeEdgeKinds.ResolvesTo,
         CodeEdgeKinds.InvokesName,
         CodeEdgeKinds.Inherits
     ];
@@ -105,6 +109,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         switch (node.Type)
         {
             case "export_statement":
+                CaptureExportModuleReference(node);
                 HandleExport(node, scope, isFileLevel);
                 return;
             case "lexical_declaration":
@@ -113,7 +118,12 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
                 WalkChildren(node, scope);
                 return;
             case "import_statement":
+                CaptureImportModuleReference(node);
                 EmitImport(node, scope);
+                return;
+            case "import_type":
+                _result.ModuleReferences.Add(new(null, "import-type", true, Location(node)));
+                WalkChildren(node, scope);
                 return;
             case "class_declaration":
             case "abstract_class_declaration":
@@ -234,6 +244,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
                 HandleDeclarator(node, scope);
                 return;
             case "call_expression":
+                CaptureDynamicImport(node);
                 TryEmitPrototypeCall(node, scope);
                 EmitCall(node, scope);
                 WalkChildren(node, scope);
@@ -280,6 +291,171 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         }
 
         WalkChildren(node, scope);
+    }
+
+    private void CaptureImportModuleReference(TreeSitterSyntaxNode node)
+    {
+        if (node.ChildByFieldName("source") is { } source)
+        {
+            var wholeTypeOnly = HasPrefixTokens(node.Text, "import", "type");
+            var typeOnly = wholeTypeOnly || AllSpecifiersAreTypeOnly(node, "import_specifier");
+            _result.ModuleReferences.Add(new(
+                RawModuleSpecifier(source),
+                wholeTypeOnly ? "import-type" : "import",
+                typeOnly,
+                Location(node)));
+            return;
+        }
+
+        // TypeScript's `import x = require(...)` syntax is a module form, but
+        // EC-6B does not resolve it. Count the observed site as unsupported.
+        if (IsImportEqualsRequire(node.Text))
+            _result.ModuleReferences.Add(new(null, "import", false, Location(node)));
+    }
+
+    private static bool IsImportEqualsRequire(string text)
+    {
+        var equals = text.IndexOf('=');
+        if (equals < 0)
+            return false;
+
+        var offset = SkipTrivia(text, equals + 1);
+        const string require = "require";
+        if (!text.AsSpan(offset).StartsWith(require, StringComparison.Ordinal))
+            return false;
+        offset += require.Length;
+        if (offset < text.Length && (char.IsLetterOrDigit(text[offset]) || text[offset] is '_' or '$'))
+            return false;
+
+        offset = SkipTrivia(text, offset);
+        return offset < text.Length && text[offset] == '(';
+    }
+
+    private static int SkipTrivia(string text, int offset)
+    {
+        while (offset < text.Length)
+        {
+            if (char.IsWhiteSpace(text[offset]))
+            {
+                offset++;
+                continue;
+            }
+
+            if (offset + 1 < text.Length && text[offset] == '/' && text[offset + 1] == '/')
+            {
+                offset += 2;
+                while (offset < text.Length && text[offset] is not ('\r' or '\n'))
+                    offset++;
+                continue;
+            }
+
+            if (offset + 1 < text.Length && text[offset] == '/' && text[offset + 1] == '*')
+            {
+                var end = text.IndexOf("*/", offset + 2, StringComparison.Ordinal);
+                if (end < 0)
+                    return text.Length;
+                offset = end + 2;
+                continue;
+            }
+
+            break;
+        }
+
+        return offset;
+    }
+
+    private void CaptureExportModuleReference(TreeSitterSyntaxNode node)
+    {
+        if (node.ChildByFieldName("source") is { } source)
+        {
+            var wholeTypeOnly = HasPrefixTokens(node.Text, "export", "type");
+            var moduleReference = wholeTypeOnly
+                ? "export-type-from"
+                : HasPrefixTokens(node.Text, "export", "*", "as")
+                    ? "export-namespace-from"
+                    : HasPrefixTokens(node.Text, "export", "*")
+                        ? "export-star"
+                        : "export-from";
+            var typeOnly = wholeTypeOnly || AllSpecifiersAreTypeOnly(node, "export_specifier");
+            _result.ModuleReferences.Add(new(
+                RawModuleSpecifier(source),
+                moduleReference,
+                typeOnly,
+                Location(node)));
+            return;
+        }
+
+        // `export =` is deliberately outside relative-v1.
+        if (HasPrefixTokens(node.Text, "export", "="))
+            _result.ModuleReferences.Add(new(null, "export-from", false, Location(node)));
+    }
+
+    private void CaptureDynamicImport(TreeSitterSyntaxNode node)
+    {
+        var function = node.ChildByFieldName("function");
+        if (function is { Text: "import" })
+            _result.ModuleReferences.Add(new(null, "import", false, Location(node)));
+        else if (function is not null && CalleeName(function) == "require")
+        {
+            var first = node.ChildByFieldName("arguments")?.NamedChildren.FirstOrDefault();
+            _result.ModuleReferences.Add(new(
+                first is { Type: "string" } ? RawModuleSpecifier(first) : null,
+                "require",
+                false,
+                Location(node)));
+        }
+    }
+
+    private static string? RawModuleSpecifier(TreeSitterSyntaxNode source)
+    {
+        if (source.Type != "string")
+            return null;
+
+        var fragment = source.NamedChildren.FirstOrDefault(child => child.Type == "string_fragment");
+        var raw = fragment?.Text;
+        if (raw is null)
+        {
+            var text = source.Text;
+            if (text.Length < 2 || text[0] is not ('\'' or '"') || text[^1] != text[0])
+                return null;
+            raw = text[1..^1];
+        }
+
+        // The written content, including any escapes, is the policy input.
+        // Overlong text is intentionally discarded before it reaches facts.
+        return raw.Length <= 256 ? raw : null;
+    }
+
+    private static bool AllSpecifiersAreTypeOnly(TreeSitterSyntaxNode node, string specifierType)
+    {
+        var specifiers = Descendants(node).Where(child => child.Type == specifierType).ToArray();
+        return specifiers.Length > 0 && specifiers.All(child => HasPrefixTokens(child.Text, "type"));
+    }
+
+    private static IEnumerable<TreeSitterSyntaxNode> Descendants(TreeSitterSyntaxNode node)
+    {
+        foreach (var child in node.NamedChildren)
+        {
+            yield return child;
+            foreach (var descendant in Descendants(child))
+                yield return descendant;
+        }
+    }
+
+    private static bool HasPrefixTokens(string text, params string[] tokens)
+    {
+        var offset = 0;
+        foreach (var token in tokens)
+        {
+            while (offset < text.Length && char.IsWhiteSpace(text[offset]))
+                offset++;
+            if (!text.AsSpan(offset).StartsWith(token, StringComparison.Ordinal))
+                return false;
+            offset += token.Length;
+        }
+
+        return offset == text.Length || char.IsWhiteSpace(text[offset]) ||
+            tokens[^1] is "*" or "=" || text[offset] is '{' or ';';
     }
 
     /// <summary>

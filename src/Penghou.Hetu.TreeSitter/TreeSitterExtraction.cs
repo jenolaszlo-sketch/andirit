@@ -31,4 +31,5 @@ internal sealed class TreeSitterExtractionResult
     internal Dictionary<string, CodeGraphDeclaration> Declarations { get; } = new(StringComparer.Ordinal);
     internal Dictionary<string, CodeGraphEdge> Edges { get; } = new(StringComparer.Ordinal);
     internal Dictionary<CodeEdgeKind, int> EdgeCounts { get; } = new();
+    internal List<TreeSitterModuleReference> ModuleReferences { get; } = [];
 }

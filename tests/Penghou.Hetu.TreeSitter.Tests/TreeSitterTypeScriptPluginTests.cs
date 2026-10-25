@@ -600,7 +600,7 @@ public sealed class TreeSitterTypeScriptPluginTests
         var packageVersion = typeof(TreeSitterTypeScriptPlugin).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion.Split('+', 2)[0];
-        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p6", plugin.Version);
+        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p7", plugin.Version);
     }
 
     [Fact]
@@ -792,7 +792,7 @@ public sealed class TreeSitterTypeScriptPluginTests
             var initial = await planner.CreatePlanAsync(source);
             var item = Assert.Single(initial.Items);
             Assert.Equal(CodeIndexPlanStatus.New, item.Status);
-            Assert.EndsWith(".p6", item.Manifest.PluginVersion, StringComparison.Ordinal);
+            Assert.EndsWith(".p7", item.Manifest.PluginVersion, StringComparison.Ordinal);
 
             // A previous publication from an older extraction-profile revision
             // must re-extract even though plugin identity and content are

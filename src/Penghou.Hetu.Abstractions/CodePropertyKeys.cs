@@ -33,4 +33,9 @@ public static class CodePropertyKeys
     public const string ImportStatic = "import-static";
     public const string ImportGlobal = "import-global";
     public const string ImportScope = "import-scope";
+    public const string Specifier = "specifier";
+    public const string ModuleReference = "module-reference";
+    public const string ResolutionPolicy = "resolution-policy";
+    public const string ResolutionRule = "resolution-rule";
+    public const string TypeOnly = "type-only";
 }

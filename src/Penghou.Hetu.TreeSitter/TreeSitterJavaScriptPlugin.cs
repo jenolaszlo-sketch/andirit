@@ -10,6 +10,7 @@ namespace Penghou.Hetu;
 public sealed class TreeSitterJavaScriptPlugin : ICodeGraphPlugin
 {
     internal static readonly CodePluginId JavaScriptPluginId = new("penghou.hetu.tree-sitter.javascript");
+    private readonly ITreeSitterModuleResolver _moduleResolver;
 
     private static readonly string[] Extensions = [".js", ".mjs", ".cjs", ".jsx"];
 
@@ -22,6 +23,16 @@ public sealed class TreeSitterJavaScriptPlugin : ICodeGraphPlugin
         $"+{TreeSitterGrammarRegistry.JavaScript.GrammarVersion}" +
         $".abi{TreeSitterGrammarRegistry.JavaScript.AbiVersion}" +
         $".p{EcmaScriptExtractionProfile.ProfileRevision}";
+
+    public TreeSitterJavaScriptPlugin()
+        : this(new EcmaScriptModuleResolver(
+            "javascript",
+            TreeSitterPluginSupport.PackageVersion(typeof(TreeSitterJavaScriptPlugin))))
+    {
+    }
+
+    internal TreeSitterJavaScriptPlugin(ITreeSitterModuleResolver moduleResolver) =>
+        _moduleResolver = moduleResolver ?? throw new ArgumentNullException(nameof(moduleResolver));
 
     public CodePluginId Id => JavaScriptPluginId;
 
@@ -60,6 +71,7 @@ public sealed class TreeSitterJavaScriptPlugin : ICodeGraphPlugin
                 path,
                 "javascript",
                 JavaScriptPluginId,
-                JavaScriptPluginVersion)));
+                JavaScriptPluginVersion),
+            _moduleResolver));
     }
 }
