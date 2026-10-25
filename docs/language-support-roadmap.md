@@ -33,9 +33,11 @@ plugin. Recognizing a file extension or obtaining a grammar is not support.
 | 3 | Kotlin | Test extension functions, properties, companion objects, top-level declarations, sealed types, and Kotlin-specific semantics. Reuse suitable Java mappings without assuming Kotlin is Java with different syntax. |
 
 Phase 0 must establish a usable foundation before another language is added.
-The initial design inventory and the ECMAScript increments EC-3D, EC-4, and
-EC-5 are closed. EC-6B remediation is complete and ready for independent
-re-review; remaining Phase 0 improvements and all expansion phases remain open.
+The initial design inventory and the ECMAScript increments EC-3D, EC-4, EC-5,
+and EC-6B are closed. EC-6C planning may be commissioned under a separate
+assignment; EC-6C implementation, integration, and release remain
+unauthorized. Remaining Phase 0 improvements and all expansion phases remain
+open.
 
 ### ECMAScript milestone status (updated 2026-10-25)
 
@@ -44,8 +46,9 @@ re-review; remaining Phase 0 improvements and all expansion phases remain open.
 | EC-3D heritage target identity correction | Closed: **VERIFIED WITH QUALIFICATIONS** | The original false heritage binding was corrected and independently verified. Verification is preserved on `review/ec3-glm-q2` at `1287590ee0c46bd863873d30baea633c3b04ef13` (`docs/reviews/ec3-glm-q2-heritage-remediation-verification.md`). |
 | EC-4 real-repository qualification | Closed: **USEFUL WITH QUALIFICATIONS** | Real-repository evaluation of `jenolaszlo-sketch/website@f9cca1773a32bb517e624cc380e1f6d14e0cc317` with source-grounded verification. The report is preserved on `review/ec4-real-repository-qualification` at `1fbc113`; its consumer lookup guidance is incorporated into `docs/consumer-guidance-qualified-name-lookup.md`. |
 | EC-5 file-level variable declarations | Closed: **VERIFIED WITH QUALIFICATIONS** | Independent GLM qualification reproduced 21/21 website declarations discovered, 11/11 directly exported, zero false positives or false negatives within the evaluated subset, 18/18 adversarial probes passed, an authentic p5→p6 migration, and byte-identical pre-existing invocation relationships; no material correctness defects were reported. The report is preserved on `review/ec5-glm-q1` at `1cad44ba11838bcefe54ed1f45e2f9b5bafcbba4`. Closure corrections were documentation-only and test-only; `docs/evidence/ec5-closure.md` records them and the accepted limitations. |
-| EC-6B relative module resolution | Remediation complete — **READY FOR INDEPENDENT RE-REVIEW** | Independent review EC6B-GLM-Q1 returned **REMEDIATION REQUIRED** for two confirmed production defects (escaped-specifier truncation producing false resolved edges; `type` binding names misclassified as type-only), a coordinate-contract wording defect, and one legacy-form ambiguity. EC-6B-R1 implements and tests the corrections; the review is preserved on `review/ec6b-glm-q1` at `66690587f4507d47e78fa4e1996e050b830c1642`. The effective ECMAScript profile advances p7 to p8 and the resolver revision to 2 so existing publications re-extract. Evidence: `docs/evidence/ec6b-r1-relative-module-resolution-remediation/README.md`. EC-6B is not accepted or closed; independent re-qualification has not run. |
-| EC-6C–EC-6F | Future gates; not started | Export and import binding, real-repository qualification, scale, and remaining EC-6 work stay within their separate design/review gates. No EC-6C implementation has started. |
+| EC-6B relative module resolution | Closed: **ACCEPTED WITH QUALIFICATIONS** | Independent review EC6B-GLM-Q1 returned **REMEDIATION REQUIRED** (F01 UTF-16 coordinate wording, F02 escaped-specifier false edges, F03 contextual `type-only`, F04 legacy-form ambiguity). EC-6B-R1 corrected them (`ffdcdbd`, `b915aed`; evidence `f8fb9d1`) and the independent EC6B-GLM-Q2 re-review returned **VERIFIED WITH QUALIFICATIONS** with no P0/P1/P2 findings (`review/ec6b-glm-q2` at `b79bfce9820f08348335db7ca0b19f4c65e3a014`). Owner closure: `docs/decisions/ec6b-owner-acceptance.md`. Effective profile p8 / `resolver2.relative-v1`. Accepted limitations: escaped specifiers unsupported; pathological grammar forms conservative; per-plugin inventory; no export/binding resolution. |
+| EC-6C export surface | Planning eligible for separate authorization; **implementation not authorized** | EC-6C planning may be commissioned under a separate assignment from the accepted EC-6B state. Implementation, integration, and release require their own owner gates; this closure does not authorize them. |
+| EC-6D-EC-6F | Future gates; not started | Import binding, publication/durability qualification, and real-repository qualification remain behind their separate design/review gates. No implementation is authorized. |
 | Astro (`.astro`) support and other language expansion | Separate future work | Not part of EC-5; `.astro` files remain unindexed, and the expansion phases below remain the only approved sequence. |
 
 Closure is scoped to the recorded snapshots, supported extensions, pinned
@@ -87,6 +90,11 @@ questions and scoped fixtures attached to each advertised feature.
 6. Maintain Elixir modules/functions/imports/invocation names and partial parsing.
    Protocol and macro declaration recognition does not establish protocol
    implementation or macro expansion.
+7. EC-6B P3-C traceability: `export type * as ns from` is labeled
+   `module-reference = export-type-from` rather than `export-namespace-from`.
+   This is a pre-existing combined-form label ambiguity, not a false
+   resolution; revisit with parser/module-fact improvements rather than
+   broadening grammar support casually.
 
 Phase 0 is usable when the catalog is maintainable, four-language omissions are
 explicit, prioritized changes have feature-level acceptance fixtures specified,

@@ -42,6 +42,16 @@ Phase 0: conservative ECMAScript relative module resolution (EC-6B):
     publications re-extract under the accepted single invalidation axis
     (D-16). Unaffected source identities and facts are unchanged.
   - Evidence: [`ec6b-r1-relative-module-resolution-remediation`](docs/evidence/ec6b-r1-relative-module-resolution-remediation/README.md).
+- EC-6B owner acceptance and closure (`EC6B-OA2` under `EC6B-OA1`): EC-6B is
+  **ACCEPTED WITH QUALIFICATIONS** after the independent `EC6B-GLM-Q2`
+  re-review returned **VERIFIED WITH QUALIFICATIONS** with no P0/P1/P2
+  findings. The closure record is
+  [`docs/decisions/ec6b-owner-acceptance.md`](docs/decisions/ec6b-owner-acceptance.md);
+  findings dispositions, hash-bound evidence, and remaining limitations are in
+  [`docs/evidence/ec6b-owner-acceptance/`](docs/evidence/ec6b-owner-acceptance/README.md).
+  This is a documentation-only closure; no runtime behavior changed. EC-6C
+  planning may be commissioned separately; EC-6C implementation, integration,
+  and release are not authorized.
 - The shared ECMAScript profile advances from p6 to p7. The implementation
   policy and consumer limits are documented in
   [`ecmascript-module-resolution.md`](docs/ecmascript-module-resolution.md);

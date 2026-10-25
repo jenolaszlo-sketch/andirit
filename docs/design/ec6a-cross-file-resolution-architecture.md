@@ -695,7 +695,8 @@ D-15.
   review's accepted recommendation (EC6-A1 A3; GLM reconciliation D-19); it
   does not introduce a second invalidation axis (D-16).
 - **Provider version:** `{packageVersion}+resolver{ResolverRevision}.{policy}`
-  (for example `0.2.0-preview.6+resolver1.relative-v1`). Any change to
+  (the current value after EC-6B-R1 is
+  `0.2.0-preview.6+resolver2.relative-v1`; the format is stable). Any change to
   emitted resolver facts — including policy changes — must change this
   string; because the effective plugin version already drives the planner
   and includes the profile revision, resolver-fact changes ride the same

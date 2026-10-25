@@ -6,6 +6,14 @@
 - **Independent re-qualification:** not performed by this task. EC-6B is not
   accepted or closed by this evidence.
 
+> **Acceptance status (25 October 2026):** independently verified by
+> EC6B-GLM-Q2 (**VERIFIED WITH QUALIFICATIONS**); EC-6B is **ACCEPTED WITH
+> QUALIFICATIONS**. See the
+> [owner decision](../../decisions/ec6b-owner-acceptance.md) and the
+> [closure evidence](../ec6b-owner-acceptance/README.md). This remediation
+> record remains the historical R1 evidence; the status lines above describe
+> the state at the R1 handoff.
+
 This handoff answers the independent review
 (`docs/reviews/ec6b-glm-q1-relative-module-resolution-verification.md`, review
 branch `review/ec6b-glm-q1` at `66690587f4507d47e78fa4e1996e050b830c1642`).

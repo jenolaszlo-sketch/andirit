@@ -4,9 +4,13 @@
 independent review EC6-GLM-AR1 returned READY WITH QUALIFICATIONS and the
 owner accepted the EC-6B decisions and the F02/F04/F05/F09 corrections
 ([owner-acceptance record](../decisions/ec6a-owner-acceptance.md)); the review
-gate on EC-6B is therefore satisfied. Milestones beyond EC-6B remain
+gate on EC-6B is therefore satisfied. EC-6B was subsequently implemented,
+remediated, and accepted with qualifications (EC6B-OA2), so only EC-6C
+planning is eligible under a separate assignment. Milestones beyond EC-6B
+remain
 **proposals**, and **implementation authorization is a separate owner
-decision — this task did not start EC-6B**.
+decision.** This artifact did not start EC-6B; its acceptance is recorded
+in [the EC-6B owner decision](../decisions/ec6b-owner-acceptance.md).
 **Baseline:** `558f8ac` (EC6-A0).
 Companion documents:
 [architecture](ec6a-cross-file-resolution-architecture.md),
@@ -25,12 +29,17 @@ Every milestone in this roadmap is:
 
 | Milestone | Goal | New graph vocabulary | Profile revision | Size | Depends on |
 | --- | --- | --- | --- | --- | --- |
-| EC-6B | Module-resolution contracts + conservative local module resolution | `resolves-to` + 5 property keys (accepted) | p6 → p7 | S | EC6-A1 owner acceptance (satisfied) |
-| EC-6C | Export surface a module owns by itself | `exports` + 4 property keys | p7 → p8 | S–M | EC-6B |
-| EC-6D | Re-export/star closure + import binding | `binds` + 3 property keys | p8 → p9 | M | EC-6C |
+| EC-6B | Module-resolution contracts + conservative local module resolution | `resolves-to` + 5 property keys (accepted) | p6 → p8 (p7; R1) | S | EC6-A1 owner acceptance (satisfied) |
+| EC-6C | Export surface a module owns by itself | `exports` + 4 property keys | p8 → p9 | S–M | EC-6B |
+| EC-6D | Re-export/star closure + import binding | `binds` + 3 property keys | p9 → p10 | M | EC-6C |
 | EC-6E | Incremental publication and durability qualification | none | none (unless a defect fix changes facts) | S (verification-heavy) | EC-6D |
 | EC-6F | Real-repository qualification | none | none | M | EC-6E |
 | *(unauthorized)* EC-6G+ | Policy extensions, query conveniences, identity migration | to be designed | n/a | L | Owner decision |
+
+Profile revisions: EC-6B shipped p7 and the EC-6B-R1 corrective pass advanced
+the effective profile to p8 because emitted resolver facts changed. EC-6C
+therefore starts from p8 and the EC-6D transition shifts accordingly; exact
+revisions are re-confirmed at each design gate.
 
 Common disciplines that apply to every emitting milestone:
 
@@ -252,6 +261,12 @@ resolution yet (named re-export/star arrive in EC-6D), so the resolver never
 consults another module's table in this milestone — but it does emit the
 `resolves-to` edge for re-export statements (already in EC-6B).
 
+**Entry conditions (EC6B-OA1 closure).** Planning may be commissioned under
+a separate assignment. Implementation is not authorized by the EC-6B
+closure; the EC-6C owner gate must accept the export contract before code.
+EC-6B is accepted with qualifications but is not merged, so EC-6C must not
+depend on an EC-6B merge.
+
 **Scope (in).**
 
 - Proposed constant `CodeEdgeKinds.Exports`, property keys `ExportedName`,
@@ -268,7 +283,7 @@ consults another module's table in this milestone — but it does emit the
   module property (recommended `exported-from`), restrict eligibility to
   path-scoped kinds, or migrate identities — with fixtures proving
   attribution. Unattributed name-based targets must not ship.
-- Coverage kind `exports`; profile revision p7 → p8.
+- Coverage kind `exports`; profile revision p8 → p9.
 
 **Scope (out).** Named re-export and star chains (`export-via: re-export` /
 `star` and their tables) — EC-6D; import binding — EC-6D; export of an
@@ -341,7 +356,7 @@ default, and namespace imports with explicit type-only semantics.
   name-based node unless EC-6C's attribution decision makes the edge
   attributable; order-independent star closure and the brief's cycle
   example must be fixtures (GLM §G).
-- Coverage kinds `binds`; profile revision p8 → p9.
+- Coverage kinds `binds`; profile revision p9 → p10.
 
 **Scope (out).** CJS bindings; export of imported bindings; dynamic module
 references; `tsconfig`; cross-plugin resolution.

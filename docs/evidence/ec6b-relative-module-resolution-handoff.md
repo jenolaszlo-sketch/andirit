@@ -2,8 +2,14 @@
 
 - **Project:** `jenolaszlo-sketch/penghou-hetu`
 - **Milestone:** EC-6B
-- **Implementation status:** complete; ready for independent review
+- **Implementation status:** complete at this handoff; see the acceptance banner below for the current status
 - **Independent qualification:** not performed by this implementation task
+
+> **Acceptance status (25 October 2026):** EC-6B is **ACCEPTED WITH
+> QUALIFICATIONS** after the independent EC6B-GLM-Q2 re-review. See the
+> [owner decision](../decisions/ec6b-owner-acceptance.md) and the
+> [closure evidence](ec6b-owner-acceptance/README.md). This handoff remains
+> the historical EC-6B implementation record.
 
 ## A. Git binding
 
