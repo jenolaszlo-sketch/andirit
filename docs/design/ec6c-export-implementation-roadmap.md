@@ -1,15 +1,15 @@
 # EC6C-D0: Export representation implementation roadmap
 
-## Current EC6C-A1 roadmap: Structural Export Surface
+## Current EC6C-A2 roadmap: Structural Export Surface
 
-**Status:** Replaces the D0 five-stage order for Track A. The original roadmap below remains as historical D0 planning; old stage numbers are mapped explicitly and must not be reused with a new meaning without this crosswalk. EC6C-A1 itself is documentation-only and authorizes no implementation.
+**Status:** Replaces the D0 five-stage order for Track A. The original roadmap below remains as historical D0 planning; old stage numbers are mapped explicitly and must not be reused with a new meaning without this crosswalk. EC6C-A1/A2 are documentation-only; Track A is specification-ready, but production implementation remains unauthorized.
 
 ### Track A stages
 
 | Current stage | Scope and exit criteria | D0 roadmap crosswalk |
 | --- | --- | --- |
 | EC-6C.1 — Export shape inventory | Implement only the accepted allowlist in the architecture addendum. Capture canonical public names, local names when written, exact name token spans, export form, explicit type-only state and syntax-only namespace projection. Reject error/missing subtrees and unsupported forms. No declaration lookup, no graph publication requirement in this stage, no export coverage system. Exit with the A01–A29 input/shape fixtures represented in extraction tests or a separately reviewed inventory artifact. | Reuses D0 EC-6C.1, narrowed to positive syntax capture. |
-| EC-6C.2 — Structural export publication | Emit per-module/name export nodes and per-written-occurrence exports edges in each file unit. Apply the exact identity, provider/evidence and collision rules in the EC6C-A1 owner record. p9 in both plugins; no export-space aggregate; no exported-as; no resolver changes. Exit with extraction, query, replacement, both-store, failure/cancellation and deterministic identity tests. | Reuses D0 EC-6C.2 but removes attribution, export completeness counters and all re-export entries. |
+| EC-6C.2 — Structural export publication | Emit per-module/name export nodes and per-written-occurrence exports edges in each file unit. Apply the exact identity, provider/evidence and collision rules in the EC6C-A1 acceptance record and [EC6C-A2 closure addendum](../decisions/ec6c-a29-closure.md). p9 in both plugins; no export-space aggregate; no exported-as; no resolver changes. Exit with extraction, query, replacement, both-store, failure/cancellation and deterministic identity tests. | Reuses D0 EC-6C.2 but removes attribution, export completeness counters and all re-export entries. |
 | EC-6C.3 — Track A qualification | Execute the complete matrix, exact-name compatibility, p8-to-p9 durable migration, both stores, durable reopen, source replacement/deletion, failure/cancellation, LF/CRLF and Unicode. Perform pinned website smoke qualification with independently prepared expected names for the nine indexed files; record only the allowlisted positive observations and do not claim complete exports. Preserve commands/results and an independent bounded review. | Takes the relevant D0 EC-6C.5 qualification work. D0 EC-6C.5's migration and qualification intent remains; its declaration-attribution and complete-surface requirements are removed from Track A. |
 
 ### Track B separation
@@ -28,9 +28,30 @@ EC-6D remains later design work for import/export binding, remote names, star cl
 - A collision or cancellation before unit completion cannot publish a partial replacement.
 - Bounded traversals report Truncated and consumers must not treat truncated observations as all observations.
 
-### Owner gate
+### Track A implementation-readiness gate
 
-The name-length unit in the identity contract remains **PROPOSED — OWNER DECISION REQUIRED**. Resolve it before EC-6C.1 fixes the validation boundary. This is the sole open Track A contract choice recorded by EC6C-A1. Implementation authorization remains separate and is not granted by this roadmap.
+Readiness disposition: All required Track A contracts are specified and source-contract compatibility is established as COMPATIBLE WITH LOCAL VALIDATION. Track A is ready for a separately authorized implementation milestone. This does not mean the extractor or tests exist, and it does not complete durable-store qualification.
+
+| Required prerequisite | EC6C-A2 disposition |
+| --- | --- |
+| Exported-name validation and 256-scalar boundary | Specified in the architecture and normative A29 fixture table; strict malformed-surrogate rejection is local to the future extractor. |
+| Export-entry identity | Exact module-path/name formula, UTF-8 encoding, ordinal case, no normalization, and fixed hash ID specified. |
+| Occurrence identity and collisions | Full accepted tuple and fail-before-insert conflict behavior specified. |
+| Type/value projection | Per-occurrence type/value/both/unknown semantics specified. |
+| Source spans and coordinates | Exact name-token spans and one-based UTF-16 columns, end-exclusive, specified. |
+| Syntax allowlist and re-export exclusions | Supported and excluded forms specified; escaped-name support remains unchanged. |
+| Positive-only absence semantics | Empty, omitted, unsupported, and truncated results specified without completeness claims. |
+| Exact-name query compatibility | Existing all-node ordinal QualifiedName lookup and declaration-navigation boundary specified. |
+| Per-file publication | Entry/occurrence ownership and atomic completion specified. |
+| Deletion and replacement | Completed empty replacement and file deletion behavior specified. |
+| Failure and cancellation | Incomplete replacement preserves the prior completed publication. |
+| Historical p8-to-p9 migration | Both ECMAScript plugins advance to p9; existing identities and resolver2.relative-v1 remain unchanged. |
+| Both graph stores | Source contracts are compatible; extraction, persistence, reopen, replacement, and failure tests remain EC-6C.3 gates. |
+| Independent review | Existing AR1 evidence is preserved; the implemented Track A result requires a bounded independent qualification review. |
+
+A29 source-inspection and documentation checks do not change the profile/package version, create a package or release, run implementation tests, or start EC-6C.1. EC-6C.1 is the next milestone only after separate implementation authorization; Track B remains DESIGN REMEDIATION REQUIRED.
+
+EC6C-A2 closes A29. The accepted bound is 256 Unicode scalar values with strict malformed-UTF-16 rejection, no normalization, and no truncation. The UTF-16 code-unit alternative is rejected for name length; source coordinates remain UTF-16. No Track A owner decision remains open. Implementation authorization remains separate and is not granted by this roadmap.
 
 ---
 

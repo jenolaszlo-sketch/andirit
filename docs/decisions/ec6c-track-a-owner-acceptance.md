@@ -1,11 +1,12 @@
-# EC6C-A1 — Owner acceptance: Structural Export Surface
+# EC6C-A1/A2 — Track A owner acceptance and A29 closure
 
 **Project:** Penghou.Hetu (future Andirit)
-**Milestone:** EC6C-A1
-**Status:** EC6C-A1 ACCEPTED WITH OPEN DECISIONS
+**Milestone:** EC6C-A1/A2
+**A1 disposition:** EC6C-A1 ACCEPTED WITH OPEN DECISIONS (historical at A1 completion)
+**Current status:** EC6C-A2 ACCEPTED — TRACK A IMPLEMENTATION READY
 **Scope:** Documentation and owner-decision reconciliation only
 **Production implementation:** NOT AUTHORIZED
-**Next implementation target:** EC-6C.1 Structural Export Surface, after the open identity-bound decision and a separate implementation authorization
+**Next implementation target:** EC-6C.1 Structural Export Surface, after separate implementation authorization; EC6C-A2 does not start it
 
 ## 1. Git and evidence binding
 
@@ -91,7 +92,7 @@ Add node kind export and edge kind exports. For each supported module/name pair:
 - Edge properties are export-kind (named/default), export-via (direct/local/expression), local-name when syntactically present, type-only=true only for explicit syntax, and namespace-projection (type/value/both/unknown).
 - No remote via-module, declaration node, export provider resolver, or completeness property exists in A1.
 
-The syntax allowlist and per-case expected graph facts are in the [A01–A29 acceptance matrix](../design/ec6c-export-adversarial-cases.md#current-ec6c-a1-structural-acceptance-matrix).
+The syntax allowlist and per-case expected graph facts are in the [A01–A29 acceptance matrix](../design/ec6c-export-adversarial-cases.md#current-ec6c-a2-structural-acceptance-matrix).
 
 ## 6. Name-slot identity and type/value semantics
 
@@ -105,7 +106,7 @@ language is exactly javascript or typescript. modulePath is the normalized repos
 
 For a simple quoted exported name without escapes, exportedName is its string value without quotes. Identifiers retain their exact spelling. The default name is default. Escaped, empty, all-whitespace, control-containing, undecodable and over-bound names are unsupported and never truncated.
 
-**PROPOSED — OWNER DECISION REQUIRED:** D0’s 256-character limit had no unit. Retain the bound at 256 but count Unicode scalar values (recommended), or choose UTF-16 code units. This changes which source names are supported. A29 remains blocked until the owner chooses. No other Track A contract choice remains open.
+A29 closes the exported-name bound at 256 Unicode scalar values. A Unicode scalar excludes U+D800–U+DFFF; a valid surrogate pair counts once and each combining mark counts separately. Strict validation must report malformed UTF-16 and reject unpaired surrogates before identity construction. Do not count with .NET string.Length, normalize, replace, or truncate. The 256 UTF-16-code-unit alternative is rejected. UTF-16 remains the source-coordinate unit. See the [A29 closure addendum](ec6c-a29-closure.md) and normative matrix fixtures.
 
 ### Per-occurrence namespace projection
 
@@ -186,7 +187,7 @@ Future qualification must seed durable state with the actual accepted p8 extract
 
 ## 12. Acceptance matrix reference
 
-The [A01–A29 matrix](../design/ec6c-export-adversarial-cases.md#current-ec6c-a1-structural-acceptance-matrix) specifies each syntax/input, expected entry and occurrence, identity inputs, evidence, location, namespace treatment, omission behavior, publication result, required test and independent gate. The matrix includes exact-name queries, both stores, collision handling, deterministic repeat extraction, p8-to-p9 migration, no attribution and positive-only interpretation.
+The [A01–A29 matrix](../design/ec6c-export-adversarial-cases.md#current-ec6c-a2-structural-acceptance-matrix) specifies each syntax/input, expected entry and occurrence, identity inputs, evidence, location, namespace treatment, omission behavior, publication result, required test and independent gate. The matrix includes exact-name queries, both stores, collision handling, deterministic repeat extraction, p8-to-p9 migration, no attribution and positive-only interpretation.
 
 ## 13. Reconciliation of D-EC6C-01 through D-EC6C-14
 
@@ -195,7 +196,7 @@ This table records the original proposal, independent-review evidence, current o
 | Decision | Original D0 proposal | AR1 / source evidence | A1 owner disposition | Required correction | Accepted Track A scope | Deferred scope / implementation prerequisite | Further owner approval |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | D-EC6C-01 | Export entries plus exports and exported-as; reject declaration-only/hybrid. | Entry separates public name from declaration; no target is needed for unresolved/default-expression names. | ACCEPTED, structural-only. | Remove exported-as from accepted stage. | File-to-entry Structural occurrence only. | Attribution remains Track B. | No additional Track A choice. |
-| D-EC6C-02 | One node per module path and name; D0 limit 256 characters. | Module/name slot is stable; type/value facets are not one binding. Limit unit was undefined. | ACCEPTED with A29 open. | Use canonical formula and no normalization; define length unit. | Entry identity independent of declaration, import and span. | A29 boundary fixture waits for owner’s unit choice. | YES: scalar values or UTF-16 units. |
+| D-EC6C-02 | One node per module path and name; D0 limit 256 characters. | Module/name slot is stable; type/value facets are not one binding. | ACCEPTED; A29 closed in EC6C-A2. | Exact formula; maximum 256 Unicode scalar values; strict malformed-UTF-16 rejection; ordinal, case-sensitive and unnormalized. | Entry identity independent of declaration, import and span. | A29 boundary fixtures are normative; source compatibility is COMPATIBLE WITH LOCAL VALIDATION. | No further Track A owner choice. |
 | D-EC6C-03 | One span-anchored occurrence edge with form/local/type-only discriminators. | UTF-16 coordinates accepted; properties are not identity; existing TryAdd can silently drop collisions. | ACCEPTED with corrected tuple. | Include public name, form, local-name presence/value, type-only, occurrence projection and span; fail before insert on conflict. | Separate deterministic edge per accepted written site. | Re-export identity is EC-6D work. | No further Track A choice. |
 | D-EC6C-04 | Direct Resolved, unique local lookup, name-converged Derived. | Same-file declarations can converge; p8 lacks a module-scope table; Derived does not identify target occurrence. | DEFERRED / NOT ACCEPTED. | No export attribution quality or edge in A1. | None. | Physical record uniqueness, scope, merging, overload and evidence need Track B design. | YES: new Track B decision. |
 | D-EC6C-05 | Structural extraction provider; distinct versioned resolver for attribution. | CodeEvidence provider/version are extensible; planner separately uses plugin Version; resolver already has separate provider. | ACCEPTED for Structural surface provider only. | Use export-surface provider and packageVersion+exports1.local-v1; no resolver provider. | Structural occurrence provenance. | Any attribution provider is deferred with Track B. | No Track A choice; Track B later. |
@@ -231,15 +232,16 @@ EC-6D or later design owns named/star/namespace re-export source names, remote t
 
 Derived associations cannot be promoted to Resolved import bindings automatically. No EC-6D work is authorized here.
 
-## 16. Remaining qualifications and open decision
+## 16. EC6C-A2 A29 decision closure
 
-The structure, syntax scope, query semantics, positive-only meaning, publication ownership and p9 migration contract are reconciled. The sole open Track A item is the unit for the D0 maximum name length of 256:
+The owner selected 256 Unicode scalar values as the maximum exported-name length. A scalar is a Unicode code point outside U+D800–U+DFFF. A valid UTF-16 surrogate pair counts once; each combining mark counts separately. Strict validation must report and reject unpaired high or low surrogates before hashing, serialization, or publication. Empty, malformed, all-whitespace, control-containing, and over-bound names produce no export fact and are never replaced, normalized, or truncated.
 
-- **PROPOSED — OWNER DECISION REQUIRED:** Unicode scalar value count, recommended because it treats supplementary symbols as one character.
-- Alternative: UTF-16 code-unit count, consistent with the accepted source-coordinate unit but rejecting some names with supplementary symbols at the boundary.
+256 UTF-16 code units is rejected as the name-counting unit. UTF-16 remains the existing source-coordinate convention. No graph-core naming or coordinate contract changes.
 
-Over-bound names are unsupported under either choice, never truncated. No A29 test expectation is final before this choice. This open item is why the final disposition is ACCEPTED WITH OPEN DECISIONS rather than implementation-ready.
+Source inspection found no name-field cap in CodeGraphNode.Name, QualifiedName, graph identifiers, exact-name query, in-memory storage, or the pinned LatticeDb provider API. The compatibility result is COMPATIBLE WITH LOCAL VALIDATION: future extraction-local strict validation is required. This is not durable runtime qualification; both-store round-trip and migration gates remain future EC-6C.3 work.
+
+The [A29 closure addendum](ec6c-a29-closure.md) records the boundary fixtures, identity implications, risks, evidence, and readiness assessment. D-EC6C-01 through D-EC6C-14 retain their A1 dispositions except that D-02’s A29 alternative is now resolved. Track B remains DESIGN REMEDIATION REQUIRED; no exported-as relationship is authorized.
 
 ## 17. Implementation authorization boundary
 
-EC6C-A1 accepts the structural-only direction and provides a bounded contract. It does not authorize implementation, tests, merge, release, EC-6D, Track B remediation, or identity migration. After the owner selects the A29 length unit, a separate owner decision must authorize EC-6C.1/6C.2 implementation. No production code or tests were changed in EC6C-A1.
+EC6C-A1 accepted the structural-only direction; EC6C-A2 closes A29 and establishes Track A implementation readiness. Neither milestone authorizes production implementation, tests, merge, release, EC-6D, Track B remediation, or identity migration. A separate authorization is required before EC-6C.1 begins. No production code or tests were changed in EC6C-A1/A2.

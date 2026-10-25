@@ -1,8 +1,8 @@
 # EC6C-D0: Export representation decision register
 
-## Current decision status: EC6C-A1 owner reconciliation
+## Current decision status: EC6C-A2 owner-decision closure
 
-**Status:** This EC6C-A1 section is authoritative for Track A. The EC6C-D0 decision-by-decision text below is preserved as the original proposal, not as current owner approval. D0 “RECOMMENDED” decisions were not owner acceptance. The owner’s accepted direction is limited to the structural-only scope recorded in docs/decisions/ec6c-track-a-owner-acceptance.md.
+**Status:** This EC6C-A1/A2 section is authoritative for Track A. A1 established the structural-only direction; A2 closes A29 as recorded in the [closure addendum](../decisions/ec6c-a29-closure.md). The EC6C-D0 decision-by-decision text below is preserved as the original proposal, not as current owner approval. D0 “RECOMMENDED” decisions were not owner acceptance.
 
 ### Correction to EC-6A decision history
 
@@ -14,12 +14,12 @@ The EC6C-D0 §2 table overstated prior EC-6A approval. The EC-6A owner record, �
 
 EC-6C-A1 makes new, bounded decisions: it accepts module/name surface entries without declaration targets, supports a name-only default entry with Structural evidence, and allows a local export-list observation even if its local value is imported. These decisions do not retroactively amend EC-6A. D-06 remote binding, the D-10 CommonJS scope boundary, and D-11 declaration/binding edges remain deferred.
 
-### D-EC6C-01 through D-EC6C-14 dispositions
+### D-EC6C-01 through D-EC6C-14 dispositions after A29 closure
 
-| Decision | D0 proposal and AR1 assessment | Owner disposition in A1 | Accepted Track A correction | Deferred work / prerequisite | Further owner approval |
+| Decision | D0 proposal and AR1 assessment | Owner disposition at A1/A2 | Accepted Track A correction | Deferred work / prerequisite | Further owner approval |
 | --- | --- | --- | --- | --- | --- |
 | D-EC6C-01 Representation | Export entry plus exports and exported-as; AR1 accepted model with qualifications. | ACCEPTED, structurally limited. | File-to-entry Structural exports only; entry is a name slot, not a declaration. | All exported-as remains Track B. | No additional decision for structure. |
-| D-EC6C-02 Name identity | Module path + exported name, occurrence-independent; AR1 required namespace refinement and a defined bound. | ACCEPTED with one OPEN boundary. | Exact formula in architecture; identity excludes declaration, import and occurrence. Unicode is ordinal, case-sensitive, unnormalized. | Maximum remains 256 as D0 proposed; count unit needs decision. | **PROPOSED — OWNER DECISION REQUIRED:** count Unicode scalar values (recommended) or UTF-16 code units. |
+| D-EC6C-02 Name identity | Module path + exported name, occurrence-independent; AR1 required namespace refinement and a defined bound. | ACCEPTED; A29 closed by EC6C-A2. | Exact formula; maximum 256 Unicode scalar values; strict malformed-UTF-16 rejection; identity remains ordinal, case-sensitive, and unnormalized. | Validate locally before hashing; verify both-store round-trip in EC-6C.3. | No further Track A owner choice. |
 | D-EC6C-03 Occurrence identity | One span-anchored edge per written occurrence; AR1 found missing re-export source name and silent TryAdd risk. | ACCEPTED with re-export scope narrowed. | Canonical tuple includes edge kind, file, entry, written public name, form, local-name presence/value, type-only state, per-occurrence projection and span; conflict fails before insert. | Future re-export identity adds remote source name/specifier in EC-6D design. | No further decision for local Track A forms. |
 | D-EC6C-04 Attribution eligibility | D0 allowed direct Resolved, local lookup and name-converged Derived; AR1 found merge and scope defects. | DEFERRED / NOT ACCEPTED for implementation. | No exported-as relationship at all in Track A. | Physical target uniqueness, lexical scope table, merge/overload rules, namespace checks and evidence contract need a separate Track B design. | Yes, a new Track B owner decision. |
 | D-EC6C-05 Evidence/provider | D0 proposed Structural for exports, distinct export resolver for attribution; AR1 accepted provider separation but challenged edge claims. | ACCEPTED for structural provider only. | Structural; provider penghou.hetu.tree-sitter.ecmascript-export-surface; version packageVersion+exports1.local-v1. This is an extraction provider, not an attribution resolver. | No attribution provider or Resolved/Derived export evidence in A1. | No additional Track A decision; Track B provider/evidence acceptance later. |
@@ -33,6 +33,15 @@ EC-6C-A1 makes new, bounded decisions: it accepts module/name surface entries wi
 | D-EC6C-13 Unattributable/absence | D0 kept names without attribution and described absence semantics; AR1 found reasons unqueryable. | ACCEPTED with positive-only narrowing. | A returned entry is observed syntax; empty means no supported occurrence recorded. All A1 entries have no declaration attribution by scope. | Do not expose “unresolved attribution” counts because attribution is not attempted. | No further decision. |
 | D-EC6C-14 EC-6D boundary | D0 reserved import binding and closure; AR1 required namespace and no Derived promotion. | ACCEPTED. | EC-6D independently resolves binding and matches projections; no Track A fact is binding proof. | Re-exports, star closure, cycles, conflicts, remote origin, cross-file ownership. | EC-6D requires a separate design/owner decision. |
 
+### EC6C-A2 closure: A29 and Track A readiness
+
+The owner selected 256 Unicode scalar values (not UTF-16 code units) for the exported-name limit. A supplementary scalar encoded by a valid surrogate pair counts once; combining marks count separately. Unpaired surrogates are rejected before encoding, and names are not normalized or truncated. Source columns remain UTF-16 code units. The full per-fixture oracle is in the current A29 section of the acceptance matrix.
+
+Graph-contract inspection found no independent name-length cap in CodeGraphNode.Name, QualifiedName, node IDs, exact-name queries, or the inspected InMemory/LatticeDb source contracts. Strict Unicode validation is therefore extraction-local. Disposition: COMPATIBLE WITH LOCAL VALIDATION. Runtime durability qualification remains a future implementation gate.
+
+All Track A owner choices are resolved. The A1 dispositions for D-EC6C-01 through D-EC6C-14 remain effective, with D-02’s A29 bound now final. Track A is implementation-ready as a specification only. Track B remains DESIGN REMEDIATION REQUIRED, and no exported-as relation is authorized. EC6C-A2 does not authorize or start EC-6C.1.
+
+The D0 checklist and decision prose later in this file are preserved as historical proposal text; they are not active open decisions and are superseded by this current A1/A2 disposition table.
 ### Historical D0 sections retained
 
 The alternative comparison and D0 reasoning remain useful historical context. In the sections below, D0 recommendations concerning export-space on the entry, coverage counters, any exported-as edge, declaration resolution, default attribution, and remote re-export entries are superseded by the table above. EC-6A status labels are corrected above. No historical finding is rewritten.

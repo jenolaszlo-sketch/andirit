@@ -1,8 +1,8 @@
 # EC6C-D0: Export representation architecture
 
-## Current normative contract: EC6C-A1 (owner accepted direction)
+## Current normative contract: EC6C-A2 (A1 direction with A29 closed)
 
-**Status:** Current structural Track A contract. This addendum controls over conflicting EC6C-D0 recommendations below. The original alternative analysis and rationale remain as history. Independent evidence: EC6C-GLM-AR1 by GPT-6 in Codex runtime, preserved at commit 49a01393375a345cefe0ca30b1f58fee1fe24e04 (tree 827f83f38221548c168e272700410a9da6cb525f). The review ID is not GLM model attribution.
+**Status:** Current structural Track A contract. EC6C-A2 closes A29; the [closure record](../decisions/ec6c-a29-closure.md) controls this name-length rule. This addendum controls over conflicting EC6C-D0 recommendations below. The original alternative analysis and rationale remain as history. Independent evidence: EC6C-GLM-AR1 by GPT-6 in Codex runtime, preserved at commit 49a01393375a345cefe0ca30b1f58fee1fe24e04 (tree 827f83f38221548c168e272700410a9da6cb525f). The review ID is not GLM model attribution.
 
 ### 1. Question and scope
 
@@ -48,13 +48,30 @@ The canonical entry formula is:
 - modulePath is the file node’s repository-relative POSIX path after the existing path normalization contract; it is never absolute or host-dependent.
 - exportedName is the actual public name: identifier spelling as written, the unescaped string value for supported quoted names, or the literal name default for a default export.
 - UTF-8 is encoded without a byte-order mark. Hash output is lowercase hexadecimal, matching the accepted graph identity convention.
-- Names compare ordinally and case-sensitively. Do not normalize Unicode. A source spelling that normalizes differently remains distinct.
-- Quoted names with no escape sequence and valid non-ASCII names are supported when otherwise within the accepted bound. Escaped names, empty names, all-whitespace names, control-containing names, undecodable source, and over-bound names are unsupported and emit no export entry. They are never truncated or replaced.
+- Names compare ordinally and case-sensitively. Do not normalize Unicode. A source spelling that normalizes differently remains distinct; precomposed and decomposed spellings therefore remain separate names and identities.
+- Quoted names with no escape sequence and valid non-ASCII names are supported when otherwise within the accepted bound. Escaped names, empty names, all-whitespace names, control-containing names, names containing an unpaired UTF-16 surrogate, undecodable source, and names exceeding 256 Unicode scalar values are unsupported and emit no export entry. They are never truncated, normalized, or replaced.
 
-**PROPOSED — OWNER DECISION REQUIRED:** EC6C-D0 proposed a 256-character maximum without defining the unit. Recommendation: retain the bound and count Unicode scalar values in exportedName, excluding the quote characters. The alternative is to count UTF-16 code units, which rejects some names containing supplementary scalars. This count changes the supported syntax boundary and is not recorded as approved until the owner chooses. The acceptance matrix tests both sides of the selected bound.
+ACCEPTED — A29 CLOSED: The maximum exported-name length is 256 Unicode scalar values. A Unicode scalar value is a code point outside U+D800–U+DFFF. A valid UTF-16 surrogate pair counts as one scalar; each combining mark counts separately. Count by strict UTF-16 decoding that reports malformed input, such as Rune.DecodeFromUtf16 only when its status is OperationStatus.Done, or equivalent logic. Do not use .NET string.Length for this count and do not accept an enumerator that silently yields U+FFFD for malformed input. Reject empty, all-whitespace, control-containing, malformed, or over-bound names before identity construction; emit no export entry or occurrence and never truncate. The 256 UTF-16-code-unit alternative is rejected as the name-counting unit. Source coordinates remain UTF-16 code units under the existing location contract.
 
 The entry ID does not depend on declaration node identity, source occurrence, import binding, inferred runtime semantics, or source location. Moving an occurrence in the same module leaves the entry ID unchanged. Renaming the export or moving the module changes the corresponding ID. Adding another occurrence of the same exported name reuses the entry in that module.
 
+### A29 owner closure and graph-contract compatibility
+
+The exported-name limit is local to Track A validation. The extractor first establishes that a written form is in the existing syntax allowlist, obtains its canonical public name without expanding escaped-name support, then strictly validates the UTF-16 sequence and counts 1–256 Unicode scalar values. An invalid or over-bound candidate emits neither an entry nor an occurrence. Validation must happen before hashing, JSON serialization, or publication so malformed surrogate input cannot be replaced by a fallback encoder.
+
+No global graph naming or source-coordinate contract changes:
+
+- CodeGraphNode.Name requires a non-whitespace string and has no length cap. QualifiedName has no length cap and preserves non-whitespace content; its existing whitespace-only-to-null behavior is compatible because all-whitespace exported names are already unsupported by the Track A syntax contract.
+- CodeNodeId and related identifier wrappers have no length cap. The export-entry ID remains the fixed-size ASCII language prefix plus lowercase SHA-256 digest; the exported name is carried in Name and QualifiedName, not as an identifier.
+- CodeGraphBatchValidator applies its configurable UTF-16 .Length cap only to text properties and text-list values (32,768 units by default), not to node Name or QualifiedName. The name slot must remain in the graph’s name fields.
+- The in-memory exact-qualified-name query uses ordinal equality. Query argument validation has no maximum length. Existing exact-name lookup therefore distinguishes case and normalization forms without changing graph-core semantics.
+- LatticeDb persistence serializes graph records to JSON UTF-8 and stores the command-log payload as Base64 text; the optional native mirror stores serialized graph JSON as a variable-length string property. The pinned LatticeDbSharp 0.2.0 API exposes LatticeValue.From(string) and a length-bearing string value, with no smaller string limit documented in its package API. Source inspection found no repository-level byte cap for Name or QualifiedName.
+
+Compatibility assessment: COMPATIBLE WITH LOCAL VALIDATION. A 256-scalar name requires at most 512 UTF-16 code units and 1,024 UTF-8 bytes for its raw scalar sequence. The graph facts, identity wrappers, query path, and inspected durable-provider contracts impose no smaller name-field limit. Strict malformed-UTF-16 rejection belongs in the future export extractor; existing graph-core validation is intentionally unchanged. This is source-contract compatibility, not a completed durable round-trip qualification: EC-6C.3 must verify exact names and identities in both stores, including durable close/reopen.
+
+The entry formula remains {language}:export:{lowercase-hex(SHA-256(UTF-8(modulePath + LF + exportedName)))}. For valid scalar sequences, UTF-8 is deterministic and preserves exact case and normalization distinctions. Existing default UTF-8 helpers may substitute for malformed UTF-16, so the future extractor must reject malformed input before invoking the existing hash formula. Do not normalize before entry identity, exact-name lookup, or serialization.
+
+A29 boundary fixtures, including validation-level malformed-surrogate cases and UTF-16 coordinate assertions, are normative in the acceptance matrix at ec6c-export-adversarial-cases.md#current-ec6c-a2-structural-acceptance-matrix.
 ### 4. Namespace observations
 
 Namespace evidence belongs to each occurrence edge, never to the shared entry. This avoids claiming that a name slot has both spaces merely because one occurrence or another might contribute a facet.
