@@ -275,7 +275,7 @@ public sealed class TreeSitterModuleResolutionLifecycleTests
                 new CodeEvidence(
                     EvidenceQuality.Resolved,
                     EcmaScriptModuleResolver.ResolverProvider,
-                    "0.2.0-preview.6+resolver1.relative-v1"));
+                    "0.2.0-preview.6+resolver2.relative-v1"));
 
             var exception = await Assert.ThrowsAsync<CodeGraphBatchRejectedException>(async () =>
                 await store.StageIndexUnitAsync(new CodeIndexUnitReplacement(origin, edges: [edge])));
@@ -379,7 +379,7 @@ public sealed class TreeSitterModuleResolutionLifecycleTests
     {
         public string Language => "typescript";
         public string Provider => EcmaScriptModuleResolver.ResolverProvider;
-        public string ProviderVersion => "0.2.0-preview.6+resolver1.relative-v1";
+        public string ProviderVersion => "0.2.0-preview.6+resolver2.relative-v1";
 
         public TreeSitterModuleResolutionResult Resolve(
             IReadOnlyList<TreeSitterModuleFile> inventory,
@@ -391,7 +391,7 @@ public sealed class TreeSitterModuleResolutionLifecycleTests
     {
         public string Language => "typescript";
         public string Provider => EcmaScriptModuleResolver.ResolverProvider;
-        public string ProviderVersion => "0.2.0-preview.6+resolver1.relative-v1";
+        public string ProviderVersion => "0.2.0-preview.6+resolver2.relative-v1";
 
         public TreeSitterModuleResolutionResult Resolve(
             IReadOnlyList<TreeSitterModuleFile> inventory,

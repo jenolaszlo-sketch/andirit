@@ -47,7 +47,7 @@ internal sealed class EcmaScriptModuleResolver : ITreeSitterModuleResolver
 {
     internal const string Policy = "relative-v1";
     internal const string ResolverProvider = "penghou.hetu.tree-sitter.ecmascript-module-resolver";
-    internal const int ResolverRevision = 1;
+    internal const int ResolverRevision = 2;
 
     private static readonly string[] TypeScriptSuffixes = [".ts", ".tsx", ".d.ts", ".mts", ".cts"];
     private static readonly string[] JavaScriptSuffixes = [".js", ".jsx", ".mjs", ".cjs"];

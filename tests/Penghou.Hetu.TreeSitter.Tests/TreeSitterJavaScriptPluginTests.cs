@@ -251,7 +251,7 @@ public sealed class TreeSitterJavaScriptPluginTests
         var packageVersion = typeof(TreeSitterJavaScriptPlugin).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion.Split('+', 2)[0];
-        Assert.Equal($"{packageVersion}+v0.25.0.abi15.p7", plugin.Version);
+        Assert.Equal($"{packageVersion}+v0.25.0.abi15.p8", plugin.Version);
     }
 
     private static string InvokedName(Extraction extracted, CodeGraphEdge edge) =>

@@ -37,16 +37,17 @@ internal sealed class TreeSitterSyntaxNode
     internal int StartRow => _node.StartPosition.Row;
 
     /// <summary>
-    /// Gets the zero-based start column in source bytes, as reported by the
-    /// parser. Hetu locations add one; non-ASCII columns stay byte-oriented
-    /// rather than character-oriented.
+    /// Gets the zero-based start column in UTF-16 code units, as reported by
+    /// the parser. Hetu locations add one; the pinned binding parses the
+    /// decoded .NET string as UTF-16LE, so non-ASCII columns count UTF-16 code
+    /// units rather than UTF-8 bytes.
     /// </summary>
     internal int StartColumn => _node.StartPosition.Column;
 
     /// <summary>Gets the zero-based end row.</summary>
     internal int EndRow => _node.EndPosition.Row;
 
-    /// <summary>Gets the zero-based end column in source bytes.</summary>
+    /// <summary>Gets the zero-based end column in UTF-16 code units.</summary>
     internal int EndColumn => _node.EndPosition.Column;
 
     /// <summary>Gets the source slice covered by this node.</summary>

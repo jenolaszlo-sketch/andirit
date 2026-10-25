@@ -43,8 +43,11 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     ///    declarations with written declaration-keyword and export metadata.
     /// 7: ECMAScript module-reference shapes feed the plugin-local
     ///    relative-v1 resolver and its `resolves-to` resolution unit.
+    /// 8: EC-6B-R1 corrective pass: escaped specifiers are rejected without
+    ///    truncation and `type` binding names are no longer treated as an
+    ///    inline type-only modifier; emitted resolver facts changed (D-16).
     /// </summary>
-    internal const int ProfileRevision = 7;
+    internal const int ProfileRevision = 8;
 
     // Kinds both grammars can emit. `implements` exists only in TypeScript, so
     // JavaScript reports it as not-produced rather than claiming an empty set.
@@ -297,7 +300,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     {
         if (node.ChildByFieldName("source") is { } source)
         {
-            var wholeTypeOnly = HasPrefixTokens(node.Text, "import", "type");
+            var wholeTypeOnly = HasStatementTypeModifier(node);
             var typeOnly = wholeTypeOnly || AllSpecifiersAreTypeOnly(node, "import_specifier");
             _result.ModuleReferences.Add(new(
                 RawModuleSpecifier(source),
@@ -368,7 +371,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     {
         if (node.ChildByFieldName("source") is { } source)
         {
-            var wholeTypeOnly = HasPrefixTokens(node.Text, "export", "type");
+            var wholeTypeOnly = HasStatementTypeModifier(node);
             var moduleReference = wholeTypeOnly
                 ? "export-type-from"
                 : HasPrefixTokens(node.Text, "export", "*", "as")
@@ -411,25 +414,100 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         if (source.Type != "string")
             return null;
 
-        var fragment = source.NamedChildren.FirstOrDefault(child => child.Type == "string_fragment");
-        var raw = fragment?.Text;
-        if (raw is null)
-        {
-            var text = source.Text;
-            if (text.Length < 2 || text[0] is not ('\'' or '"') || text[^1] != text[0])
-                return null;
-            raw = text[1..^1];
-        }
+        // Escape sequences split a string literal into several fragments, so a
+        // fragment-only read would silently truncate the written specifier and
+        // bypass the policy's backslash rejection (EC6B-GLM-F02). relative-v1
+        // rejects escape sequences instead of decoding them.
+        if (source.NamedChildren.Any(child => child.Type == "escape_sequence"))
+            return null;
 
-        // The written content, including any escapes, is the policy input.
-        // Overlong text is intentionally discarded before it reaches facts.
+        var text = source.Text;
+        if (text.Length < 2 || text[0] is not ('\'' or '"') || text[^1] != text[0])
+            return null;
+        var raw = text[1..^1];
+
+        // The written, unescaped content is the policy input. Escape
+        // sequences were rejected above rather than decoded. Overlong text is
+        // intentionally discarded before it reaches facts.
         return raw.Length <= 256 ? raw : null;
     }
 
     private static bool AllSpecifiersAreTypeOnly(TreeSitterSyntaxNode node, string specifierType)
     {
         var specifiers = Descendants(node).Where(child => child.Type == specifierType).ToArray();
-        return specifiers.Length > 0 && specifiers.All(child => HasPrefixTokens(child.Text, "type"));
+        return specifiers.Length > 0 && specifiers.All(IsTypeOnlySpecifier);
+    }
+
+    /// <summary>
+    /// Detects an explicit statement-level <c>type</c> modifier from the
+    /// grammar structure. A <c>type</c> token that is a binding name (for
+    /// example <c>import type from './m'</c>) is part of the import clause and
+    /// never appears as a statement keyword (EC6B-GLM-F03).
+    /// </summary>
+    private static bool HasStatementTypeModifier(TreeSitterSyntaxNode node)
+    {
+        var children = node.Children;
+        for (var index = 0; index < children.Count; index++)
+        {
+            var child = children[index];
+            if (!child.IsNamed && child.Type == "type")
+                return true;
+
+            // The pinned grammar parses `export type * from` and
+            // `export type * as ns from` through error recovery: the keyword
+            // sits inside an error node directly before the star token or the
+            // namespace export clause.
+            if (child.IsError &&
+                child.Children.Count > 0 &&
+                !child.Children[0].IsNamed &&
+                child.Children[0].Type == "type" &&
+                index + 1 < children.Count &&
+                ((!children[index + 1].IsNamed && children[index + 1].Type == "*") ||
+                 (children[index + 1].IsNamed && children[index + 1].Type == "namespace_export")))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Detects an explicit inline <c>type</c> modifier on one import/export
+    /// specifier. <c>{ type }</c> and <c>{ type as x }</c> name the binding
+    /// <c>type</c>; only <c>{ type x }</c>, <c>{ type x as y }</c>, and the
+    /// all-<c>as</c> three-token form are type-only output (EC6B-GLM-F03).
+    /// </summary>
+    private static bool IsTypeOnlySpecifier(TreeSitterSyntaxNode specifier)
+    {
+        var children = specifier.Children;
+        for (var index = 0; index < children.Count; index++)
+        {
+            if (children[index].IsNamed || children[index].Type != "type")
+                continue;
+            if (index + 1 >= children.Count)
+                return false;
+
+            var next = children[index + 1];
+            if (!next.IsNamed)
+                return false;
+            if (next.Type == "string")
+                return true;
+            if (next.Type != "identifier")
+                return false;
+            if (next.Text != "as")
+                return true;
+
+            // `type as X` names the binding `type`; TypeScript's parser only
+            // treats the three-token `type as as as` form as a modifier.
+            return index + 3 < children.Count &&
+                !children[index + 2].IsNamed &&
+                children[index + 2].Type == "as" &&
+                children[index + 3].IsNamed &&
+                children[index + 3].Type == "identifier";
+        }
+
+        return false;
     }
 
     private static IEnumerable<TreeSitterSyntaxNode> Descendants(TreeSitterSyntaxNode node)

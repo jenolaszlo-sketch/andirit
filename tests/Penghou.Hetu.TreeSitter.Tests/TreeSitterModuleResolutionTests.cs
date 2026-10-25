@@ -49,7 +49,7 @@ public sealed class TreeSitterModuleResolutionTests
 
         var packageVersion = new TreeSitterTypeScriptPlugin().Version.Split('+', 2)[0];
         Assert.All(edges, edge => Assert.Equal(
-            $"{packageVersion}+resolver1.relative-v1",
+            $"{packageVersion}+resolver2.relative-v1",
             edge.Evidence.ProviderVersion));
 
         Assert.DoesNotContain(extracted.Edges, edge => edge.Kind.Value is "exports" or "binds");
@@ -349,6 +349,178 @@ public sealed class TreeSitterModuleResolutionTests
             item => item.RelationshipKind == CodeEdgeKinds.ResolvesTo.Value);
         Assert.Equal(3, coverage.Candidates);
         Assert.Equal(3, coverage.UnsupportedTargets);
+    }
+
+    // EC6B-GLM-F02: escaped specifiers are rejected, never truncated into a
+    // resolves-to edge.
+    [Fact]
+    public async Task ExtractAsync_EscapedSpecifiersAreUnsupportedAndNeverResolve()
+    {
+        const string importer = """
+            import './a\b';
+            import './a\\b';
+            import './caf\u00e9';
+            import './quote\'name';
+            import './tab\tname';
+            import './plain';
+            const required = require('./a\b');
+            """;
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/page.ts", importer),
+            ("src/a.ts", "export const a = 1;"),
+            ("src/caf.ts", "export const caf = 1;"),
+            ("src/plain.ts", "export const plain = 1;"));
+
+        var edges = extracted.Edges.Where(edge => edge.Kind == CodeEdgeKinds.ResolvesTo).ToArray();
+        var edge = Assert.Single(edges);
+        Assert.Equal("./plain", Text(edge, CodePropertyKeys.Specifier));
+        Assert.Equal(FileNodeId("typescript", "src/plain.ts"), edge.TargetId);
+
+        // Truncated prefixes (`./a`, `./caf`, ...) must never be targets.
+        Assert.DoesNotContain(edges, candidate => candidate.TargetId == FileNodeId("typescript", "src/a.ts"));
+        Assert.DoesNotContain(edges, candidate => candidate.TargetId == FileNodeId("typescript", "src/caf.ts"));
+
+        var coverage = Assert.Single(
+            extracted.Result.RelationshipCoverage,
+            item => item.RelationshipKind == CodeEdgeKinds.ResolvesTo.Value);
+        Assert.Equal(7, coverage.Candidates);
+        Assert.Equal(6, coverage.UnsupportedTargets);
+        Assert.Equal(1, coverage.EdgesEmitted);
+        Assert.Equal(0, coverage.UnresolvedTargets);
+    }
+
+    // EC6B-GLM-F03: a binding literally named `type` is not type-only syntax.
+    [Theory]
+    [InlineData("import { type } from './m';", "import")]
+    [InlineData("import { type as t } from './m';", "import")]
+    [InlineData("import type from './m';", "import")]
+    [InlineData("export { type as u } from './m';", "export-from")]
+    public async Task ExtractAsync_BindingNamedTypeIsNotTypeOnly(string source, string moduleReference)
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/page.ts", source),
+            ("src/m.ts", "export const type = 1;"));
+
+        var edge = Assert.Single(
+            extracted.Edges,
+            candidate => candidate.Kind == CodeEdgeKinds.ResolvesTo);
+        Assert.Equal(moduleReference, Text(edge, CodePropertyKeys.ModuleReference));
+        Assert.False(edge.Properties.ContainsKey(CodePropertyKeys.TypeOnly));
+    }
+
+    // EC6B-GLM-F03: genuine explicit type-only syntax is preserved.
+    [Theory]
+    [InlineData("import type { T } from './m';", "import-type")]
+    [InlineData("import { type T } from './m';", "import")]
+    [InlineData("import { type T as U } from './m';", "import")]
+    [InlineData("export type { T } from './m';", "export-type-from")]
+    [InlineData("export { type T } from './m';", "export-from")]
+    [InlineData("export { type T as U } from './m';", "export-from")]
+    [InlineData("export type * from './m';", "export-type-from")]
+    [InlineData("export type * as ns from './m';", "export-type-from")]
+    public async Task ExtractAsync_ExplicitTypeOnlySyntaxStaysTypeOnly(string source, string moduleReference)
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/page.ts", source),
+            ("src/m.ts", "export type T = string;"));
+
+        var edge = Assert.Single(
+            extracted.Edges,
+            candidate => candidate.Kind == CodeEdgeKinds.ResolvesTo);
+        Assert.Equal(moduleReference, Text(edge, CodePropertyKeys.ModuleReference));
+        Assert.True(edge.Properties.TryGetValue(CodePropertyKeys.TypeOnly, out var value) &&
+            value is CodeBooleanProperty { Value: true });
+    }
+
+    [Theory]
+    [InlineData("import { type T, V } from './m';", "import")]
+    [InlineData("export { type T, V } from './m';", "export-from")]
+    public async Task ExtractAsync_MixedTypeAndValueBindingsAreNotWhollyTypeOnly(
+        string source,
+        string moduleReference)
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/page.ts", source),
+            ("src/m.ts", "export type T = string;\nexport const V = 1;"));
+
+        var edge = Assert.Single(
+            extracted.Edges,
+            candidate => candidate.Kind == CodeEdgeKinds.ResolvesTo);
+        Assert.Equal(moduleReference, Text(edge, CodePropertyKeys.ModuleReference));
+        Assert.False(edge.Properties.ContainsKey(CodePropertyKeys.TypeOnly));
+    }
+
+    // EC6B-GLM-F03: JavaScript has no inline type modifier; `type` is an
+    // ordinary binding name there.
+    [Fact]
+    public async Task ExtractAsync_JavaScriptBindingNamedTypeIsNotTypeOnly()
+    {
+        const string source = "import { type } from './m';\nimport { type as t } from './m';\nexport { type as u } from './m';";
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterJavaScriptPlugin(),
+            ("src/page.js", source),
+            ("src/m.js", "export const type = 1;"));
+
+        var edges = extracted.Edges.Where(edge => edge.Kind == CodeEdgeKinds.ResolvesTo).ToArray();
+        Assert.Equal(3, edges.Length);
+        Assert.All(edges, edge =>
+        {
+            Assert.Contains(Text(edge, CodePropertyKeys.ModuleReference), new[] { "import", "export-from" });
+            Assert.False(edge.Properties.ContainsKey(CodePropertyKeys.TypeOnly));
+        });
+    }
+
+    // EC6B-GLM-F04: the literal require inside an unsupported `export =`
+    // form is a separate supported site; the outer form stays unsupported.
+    [Fact]
+    public async Task ExtractAsync_LiteralRequireNestedInExportEqualsIsCaptured()
+    {
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/legacy.ts", "export = require('./item');"),
+            ("src/item.ts", "export const item = true;"));
+
+        var edge = Assert.Single(
+            extracted.Edges,
+            candidate => candidate.Kind == CodeEdgeKinds.ResolvesTo);
+        Assert.Equal("require", Text(edge, CodePropertyKeys.ModuleReference));
+        Assert.Equal("./item", Text(edge, CodePropertyKeys.Specifier));
+        Assert.Equal(FileNodeId("typescript", "src/item.ts"), edge.TargetId);
+        Assert.DoesNotContain(extracted.Edges, candidate => candidate.Kind.Value is "exports" or "binds");
+
+        var coverage = Assert.Single(
+            extracted.Result.RelationshipCoverage,
+            item => item.RelationshipKind == CodeEdgeKinds.ResolvesTo.Value);
+        Assert.Equal(2, coverage.Candidates);
+        Assert.Equal(1, coverage.UnsupportedTargets);
+        Assert.Equal(1, coverage.EdgesEmitted);
+    }
+
+    // EC6B-GLM-F01: published columns are one-based UTF-16 code units.
+    [Fact]
+    public async Task ExtractAsync_ReportsUtf16CodeUnitColumns()
+    {
+        const string line = "const s = \"\u4E2D\u6587 caf\u00E9 \U0001F600\"; import './a';";
+        var extracted = await TreeSitterTestSupport.ExtractAsync(
+            new TreeSitterTypeScriptPlugin(),
+            ("src/use.ts", line),
+            ("src/a.ts", "export const a = 1;"));
+
+        var edge = Assert.Single(
+            extracted.Edges,
+            candidate => candidate.Kind == CodeEdgeKinds.ResolvesTo);
+        var start = line.IndexOf("import", StringComparison.Ordinal);
+        var utf8Start = Encoding.UTF8.GetByteCount(line[..start]);
+        var location = edge.Evidence.Location!;
+        Assert.Equal(1, location.StartLine);
+        Assert.Equal(start + 1, location.StartColumn);
+        Assert.NotEqual(utf8Start + 1, location.StartColumn);
+        Assert.Equal(start + "import './a';".Length + 1, location.EndColumn);
+        AssertIdentity(edge);
     }
 
     private static TreeSitterModuleFile File(string language, string path) =>
