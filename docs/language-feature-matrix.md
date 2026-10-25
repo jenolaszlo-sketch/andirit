@@ -17,10 +17,11 @@ Milestone status: EC-3D closed **VERIFIED WITH QUALIFICATIONS**, EC-4 closed
 **USEFUL WITH QUALIFICATIONS**, and EC-5 closed **VERIFIED WITH QUALIFICATIONS**
 after independent GLM qualification; the EC-5 closure corrections and accepted
 `field`-kind and ambient-`declare` limitations are recorded in
-`docs/evidence/ec5-closure.md`. EC-6 remains design pending; implementation is
-not authorized, and Astro (`.astro`) support remains separate future work. The
-affected cells below state the corrected coverage; the audit baseline still
-describes the original inspection revision.
+`docs/evidence/ec5-closure.md`. EC-6B implementation is complete and ready for
+independent review; it has not been independently qualified. Export and import
+binding work remains outside EC-6B, and Astro (`.astro`) support remains
+separate future work. The affected cells below state the corrected coverage;
+the audit baseline still describes the original inspection revision.
 
 The [language roadmap](language-support-roadmap.md) records priorities. This
 catalog contains **46 features** chosen for useful repository questions rather
@@ -114,8 +115,8 @@ The common conformance requirements below apply to every row.
 | `relationship.inherits` | Explicit base relationships for impact and implementations. | L: `inherits`; multi-base order and generic arguments not modeled. | S for written heritage, R for bound base identities; D for pattern-derived cases. Tree-sitter keeps written names in file-scoped declaration-less candidates because it does not resolve inheritance targets. | Class/interface extension, multiple bases, expression bases and missing targets. |
 | `relationship.implements` | Explicit interface adoption for implementation queries. | L: `implements`; no proof that all runtime obligations hold from syntax alone. | S written assertion or R authoritative binding. Tree-sitter keeps written names in declaration-less candidates; implicit satisfaction requires separate analysis. | Class/struct adoption, interface extension classified as inheritance. |
 | `relationship.trait-implementation` | Trait/type/implementation association for Rust navigation. | ?: assess `implements` plus implementation-block ownership. | S explicit block; R binding requires analysis context; bounds/blanket impls not guessed. | Inherent versus trait impls, associated members, conditional/blanket impls. |
-| `module.import` | Written dependency/import scope for repository navigation. | L: `imports`; C# `import-alias`, `import-static`, `import-global`, `import-scope`. | S source target or R bound namespace/type; import spelling does not bind exported symbols. | Named/default/type-only/side-effect and scoped imports, missing/external targets. |
-| `module.export` | Public exports and re-exports for module consumers. | X: export/re-export binding representation remains to design; EC-5 retains a direct written `export` modifier on supported variable declarations only. | S syntax observation; no export-binding relationship or resolved module surface. R only if target binding is established. | Local/default/star/renamed/re-export forms, cycles, unresolved sources, and distinction between a declaration modifier and an export binding. |
+| `module.import` | Written dependency/import scope for repository navigation. | L: `imports`; EC-6B adds file-to-file `resolves-to` for `relative-v1` targets in the owning plugin inventory. C# `import-alias`, `import-static`, `import-global`, `import-scope`. | `imports` remains Structural. `resolves-to` uses policy-scoped Resolved evidence and establishes only a target file; it does not bind imported symbols or claim compiler/bundler/runtime equivalence. | Relative extension and index matching, type-only forms, literal `require`, missing/external/unsupported targets, cross-plugin boundaries. |
+| `module.export` | Public exports and re-exports for module consumers. | X: export binding representation remains future work; EC-5 retains a direct written `export` modifier on supported variables. EC-6B resolves supported re-export source files only. | S syntax observation; a re-export `resolves-to` edge does not establish an export surface or binding. No `exports` or `binds` edge is emitted. | Local/default/star/renamed/re-export forms, cycles, unresolved sources, and distinction between a declaration modifier and an export binding. |
 | `relationship.depends-on` | Project/package dependencies for architecture and impact. | L: `depends-on`, `project`/`package`, `package-version`, `package-condition`. | S declared packages; current C# project links use R in its constructed context. No evaluated conditions or transitive closure. | Internal/missing/cyclic projects, conditional/versionless packages, caps. |
 | `relationship.calls` | Bound caller/callee for impact and test selection. | E: `calls`. | R only, relative to named semantic context; no name matching or complete runtime dispatch claim. | Overloads, constructors, generic/extension/interface dispatch, unresolved/ambiguous/external negatives. |
 | `relationship.invokes-name` | Unbound invocation spelling for structural comprehension. | E: `invokes-name` to declaration-less `callable`. | S only; a matching node name cannot become a resolved call. Tree-sitter attributes static-block calls to the class node and decorator calls to the decorated member node. | Simple/member/new forms; exclude JSX/control forms and unnameable dynamic targets. |
@@ -128,7 +129,7 @@ The common conformance requirements below apply to every row.
 | Stable identifier | Meaning and repository use | B: representation | Required evidence and known limits | Feature fixture expectations |
 | --- | --- | --- | --- | --- |
 | `javascript.prototype-inheritance` | Legacy prototype relationships for impact. | L: `inherits` between file-scoped declaration-less `heritage-target` type nodes. | D exact patterns, never R; Tree-sitter does not resolve target names, and runtime mutation is not analyzed. | `Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`; dynamic/shadowed negatives. |
-| `javascript.commonjs` | CommonJS dependency/public surface discovery. | L: literal `require` uses `imports`; export graph needs `module.export` design. | S written patterns; no runtime module evaluation or loader binding. | Literal/dynamic `require`, `exports`, `module.exports`, aliases and reassignment. |
+| `javascript.commonjs` | CommonJS dependency/public surface discovery. | L: literal `require` retains `imports`; EC-6B adds `resolves-to` for supported relative literal `require` calls. Export graph remains future work. | S written pattern; module edge targets a file only. No runtime module evaluation, loader binding, or CommonJS export modeling. | Relative literal `require`, dynamic/template forms, `exports`, `module.exports`, aliases and reassignment. |
 | `type.union` | Alternatives in types for API comprehension. | ?: type-expression summary or bounded relationships to design. | S syntax or R bound components; alias node alone is insufficient. | Named/inline unions, nesting, dynamic-language comparable forms assessed separately. |
 | `type.intersection` | Combined type constraints for API comprehension. | ?: bounded type-expression representation to design. | S syntax or R bound components; do not manufacture inheritance. | Intersection components and negative inheritance assertions. |
 | `type.mapped` | TypeScript computed type members for API discovery. | ?: retain bounded declaration-level description versus computed members. | S pattern; R expansion requires authoritative type analysis. | Key remapping/optional modifiers; no invented expanded fields. |
@@ -175,7 +176,7 @@ even if the enclosing construct's node or callback-body facts survive.
 | `relationship.inherits` | A:V/R | A:V/S | A:V/S,D | N:NA/- | CS-R, EC-H, EC-C, EC-3D |
 | `relationship.implements` | A:V/R | A:V/S | N:NA/- | A:NI/- | CS-R, EC-H; EL-D no defimpl mapping |
 | `relationship.trait-implementation` | N:NA/- | N:NA/- | N:NA/- | N:NA/- | Rust-specific feature scope |
-| `module.import` | A:V/R | A:V/S | A:V/S | A:V/S | CS-R imports; EC-I; EL-I |
+| `module.import` | A:V/R | A:V/S | A:V/S | A:V/S | CS-R imports; EC-I and EC-6B `resolves-to`; EL-I |
 | `module.export` | N:NA/- | A:P/S | A:P/S | A:NI/- | EC-I source observations; EC-5 direct variable modifier only, no binding; EL-D |
 | `relationship.depends-on` | A:V/S,R | A:NI/- | A:NI/- | A:NI/- | CS-P; EC-D/EL-D only imports |
 | `relationship.calls` | A:V/R | A:NI/- | A:NI/- | A:NI/- | CS-R; EC-I/EL-I negative assertions |
@@ -184,7 +185,7 @@ even if the enclosing construct's node or callback-body facts survive.
 | `type.reference` | A:P/R | A:NI/- | C:NI/- | A:NI/- | CS-R type uses via references; EC-D, EL-D |
 | `relationship.alias` | A:P/R | A:NI/- | A:NI/- | A:P/S | CS-R import properties; EC-I, EL-I |
 | `javascript.prototype-inheritance` | N:NA/- | A:P/D | A:V/D | N:NA/- | EC-H shared code, JS prototype assertions |
-| `javascript.commonjs` | N:NA/- | C:P/S | C:P/S | N:NA/- | EC-I literal require only |
+| `javascript.commonjs` | N:NA/- | C:P/S | C:P/S | N:NA/- | EC-I structural literal require; EC-6B relative literal require resolution only |
 | `type.union` | N:NA/- | A:NI/- | C:NI/- | A:NI/- | EC-D alias name only; EL-D specs skipped |
 | `type.intersection` | N:NA/- | A:NI/- | C:NI/- | N:NA/- | EC-D |
 | `type.mapped` | N:NA/- | A:NI/- | N:NA/- | N:NA/- | EC-D |
@@ -226,6 +227,7 @@ dispatch and emitted kinds, not the absence of a test name.
 | EC-C | Same profile: path-scoped class identity, EmitClassMember/HandleClassMethod/MethodShape, file-scoped StructuralTypeNode; policy in [ECMAScript symbol identity](ecmascript-symbol-identity.md) | [Class identity tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaClassIdentityTests.cs): `ExtractAsync_KeepsSameNameClassesAndMethodsDistinctAcrossTypeScriptModules`, `ExtractAsync_KeepsSameNameClassesAndMethodsDistinctAcrossJavaScriptModules`, `ExtractAsync_KeepsSameNameMembersOnUnrelatedClassesDistinct`, `ExtractAsync_KeepsStaticAndInstanceMethodsWithTheSameNameDistinct`, `ExtractAsync_KeepsMethodsAndAccessorsWithTheSameNameDistinct`, `ExtractAsync_KeepsJavaScriptStaticAccessorsAndInstanceMethodsDistinct`, `ExtractAsync_HandlesJavaScriptCombinedStaticGetToken`, `ExtractAsync_KeepsSameNameClassAndInterfaceDistinct`, `ExtractAsync_NestedClassDeclarationsRetainTheirOwnerAndIdentity`, `ExtractAsync_ConvergesDuplicateClassDeclarationsInOneFileWithSeparateDeclarations`, `ExtractAsync_KeepsClassIdentityStableAcrossUnrelatedEdits`, `ExtractAsync_HeritageTargetConvergesWithSameFileClassDeclaration`, `ExtractAsync_HeritagePlaceholdersStayFileScoped`, `ExtractAsync_ImplementsTargetStaysDeclarationLess`; [lifecycle tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaClassLifecycleTests.cs): `IndexAsync_KeepsSameNameClassesDistinctThroughQueries`. |
 | EC-F | Same profile: HandleClassField/FieldProperties (TypeScript `public_field_definition`, JavaScript `field_definition`) | [Class member tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaClassMemberTests.cs): `ExtractAsync_ModelsTypeScriptClassFieldsWithContainmentAndLocations`, `ExtractAsync_RecordsTypeScriptFieldModifiersAndAccess`, `ExtractAsync_ModelsJavaScriptClassFields`, `ExtractAsync_KeepsFieldAndMethodWithTheSameNameDistinct`, `ExtractAsync_AttributesInitializerInvocationsToTheField`, `ExtractAsync_SkipsComputedPrivateAndAccessorFields`, `ExtractAsync_PreservesValidClassFactsFromPartialFiles`, `ExtractAsync_RepeatsClassMemberFactsDeterministically`, `IndexAsync_AnswersExactClassMemberAndEnclosingSymbolQueries`; [lifecycle tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaClassLifecycleTests.cs): `IndexAsync_RemovesRenamedAndRemovedClassMembers`, `IndexAsync_RemovesFactsForRenamedClasses`, `IndexAsync_RemovesClassFactsWhenSourceFileIsDeleted`. |
 | EC-5 | Same profile: `HandleVariableDeclaration` for file-level `lexical_declaration`/`variable_declaration`; `field` identity is path-scoped and discriminator-specific. | [Variable tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaVariableTests.cs): `ExtractAsync_ModelsTypeScriptFileVariablesWithWrittenModifiersAndLocations`, `ExtractAsync_ModelsJavaScriptVariablesThroughMjsPipeline`, `ExtractAsync_KeepsVariableIdentitiesFileScopedKindScopedAndDeterministic`, `ExtractAsync_SkipsLocalDestructuredAndMalformedBindings`; [publication tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaVariableLifecycleTests.cs): `IndexAsync_PublishesAndReplacesVariableFactsAcrossIncrementalChanges`, `IndexAsync_IndexesMjsVariablesThroughTheJavaScriptPipeline`; revision invalidation is covered by `TreeSitterTypeScriptPluginTests.Plan_InvalidatesPreviousExtractionProfileRevisions`. |
+| EC-6B | [Plugin-local resolver](../src/Penghou.Hetu.TreeSitter/TreeSitterModuleResolution.cs), module-shape capture and publication in `EcmaScriptExtractionProfile`/`TreeSitterExtractionSession`; profile p6→p7. | [Policy and identity tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterModuleResolutionTests.cs): ordered suffix/classification, edge provenance and unit order, occurrence identity/LF-CRLF, cross-plugin boundary, partial coverage and unsupported forms. [Lifecycle/store tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterModuleResolutionLifecycleTests.cs): add/delete/empty replacement, occurrence removal, failure/cancellation retention on both stores, durable reopen and endpoint-order rejection. [Website p6→p7 comparison](evidence/ec6b-relative-module-resolution-handoff.md). |
 | EL-D | [ElixirExtractionProfile](../src/Penghou.Hetu.TreeSitter/ElixirExtractionProfile.cs): module/function target sets, Walk, TryEmitModule/Function | [Elixir tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterElixirPluginTests.cs): `ExtractAsync_ModelsModulesFunctionsAndContainment`; protocol/macro branches lack dedicated output assertions. |
 | EL-I | Same profile: ImportTargets, TryEmitImport/Invocation, attribute and control-form skipping | Same Elixir tests: `ExtractAsync_EmitsImportsAndStructuralInvocationsOnly`, `ExtractAsync_ScopesScriptInvocationsToTheirFile`, `ExtractAsync_ReportsCapabilitiesHonestly`. |
 
@@ -447,13 +449,15 @@ existing runtime states. Documentation labels do not add states to the enum:
 Counts distinguish candidates, emitted edges, unresolved, internal/cross-project,
 external, ambiguous and unsupported targets. C# reports run-wide and per-project
 unit entries for selected kinds. Tree-sitter reports a run-wide fixed list of
-contains/declares/imports/invokes-name/inherits/implements/calls/references; kinds
-outside each profile's produced set are `NotProduced` (including JS implements
-and Elixir inherits/implements). Missing kinds are not implied `Produced` or `NA`.
-Its counts reflect emitted observations, not all grammar sites; a parse-error
-flag makes produced kinds Partial across the session. Undecodable inputs warn
-and clear their units but do not themselves set that parse-error partial flag.
-Zero unresolved counts cannot prove complete extraction.
+contains/declares/imports/resolves-to/invokes-name/inherits/implements/calls/references;
+kinds outside each profile's produced set are `NotProduced` (including JS
+implements and Elixir inherits/implements). Missing kinds are not implied
+`Produced` or `NA`. Its counts reflect emitted observations, not all grammar
+sites; a parse-error flag makes produced kinds Partial across the session.
+Resolver coverage also becomes Partial when an owning-plugin source cannot be
+decoded. Undecodable inputs warn and clear their file units; they do not set
+the pre-existing parse-error partial flag for other relationship kinds. Zero
+unresolved counts cannot prove complete extraction.
 
 This inventory records feature semantics and fixtures. Actual published coverage
 and attributable graph facts govern consumer answers for a publication. Runtime

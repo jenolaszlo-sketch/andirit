@@ -313,10 +313,14 @@ and field initializer invocations attribute to the field. The common
 JavaScript prototype-inheritance idioms
 (`Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`) are
 recognized and emitted as `inherits` with `Derived` evidence — never
-structural or resolved. There are no `calls` or `references` edges and no
-semantic resolution of any kind. Malformed regions keep their valid facts and
-report `<language>.parse-error` with partial coverage instead of failing the
-run. Grammar identity, ABI, and capabilities are recorded on each plugin's
+structural or resolved. There are no `calls` or `references` edges. The EC-6B
+module pass adds `resolves-to` only for supported relative references within
+the owning plugin's indexed source inventory. It identifies a target file;
+it does not bind imported names to declarations or claim compiler, bundler,
+or runtime-equivalent behavior. See the [relative module resolution policy](docs/ecmascript-module-resolution.md).
+Malformed regions keep their valid facts and report
+`<language>.parse-error` with partial coverage instead of failing the run.
+Grammar identity, ABI, and capabilities are recorded on each plugin's
 `Grammar` descriptor, and the expected ABI is validated at load.
 
 ## Provider-neutral queries
