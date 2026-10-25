@@ -594,11 +594,14 @@ pass, and the EC6B-GLM-Q2 re-review returned **VERIFIED WITH
 QUALIFICATIONS** with no P0/P1/P2 findings. The owner closure record is
 `docs/decisions/ec6b-owner-acceptance.md`; closure evidence and
 dispositions are in `docs/evidence/ec6b-owner-acceptance/README.md`.
-EC-6C planning may be commissioned under a separate assignment; EC-6C
-implementation, integration, and release are not authorized by this
-closure. Export/import binding and Astro (`.astro`) support remain future
-work. Closure records, preserved review bindings, and accepted limitations
-are in `docs/evidence/ec5-closure.md`,
+EC-6C.1 is **OWNER ACCEPTED WITH QUALIFICATIONS** on its isolated branch, based
+on locally reported results; independent verification remains outstanding.
+EC-6C.2 is implemented and locally verified on
+`implementation/ec6c-2-structural-export-publication`; it is ready for
+independent qualification but is not integrated or released. Track B and
+EC-6D binding work remain unauthorized. Astro (`.astro`) support remains
+future work. Closure records, preserved review bindings, and accepted
+limitations are in `docs/evidence/ec5-closure.md`,
 `docs/decisions/ec6b-owner-acceptance.md`, and the
 [language roadmap](docs/language-support-roadmap.md#ecmascript-milestone-status-updated-2026-10-25).
 

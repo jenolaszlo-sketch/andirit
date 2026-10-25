@@ -34,12 +34,12 @@ plugin. Recognizing a file extension or obtaining a grammar is not support.
 
 Phase 0 must establish a usable foundation before another language is added.
 The initial design inventory and the ECMAScript increments EC-3D, EC-4, EC-5,
-and EC-6B are closed. EC-6C.1 has been implemented on an isolated branch under
-separate owner authorization and is awaiting independent review. That stage
-captures internal syntax observations only. Structural graph publication,
-declaration attribution, import/export binding, integration, and release remain
-separately gated. Remaining Phase 0 improvements and all expansion phases
-remain open.
+and EC-6B are closed. EC-6C.1 is owner accepted with qualifications on its
+isolated branch, based on locally reported results; independent verification
+remains outstanding. EC-6C.2 structural publication is implemented and locally
+verified on an isolated branch, pending independent qualification. Track B,
+EC-6D, integration, and release remain separately gated. Remaining Phase 0
+improvements and all expansion phases remain open.
 
 ### ECMAScript milestone status (updated 2026-10-25)
 
@@ -49,9 +49,10 @@ remain open.
 | EC-4 real-repository qualification | Closed: **USEFUL WITH QUALIFICATIONS** | Real-repository evaluation of `jenolaszlo-sketch/website@f9cca1773a32bb517e624cc380e1f6d14e0cc317` with source-grounded verification. The report is preserved on `review/ec4-real-repository-qualification` at `1fbc113`; its consumer lookup guidance is incorporated into `docs/consumer-guidance-qualified-name-lookup.md`. |
 | EC-5 file-level variable declarations | Closed: **VERIFIED WITH QUALIFICATIONS** | Independent GLM qualification reproduced 21/21 website declarations discovered, 11/11 directly exported, zero false positives or false negatives within the evaluated subset, 18/18 adversarial probes passed, an authentic p5→p6 migration, and byte-identical pre-existing invocation relationships; no material correctness defects were reported. The report is preserved on `review/ec5-glm-q1` at `1cad44ba11838bcefe54ed1f45e2f9b5bafcbba4`. Closure corrections were documentation-only and test-only; `docs/evidence/ec5-closure.md` records them and the accepted limitations. |
 | EC-6B relative module resolution | Closed: **ACCEPTED WITH QUALIFICATIONS** | Independent review EC6B-GLM-Q1 returned **REMEDIATION REQUIRED** (F01 UTF-16 coordinate wording, F02 escaped-specifier false edges, F03 contextual `type-only`, F04 legacy-form ambiguity). EC-6B-R1 corrected them (`ffdcdbd`, `b915aed`; evidence `f8fb9d1`) and the independent EC6B-GLM-Q2 re-review returned **VERIFIED WITH QUALIFICATIONS** with no P0/P1/P2 findings (`review/ec6b-glm-q2` at `b79bfce9820f08348335db7ca0b19f4c65e3a014`). Owner closure: `docs/decisions/ec6b-owner-acceptance.md`. Effective profile p8 / `resolver2.relative-v1`. Accepted limitations: escaped specifiers unsupported; pathological grammar forms conservative; per-plugin inventory; no export/binding resolution. |
-| EC-6C.1 structural export shape inventory | **Implemented on isolated branch; pending independent review** | Internal TypeScript/JavaScript syntax observations only: accepted direct declarations, local lists and aliases, defaults, explicit type-only grammar, exact source spans, and strict A29 public-name validation. No graph publication, profile bump, declaration attribution, resolver change, or binding. Handoff: `docs/evidence/ec6c-1-export-shape-inventory-handoff.md`. |
-| EC-6C.2+ export surface | Future gated stages; not started | Structural export graph publication, durability qualification, attribution, import/export binding, integration, and release remain behind separate design, owner, and review gates. |
-| EC-6D-EC-6F | Future gates; not started | Import binding beyond any separately authorized EC-6C stage and real-repository qualification remain behind their separate design/review gates. No implementation is authorized by this milestone. |
+| EC-6C.1 structural export shape inventory | **Owner accepted with qualifications; independent verification pending** | Internal TypeScript/JavaScript observations only. Acceptance relies on locally reported results and does not establish independent qualification. Handoff: `docs/evidence/ec6c-1-export-shape-inventory-handoff.md`; owner record: `docs/decisions/ec6c1-owner-acceptance.md`. |
+| EC-6C.2 structural export publication | **Implemented and locally verified on isolated branch; ready for independent qualification** | Adds module/name `export` entries and per-occurrence Structural `exports` edges; p9 both plugins; preserves all existing facts in authentic durable p8→p9 migration. No declaration attribution, re-export publication, completeness, integration, or release. Handoff: `docs/evidence/ec6c-2-structural-export-publication-handoff.md`. |
+| Track B / EC-6D binding | **Not started; not authorized** | Declaration attribution, import/export binding, re-export closure and related identity work remain outside EC-6C.2 and require separate accepted authorization. |
+| EC-6F and Astro (`.astro`) support | Future gates | Broader real-repository qualification and `.astro` support remain behind their separate design/review gates. |
 | Astro (`.astro`) support and other language expansion | Separate future work | Not part of EC-5; `.astro` files remain unindexed, and the expansion phases below remain the only approved sequence. |
 
 Closure is scoped to the recorded snapshots, supported extensions, pinned

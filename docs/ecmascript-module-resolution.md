@@ -6,18 +6,47 @@ kind is `resolves-to`, directed from the importing file to the verified target
 file. It supplements the existing structural `imports` observation.
 
 The relationship establishes a module-file target only. It does not identify
-which exported declaration an imported name binds to. Hetu emits no `exports`
-or `binds` relationships as part of this capability.
+which exported declaration an imported name binds to. The separate EC-6C.2
+capability below publishes directly observed export names without binding them
+to declarations or imports.
 
-The EC-6C.1 implementation adds a separate, internal-only inventory of
-supported export syntax while the existing Tree-sitter profile walks the same
-parsed source. Those observations retain written public/local names, syntax
-form, explicit type-only grammar, syntax-only projection, and source spans for
-later stages. They are not graph nodes or edges, do not attribute a written
-local name to a declaration, and do not change this module-resolution policy,
-the p8 profile, or `resolver2.relative-v1`. See the
-[EC-6C.1 handoff](evidence/ec6c-1-export-shape-inventory-handoff.md) for its
-accepted and excluded syntax and verification evidence.
+EC-6C.1's supported syntax observations feed the p9 export graph. The
+[EC-6C.1 handoff](evidence/ec6c-1-export-shape-inventory-handoff.md) records
+the locally reported observation and syntax-boundary evidence; the
+[EC-6C.2 handoff](evidence/ec6c-2-structural-export-publication-handoff.md)
+records graph publication and store qualification. Neither stage changes the
+module-resolution policy or `resolver2.relative-v1`.
+
+## Structural export-name publication (EC-6C.2)
+
+For the accepted TypeScript/JavaScript syntax allowlist, Hetu emits one
+module-scoped `export` node per distinct exported name and one file-to-entry
+Structural `exports` edge per written occurrence. Entries have `Name` and
+`QualifiedName` equal to the observed public name and no `SymbolId`. Duplicate
+occurrences share the entry but retain independent edge identities.
+
+Each edge records `export-kind` (`named` or `default`), `export-via`
+(`direct`, `local`, or `expression`), `local-name` when one was written,
+`type-only` only when explicitly true, and `namespace-projection` (`type`,
+`value`, `both`, or `unknown`). `Evidence.Location` is the exact exported-name
+token span, using one-based UTF-16 columns with an end-exclusive boundary.
+The enclosing construct span stays in the internal observation and is not a
+graph property.
+
+This inventory is positive-only. An absent entry does not mean the module has
+no exports or that its complete runtime surface was understood. Named, star,
+and namespace re-exports; CommonJS assignments; `export =`; declaration
+attribution; and import-to-export binding remain excluded. `exports` is not
+added to relationship coverage or `UnresolvedRelationships`, and traversal or
+impact presets do not include it by default. Use the existing exact
+`QualifiedName` lookup or a bounded neighborhood filtered to `exports`, then
+filter `Kind=export` before declaration navigation.
+
+Both ECMAScript plugins use profile p9 for unit invalidation. Existing graph
+facts retain their p8 evidence provider version because their emitted fields
+are unchanged; the new export edges use
+`{packageVersion}+exports1.local-v1`. The resolver continues to use
+`{packageVersion}+resolver2.relative-v1`.
 
 ## Evidence and properties
 
@@ -165,8 +194,8 @@ var neighborhood = await queries.GetNeighborhoodAsync(
 Impact presets are unchanged and do not automatically traverse `resolves-to`.
 Structural `imports` edges remain available with `Structural` evidence.
 
-Export binding, re-export closure, `.js` to `.ts` substitution,
-`tsconfig` aliases, Node package resolution, dynamic module expressions,
-cross-plugin resolution, and compiler/runtime equivalence remain outside this
-policy. Export and binding work is reserved for EC-6C/EC-6D; broader
-real-repository qualification remains EC-6F.
+Export declaration attribution, import-to-export binding, re-export closure,
+`.js` to `.ts` substitution, `tsconfig` aliases, Node package resolution,
+dynamic module expressions, cross-plugin resolution, and compiler/runtime
+equivalence remain outside this policy. Broader export-surface qualification
+and `.astro` parsing remain future work.

@@ -83,11 +83,25 @@ recorded example), and the two nodes stay separate under one displayed name.
    claim. This remains a future implementation contract.
 
 
-## EC6C-A1: Structural export observations
+## EC-6C.2: Structural export entries
 
-Owner-accepted direction as of 25 October 2026; implementation is not yet authorized.
+Implemented on the isolated EC-6C.2 branch and pending independent
+qualification. EC-6C.1 was owner accepted with qualifications based on local
+reports; independent verification remains outstanding.
 
-Track A introduces export-entry nodes with Kind=export, Name and QualifiedName equal to the written exported name, and no SymbolId. An exports edge connects the owning file node to one entry for each supported written occurrence. The edge is Structural, has the exact public-name token in Evidence.Location, and carries syntax-only form, local-name, type-only and namespace-projection properties.
+For the accepted syntax allowlist, each module has one export-entry node per
+distinct exported name. The node has `Kind=export`, `Name` and `QualifiedName`
+equal to the written exported name, and no `SymbolId`. The entry ID is
+module/name scoped: `{language}:export:` plus lowercase SHA-256 of UTF-8
+`modulePath + LF + exportedName`.
+
+An `exports` edge points from the owning file node to the entry for each
+supported written occurrence. Duplicate names share the entry and retain
+separate deterministic edge IDs. Each edge is Structural, has the exact
+exported-name token in `Evidence.Location`, and carries `export-kind`,
+`export-via`, `local-name` when written, `type-only` only when explicitly true,
+and `namespace-projection`. The enclosing construct span remains internal and
+is not a graph property. No edge connects the entry to a declaration.
 
 ### Exact-name lookup
 
@@ -101,10 +115,10 @@ Find the module’s file node, then call GetNeighborhoodAsync with the exports e
 
 ### Meaning and exclusions
 
-This is a positive-only inventory. Nonempty means the returned supported occurrences were observed. Empty means no supported occurrence was recorded. It does not mean that the module has no exports, that all export syntax is understood, or that any declaration or runtime binding is valid. Track A excludes named/star/namespace re-export entries, CommonJS and export-equals facts, and all declaration attribution.
+This is a positive-only inventory. Nonempty means the returned supported occurrences were observed. Empty means no supported occurrence was recorded. It does not mean that the module has no exports, that all export syntax is understood, or that any declaration or runtime binding is valid. EC-6C.2 excludes named/star/namespace re-export entries, CommonJS and export-equals facts, and all declaration attribution.
 
 A local export list after an imported local binding is still a Structural local-list observation. It has no remote source name, remote target or declaration binding. This is distinct from a re-export statement with a from clause, which is excluded.
 
 FindReferencesAsync continues to traverse references only. Impact and dependency presets do not include exports. Generic unfiltered neighborhoods can expose the new edge only as a graph fact; consumers should request the exports kind explicitly.
 
-The earlier practical rule about export modifiers described the graph before EC6C-A1. A modifier is still direct syntax and not a binding; in A1, an allowlisted occurrence also produces the Structural file-to-entry exports relationship described above.
+The earlier practical rule about export modifiers described the graph before EC-6C.2. A modifier is still direct syntax and not a binding; supported occurrences also produce the Structural file-to-entry `exports` relationship described above.

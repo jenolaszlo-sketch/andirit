@@ -6,6 +6,26 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+ECMAScript structural export-name publication (EC-6C.2; isolated implementation):
+
+- TypeScript and JavaScript advance to profile p9 and publish one module-scoped
+  `export` entry per supported exported name plus one Structural `exports` edge
+  per written occurrence. Entries have deterministic module/name IDs, no
+  `SymbolId`, and no declaration relationship. Edges retain exact public-name
+  token locations, syntax form, written local name, explicit type-only state,
+  and syntax-grounded namespace projection.
+- The existing graph facts remain byte-identical through p8→p9: unchanged
+  evidence keeps its p8 provider version while p9 source-unit metadata triggers
+  re-extraction. Export edges use `exports1.local-v1`; module resolution stays
+  `resolver2.relative-v1`. Both graph stores, source replacement/deletion,
+  failure/cancellation retention, exact-name queries, durable reopen, Unicode
+  boundaries, and an authentic p8 LatticeDb migration were locally verified.
+- EC-6C.1 was owner accepted with qualifications on the implementation branch;
+  the acceptance relies on locally reported results. Independent qualification
+  remains required before integration or release. Declaration attribution,
+  re-export publication, export completeness, Track B, and EC-6D remain outside
+  this milestone.
+
 Phase 0: conservative ECMAScript relative module resolution (EC-6B):
 
 - TypeScript and JavaScript Tree-sitter plugins now emit policy-scoped
