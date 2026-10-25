@@ -36,7 +36,7 @@ public sealed class TreeSitterEcmaExportShapeTests
             Assert.Equal(EcmaScriptExportForm.DirectDeclaration, observation.ExportForm);
             Assert.False(observation.TypeOnly);
             Assert.Equal(observation.ExportedName, observation.LocalName);
-            Assert.Equal(new CodeLocation("src/direct.ts", observation.NameLocation.StartLine, 1, observation.NameLocation.StartLine, source.Split('\n')[observation.NameLocation.StartLine - 1].Length + 1), observation.ConstructLocation);
+            Assert.Equal(new CodeLocation("src/direct.ts", observation.NameLocation.StartLine, 1, observation.NameLocation.StartLine, source.Split('\n')[observation.NameLocation.StartLine - 1].TrimEnd('\r').Length + 1), observation.ConstructLocation);
         });
         Assert.Equal(EcmaScriptNamespaceProjection.Value, result[0].Projection);
         Assert.Equal(EcmaScriptNamespaceProjection.Value, result[4].Projection);
@@ -345,7 +345,7 @@ public sealed class TreeSitterEcmaExportShapeTests
     }
 
     [Fact]
-    public async Task PublishedGraphMatchesThePreChangeP8Fingerprint()
+    public async Task PublishedGraphAddsExportsWithoutChangingPreChangeP8Facts()
     {
         const string typescriptMain = """
             import { type Remote } from "./dep";
@@ -366,26 +366,60 @@ public sealed class TreeSitterEcmaExportShapeTests
 
         var typescript = await TreeSitterTestSupport.ExtractAsync(
             new TreeSitterTypeScriptPlugin(),
-            ("src/main.ts", typescriptMain),
-            ("src/dep.ts", typescriptDep));
+            ("src/main.ts", NormalizeLineEndings(typescriptMain)),
+            ("src/dep.ts", NormalizeLineEndings(typescriptDep)));
         var javascript = await TreeSitterTestSupport.ExtractAsync(
             new TreeSitterJavaScriptPlugin(),
-            ("src/main.js", javascriptMain),
-            ("src/dep.js", javascriptDep));
+            ("src/main.js", NormalizeLineEndings(javascriptMain)),
+            ("src/dep.js", NormalizeLineEndings(javascriptDep)));
 
-        Assert.Equal(8, EcmaScriptExtractionProfile.ProfileRevision);
-        Assert.EndsWith(".p8", new TreeSitterTypeScriptPlugin().Version);
-        Assert.EndsWith(".p8", new TreeSitterJavaScriptPlugin().Version);
-        Assert.Equal((7, 4, 12), (typescript.Nodes.Count, typescript.Declarations.Count, typescript.Edges.Count));
-        Assert.Equal((7, 4, 12), (javascript.Nodes.Count, javascript.Declarations.Count, javascript.Edges.Count));
-        Assert.Equal("84c13587db0ef90751bbb6f9c561b1294b541dc7fade44d15bdf54a6fb5722bf", GraphFingerprint(typescript));
-        Assert.Equal("3b2d3761334e5f4b87423cf0f84fa8824c2618450f4e5b98386ee861fdf32cdd", GraphFingerprint(javascript));
+        Assert.Equal(9, EcmaScriptExtractionProfile.ProfileRevision);
+        Assert.EndsWith(".p9", new TreeSitterTypeScriptPlugin().Version);
+        Assert.EndsWith(".p9", new TreeSitterJavaScriptPlugin().Version);
+        Assert.Equal((5, 12, 4, 12, 17), (
+            typescript.Nodes.Count(node => node.Kind == CodeNodeKinds.Export),
+            typescript.Nodes.Count,
+            typescript.Declarations.Count,
+            typescript.Edges.Count(edge => edge.Kind != CodeEdgeKinds.Exports),
+            typescript.Edges.Count));
+        Assert.Equal((5, 12, 4, 12, 17), (
+            javascript.Nodes.Count(node => node.Kind == CodeNodeKinds.Export),
+            javascript.Nodes.Count,
+            javascript.Declarations.Count,
+            javascript.Edges.Count(edge => edge.Kind != CodeEdgeKinds.Exports),
+            javascript.Edges.Count));
+        Assert.Equal("84c13587db0ef90751bbb6f9c561b1294b541dc7fade44d15bdf54a6fb5722bf", PreExportGraphFingerprint(typescript));
+        Assert.Equal("3b2d3761334e5f4b87423cf0f84fa8824c2618450f4e5b98386ee861fdf32cdd", PreExportGraphFingerprint(javascript));
         Assert.Contains(typescript.Edges, edge => edge.Kind == CodeEdgeKinds.ResolvesTo);
         Assert.Contains(javascript.Edges, edge => edge.Kind == CodeEdgeKinds.ResolvesTo);
-        Assert.DoesNotContain(typescript.Nodes, node => node.Kind.Value == "export");
-        Assert.DoesNotContain(javascript.Nodes, node => node.Kind.Value == "export");
-        Assert.DoesNotContain(typescript.Edges, edge => edge.Kind.Value is "exports" or "exported-as");
-        Assert.DoesNotContain(javascript.Edges, edge => edge.Kind.Value is "exports" or "exported-as");
+        Assert.Equal(5, typescript.Nodes.Count(node => node.Kind == CodeNodeKinds.Export));
+        Assert.Equal(5, javascript.Nodes.Count(node => node.Kind == CodeNodeKinds.Export));
+        Assert.DoesNotContain(typescript.Nodes.Where(node => node.Kind == CodeNodeKinds.Export), node => node.SymbolId is not null);
+        Assert.DoesNotContain(javascript.Nodes.Where(node => node.Kind == CodeNodeKinds.Export), node => node.SymbolId is not null);
+        Assert.DoesNotContain(typescript.Edges, edge => edge.Kind.Value is "exported-as" or "binds");
+        Assert.DoesNotContain(javascript.Edges, edge => edge.Kind.Value is "exported-as" or "binds");
+        Assert.DoesNotContain(typescript.Result.RelationshipCoverage, item => item.RelationshipKind == CodeEdgeKinds.Exports.Value);
+        Assert.DoesNotContain(javascript.Result.RelationshipCoverage, item => item.RelationshipKind == CodeEdgeKinds.Exports.Value);
+        Assert.All(typescript.Edges.Where(edge => edge.Kind == CodeEdgeKinds.Exports), edge =>
+        {
+            Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality);
+            Assert.Equal(EcmaScriptExportGraphPublisher.Provider, edge.Evidence.Provider);
+            Assert.Contains("+exports1.local-v1", edge.Evidence.ProviderVersion!, StringComparison.Ordinal);
+        });
+        Assert.All(javascript.Edges.Where(edge => edge.Kind == CodeEdgeKinds.Exports), edge =>
+        {
+            Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality);
+            Assert.Equal(EcmaScriptExportGraphPublisher.Provider, edge.Evidence.Provider);
+            Assert.Contains("+exports1.local-v1", edge.Evidence.ProviderVersion!, StringComparison.Ordinal);
+        });
+        Assert.All(
+            typescript.Edges.Where(edge => edge.Kind != CodeEdgeKinds.Exports &&
+                edge.Evidence.Provider == new TreeSitterTypeScriptPlugin().Id.Value),
+            edge => Assert.EndsWith(".p8", edge.Evidence.ProviderVersion, StringComparison.Ordinal));
+        Assert.All(
+            javascript.Edges.Where(edge => edge.Kind != CodeEdgeKinds.Exports &&
+                edge.Evidence.Provider == new TreeSitterJavaScriptPlugin().Id.Value),
+            edge => Assert.EndsWith(".p8", edge.Evidence.ProviderVersion, StringComparison.Ordinal));
         Assert.Contains(typescript.Edges, edge => edge.Kind == CodeEdgeKinds.ResolvesTo && edge.Evidence.ProviderVersion!.Contains("resolver2.relative-v1", StringComparison.Ordinal));
         Assert.Contains(javascript.Edges, edge => edge.Kind == CodeEdgeKinds.ResolvesTo && edge.Evidence.ProviderVersion!.Contains("resolver2.relative-v1", StringComparison.Ordinal));
     }
@@ -397,14 +431,18 @@ public sealed class TreeSitterEcmaExportShapeTests
         out bool hasParseError) =>
         TreeSitterTestSupport.ExtractSyntax(language, path, source, out hasParseError).ExportObservations;
 
-    private static string GraphFingerprint(Extraction extraction)
+    private static string PreExportGraphFingerprint(Extraction extraction)
     {
         var json = JsonSerializer.Serialize(new
         {
-            extraction.Nodes,
+            Nodes = extraction.Nodes.Where(node => node.Kind != CodeNodeKinds.Export).ToArray(),
             extraction.Declarations,
-            extraction.Edges
+            Edges = extraction.Edges.Where(edge => edge.Kind != CodeEdgeKinds.Exports).ToArray()
         });
         return Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(json)));
     }
+
+    private static string NormalizeLineEndings(string source) =>
+        source.Replace("\r\n", "\n", StringComparison.Ordinal);
+
 }
