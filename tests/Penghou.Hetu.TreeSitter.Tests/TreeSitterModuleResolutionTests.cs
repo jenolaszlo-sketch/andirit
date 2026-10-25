@@ -52,7 +52,7 @@ public sealed class TreeSitterModuleResolutionTests
             $"{packageVersion}+resolver2.relative-v1",
             edge.Evidence.ProviderVersion));
 
-        Assert.DoesNotContain(extracted.Edges, edge => edge.Kind.Value is "exports" or "binds");
+        Assert.DoesNotContain(extracted.Edges, edge => edge.Kind.Value == "binds");
         var structuralImports = extracted.Edges.Where(edge => edge.Kind == CodeEdgeKinds.Imports).ToArray();
         Assert.Equal(7, structuralImports.Length);
         Assert.All(structuralImports, edge => Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality));
@@ -525,7 +525,10 @@ public sealed class TreeSitterModuleResolutionTests
         Assert.Equal("require", Text(edge, CodePropertyKeys.ModuleReference));
         Assert.Equal("./item", Text(edge, CodePropertyKeys.Specifier));
         Assert.Equal(FileNodeId("typescript", "src/item.ts"), edge.TargetId);
-        Assert.DoesNotContain(extracted.Edges, candidate => candidate.Kind.Value is "exports" or "binds");
+        Assert.DoesNotContain(extracted.Edges, candidate =>
+            candidate.Kind == CodeEdgeKinds.Exports &&
+            candidate.SourceId == FileNodeId("typescript", "src/legacy.ts"));
+        Assert.DoesNotContain(extracted.Edges, candidate => candidate.Kind.Value == "binds");
 
         var coverage = Assert.Single(
             extracted.Result.RelationshipCoverage,

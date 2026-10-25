@@ -211,8 +211,10 @@ public sealed class TreeSitterTypeScriptPluginTests
         Assert.DoesNotContain(extracted.Edges, edge => edge.Kind == CodeEdgeKinds.References);
         Assert.All(extracted.Edges, edge =>
             Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality));
-        Assert.All(extracted.Edges, edge =>
-            Assert.Equal("penghou.hetu.tree-sitter.typescript", edge.Evidence.Provider));
+        Assert.All(
+            extracted.Edges.Where(edge => edge.Kind != CodeEdgeKinds.Exports &&
+                edge.Kind != CodeEdgeKinds.ResolvesTo),
+            edge => Assert.Equal("penghou.hetu.tree-sitter.typescript", edge.Evidence.Provider));
     }
 
     [Fact]
@@ -600,7 +602,7 @@ public sealed class TreeSitterTypeScriptPluginTests
         var packageVersion = typeof(TreeSitterTypeScriptPlugin).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion.Split('+', 2)[0];
-        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p8", plugin.Version);
+        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p9", plugin.Version);
     }
 
     [Fact]
@@ -631,7 +633,7 @@ public sealed class TreeSitterTypeScriptPluginTests
             Assert.Equal(CodeIndexRunStatus.Completed, result.Diagnostics.Status);
             var queries = new CodeGraphQueryService(store);
             var widgetId = (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Widget"))
-                .Candidates.Single().Id;
+                .Candidates.Single(node => node.SymbolId is not null).Id;
 
             // Structural containment reaches the members; resolved callers stay
             // empty because structural evidence never poses as resolved.
@@ -675,7 +677,7 @@ public sealed class TreeSitterTypeScriptPluginTests
             Assert.Equal(CodeIndexRunStatus.Completed, first.Diagnostics.Status);
             var queries = new CodeGraphQueryService(store);
             var shapeId = (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape"))
-                .Candidates.Single().Id;
+                .Candidates.Single(node => node.SymbolId is not null).Id;
             Assert.Single(
                 (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape.perimeter")).Candidates);
             Assert.Single(
@@ -736,7 +738,8 @@ public sealed class TreeSitterTypeScriptPluginTests
 
             var queries = new CodeGraphQueryService(store);
             var shape = Assert.Single(
-                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape")).Candidates);
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape")).Candidates,
+                node => node.SymbolId is not null);
             var area = Assert.Single(
                 (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Shape.area")).Candidates);
             Assert.Equal(CodeNodeKinds.Interface, shape.Kind);
@@ -792,7 +795,7 @@ public sealed class TreeSitterTypeScriptPluginTests
             var initial = await planner.CreatePlanAsync(source);
             var item = Assert.Single(initial.Items);
             Assert.Equal(CodeIndexPlanStatus.New, item.Status);
-            Assert.EndsWith(".p8", item.Manifest.PluginVersion, StringComparison.Ordinal);
+            Assert.EndsWith(".p9", item.Manifest.PluginVersion, StringComparison.Ordinal);
 
             // A previous publication from an older extraction-profile revision
             // must re-extract even though plugin identity and content are

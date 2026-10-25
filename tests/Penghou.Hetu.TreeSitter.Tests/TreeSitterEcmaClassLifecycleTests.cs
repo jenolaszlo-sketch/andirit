@@ -162,7 +162,8 @@ public sealed class TreeSitterEcmaClassLifecycleTests
             // Stale identities and their containment relationships are gone
             // from the current neighborhood.
             var service = Assert.Single(
-                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Service")).Candidates);
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Service")).Candidates,
+                node => node.SymbolId is not null);
             var neighborhood = await queries.GetNeighborhoodAsync(
                 repositoryId,
                 service.Id,
@@ -200,7 +201,8 @@ public sealed class TreeSitterEcmaClassLifecycleTests
             var first = await indexing.IndexAsync(descriptor, new CodeIndexRunId("run:first"));
             Assert.Equal(CodeIndexRunStatus.Completed, first.Diagnostics.Status);
             var oldWidget = Assert.Single(
-                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "OldWidget")).Candidates);
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "OldWidget")).Candidates,
+                node => node.SymbolId is not null);
 
             await File.WriteAllTextAsync(path, """
                 export class NewWidget {
@@ -218,7 +220,8 @@ public sealed class TreeSitterEcmaClassLifecycleTests
                 (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "OldWidget.spin")).Candidates);
             Assert.Empty(await queries.FindDeclarationsAsync(repositoryId, oldWidget.SymbolId!));
             Assert.Single(
-                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "NewWidget")).Candidates);
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "NewWidget")).Candidates,
+                node => node.SymbolId is not null);
 
             var declarations = await queries.GetDeclarationsInFileAsync(repositoryId, "src/widget.ts");
             Assert.Equal(2, declarations.Count);
@@ -252,7 +255,8 @@ public sealed class TreeSitterEcmaClassLifecycleTests
             var first = await indexing.IndexAsync(descriptor, new CodeIndexRunId("run:first"));
             Assert.Equal(CodeIndexRunStatus.Completed, first.Diagnostics.Status);
             Assert.Single(
-                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Solo")).Candidates);
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Solo")).Candidates,
+                node => node.SymbolId is not null);
 
             File.Delete(path);
             var second = await indexing.IndexAsync(descriptor, new CodeIndexRunId("run:second"));
@@ -299,10 +303,13 @@ public sealed class TreeSitterEcmaClassLifecycleTests
             var result = await indexing.IndexAsync(descriptor, new CodeIndexRunId("run:query"));
             Assert.Equal(CodeIndexRunStatus.Completed, result.Diagnostics.Status);
 
-            // Both classes are indexed under one display name; exact lookup
-            // reports both candidates instead of silently selecting one.
-            var services = (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Service")).Candidates;
-            Assert.Equal(2, services.Count);
+            // Exact lookup returns both declaration nodes and their separate
+            // module export entries under the same display name.
+            var serviceCandidates =
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Service")).Candidates;
+            var services = serviceCandidates.Where(node => node.SymbolId is not null).ToArray();
+            Assert.Equal(2, serviceCandidates.Count(node => node.Kind == CodeNodeKinds.Export));
+            Assert.Equal(2, services.Length);
             Assert.Equal(2, services.Select(node => node.Id).Distinct().Count());
 
             var processes = (await queries.FindSymbolsByQualifiedNameAsync(

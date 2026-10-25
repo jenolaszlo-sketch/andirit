@@ -345,7 +345,8 @@ public sealed class TreeSitterEcmaClassMemberTests
 
             var queries = new CodeGraphQueryService(store);
             var settings = Assert.Single(
-                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Settings")).Candidates);
+                (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Settings")).Candidates,
+                node => node.SymbolId is not null);
             var counter = Assert.Single(
                 (await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "Settings.counter")).Candidates);
             Assert.Equal(CodeNodeKinds.Type, settings.Kind);

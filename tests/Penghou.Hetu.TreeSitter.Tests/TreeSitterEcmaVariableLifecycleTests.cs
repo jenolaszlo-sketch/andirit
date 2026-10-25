@@ -61,8 +61,8 @@ public sealed class TreeSitterEcmaVariableLifecycleTests
             Assert.Empty((await queries.FindSymbolsByQualifiedNameAsync(repositoryId, "second")).Candidates);
             Assert.Single(await queries.FindDeclarationsAsync(repositoryId, originalFirst.SymbolId!));
 
-            // Written export changes node metadata while preserving the
-            // declaration identity; it does not create an export edge.
+            // EC-5 written-export metadata preserves declaration identity;
+            // EC-6C.2 also publishes a separate module export entry and edge.
             await File.WriteAllTextAsync(path, "export const projectCatalog = [];\nexport const first = 1;\nlet currentProject = null;\n");
             var exported = await indexing.IndexAsync(descriptor, new CodeIndexRunId("run:ec5-export-add"));
             Assert.Equal(CodeIndexRunStatus.Completed, exported.Diagnostics.Status);
@@ -136,7 +136,7 @@ public sealed class TreeSitterEcmaVariableLifecycleTests
     }
 
     private static CodeGraphNode Variable(CodeSymbolLookupResult query) =>
-        Assert.Single(query.Candidates);
+        Assert.Single(query.Candidates, node => node.Kind == CodeNodeKinds.Field);
 
     private static string? Modifiers(CodeGraphNode node) =>
         node.Properties.TryGetValue(CodePropertyKeys.Modifiers, out var value)

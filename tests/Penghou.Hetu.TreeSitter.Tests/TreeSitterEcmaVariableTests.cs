@@ -202,8 +202,8 @@ public sealed class TreeSitterEcmaVariableTests
 
         var variables = extracted.Nodes.Where(node => node.Kind == CodeNodeKinds.Field).ToArray();
         Assert.Equal(["stable"], variables.Select(node => node.Name));
-        Assert.DoesNotContain(extracted.Nodes, node =>
-            node.Name is "name" or "age" or "first" or "second" or "local" or "blockLocal" or "nested" or "item" or "broken");
+        Assert.DoesNotContain(extracted.Nodes, node => node.SymbolId is not null &&
+            (node.Name is "name" or "age" or "first" or "second" or "local" or "blockLocal" or "nested" or "item" or "broken"));
         Assert.DoesNotContain(extracted.Edges, edge => edge.Kind is { } kind &&
             (kind == CodeEdgeKinds.Calls || kind == CodeEdgeKinds.References));
         Assert.Contains("typescript.parse-error", extracted.Result.WarningCodes);
@@ -235,7 +235,7 @@ public sealed class TreeSitterEcmaVariableTests
     }
 
     private static CodeGraphNode Variable(IReadOnlyList<CodeGraphNode> variables, string name) =>
-        Assert.Single(variables, node => node.Name == name);
+        Assert.Single(variables, node => node.Kind == CodeNodeKinds.Field && node.Name == name);
 
     private static string? Modifiers(CodeGraphNode node) =>
         node.Properties.TryGetValue(CodePropertyKeys.Modifiers, out var value)
