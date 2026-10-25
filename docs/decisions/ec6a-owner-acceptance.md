@@ -192,6 +192,13 @@ convention, coverage unit semantics, failure-class mapping) implements the
 accepted decisions and the F02/F04/F05/F09 mandates using verified existing
 runtime behavior.
 
+**Identifier reconciliation.** The review brief's §15 labels for D-07
+("resolution-unit ownership") and D-14 ("publication assumptions") do not
+match the actual decision register (D-12/D-13 own ownership/invalidation;
+D-07 is binding rules; D-14 is coverage counting), as recorded in the GLM
+reconciliation report. This record and the register assess the actual
+register entries and cover the brief's intent under both IDs.
+
 ## 7. Deferred decisions and their milestones
 
 Preserved from the independent review; none is resolved by this task. The

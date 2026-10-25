@@ -90,6 +90,13 @@ ones.
 | F10 all-files-deleted | Deferred fixture to EC-6E | architecture §9.1.3 |
 | F12 export/binding evidence gates | Preserved: classification settled at EC-6C/D under preconditions | architecture §8; D-03 |
 
+**Identifier note (from the GLM reconciliation report).** The review brief's
+§15 labels for D-07 ("resolution-unit ownership") and D-14 ("publication
+assumptions") do not match this register, where D-12/D-13 own resolution-unit
+ownership/invalidation, D-07 owns import binding rules, and D-14 owns
+coverage counting. The acceptance record and this register assess the actual
+register entries and cover the brief's intent under both IDs.
+
 ### Deferred decisions with future gates
 
 | Item | Original source | Reason deferred | Required milestone | Blocking condition | Evidence for acceptance |
