@@ -1,5 +1,41 @@
 # EC6C-D0: Export representation implementation roadmap
 
+## Current EC6C-A1 roadmap: Structural Export Surface
+
+**Status:** Replaces the D0 five-stage order for Track A. The original roadmap below remains as historical D0 planning; old stage numbers are mapped explicitly and must not be reused with a new meaning without this crosswalk. EC6C-A1 itself is documentation-only and authorizes no implementation.
+
+### Track A stages
+
+| Current stage | Scope and exit criteria | D0 roadmap crosswalk |
+| --- | --- | --- |
+| EC-6C.1 — Export shape inventory | Implement only the accepted allowlist in the architecture addendum. Capture canonical public names, local names when written, exact name token spans, export form, explicit type-only state and syntax-only namespace projection. Reject error/missing subtrees and unsupported forms. No declaration lookup, no graph publication requirement in this stage, no export coverage system. Exit with the A01–A29 input/shape fixtures represented in extraction tests or a separately reviewed inventory artifact. | Reuses D0 EC-6C.1, narrowed to positive syntax capture. |
+| EC-6C.2 — Structural export publication | Emit per-module/name export nodes and per-written-occurrence exports edges in each file unit. Apply the exact identity, provider/evidence and collision rules in the EC6C-A1 owner record. p9 in both plugins; no export-space aggregate; no exported-as; no resolver changes. Exit with extraction, query, replacement, both-store, failure/cancellation and deterministic identity tests. | Reuses D0 EC-6C.2 but removes attribution, export completeness counters and all re-export entries. |
+| EC-6C.3 — Track A qualification | Execute the complete matrix, exact-name compatibility, p8-to-p9 durable migration, both stores, durable reopen, source replacement/deletion, failure/cancellation, LF/CRLF and Unicode. Perform pinned website smoke qualification with independently prepared expected names for the nine indexed files; record only the allowlisted positive observations and do not claim complete exports. Preserve commands/results and an independent bounded review. | Takes the relevant D0 EC-6C.5 qualification work. D0 EC-6C.5's migration and qualification intent remains; its declaration-attribution and complete-surface requirements are removed from Track A. |
+
+### Track B separation
+
+D0 EC-6C.3 (local declaration attribution) and EC-6C.4 (name-converged attribution) are not Track A implementation stages. Move them to a separate, not-yet-numbered Track B design/remediation workstream. It must first specify physical occurrence identity, conservative lexical scope, merged declarations, namespace matching and evidence claims. No Track B implementation begins under this roadmap.
+
+EC-6D remains later design work for import/export binding, remote names, star closure, namespace re-exports, conflicts, cycles and cross-file ownership/dependency tracking.
+
+### Qualification assertions
+
+- No production identity or evidence claim changes other than additive export facts.
+- Existing file/declaration IDs, structural edges and unchanged resolves-to facts remain byte-identical across authentic p8-to-p9 migration.
+- JavaScript and TypeScript profile-bearing plugin versions both advance to p9; resolver remains resolver2.relative-v1.
+- Exact QualifiedName lookup retains all prior candidates and adds a declaration-less Kind=export candidate when the export spelling matches. Existing declaration navigation remains SymbolId-based.
+- A completed empty file unit clears old export facts; no exported facts or separate completeness marker appear for unsupported syntax.
+- A collision or cancellation before unit completion cannot publish a partial replacement.
+- Bounded traversals report Truncated and consumers must not treat truncated observations as all observations.
+
+### Owner gate
+
+The name-length unit in the identity contract remains **PROPOSED — OWNER DECISION REQUIRED**. Resolve it before EC-6C.1 fixes the validation boundary. This is the sole open Track A contract choice recorded by EC6C-A1. Implementation authorization remains separate and is not granted by this roadmap.
+
+---
+
+> Historical EC6C-D0 content follows. Preserve it for rationale and traceability; the EC6C-A1 contract above controls wherever the text conflicts.
+
 **Status:** proposed decomposition for EC-6C, derived from
 [ec6c-export-representation-architecture.md](ec6c-export-representation-architecture.md).
 No implementation is authorized by this document. The EC-6C owner gate and an
