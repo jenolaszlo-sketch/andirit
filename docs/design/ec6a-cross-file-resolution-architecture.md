@@ -242,7 +242,7 @@ implements the same internal seam; a future core phase (alternative B) can
 lift the same resolver core without changing graph identities. See D-01 in
 the [decision register](ec6a-decision-register.md).
 
-## 5. Architecture overview (proposed)
+## 5. Architecture overview (owner-accepted for EC-6B; not implemented)
 
 ```text
 CodeIndexingService
@@ -253,8 +253,8 @@ CodeIndexingService
   TreeSitterExtractionSession (per plugin, e.g. typescript)
     1. per-file loop (existing, unchanged output):
          parse → facts → file unit (nodes/declarations/edges) → staged
-         + CAPTURE module shape per file (PROPOSED, in-memory only)
-    2. resolution pass (PROPOSED, after the loop):
+          + CAPTURE module shape per file (EC-6B, in-memory only)
+    2. resolution pass (EC-6B, after the loop):
          inventory  = decodable files {path → fileNodeId, hash, shapes}
          symbolsOf  = per-file symbol-bearing nodes from step 1
          resolver.Resolve(inventory, symbolsOf) → resolver edges + counts
@@ -272,7 +272,7 @@ is the owner-accepted `resolves-to` kind and its five property keys; the
 further kinds of §7 remain proposals. No new node kinds, no new declarations,
 no identity changes.
 
-### 5.1 Module shape capture (PROPOSED, in-memory)
+### 5.1 Module shape capture (EC-6B scope, in-memory)
 
 The per-file profile already visits every import/export syntax node. It will
 additionally capture, for the session (never as graph facts):
@@ -293,7 +293,7 @@ binding avoid display-name matching entirely. Alternative (re-parsing in the
 resolver) is rejected: double cost, duplicated grammar knowledge (D-alt in
 register).
 
-## 6. Module resolution policy (PROPOSED)
+## 6. Module resolution policy (EC-6B: `relative-v1` accepted; later levels proposed)
 
 ### 6.1 Module identity
 
