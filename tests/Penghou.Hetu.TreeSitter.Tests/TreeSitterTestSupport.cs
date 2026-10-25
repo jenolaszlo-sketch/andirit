@@ -65,6 +65,34 @@ internal static class TreeSitterTestSupport
             sink.Batches.ToArray());
     }
 
+    internal static TreeSitterExtractionResult ExtractSyntax(
+        string language,
+        string path,
+        string content,
+        out bool hasParseError)
+    {
+        var (grammar, pluginId, pluginVersion) = language switch
+        {
+            "typescript" => (
+                path.EndsWith(".tsx", StringComparison.OrdinalIgnoreCase)
+                    ? TreeSitterGrammarRegistry.Tsx
+                    : TreeSitterGrammarRegistry.TypeScript,
+                TreeSitterTypeScriptPlugin.PluginId,
+                TreeSitterTypeScriptPlugin.PluginVersion),
+            "javascript" => (
+                TreeSitterGrammarRegistry.JavaScript,
+                TreeSitterJavaScriptPlugin.PluginId,
+                TreeSitterJavaScriptPlugin.PluginVersion),
+            _ => throw new ArgumentOutOfRangeException(nameof(language), language, "Expected TypeScript or JavaScript.")
+        };
+
+        using var parser = TreeSitterSessionParser.Create(grammar);
+        using var document = parser.Parse(content);
+        hasParseError = document.Root.HasError;
+        var profile = new EcmaScriptExtractionProfile(path, language, pluginId, pluginVersion);
+        return profile.Extract(document.Root, new CodeNodeId($"{language}:file:shape-test"), path);
+    }
+
     internal static string Hash(string content) =>
         Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(content)));
 }

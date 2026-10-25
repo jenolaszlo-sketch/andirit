@@ -98,6 +98,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         string path)
     {
         WalkChildren(root, new Scope(null, fileNodeId, fileNodeId), isFileLevel: true);
+        _result.ExportObservations.Sort(EcmaScriptExportObservation.SourceOrderComparer);
         return _result;
     }
 
@@ -112,6 +113,8 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
         switch (node.Type)
         {
             case "export_statement":
+                if (isFileLevel && scope.Owner == ScopeOwner.File)
+                    EcmaScriptExportShapeCollector.Capture(node, _path, _language, _result.ExportObservations);
                 CaptureExportModuleReference(node);
                 HandleExport(node, scope, isFileLevel);
                 return;
@@ -444,7 +447,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     /// example <c>import type from './m'</c>) is part of the import clause and
     /// never appears as a statement keyword (EC6B-GLM-F03).
     /// </summary>
-    private static bool HasStatementTypeModifier(TreeSitterSyntaxNode node)
+    internal static bool HasStatementTypeModifier(TreeSitterSyntaxNode node)
     {
         var children = node.Children;
         for (var index = 0; index < children.Count; index++)
@@ -478,7 +481,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     /// <c>type</c>; only <c>{ type x }</c>, <c>{ type x as y }</c>, and the
     /// all-<c>as</c> three-token form are type-only output (EC6B-GLM-F03).
     /// </summary>
-    private static bool IsTypeOnlySpecifier(TreeSitterSyntaxNode specifier)
+    internal static bool IsTypeOnlySpecifier(TreeSitterSyntaxNode specifier)
     {
         var children = specifier.Children;
         for (var index = 0; index < children.Count; index++)

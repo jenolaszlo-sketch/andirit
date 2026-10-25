@@ -9,6 +9,16 @@ The relationship establishes a module-file target only. It does not identify
 which exported declaration an imported name binds to. Hetu emits no `exports`
 or `binds` relationships as part of this capability.
 
+The EC-6C.1 implementation adds a separate, internal-only inventory of
+supported export syntax while the existing Tree-sitter profile walks the same
+parsed source. Those observations retain written public/local names, syntax
+form, explicit type-only grammar, syntax-only projection, and source spans for
+later stages. They are not graph nodes or edges, do not attribute a written
+local name to a declaration, and do not change this module-resolution policy,
+the p8 profile, or `resolver2.relative-v1`. See the
+[EC-6C.1 handoff](evidence/ec6c-1-export-shape-inventory-handoff.md) for its
+accepted and excluded syntax and verification evidence.
+
 ## Evidence and properties
 
 Every `resolves-to` edge has `Resolved` evidence with this bounded meaning:
