@@ -183,6 +183,25 @@ Environment: Windows 11 x64, .NET SDK 10.0.401, runtime 10.0.12.
   p8-to-p9 migration, graph-store lifecycle, query, or real-repository
   qualification is part of this stage. Those are later gates.
 
+### EC-6C.2 integration prerequisites
+
+- Consume the immutable observations from the existing extraction result and
+  do not reparse source or infer a local-name binding.
+- Apply the A1/A2 accepted export-entry and occurrence identity, collision,
+  evidence, property, and per-file ownership contracts in EC-6C.2; keep this
+  inventory's occurrence multiplicity and exact spans available to that stage.
+- Add export graph facts only in the authorized publication stage. Advance both
+  ECMAScript plugin profile versions to p9 when those facts are emitted; keep
+  `resolver2.relative-v1` unchanged.
+- Prove existing p8 node, declaration, structural-edge, and resolution-edge
+  identities survive the p8-to-p9 transition. Cover deterministic identity,
+  duplicate names, collision failure, empty replacement, source deletion,
+  cancellation/failure atomicity, query compatibility, and both graph stores
+  under their specified EC-6C.2/6C.3 gates.
+- Keep declaration attribution, import binding, re-export closure, coverage
+  completeness, and real-repository qualification outside EC-6C.2 unless a
+  later accepted owner decision explicitly adds them.
+
 ### Independent review focus
 
 Review the allowlist against the accepted EC6C-A1/A2 contract; challenge the
