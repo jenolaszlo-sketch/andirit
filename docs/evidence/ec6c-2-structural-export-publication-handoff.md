@@ -246,9 +246,11 @@ Penghou.Hetu.CSharp.Tests: 46 passed, 0 failed, 0 skipped
 Total: 388 passed, 0 failed, 0 skipped
 ```
 
-The final Tree-sitter-only run also passed 156/156 with no skips. Formatting
-verification used `dotnet format Penghou.Hetu.slnx --verify-no-changes
---no-restore`; `git diff --check` passed.
+A Tree-sitter-only run passed 156/156 with no skips after the main
+compatibility fixes. The committed full solution run, after the final explicit
+query-candidate assertion was added, also passed all 156 Tree-sitter tests.
+Formatting verification used `dotnet format Penghou.Hetu.slnx
+--verify-no-changes --no-restore`; `git diff --check` passed.
 
 Failed attempts are recorded for context. The first solution-wide run after
 adding graph entries had 18 Tree-sitter failures (138 passed, 18 failed); the
