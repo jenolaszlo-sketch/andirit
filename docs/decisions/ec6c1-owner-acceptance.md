@@ -1,8 +1,8 @@
 # EC-6C.1 Owner Acceptance and EC-6C.2 Authorization
 
-**Project:** Penghou.Hetu (future Andirit)  
-**Milestone:** EC-6C.1 owner acceptance  
-**Date:** 2026-10-25  
+**Project:** Penghou.Hetu (future Andirit)
+**Milestone:** EC-6C.1 owner acceptance
+**Date:** 2026-10-25
 **Disposition:** **EC-6C.1 OWNER ACCEPTED WITH QUALIFICATIONS — EC-6C.2 IMPLEMENTATION AUTHORIZED**
 
 ## 1. Decision
