@@ -6,6 +6,29 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+Phase 0: conservative ECMAScript relative module resolution (EC-6B):
+
+- TypeScript and JavaScript Tree-sitter plugins now emit policy-scoped
+  `resolves-to` edges from an importing file to an existing target file in
+  that same plugin's indexed source inventory. The `relative-v1` policy uses
+  exact matches, the accepted ordered language suffixes, and `index` files;
+  it does not inspect package metadata, configuration, the filesystem, or the
+  network. Literal `require` and supported import/re-export module references
+  are covered; unsupported and missing targets remain edge-free and are
+  reflected in relationship coverage.
+- The resolver records the written specifier, module-reference form, policy,
+  matching rule, and explicit type-only flag, with policy-scoped `Resolved`
+  evidence. Edges keep occurrence-based deterministic identities and existing
+  file endpoints. The stable `{language}:modules` unit is rebuilt after
+  per-file units, including an empty replacement; atomic publication retains
+  the prior graph on failure or cancellation. Impact presets and structural
+  `imports` facts are unchanged. No export or import-symbol binding is claimed.
+- The shared ECMAScript profile advances from p6 to p7. The implementation
+  policy and consumer limits are documented in
+  [`ecmascript-module-resolution.md`](docs/ecmascript-module-resolution.md);
+  EC-6B implementation and verification evidence are in
+  [`ec6b-relative-module-resolution-handoff.md`](docs/evidence/ec6b-relative-module-resolution-handoff.md).
+
 Phase 0: ECMAScript file-level variable declarations (EC-5):
 
 - TypeScript and JavaScript now emit named top-level `const`, `let`, and `var`

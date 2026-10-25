@@ -587,11 +587,15 @@ EC-4 closed **USEFUL WITH QUALIFICATIONS** (real-repository qualification with
 source-grounded verification), and EC-5 closed **VERIFIED WITH QUALIFICATIONS**
 (file-level variable declarations independently qualified by GLM; 21/21 website
 declarations, 11/11 directly exported, 18/18 adversarial probes, authentic
-p5→p6 migration, unchanged pre-existing invocation facts). EC-6 is **design
-pending, implementation not authorized**, and Astro (`.astro`) support remains
-separate future work. Closure records, preserved review bindings, and accepted
-limitations are in `docs/evidence/ec5-closure.md` and the
-[language roadmap](docs/language-support-roadmap.md#ecmascript-milestone-closure-2026-10-23).
+p5→p6 migration, unchanged pre-existing invocation facts). EC-6B relative
+module resolution implementation is complete and **ready for independent
+review**; it has not been independently qualified. The authentic website
+p6→p7 migration and full solution suite are recorded in
+`docs/evidence/ec6b-relative-module-resolution-handoff.md`. Export/import
+binding and Astro (`.astro`) support remain future work. Closure records,
+preserved review bindings, and accepted limitations are in
+`docs/evidence/ec5-closure.md` and the
+[language roadmap](docs/language-support-roadmap.md#ecmascript-milestone-status-updated-2026-10-25).
 
 Objective: establish a maintainable, evidence-based feature inventory before
 adding the next language. The approved strategy is in the

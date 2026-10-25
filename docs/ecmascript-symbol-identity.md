@@ -1,10 +1,10 @@
 # ECMAScript symbol identity for TypeScript and JavaScript
 
-Status: design note recorded **2026-10-22**, extended by EC-3 class identity
-and class-member extraction and EC-3D heritage target identity. It documents
-the audited identity model, the interface amendment, the class/member and
-heritage identity policies, and the resulting limitations. It adds no graph
-vocabulary and does not change C# semantics.
+Status: implementation identity note recorded **2026-10-22**, extended by
+EC-3 class identity and class-member extraction, EC-3D heritage target
+identity, EC-5 file-level variables, and EC-6B module-edge identity. It
+documents the audited symbol model and the separate resolver-edge identity;
+EC-6B adds no new symbol identity and changes no C# semantics.
 
 ## Audited model
 
@@ -196,6 +196,38 @@ a function declaration.
 Profile revision 6 changes the TypeScript and JavaScript plugin versions so
 previous `.p5` source units re-extract. Ordinary source-unit replacement
 removes renamed, removed, and deleted variable facts without a graph migration.
+
+## EC-6B: module relationship identity
+
+The EC-6B `resolves-to` relationship uses existing file-node identities for
+both endpoints and does not change any symbol identity. Its separate edge id is:
+
+```text
+{language}:{sha256(kind \n source \n target \n discriminator \n span)}
+```
+
+`discriminator` is `resolves-to:{module-reference}:{raw-specifier-text}`.
+The span is the written import/export-from statement or literal `require`
+call, with one-based lines, one-based byte columns, and an exclusive end. Edge
+properties do not participate in identity. Therefore two same-target import
+occurrences remain separate; changing the specifier or moving an occurrence
+changes its id. LF and CRLF checkouts preserve ids for the same logical source.
+An identity collision fails the resolution pass rather than dropping an edge.
+
+`Resolved` means exactly:
+
+> The target was verified under the declared resolution policy and the indexed source inventory of this publication. This does not establish equivalence with TypeScript compiler, bundler, or runtime resolution.
+
+The resolver provider is
+`penghou.hetu.tree-sitter.ecmascript-module-resolver`; its initial provider
+version is `{packageVersion}+resolver1.relative-v1`. The full matching,
+classification, provenance, and publication contract is documented in
+[`ecmascript-module-resolution.md`](ecmascript-module-resolution.md).
+
+EC-6B advances the shared profile revision from 6 to 7, so `.p6` source units
+re-extract and both plugins rebuild their stable module unit. Existing file,
+symbol, and structural edge identities stay the same; no persistent identity
+migration is introduced.
 
 ## Heritage target identities
 
