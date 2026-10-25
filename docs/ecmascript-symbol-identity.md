@@ -208,23 +208,29 @@ both endpoints and does not change any symbol identity. Its separate edge id is:
 
 `discriminator` is `resolves-to:{module-reference}:{raw-specifier-text}`.
 The span is the written import/export-from statement or literal `require`
-call, with one-based lines, one-based byte columns, and an exclusive end. Edge
-properties do not participate in identity. Therefore two same-target import
-occurrences remain separate; changing the specifier or moving an occurrence
-changes its id. LF and CRLF checkouts preserve ids for the same logical source.
-An identity collision fails the resolution pass rather than dropping an edge.
+call, with one-based lines, one-based UTF-16 code-unit columns, and an
+exclusive end. The pinned parser binding parses the decoded .NET string as
+UTF-16LE, so columns are UTF-16 code units rather than UTF-8 bytes; EC-6B-R1
+corrected the earlier "byte columns" wording without changing emitted
+coordinates. Edge properties do not participate in identity. Therefore two
+same-target import occurrences remain separate; changing the specifier or
+moving an occurrence changes its id. LF and CRLF checkouts preserve ids for
+the same logical source. An identity collision fails the resolution pass
+rather than dropping an edge.
 
 `Resolved` means exactly:
 
 > The target was verified under the declared resolution policy and the indexed source inventory of this publication. This does not establish equivalence with TypeScript compiler, bundler, or runtime resolution.
 
 The resolver provider is
-`penghou.hetu.tree-sitter.ecmascript-module-resolver`; its initial provider
-version is `{packageVersion}+resolver1.relative-v1`. The full matching,
-classification, provenance, and publication contract is documented in
+`penghou.hetu.tree-sitter.ecmascript-module-resolver`; its provider
+version is `{packageVersion}+resolver2.relative-v1` after the EC-6B-R1
+corrective pass. The full matching, classification, provenance, and
+publication contract is documented in
 [`ecmascript-module-resolution.md`](ecmascript-module-resolution.md).
 
-EC-6B advances the shared profile revision from 6 to 7, so `.p6` source units
+EC-6B advanced the shared profile revision from 6 to 7; EC-6B-R1 advanced it
+to 8 because emitted resolver facts changed, so `.p6`/`.p7` source units
 re-extract and both plugins rebuild their stable module unit. Existing file,
 symbol, and structural edge identities stay the same; no persistent identity
 migration is introduced.

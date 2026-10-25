@@ -48,8 +48,9 @@ evidence for the verified store behaviors cited below.
 
 **Source inspection performed during this reconciliation** (facts re-verified
 against the baseline tree before documenting them): the edge-identity formula
-(`EcmaScriptExtractionProfile.cs:1095-1096`), one-based byte-column locations
-(`TreeSitterSyntax.cs:39-50`, `CodeLocation.cs:3-35`), staged-vs-prospective
+(`EcmaScriptExtractionProfile.cs:1095-1096`), one-based UTF-16 code-unit
+columns (`TreeSitterSyntax.cs:39-50`, `CodeLocation.cs:3-35`; EC-6B-R1
+corrected the earlier "byte-column" wording), staged-vs-prospective
 validation and endpoint rejection (`InMemoryCodeGraphStore.cs:287-299, 358-390,
 661-671, 913-929, 985-1011`), atomic completion and supersession
 (`InMemoryCodeGraphStore.cs:150-215, 752-765`), the lifecycle order
@@ -139,8 +140,9 @@ files, multiple physical candidates, and symlinked entries.
 `{language}:{sha256(kind \n source \n target \n discriminator \n span)}` with
 discriminator `resolves-to:{module-reference}:{raw-specifier-text}` and the
 written statement span (import/export-from statement node; `require` call
-expression node). Locations are one-based lines and one-based byte columns,
-end-exclusive. Each written module-reference site yields at most one edge;
+expression node). Locations are one-based lines and one-based UTF-16
+code-unit columns, end-exclusive (EC-6B-R1 corrected the earlier "byte
+columns" wording). Each written module-reference site yields at most one edge;
 occurrences are distinguished by span; identical specifiers at distinct
 locations, different specifiers to one target, and shared targets across
 files are distinct edges. Identity is occurrence-anchored: location-shifting

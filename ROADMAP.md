@@ -588,9 +588,12 @@ source-grounded verification), and EC-5 closed **VERIFIED WITH QUALIFICATIONS**
 (file-level variable declarations independently qualified by GLM; 21/21 website
 declarations, 11/11 directly exported, 18/18 adversarial probes, authentic
 p5→p6 migration, unchanged pre-existing invocation facts). EC-6B relative
-module resolution implementation is complete and **ready for independent
-review**; it has not been independently qualified. The authentic website
-p6→p7 migration and full solution suite are recorded in
+module resolution was independently reviewed (EC6B-GLM-Q1: **REMEDIATION
+REQUIRED**) and the EC-6B-R1 corrective pass is complete; it is **ready for
+independent re-review** and has not been independently re-qualified. The
+remediation evidence is in
+`docs/evidence/ec6b-r1-relative-module-resolution-remediation/README.md`; the
+original implementation handoff remains in
 `docs/evidence/ec6b-relative-module-resolution-handoff.md`. Export/import
 binding and Astro (`.astro`) support remain future work. Closure records,
 preserved review bindings, and accepted limitations are in

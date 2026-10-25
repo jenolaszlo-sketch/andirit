@@ -17,8 +17,9 @@ Every `resolves-to` edge has `Resolved` evidence with this bounded meaning:
 
 The provider is `penghou.hetu.tree-sitter.ecmascript-module-resolver`. Its
 provider version follows
-`{packageVersion}+resolver{ResolverRevision}.{policy}`; the initial value uses
-`resolver1.relative-v1`. Edge properties are:
+`{packageVersion}+resolver{ResolverRevision}.{policy}`; the current value uses
+`resolver2.relative-v1` (resolver revision 2, the EC-6B-R1 corrective pass).
+Edge properties are:
 
 | Property | Meaning |
 | --- | --- |
@@ -29,10 +30,13 @@ provider version follows
 | `type-only` | Present as `true` only for explicitly type-only forms; otherwise absent |
 
 The evidence location is the written import or re-export statement, or the
-literal `require` call expression. Lines and byte columns are one-based, and
-the end location is exclusive. The edge's unit origin identifies the
-repository, plugin, effective version, run, and stable `{language}:modules`
-unit.
+literal `require` call expression. Lines are one-based; columns are one-based
+**UTF-16 code-unit** offsets from the start of the line, and the end location
+is exclusive. The pinned parser binding decodes source text to a .NET string
+and parses it as UTF-16LE, so columns count UTF-16 code units, not UTF-8
+bytes; for non-ASCII source a UTF-8 byte offset differs from the published
+column. The edge's unit origin identifies the repository, plugin, effective
+version, run, and stable `{language}:modules` unit.
 
 ## `relative-v1` policy
 
@@ -74,7 +78,20 @@ The resolver declines or classifies these cases without inventing an edge:
   `import()`, template or nonliteral `require`, TypeScript `import = require`,
   `export =`, and literal text longer than 256 characters are
   `unsupported-targets`.
+- A module specifier written with a JavaScript escape sequence (for example
+  `'./a\b'` or `'./caf\u00e9'`) is rejected conservatively as
+  `unsupported-targets`: escapes are never decoded and the partial text before
+  an escape is never used, so no `resolves-to` edge can be produced from it.
+  The site retains no specifier text.
 - A literal longer than 256 characters is not retained as a graph property.
+
+A literal `require('...')` call is a captured require site wherever it is
+written, including inside an outer form that is itself unsupported. For
+example, `export = require('./m')` contributes one unsupported `export =`
+site and one `resolves-to` edge attributed to the `require` call span; no
+export or binding fact is produced. `import x = require('./m')` and
+`import type X = require('./m')` are rejected as whole statements and do not
+capture a nested require.
 
 Directory resolution uses only the ordered `index` filenames; it never reads
 package metadata. Ambiguity counters remain zero because the policy defines
@@ -107,10 +124,12 @@ replacement. A failed or cancelled run retains the previous successful
 publication.
 
 Any ECMAScript profile or resolver-fact change must bump the effective plugin
-version. EC-6B moves the shared profile from p6 to p7, so existing p6 source
-units are re-extracted. Resolver revisions and policy-bearing provider
-versions must change in lockstep with resolver-fact changes; the effective
-plugin version remains the planner's single invalidation axis.
+version. EC-6B moved the shared profile from p6 to p7; the EC-6B-R1 corrective
+pass changed emitted resolver facts, so the effective profile continues to p8
+and the resolver revision becomes 2. Existing p6/p7 source units therefore
+re-extract. Resolver revisions and policy-bearing provider versions must
+change in lockstep with resolver-fact changes; the effective plugin version
+remains the planner's single invalidation axis.
 
 ## Coverage and queries
 
