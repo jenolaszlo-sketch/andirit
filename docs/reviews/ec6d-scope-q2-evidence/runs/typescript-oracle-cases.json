@@ -1,0 +1,14 @@
+{
+  "ns-shadow": {
+    "types.ts": "export interface Renderable {\n  a: string;\n}\n",
+    "consumer.ts": "import type { Renderable as Drawable } from \"./types\";\n\nexport namespace NS {\n  export interface Drawable {\n    own: string;\n  }\n\n  export class NsC implements Drawable {\n    own = \"o\";\n  }\n}\n"
+  },
+  "collision": {
+    "types.ts": "export interface Widget {\n  remote: string;\n}\n",
+    "consumer.ts": "import { Widget as Local } from \"./types\";\n\ninterface Local {\n  local: string;\n}\n\nexport class Ambiguous implements Local {\n  local = \"l\";\n}\n"
+  },
+  "type-param": {
+    "renderable.ts": "export interface Renderable {\n  a: string;\n}\n",
+    "consumer.ts": "import type { Renderable } from \"./renderable\";\n\nexport class TypeParamC<Renderable> implements Renderable {\n  a = \"a\";\n}\n"
+  }
+}
