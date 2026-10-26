@@ -1,154 +1,53 @@
-# EC6D-SCOPE-Q2 evidence
+# EC6D-SCOPE-Q2 review evidence
 
-Review-only artifacts for the EC6D-SCOPE-Q2 independent remediation
-verification. Nothing here is production code; nothing in this directory is
-part of the Penghou.Hetu solution. The harness used for the runs is the
-committed planning harness (`docs/planning/ec6d/analysis/`) at the reviewed
-R1 commit, built and executed from the review worktree — unmodified.
+Reviewed R1: `0e1b213737d42c74df20aef4744ab5718058e266`, tree `ddf777aa155852daca40b6ed8748c028c67d5822`, parent `91a3ed53a256e89ed71d7d11c204252c417400a6`.
 
-## Git binding (this review)
+[Final report](../ec6d-scope-q2-independent-verification.md): **REMEDIATION REQUIRED**, three open P1 findings (Q2-01/02/03), no P0. This is review evidence, not an EC-6D implementation.
 
-- Reviewed source commit: `0e1b213737d42c74df20aef4744ab5718058e266`
-  (tree `ddf777aa155852daca40b6ed8748c028c67d5822`, parent
-  `91a3ed53a256e89ed71d7d11c204252c417400a6`).
-- Review branch: `review/hetu-ec6d-scope-q2`.
-- Review-content commit / tree: recorded in the binding-record follow-up
-  commit (final section of this file).
-- Final review commit / tree / parent: recorded in the binding-record
-  follow-up commit.
-- Review report:
-  [`../ec6d-scope-q2-independent-verification.md`](../ec6d-scope-q2-independent-verification.md).
+## Provenance and preserved history
 
-## Contents (produced by this review)
+This chat created the Q2 worktree at R1 and authored the root-level evidence toolkit on 2026-10-26. It was interrupted by an approval-review usage limit. On resume, commits `575712074cae22ea98312864b78c950ecc56e411` and `6e34452647fb28ee12be14798142921838f997bd` were present with a separate report, fixtures, runs and tools. Those commits and their raw evidence are retained unchanged. The resumed report integrates this chat's evidence and corrects the previous characterization of it as unrelated “setup-generated” material. The previous report remains accessible in Git history.
 
-- `runs/crlf-environment-reproduction.json` — Q2 run 1: the committed corpus
-  as checked out in the review worktree (all-CRLF working files). Reproduces
-  the R1 fresh-run values (`IndexIdentity` `5c866e16…`, `CanonicalFactsSha256`
-  `631c0ab3…`).
-- `runs/original-bytes-reconstruction.json` — Q2 run 2: the corpus
-  reconstructed to the original environment's bytes (LF except the final line
-  break; 14/14 files byte-identical to the original planning worktree).
-  Reproduces the committed original observation (`667ec2d4…`, `05bf7c7d…`).
-- `runs/original-bytes-reconstruction.sha256` — SHA-256 of each reconstructed
-  file (so the reconstruction can be verified without committing
-  CRLF-sensitive bytes).
-- `runs/adversarial-corpus-observation.json` — Q2 run 3: the adversarial
-  fixture corpus, indexed through the unmodified planning harness.
-- `fixtures/adversarial/` — 13-file adversarial corpus plus
-  [README.md](fixtures/adversarial/README.md) tabulating each probe, its
-  adversarial intent, and the observed p9 facts.
-- `tools/q2-typescript-oracle.cjs`, `runs/typescript-oracle-cases.json`,
-  `runs/typescript-oracle-q2.json` — Q2-authored TypeScript semantic oracle
-  (see below).
+## Evidence map and classification
 
-## Reproduction
+| Artifact | Meaning |
+| --- | --- |
+| [git-before.json](git-before.json) | Read-only original/R1/Q1/canonical Git bindings, object-store separation, change surfaces, protected tracked-file hashes/statuses |
+| [git-resumed.json](git-resumed.json), [git-after.json](git-after.json) | Repeated preservation audits compared with original snapshot |
+| [digest-reconciliation.json](digest-reconciliation.json) | Per-file normalized/raw blob and SHA-256 evidence; original mixed-byte, LF and CRLF comparisons |
+| baseline-original-bytes.json | Fresh original-working-byte reproduction of both original digests |
+| baseline-lf.json | Exact Git-blob LF run: a third, correctly different digest pair |
+| baseline-crlf.json, baseline-crlf-repeat.json | Fresh repeated CRLF runs matching R1 |
+| [cases.json](cases.json) | Fourteen independent adversarial source corpora; sources are literal JSON strings |
+| [harness/Program.cs](harness/Program.cs), [harness/Q2.csproj](harness/Q2.csproj) | Non-production p9 harness using unchanged indexing APIs; incremental-origin check |
+| [p9-adversarial-results.json](p9-adversarial-results.json) | Measured p9 facts/diagnostics; no new import/attribution/query implementation |
+| [ts-oracle.cjs](ts-oracle.cjs), [typescript-results.json](typescript-results.json) | Independent TS 5.9.3 diagnostics/binding oracle for fourteen corpora |
+| [audit_evidence.py](audit_evidence.py), [audit-results.json](audit-results.json) | Eighteen assertions on measured existing behavior and digest reconciliation |
+| [validation.json](validation.json), [validate_review.py](validate_review.py) | Link, surface, hash, identity and whitespace audit |
+| fixtures/adversarial/, runs/, tools/ | Additional evidence already committed during the interruption; retained verbatim |
 
-From the review worktree root:
+The root evidence is the basis for the resumed final report. Prior `runs/typescript-oracle-q2.json` independently corroborates namespace-shadowing, invalid collision and type-parameter exclusions. Historical 388-test outcomes are cited as historical evidence; no broad regression suite was rerun. All future A01–A20 assertions are contract assessments, not implementation-pass evidence.
+
+## Reproduce from the Q2 worktree root
 
 ```powershell
+dotnet restore docs/planning/ec6d/analysis/ConsumerBaseline.csproj --ignore-failed-sources -m:1 -p:RestoreUseStaticGraphEvaluation=true -p:NuGetAudit=false
 dotnet build docs/planning/ec6d/analysis/ConsumerBaseline.csproj --no-restore -m:1
-dotnet docs/planning/ec6d/analysis/bin/Debug/net10.0/ConsumerBaseline.dll docs/planning/ec6d/corpus/ts-interface-impact > runs/crlf-environment-reproduction.json
-dotnet docs/planning/ec6d/analysis/bin/Debug/net10.0/ConsumerBaseline.dll docs/reviews/ec6d-scope-q2-evidence/fixtures/adversarial > runs/adversarial-corpus-observation.json
+python docs/reviews/ec6d-scope-q2-evidence/reproduce.py
+dotnet build docs/reviews/ec6d-scope-q2-evidence/harness/Q2.csproj -m:1 -p:NuGetAudit=false
+dotnet docs/reviews/ec6d-scope-q2-evidence/harness/bin/Debug/net10.0/Q2.dll docs/reviews/ec6d-scope-q2-evidence
+node docs/reviews/ec6d-scope-q2-evidence/ts-oracle.cjs C:/Users/Laszlos/source/repos/website/node_modules/typescript/lib/typescript.js
+python docs/reviews/ec6d-scope-q2-evidence/audit_evidence.py
 ```
 
-For the original-bytes reconstruction: copy the committed corpus, normalize
-line endings to LF, then set the **final** line break to CRLF; the resulting
-files must match the `original-bytes-reconstruction.sha256` manifest and the
-harness must produce the original digest values above. (The reconstructed
-bytes cannot be committed literally because Git normalizes line endings; the
-manifest plus this procedure is the reproducible form.)
+`reproduce.py` requires the preserved original planning checkout to read its exact working bytes; it never writes that checkout. Copies live in this review's ignored bin directory. The observed original bytes can also be reconstructed from the LF blobs using the line-ending counts and hashes in digest-reconciliation.json: each original corpus file has its final newline changed to CRLF. The previously committed runs/original-bytes-reconstruction.sha256 provides an additional manifest. Raw observations contain publication-specific metadata that may change on rerun; compare identities/digests and semantic facts, not the whole snapshot integrity hash.
 
-## TypeScript semantic oracle (Q2-authored)
+The TS library is an external read-only tool (5.9.3), not a copied dependency or required production component. An equivalent installed 5.9.3 typescript.js may be passed as the argument. The harness materializes cases.json in ignored bin/fixtures/. The idle incremental case appends one declaration only in that scratch copy. Sources and production projects are never edited.
 
-Committed with the review because the Q2-N01 correctness finding depends on
-TypeScript's name-resolution semantics:
+For protected-state verification, run `python docs/reviews/ec6d-scope-q2-evidence/verify_git.py after` with read access to the canonical and Q1 repositories. Do not overwrite git-before.json on a verification rerun. Its original snapshot is immutable review evidence. Scripts use GIT_OPTIONAL_LOCKS=0 for protected reads.
 
-```powershell
-node tools/q2-typescript-oracle.cjs "<path-to-typescript.js>" runs/typescript-oracle-cases.json > runs/typescript-oracle-q2.json
-```
+## Final binding and limits
 
-The compiler library used was TypeScript 5.9.3 from an editor installation on
-this machine
-(`C:\Users\Laszlos\AppData\Local\Programs\Antigravity IDE\resources\app\extensions\node_modules\typescript\lib\typescript.js`);
-node v24.21.0. The script indexes each case with `strict` settings via the
-TypeScript compiler API and reports diagnostics plus the declaration each
-heritage clause actually resolves to.
+The report's O section records the final content commit/tree/parent through a binding-only follow-up. The exact final containing commit is supplied in the completion handoff; it can be obtained with `git show -s --format="%H%n%T%n%P" review/hetu-ec6d-scope-q2`. No literal self-hash is fabricated inside its own commit.
 
-Results (committed output):
-
-| Case | Diagnostics | Heritage resolution |
-| --- | --- | --- |
-| `ns-shadow` (module import alias shadowed by a namespace-local interface) | **none (valid TypeScript)** | binds the **namespace-local** `Drawable` in `consumer.ts` |
-| `collision` (import alias + same-scope local interface) | TS2440 "Import declaration conflicts with local declaration" | imported `Widget` (file is invalid) |
-| `type-param` (`class TypeParamC<Renderable> implements Renderable`) | TS2422 "A class can only implement an object type…" | the class's `TypeParameter` |
-
-## Pre-existing environment artifacts (preserved, NOT part of this review)
-
-When this review began, `docs/reviews/ec6d-scope-q2-evidence/` **already
-contained** an untracked, setup-generated verification toolkit, created
-2026-10-26 21:40–21:45 local (before the first Q2 file write at 2026-10-27
-00:45). It was not produced by this review, is **not committed as Q2
-evidence**, and was not used as evidence in the review report. It is
-preserved untouched for the owner:
-
-`audit-results.json`, `audit_evidence.py`, `baseline-crlf.json`,
-`baseline-crlf-repeat.json`, `baseline-lf.json`,
-`baseline-original-bytes.json`, `cases.json`, `digest-reconciliation.json`,
-`git-before.json`, `harness/` (a copied C# harness project; `bin/` and `obj/`
-build output is Git-ignored), `p9-adversarial-results.json`, `reproduce.py`,
-`ts-oracle.cjs`, `typescript-results.json`, `verify_git.py`, and the
-Git-ignored working directory `bin/` (scratch fixtures).
-
-Notes recorded during Q2 verification of that directory:
-
-- Its digest reconciliation and identity equality conclusions were
-  **independently reproduced** by Q2's own runs (above) and by the review
-  report's §C checks; Q2 did not rely on its outputs.
-- Its TypeScript oracle used compiler 5.9.3; Q2 re-ran an equivalent check
-  with its **own** script and cases (above), producing the committed results.
-- `harness/`, `bin/`, and `obj/` build products are covered by the
-  repository's `.gitignore` and never appear in `git status`.
-
-## Verified outcomes (summary)
-
-| Measure | Original observation | R1 fresh run | Q2 run 1 (CRLF) | Q2 run 2 (reconstructed) |
-| --- | --- | --- | --- | --- |
-| Node identity set (64) | baseline | equal | **equal to both** | **equal to both** |
-| Edge identity set (99) | baseline | equal | **equal to both** | **equal to both** |
-| Counts (units/contributions/declarations/edges) | 14/73/23/99 | equal | equal | equal |
-| Relationship mix | 23/23/13/5/17/1/1/16 | equal | equal | equal |
-| `FindImplementations` (target) | seed-only | seed-only | seed-only | seed-only |
-| `PublicationConsistent` | false | false | false | false |
-| `IndexIdentity` | `667ec2d4…` | `5c866e16…` | **`5c866e16…`** | **`667ec2d4…`** |
-| `CanonicalFactsSha256` | `05bf7c7d…` | `631c0ab3…` | **`631c0ab3…`** | **`05bf7c7d…`** |
-| `SnapshotIntegrityHash` | `f1bcebc2…` | `5659fad9…` | `60fff76d…` (run metadata; varies) | varies |
-
-Additional verified facts: committed corpus blobs are identical across
-`1c9f4c9`/`3b5e8d9`/`91a3ed5`/`0e1b213` (corpus tree
-`014da71f0855cdc957fa9b6a0667bca565145092`); `git hash-object` of each
-working file equals its committed blob (`src/other/Renderable.ts` →
-`79fddb0a7de07f9245671c981e540bd26de0576a`); Q2 run 1 differs from R1's
-committed run only in the `SnapshotIntegrityHash` line; the mirror `main`
-ref remains `558f8ac82ac1b5e07da68f4a71a70240eaf38409` and the live origin
-(`https://github.com/jenolaszlo-sketch/penghou-hetu.git`) has 9 heads with
-no EC-6D/planning refs.
-
-## Final review commit (binding record)
-
-- Review-content (final review) commit:
-  `575712074cae22ea98312864b78c950ecc56e411`
-  (`docs(review): add EC6D-SCOPE-Q2 independent verification`).
-- Review-content tree: `209d0df6c3131b1e814cff0e05cba46953e5568a`.
-- Parent: `0e1b213737d42c74df20aef4744ab5718058e266` (reviewed R1 source).
-- Binding-record commit: the branch-HEAD commit created immediately after the
-  content commit (`docs(review): record final review binding and validation
-  log`); it does not alter review content. Its hash is reported in the Q2
-  completion record.
-
-## Limits
-
-Runs are Windows x64 / .NET SDK 10.0.401; no cross-platform execution. The
-adversarial corpus exercises p9 extraction only (no EC-6D facts exist yet);
-binding-level statements live in the review report. The TypeScript oracle
-covers the three committed cases only. The four existing test suites were not
-re-run (Q1's 388/388 run at the same baseline is referenced).
+Windows x64, .NET 10.0.401. No cross-platform, scale, new-feature durable reopen, migration, cancellation injection or release claim. Qualified source consistency is distinct from durable graph integrity. Raw prior evidence stays preserved even where its narrative interpretation has been superseded by the final report.
