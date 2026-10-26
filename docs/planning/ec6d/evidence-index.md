@@ -22,6 +22,7 @@ query behavior.
 | Artifact | Purpose |
 | --- | --- |
 | integration-readiness.md | EC-6C integration gate and owner authorization boundary |
+| integration-delta.md | Complete 65-path main-to-candidate delta manifest |
 | current-capability-inventory.md | Evidence-based provider, graph, query, persistence and operational inventory |
 | consumer-use-cases.md | UC-1 through UC-5 consumer requirements |
 | consumer-baseline.md | Fixture identity, manual expected set, observed pipeline and relationship-specific scores |

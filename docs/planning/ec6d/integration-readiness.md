@@ -41,6 +41,8 @@ extraction, module resolution, and export publication. There is no change to
 the C# Roslyn provider, core query service, LatticeDB provider, or an explicit
 store-schema migration file. New graph vocabulary and producer facts are
 additive, but still require durable-store migration validation at integration.
+The complete changed-path manifest is in
+[integration-delta.md](integration-delta.md).
 
 There is no merge conflict or source-level incompatibility demonstrated by
 the reviewed history. The production delta is exactly the one qualified for
@@ -117,3 +119,5 @@ writing:
 
 Until those decisions exist, the candidate remains unintegrated. EC-6D
 planning and its proposed scope do not change that boundary.
+
+This readiness assessment does not establish production readiness.

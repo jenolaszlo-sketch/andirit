@@ -10,6 +10,8 @@ or production source change.
 1. [Integration readiness](integration-readiness.md): exact Git ancestry,
    dependency status, candidate delta, qualifications and required owner
    authorization.
+   The complete changed-path inventory is in
+   [integration-delta.md](integration-delta.md).
 2. [Current capability inventory](current-capability-inventory.md): what
    consumers can use on the owner-accepted candidate, separated from
    canonical main.
@@ -38,4 +40,5 @@ implementations, graph diff and performance claims remain deferred.
 
 This is a proposal only. The owner must separately authorize design and
 implementation. EC-6C integration, packages, releases and Track B are also
-outside this planning task's authority.
+outside this planning task's authority. This assessment does not establish
+production readiness.
