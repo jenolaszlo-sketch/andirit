@@ -1,0 +1,66 @@
+{
+  "compiler": "5.9.3",
+  "node": "v24.21.0",
+  "cases": {
+    "ns-shadow": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Drawable",
+          "bindsTo": [
+            {
+              "file": "consumer.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Drawable {\n    own: string;\n  }"
+            }
+          ]
+        }
+      ]
+    },
+    "collision": {
+      "diagnostics": [
+        {
+          "code": 2440,
+          "file": "consumer.ts",
+          "message": "Import declaration conflicts with local declaration of 'Local'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Local",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {\n  remote: string;\n}"
+            }
+          ]
+        }
+      ]
+    },
+    "type-param": {
+      "diagnostics": [
+        {
+          "code": 2422,
+          "file": "consumer.ts",
+          "message": "A class can only implement an object type or intersection of object types with statically known members."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Renderable",
+          "bindsTo": [
+            {
+              "file": "consumer.ts",
+              "kind": "TypeParameter",
+              "text": "Renderable"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
