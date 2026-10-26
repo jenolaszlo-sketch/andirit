@@ -144,3 +144,19 @@ name matching creates one false positive and misses an imported alias, and
 the two visible type-use consumers cannot be linked. The main missing step is
 symbol binding across declaration, export, import and heritage facts, followed
 by a query that reports a bounded, source-backed impact result.
+
+## R1 reproduction note (EC6D-PLAN-R1)
+
+The independent scope review (Q1, commit `5ba43e1`) and the R1 remediation
+run (`analysis/r1-reproduction-run.txt`, this branch) both re-executed this
+harness against the committed corpus. Structural results reproduce exactly
+(all 64 node identities, all 99 edge identities, identical relationship
+counts, `FindImplementations` = 0, `PublicationConsistent=false`). The
+`IndexIdentity` and `CanonicalFactsSha256` values are
+checkout-environment-dependent (file-node `content-hash` properties hash
+working-tree bytes; this environment checks out CRLF via `core.autocrlf=true`
+while the original preserved LF). The committed content is byte-identical —
+`git hash-object` of the R1 working file equals the committed blob hash.
+Digest comparisons are therefore valid only within byte-identical checkouts;
+graph-identity comparisons are valid across checkouts. Full analysis:
+[recovery-and-provenance.md](recovery-and-provenance.md) §6.

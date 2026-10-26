@@ -224,3 +224,18 @@ The five questions are the task's representative requirements, and the
 fixture is a controlled diagnostic. The scope should be confirmed with an
 intended consumer owner before implementation authorization; this limitation
 does not alter the observed query gap.
+
+## R1 note (EC6D-PLAN-R1)
+
+The independent scope review (Q1, branch `review/hetu-ec6d-scope-q1`)
+independently reproduced the G1/G2/G3/G6 observations on purpose-built
+fixtures: 0-of-4 implementations with heritage placeholders in a separate
+identity namespace (scenario A), no export attribution and no import binding
+names (scenario D), seed-only legacy query results, alias-collision
+wrong-binding and duplicate-name non-convergence (scenarios G1/G2), and
+provider-declared snapshot inconsistency (scenario H). G1–G3 and G6 are
+thereby confirmed by two independent methods; the candidate resolutions in
+this document map to the R1 contracts
+([symbol-binding-contract.md](symbol-binding-contract.md),
+[consumer-query-contract.md](consumer-query-contract.md)). G4/G5/G7 retain
+their original priorities and remain deferred or measured later.

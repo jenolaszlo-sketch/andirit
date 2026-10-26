@@ -127,3 +127,60 @@ and no performance claim. See the owner decision and
   preserved; no merge, push, rebase or reset was performed.
 - This branch contains documentation, test output evidence, the committed
   fixture and the non-production analysis harness only.
+
+## R1 evidence (EC6D-PLAN-R1)
+
+### Git bindings verified during recovery
+
+| Check | Command | Result |
+| --- | --- | --- |
+| Planning commit exists | `git cat-file -t 91a3ed53a256e89ed71d7d11c204252c417400a6` (mirror) | `commit` |
+| Planning tree matches | `git rev-parse 91a3ed5…^{tree}` | `d79e5814485040a36c77bcde332ebc937f312476` |
+| Worktree HEAD/branch | `git rev-parse HEAD; git branch --show-current` (original worktree) | `91a3ed5…`, `planning/hetu-ec6d-consumer-intelligence`, clean |
+| Connectivity | `git fsck --connectivity-only` (mirror) | clean |
+| Ancestry | `git merge-base --is-ancestor 2c3090c 91a3ed5` / `558f8ac 91a3ed5` | both true |
+| Change surface | `git diff --name-status 2c3090c..91a3ed5` | 33 added paths, all `docs/planning/ec6d/`; src/tests diff empty |
+| Review branch import | `git fetch <Q1 worktree> review/hetu-ec6d-scope-q1:refs/heads/review/hetu-ec6d-scope-q1` (mirror, additive) | new ref at `d2bb7b1c6d2c760ed044ad31994a90d8665fd0dc`; content commit `5ba43e1cd23871c55e01d9201a492a32dff09ae6` present |
+| Remediation branch | branch `planning/hetu-ec6d-plan-r1` created at `91a3ed5`; worktree `C:\Users\Laszlos\source\repos\Solo\hetu-ec6d-plan-r1` | clean checkout of the recovered tip |
+
+### Independent baseline reproduction (R1)
+
+Commands identical to "Baseline reproduction" above, executed in the R1
+worktree; output committed as `analysis/r1-reproduction-run.txt`:
+
+- Relationship counts, node/edge identity sets: **bit-identical** to the
+  committed observation (64 nodes, 99 edges, 14 units, 23 declarations).
+- `FindImplementations` on the selected declaration: 0 relationships
+  (reproduces the committed claim).
+- `PublicationConsistent=false` (reproduces).
+- `IndexIdentity` / `CanonicalFactsSha256` differ from the committed values
+  (`5c866e16…` / `631c0ab3…` vs `667ec2d4…` / `05bf7c7d…`): file-node
+  `content-hash` properties hash working-tree bytes, and this environment
+  checks out CRLF (`core.autocrlf=true`) where the original preserved LF.
+  `git hash-object` of the R1 working file equals the committed blob hash —
+  committed content is byte-identical; only on-disk normalization differs.
+  Digest comparisons are valid within byte-identical checkouts only.
+  Analysis: [recovery-and-provenance.md](recovery-and-provenance.md) §6.
+
+### Q1 review evidence (external, referenced not modified)
+
+- Review report: `docs/reviews/ec6d-scope-q1-independent-review.md` at
+  `review/hetu-ec6d-scope-q1` content commit `5ba43e1cd23871c55e01d9201a492a32dff09ae6`.
+- Q1 harness + results:
+  `docs/reviews/ec6d-scope-q1-evidence/harness/` (scenarios A, B, C, D, F,
+  G1–G5, H and `harness-results.json`) at the same commit.
+- Q1's platform validation: 388/388 existing tests passed at the EC-6C
+  baseline `2c3090c` (recorded in the review report §C.1).
+- R1 did not modify the Q1 worktree or branch; the fetch into the mirror is
+  additive and documented in
+  [recovery-and-provenance.md](recovery-and-provenance.md) §5.
+
+### R1 environmental limitations
+
+- Recovery and reproduction were performed on Windows x64 with .NET SDK
+  10.0.401; no cross-platform execution was attempted.
+- The Q1 harness scenarios were not re-executed during R1 (their committed
+  results are referenced as evidence; the committed baseline harness was
+  re-executed instead to validate the authentic planning measurements).
+- No performance measurement, migration rehearsal, or integration activity
+  was performed.

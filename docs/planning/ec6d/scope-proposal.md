@@ -133,3 +133,54 @@ consumers. The following remain explicit negatives or out of scope:
 The complete proposed consumer contract is in
 [acceptance-contract.md](acceptance-contract.md). Risks are tracked in
 [risk-register.md](risk-register.md).
+
+---
+
+## R1 revision (EC6D-PLAN-R1): binding-fact prerequisite and vertical-slice success
+
+The independent scope review (Q1) rejected the original submission on
+provenance grounds and verified that this proposal's two candidate
+prerequisites are genuine gaps: the accepted p9 facts cannot bind imports to
+declarations (no import-name facts, no export attribution), and the legacy
+implementation query returns a seed-only result. This revision keeps the
+recommended candidate 3 boundary unchanged and strengthens it in four ways.
+
+### 1. The milestone includes the two missing fact capabilities
+
+The bounded slice now explicitly includes per-specifier import-occurrence
+facts and conservative export-to-declaration attribution, as specified in
+[symbol-binding-contract.md](symbol-binding-contract.md). Without them, the
+slice cannot produce a single confirmed implementation without name-only
+matching, which is prohibited.
+
+### 2. Success is defined at the query boundary, not by graph growth
+
+The milestone succeeds only when the complete vertical slice
+(source → import/export attribution → declaration identity → explicit
+heritage binding → interface-impact query) returns, for the committed corpus
+and supported profile, the four intended directly bound implementations as
+**confirmed** results with full provenance chains. Introducing new fact
+types, edges, or providers without that query-level outcome does not satisfy
+acceptance. The four-case expectation is fixture-scoped; it must never be
+reported as a general precision/recall claim.
+
+### 3. The consumer surface is a new versioned query
+
+The bounded query is `GetInterfaceImpactV1` with classified result
+categories, closed unknown reasons, provenance chains, deterministic
+ordering, declared bounds, and explicit publication qualification
+([consumer-query-contract.md](consumer-query-contract.md)). The legacy
+`FindImplementations` preset is not modified.
+
+### 4. Publication qualification is part of the scope
+
+Because the shipped source provider never declares a consistent snapshot,
+the scope includes explicit snapshot-consistency semantics: qualified
+results that cannot be mistaken for authoritative consistent-snapshot
+answers, and fail-closed boundaries ([publication-consistency-contract.md](publication-consistency-contract.md)).
+
+The graph/API representation ADR gate from the original proposal remains in
+force and now decides: occurrence/attribution representation, whether the
+binding join is computed at query time (recommended) or emitted as
+extraction-time binding edges, and the resulting provider-version and
+lifecycle contract.

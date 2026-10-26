@@ -121,3 +121,74 @@ Until those decisions exist, the candidate remains unintegrated. EC-6D
 planning and its proposed scope do not change that boundary.
 
 This readiness assessment does not establish production readiness.
+
+---
+
+## R1 revision (EC6D-PLAN-R1): separated prerequisites for EC-6D
+
+The EC-6C dependency facts above are unchanged and remain authoritative.
+This section restates them as explicit prerequisite gates for EC-6D and
+separates implementation, integration, and release readiness. None of these
+gates has been executed by R1; none is authorized by this packet.
+
+### Evidence base (retained qualifications that EC-6D inherits)
+
+- EC-6B qualifies p6→p8 history-preserving module-resolution migration;
+  EC-6C independently qualifies p8→p9 export publication (fresh reproduction
+  with committed tooling; the historical migration hash remains
+  unreproducible and stays a recorded limitation, QN-1/FQ1-EV-1).
+- Independent EC-6C qualification ran on Windows, .NET SDK 10.0.401, through
+  public store contracts, on small fixtures and the pinned website smoke.
+  No cross-platform (Linux/macOS) qualification exists; no performance
+  qualification exists (G7 NOT EVALUATED).
+- A direct p6→p9 operational migration has **not** been rehearsed as one
+  procedure; the staged p6→p8→p9 evidence covers the components.
+
+### Prerequisites for EC-6D implementation (before any production work)
+
+1. Owner approval of the R1 contracts:
+   [symbol-binding-contract.md](symbol-binding-contract.md) (fact contracts
+   A and B, binding rule, evidence identity),
+   [consumer-query-contract.md](consumer-query-contract.md)
+   (`GetInterfaceImpactV1`),
+   [publication-consistency-contract.md](publication-consistency-contract.md)
+   (qualified-results policy), and the revised
+   [scope-proposal.md](scope-proposal.md) / acceptance matrix.
+2. Owner decision on the representation ADR gate (occurrence/attribution
+   representation; query-time binding join vs extraction-time binding edges;
+   provider-version and lifecycle contract).
+3. The EC-6C owner-accepted baseline (2c3090c, p9) used as the working base —
+   EC-6D implementation does not require EC-6C to be merged first.
+4. A Q2 scope-review acceptance of this packet.
+
+### Prerequisites for EC-6D integration (before entering canonical main)
+
+5. EC-6C (and the EC-6B chain) integrated into canonical main by separate
+   owner authorization; merge order matters because EC-6D facts assume the
+   p9 extraction, `exports1`, and `resolver2` provider versions.
+6. A p9-to-new-profile durable migration rehearsal repeating the accepted
+   p8→p9 pattern (unchanged-fact comparison, added facts, deletion/reindex,
+   close/reopen, rollback) on both stores; EC-6D's profile/provider bumps
+   invalidate prior indexes exactly as p9 did.
+7. A19/A20 compatibility demonstrated: pre-existing p9 facts
+   byte-identical for unchanged sources; existing queries and presets
+   unmodified.
+
+### Prerequisites for release / production-readiness claims
+
+8. EC-6E-class durability, incremental invalidation, and resource-bound
+   qualification (recorded deferral) — explicitly out of EC-6D's scope.
+9. Cross-platform qualification if any non-Windows deployment is intended
+   (today's evidence is Windows-only).
+10. A representative-repository performance baseline before any performance
+    claim (no targets may be set from the thirteen-file fixture).
+11. Documentation synchronization (root README support table predates p9) —
+    integration-review item, unchanged.
+
+### Authorization boundaries preserved by R1
+
+EC6C-OWNER-01 explicitly withholds integration, release, EC-6D, and Track B
+authorization. This R1 packet is planning and remediation only: it
+implements nothing, changes no production schema, executes no migration
+rehearsal, and performs no integration. Every gate above requires its own
+written owner decision.
