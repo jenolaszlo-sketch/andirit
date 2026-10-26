@@ -1,0 +1,175 @@
+{
+  "scenarioA": {
+    "interfaceNodeId": "typescript:symbol:bae850138efa718d4c3bcad69f1b3fc13eddadea69e80785ddaa0fb321d1aa1b",
+    "findImplementationsNodeCount": 1,
+    "findImplementationsEdgeCount": 0,
+    "implementsEdgeCount": 4,
+    "implementsEdgeTargets": [
+      "typescript:heritage-target:9db69fe83450feeca94b0a8de45dc0a9ff0c1c170df6ab655d61edc79429a7eb kind=type qname=Renderable",
+      "typescript:heritage-target:4ecdd992b4c4101d53de2bf6fe4f1edc4b3a442cb4a69346059ea2e75bfaf7b1 kind=type qname=Renderable",
+      "typescript:heritage-target:dfbe75855fcb95f3cf320984abe2377be9f977aae385e225160a385644d66505 kind=type qname=Renderable",
+      "typescript:heritage-target:0ed1af3c5171b48392f86f8184e639f8fe12f50d9ff9908980123dffcac9cc67 kind=type qname=Renderable"
+    ],
+    "interfaceNeighborhoodNodeCount": 3,
+    "interfaceNeighborhoodEdges": [
+      "contains typescript:file:c54113cf61ec99691748a3890bfbeb00e10efb3f0a76f03a0fd9ec49072e410a->typescript:symbol:bae850138efa718d4c3bcad69f1b3fc13eddadea69e80785ddaa0fb321d1aa1b",
+      "contains typescript:symbol:bae850138efa718d4c3bcad69f1b3fc13eddadea69e80785ddaa0fb321d1aa1b->typescript:symbol:c2c88dbc391348af82c1e61659cec301c1f4b5d7df7371954e2cea618c53ff83",
+      "declares typescript:file:c54113cf61ec99691748a3890bfbeb00e10efb3f0a76f03a0fd9ec49072e410a->typescript:symbol:bae850138efa718d4c3bcad69f1b3fc13eddadea69e80785ddaa0fb321d1aa1b"
+    ]
+  },
+  "scenarioB": {
+    "textualMatcherScore": "TP=3 (tp0 same-file Local, tp1 Alpha, tp2 Beta); FP=1 (fp1 implements Alpha with no import binding); FN=1 (tp3 implements Gamma, an alias of Alpha). The textual oracle misclassifies exactly the two cases import binding evidence would resolve.",
+    "implementsEdgesByFile": {
+      "src/tp3.ts:2": "class=T3 heritage=Gamma quality=Structural",
+      "src/tp1.ts:2": "class=T1 heritage=Alpha quality=Structural",
+      "src/tp0.ts:2": "class=T0 heritage=Local quality=Structural",
+      "src/fp1.ts:1": "class=F1 heritage=Alpha quality=Structural",
+      "src/tp2.ts:2": "class=T2 heritage=Beta quality=Structural"
+    }
+  },
+  "scenarioC": {
+    "resolvedEdgeCount": 6,
+    "resolvedEdges": [
+      {
+        "specifier": "./util",
+        "form": "import",
+        "rule": "extension-substitution",
+        "typeOnly": false,
+        "source": "typescript:file:4fab5baaca5c14d2de62d8d2fceef376ddddcc8e9509d86cfa5643f51b89ce3d",
+        "target": "typescript:file:3294a832ea2276e554177e0b3007cc2d401c082912c7fbde49fa09141bf1aed1"
+      },
+      {
+        "specifier": "../shared/kit",
+        "form": "import",
+        "rule": "extension-substitution",
+        "typeOnly": false,
+        "source": "typescript:file:4fab5baaca5c14d2de62d8d2fceef376ddddcc8e9509d86cfa5643f51b89ce3d",
+        "target": "typescript:file:97c1e9e0e6bf98f19e270caf9b7d248c1156b6128a884cfcff58a5c9d23b23c8"
+      },
+      {
+        "specifier": "./widgets",
+        "form": "import",
+        "rule": "directory-index",
+        "typeOnly": false,
+        "source": "typescript:file:4fab5baaca5c14d2de62d8d2fceef376ddddcc8e9509d86cfa5643f51b89ce3d",
+        "target": "typescript:file:12bb5dd7e590758d00a50e4982325a301203841bb657a2d0024d891be5852f6d"
+      },
+      {
+        "specifier": "./typ",
+        "form": "import-type",
+        "rule": "extension-substitution",
+        "typeOnly": true,
+        "source": "typescript:file:4fab5baaca5c14d2de62d8d2fceef376ddddcc8e9509d86cfa5643f51b89ce3d",
+        "target": "typescript:file:eec80dc648bc654da8a13758208d328a536bfddaf398f2c9c99fdb93a199a647"
+      },
+      {
+        "specifier": "./mod-a",
+        "form": "import",
+        "rule": "extension-substitution",
+        "typeOnly": false,
+        "source": "typescript:file:4fab5baaca5c14d2de62d8d2fceef376ddddcc8e9509d86cfa5643f51b89ce3d",
+        "target": "typescript:file:03234773d6d42814552476cca14472ff2e6cc2c71400e09ed49537108839f939"
+      },
+      {
+        "specifier": "./ns",
+        "form": "import",
+        "rule": "extension-substitution",
+        "typeOnly": false,
+        "source": "typescript:file:4fab5baaca5c14d2de62d8d2fceef376ddddcc8e9509d86cfa5643f51b89ce3d",
+        "target": "typescript:file:28d85811c35359c770cd61801b6683b4b4aa8073ff9e79828e32c48310d922c6"
+      }
+    ]
+  },
+  "scenarioD": {
+    "exportEntryCount": 5,
+    "exportEntryIds": [
+      "typescript:export:10c3650c9126a97737aa8d9eedd0ac52e23d1fca5e894c68c44ed2c4ebe8744d",
+      "typescript:export:9a1d5e32bd943466430bdfbffd14e769421b05a18d117f60b2e5e73b6ef9b136",
+      "typescript:export:cbef709f7d9d8a95e9cf41d9134b65abb60cdfaca6e2ddfa86e242523c297b95",
+      "typescript:export:cf27bd58ccc6bb18fd306b5659f8232b85e3ed744fdf30d54cd69654d8cb8ded",
+      "typescript:export:f9fbb3ed273fd34ba287ecb8ea8452d6da041ed3c2a744b4e45c1d352f30f407"
+    ],
+    "exportEntryToDeclarationEdges": 0,
+    "declarationToExportEdges": 0,
+    "renderableExportEntryEdges": [
+      "exports typescript:file:c54113cf61ec99691748a3890bfbeb00e10efb3f0a76f03a0fd9ec49072e410a->typescript:export:cf27bd58ccc6bb18fd306b5659f8232b85e3ed744fdf30d54cd69654d8cb8ded"
+    ],
+    "importTargetNodeCount": 1,
+    "importTargetSample": [
+      "typescript:import:44c8afbbdd0d8a9952038c04e9fe7c9b679bb95a3e5327a78df023b205d4ac8f"
+    ],
+    "importEdgesWithProperties": 0,
+    "finding": "Export slots are not attributed to declaration nodes; import edges record only the module specifier and no imported/local name pair; heritage targets are declaration-less file-scoped placeholders. No existing fact chain connects interface -> export slot -> importing file -> heritage placeholder."
+  },
+  "scenarioF": {
+    "exportEntryNames": [
+      "Consumer",
+      "Widget"
+    ],
+    "resolvedSpecifiers": [
+      "./index",
+      "./types"
+    ],
+    "finding": "The barrel publishes no export entry for Widget (structural p9 entries exclude re-exports), so a confirmed binding through the barrel is impossible; the consumer's import resolves only to the barrel file."
+  },
+  "scenarioG1_duplicates": {
+    "widgetInterfaceNodeCount": 2,
+    "widgetInterfaceIds": [
+      "typescript:symbol:05305d6abe5950732093abc9ad5ccfe31ee8cdafca3443752ed4272ff467290a",
+      "typescript:symbol:440ad5938c2a5de87ebce2138f3c7ef0fbbe6c5953e3d940f0123f36da037350"
+    ],
+    "implementsEdgeCount": 1,
+    "implementsTargetId": "typescript:heritage-target:ae83c55f7be957d8fb116035a896693d8e9b277a5a5df0a88e32781d9c7c4a1a",
+    "implementsTargetQualifiedName": "Widget",
+    "finding": "Path-scoped identities keep the two Widget interfaces distinct (no false convergence), but the heritage placeholder is file-scoped and name-keyed, so it cannot say WHICH Widget the implements clause denoted. Current facts cannot bind c.ts to a.ts's Widget; a textual matcher would bind both."
+  },
+  "scenarioG2_aliasCollision": {
+    "localInterfaceNodes": [
+      "typescript:symbol:256cb79b839f6da99afc4ed86e6923101c5677511f5a7c0e2b0b77ef8afc964c (Local)"
+    ],
+    "implementsTargetQualifiedName": "Local",
+    "finding": "Ground truth: `implements Local` denotes the IMPORTED Widget (the import shadows the local interface in that clause scope would be a type error; TypeScript resolves the imported binding). The written heritage name 'Local' matches the local interface textually, so a name-only matcher binds the WRONG declaration. The graph records neither the alias nor the imported name, so even the correct binding is impossible today."
+  },
+  "scenarioG3_wrongExport": {
+    "finding": "wrong.ts imports Gadget but implements Widget. Ground truth: no confirmed binding to types.ts Widget (the written implements name is not even in scope; this file is a type error). A module-level matcher would still call wrong.ts a consumer of types.ts; only name-level binding evidence prevents the false confirmed implementation."
+  },
+  "scenarioG4_importWithoutUse": {
+    "importEdgeCount": 1,
+    "finding": "idle.ts imports Widget and never uses it. It IS a module-level possible consumer (an edit to Widget can break its compilation) but has NO implementation relationship. This is exactly the confirmed-vs-possible boundary the query contract must keep distinct."
+  },
+  "scenarioG5_importForms": {
+    "resolvedOccurrences": [
+      {
+        "specifier": "./types",
+        "form": "import",
+        "typeOnly": false
+      },
+      {
+        "specifier": "./types",
+        "form": "import",
+        "typeOnly": true
+      },
+      {
+        "specifier": "./types",
+        "form": "import-type",
+        "typeOnly": true
+      }
+    ],
+    "finding": "Module occurrences record form and type-only flags, but never the imported name, local name, or span of each specifier. Default, namespace, aliased, and inline-type-only specifiers are indistinguishable for binding purposes."
+  },
+  "scenarioH_publication": {
+    "inMemoryIsConsistentSnapshot": false,
+    "inMemorySnapshotIdentity": null,
+    "latticeIsConsistentSnapshot": false,
+    "latticeSnapshotIdentity": null,
+    "digestRun1": "db8a28cde6d63a4f17d8b5e5077915d8811f2c7cc2d5c85de3c1aa698635af58",
+    "digestRun2": "db8a28cde6d63a4f17d8b5e5077915d8811f2c7cc2d5c85de3c1aa698635af58",
+    "digestRun1EqualsRun2": true,
+    "digestAfterSourceChange": "d1d084c2790075a88ca3c76758797cef7c870b4ecb480749812b214d1557a05d",
+    "digestChangedAfterSourceChange": true,
+    "latticePublishedFactCountRun1": 67,
+    "latticePublishedFactCountReopened": 67,
+    "latticeReopenPreservesFacts": true,
+    "finding": "The filesystem provider declares IsConsistentSnapshot=false for every publication; snapshot identity is null. Facts from different source states can coexist within one run. Repeat indexing is deterministic (digest stable) and digest-fragile: the digest moves when sources move, but nothing in the publication records which file-level state each fact derives from."
+  }
+}

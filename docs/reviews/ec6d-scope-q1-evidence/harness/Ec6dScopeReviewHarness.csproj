@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!--
+      Review-only harness for EC6D-SCOPE-Q1. Not part of the production
+      solution; never published or packaged. Reproduces baseline observations
+      and runs adversarial identity fixtures against the EC-6C p9 baseline.
+    -->
+    <RootNamespace>Ec6dScopeReviewHarness</RootNamespace>
+    <AssemblyName>Ec6dScopeReviewHarness</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Penghou.Hetu\Penghou.Hetu.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Penghou.Hetu.TreeSitter\Penghou.Hetu.TreeSitter.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Penghou.Hetu.LatticeDb\Penghou.Hetu.LatticeDb.csproj" />
+  </ItemGroup>
+
+</Project>
