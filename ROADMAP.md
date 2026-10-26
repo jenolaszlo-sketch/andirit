@@ -594,16 +594,21 @@ pass, and the EC6B-GLM-Q2 re-review returned **VERIFIED WITH
 QUALIFICATIONS** with no P0/P1/P2 findings. The owner closure record is
 `docs/decisions/ec6b-owner-acceptance.md`; closure evidence and
 dispositions are in `docs/evidence/ec6b-owner-acceptance/README.md`.
-EC-6C.1 is **OWNER ACCEPTED WITH QUALIFICATIONS** on its isolated branch, based
-on locally reported results; independent verification remains outstanding.
-EC-6C.2 is implemented and locally verified on
-`implementation/ec6c-2-structural-export-publication`; it is ready for
-independent qualification but is not integrated or released. Track B and
-EC-6D binding work remain unauthorized. Astro (`.astro`) support remains
-future work. Closure records, preserved review bindings, and accepted
-limitations are in `docs/evidence/ec5-closure.md`,
+EC-6C.1 is **ACCEPTED WITH QUALIFICATIONS** and EC-6C.2 is **ACCEPTED WITH
+QUALIFICATIONS**, closing EC-6C for the accepted scope after the independent
+GLM-Q1 qualification (`qualification/ec6c-2-glm-q1` at `54ca715`) verified
+EC-6C.1 and qualified EC-6C.2 with no demonstrated production defect. Two LOW
+documentation/evidence findings were corrected or preserved as recorded
+limitations, and QN-1 remains a non-blocking test note. The owner closure
+record is `docs/decisions/ec6c-owner-acceptance.md`; findings and evidence are
+preserved in `docs/reviews/ec6c2-glm-q1-*.md` and
+`docs/evidence/ec6c2-glm-q1/`. EC-6C is not integrated or released. Track B
+and EC-6D binding work remain unauthorized; EC-6D is the next candidate
+milestone but requires a separate planning and authorization decision. Astro
+(`.astro`) support remains future work. Closure records, preserved review
+bindings, and accepted limitations are in `docs/evidence/ec5-closure.md`,
 `docs/decisions/ec6b-owner-acceptance.md`, and the
-[language roadmap](docs/language-support-roadmap.md#ecmascript-milestone-status-updated-2026-10-25).
+[language roadmap](docs/language-support-roadmap.md#ecmascript-milestone-status-updated-2026-10-26).
 
 Objective: establish a maintainable, evidence-based feature inventory before
 adding the next language. The approved strategy is in the

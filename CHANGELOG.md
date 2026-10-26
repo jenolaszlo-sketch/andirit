@@ -20,11 +20,13 @@ ECMAScript structural export-name publication (EC-6C.2; isolated implementation)
   `resolver2.relative-v1`. Both graph stores, source replacement/deletion,
   failure/cancellation retention, exact-name queries, durable reopen, Unicode
   boundaries, and an authentic p8 LatticeDb migration were locally verified.
-- EC-6C.1 was owner accepted with qualifications on the implementation branch;
-  the acceptance relies on locally reported results. Independent qualification
-  remains required before integration or release. Declaration attribution,
-  re-export publication, export completeness, Track B, and EC-6D remain outside
-  this milestone.
+- EC-6C.1 was independently verified and EC-6C.2 independently qualified by
+  the GLM-Q1 review; the owner closed both as **accepted with qualifications**
+  with no demonstrated production defect (two LOW documentation/evidence
+  qualifications resolved or preserved as recorded limitations —
+  `docs/decisions/ec6c-owner-acceptance.md`). Declaration attribution,
+  re-export publication, export completeness, Track B, EC-6D, integration, and
+  release remain outside this milestone and unauthorized.
 
 Phase 0: conservative ECMAScript relative module resolution (EC-6B):
 

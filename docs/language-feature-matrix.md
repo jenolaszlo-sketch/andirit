@@ -26,13 +26,16 @@ after independent GLM qualification; the EC-5 closure corrections and accepted
 `docs/evidence/ec5-closure.md`. EC-6B is **ACCEPTED WITH QUALIFICATIONS**
 after independent Q1/Q2 review; the closure record is
 `docs/decisions/ec6b-owner-acceptance.md`. Export and import binding work
-remains outside EC-6B. EC-6C.1 is owner accepted with qualifications based on
-local reports; independent verification is outstanding. EC-6C.2 is implemented
-and locally verified on an isolated branch, pending independent qualification.
-It publishes a bounded structural export-name surface without attribution or
-binding. Astro (`.astro`) support remains separate future work. The affected
-cells below state the corrected coverage; the audit baseline still describes
-the original inspection revision.
+remains outside EC-6B. EC-6C.1 is **ACCEPTED WITH QUALIFICATIONS** and EC-6C.2
+is **ACCEPTED WITH QUALIFICATIONS** after the independent GLM-Q1 review
+(`qualification/ec6c-2-glm-q1` at `54ca715`) verified EC-6C.1 and qualified
+EC-6C.2 with no demonstrated production defect; the EC6C-OWNER-01 closure is
+`docs/decisions/ec6c-owner-acceptance.md`. EC-6C.2 publishes a bounded
+structural export-name surface without attribution or binding; its LOW
+documentation/evidence findings are corrected or preserved as recorded
+limitations. Astro (`.astro`) support remains separate future work. The
+affected cells below state the corrected coverage; the audit baseline still
+describes the original inspection revision.
 
 The [language roadmap](language-support-roadmap.md) records priorities. This
 catalog contains **46 features** chosen for useful repository questions rather
@@ -239,7 +242,7 @@ dispatch and emitted kinds, not the absence of a test name.
 | EC-F | Same profile: HandleClassField/FieldProperties (TypeScript `public_field_definition`, JavaScript `field_definition`) | [Class member tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaClassMemberTests.cs): `ExtractAsync_ModelsTypeScriptClassFieldsWithContainmentAndLocations`, `ExtractAsync_RecordsTypeScriptFieldModifiersAndAccess`, `ExtractAsync_ModelsJavaScriptClassFields`, `ExtractAsync_KeepsFieldAndMethodWithTheSameNameDistinct`, `ExtractAsync_AttributesInitializerInvocationsToTheField`, `ExtractAsync_SkipsComputedPrivateAndAccessorFields`, `ExtractAsync_PreservesValidClassFactsFromPartialFiles`, `ExtractAsync_RepeatsClassMemberFactsDeterministically`, `IndexAsync_AnswersExactClassMemberAndEnclosingSymbolQueries`; [lifecycle tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaClassLifecycleTests.cs): `IndexAsync_RemovesRenamedAndRemovedClassMembers`, `IndexAsync_RemovesFactsForRenamedClasses`, `IndexAsync_RemovesClassFactsWhenSourceFileIsDeleted`. |
 | EC-5 | Same profile: `HandleVariableDeclaration` for file-level `lexical_declaration`/`variable_declaration`; `field` identity is path-scoped and discriminator-specific. | [Variable tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaVariableTests.cs): `ExtractAsync_ModelsTypeScriptFileVariablesWithWrittenModifiersAndLocations`, `ExtractAsync_ModelsJavaScriptVariablesThroughMjsPipeline`, `ExtractAsync_KeepsVariableIdentitiesFileScopedKindScopedAndDeterministic`, `ExtractAsync_SkipsLocalDestructuredAndMalformedBindings`; [publication tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaVariableLifecycleTests.cs): `IndexAsync_PublishesAndReplacesVariableFactsAcrossIncrementalChanges`, `IndexAsync_IndexesMjsVariablesThroughTheJavaScriptPipeline`; revision invalidation is covered by `TreeSitterTypeScriptPluginTests.Plan_InvalidatesPreviousExtractionProfileRevisions`. |
 | EC-6B | [Plugin-local resolver](../src/Penghou.Hetu.TreeSitter/TreeSitterModuleResolution.cs), module-shape capture and publication in `EcmaScriptExtractionProfile`/`TreeSitterExtractionSession`; profile p6→p8 (EC-6B; EC-6B-R1). | [Policy and identity tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterModuleResolutionTests.cs): ordered suffix/classification, edge provenance and unit order, occurrence identity/LF-CRLF, cross-plugin boundary, partial coverage and unsupported forms. [Lifecycle/store tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterModuleResolutionLifecycleTests.cs): add/delete/empty replacement, occurrence removal, failure/cancellation retention on both stores, durable reopen and endpoint-order rejection. [Website p6→p8 migration](evidence/ec6b-relative-module-resolution-handoff.md). Closed: **ACCEPTED WITH QUALIFICATIONS** (EC6B-OA2; Q2 **VERIFIED WITH QUALIFICATIONS**; [owner decision](decisions/ec6b-owner-acceptance.md)). |
-| EC-6C.2 | [Export publisher](../src/Penghou.Hetu.TreeSitter/EcmaScriptExportGraphPublisher.cs) and p9 [extraction profile](../src/Penghou.Hetu.TreeSitter/EcmaScriptExtractionProfile.cs). | [Shape tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaExportShapeTests.cs), [publication/store/query tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaExportPublicationTests.cs), p8-fact regression, and [EC-6C.2 handoff](evidence/ec6c-2-structural-export-publication-handoff.md). Locally verified; independent qualification pending. |
+| EC-6C.2 | [Export publisher](../src/Penghou.Hetu.TreeSitter/EcmaScriptExportGraphPublisher.cs) and p9 [extraction profile](../src/Penghou.Hetu.TreeSitter/EcmaScriptExtractionProfile.cs). | [Shape tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaExportShapeTests.cs), [publication/store/query tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterEcmaExportPublicationTests.cs), p8-fact regression, and [EC-6C.2 handoff](evidence/ec6c-2-structural-export-publication-handoff.md). Independently qualified by GLM-Q1 and accepted with qualifications: [owner closure](decisions/ec6c-owner-acceptance.md). |
 | EL-D | [ElixirExtractionProfile](../src/Penghou.Hetu.TreeSitter/ElixirExtractionProfile.cs): module/function target sets, Walk, TryEmitModule/Function | [Elixir tests](../tests/Penghou.Hetu.TreeSitter.Tests/TreeSitterElixirPluginTests.cs): `ExtractAsync_ModelsModulesFunctionsAndContainment`; protocol/macro branches lack dedicated output assertions. |
 | EL-I | Same profile: ImportTargets, TryEmitImport/Invocation, attribute and control-form skipping | Same Elixir tests: `ExtractAsync_EmitsImportsAndStructuralInvocationsOnly`, `ExtractAsync_ScopesScriptInvocationsToTheirFile`, `ExtractAsync_ReportsCapabilitiesHonestly`. |
 

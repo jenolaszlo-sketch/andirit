@@ -2,7 +2,7 @@
 
 ## Current EC6C-A2 roadmap: Structural Export Surface
 
-**Status:** Replaces the D0 five-stage order for Track A. EC-6C.1 is owner accepted with qualifications based on locally reported results; independent verification remains outstanding. EC-6C.2 is implemented and locally verified on `implementation/ec6c-2-structural-export-publication`, pending independent qualification. No integration or release is authorized; Track B and EC-6D remain outside this milestone. The original roadmap below remains historical D0 planning; old stage numbers are mapped explicitly and must not be reused with a new meaning without this crosswalk.
+**Status:** Replaces the D0 five-stage order for Track A. EC-6C.1 is **accepted with qualifications** (independently verified by GLM-Q1) and EC-6C.2 is **accepted with qualifications** (independently qualified by GLM-Q1 with no demonstrated production defect); the owner closure is [`../decisions/ec6c-owner-acceptance.md`](../decisions/ec6c-owner-acceptance.md). No integration, release, EC-6D, or Track B work is authorized. The original roadmap below remains historical D0 planning; old stage numbers are mapped explicitly and must not be reused with a new meaning without this crosswalk.
 
 ### Track A stages
 
@@ -12,13 +12,22 @@
 | EC-6C.2 — Structural export publication | Emit per-module/name export nodes and per-written-occurrence exports edges in each file unit. Apply the exact identity, provider/evidence and collision rules in the EC6C-A1 acceptance record and [EC6C-A2 closure addendum](../decisions/ec6c-a29-closure.md). p9 in both plugins; no export-space aggregate; no exported-as; no resolver changes. Exit with extraction, query, replacement, both-store, failure/cancellation and deterministic identity tests. | Reuses D0 EC-6C.2 but removes attribution, export completeness counters and all re-export entries. |
 | EC-6C.3 — Track A qualification | Execute the complete matrix, exact-name compatibility, p8-to-p9 durable migration, both stores, durable reopen, source replacement/deletion, failure/cancellation, LF/CRLF and Unicode. Perform pinned website smoke qualification with independently prepared expected names for the nine indexed files; record only the allowlisted positive observations and do not claim complete exports. Preserve commands/results and an independent bounded review. | Takes the relevant D0 EC-6C.5 qualification work. D0 EC-6C.5's migration and qualification intent remains; its declaration-attribution and complete-surface requirements are removed from Track A. |
 
-Current dispositions: EC-6C.1 owner acceptance is recorded in
-[`../decisions/ec6c1-owner-acceptance.md`](../decisions/ec6c1-owner-acceptance.md).
-EC-6C.2 implementation, both-store lifecycle tests, Unicode round-trip,
-authentic p8→p9 migration, and the pinned website smoke are preserved in
+Current dispositions: the pre-qualification EC-6C.1 acceptance
+([`../decisions/ec6c1-owner-acceptance.md`](../decisions/ec6c1-owner-acceptance.md))
+is superseded by the final closure
+([`../decisions/ec6c-owner-acceptance.md`](../decisions/ec6c-owner-acceptance.md)):
+EC-6C.1 **accepted with qualifications**, EC-6C.2 **accepted with
+qualifications**, EC-6C closed for the accepted scope. The EC-6C.2 implementation handoff, both-store
+lifecycle tests, Unicode round-trip, authentic p8→p9 migration, and the
+pinned website smoke are preserved in
 [`../evidence/ec6c-2-structural-export-publication-handoff.md`](../evidence/ec6c-2-structural-export-publication-handoff.md).
-The remaining gate is independent qualification of EC-6C.1 and EC-6C.2 before
-integration or release.
+The independent GLM-Q1 review artifacts (`docs/reviews/ec6c2-glm-q1-*.md`,
+`docs/evidence/ec6c2-glm-q1/**`) are preserved unchanged on branch
+`qualification/ec6c-2-glm-q1` at `54ca715`, bound by the owner decision. The
+remaining gates are integration, release, Track B, and EC-6D; none is
+authorized. The committed migration reproduction tooling and fresh
+reproduction evidence are in
+[`../evidence/ec6c-owner-acceptance/migration-reproduction/`](../evidence/ec6c-owner-acceptance/migration-reproduction/README.md).
 
 ### Track B separation
 
@@ -38,7 +47,7 @@ EC-6D remains later design work for import/export binding, remote names, star cl
 
 ### Track A implementation-readiness gate
 
-Readiness disposition: Track A implementation was authorized after EC-6C.1 owner acceptance and is locally complete. The EC-6C.2 handoff records both-store and durable qualification, authentic p8→p9 migration, and a real-repository smoke. Independent qualification remains required before integration or release.
+Readiness disposition: Track A implementation was authorized after EC-6C.1 owner acceptance and is locally complete. The EC-6C.2 handoff records both-store and durable qualification, authentic p8→p9 migration, and a real-repository smoke. Independent qualification is now complete (EC-6C.1 verified, EC-6C.2 qualified by GLM-Q1) and EC-6C is closed with qualifications by the owner decision; integration and release remain unauthorized and require a separate decision.
 
 | Required prerequisite | EC6C-A2 disposition |
 | --- | --- |
