@@ -277,7 +277,16 @@ Final validation checks local Markdown links, evidence hashes, `git diff --check
 
 ## O. Review commit attestation
 
-The final content binding is recorded in a binding-only follow-up after committing all review artifacts and validation evidence. The containing commit/tree/parent are emitted in the completion handoff and can be resolved without a self-referential hash:
+The complete reconciled review and evidence are bound to:
+
+| Item | Exact identity |
+| --- | --- |
+| Final review-content commit | `6630624f976d53161e2657b638c7a67c41f9c0ed` |
+| Final review-content tree | `5c4447b43c19133fc912ad1402f34405541a74fe` |
+| Final review-content parent | `6e34452647fb28ee12be14798142921838f997bd` |
+| Binding-record parent | `6630624f976d53161e2657b638c7a67c41f9c0ed` |
+
+The content commit had a clean worktree after commit. Validation passed: 18 evidence assertions, 87 local links, exact source binding, artifact-only change surface, unchanged protected tracked files/statuses and existing raw evidence, and clean whitespace checks. The source/test/planning diff is empty. The following binding-only commit changes this attestation, not findings or raw evidence. Its exact final commit/tree are reported in the completion handoff; they cannot be embedded literally in themselves. Resolve the containing commit/tree/parent with:
 
 ```text
 git show -s --format="%H%n%T%n%P" review/hetu-ec6d-scope-q2
