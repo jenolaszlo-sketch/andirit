@@ -135,8 +135,15 @@ no EC-6D/planning refs.
 
 ## Final review commit (binding record)
 
-- Review-content commit / tree: `PENDING` / `PENDING`.
-- Final review commit / tree / parent: `PENDING`.
+- Review-content (final review) commit:
+  `575712074cae22ea98312864b78c950ecc56e411`
+  (`docs(review): add EC6D-SCOPE-Q2 independent verification`).
+- Review-content tree: `209d0df6c3131b1e814cff0e05cba46953e5568a`.
+- Parent: `0e1b213737d42c74df20aef4744ab5718058e266` (reviewed R1 source).
+- Binding-record commit: the branch-HEAD commit created immediately after the
+  content commit (`docs(review): record final review binding and validation
+  log`); it does not alter review content. Its hash is reported in the Q2
+  completion record.
 
 ## Limits
 

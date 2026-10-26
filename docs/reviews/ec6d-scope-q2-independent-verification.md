@@ -38,15 +38,14 @@ Q1 worktree, canonical clone, and canonical main were used read-only.
 
 | Item | Value |
 | --- | --- |
-| Review-content commit | recorded in the binding-record follow-up commit |
-| Review-content tree | recorded in the binding-record follow-up commit |
-| Final review commit | recorded in the binding-record follow-up commit |
-| Final review tree | recorded in the binding-record follow-up commit |
-| Final review parent | review-content commit (direct parent) |
+| Review-content commit (final review commit) | `575712074cae22ea98312864b78c950ecc56e411` (`docs(review): add EC6D-SCOPE-Q2 independent verification`) |
+| Review-content tree | `209d0df6c3131b1e814cff0e05cba46953e5568a` |
+| Final review parent | `0e1b213737d42c74df20aef4744ab5718058e266` (reviewed R1 source commit) |
+| Binding-record commit (branch HEAD) | created immediately after the content commit (`docs(review): record final review binding and validation log`); does not alter review content; hash reported in the Q2 completion record |
 
-*The content commit carries the complete review; the follow-up commit fills
-these Git-binding rows and the validation log only and does not alter review
-content (the Q1 pattern). The filled values are also recorded in
+*The content commit carries the complete review; the binding-record commit
+fills these Git-binding rows and the validation log only (the Q1 pattern).
+The filled values are also recorded in
 [ec6d-scope-q2-evidence/README.md](ec6d-scope-q2-evidence/README.md).*
 
 ## B. Verdict
