@@ -97,7 +97,7 @@ to sharpen an unknown projection.
 | Direct simple variable declarators | One named occurrence per simple identifier declarator; destructuring is excluded. |
 | Direct function, generator function, class, TypeScript abstract class, interface, type alias, enum, nonambient namespace | Named direct occurrence using the grammar `name` token; unsupported/error/missing declaration trees are excluded. Overload signatures retain separate occurrences. |
 | Local export list, including imported-local names | One occurrence per valid specifier; local name and optional alias are retained. No import binding or declaration attribution. |
-| Inline and statement-level TypeScript type-only exports | Type-only state follows pinned grammar tokens and existing EC-6B grammar helpers; projection is type. JavaScript type-only-like recovery is excluded. |
+| Inline and statement-level TypeScript type-only exports | Type-only state follows pinned grammar tokens and existing EC-6B grammar helpers; projection is type. JavaScript statement-level type-only-like clauses (`export type { … }`) are excluded. Inline JavaScript recovery such as `export { type Model as Shape }` may still publish a conservative structural occurrence for the error-free specifier while the parser error stays visible: no `type-only` flag, `unknown` projection, and no assertion of JavaScript runtime export validity or complete TypeScript semantic interpretation. (Corrected in EC6C-OWNER-01; see `docs/evidence/ec6c-owner-acceptance/fq1-doc-1-correction.md`.) |
 | Named/default declaration, anonymous default declaration, default expression | `default` is the public name and its token is the name span. Written local name is retained for named declarations and simple identifier expressions only. |
 | Quoted alias | Raw, unescaped literal content is retained; the name-token span covers the written string token, including quotes. |
 
@@ -176,6 +176,14 @@ Environment: Windows 11 x64, .NET SDK 10.0.401, runtime 10.0.12.
   grammar. The collector handles only the exact observed shapes documented
   above. Broader malformed or recovered forms are omitted, and the parse-error
   result remains visible to the caller.
+- JavaScript type-only-like recovery is excluded at statement level only.
+  Inline recovered forms (for example `export { type Model as Shape }`) may
+  publish a conservative structural occurrence while the parse error remains
+  visible; such an occurrence carries no `type-only` flag and an `unknown`
+  projection and does not establish JavaScript runtime export validity or
+  complete TypeScript semantic interpretation (FQ1-DOC-1 correction,
+  EC6C-OWNER-01; see
+  `docs/evidence/ec6c-owner-acceptance/fq1-doc-1-correction.md`).
 - Escaped public names are deliberately omitted. EC-6C.1 does not decode
   escapes, establish declaration identity, distinguish type/value through
   binding, or promise complete export coverage.
