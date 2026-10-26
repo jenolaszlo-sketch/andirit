@@ -30,7 +30,12 @@ baseline instead — the newest state EC-6D is authorized to build upon:
 - **Parent:** `5e79418f8b3864e8b829a4be10ab62c6b5744d89`
 - **Review branch:** `review/hetu-ec6d-scope-q1` (created at the commit above; no force updates, no pushes)
 - **Review worktree:** `C:/Users/Laszlos/source/repos/Penghou.Hetu.review-ec6d-scope-q1`
-- **Final review commit:** recorded after commit; see the completion note at the end of this document.
+- **Final review commit:** `5ba43e1cd23871c55e01d9201a492a32dff09ae6`
+  (`docs(review): record EC6D-SCOPE-Q1 independent scope review`)
+- **Final review tree:** `87d0c855f786cf8aaad7f000fd1c182e4581946d`
+- **Binding record:** the initial commit `5ba43e1` carries the complete
+  review; the binding values above were recorded in a follow-up commit that
+  does not alter review content.
 
 The planning worktree, canonical main, and all other worktrees remain
 untouched. No merge, rebase, reset, tag, publish, or push was performed.
@@ -587,3 +592,17 @@ This review does **not** establish:
 *Review-only artifacts: this document, `docs/reviews/ec6d-scope-q1-evidence/`,
 and the branch `review/hetu-ec6d-scope-q1`. No production source, test, or
 schema file was modified.*
+
+### Validation commands and results (final pass)
+
+| Command | Result |
+| --- | --- |
+| `git merge-base --is-ancestor 558f8ac 2c3090c` | exit 0 (main is an ancestor of the EC-6C baseline) |
+| `dotnet restore Penghou.Hetu.slnx` | exit 0 |
+| `dotnet build Penghou.Hetu.slnx --no-restore` | 0 warnings, 0 errors, exit 0 |
+| `dotnet test Penghou.Hetu.slnx --no-build` | 160 + 26 + 156 + 46 = **388 passed, 0 failed**, exit 0 |
+| `dotnet build docs/reviews/ec6d-scope-q1-evidence/harness/Ec6dScopeReviewHarness.csproj` | 0 warnings, 0 errors, exit 0 |
+| `dotnet run --project …Ec6dScopeReviewHarness.csproj --no-build` | exit 0; `harness-results.json` written (committed) |
+| `git diff --check` (staged and final) | exit 0, no whitespace errors |
+| `git status` (review worktree, after commit) | clean |
+| `git status` (canonical main worktree) | clean; main at `558f8ac` unchanged |
