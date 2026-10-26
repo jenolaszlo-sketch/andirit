@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    EC6C-OWNER-01 FQ1-EV-1 reproduction tooling: p9 reindex and comparison
+    harness. Build it against a p9 checkout (defaults to this repository root
+    when run from a full Penghou.Hetu checkout). The workspace root and the
+    report path are program arguments. Build outputs stay under this directory
+    (bin/obj, gitignored). Exact commands: see ../README.md.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Root of the Penghou.Hetu checkout to bind against. -->
+    <HetuRoot Condition="'$(HetuRoot)' == ''">$(MSBuildThisFileDirectory)..\..\..\..\..</HetuRoot>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(HetuRoot)\src\Penghou.Hetu.TreeSitter\Penghou.Hetu.TreeSitter.csproj" />
+    <ProjectReference Include="$(HetuRoot)\src\Penghou.Hetu.LatticeDb\Penghou.Hetu.LatticeDb.csproj" />
+  </ItemGroup>
+</Project>
