@@ -41,7 +41,10 @@ for Q2 or later gates.
   The five-step binding rule (heritage → import occurrence → relative-v1
   resolution → export entry → attribution) replaces name-only matching;
   import-first precedence resolves the alias-collision case in the direction
-  TypeScript semantics require.
+  TypeScript semantics require. *(R2 correction: import-first precedence was
+  superseded by the lexical-binding rule after Q2-01; conflicting or shadowed
+  bindings now fail closed — see
+  [q2-findings-disposition.md](q2-findings-disposition.md).)*
 - **Updated artifact:** [symbol-binding-contract.md](symbol-binding-contract.md).
 - **Evidence:** Q1 scenarios A, D, G1, G2, G5; committed corpus observations
   (5 `implements` edges to file-scoped placeholders; 13 export entries; 0
@@ -158,3 +161,17 @@ for Q2 or later gates.
   as evidence about the platform, never as a review of the planning proposal;
   the authentic proposal is now recovered and Q2 reviews it with these
   remediations applied.
+
+## R2 update (EC6D-PLAN-R2)
+
+The reconciled Q2 review (register Q2-01..Q2-08) re-opened the planning
+dispositions F-02 (missing facts / binding), F-04 (query semantics), F-05
+(publication consistency) and F-06 (re-export barrier) and required targeted
+contract repairs; it closed F-01 with an evidence-wording qualification
+(Q2-08), F-07 resolved and F-08 resolved with its intentional deferral.
+EC6D-PLAN-R2 delivers those repairs: see
+[q2-findings-disposition.md](q2-findings-disposition.md) for the full
+disposition matrix, the N01–N09 crosswalk, and the reason-reachability
+table. No Q1 disposition above is withdrawn; F-02/F-04/F-05/F-06 remain
+resolved at the planning-contract level only after Q3 verification of the
+R2 repairs, and no implementation of any proposed feature is claimed.

@@ -109,7 +109,7 @@ R1 re-executed the committed analysis harness on the remediation worktree
 | Relationship mix (contains/declares/exports/implements/imports/inherits/invokes-name/resolves-to) | 23/23/13/5/17/1/1/16 | 23/23/13/5/17/1/1/16 | exact |
 | Node identities (all 64) | — | — | **bit-identical** |
 | Edge identities (all 99) | — | — | **bit-identical** |
-| `FindImplementations` on the selected declaration | 0 relationships | 0 nodes, 0 edges | exact |
+| `FindImplementations` on the selected declaration | 0 relationships | 1 seed node, 0 edges (R2 correction) | exact |
 | `PublicationConsistent` | false | false | exact |
 | `IndexIdentity` | `667ec2d4df6b821e63b2f7d1adad6c63492aaf453b9af639f1aa6e9b0fa77ec8` | `5c866e16796b6784327a5366b93ba5926e44abdad10841b2e04533ee6a63f5eb` | **differs** |
 | `CanonicalFactsSha256` | `05bf7c7de0e5e1a552c77759cc3bba39aff8d72e093405379e5acfd2d99b0d3c` | `631c0ab3960790d714f824259cede7e7da89c3fc930f410b109c8cc4c44ecb29` | **differs** |
@@ -119,7 +119,10 @@ The digest divergence is fully explained and locally verified:
 - The digest includes each file node's `content-hash` property, which hashes
   **working-tree bytes**.
 - This environment checks out with `core.autocrlf=true`, converting the
-  corpus's LF line endings to CRLF; the original environment preserved LF.
+  corpus's line endings to CRLF; the original worktree contains LF endings
+  except a final-line CRLF, and an exact Git-blob (pure-LF) copy does **not**
+  reproduce the original digests (R2 correction to the earlier "preserved
+  LF" wording; the byte difference is line endings only).
 - `git hash-object` of the R1 working file equals the committed blob hash
   (`79fddb0a…` for `src/other/Renderable.ts`): the **committed content is
   byte-identical**; only the on-disk normalization differs.
@@ -127,6 +130,9 @@ The digest divergence is fully explained and locally verified:
   content-hash-dependent digests reproduce only within byte-identical
   working trees. The original claim ("two equivalent runs produced the same
   digest") remains true within one checkout and is now precisely bounded.
+- `SnapshotIntegrityHash` also differs between runs and checkouts because it
+  includes publication metadata; it is not a cross-run fact digest and is
+  excluded from digest comparisons (R2 completeness note).
 
 The fresh run is preserved at `analysis/r1-reproduction-run.txt` on this
 branch for independent comparison.

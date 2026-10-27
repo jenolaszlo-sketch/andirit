@@ -184,3 +184,49 @@ force and now decides: occurrence/attribution representation, whether the
 binding join is computed at query time (recommended) or emitted as
 extraction-time binding edges, and the resulting provider-version and
 lifecycle contract.
+
+---
+
+## R2 revision (EC6D-PLAN-R2): lexical binding, observability, decision proposals
+
+The independent Q2 review (reconciled report at `review/hetu-ec6d-scope-q2`,
+register Q2-01..Q2-08) confirmed the recovery and the architectural
+direction, and required targeted contract repairs before planning
+acceptance. This revision keeps the milestone boundary unchanged and:
+
+1. **Restricts the confirmed shape.** Confirmed implementations require a
+   module-scope, simple-identifier class `implements` clause with an
+   explicit heritage context record and exactly one eligible visible
+   binding (import route or same-file route). Nested scope, type
+   parameters, ambient/global contexts, recovered syntax, duplicate and
+   conflicting bindings, merges, nested declarations and qualification
+   forms fail closed with explicit reasons (symbol-binding-contract §3;
+   consumer-query-contract §3.4).
+2. **Adds facts C and E.** Heritage context records make every explicit
+   heritage occurrence observable, including the qualified/expression/
+   extends shapes p9 currently drops; export-reference records make
+   re-export barriers and unresolved export sources observable and enable
+   one bounded hop of alias association for candidate relevance. Neither
+   fact confirms anything by itself; re-export closure stays excluded.
+3. **Entry-driven discovery.** Candidates are discovered from the target's
+   attributed export entries and associated occurrence names, not from the
+   target's written name alone; the committed `BarrelPreview` obligation is
+   met by an occurrence-level `re-export-barrier` unknown.
+4. **Physical declaration cardinality.** Attribution counts physical
+   declaration records at module scope before symbol-node deduplication;
+   merged, nested and ambient declarations never yield confirmed identity.
+5. **Publication truth table.** Qualification derives mechanically from
+   `IsConsistentSnapshot` and `SnapshotIdentity` (true/null → qualified),
+   with full publication identity and checked consistent-only consumption
+   (publication-consistency-contract §3–§5).
+6. **Two owner decisions prepared:** the representation decision proposal
+   (query-time joins recommended) and the publication policy decision
+   proposal (qualified results recommended). Both remain unapproved.
+
+Success remains pinned at the query boundary: the committed corpus's four
+intended direct implementations must return as confirmed results with full
+witnesses, negatives must stay negative, and every unevaluated relationship
+inside the declared boundary must be observable in unknowns or coverage.
+The narrow attribution authority (export aliases, physical declarations,
+one-hop relevance) still requires explicit owner authorization across the
+prior Track B deferral; it does not authorize general Track B.

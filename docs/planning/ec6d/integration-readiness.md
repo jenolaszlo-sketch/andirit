@@ -192,3 +192,46 @@ authorization. This R1 packet is planning and remediation only: it
 implements nothing, changes no production schema, executes no migration
 rehearsal, and performs no integration. Every gate above requires its own
 written owner decision.
+
+## R2 revision (EC6D-PLAN-R2): updated implementation prerequisites
+
+The Q2 review (reconciled register Q2-01..Q2-08) authenticated the recovery
+and required targeted contract repairs, delivered by R2. The prerequisite
+list for EC-6D implementation is updated as follows; integration and
+release gates are unchanged.
+
+### Prerequisites for EC-6D implementation (before any production work)
+
+1. Owner approval of the R2 contracts:
+   [symbol-binding-contract.md](symbol-binding-contract.md) (facts A–E;
+   lexical-binding rule; physical-declaration cardinality; witnesses),
+   [consumer-query-contract.md](consumer-query-contract.md) (entry-driven
+   discovery; closed reasons with reachability; coverage),
+   [publication-consistency-contract.md](publication-consistency-contract.md)
+   (truth table; integrity failures; consumption), and the R2
+   [acceptance-contract.md](acceptance-contract.md) matrix.
+2. Owner decisions on the two prepared proposals:
+   [representation-decision-proposal.md](representation-decision-proposal.md)
+   (ADR-1; query-time joins recommended) and
+   [publication-policy-decision-proposal.md](publication-policy-decision-proposal.md)
+   (ADR-2; qualified results with safeguards recommended). These decisions
+   are correctness-relevant and are gated before implementation; no
+   implementation authorization may be inferred while either is unresolved.
+3. **Narrow attribution authority:** explicit written owner authorization of
+   the narrow export-attribution and one-hop relevance subset (physical
+   declarations, export aliases, barrier reporting), recorded against the
+   prior Track B deferral. This does not authorize general Track B.
+4. Targeted independent re-review (Q3) of the repaired contracts —
+   binding algorithm, candidate/coverage rules, publication truth table and
+   the corrected acceptance rows — before owner acceptance binds to a
+   repaired commit/tree.
+5. The EC-6C owner-accepted baseline (`2c3090c`, p9) used as the working
+   base — EC-6D implementation does not require EC-6C to be merged first.
+6. Intended-consumer confirmation of the bounded workflow value (R16 of the
+   risk register) at or before implementation authorization.
+
+Items 5–11 of the R1 prerequisite lists (integration, migration rehearsal,
+A19/A20 compatibility, durability/incremental qualification, cross-platform
+qualification, performance baseline, documentation synchronization) remain
+in force unchanged. R2 performed no implementation, integration, migration,
+publication or release action, and preserves all R1/R2/Q1/Q2 evidence.

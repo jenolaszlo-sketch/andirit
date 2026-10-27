@@ -147,15 +147,20 @@ by a query that reports a bounded, source-backed impact result.
 
 ## R1 reproduction note (EC6D-PLAN-R1)
 
-The independent scope review (Q1, commit `5ba43e1`) and the R1 remediation
-run (`analysis/r1-reproduction-run.txt`, this branch) both re-executed this
-harness against the committed corpus. Structural results reproduce exactly
+The R1 remediation run (`analysis/r1-reproduction-run.txt`, this branch)
+re-executed this harness against the committed corpus; the independent
+scope review (Q1, commit `5ba43e1`) verified the baseline with its **own**
+harness on equivalent fixtures because it could not locate the planning
+corpus. (R2 correction: the earlier wording misattributed the planning
+harness run to Q1.) Structural results reproduce exactly
 (all 64 node identities, all 99 edge identities, identical relationship
 counts, `FindImplementations` = 0, `PublicationConsistent=false`). The
 `IndexIdentity` and `CanonicalFactsSha256` values are
 checkout-environment-dependent (file-node `content-hash` properties hash
-working-tree bytes; this environment checks out CRLF via `core.autocrlf=true`
-while the original preserved LF). The committed content is byte-identical —
+working-tree bytes; this environment checks out CRLF via `core.autocrlf=true`,
+while the original worktree contains LF endings except a final-line CRLF —
+an exact Git-blob (pure-LF) copy does not reproduce the original digests;
+see recovery §6). The committed content is byte-identical —
 `git hash-object` of the R1 working file equals the committed blob hash.
 Digest comparisons are therefore valid only within byte-identical checkouts;
 graph-identity comparisons are valid across checkouts. Full analysis:

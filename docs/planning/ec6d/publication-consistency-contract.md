@@ -1,130 +1,148 @@
-# EC-6D publication-consistency contract (R1 proposal)
+# EC-6D publication-consistency contract (R2 revision)
 
-**Status: remediated planning contract for owner review.** Addresses Q1
-finding F-05: the shipped filesystem source provider declares
-`IsConsistentSnapshot=false` and `SnapshotIdentity=null` for every
-publication (verified on both the in-memory and LatticeDB stores in Q1
-scenario H; `src/Penghou.Hetu/CodeRepositorySource.cs:254-255`). EC-6D must
-define safe consumer semantics for such publications. This document
-authorizes no implementation.
+**Status: remediated planning contract for owner review (EC6D-PLAN-R2).**
+Supersedes the R1 proposal at commit `0e1b213`. Addresses Q2 report Q2-05
+and the publication portions of Q2-04. It authorizes no implementation.
+
+**R2 changes (summary):** full publication identity in every result;
+consistency truth table including the `true`/null contradiction; explicit
+integrity failures distinct from ordinary unknowns; qualification preserved
+through official display/serialization/export with a checked
+consistent-only authority path; failed re-index retention semantics; A17
+and A18 expanded.
 
 ## 1. What the flag means and what it does not
 
 - `IsConsistentSnapshot` is a **provider-declared property**: whether
-  enumeration and reads are guaranteed to see one immutable source snapshot.
-  The filesystem provider cannot guarantee it; the flag is structural, not a
-  defect of a particular run.
-- Within one run, each file's facts reflect that file's content **at its own
-  read time**; files are read sequentially and each file's bytes are
-  re-verified against the planned SHA-256 at materialization
-  (`CodeSourceChangedDuringIndexingException` aborts on drift). A publication
-  can therefore mix state A of file 1 (read at t₀) with state B of file 2
-  (read at t₁) even though every hash verified at read time.
-- **Repeat-index digest stability is not consistency evidence.** Q1 scenario
-  H showed two fresh runs produce identical canonical digests and that the
-  digest moves when a source changes: that demonstrates pipeline
-  determinism and post-hoc drift detection, never intra-run snapshot
-  isolation. Durable reopen preserves facts (67/67 in Q1) — including the
-  inconsistency flag itself; it says nothing about source immutability.
-  Source consistency and durable fact integrity are separate properties and
-  are reported separately everywhere in EC-6D.
+  enumeration and reads are guaranteed to see one immutable source
+  snapshot. The only shipped provider (`FileSystemCodeRepositorySource`)
+  declares `false` with a null `SnapshotIdentity`; the provider interface
+  documents the identity as available "when available" and does not forbid
+  a `true`/null combination — the truth table below therefore defines the
+  behavior rather than assuming provider correctness.
+- Within one run, each file's facts reflect that file's content at its own
+  read time; per-file hashes are re-verified at materialization. A
+  publication can mix per-file states read at different times.
+- **Six distinct guarantees are never substituted for one another:** Git
+  blob identity, working-tree bytes, extracted graph identity, index
+  identity, canonical-facts digest, and publication consistency. Determinism
+  (repeat-index digests) and durable reopen survival are not snapshot
+  consistency evidence, and semantic graph equivalence is never presented
+  as byte-identical indexing.
 
 ## 2. Policy decision
 
-The two permitted designs were evaluated:
+The two permitted designs were evaluated: (1) fail closed — refuse
+confirmed results from inconsistent publications; (2) distinctly qualified
+results with structurally mandatory qualification and fail-closed
+boundaries.
 
-1. **Fail closed** — refuse to return confirmed results from an
-   inconsistent publication.
-2. **Distinctly qualified results** — return results that cannot be
-   interpreted as authoritative consistent-snapshot answers.
+**Recommendation: design 2**, as in R1, for the same reasons: the shipped
+provider is always inconsistent, so design 1 would reject every publication
+the repository can produce; the binding facts are single-file and
+hash-verified; the snapshot risk concentrates in cross-file joins, which
+are pinned to one publication and one run.
 
-**Recommendation: design 2 — qualified results with structurally mandatory
-qualification — with fail-closed elements.** Reasoning:
-
-- Fail-closed alone would reject **every** publication the repository can
-  currently produce (the only shipped provider is always inconsistent),
-  making the milestone unusable and untestable end-to-end; it would also
-  contradict the accepted evidence model in which per-file facts are
-  hash-verified at read time.
-- The per-file facts the binding consumes (heritage clause, import
-  occurrence, export entry, attribution) are **single-file and
-  hash-verified at read**; their internal soundness does not depend on
-  snapshot isolation. The snapshot risk concentrates in **cross-file joins**
-  (module resolution, binding) and in staleness relative to the live tree.
-- Therefore the safe, useful contract is: confirmed bindings are asserted
-  **relative to the publication**, with the publication's consistency status
-  exposed in a form a consumer cannot accidentally ignore, and hard
-  fail-closed behavior at the boundaries where safety cannot be qualified
-  (Section 4).
-
-If a future provider publishes `IsConsistentSnapshot=true` with a non-null
-`SnapshotIdentity`, the same result shape carries `qualification:
-"consistent"` and no qualification prose is required. Nothing else changes.
+**Alternative recorded:** a consistent-only contract (design 1) is the
+fallback if owner review prefers maximum conservatism; its tradeoff is that
+EC-6D becomes unusable and untestable end-to-end with the only shipped
+provider until a snapshot-consistent provider exists. The publication
+policy decision proposal carries the explicit owner choice.
 
 ## 3. How qualification is represented
 
-1. Every result carries `publication { indexIdentity, snapshotIdentity,
-   isConsistentSnapshot, qualification }` where `qualification` is
-   `"consistent"` or `"qualified"`, derived mechanically:
-   `qualification = isConsistentSnapshot ? "consistent" : "qualified"`.
-2. The qualification is a **first-class field of the primary result type**,
-   not an optional envelope header: a consumer that destructures only the
-   result body still receives it, and the coverage statement (consumer-query
-   contract §6) embeds it in the fixed profile text.
-3. `"qualified"` carries exactly this meaning: "all participating facts were
-   produced in this index run from per-file hash-verified reads; the run's
-   source provider does not guarantee a single snapshot; results may mix
-   per-file states read at different times and may not reflect sources
+1. Every result carries
+   `publication { repositoryId, indexRunId, indexIdentity,
+   snapshotIdentity, isConsistentSnapshot, qualification }`. Repository and
+   run identifiers are included because publication-bound queries compare
+   full publication identity (`CodeGraphPublication` and
+   `EnsurePublication`); a partial identity is not sufficient for joins.
+2. **Derivation rule (mechanical, no discretion):**
+
+   | `isConsistentSnapshot` | `snapshotIdentity` | `qualification` |
+   | --- | --- | --- |
+   | `false` | any (null or present) | `qualified` |
+   | `true` | non-null, non-blank | `consistent` |
+   | `true` | null or blank | `qualified` — an inconsistent provider declaration, treated as qualified; never silently promoted to snapshot authority |
+
+3. Qualification is a first-class, discriminated field of the primary
+   result type: a consumer that destructures only the result body still
+   receives it, the coverage statement embeds it, and official display,
+   serialization and export paths preserve it.
+4. `"qualified"` carries exactly this meaning: "all participating facts
+   were produced in this index run from per-file hash-verified reads; the
+   run's source provider does not guarantee a single snapshot; results may
+   mix per-file states read at different times and may not reflect sources
    edited after the run."
-4. Confirmed implementations are asserted **only relative to the
-   publication**: "bound within publication P (run R)". The binding rule
-   consumes facts from exactly one run; the store retains only the latest
-   publication, and a test must pin that no result references facts from
-   superseded units.
-5. Relationship-level provenance (per confirmed path) is independent of
-   publication qualification and remains fully traceable regardless of the
+5. Confirmed implementations are asserted only relative to the publication:
+   every witness step is a stored fact of that publication; the store
+   retains only the latest successful publication; a test must pin that no
+   result references facts from superseded units. Verified witness steps
+   are immutable derivations; recomputation yields the identical witness
+   identity.
+6. Relationship-level provenance remains fully traceable regardless of the
    qualification value.
 
 ## 4. When the system must fail closed
 
-Independent of the qualification value, the query fails closed (throws /
-returns an error result, never classified output) when:
+Independent of qualification, the query fails closed (throws or returns an
+error result, never classified output) when:
 
 - the publication moved between binding the view and answering
   (`CodeGraphPublicationChangedException`, existing fail-on-change
-  semantics);
-- the queried declaration does not exist or is not a supported interface
-  declaration node in the publication;
-- the facts required to evaluate a candidate are internally inconsistent
-  (duplicate identity with different facts — existing fail-closed store
-  behavior);
-- the caller cancels (no partial classified results).
+  semantics — including a same-content/new-run replacement);
+- the input is invalid: unknown/non-interface node, unsupported publication
+  (missing EC-6D provider set), invalid or contradictory bounds;
+- **integrity failures** (distinct from ordinary unknowns): contradictory
+  endpoints in a cited fact, mismatched unit versions, superseded units
+  referenced by a candidate chain, a missing fact inside an asserted
+  witness, duplicate identity with different facts, or any other internal
+  fact inconsistency;
+- the caller cancels (no partial classified results);
+- a query or store failure occurs mid-execution (no partial output).
 
-The query never silently converts an unknown into a confirmed result to
-compensate for missing evidence, and never downgrades a confirmed binding to
-an unknown because of publication inconsistency — the two dimensions stay
-separate.
+Ordinary missing attribution (no declaration, no entry, barrier,
+unresolved module) is an **unknown**, never an integrity error.
+
+**Index-side failures:** a failed or cancelled re-index publishes no
+partial facts and preserves the last successful publication unchanged;
+later live source edits need not move or upgrade it. A bound query keeps
+answering from that publication and exposes its identity and qualification
+— never a freshness claim.
 
 ## 5. Consumer handling obligations (contract text)
 
-The response contract states, as normative text for consumers:
-
-- A `"qualified"` result may be used for navigation, triage, and
-  explanation, and must be surfaced to end users with its qualification.
-- A `"qualified"` result must not be recorded, exported, or acted upon as an
+- A `"qualified"` result may be used for navigation, triage and
+  explanation, and must be surfaced with its qualification.
+- A `"qualified"` result must not be recorded, exported or acted upon as an
   authoritative consistent-snapshot impact statement; re-indexing a fresh,
   ideally revision-pinned snapshot is the prescribed way to obtain one.
 - Only `"consistent"` results may be used where snapshot authority is
   required (for example, gating an automated change).
+- **Checked consumption:** the contract defines a checked consistent-only
+  authority path (a consistent-only accessor or equivalent discriminated
+  guard) that refuses `"qualified"` results for authority use; navigation
+  opt-in is explicit. Tests assert (a) serialization/deserialization
+  preserves qualification, (b) the authority path refuses qualified
+  results, and (c) navigation surfaces label qualified results. A required
+  sibling field cannot mechanically prevent a caller from copying a bare
+  confirmed list; the wrapper/discriminated shape plus the authority path
+  and tested boundaries are the reasonable safeguard, and arbitrary
+  downstream misuse cannot be made impossible.
+- Consistent output still carries language and coverage caveats; snapshot
+  authority never implies whole-program impact completeness.
 
 ## 6. Acceptance linkage
 
-- A17: an inconsistent publication yields `"qualified"` (never an
-  unqualified confirmed claim), and the qualification is present in the
-  primary result type.
-- A15/A16: repeat indexing and durable reopen preserve equivalent canonical
-  results **and** the same qualification value.
-- A18: publication movement and cancellation fail closed with no partial
-  classified results.
+- A17 (expanded): inconsistent `false`/null → `qualified`; `true` with
+  identified snapshot → `consistent`; `true`/null → `qualified` (policy
+  case, never `consistent`); structural integrity errors fail closed;
+  serialization preserves qualification; the checked authority path
+  refuses qualified results.
+- A18 and A18b (expanded): mid-query cancellation; publication movement
+  between joins including same-content/new-run replacement; failed indexing
+  retains the last successful publication and bound queries still answer
+  with unchanged identity/qualification; query/store failures return no
+  partial output.
 - No digest-stability or reopen claim may be cited as snapshot-consistency
-  evidence (this Section 1 boundary is itself an acceptance assertion).
+  evidence (this boundary is itself an acceptance assertion).
