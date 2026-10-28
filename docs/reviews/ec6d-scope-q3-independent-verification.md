@@ -49,10 +49,18 @@ see new finding Q3-F01.
 (`ff2d18826a350c809785a8d24c5355abbfb36f38`) was extracted byte-identical
 from Git; the attestation commit's recorded binding matches exactly.
 
-**Final review binding.** This report and its evidence are the Q3 content
-commit; a binding-only follow-up commit records the exact content
-commit/tree/parent and the resulting HEAD. Resolve the final review
-commit/tree/parent with:
+**Final review binding.** The complete Q3 review and evidence are bound to:
+
+| Item | Exact identity |
+| --- | --- |
+| Review-content commit | `9ec3d7f4306cffa33858bcb49a798945f81dd044` |
+| Review-content tree | `4e4de139b80bd4bef40579f4f2b1edd5ebd8694e` |
+| Review-content parent | `3ce7dd93c105e7e7375a04edb083be3a5d97f672` |
+
+The content commit had a clean worktree after commit. The following
+binding-only commit changes this attestation, not the findings or evidence.
+Its exact final commit/tree are emitted in the completion handoff; resolve
+the containing commit/tree/parent with:
 
 ```text
 git show -s --format="%H%n%T%n%P" review/hetu-ec6d-scope-q3
@@ -498,8 +506,12 @@ change-surface checks recorded in §A/§C.
 
 **EC6D-SCOPE-Q3 COMPLETE: ACCEPT WITH QUALIFICATIONS**
 
-- Final review commit/tree/parent: recorded by the binding attestation
-  commit; resolve with `git show -s --format="%H%n%T%n%P" review/hetu-ec6d-scope-q3`.
+- Final review commit/tree/parent: review-content commit
+  `9ec3d7f4306cffa33858bcb49a798945f81dd044` (tree
+  `4e4de139b80bd4bef40579f4f2b1edd5ebd8694e`, parent
+  `3ce7dd93c105e7e7375a04edb083be3a5d97f672`) plus the binding-only
+  attestation commit; resolve the final HEAD with
+  `git show -s --format="%H%n%T%n%P" review/hetu-ec6d-scope-q3`.
 - Open P0/P1 findings: none.
 - Remaining qualifications: Q3-F01..Q3-F05 (all P3) plus the inherited
   limitations in §L.
