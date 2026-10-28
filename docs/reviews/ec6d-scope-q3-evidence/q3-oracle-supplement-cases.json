@@ -1,0 +1,26 @@
+{
+  "q3-nested-shadow-q2shape": {
+    "types.ts": "export interface Widget { remote: string; }\n",
+    "consumer.ts": "import type { Widget as Local } from './types';\nexport function make() {\n  interface Local { local: string; }\n  class Nested implements Local { local = ''; }\n  return new Nested();\n}\n"
+  },
+  "q3-type-param-boundary": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import type { Widget as Local } from './types';\nexport class TypeParamC<Local> implements Local { local = ''; }\n"
+  },
+  "q3-block-scope-positive-ts": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import type { Widget } from './types';\n{\n  export class BlockC implements Widget { a = ''; }\n}\n"
+  },
+  "q3-unshadowed-alias-positive": {
+    "types.ts": "interface Internal { a: string; }\nexport { Internal as Public };\n",
+    "consumer.ts": "import type { Public as Alias } from './types';\nexport class Renamed implements Alias { a = ''; }\n"
+  },
+  "q3-import-vs-nested-unrelated": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import type { Widget } from './types';\nnamespace N { export interface Widget { n: string; } }\nexport class ViaModule implements Widget { a = ''; }\n"
+  },
+  "q3-local-namespace-qualified": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import type { Widget } from './types';\nnamespace NS { export interface Widget { n: string; } }\nexport class ViaNs implements NS.Widget { n = ''; }\n"
+  }
+}

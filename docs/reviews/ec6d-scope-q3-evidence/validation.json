@@ -1,0 +1,131 @@
+{
+  "review": "EC6D-SCOPE-Q3 focused independent contract verification",
+  "branch": "review/hetu-ec6d-scope-q3",
+  "worktree": "C:/Users/Laszlos/source/repos/Solo/hetu-ec6d-scope-q3",
+  "reviewedSource": {
+    "commit": "3ce7dd93c105e7e7375a04edb083be3a5d97f672",
+    "tree": "a10b91d10523515de9c038b9fa2e8cc51000c19d",
+    "parent": "0e1b213737d42c74df20aef4744ab5718058e266"
+  },
+  "baselines": {
+    "r1": { "commit": "0e1b213737d42c74df20aef4744ab5718058e266", "tree": "ddf777aa155852daca40b6ed8748c028c67d5822", "parent": "91a3ed53a256e89ed71d7d11c204252c417400a6" },
+    "recoveredPlanning": { "commit": "91a3ed53a256e89ed71d7d11c204252c417400a6", "tree": "d79e5814485040a36c77bcde332ebc937f312476" },
+    "ec6cOwnerAcceptance": { "commit": "2c3090cba6d8a56102a5c47ceb026c5b5fea3234", "tree": "ece772f1f2b2497891f4019d0d85f4d852b197e1" },
+    "canonicalMain": { "commit": "558f8ac82ac1b5e07da68f4a71a70240eaf38409", "tree": "08a01a1b7d5d3109b991bcd05d57272fd3f5f018" },
+    "ancestryChecks": "all exit 0 (see git-verification.txt)"
+  },
+  "q2Supersession": {
+    "originalHandoff": { "commit": "6e34452647fb28ee12be14798142921838f997bd", "tree": "55ea07415c97792710151392c6b1ae9eef74f776", "parent": "575712074cae22ea98312864b78c950ecc56e411" },
+    "reconciledContent": { "commit": "6630624f976d53161e2657b638c7a67c41f9c0ed", "tree": "5c4447b43c19133fc912ad1402f34405541a74fe", "parent": "6e34452647fb28ee12be14798142921838f997bd" },
+    "bindingHead": { "commit": "1bfcc84bfd95974fe9c54637a347e0e4d4b158e7", "tree": "a34154a51afb4186f6d2778ecbaec63f1eceebd4", "parent": "6630624f976d53161e2657b638c7a67c41f9c0ed" },
+    "reportBlob": "ff2d18826a350c809785a8d24c5355abbfb36f38",
+    "extractedReportSha256MatchesBlob": true,
+    "attestation": "1bfcc84 records content commit 6630624f976d53161e2657b638c7a67c41f9c0ed / tree 5c4447b43c19133fc912ad1402f34405541a74fe / parent 6e34452647fb28ee12be14798142921838f997bd; verified byte-for-byte",
+    "ancestryChecks": "6e34452 -> 6630624 -> 1bfcc84 all exit 0"
+  },
+  "changeSurface": {
+    "modifiedCount": 12,
+    "addedCount": 6,
+    "allUnder": "docs/planning/ec6d/",
+    "modified": [
+      "docs/planning/ec6d/README.md",
+      "docs/planning/ec6d/acceptance-contract.md",
+      "docs/planning/ec6d/consumer-baseline.md",
+      "docs/planning/ec6d/consumer-query-contract.md",
+      "docs/planning/ec6d/evidence-index.md",
+      "docs/planning/ec6d/integration-readiness.md",
+      "docs/planning/ec6d/publication-consistency-contract.md",
+      "docs/planning/ec6d/q1-findings-disposition.md",
+      "docs/planning/ec6d/recovery-and-provenance.md",
+      "docs/planning/ec6d/risk-register.md",
+      "docs/planning/ec6d/scope-proposal.md",
+      "docs/planning/ec6d/symbol-binding-contract.md"
+    ],
+    "added": [
+      "docs/planning/ec6d/analysis/fixtures/r2/README.md",
+      "docs/planning/ec6d/analysis/fixtures/r2/cases.json",
+      "docs/planning/ec6d/analysis/r2-typescript-oracle-run.txt",
+      "docs/planning/ec6d/publication-policy-decision-proposal.md",
+      "docs/planning/ec6d/q2-findings-disposition.md",
+      "docs/planning/ec6d/representation-decision-proposal.md"
+    ],
+    "matchesCommitMessage": true,
+    "evidenceIndexDiscrepancy": "docs/planning/ec6d/evidence-index.md R2 section states 'ten modified and five added paths' and omits README.md and evidence-index.md from its modified list; actual surface is 12 modified + 6 added (Q3-F01, P3)"
+  },
+  "noProductionOrTestChanges": "git diff --name-only 0e1b213 3ce7dd9 -- src tests docs/reviews -> empty",
+  "whitespace": "git diff --check 0e1b213 3ce7dd9 -> clean",
+  "linkCheck": {
+    "documentsChecked": 22,
+    "linksChecked": 67,
+    "missingCount": 0,
+    "scope": "relative Markdown links under docs/planning/ec6d (existence only)"
+  },
+  "oracleVerification": {
+    "compiler": "5.9.3",
+    "node": "v24.21.0",
+    "casesRun": 43,
+    "casesVsRecordedR2Run": { "cases": 23, "diffs": 0 },
+    "casesVsRecordedQ2RunNormalized": { "cases": 14, "diffs": 0 },
+    "supplementalCases": [
+      "q3-nested-shadow-q2shape (valid; binds consumer-local interface; contract refuses with nested-scope-heritage)",
+      "q3-type-param-boundary (TS2422; binds class type parameter; contract refuses with type-parameter-shadowing)",
+      "q3-block-scope-positive-ts (TS1184 fixture; clause owner outside file scope; contract refuses conservatively)",
+      "q3-unshadowed-alias-positive (valid; binds target via alias; import route confirms)",
+      "q3-import-vs-nested-unrelated (valid; binds imported target; nested same-name does not interfere)",
+      "q3-local-namespace-qualified (valid; binds local namespace member; contract reports qualified-heritage-unresolved, never confirms)"
+    ]
+  },
+  "protectedState": {
+    "refs": {
+      "planning/hetu-ec6d-plan-r2": "3ce7dd93c105e7e7375a04edb083be3a5d97f672",
+      "planning/hetu-ec6d-plan-r1": "0e1b213737d42c74df20aef4744ab5718058e266",
+      "planning/hetu-ec6d-consumer-intelligence": "91a3ed53a256e89ed71d7d11c204252c417400a6",
+      "review/hetu-ec6d-scope-q1": "d2bb7b1c6d2c760ed044ad31994a90d8665fd0dc",
+      "review/hetu-ec6d-scope-q2": "1bfcc84bfd95974fe9c54637a347e0e4d4b158e7",
+      "main": "558f8ac82ac1b5e07da68f4a71a70240eaf38409"
+    },
+    "planningWorktreesClean": [
+      "C:/Users/Laszlos/source/repos/Solo/hetu-ec6d-consumer-intelligence (91a3ed5, clean)",
+      "C:/Users/Laszlos/source/repos/Solo/hetu-ec6d-plan-r1 (0e1b213, clean)",
+      "C:/Users/Laszlos/source/repos/Solo/hetu-ec6d-plan-r2 (3ce7dd9, clean)",
+      "C:/Users/Laszlos/source/repos/Solo/hetu-ec6d-scope-q2 (1bfcc84, clean)"
+    ],
+    "canonicalWorktrees": "listed read-only at start; no writes performed"
+  },
+  "environment": {
+    "fsck": "git fsck --connectivity-only -> exit 0 (dangling blobs only, same class as Q2 record)",
+    "diskFreeBytesAtStart": 71716745216,
+    "platform": "Windows x64"
+  },
+  "sourceInspections": [
+    "src/Penghou.Hetu/CodeGraphStoreModels.cs: CodeGraphPublication permits true/null and normalizes blank SnapshotIdentity to null; full identity block present (Q2-05 basis)",
+    "src/Penghou.Hetu/CodeGraphQueryService.cs: EnsurePublication compares full publication records and throws CodeGraphPublicationChangedException",
+    "src/Penghou.Hetu.TreeSitter/EcmaScriptExtractionProfile.cs: HeritageName handles identifier/type_identifier/member_expression only (qualified TS types dropped, confirming the fact-C need); heritage-target ids are declaration-less file-scoped (profile revision 5); existing facts intentionally retain the .abi14.p8 evidence version at the p9 profile",
+    "src/Penghou.Hetu.TreeSitter/EcmaScriptExportGraphPublisher.cs: export-via vocabulary is direct/local/expression; re-export clauses publish no export entries; export entry ids hash path+name",
+    "src/Penghou.Hetu.TreeSitter/EcmaScriptExportObservation.cs: EcmaScriptExportForm has no re-export form",
+    "src/Penghou.Hetu.TreeSitter/TreeSitterModuleResolution.cs: resolver outcomes Resolved/Unresolved/External/Unsupported (A28 basis)",
+    "docs/ecmascript-module-resolution.md: module-reference vocabulary is import/import-type/require/export-from/export-type-from/export-star/export-namespace-from",
+    "docs/ecmascript-symbol-identity.md: heritage-target namespace rule (file-scoped, declaration-less)",
+    "docs/analysis evidence (committed Q2 branch, read-only): p9 barrel case emits export-from module reference and no export entry for the re-exported name; merged emits one node + one entry + two occurrence edges; repeated-export emits separate alias entries; type-value emits distinct interface/field nodes with one local-via entry; audit-results.json contains 18 passing checks"
+  ],
+  "artifactByteSha256": {
+    "git-verification.txt": "7f832dabb54f1df2e8ae8e19b56973b06111d1de9a4da65ad77c4d79abad53b0",
+    "q3-link-check.json": "1c6a03d4c3acfb7946cefc565c112137b6f618650f0306024eb35a7dc0d903fc",
+    "q3-oracle-input-cases.json": "88339735f4ba123d7a941d71d237e6fa8176982f8c5c49900f6576feafed68e0",
+    "q3-oracle-recorded-comparison.json": "ec73bea180af0331987ef883bdabc5b7206ded13fdc128b33bc97ce3bf7bda36",
+    "q3-oracle-run.json": "4d642a994a77cbb02e1f3da6a76f0ab21c2c19a28fb8e76e73c54fa2f28c6cfc",
+    "q3-oracle-supplement-cases.json": "51a16b732bfb992f442b26d46013f8fd3ee3e68ad4a5eee4c5007f3a662ab51b",
+    "README.md": "05fcfe9a6645cea8b037fdbf82a8aca6c7829b98af0766b368c8382f05c4ed59",
+    "tools/compare-oracle-runs.cjs": "ece8a3f02206049b9edb1999bd2e5bec559813e68427e3c1de06d40a14288df4",
+    "tools/git-verification.cjs": "e49ef27fa45cc84416e1bd60b676f103cd2a34ce2acce99512d21ea36a5b2128",
+    "tools/merge-cases.cjs": "a529a32b3548b0ac368a00ec83a79b57f6d19f12bc13ce74a2b2c48434af1f12",
+    "tools/q2-typescript-oracle.cjs": "00224ebfeda646f4751fc99744580a12fe0359e6206baef8723600682c11e204"
+  },
+  "limits": [
+    "No EC-6D implementation exists: facts A/C/E, binding rule and GetInterfaceImpactV1 behavior are contract text only.",
+    "TypeScript oracle is a semantic reference, not a product dependency; fixture-bounded.",
+    "The Q2 p9 C# observation harness was not re-executed; committed Q2 evidence and production source were read and spot-checked.",
+    "Link check verifies relative-target existence only, not anchors.",
+    "Windows x64 only; no cross-platform, performance, migration or release qualification."
+  ]
+}

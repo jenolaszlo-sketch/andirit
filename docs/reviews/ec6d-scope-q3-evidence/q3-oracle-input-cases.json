@@ -1,0 +1,195 @@
+{
+  "collision": {
+    "types.ts": "export interface Widget { remote: string; }\n",
+    "consumer.ts": "import { Widget as Local } from './types';\ninterface Local { local: string; }\nexport class Ambiguous implements Local { remote = ''; }\n"
+  },
+  "nested-shadow": {
+    "types.ts": "export interface Widget { remote: string; }\n",
+    "consumer.ts": "import type { Widget as Local } from './types';\nexport function make() {\n interface Local { local: string; }\n class Nested implements Local { local = ''; }\n return new Nested();\n}\n"
+  },
+  "merged": {
+    "types.ts": "export interface Widget { a: string; }\nexport interface Widget { b: number; }\n",
+    "consumer.ts": "import type { Widget } from './types';\nexport class Merged implements Widget { a = ''; b = 0; }\n"
+  },
+  "wrong-export": {
+    "types.ts": "export interface Widget {}\nexport interface Gadget {}\n",
+    "consumer.ts": "import { Gadget } from './types';\nexport class Wrong implements Widget {}\n"
+  },
+  "nested-export": {
+    "types.ts": "namespace Hidden { export interface Widget {} }\nexport { Widget };\n",
+    "consumer.ts": "import type { Widget } from './types';\nexport class Wrong implements Widget {}\n"
+  },
+  "barrel": {
+    "types.ts": "export interface Widget {}\n",
+    "named.ts": "export { Widget } from './types';\n",
+    "star.ts": "export * from './types';\n",
+    "missing.ts": "export { Widget } from './absent';\n",
+    "ordinary.ts": "import { Widget } from './types';\nexport const marker = 1;\n",
+    "multi.ts": "export * from './types';\nexport * from './absent';\n",
+    "no-declaration.ts": "export { Ghost } from './types';\n",
+    "consumer.ts": "import { Widget } from './named';\nexport class ViaNamed implements Widget {}\n",
+    "direct.ts": "import { Widget } from './types';\nexport class Direct implements Widget {}\n"
+  },
+  "idle": {
+    "types.ts": "export interface Widget {}\n",
+    "consumer.ts": "import type { Widget } from './types';\n"
+  },
+  "duplicate-imports": {
+    "a.ts": "export interface Widget {}\n",
+    "b.ts": "export interface Widget {}\n",
+    "consumer.ts": "import type { Widget as Local } from './a';\nimport type { Widget as Local } from './b';\nexport class Ambiguous implements Local {}\n"
+  },
+  "multi-specifier": {
+    "types.ts": "export interface Widget {}\nexport interface Gadget {}\n",
+    "consumer.ts": "import { type Widget as W, type Gadget as G } from './types';\nexport class A implements W {}\nexport class B implements G {}\n"
+  },
+  "export-alias": {
+    "types.ts": "interface Internal {}\nexport { Internal as Public };\n",
+    "consumer.ts": "import type { Public as Alias } from './types';\nexport class Renamed implements Alias {}\n"
+  },
+  "unsupported": {
+    "types.ts": "export interface Widget {}\nexport default interface DefaultWidget {}\n",
+    "consumer.ts": "import * as NS from './types';\nimport DefaultWidget from './types';\nimport { Ghost as MissingAlias } from './absent';\nexport class Namespaced implements NS.Widget {}\nexport class Defaulted implements DefaultWidget {}\nexport class Missing implements MissingAlias {}\n"
+  },
+  "type-value": {
+    "types.ts": "interface Widget {}\nconst Widget = 1;\nexport { Widget };\n",
+    "consumer.ts": "import type { Widget } from './types';\nexport class Both implements Widget {}\n"
+  },
+  "same-file": {
+    "types.ts": "export interface Widget {}\nexport class Local implements Widget {}\n"
+  },
+  "repeated-export": {
+    "types.ts": "interface Widget {}\nexport { Widget as One, Widget as Two };\n",
+    "consumer.ts": "import type { One as W } from './types';\nexport class ViaOne implements W {}\n"
+  },
+  "absent-export": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "partial.ts": "export interface Other { o: string; }\n",
+    "consumer.ts": "import { Widget } from './partial';\nexport class ViaClause implements Widget { a = ''; }\n",
+    "bare.ts": "import { Widget } from './partial';\n"
+  },
+  "barrel-named": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "barrel.ts": "export { Widget } from './target';\n",
+    "consumer.ts": "import { Widget } from './barrel';\nexport class ViaNamed implements Widget { a = ''; }\n"
+  },
+  "barrel-star": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "barrel.ts": "export * from './target';\n",
+    "consumer.ts": "import { Widget } from './barrel';\nexport class ViaStar implements Widget { a = ''; }\n"
+  },
+  "barrel-missing": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "barrel.ts": "export { Widget } from './absent';\n",
+    "consumer.ts": "import { Widget } from './barrel';\nexport class ViaMissing implements Widget { a = ''; }\n"
+  },
+  "barrel-multi": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "barrel.ts": "export * from './target';\nexport * from './absent';\n",
+    "consumer.ts": "import { Widget } from './barrel';\nexport class ViaMulti implements Widget { a = ''; }\n"
+  },
+  "barrel-no-declaration": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "types.ts": "export interface Other { o: string; }\n",
+    "barrel.ts": "export { Widget } from './types';\n",
+    "consumer.ts": "import { Widget } from './barrel';\nexport class ViaNoDecl implements Widget { a = ''; }\n"
+  },
+  "barrel-ordinary-consumer": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "ordinary.ts": "import { Widget } from './target';\nexport const marker = 1;\n",
+    "consumer.ts": "import { Widget } from './ordinary';\nexport class ViaOrdinary implements Widget { a = ''; }\n"
+  },
+  "barrel-missing-consumer": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "barrel.ts": "export { Widget } from './absent';\n",
+    "consumer.ts": "import { Widget } from './barrel';\n"
+  },
+  "forms-import-equals": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import W = require('./types');\nexport class ViaEquals implements W { a = ''; }\n"
+  },
+  "forms-inline-type": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import { type Widget } from './types';\nexport class ViaInline implements Widget { a = ''; }\n"
+  },
+  "forms-dynamic": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "export const load = () => import('./types');\n"
+  },
+  "expression-heritage": {
+    "types.ts": "export interface Widget { a: string; }\nexport class WidgetImpl { a = ''; }\n",
+    "consumer.ts": "import { Widget, WidgetImpl } from './types';\nexport function factory(base: unknown) { return WidgetImpl; }\nexport class ViaExpression extends factory(Widget) {}\n"
+  },
+  "interface-extends": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import { Widget } from './types';\nexport interface Extended extends Widget { b: string; }\n"
+  },
+  "same-file-merged": {
+    "consumer.ts": "export interface Local { a: string; }\nexport class Local { a = ''; }\nexport class ViaMergedLocal implements Local { a = ''; }\n"
+  },
+  "ambient-export": {
+    "types.ts": "export declare interface Widget { a: string; }\n",
+    "consumer.ts": "import { Widget } from './types';\nexport class ViaAmbient implements Widget { a = ''; }\n"
+  },
+  "ambient-script": {
+    "script.ts": "interface Local { a: string; }\nclass ViaScript implements Local { a = ''; }\n"
+  },
+  "recovered-clause": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import { Widget } from './types';\nexport class Broken implements Widget {\n  field = ;\n"
+  },
+  "ghost": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "ghost.ts": "export { Widget };\n",
+    "consumer.ts": "import { Widget } from './ghost';\nexport class ViaGhost implements Widget { a = ''; }\n"
+  },
+  "external-package": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import { Widget } from 'some-package';\nexport class ViaExternal implements Widget { a = ''; }\n"
+  },
+  "barrier-scope": {
+    "target.ts": "export interface Widget { a: string; }\n",
+    "related-barrel.ts": "export * from './target';\n",
+    "related-consumer.ts": "import { Widget } from './related-barrel';\nexport class ViaRelated implements Widget { a = ''; }\n",
+    "unrelated.ts": "export interface Unrelated { u: string; }\n",
+    "unrelated-barrel.ts": "export * from './unrelated';\n",
+    "unrelated-consumer.ts": "import { Unrelated } from './unrelated-barrel';\nexport class ViaUnrelated implements Unrelated { u = ''; }\n",
+    "direct-consumer.ts": "import { Widget } from './target';\nexport class Direct implements Widget { a = ''; }\n"
+  },
+  "nested-unrelated": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import type { Widget } from './types';\nexport namespace N {\n  export interface Widget { n: string; }\n}\nexport class ViaNestedContrast implements Widget { a = ''; }\n"
+  },
+  "default-implement": {
+    "types.ts": "export interface Widget { a: string; }\nexport default interface DefaultWidget { d: string; }\n",
+    "consumer.ts": "import DefaultWidget from './types';\nexport class ViaDefault implements DefaultWidget { d = ''; }\n"
+  },
+  "qualified-member": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import * as NS from './types';\nexport class ViaQualified implements NS.Widget { a = ''; }\n"
+  },
+  "q3-nested-shadow-q2shape": {
+    "types.ts": "export interface Widget { remote: string; }\n",
+    "consumer.ts": "import type { Widget as Local } from './types';\nexport function make() {\n  interface Local { local: string; }\n  class Nested implements Local { local = ''; }\n  return new Nested();\n}\n"
+  },
+  "q3-type-param-boundary": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import type { Widget as Local } from './types';\nexport class TypeParamC<Local> implements Local { local = ''; }\n"
+  },
+  "q3-block-scope-positive-ts": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import type { Widget } from './types';\n{\n  export class BlockC implements Widget { a = ''; }\n}\n"
+  },
+  "q3-unshadowed-alias-positive": {
+    "types.ts": "interface Internal { a: string; }\nexport { Internal as Public };\n",
+    "consumer.ts": "import type { Public as Alias } from './types';\nexport class Renamed implements Alias { a = ''; }\n"
+  },
+  "q3-import-vs-nested-unrelated": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import type { Widget } from './types';\nnamespace N { export interface Widget { n: string; } }\nexport class ViaModule implements Widget { a = ''; }\n"
+  },
+  "q3-local-namespace-qualified": {
+    "types.ts": "export interface Widget { a: string; }\n",
+    "consumer.ts": "import type { Widget } from './types';\nnamespace NS { export interface Widget { n: string; } }\nexport class ViaNs implements NS.Widget { n = ''; }\n"
+  }
+}

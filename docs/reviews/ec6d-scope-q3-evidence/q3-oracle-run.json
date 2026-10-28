@@ -1,0 +1,828 @@
+{
+  "compiler": "5.9.3",
+  "node": "v24.21.0",
+  "cases": {
+    "collision": {
+      "diagnostics": [
+        {
+          "code": 2440,
+          "file": "consumer.ts",
+          "message": "Import declaration conflicts with local declaration of 'Local'."
+        },
+        {
+          "code": 2420,
+          "file": "consumer.ts",
+          "message": "Class 'Ambiguous' incorrectly implements interface 'Local'.   Property 'local' is missing in type 'Ambiguous' but required in type 'Local'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Local",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { remote: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "nested-shadow": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Local",
+          "bindsTo": [
+            {
+              "file": "consumer.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Local { local: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "merged": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            },
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { b: number; }"
+            }
+          ]
+        }
+      ]
+    },
+    "wrong-export": {
+      "diagnostics": [
+        {
+          "code": 2304,
+          "file": "consumer.ts",
+          "message": "Cannot find name 'Widget'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": []
+        }
+      ]
+    },
+    "nested-export": {
+      "diagnostics": [
+        {
+          "code": 2304,
+          "file": "types.ts",
+          "message": "Cannot find name 'Widget'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": []
+        }
+      ]
+    },
+    "barrel": {
+      "diagnostics": [
+        {
+          "code": 2307,
+          "file": "missing.ts",
+          "message": "Cannot find module './absent' or its corresponding type declarations."
+        },
+        {
+          "code": 2307,
+          "file": "multi.ts",
+          "message": "Cannot find module './absent' or its corresponding type declarations."
+        },
+        {
+          "code": 2305,
+          "file": "no-declaration.ts",
+          "message": "Module '\"./types\"' has no exported member 'Ghost'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        },
+        {
+          "file": "direct.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        }
+      ]
+    },
+    "idle": {
+      "diagnostics": [],
+      "heritage": []
+    },
+    "duplicate-imports": {
+      "diagnostics": [
+        {
+          "code": 2300,
+          "file": "consumer.ts",
+          "message": "Duplicate identifier 'Local'."
+        },
+        {
+          "code": 2300,
+          "file": "consumer.ts",
+          "message": "Duplicate identifier 'Local'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Local",
+          "bindsTo": [
+            {
+              "file": "a.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        }
+      ]
+    },
+    "multi-specifier": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "W",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        },
+        {
+          "file": "consumer.ts",
+          "text": "G",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Gadget {}"
+            }
+          ]
+        }
+      ]
+    },
+    "export-alias": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Alias",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Internal {}"
+            }
+          ]
+        }
+      ]
+    },
+    "unsupported": {
+      "diagnostics": [
+        {
+          "code": 2307,
+          "file": "consumer.ts",
+          "message": "Cannot find module './absent' or its corresponding type declarations."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "NS.Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        },
+        {
+          "file": "consumer.ts",
+          "text": "DefaultWidget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export default interface DefaultWidget {}"
+            }
+          ]
+        },
+        {
+          "file": "consumer.ts",
+          "text": "MissingAlias",
+          "bindsTo": []
+        }
+      ]
+    },
+    "type-value": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Widget {}"
+            },
+            {
+              "file": "types.ts",
+              "kind": "VariableDeclaration",
+              "text": "Widget = 1"
+            }
+          ]
+        }
+      ]
+    },
+    "same-file": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "types.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        }
+      ]
+    },
+    "repeated-export": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "W",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Widget {}"
+            }
+          ]
+        }
+      ]
+    },
+    "absent-export": {
+      "diagnostics": [
+        {
+          "code": 2305,
+          "file": "bare.ts",
+          "message": "Module '\"./partial\"' has no exported member 'Widget'."
+        },
+        {
+          "code": 2305,
+          "file": "consumer.ts",
+          "message": "Module '\"./partial\"' has no exported member 'Widget'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": []
+        }
+      ]
+    },
+    "barrel-named": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "target.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "barrel-star": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "target.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "barrel-missing": {
+      "diagnostics": [
+        {
+          "code": 2307,
+          "file": "barrel.ts",
+          "message": "Cannot find module './absent' or its corresponding type declarations."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": []
+        }
+      ]
+    },
+    "barrel-multi": {
+      "diagnostics": [
+        {
+          "code": 2307,
+          "file": "barrel.ts",
+          "message": "Cannot find module './absent' or its corresponding type declarations."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "target.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "barrel-no-declaration": {
+      "diagnostics": [
+        {
+          "code": 2305,
+          "file": "barrel.ts",
+          "message": "Module '\"./types\"' has no exported member 'Widget'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": []
+        }
+      ]
+    },
+    "barrel-ordinary-consumer": {
+      "diagnostics": [
+        {
+          "code": 2459,
+          "file": "consumer.ts",
+          "message": "Module '\"./ordinary\"' declares 'Widget' locally, but it is not exported."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": []
+        }
+      ]
+    },
+    "barrel-missing-consumer": {
+      "diagnostics": [
+        {
+          "code": 2307,
+          "file": "barrel.ts",
+          "message": "Cannot find module './absent' or its corresponding type declarations."
+        }
+      ],
+      "heritage": []
+    },
+    "forms-import-equals": {
+      "diagnostics": [
+        {
+          "code": 2709,
+          "file": "consumer.ts",
+          "message": "Cannot use namespace 'W' as a type."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "W",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "SourceFile",
+              "text": "export interface Widget { a: string; }\n"
+            }
+          ]
+        }
+      ]
+    },
+    "forms-inline-type": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "forms-dynamic": {
+      "diagnostics": [],
+      "heritage": []
+    },
+    "expression-heritage": {
+      "diagnostics": [
+        {
+          "code": 2693,
+          "file": "consumer.ts",
+          "message": "'Widget' only refers to a type, but is being used as a value here."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "factory(Widget)",
+          "bindsTo": []
+        }
+      ]
+    },
+    "interface-extends": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "same-file-merged": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Local",
+          "bindsTo": [
+            {
+              "file": "consumer.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Local { a: string; }"
+            },
+            {
+              "file": "consumer.ts",
+              "kind": "ClassDeclaration",
+              "text": "export class Local { a = ''; }"
+            }
+          ]
+        }
+      ]
+    },
+    "ambient-export": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export declare interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "ambient-script": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "script.ts",
+          "text": "Local",
+          "bindsTo": [
+            {
+              "file": "script.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Local { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "recovered-clause": {
+      "diagnostics": [
+        {
+          "code": 2420,
+          "file": "consumer.ts",
+          "message": "Class 'Broken' incorrectly implements interface 'Widget'.   Property 'a' is missing in type 'Broken' but required in type 'Widget'."
+        },
+        {
+          "code": 1109,
+          "file": "consumer.ts",
+          "message": "Expression expected."
+        },
+        {
+          "code": 1005,
+          "file": "consumer.ts",
+          "message": "'}' expected."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "ghost": {
+      "diagnostics": [
+        {
+          "code": 2304,
+          "file": "ghost.ts",
+          "message": "Cannot find name 'Widget'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": []
+        }
+      ]
+    },
+    "external-package": {
+      "diagnostics": [
+        {
+          "code": 2307,
+          "file": "consumer.ts",
+          "message": "Cannot find module 'some-package' or its corresponding type declarations."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": []
+        }
+      ]
+    },
+    "barrier-scope": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "related-consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "target.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        },
+        {
+          "file": "unrelated-consumer.ts",
+          "text": "Unrelated",
+          "bindsTo": [
+            {
+              "file": "unrelated.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Unrelated { u: string; }"
+            }
+          ]
+        },
+        {
+          "file": "direct-consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "target.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "nested-unrelated": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "default-implement": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "DefaultWidget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export default interface DefaultWidget { d: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "qualified-member": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "NS.Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "q3-nested-shadow-q2shape": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Local",
+          "bindsTo": [
+            {
+              "file": "consumer.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Local { local: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "q3-type-param-boundary": {
+      "diagnostics": [
+        {
+          "code": 2422,
+          "file": "consumer.ts",
+          "message": "A class can only implement an object type or intersection of object types with statically known members."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Local",
+          "bindsTo": [
+            {
+              "file": "consumer.ts",
+              "kind": "TypeParameter",
+              "text": "Local"
+            }
+          ]
+        }
+      ]
+    },
+    "q3-block-scope-positive-ts": {
+      "diagnostics": [
+        {
+          "code": 1184,
+          "file": "consumer.ts",
+          "message": "Modifiers cannot appear here."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "q3-unshadowed-alias-positive": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Alias",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Internal { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "q3-import-vs-nested-unrelated": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "bindsTo": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "q3-local-namespace-qualified": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "NS.Widget",
+          "bindsTo": [
+            {
+              "file": "consumer.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { n: string; }"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
