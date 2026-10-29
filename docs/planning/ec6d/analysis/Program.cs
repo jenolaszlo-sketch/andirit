@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Security.Cryptography;
 using System.Text;
-using Penghou.Hetu;
+using Andirit;
 
 if (args.Length != 1)
 {

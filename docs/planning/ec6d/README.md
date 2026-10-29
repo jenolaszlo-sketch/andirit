@@ -10,7 +10,9 @@ ADR-3 narrow attribution authority. [Closure/audit](owner-01-findings-closure.md
 [HETU-INT-01 handoff](owner-01-integration-handoff.md) are the current entry
 points. The R2 status and proposal language below describe their historical
 authorship state; the owner record supplies current decision status.
-R16 and all inherited qualifications remain open. No implementation,
+R16 was closed on 2026-10-30 by a recorded intended-consumer ACCEPT
+([R16 validation](../../validation/ec6d-r16/README.md)); the other inherited
+qualifications remain open. No implementation,
 integration, rename, publication or release is authorized.
 
 **EC6D-PLAN-R2 status: remediation complete; ready for focused Q3
