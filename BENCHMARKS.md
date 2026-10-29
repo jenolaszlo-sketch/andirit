@@ -1,7 +1,7 @@
-# Penghou.Hetu Benchmarks
+# Penghou.Andirit Benchmarks
 
 The reproducible BenchmarkDotNet harness lives in
-`benchmarks/Penghou.Hetu.Benchmarks`. It exercises durable LatticeDB unit
+`benchmarks/Penghou.Andirit.Benchmarks`. It exercises durable LatticeDB unit
 replacement, exact qualified-name lookup, bounded traversal, deletion plus
 reinsertion, database reopen, and bounded C# extraction throughput over
 in-memory sources.
@@ -9,13 +9,13 @@ in-memory sources.
 Run the complete matrix in Release mode:
 
 ```powershell
-dotnet run -c Release --project benchmarks/Penghou.Hetu.Benchmarks -- --job short
+dotnet run -c Release --project benchmarks/Penghou.Andirit.Benchmarks -- --job short
 ```
 
 Run only the extraction throughput benchmark:
 
 ```powershell
-dotnet run -c Release --project benchmarks/Penghou.Hetu.Benchmarks -- --filter "*ExtractionBenchmarks*" --job short
+dotnet run -c Release --project benchmarks/Penghou.Andirit.Benchmarks -- --filter "*ExtractionBenchmarks*" --job short
 ```
 
 ## C# extraction throughput baseline (2026-09-26)

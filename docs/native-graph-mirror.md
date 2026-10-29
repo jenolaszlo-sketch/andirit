@@ -15,7 +15,7 @@ The mirror is derived state, never the source of truth:
 - Each published `CodeGraphNode` becomes one `HetuGraphNode` native node
   carrying its full JSON; each `CodeGraphEdge` becomes one native edge typed
   by its kind and carrying its JSON. Native ids are engine-assigned, so a
-  `HetuMirror` row maps Hetu identities to native identities per repository.
+  `HetuMirror` row maps Andirit identities to native identities per repository.
 - The mirror is rebuilt from published units on every enabled publication and
   every enabled reopen. Publications made while native traversal is disabled
   remove the persisted marker, so re-enabling cannot serve stale data. A corrupt

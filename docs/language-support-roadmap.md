@@ -4,7 +4,7 @@ Status: approved direction; documentation baseline audited on 2026-10-21 against
 `5a5e38749570bad36630485d462f9ac92ade39a9`. This roadmap commits to priorities,
 not implementation dates, releases, parser choices, or complete language coverage.
 
-Hetu extracts, normalizes, persists, and queries useful code facts for repository
+Andirit extracts, normalizes, persists, and queries useful code facts for repository
 comprehension, symbol discovery, dependencies, change impact, test identification,
 architectural analysis, and AI-agent context selection. It does not reproduce
 every language's AST or become a universal compiler.
@@ -12,7 +12,7 @@ every language's AST or become a universal compiler.
 The permanent [feature catalog and coverage matrix](language-feature-matrix.md)
 separates language applicability, graph representation, extraction coverage, and
 evidence. [ROADMAP Milestone 8B](../ROADMAP.md#milestone-8b--language-feature-catalog-and-phased-language-expansion)
-places this work under Hetu's architectural laws and Solo/Marang integration
+places this work under Andirit's architectural laws and Solo/Marang integration
 priorities. Existing decisions in the accepted
 [evidence and provider ADR](evidence-quality-and-provider-strategy.md) continue
 to govern plugin selection, evidence, partial results, and grammar pinning.
@@ -22,7 +22,7 @@ The expansion phases here are separate from that ADR's implementation phases.
 
 The nine-language target comprises four existing languages (C#, TypeScript,
 JavaScript, Elixir) and five planned languages (Python, Java, Go, Rust, Kotlin).
-The five planned languages cannot yet be indexed through a supported Hetu
+The five planned languages cannot yet be indexed through a supported Andirit
 plugin. Recognizing a file extension or obtaining a grammar is not support.
 
 | Phase | Languages in priority order | Purpose and boundaries |
@@ -122,7 +122,7 @@ general-purpose languages. Erlang remains parked, not rejected.
 Future decisions consider, together:
 
 1. Language adoption and repository prevalence.
-2. Usefulness to actual Hetu consumers.
+2. Usefulness to actual Andirit consumers.
 3. Availability and maturity of deterministic parsers.
 4. Availability of optional semantic providers.
 5. Value in validating the language-neutral graph vocabulary.

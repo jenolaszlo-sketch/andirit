@@ -1,0 +1,15 @@
+# Durable compatibility
+
+**COMPATIBLE WITHOUT MIGRATION** in the exercised Windows x64 environment (.NET 10.0.401; LatticeDbSharp 0.2.0).
+
+Authentic schema-2 databases were created by exact pre-rename commit `b8d096672334f6bed443974ca548f558896fe54c`, from a Git archive export. The shared probe was independently compiled against that source and against Andirit. No clone, planning mirror or linked worktree was created. Both authoritative materialized projection and experimental `UseNativeTraversal=true` were exercised with the accepted TS/JS migration corpus.
+
+Original closed seed database copies remain outside the checkout. Andirit operated on disposable copies at the same source-root paths with identical spelling and source bytes. The comparison asserts exact equality of repository manifests, publication identities, full published units/origins, every node/declaration/edge payload, query candidates/envelopes, default neighborhoods, direct three-hop traversal, snapshot JSON and integrity hashes. Each old snapshot is deserialized and integrity-verified by Andirit. Both languages retain 12 nodes, 4 declarations and 17 edges. The canonical-facts digests agree across traversal profiles.
+
+Unchanged-source repeat indexing completed with **zero plugins executed**, no unit deletion/replacement, unchanged publication, identical queries/facts/provenance and identical snapshot integrity hashes. Cancellation raises OperationCanceledException and leaves the publication unchanged. A further close/reopen also compares exactly. No assembly/package rename induced planner invalidation or schema migration. New identifier guards and the full suite cover historical C#, Elixir, resolver, export and storage identifiers beyond the TS/JS cross-version corpus.
+
+The initial probe invocation used mixed slash spelling for the same physical source root; that changed only repository SourceUri and its snapshot digest on repeat. The harness was corrected to use the exact original root spelling, restored from the untouched original seed, and the full strict comparison then passed without changing expected hashes or product code. This is harness evidence, not a guarantee that changing user source-root strings preserves snapshot bytes.
+
+Raw baseline/reopen/repeat/cancel/after reports and [qualification-summary.json](raw/qualification-summary.json) contain complete facts, source/provider evidence, publication digests and seed SHA256s. The [reproducer](tools/reproduce-durable.ps1) exports the exact baseline and runs independent probes in a new disposable workspace. No raw database is committed.
+
+Qualifications: Windows-focused rename compatibility only; hosted native regression coverage is separate from cross-version Linux/macOS durable qualification. Historical migration hash `ff6b88345b744d05caaad9ae0a5a05d1ff4ecf3d462673c06986580561c3a12f` remains unreproducible and is not replaced by this evidence. Filesystem provider remains IsConsistentSnapshot=false; graph determinism does not establish an immutable source snapshot. No production database, migration redesign or performance qualification is implied.

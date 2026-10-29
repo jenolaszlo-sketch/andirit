@@ -20,46 +20,46 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
-      - run: dotnet restore Penghou.Hetu.slnx
-      - run: dotnet format Penghou.Hetu.slnx --verify-no-changes --no-restore
+      - run: dotnet restore Penghou.Andirit.slnx
+      - run: dotnet format Penghou.Andirit.slnx --verify-no-changes --no-restore
       - name: Test and coverage (core)
         run: >
-          dotnet test tests/Penghou.Hetu.Tests/Penghou.Hetu.Tests.csproj
+          dotnet test tests/Penghou.Andirit.Tests/Penghou.Andirit.Tests.csproj
           -c Release --no-restore
           /p:CollectCoverage=true
           /p:CoverletOutput=${{ github.workspace }}/coverage/
           /p:CoverletOutputFormat=cobertura
-          '/p:Include=[Penghou.Hetu]*%2c[Penghou.Hetu.Abstractions]*'
+          '/p:Include=[Penghou.Andirit]*%2c[Penghou.Andirit.Abstractions]*'
           /p:Threshold=55
           /p:ThresholdType=line%2cbranch
       - name: Test and coverage (CSharp)
         run: >
-          dotnet test tests/Penghou.Hetu.CSharp.Tests/Penghou.Hetu.CSharp.Tests.csproj
+          dotnet test tests/Penghou.Andirit.CSharp.Tests/Penghou.Andirit.CSharp.Tests.csproj
           -c Release --no-restore
           /p:CollectCoverage=true
           /p:CoverletOutput=${{ github.workspace }}/coverage-csharp/
           /p:CoverletOutputFormat=cobertura
-          '/p:Include=[Penghou.Hetu.CSharp]*'
+          '/p:Include=[Penghou.Andirit.CSharp]*'
           /p:Threshold=75
           /p:ThresholdType=line%2cbranch
       - name: Test and coverage (TreeSitter)
         run: >
-          dotnet test tests/Penghou.Hetu.TreeSitter.Tests/Penghou.Hetu.TreeSitter.Tests.csproj
+          dotnet test tests/Penghou.Andirit.TreeSitter.Tests/Penghou.Andirit.TreeSitter.Tests.csproj
           -c Release --no-restore
           /p:CollectCoverage=true
           /p:CoverletOutput=${{ github.workspace }}/coverage-treesitter/
           /p:CoverletOutputFormat=cobertura
-          '/p:Include=[Penghou.Hetu.TreeSitter]*'
+          '/p:Include=[Penghou.Andirit.TreeSitter]*'
           /p:Threshold=60
           /p:ThresholdType=line%2cbranch
       - name: Test and coverage (LatticeDb)
         run: >
-          dotnet test tests/Penghou.Hetu.LatticeDb.Tests/Penghou.Hetu.LatticeDb.Tests.csproj
+          dotnet test tests/Penghou.Andirit.LatticeDb.Tests/Penghou.Andirit.LatticeDb.Tests.csproj
           -c Release --no-restore
           /p:CollectCoverage=true
           /p:CoverletOutput=${{ github.workspace }}/coverage-latticedb/
           /p:CoverletOutputFormat=cobertura
-          '/p:Include=[Penghou.Hetu.LatticeDb]*'
+          '/p:Include=[Penghou.Andirit.LatticeDb]*'
           /p:Threshold=70
           /p:ThresholdType=line%2cbranch
       - name: Upload coverage
@@ -81,16 +81,16 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
-      - run: dotnet restore Penghou.Hetu.slnx
-      - run: dotnet pack Penghou.Hetu.slnx -c Release --no-restore --output artifacts/packages
+      - run: dotnet restore Penghou.Andirit.slnx
+      - run: dotnet pack Penghou.Andirit.slnx -c Release --no-restore --output artifacts/packages
       # Pack-consume-load smoke test for the Tree-sitter natives: repack with
       # a unique version (a same-version restore could resolve the published
       # previews instead of these bits), then consume the packages from a clean
       # project that proves the RID assets resolve and parse outside the repo
       # build output. Ubuntu stands in for all runners here; the test matrix
       # above proves native loading per OS.
-      - name: Smoke-test Tree-sitter package natives
+      - name: Smoke-test all Andirit packages and Tree-sitter natives
         run: |
           SMOKE_VERSION="0.2.0-preview.6-smoke.${{ github.run_id }}"
-          dotnet pack Penghou.Hetu.slnx -c Release --no-restore --output "${{ github.workspace }}/smoke-packages" -p:Version="$SMOKE_VERSION"
+          dotnet pack Penghou.Andirit.slnx -c Release --no-restore --output "${{ github.workspace }}/smoke-packages" -p:Version="$SMOKE_VERSION"
           SMOKE_FEED="${{ github.workspace }}/smoke-packages" dotnet run --project smoke/TreeSitterPackage/TreeSitterPackage.csproj -c Release -p:SmokerPackageVersion="$SMOKE_VERSION"

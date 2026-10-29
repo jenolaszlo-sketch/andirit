@@ -1,41 +1,43 @@
-# Penghou.Hetu
+# Penghou.Andirit
 
-[![CI](https://github.com/jenolaszlo-sketch/penghou-hetu/actions/workflows/ci.yml/badge.svg)](https://github.com/jenolaszlo-sketch/penghou-hetu/actions/workflows/ci.yml)
-[![License](https://img.shields.io/github/license/jenolaszlo-sketch/penghou-hetu)](LICENSE)
+Migration from historical Hetu: [migration guide](docs/andirit-migration.md).
 
-Penghou.Hetu is an embedded, language-neutral code knowledge graph for .NET.
+[![CI](https://github.com/jenolaszlo-sketch/penghou-andirit/actions/workflows/ci.yml/badge.svg)](https://github.com/jenolaszlo-sketch/penghou-andirit/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/jenolaszlo-sketch/penghou-andirit)](LICENSE)
+
+Penghou.Andirit is an embedded, language-neutral code knowledge graph for .NET.
 It turns source repositories into a normalized, queryable graph for repository
 understanding, dependency discovery, impact analysis, and context selection.
 
-Hetu defines what code means in the graph. Language plugins define how those
+Andirit defines what code means in the graph. Language plugins define how those
 facts are discovered.
 
 ```text
 Source repository
-       │
-       ▼
+       â”‚
+       â–¼
 Language extraction session
-       │
-       ▼
+       â”‚
+       â–¼
 Owned graph-fact batches
-       │
-       ▼
-Hetu validation and persistence
-       │
-       ▼
+       â”‚
+       â–¼
+Andirit validation and persistence
+       â”‚
+       â–¼
 Bounded deterministic queries
-       │
-       ▼
+       â”‚
+       â–¼
 Solo and other consumers
 ```
 
-Hetu does not define a universal AST and does not expose parser-specific types.
+Andirit does not define a universal AST and does not expose parser-specific types.
 A C# plugin may use Roslyn while future plugins may use compiler APIs, generated
 ANTLR parsers, hand-written parsers, or other deterministic extraction tools.
 
 ## Status
 
-Hetu 0.2.0-preview.5 has a working preview runtime, C# extractor, durable
+Andirit 0.2.0-preview.5 has a working preview runtime, C# extractor, durable
 LatticeDb provider, and shared provider conformance suite. The API remains
 preview-quality and is built for .NET 10. See [ROADMAP.md](ROADMAP.md) for the remaining
 semantic milestones and first-release invariants.
@@ -44,14 +46,14 @@ semantic milestones and first-release invariants.
 
 | Package | Purpose |
 | --- | --- |
-| `Penghou.Hetu.Abstractions` | Parser-independent graph vocabulary, evidence, extraction sessions, and sinks |
-| `Penghou.Hetu` | Indexing orchestration, validation, in-memory storage, and query services |
-| `Penghou.Hetu.CSharp` | Roslyn-based C# extraction plugin |
-| `Penghou.Hetu.TreeSitter` | Tree-sitter structural extraction plugins (Elixir, TypeScript, and JavaScript) |
-| `Penghou.Hetu.LatticeDb` | Embedded LatticeDB graph-store provider |
-| `Penghou.Hetu.Testing` | Reusable graph-store and plugin contract tests |
+| `Penghou.Andirit.Abstractions` | Parser-independent graph vocabulary, evidence, extraction sessions, and sinks |
+| `Penghou.Andirit` | Indexing orchestration, validation, in-memory storage, and query services |
+| `Penghou.Andirit.CSharp` | Roslyn-based C# extraction plugin |
+| `Penghou.Andirit.TreeSitter` | Tree-sitter structural extraction plugins (Elixir, TypeScript, and JavaScript) |
+| `Penghou.Andirit.LatticeDb` | Embedded LatticeDB graph-store provider |
+| `Penghou.Andirit.Testing` | Reusable graph-store and plugin contract tests |
 
-The future `Penghou.Hetu.Generator` project is reserved for deterministic
+The future `Penghou.Andirit.Generator` project is reserved for deterministic
 generation of language plugins from grammars and declarative graph mappings.
 It is intentionally outside the first milestone.
 
@@ -69,7 +71,7 @@ It is intentionally outside the first milestone.
 | Rust | TBD | Planned | Phase 2 |
 | Kotlin | TBD | Planned | Phase 3 |
 
-Planned languages cannot yet be indexed through a supported Hetu plugin.
+Planned languages cannot yet be indexed through a supported Andirit plugin.
 Structural support extracts a useful documented subset from syntax. Semantic
 support resolves selected symbols and relationships in a provider's analysis
 context; it is feature-specific, not a claim of complete language coverage.
@@ -104,7 +106,7 @@ await using var sink = new CodeGraphIngestionSink(store);
 // Extraction sessions stream owned CodeGraphBatch values to the sink.
 ```
 
-`Penghou.Hetu.Testing` contains a reusable conformance suite that every durable
+`Penghou.Andirit.Testing` contains a reusable conformance suite that every durable
 store provider must pass.
 
 Repository discovery is provider-based. Local filesystem discovery is
@@ -112,7 +114,7 @@ registered by default, while hosts can add a VFS, Git tree, archive, remote
 workspace, or in-memory implementation without changing language plugins:
 
 ```csharp
-var sources = new HetuBuilder()
+var sources = new AndiritBuilder()
     .AddRepositoryProvider(new MyVirtualRepositoryProvider())
     .BuildRepositoryProviderRegistry();
 
@@ -133,7 +135,7 @@ classifies each selected source as new, changed, unchanged, or deleted; changing
 a plugin version invalidates that plugin's otherwise unchanged units:
 
 ```csharp
-var plugins = new HetuBuilder()
+var plugins = new AndiritBuilder()
     .AddPlugin(new MyLanguagePlugin())
     .BuildPluginRegistry();
 var planner = new CodeIndexPlanner(plugins);
@@ -153,7 +155,7 @@ Source manifests report changed inputs; they do not dictate extraction
 ownership. A syntax plugin may emit one index unit per file, while a semantic
 plugin may atomically own a project or solution unit. Plugin contexts therefore
 provide repeatable `CodeGraphSource` readers and only an optional provider-defined
-location hint—plugins must not assume repositories live on a local filesystem.
+location hintâ€”plugins must not assume repositories live on a local filesystem.
 
 `CodeIndexingService` now coordinates the first complete lifecycle: repository
 opening, source planning, plugin execution, bounded ingestion, obsolete-unit
@@ -180,7 +182,7 @@ Plugins see the complete current source set, exact source transitions, and their
 unit identities from the previous successful publication. They remain responsible
 for choosing atomic index units and report obsolete unit IDs after extraction.
 This lets project-aware plugins remove units whose project remains on disk but
-leaves a solution. Hetu refuses to complete a run if any streamed unit remains
+leaves a solution. Andirit refuses to complete a run if any streamed unit remains
 buffered or rejected.
 
 Lifecycle execution is defensive at repository boundaries. Each executing
@@ -188,7 +190,7 @@ plugin receives a scoped sink, so it cannot accidentally emit facts under a
 different repository, run, plugin identity, or plugin version. Plugins whose
 inputs are entirely unchanged are not invoked.
 
-For providers without an immutable snapshot, Hetu hashes sources during
+For providers without an immutable snapshot, Andirit hashes sources during
 planning and materializes bounded, repeatable content before extraction. A
 SHA-256 mismatch means the live source changed during the boundary and the run
 fails explicitly. `CodeIndexingOptions` limits both individual source size and
@@ -206,7 +208,7 @@ failure-isolated from indexing behavior.
 
 ## C# structural extraction
 
-`Penghou.Hetu.CSharp` now provides the first useful Roslyn plugin. It consumes
+`Penghou.Andirit.CSharp` now provides the first useful Roslyn plugin. It consumes
 provider-neutral source readers, discovers SDK-style `.csproj` inputs without
 requiring a physical filesystem or MSBuild, creates one compilation and atomic
 index unit per project, and emits projects, files, namespaces, types,
@@ -259,7 +261,7 @@ host runtime's trusted platform assemblies. This keeps extraction independent
 of MSBuild, but a project targeting another framework may be analyzed against
 the host's .NET 10 reference surface. Hosts requiring exact target-framework
 semantics should treat this as a known preview limitation; a future opt-in
-reference resolver can supply targeting-pack metadata without changing Hetu's
+reference resolver can supply targeting-pack metadata without changing Andirit's
 graph contracts.
 
 The current extractor also models semantic reference edges from the smallest
@@ -272,17 +274,17 @@ references.
 
 ## Tree-sitter structural extraction
 
-`Penghou.Hetu.TreeSitter` proves Hetu can ingest non-.NET languages without
+`Penghou.Andirit.TreeSitter` proves Andirit can ingest non-.NET languages without
 changing the graph model. It embeds the Tree-sitter runtime through managed
 bindings and exposes one structural plugin per language: Elixir, TypeScript
 (`.ts`/`.mts`/`.cts`/`.tsx`), and JavaScript (`.js`/`.mjs`/`.cjs`/`.jsx`). All
 grammar pins, including which natives ship with the package and which come
 from the pinned `TreeSitter.DotNet` binding, are recorded in
-`src/Penghou.Hetu.TreeSitter/native/grammar-pins.md`, so indexing stays
+`src/Penghou.Andirit.TreeSitter/native/grammar-pins.md`, so indexing stays
 offline and reproducible:
 
 ```csharp
-await using var host = new HetuHostBuilder()
+await using var host = new AndiritHostBuilder()
     .AddTreeSitterElixirPlugin()
     .AddTreeSitterTypeScriptPlugin()
     .AddTreeSitterJavaScriptPlugin()
@@ -312,7 +314,7 @@ computed, string, numeric, `#private`, and auto-accessor fields are not emitted,
 and field initializer invocations attribute to the field. The common
 JavaScript prototype-inheritance idioms
 (`Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`) are
-recognized and emitted as `inherits` with `Derived` evidence — never
+recognized and emitted as `inherits` with `Derived` evidence â€” never
 structural or resolved. There are no `calls` or `references` edges. The EC-6B
 module pass adds `resolves-to` only for supported relative references within
 the owning plugin's indexed source inventory. It identifies a target file;
@@ -382,10 +384,10 @@ file and the public symbol surface reachable from a project through containment
 and declaration edges. These operations compare exact names and paths and never
 silently choose among ambiguous symbols.
 
-`HetuHostBuilder.WithIndexingOptions(...)` establishes host defaults that each
+`AndiritHostBuilder.WithIndexingOptions(...)` establishes host defaults that each
 indexing call may override. `UseStore(store)` transfers ownership of a supplied
 store instance to the resulting host. A builder creates one host so ownership
-cannot be transferred twice. `HetuHost.CheckHealthAsync()` provides a
+cannot be transferred twice. `AndiritHost.CheckHealthAsync()` provides a
 content-free readiness result covering the graph store and the deterministically
 ordered plugin/provider composition. Stores that do not implement the optional
 `ICodeGraphStoreHealthCheck` contract report `Unknown`, not a guessed healthy
@@ -393,7 +395,7 @@ state.
 
 ## LatticeDb persistence
 
-`Penghou.Hetu.LatticeDb` provides `LatticeCodeGraphStore`, an embedded durable
+`Penghou.Andirit.LatticeDb` provides `LatticeCodeGraphStore`, an embedded durable
 implementation of the same `ICodeGraphStore` contract. It uses the community
 LatticeDbSharp 0.2.0 binding for LatticeDB (an embedded single-file
 property-graph database with Cypher, vector search, full-text search, ACID
@@ -413,7 +415,7 @@ A file-backed host is one builder call away; the database is a single file,
 so each repository maps naturally to one path:
 
 ```csharp
-await using var host = new HetuHostBuilder()
+await using var host = new AndiritHostBuilder()
     .AddPlugin(new CSharpCodeGraphPlugin())
     .UseLatticeStore("C:/data/hetu/my-app.ltdb")
     .Build();
@@ -434,7 +436,7 @@ var candidates = view is null
 
 Only one process may own a database file at a time; a second owner fails fast
 with the engine error instead of queuing. Name-pattern search is a bounded,
-case-insensitive substring match callers rank themselves — exact lookup and
+case-insensitive substring match callers rank themselves â€” exact lookup and
 traversal remain the deterministic primitives.
 
 ## Architectural boundaries
@@ -443,9 +445,9 @@ traversal remain the deterministic primitives.
 - Plugins receive repository-aware extraction sessions so semantic analyzers can
   resolve project-wide and cross-file relationships.
 - Plugins emit normalized facts; they never write directly to a graph database.
-- Hetu owns graph vocabulary, validation, physical identity, transactions,
+- Andirit owns graph vocabulary, validation, physical identity, transactions,
   incremental replacement, and query semantics.
-- Persistence providers implement Hetu's store contract without leaking their
+- Persistence providers implement Andirit's store contract without leaking their
   query language through ordinary consumer APIs.
 - All traversals are bounded and deterministically ordered.
 - Evidence records how each relationship was discovered without overstating
@@ -453,7 +455,7 @@ traversal remain the deterministic primitives.
 
 ## Intended use
 
-Hetu will help answer questions such as:
+Andirit will help answer questions such as:
 
 - What does this type contain?
 - What calls this method, and what does it call?
@@ -469,11 +471,11 @@ Baize   provider and model communication
 Nuwa    deterministic structured-output repair
 Zhinu   durable workflow execution
 Cangjie durable contextual knowledge and provenance
-Hetu    source-code structure, relationships, and impact
+Andirit    source-code structure, relationships, and impact
 Solo    software-engineering orchestration and interpretation
 ```
 
-Hetu may supply graph-derived observations to Cangjie or Solo, but it does not
+Andirit may supply graph-derived observations to Cangjie or Solo, but it does not
 become a general memory store or workflow engine.
 
 ## Initial non-goals
@@ -494,8 +496,8 @@ hardening, and integration evidence rather than proving the basic architecture.
 ## Development
 
 ```powershell
-dotnet build Penghou.Hetu.slnx --configuration Release
-dotnet test Penghou.Hetu.slnx --configuration Release --no-build
+dotnet build Penghou.Andirit.slnx --configuration Release
+dotnet test Penghou.Andirit.slnx --configuration Release --no-build
 ```
 
 See the [roadmap](ROADMAP.md), [benchmark notes](BENCHMARKS.md), and
@@ -506,4 +508,4 @@ semantic and integration work.
 
 Apache-2.0
 
-Copyright (c) 2026 Jenő Konrád László
+Copyright (c) 2026 JenÅ‘ KonrÃ¡d LÃ¡szlÃ³

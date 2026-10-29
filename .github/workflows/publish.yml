@@ -32,11 +32,11 @@ jobs:
             args+=(--property:PackageVersion="${GITHUB_REF_NAME#v}")
           fi
           for csproj in \
-            src/Penghou.Hetu.Abstractions/Penghou.Hetu.Abstractions.csproj \
-            src/Penghou.Hetu/Penghou.Hetu.csproj \
-            src/Penghou.Hetu.CSharp/Penghou.Hetu.CSharp.csproj \
-            src/Penghou.Hetu.LatticeDb/Penghou.Hetu.LatticeDb.csproj \
-            src/Penghou.Hetu.Testing/Penghou.Hetu.Testing.csproj; do
+            src/Penghou.Andirit.Abstractions/Penghou.Andirit.Abstractions.csproj \
+            src/Penghou.Andirit/Penghou.Andirit.csproj \
+            src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj \
+            src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj \
+            src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj; do
             dotnet pack "$csproj" \
               --configuration Release \
               --output ./artifacts \

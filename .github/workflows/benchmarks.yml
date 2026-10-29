@@ -19,11 +19,11 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
-      - run: dotnet restore Penghou.Hetu.slnx
+      - run: dotnet restore Penghou.Andirit.slnx
       - name: Run benchmarks
-        run: dotnet run -c Release --no-restore --project benchmarks/Penghou.Hetu.Benchmarks -- --job ${{ inputs.job }} --filter *LatticeStoreBenchmarks*
+        run: dotnet run -c Release --no-restore --project benchmarks/Penghou.Andirit.Benchmarks -- --job ${{ inputs.job }} --filter *LatticeStoreBenchmarks*
       - name: Run extraction benchmarks
-        run: dotnet run -c Release --no-restore --project benchmarks/Penghou.Hetu.Benchmarks -- --job ${{ inputs.job }} --filter *ExtractionBenchmarks*
+        run: dotnet run -c Release --no-restore --project benchmarks/Penghou.Andirit.Benchmarks -- --job ${{ inputs.job }} --filter *ExtractionBenchmarks*
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v4

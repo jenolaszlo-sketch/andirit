@@ -1,0 +1,193 @@
+namespace Penghou.Andirit;
+
+/// <summary>
+/// A fail-on-change query view bound to one successful publication. Andirit keeps
+/// only the latest graph today, so this view detects publication movement
+/// rather than pretending to retain historical data.
+/// </summary>
+public sealed class CodeGraphPublicationQuery
+{
+    private readonly CodeGraphQueryService _queries;
+
+    internal CodeGraphPublicationQuery(
+        CodeGraphQueryService queries,
+        CodeGraphPublication publication)
+    {
+        _queries = queries ?? throw new ArgumentNullException(nameof(queries));
+        Publication = publication ??
+            throw new ArgumentNullException(nameof(publication));
+    }
+
+    public CodeGraphPublication Publication { get; }
+
+    public async ValueTask<CodeGraphQueryEnvelope<CodeSymbolLookupResult>>
+        FindSymbolAsync(
+            string qualifiedName,
+            CancellationToken cancellationToken = default) =>
+        Require(await _queries.FindSymbolsByQualifiedNameWithProvenanceAsync(
+            Publication.RepositoryId,
+            qualifiedName,
+            cancellationToken).ConfigureAwait(false));
+
+    public async ValueTask<CodeGraphQueryEnvelope<
+        IReadOnlyDictionary<string, CodeSymbolLookupResult>>>
+        ResolveSymbolsAsync(
+            IReadOnlyCollection<string> qualifiedNames,
+            CancellationToken cancellationToken = default) =>
+        Require(await _queries.ResolveSymbolsWithProvenanceAsync(
+            Publication.RepositoryId,
+            qualifiedNames,
+            cancellationToken).ConfigureAwait(false));
+
+    public async ValueTask<CodeGraphQueryEnvelope<
+        IReadOnlyList<CodeGraphDeclaration>>>
+        FindDeclarationsAsync(
+            CodeSymbolId symbolId,
+            CancellationToken cancellationToken = default) =>
+        Require(await _queries.FindDeclarationsWithProvenanceAsync(
+            Publication.RepositoryId,
+            symbolId,
+            cancellationToken).ConfigureAwait(false));
+
+    public async ValueTask<CodeGraphQueryEnvelope<CodeGraphTraversalResult>>
+        GetNeighborhoodAsync(
+            CodeNodeId nodeId,
+            IReadOnlyCollection<CodeEdgeKind>? edgeKinds = null,
+            CodeGraphQueryOptions? options = null,
+            CancellationToken cancellationToken = default) =>
+        Require(await _queries.GetNeighborhoodWithProvenanceAsync(
+            Publication.RepositoryId,
+            nodeId,
+            edgeKinds,
+            options,
+            cancellationToken).ConfigureAwait(false));
+
+    public ValueTask<CodeGraphQueryEnvelope<CodeGraphTraversalResult>> FindReferencesAsync(
+        CodeNodeId nodeId,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default) =>
+        TraverseAsync(nodeId, CodeGraphDirection.Incoming,
+            CodeGraphTraversalPresets.References, options, cancellationToken);
+
+    public ValueTask<CodeGraphQueryEnvelope<CodeGraphTraversalResult>> FindCallersAsync(
+        CodeNodeId nodeId,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default) =>
+        TraverseAsync(nodeId, CodeGraphDirection.Incoming,
+            CodeGraphTraversalPresets.Calls, options, cancellationToken);
+
+    public ValueTask<CodeGraphQueryEnvelope<CodeGraphTraversalResult>> FindCalleesAsync(
+        CodeNodeId nodeId,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default) =>
+        TraverseAsync(nodeId, CodeGraphDirection.Outgoing,
+            CodeGraphTraversalPresets.Calls, options, cancellationToken);
+
+    public ValueTask<CodeGraphQueryEnvelope<CodeGraphTraversalResult>> FindImplementationsAsync(
+        CodeNodeId nodeId,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default) =>
+        TraverseAsync(nodeId, CodeGraphDirection.Incoming,
+            CodeGraphTraversalPresets.Implementations, options, cancellationToken);
+
+    public ValueTask<CodeGraphQueryEnvelope<CodeGraphTraversalResult>> FindDependenciesAsync(
+        CodeNodeId nodeId,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default) =>
+        TraverseAsync(nodeId, CodeGraphDirection.Outgoing,
+            CodeGraphTraversalPresets.Dependencies, options, cancellationToken);
+
+    public ValueTask<CodeGraphQueryEnvelope<CodeGraphTraversalResult>> FindDependentsAsync(
+        CodeNodeId nodeId,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default) =>
+        TraverseAsync(nodeId, CodeGraphDirection.Incoming,
+            CodeGraphTraversalPresets.Dependencies, options, cancellationToken);
+
+    /// <summary>
+    /// Returns the incoming impact set: nodes that reference, call, implement,
+    /// inherit, or depend on <paramref name="nodeId"/>. Outgoing edges are
+    /// intentionally excluded; use neighborhood or dependency traversals for those.
+    /// </summary>
+    public ValueTask<CodeGraphQueryEnvelope<CodeGraphTraversalResult>> GetImpactSetAsync(
+        CodeNodeId nodeId,
+        CodeGraphQueryOptions? options = null,
+        CancellationToken cancellationToken = default) =>
+        TraverseAsync(
+            nodeId,
+            CodeGraphDirection.Incoming,
+            CodeGraphTraversalPresets.ImpactSet,
+            options,
+            cancellationToken);
+
+    public async ValueTask<CodeGraphQueryEnvelope<CodeGraphMultiTraversalResult>>
+        GetImpactSetsAsync(
+            IReadOnlyCollection<CodeNodeId> seedNodeIds,
+            CodeGraphQueryOptions? options = null,
+            CancellationToken cancellationToken = default) =>
+        Require(await _queries.GetImpactSetsWithProvenanceAsync(
+            Publication.RepositoryId,
+            seedNodeIds,
+            options,
+            cancellationToken).ConfigureAwait(false));
+
+    public async ValueTask<CodeGraphQueryEnvelope<CodeAffectedTestsResult>>
+        GetAffectedTestsAsync(
+            IReadOnlyCollection<CodeNodeId> seedNodeIds,
+            CodeGraphQueryOptions? options = null,
+            CancellationToken cancellationToken = default) =>
+        Require(await _queries.GetAffectedTestsWithProvenanceAsync(
+            Publication.RepositoryId,
+            seedNodeIds,
+            options,
+            cancellationToken).ConfigureAwait(false));
+
+    public async ValueTask<CodeGraphQueryEnvelope<IReadOnlyList<CodeGraphNode>>>
+        GetPublicSurfaceAsync(
+            string projectPath,
+            CodeGraphQueryOptions? options = null,
+            CancellationToken cancellationToken = default) =>
+        Require(await _queries.GetPublicSurfaceWithProvenanceAsync(
+            Publication.RepositoryId,
+            projectPath,
+            options,
+            cancellationToken).ConfigureAwait(false));
+
+    public async ValueTask<CodeGraphQueryEnvelope<
+        IReadOnlyList<CodeGraphDeclaration>>>
+        GetDeclarationsInFileAsync(
+            string sourcePath,
+            CodeGraphQueryOptions? options = null,
+            CancellationToken cancellationToken = default) =>
+        Require(await _queries.GetDeclarationsInFileWithProvenanceAsync(
+            Publication.RepositoryId,
+            sourcePath,
+            options,
+            cancellationToken).ConfigureAwait(false));
+
+    private CodeGraphQueryEnvelope<TResult> Require<TResult>(
+        CodeGraphQueryEnvelope<TResult>? envelope)
+    {
+        CodeGraphQueryService.EnsurePublication(
+            Publication,
+            envelope?.Publication);
+        return envelope!;
+    }
+
+    private async ValueTask<CodeGraphQueryEnvelope<CodeGraphTraversalResult>> TraverseAsync(
+        CodeNodeId nodeId,
+        CodeGraphDirection direction,
+        IReadOnlyCollection<CodeEdgeKind> edgeKinds,
+        CodeGraphQueryOptions? options,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(nodeId);
+        return Require(await _queries.TraverseWithProvenanceAsync(
+            Publication.RepositoryId,
+            nodeId,
+            direction,
+            edgeKinds,
+            options,
+            cancellationToken).ConfigureAwait(false));
+    }
+}

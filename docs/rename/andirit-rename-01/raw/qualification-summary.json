@@ -1,0 +1,195 @@
+{
+  "public_api": {
+    "assemblies": 6,
+    "types": 139,
+    "verdict": "exact mapped type/member equality"
+  },
+  "profiles": {
+    "projection": {
+      "reopen": "exact equality",
+      "repeat": "zero plugins; exact equality",
+      "cancellation": "observable; unchanged publication",
+      "source_root": "C:\\Users\\Laszlos\\source\\repos\\Solo\\andirit-rename-01\\stores\\projection\\ts",
+      "seed_sha256": "5192762d22c2c1eac46b5917874c5ca20e4cf703c9219e98e70387cdcd3f51cc",
+      "languages": {
+        "ts": {
+          "nodes": 12,
+          "declarations": 4,
+          "edges": 17,
+          "canonical_facts_sha256": "450529e9d222a1a875868572ff39da7c0c887d2da26ada7915e3a8144daba5ff",
+          "publication_snapshot_integrity": "bf80bf17060d10d6cf63096db7c3fa6946f08c45db05d809a30b5fa4d6fa45d4"
+        },
+        "js": {
+          "nodes": 12,
+          "declarations": 4,
+          "edges": 17,
+          "canonical_facts_sha256": "2c05cba56336f11d2af52a680ec53d09ec999724ac0f3fc449cfa47e32c1670f",
+          "publication_snapshot_integrity": "0b113f91f0c1290fa1c579e12d1132c79109ad0ef6b4e5cf1286ac685c5cedd7"
+        }
+      }
+    },
+    "native": {
+      "reopen": "exact equality",
+      "repeat": "zero plugins; exact equality",
+      "cancellation": "observable; unchanged publication",
+      "source_root": "C:\\Users\\Laszlos\\source\\repos\\Solo\\andirit-rename-01\\stores\\native\\ts",
+      "seed_sha256": "88d08ce6c519d7aa5dc2e84055c4c4bb1202242c02e4d9f0c8f429c332b4b98f",
+      "languages": {
+        "ts": {
+          "nodes": 12,
+          "declarations": 4,
+          "edges": 17,
+          "canonical_facts_sha256": "450529e9d222a1a875868572ff39da7c0c887d2da26ada7915e3a8144daba5ff",
+          "publication_snapshot_integrity": "81caf30f496a0abdb173863655d1a4202289ada1401a531efd8cedd7ce42bff5"
+        },
+        "js": {
+          "nodes": 12,
+          "declarations": 4,
+          "edges": 17,
+          "canonical_facts_sha256": "2c05cba56336f11d2af52a680ec53d09ec999724ac0f3fc449cfa47e32c1670f",
+          "publication_snapshot_integrity": "1632bb9ce47c7b09110da2406f91b3e84823a5bf5f29db62535d8fcba2c95738"
+        }
+      }
+    }
+  },
+  "historical_evidence": "all seven preserved path groups byte-identical to baseline",
+  "packages": [
+    {
+      "id": "Penghou.Andirit",
+      "version": "0.2.0-preview.6",
+      "sha256": "72a10d86d422252db022c28e6bab853e4511df0d7b4c50baf4627ae0bc5b92d7",
+      "dependencies": [
+        {
+          "id": "Penghou.Andirit.Abstractions",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/jenolaszlo-sketch/penghou-andirit",
+        "commit": "b8d096672334f6bed443974ca548f558896fe54c"
+      }
+    },
+    {
+      "id": "Penghou.Andirit.Abstractions",
+      "version": "0.2.0-preview.6",
+      "sha256": "871f227745d5ac27dac30cd2e0b3bb85e1873ae6fb134b9cf8682340f74b25d6",
+      "dependencies": [],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/jenolaszlo-sketch/penghou-andirit",
+        "commit": "b8d096672334f6bed443974ca548f558896fe54c"
+      }
+    },
+    {
+      "id": "Penghou.Andirit.CSharp",
+      "version": "0.2.0-preview.6",
+      "sha256": "4db208457ef543d486c6f593070f02dcd381cdc03498a5f856cc0e6348aeb807",
+      "dependencies": [
+        {
+          "id": "Penghou.Andirit.Abstractions",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Penghou.Andirit",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Microsoft.CodeAnalysis.CSharp",
+          "version": "5.9.0",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Microsoft.Extensions.DependencyInjection.Abstractions",
+          "version": "10.0.9",
+          "exclude": "Build,Analyzers"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/jenolaszlo-sketch/penghou-andirit",
+        "commit": "b8d096672334f6bed443974ca548f558896fe54c"
+      }
+    },
+    {
+      "id": "Penghou.Andirit.LatticeDb",
+      "version": "0.2.0-preview.6",
+      "sha256": "c9ed69652b31c71f342d7ad05d7eff0f5c90bc8860c23b1ed010fffa9d57f516",
+      "dependencies": [
+        {
+          "id": "Penghou.Andirit.Abstractions",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Penghou.Andirit",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "LatticeDbSharp",
+          "version": "0.2.0",
+          "exclude": "Build,Analyzers"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/jenolaszlo-sketch/penghou-andirit",
+        "commit": "b8d096672334f6bed443974ca548f558896fe54c"
+      }
+    },
+    {
+      "id": "Penghou.Andirit.Testing",
+      "version": "0.2.0-preview.6",
+      "sha256": "ebff16982334bdd1e9c46d20f33d5e981d734d3a8d7cf68a39f27e1668f6fdb0",
+      "dependencies": [
+        {
+          "id": "Penghou.Andirit.Abstractions",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Penghou.Andirit",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/jenolaszlo-sketch/penghou-andirit",
+        "commit": "b8d096672334f6bed443974ca548f558896fe54c"
+      }
+    },
+    {
+      "id": "Penghou.Andirit.TreeSitter",
+      "version": "0.2.0-preview.6",
+      "sha256": "179e7fd2370d8e2529ae1748ffe31702b779f64729136c728346dc6f34eb5d8e",
+      "dependencies": [
+        {
+          "id": "Penghou.Andirit.Abstractions",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Penghou.Andirit",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "TreeSitter.DotNet",
+          "version": "1.3.0",
+          "exclude": "Build,Analyzers"
+        }
+      ],
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/jenolaszlo-sketch/penghou-andirit",
+        "commit": "b8d096672334f6bed443974ca548f558896fe54c"
+      }
+    }
+  ],
+  "isolated_consumer": "six local packages, fresh cache, no old package dependencies"
+}

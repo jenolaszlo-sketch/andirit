@@ -1,6 +1,6 @@
 # ECMAScript relative module resolution
 
-Hetu's TypeScript and JavaScript Tree-sitter plugins publish a conservative
+Andirit's TypeScript and JavaScript Tree-sitter plugins publish a conservative
 module-file relationship for supported relative module references. The edge
 kind is `resolves-to`, directed from the importing file to the verified target
 file. It supplements the existing structural `imports` observation.
@@ -19,7 +19,7 @@ module-resolution policy or `resolver2.relative-v1`.
 
 ## Structural export-name publication (EC-6C.2)
 
-For the accepted TypeScript/JavaScript syntax allowlist, Hetu emits one
+For the accepted TypeScript/JavaScript syntax allowlist, Andirit emits one
 module-scoped `export` node per distinct exported name and one file-to-entry
 Structural `exports` edge per written occurrence. Entries have `Name` and
 `QualifiedName` equal to the observed public name and no `SymbolId`. Duplicate

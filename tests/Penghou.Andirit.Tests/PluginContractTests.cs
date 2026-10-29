@@ -1,0 +1,193 @@
+using Penghou.Andirit;
+using System.Text;
+
+namespace Penghou.Andirit.Tests;
+
+public sealed class PluginContractTests
+{
+    [Fact]
+    public void ExtractionResult_RejectsInvalidOrUnboundedDiagnostics()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new CodeGraphExtractionResult(sourcesExamined: -1));
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new CodeGraphExtractionResult(
+                sourcesExamined: 1,
+                sourcesContributingFacts: 2));
+        Assert.Throws<ArgumentException>(() =>
+            new CodeGraphExtractionResult(
+                warningCodes: Enumerable.Range(0, 101).Select(index => $"warning:{index}").ToArray()));
+        Assert.Throws<ArgumentException>(() =>
+            new CodeGraphExtractionResult(warningCodes: [new string('x', 129)]));
+        Assert.Throws<ArgumentException>(() =>
+            new CodeGraphExtractionResult(obsoleteIndexUnits: [null!]));
+    }
+
+    [Fact]
+    public async Task SyntaxAndProjectAwarePlugins_UseTheSameSessionContract()
+    {
+        var context = CreateContext();
+        ICodeGraphPlugin syntaxPlugin = new FakePlugin(projectAware: false);
+        ICodeGraphPlugin projectPlugin = new FakePlugin(projectAware: true);
+        var syntaxSink = new RecordingSink();
+        var projectSink = new RecordingSink();
+
+        await using (var session = await syntaxPlugin.CreateSessionAsync(context))
+            await session.ExtractAsync(syntaxSink);
+        await using (var session = await projectPlugin.CreateSessionAsync(context))
+            await session.ExtractAsync(projectSink);
+
+        Assert.Equal(2, syntaxSink.Batches.Count);
+        Assert.Single(projectSink.Batches);
+        Assert.All(
+            syntaxSink.Batches.Concat(projectSink.Batches),
+            batch => Assert.NotNull(batch.Origin));
+        Assert.True(projectSink.Batches.Single().CompletesIndexUnit);
+    }
+
+    [Fact]
+    public void PluginContext_RejectsDuplicateSourcePaths()
+    {
+        var source = Source("src/One.cs", "one");
+
+        Assert.Throws<ArgumentException>(() =>
+            new CodeGraphPluginContext(
+                new CodeRepositoryId("repo:test"),
+                "vfs://workspace/test",
+                new CodeIndexRunId("run:one"),
+                [source, source]));
+    }
+
+    [Fact]
+    public void PluginContext_SettingsAreAnImmutableSnapshot()
+    {
+        var input = new Dictionary<string, string> { ["mode"] = "initial" };
+        var context = new CodeGraphPluginContext(
+            new CodeRepositoryId("repo:test"),
+            "vfs://workspace/test",
+            new CodeIndexRunId("run:settings"),
+            [Source("src/One.cs", "class One {}")],
+            input);
+
+        input["mode"] = "changed";
+        Assert.Equal("initial", context.Settings["mode"]);
+        Assert.Throws<NotSupportedException>(() =>
+            ((IDictionary<string, string>)context.Settings).Add("extra", "value"));
+    }
+
+    [Fact]
+    public void PluginContext_PreviousUnitsAreAnImmutableOrderedSnapshot()
+    {
+        var units = new List<CodeIndexUnitId> { new("unit:z"), new("unit:a") };
+        var context = new CodeGraphPluginContext(
+            new CodeRepositoryId("repo:test"),
+            "vfs://workspace/test",
+            new CodeIndexRunId("run:units"),
+            [Source("src/One.cs", "class One {}")],
+            previousIndexUnits: units);
+
+        units.Clear();
+        Assert.Equal(["unit:a", "unit:z"], context.PreviousIndexUnits.Select(unit => unit.Value));
+        Assert.Throws<NotSupportedException>(() =>
+            ((IList<CodeIndexUnitId>)context.PreviousIndexUnits).Add(new("unit:extra")));
+    }
+
+    private static CodeGraphPluginContext CreateContext() =>
+        new(
+            new CodeRepositoryId("repo:test"),
+            "vfs://workspace/test",
+            new CodeIndexRunId("run:one"),
+            [
+                Source("src/One.cs", "class One {}"),
+                Source("src/Two.cs", "class Two : One {}")
+            ]);
+
+    [Fact]
+    public void PluginContext_PreservesProviderLocationWithoutTreatingItAsAPath()
+    {
+        var context = CreateContext();
+
+        Assert.Equal("vfs://workspace/test", context.RepositoryLocation);
+    }
+
+    private static CodeGraphSource Source(string path, string content) =>
+        new(
+            path,
+            $"hash:{path}",
+            _ => new ValueTask<Stream>(
+                new MemoryStream(Encoding.UTF8.GetBytes(content))));
+
+    private sealed class FakePlugin(bool projectAware) : ICodeGraphPlugin
+    {
+        public CodePluginId Id { get; } = new("plugin:fake");
+        public string Version => "1.0.0";
+        public string Language => "fake";
+        public IReadOnlyCollection<string> FileExtensions => [".cs"];
+        public CodeGraphCapabilities Capabilities => projectAware
+            ? CodeGraphCapabilities.Syntax | CodeGraphCapabilities.Symbols
+            : CodeGraphCapabilities.Syntax;
+
+        public bool CanHandle(string path) =>
+            path.EndsWith(".cs", StringComparison.OrdinalIgnoreCase);
+
+        public ValueTask<ICodeGraphExtractionSession> CreateSessionAsync(
+            CodeGraphPluginContext context,
+            CancellationToken cancellationToken = default) =>
+            new(new FakeSession(context, projectAware));
+    }
+
+    private sealed class FakeSession(
+        CodeGraphPluginContext context,
+        bool projectAware) : ICodeGraphExtractionSession
+    {
+        public async ValueTask<CodeGraphExtractionResult> ExtractAsync(
+            ICodeGraphSink sink,
+            CancellationToken cancellationToken = default)
+        {
+            var selected = projectAware
+                ? [context.Sources]
+                : context.Sources.Select(source =>
+                    (IReadOnlyList<CodeGraphSource>)[source]);
+            var groups = selected.ToArray();
+
+            for (var index = 0; index < groups.Length; index++)
+            {
+                var group = groups[index];
+                var origin = new CodeFactOrigin(
+                    context.RepositoryId,
+                    new CodePluginId("plugin:fake"),
+                    "1.0.0",
+                    context.IndexRunId,
+                    new CodeIndexUnitId(
+                        projectAware
+                            ? "project:fake"
+                            : $"file:{group.Single().Path}"),
+                    projectAware ? null : group.Single().Path,
+                    projectAware ? null : group.Single().ContentHash);
+                await sink.WriteBatchAsync(
+                    new CodeGraphBatch(
+                        origin,
+                        completesIndexUnit: true),
+                    cancellationToken);
+            }
+
+            return new CodeGraphExtractionResult();
+        }
+
+        public ValueTask DisposeAsync() => ValueTask.CompletedTask;
+    }
+
+    private sealed class RecordingSink : ICodeGraphSink
+    {
+        public CodeGraphBatchLimits Limits { get; } = new();
+        public List<CodeGraphBatch> Batches { get; } = [];
+
+        public ValueTask WriteBatchAsync(
+            CodeGraphBatch batch,
+            CancellationToken cancellationToken = default)
+        {
+            Batches.Add(batch);
+            return ValueTask.CompletedTask;
+        }
+    }
+}

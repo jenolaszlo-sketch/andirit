@@ -1,0 +1,2554 @@
+[
+  {
+    "assembly": "Penghou.Hetu",
+    "types": [
+      {
+        "name": "Penghou.Hetu.CodeAffectedTestsResult",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeAffectedTestsResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean Truncated",
+          "Boolean get_Truncated()",
+          "Boolean op_Equality(Penghou.Hetu.CodeAffectedTestsResult, Penghou.Hetu.CodeAffectedTestsResult)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeAffectedTestsResult, Penghou.Hetu.CodeAffectedTestsResult)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeAffectedTestsResult \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]] TestsBySeed",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]] get_TestsBySeed()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]], Boolean)",
+          "Void Deconstruct(System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]] ByRef, Boolean ByRef)",
+          "Void set_TestsBySeed(System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]])",
+          "Void set_Truncated(Boolean)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeEnclosingSymbolResult",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeEnclosingSymbolResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeEnclosingSymbolResult, Penghou.Hetu.CodeEnclosingSymbolResult)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeEnclosingSymbolResult, Penghou.Hetu.CodeEnclosingSymbolResult)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeEnclosingSymbolResult \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeGraphDeclaration Declaration",
+          "Penghou.Hetu.CodeGraphDeclaration get_Declaration()",
+          "Penghou.Hetu.CodeGraphNode Symbol",
+          "Penghou.Hetu.CodeGraphNode get_Symbol()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeGraphNode, Penghou.Hetu.CodeGraphDeclaration)",
+          "Void Deconstruct(Penghou.Hetu.CodeGraphNode ByRef, Penghou.Hetu.CodeGraphDeclaration ByRef)",
+          "Void set_Declaration(Penghou.Hetu.CodeGraphDeclaration)",
+          "Void set_Symbol(Penghou.Hetu.CodeGraphNode)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeFreshnessResult",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeFreshnessResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeFreshnessResult, Penghou.Hetu.CodeFreshnessResult)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeFreshnessResult, Penghou.Hetu.CodeFreshnessResult)",
+          "Int32 ChangedCount",
+          "Int32 DeletedCount",
+          "Int32 GetHashCode()",
+          "Int32 NewCount",
+          "Int32 UnchangedCount",
+          "Int32 get_ChangedCount()",
+          "Int32 get_DeletedCount()",
+          "Int32 get_NewCount()",
+          "Int32 get_UnchangedCount()",
+          "Penghou.Hetu.CodeFreshnessResult \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeFreshnessStatus Status",
+          "Penghou.Hetu.CodeFreshnessStatus get_Status()",
+          "Penghou.Hetu.CodeGraphPublication Publication",
+          "Penghou.Hetu.CodeGraphPublication get_Publication()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeFreshnessStatus, Penghou.Hetu.CodeGraphPublication, Int32, Int32, Int32, Int32)",
+          "Void Deconstruct(Penghou.Hetu.CodeFreshnessStatus ByRef, Penghou.Hetu.CodeGraphPublication ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef)",
+          "Void set_ChangedCount(Int32)",
+          "Void set_DeletedCount(Int32)",
+          "Void set_NewCount(Int32)",
+          "Void set_Publication(Penghou.Hetu.CodeGraphPublication)",
+          "Void set_Status(Penghou.Hetu.CodeFreshnessStatus)",
+          "Void set_UnchangedCount(Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeFreshnessStatus",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeFreshnessStatus Fresh",
+          "Penghou.Hetu.CodeFreshnessStatus SourceConflict",
+          "Penghou.Hetu.CodeFreshnessStatus Stale",
+          "Penghou.Hetu.CodeFreshnessStatus Unknown"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphBatchValidator",
+        "members": [
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphValidationError] Validate(Penghou.Hetu.CodeGraphBatch, Penghou.Hetu.CodeGraphBatchLimits)",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphDirection",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeGraphDirection Both",
+          "Penghou.Hetu.CodeGraphDirection Incoming",
+          "Penghou.Hetu.CodeGraphDirection Outgoing"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphFactKind",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeGraphFactKind Declaration",
+          "Penghou.Hetu.CodeGraphFactKind Edge",
+          "Penghou.Hetu.CodeGraphFactKind Node"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphFactProvenance",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphFactProvenance)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphFactProvenance, Penghou.Hetu.CodeGraphFactProvenance)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphFactProvenance, Penghou.Hetu.CodeGraphFactProvenance)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphFactKind Kind",
+          "Penghou.Hetu.CodeGraphFactKind get_Kind()",
+          "Penghou.Hetu.CodeGraphFactProvenance \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeFactOrigin] Contributors",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeFactOrigin] get_Contributors()",
+          "System.String FactId",
+          "System.String ToString()",
+          "System.String get_FactId()",
+          "Void .ctor(Penghou.Hetu.CodeGraphFactKind, System.String, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeFactOrigin])",
+          "Void Deconstruct(Penghou.Hetu.CodeGraphFactKind ByRef, System.String ByRef, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeFactOrigin] ByRef)",
+          "Void set_Contributors(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeFactOrigin])",
+          "Void set_FactId(System.String)",
+          "Void set_Kind(Penghou.Hetu.CodeGraphFactKind)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphIngestionDiagnostics",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphIngestionDiagnostics)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphIngestionDiagnostics, Penghou.Hetu.CodeGraphIngestionDiagnostics)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphIngestionDiagnostics, Penghou.Hetu.CodeGraphIngestionDiagnostics)",
+          "Int32 BatchesReceived",
+          "Int32 DeclarationsReceived",
+          "Int32 EdgesReceived",
+          "Int32 GetHashCode()",
+          "Int32 NodesReceived",
+          "Int32 RejectedFacts",
+          "Int32 get_BatchesReceived()",
+          "Int32 get_DeclarationsReceived()",
+          "Int32 get_EdgesReceived()",
+          "Int32 get_NodesReceived()",
+          "Int32 get_RejectedFacts()",
+          "Penghou.Hetu.CodeGraphIngestionDiagnostics \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeIndexRunId IndexRunId",
+          "Penghou.Hetu.CodeIndexRunId get_IndexRunId()",
+          "Penghou.Hetu.CodeIndexUnitId IndexUnitId",
+          "Penghou.Hetu.CodeIndexUnitId get_IndexUnitId()",
+          "Penghou.Hetu.CodeRepositoryId RepositoryId",
+          "Penghou.Hetu.CodeRepositoryId get_RepositoryId()",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] WarningCodes",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] get_WarningCodes()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, Penghou.Hetu.CodeIndexUnitId, Int32, Int32, Int32, Int32, Int32, System.Collections.Generic.IReadOnlyList\u00601[System.String])",
+          "Void Deconstruct(Penghou.Hetu.CodeRepositoryId ByRef, Penghou.Hetu.CodeIndexRunId ByRef, Penghou.Hetu.CodeIndexUnitId ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, System.Collections.Generic.IReadOnlyList\u00601[System.String] ByRef)",
+          "Void set_BatchesReceived(Int32)",
+          "Void set_DeclarationsReceived(Int32)",
+          "Void set_EdgesReceived(Int32)",
+          "Void set_IndexRunId(Penghou.Hetu.CodeIndexRunId)",
+          "Void set_IndexUnitId(Penghou.Hetu.CodeIndexUnitId)",
+          "Void set_NodesReceived(Int32)",
+          "Void set_RejectedFacts(Int32)",
+          "Void set_RepositoryId(Penghou.Hetu.CodeRepositoryId)",
+          "Void set_WarningCodes(System.Collections.Generic.IReadOnlyList\u00601[System.String])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphIngestionSink",
+        "members": [
+          "Penghou.Hetu.CodeGraphBatchLimits Limits",
+          "Penghou.Hetu.CodeGraphBatchLimits get_Limits()",
+          "System.Threading.Tasks.ValueTask CompleteAsync(System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask DisposeAsync()",
+          "System.Threading.Tasks.ValueTask WriteBatchAsync(Penghou.Hetu.CodeGraphBatch, System.Threading.CancellationToken)",
+          "Void .ctor(Penghou.Hetu.ICodeGraphIndexStore, Penghou.Hetu.CodeGraphBatchLimits, Penghou.Hetu.CodeGraphBatchValidator, System.Action\u00601[Penghou.Hetu.CodeGraphIngestionDiagnostics])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphMultiTraversalResult",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphMultiTraversalResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean Truncated",
+          "Boolean get_Truncated()",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphMultiTraversalResult, Penghou.Hetu.CodeGraphMultiTraversalResult)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphMultiTraversalResult, Penghou.Hetu.CodeGraphMultiTraversalResult)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphMultiTraversalResult \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodeGraphTraversalResult] Results",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodeGraphTraversalResult] get_Results()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodeGraphTraversalResult])",
+          "Void Deconstruct(System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodeGraphTraversalResult] ByRef)",
+          "Void set_Results(System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodeGraphTraversalResult])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphPluginRegistry",
+        "members": [
+          "Boolean TryGetFallback(Penghou.Hetu.ICodeGraphPlugin, Penghou.Hetu.ICodeGraphPlugin ByRef)",
+          "Penghou.Hetu.CodeLanguageProviderMap ProviderMap",
+          "Penghou.Hetu.CodeLanguageProviderMap get_ProviderMap()",
+          "Penghou.Hetu.ICodeGraphPlugin Resolve(System.String)",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.ICodeGraphPlugin] FindCandidates(System.String)",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.ICodeGraphPlugin] Plugins",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.ICodeGraphPlugin] get_Plugins()",
+          "Void .ctor(System.Collections.Generic.IEnumerable\u00601[Penghou.Hetu.ICodeGraphPlugin], Penghou.Hetu.CodeLanguageProviderMap)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphPluginSelectionException",
+        "members": [
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId] CandidateIds",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId] get_CandidateIds()",
+          "System.String Path",
+          "System.String get_Path()",
+          "Void .ctor(System.String, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.ICodeGraphPlugin])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphPublication",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphPublication)",
+          "Boolean Equals(System.Object)",
+          "Boolean IsConsistentSnapshot",
+          "Boolean get_IsConsistentSnapshot()",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphPublication, Penghou.Hetu.CodeGraphPublication)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphPublication, Penghou.Hetu.CodeGraphPublication)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphPublication \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeIndexIdentity IndexIdentity",
+          "Penghou.Hetu.CodeIndexIdentity get_IndexIdentity()",
+          "Penghou.Hetu.CodeIndexRunId IndexRunId",
+          "Penghou.Hetu.CodeIndexRunId get_IndexRunId()",
+          "Penghou.Hetu.CodeRepositoryId RepositoryId",
+          "Penghou.Hetu.CodeRepositoryId get_RepositoryId()",
+          "System.String SnapshotIdentity",
+          "System.String ToString()",
+          "System.String get_SnapshotIdentity()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, System.String, Boolean, Penghou.Hetu.CodeIndexIdentity)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphPublicationChangedException",
+        "members": [
+          "Penghou.Hetu.CodeGraphPublication Actual",
+          "Penghou.Hetu.CodeGraphPublication Expected",
+          "Penghou.Hetu.CodeGraphPublication get_Actual()",
+          "Penghou.Hetu.CodeGraphPublication get_Expected()",
+          "Void .ctor(Penghou.Hetu.CodeGraphPublication, Penghou.Hetu.CodeGraphPublication)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphPublicationQuery",
+        "members": [
+          "Penghou.Hetu.CodeGraphPublication Publication",
+          "Penghou.Hetu.CodeGraphPublication get_Publication()",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeAffectedTestsResult]] GetAffectedTestsAsync(System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeNodeId], Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphMultiTraversalResult]] GetImpactSetsAsync(System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeNodeId], Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindCalleesAsync(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindCallersAsync(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindDependenciesAsync(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindDependentsAsync(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindImplementationsAsync(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindReferencesAsync(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] GetImpactSetAsync(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] GetNeighborhoodAsync(Penghou.Hetu.CodeNodeId, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeEdgeKind], Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeSymbolLookupResult]] FindSymbolAsync(System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodeSymbolLookupResult]]] ResolveSymbolsAsync(System.Collections.Generic.IReadOnlyCollection\u00601[System.String], System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]]] FindDeclarationsAsync(Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]]] GetDeclarationsInFileAsync(System.String, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]]] GetPublicSurfaceAsync(System.String, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphQueryDescriptor",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphQueryDescriptor)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphQueryDescriptor, Penghou.Hetu.CodeGraphQueryDescriptor)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphQueryDescriptor, Penghou.Hetu.CodeGraphQueryDescriptor)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphQueryDescriptor \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeGraphTraversalQuery Traversal",
+          "Penghou.Hetu.CodeGraphTraversalQuery get_Traversal()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphTraversalQuery] Traversals",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphTraversalQuery] get_Traversals()",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] QualifiedNames",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] get_QualifiedNames()",
+          "System.String Operation",
+          "System.String QualifiedName",
+          "System.String ToString()",
+          "System.String get_Operation()",
+          "System.String get_QualifiedName()",
+          "Void .ctor(System.String, System.String, Penghou.Hetu.CodeGraphTraversalQuery, System.Collections.Generic.IReadOnlyList\u00601[System.String], System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphTraversalQuery])",
+          "Void Deconstruct(System.String ByRef, System.String ByRef, Penghou.Hetu.CodeGraphTraversalQuery ByRef, System.Collections.Generic.IReadOnlyList\u00601[System.String] ByRef, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphTraversalQuery] ByRef)",
+          "Void set_Operation(System.String)",
+          "Void set_QualifiedName(System.String)",
+          "Void set_QualifiedNames(System.Collections.Generic.IReadOnlyList\u00601[System.String])",
+          "Void set_Traversal(Penghou.Hetu.CodeGraphTraversalQuery)",
+          "Void set_Traversals(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphTraversalQuery])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphQueryEnvelope\u00601",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphQueryEnvelope\u00601[TResult])",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphQueryEnvelope\u00601[TResult], Penghou.Hetu.CodeGraphQueryEnvelope\u00601[TResult])",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphQueryEnvelope\u00601[TResult], Penghou.Hetu.CodeGraphQueryEnvelope\u00601[TResult])",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphPublication Publication",
+          "Penghou.Hetu.CodeGraphPublication get_Publication()",
+          "Penghou.Hetu.CodeGraphQueryDescriptor Query",
+          "Penghou.Hetu.CodeGraphQueryDescriptor get_Query()",
+          "Penghou.Hetu.CodeGraphQueryEnvelope\u00601[TResult] \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphFactProvenance] Provenance",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphFactProvenance] get_Provenance()",
+          "System.String ToString()",
+          "TResult Result",
+          "TResult get_Result()",
+          "Void .ctor(Penghou.Hetu.CodeGraphPublication, Penghou.Hetu.CodeGraphQueryDescriptor, TResult, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphFactProvenance])",
+          "Void Deconstruct(Penghou.Hetu.CodeGraphPublication ByRef, Penghou.Hetu.CodeGraphQueryDescriptor ByRef, TResult ByRef, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphFactProvenance] ByRef)",
+          "Void set_Provenance(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphFactProvenance])",
+          "Void set_Publication(Penghou.Hetu.CodeGraphPublication)",
+          "Void set_Query(Penghou.Hetu.CodeGraphQueryDescriptor)",
+          "Void set_Result(TResult)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphQueryOptions",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphQueryOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphQueryOptions, Penghou.Hetu.CodeGraphQueryOptions)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphQueryOptions, Penghou.Hetu.CodeGraphQueryOptions)",
+          "Int32 GetHashCode()",
+          "Int32 MaxDepth",
+          "Int32 MaxEdges",
+          "Int32 MaxNodes",
+          "Int32 get_MaxDepth()",
+          "Int32 get_MaxEdges()",
+          "Int32 get_MaxNodes()",
+          "Penghou.Hetu.CodeGraphQueryOptions \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.EvidenceQuality] EvidenceQualities",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.EvidenceQuality] get_EvidenceQualities()",
+          "System.String ToString()",
+          "Void .ctor(Int32, Int32, Int32, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.EvidenceQuality])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphQueryService",
+        "members": [
+          "Penghou.Hetu.CodeGraphPublicationQuery Bind(Penghou.Hetu.CodeGraphPublication)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeAffectedTestsResult] GetAffectedTestsAsync(Penghou.Hetu.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeNodeId], Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeEnclosingSymbolResult] FindEnclosingSymbolAsync(Penghou.Hetu.CodeRepositoryId, System.String, Int32, Int32, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphMultiTraversalResult] GetImpactSetsAsync(Penghou.Hetu.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeNodeId], Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphPublicationQuery] OpenLatestPublicationAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeAffectedTestsResult]] GetAffectedTestsWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeNodeId], Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphMultiTraversalResult]] GetImpactSetsWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeNodeId], Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindCalleesWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindCallersWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindDependenciesWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindDependentsWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindImplementationsWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] FindReferencesWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] GetImpactSetWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] GetNeighborhoodWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeEdgeKind], Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] TraverseWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphDirection, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeEdgeKind], Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeSymbolLookupResult]] FindSymbolWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeSymbolLookupResult]] FindSymbolsByQualifiedNameWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodeSymbolLookupResult]]] ResolveSymbolsWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection\u00601[System.String], System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]]] FindDeclarationsWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]]] GetDeclarationsInFileWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, System.String, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]]] GetPublicSurfaceWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, System.String, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] FindCalleesAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] FindCallersAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] FindDependenciesAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] FindDependentsAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] FindImplementationsAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] FindReferencesAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] GetImpactSetAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] GetNeighborhoodAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeEdgeKind], Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeNamePatternResult] FindNodesByNamePatternAsync(Penghou.Hetu.CodeRepositoryId, System.String, Int32, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeSymbolDiscoveryResult] FindSymbolsAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolDiscoveryQuery, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeSymbolLookupResult] FindSymbolAsync(Penghou.Hetu.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeSymbolLookupResult] FindSymbolsByQualifiedNameAsync(Penghou.Hetu.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodeSymbolLookupResult]] ResolveSymbolsAsync(Penghou.Hetu.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection\u00601[System.String], System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]] FindDeclarationsAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]] GetDeclarationsInFileAsync(Penghou.Hetu.CodeRepositoryId, System.String, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]] GetDeclarationsInProjectAsync(Penghou.Hetu.CodeRepositoryId, System.String, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]] GetPublicSurfaceAsync(Penghou.Hetu.CodeRepositoryId, System.String, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]] GetSymbolsInFileAsync(Penghou.Hetu.CodeRepositoryId, System.String, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]] GetSymbolsInProjectAsync(Penghou.Hetu.CodeRepositoryId, System.String, Penghou.Hetu.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "Void .ctor(Penghou.Hetu.ICodeGraphReader)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphStoreException",
+        "members": [
+          "System.String NativeErrorCode",
+          "System.String StoreName",
+          "System.String get_NativeErrorCode()",
+          "System.String get_StoreName()",
+          "Void .ctor(System.String, System.String, System.String, System.Exception)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphStoreHealth",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphStoreHealth)",
+          "Boolean Equals(System.Object)",
+          "Boolean IsHealthy",
+          "Boolean get_IsHealthy()",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphStoreHealth, Penghou.Hetu.CodeGraphStoreHealth)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphStoreHealth, Penghou.Hetu.CodeGraphStoreHealth)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphStoreHealth \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeGraphStoreHealthStatus Status",
+          "Penghou.Hetu.CodeGraphStoreHealthStatus get_Status()",
+          "System.Nullable\u00601[System.Int32] IndexUnitCount",
+          "System.Nullable\u00601[System.Int32] RepositoryCount",
+          "System.Nullable\u00601[System.Int32] RunCount",
+          "System.Nullable\u00601[System.Int32] SchemaVersion",
+          "System.Nullable\u00601[System.Int32] get_IndexUnitCount()",
+          "System.Nullable\u00601[System.Int32] get_RepositoryCount()",
+          "System.Nullable\u00601[System.Int32] get_RunCount()",
+          "System.Nullable\u00601[System.Int32] get_SchemaVersion()",
+          "System.String Detail",
+          "System.String StoreName",
+          "System.String ToString()",
+          "System.String get_Detail()",
+          "System.String get_StoreName()",
+          "Void .ctor(Penghou.Hetu.CodeGraphStoreHealthStatus, System.String, System.String, System.Nullable\u00601[System.Int32], System.Nullable\u00601[System.Int32], System.Nullable\u00601[System.Int32], System.Nullable\u00601[System.Int32])",
+          "Void Deconstruct(Penghou.Hetu.CodeGraphStoreHealthStatus ByRef, System.String ByRef, System.String ByRef, System.Nullable\u00601[System.Int32] ByRef, System.Nullable\u00601[System.Int32] ByRef, System.Nullable\u00601[System.Int32] ByRef, System.Nullable\u00601[System.Int32] ByRef)",
+          "Void set_Detail(System.String)",
+          "Void set_IndexUnitCount(System.Nullable\u00601[System.Int32])",
+          "Void set_RepositoryCount(System.Nullable\u00601[System.Int32])",
+          "Void set_RunCount(System.Nullable\u00601[System.Int32])",
+          "Void set_SchemaVersion(System.Nullable\u00601[System.Int32])",
+          "Void set_Status(Penghou.Hetu.CodeGraphStoreHealthStatus)",
+          "Void set_StoreName(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphStoreHealthStatus",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeGraphStoreHealthStatus Healthy",
+          "Penghou.Hetu.CodeGraphStoreHealthStatus Unhealthy",
+          "Penghou.Hetu.CodeGraphStoreHealthStatus Unknown"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphTraversalQuery",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphTraversalQuery)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphTraversalQuery, Penghou.Hetu.CodeGraphTraversalQuery)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphTraversalQuery, Penghou.Hetu.CodeGraphTraversalQuery)",
+          "Int32 GetHashCode()",
+          "Int32 MaxDepth",
+          "Int32 MaxEdges",
+          "Int32 MaxNodes",
+          "Int32 get_MaxDepth()",
+          "Int32 get_MaxEdges()",
+          "Int32 get_MaxNodes()",
+          "Penghou.Hetu.CodeGraphDirection Direction",
+          "Penghou.Hetu.CodeGraphDirection get_Direction()",
+          "Penghou.Hetu.CodeGraphTraversalQuery \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeNodeId StartNodeId",
+          "Penghou.Hetu.CodeNodeId get_StartNodeId()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeEdgeKind] EdgeKinds",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeEdgeKind] get_EdgeKinds()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.EvidenceQuality] EvidenceQualities",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.EvidenceQuality] get_EvidenceQualities()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeGraphDirection, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeEdgeKind], System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.EvidenceQuality], Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphTraversalResult",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphTraversalResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean Truncated",
+          "Boolean get_Truncated()",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphTraversalResult, Penghou.Hetu.CodeGraphTraversalResult)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphTraversalResult, Penghou.Hetu.CodeGraphTraversalResult)",
+          "Int32 DepthReached",
+          "Int32 EdgesExamined",
+          "Int32 GetHashCode()",
+          "Int32 NodesExamined",
+          "Int32 OmittedFrontierCount",
+          "Int32 get_DepthReached()",
+          "Int32 get_EdgesExamined()",
+          "Int32 get_NodesExamined()",
+          "Int32 get_OmittedFrontierCount()",
+          "Penghou.Hetu.CodeGraphTraversalResult \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeGraphTruncationReason TruncationReason",
+          "Penghou.Hetu.CodeGraphTruncationReason get_TruncationReason()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphEdge] Edges",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphEdge] get_Edges()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] Nodes",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] get_Nodes()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode], System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphEdge], Boolean, Penghou.Hetu.CodeGraphTruncationReason, Int32, Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphTruncationReason",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeGraphTruncationReason MaxDepth",
+          "Penghou.Hetu.CodeGraphTruncationReason MaxEdges",
+          "Penghou.Hetu.CodeGraphTruncationReason MaxNodes",
+          "Penghou.Hetu.CodeGraphTruncationReason None"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexIdentity",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexIdentity)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexIdentity, Penghou.Hetu.CodeIndexIdentity)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexIdentity, Penghou.Hetu.CodeIndexIdentity)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeIndexIdentity \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexPlan",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexPlan)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexPlan, Penghou.Hetu.CodeIndexPlan)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexPlan, Penghou.Hetu.CodeIndexPlan)",
+          "Int32 DepthLimitedDirectories",
+          "Int32 ExcludedDirectories",
+          "Int32 GetHashCode()",
+          "Int32 ReparsePointsSkipped",
+          "Int32 RepositoryEntries",
+          "Int32 UnsupportedEntries",
+          "Int32 get_DepthLimitedDirectories()",
+          "Int32 get_ExcludedDirectories()",
+          "Int32 get_ReparsePointsSkipped()",
+          "Int32 get_RepositoryEntries()",
+          "Int32 get_UnsupportedEntries()",
+          "Int64 HashBytesRead",
+          "Int64 get_HashBytesRead()",
+          "Penghou.Hetu.CodeIndexPlan \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeIndexPlanItem] Items",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeIndexPlanItem] get_Items()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeIndexPlanItem], Int32, Int32, Int64, Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexPlanItem",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexPlanItem)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexPlanItem, Penghou.Hetu.CodeIndexPlanItem)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexPlanItem, Penghou.Hetu.CodeIndexPlanItem)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeIndexPlanItem \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeIndexPlanStatus Status",
+          "Penghou.Hetu.CodeIndexPlanStatus get_Status()",
+          "Penghou.Hetu.CodeRepositoryEntry Source",
+          "Penghou.Hetu.CodeRepositoryEntry get_Source()",
+          "Penghou.Hetu.CodeSourceManifest Manifest",
+          "Penghou.Hetu.CodeSourceManifest get_Manifest()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeIndexPlanStatus, Penghou.Hetu.CodeSourceManifest, Penghou.Hetu.CodeRepositoryEntry)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexPlanStatus",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeIndexPlanStatus Changed",
+          "Penghou.Hetu.CodeIndexPlanStatus Deleted",
+          "Penghou.Hetu.CodeIndexPlanStatus New",
+          "Penghou.Hetu.CodeIndexPlanStatus Unchanged"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexPlanner",
+        "members": [
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeIndexPlan] CreatePlanAsync(Penghou.Hetu.ICodeRepositorySource, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeSourceManifest], Penghou.Hetu.CodeIndexPlanningOptions, System.Threading.CancellationToken)",
+          "Void .ctor(Penghou.Hetu.CodeGraphPluginRegistry)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexPlanningOptions",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexPlanningOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexPlanningOptions, Penghou.Hetu.CodeIndexPlanningOptions)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexPlanningOptions, Penghou.Hetu.CodeIndexPlanningOptions)",
+          "Int32 GetHashCode()",
+          "Int64 MaxHashSourceBytes",
+          "Int64 MaxHashTotalBytes",
+          "Int64 get_MaxHashSourceBytes()",
+          "Int64 get_MaxHashTotalBytes()",
+          "Penghou.Hetu.CodeIndexPlanningOptions \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeRepositoryEnumerationOptions Enumeration",
+          "Penghou.Hetu.CodeRepositoryEnumerationOptions get_Enumeration()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodePluginId] PluginIds",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodePluginId] get_PluginIds()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryEnumerationOptions, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodePluginId], Int64, Int64)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexRunManifest",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexRunManifest)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexRunManifest, Penghou.Hetu.CodeIndexRunManifest)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexRunManifest, Penghou.Hetu.CodeIndexRunManifest)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeIndexRunId Id",
+          "Penghou.Hetu.CodeIndexRunId get_Id()",
+          "Penghou.Hetu.CodeIndexRunManifest \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeIndexRunStatus Status",
+          "Penghou.Hetu.CodeIndexRunStatus get_Status()",
+          "Penghou.Hetu.CodeRepositoryId RepositoryId",
+          "Penghou.Hetu.CodeRepositoryId get_RepositoryId()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodePluginId] Plugins",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodePluginId] get_Plugins()",
+          "System.DateTimeOffset StartedAt",
+          "System.DateTimeOffset get_StartedAt()",
+          "System.Nullable\u00601[System.DateTimeOffset] CompletedAt",
+          "System.Nullable\u00601[System.DateTimeOffset] get_CompletedAt()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, System.DateTimeOffset, Penghou.Hetu.CodeIndexRunStatus, System.Nullable\u00601[System.DateTimeOffset], System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodePluginId])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexRunStatus",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeIndexRunStatus Cancelled",
+          "Penghou.Hetu.CodeIndexRunStatus Completed",
+          "Penghou.Hetu.CodeIndexRunStatus Failed",
+          "Penghou.Hetu.CodeIndexRunStatus Running"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexUnitReplacement",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexUnitReplacement)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexUnitReplacement, Penghou.Hetu.CodeIndexUnitReplacement)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexUnitReplacement, Penghou.Hetu.CodeIndexUnitReplacement)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeFactOrigin Origin",
+          "Penghou.Hetu.CodeFactOrigin get_Origin()",
+          "Penghou.Hetu.CodeIndexUnitReplacement \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration] Declarations",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration] get_Declarations()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphEdge] Edges",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphEdge] get_Edges()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] Nodes",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] get_Nodes()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeFactOrigin, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode], System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration], System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphEdge])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexingDiagnostics",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexingDiagnostics)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexingDiagnostics, Penghou.Hetu.CodeIndexingDiagnostics)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexingDiagnostics, Penghou.Hetu.CodeIndexingDiagnostics)",
+          "Int32 DeclarationsProduced",
+          "Int32 DirectoriesDepthLimited",
+          "Int32 DirectoriesExcluded",
+          "Int32 EdgesProduced",
+          "Int32 FilesChanged",
+          "Int32 FilesDeleted",
+          "Int32 FilesDiscovered",
+          "Int32 FilesNew",
+          "Int32 FilesUnchanged",
+          "Int32 FilesUnsupported",
+          "Int32 GetHashCode()",
+          "Int32 IndexUnitsCompleted",
+          "Int32 IndexUnitsDeleted",
+          "Int32 NodesProduced",
+          "Int32 PluginsExecuted",
+          "Int32 RejectedFacts",
+          "Int32 ReparsePointsSkipped",
+          "Int32 UnresolvedRelationships",
+          "Int32 get_DeclarationsProduced()",
+          "Int32 get_DirectoriesDepthLimited()",
+          "Int32 get_DirectoriesExcluded()",
+          "Int32 get_EdgesProduced()",
+          "Int32 get_FilesChanged()",
+          "Int32 get_FilesDeleted()",
+          "Int32 get_FilesDiscovered()",
+          "Int32 get_FilesNew()",
+          "Int32 get_FilesUnchanged()",
+          "Int32 get_FilesUnsupported()",
+          "Int32 get_IndexUnitsCompleted()",
+          "Int32 get_IndexUnitsDeleted()",
+          "Int32 get_NodesProduced()",
+          "Int32 get_PluginsExecuted()",
+          "Int32 get_RejectedFacts()",
+          "Int32 get_ReparsePointsSkipped()",
+          "Int32 get_UnresolvedRelationships()",
+          "Int64 SourceBytesRead",
+          "Int64 get_SourceBytesRead()",
+          "Penghou.Hetu.CodeIndexRunId IndexRunId",
+          "Penghou.Hetu.CodeIndexRunId get_IndexRunId()",
+          "Penghou.Hetu.CodeIndexRunStatus Status",
+          "Penghou.Hetu.CodeIndexRunStatus get_Status()",
+          "Penghou.Hetu.CodeIndexingDiagnostics \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeRepositoryId RepositoryId",
+          "Penghou.Hetu.CodeRepositoryId get_RepositoryId()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginIndexingDiagnostics] Plugins",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginIndexingDiagnostics] get_Plugins()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeProviderSelection] ProviderSelections",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeProviderSelection] get_ProviderSelections()",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] WarningCodes",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] get_WarningCodes()",
+          "System.String ToString()",
+          "System.TimeSpan ExtractionDuration",
+          "System.TimeSpan PersistenceDuration",
+          "System.TimeSpan PlanningDuration",
+          "System.TimeSpan get_ExtractionDuration()",
+          "System.TimeSpan get_PersistenceDuration()",
+          "System.TimeSpan get_PlanningDuration()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, Penghou.Hetu.CodeIndexRunStatus, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int64, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32, System.TimeSpan, System.TimeSpan, System.TimeSpan, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginIndexingDiagnostics], System.Collections.Generic.IReadOnlyList\u00601[System.String], System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeProviderSelection])",
+          "Void Deconstruct(Penghou.Hetu.CodeRepositoryId ByRef, Penghou.Hetu.CodeIndexRunId ByRef, Penghou.Hetu.CodeIndexRunStatus ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int64 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, System.TimeSpan ByRef, System.TimeSpan ByRef, System.TimeSpan ByRef, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginIndexingDiagnostics] ByRef, System.Collections.Generic.IReadOnlyList\u00601[System.String] ByRef, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeProviderSelection] ByRef)",
+          "Void set_DeclarationsProduced(Int32)",
+          "Void set_DirectoriesDepthLimited(Int32)",
+          "Void set_DirectoriesExcluded(Int32)",
+          "Void set_EdgesProduced(Int32)",
+          "Void set_ExtractionDuration(System.TimeSpan)",
+          "Void set_FilesChanged(Int32)",
+          "Void set_FilesDeleted(Int32)",
+          "Void set_FilesDiscovered(Int32)",
+          "Void set_FilesNew(Int32)",
+          "Void set_FilesUnchanged(Int32)",
+          "Void set_FilesUnsupported(Int32)",
+          "Void set_IndexRunId(Penghou.Hetu.CodeIndexRunId)",
+          "Void set_IndexUnitsCompleted(Int32)",
+          "Void set_IndexUnitsDeleted(Int32)",
+          "Void set_NodesProduced(Int32)",
+          "Void set_PersistenceDuration(System.TimeSpan)",
+          "Void set_PlanningDuration(System.TimeSpan)",
+          "Void set_Plugins(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginIndexingDiagnostics])",
+          "Void set_PluginsExecuted(Int32)",
+          "Void set_ProviderSelections(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeProviderSelection])",
+          "Void set_RejectedFacts(Int32)",
+          "Void set_ReparsePointsSkipped(Int32)",
+          "Void set_RepositoryId(Penghou.Hetu.CodeRepositoryId)",
+          "Void set_SourceBytesRead(Int64)",
+          "Void set_Status(Penghou.Hetu.CodeIndexRunStatus)",
+          "Void set_UnresolvedRelationships(Int32)",
+          "Void set_WarningCodes(System.Collections.Generic.IReadOnlyList\u00601[System.String])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexingOptions",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexingOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexingOptions, Penghou.Hetu.CodeIndexingOptions)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexingOptions, Penghou.Hetu.CodeIndexingOptions)",
+          "Int32 GetHashCode()",
+          "Int32 MaxConcurrentPlugins",
+          "Int32 get_MaxConcurrentPlugins()",
+          "Int64 MaxSourceBytes",
+          "Int64 MaxTotalSourceBytes",
+          "Int64 get_MaxSourceBytes()",
+          "Int64 get_MaxTotalSourceBytes()",
+          "Penghou.Hetu.CodeGraphBatchLimits BatchLimits",
+          "Penghou.Hetu.CodeGraphBatchLimits get_BatchLimits()",
+          "Penghou.Hetu.CodeIndexPlanningOptions Planning",
+          "Penghou.Hetu.CodeIndexPlanningOptions get_Planning()",
+          "Penghou.Hetu.CodeIndexingOptions \u003CClone\u003E$()",
+          "Penghou.Hetu.ProviderFallbackPolicy FallbackPolicy",
+          "Penghou.Hetu.ProviderFallbackPolicy get_FallbackPolicy()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeIndexPlanningOptions, Penghou.Hetu.CodeGraphBatchLimits, Int32, Int64, Int64, Penghou.Hetu.ProviderFallbackPolicy)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexingResult",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexingResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexingResult, Penghou.Hetu.CodeIndexingResult)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexingResult, Penghou.Hetu.CodeIndexingResult)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphPublication Publication",
+          "Penghou.Hetu.CodeGraphPublication get_Publication()",
+          "Penghou.Hetu.CodeIndexPlan Plan",
+          "Penghou.Hetu.CodeIndexPlan get_Plan()",
+          "Penghou.Hetu.CodeIndexingDiagnostics Diagnostics",
+          "Penghou.Hetu.CodeIndexingDiagnostics get_Diagnostics()",
+          "Penghou.Hetu.CodeIndexingResult \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeRepositoryIndexState PublishedState",
+          "Penghou.Hetu.CodeRepositoryIndexState get_PublishedState()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeIndexPlan, Penghou.Hetu.CodeIndexingDiagnostics, Penghou.Hetu.CodeGraphPublication, Penghou.Hetu.CodeRepositoryIndexState)",
+          "Void Deconstruct(Penghou.Hetu.CodeIndexPlan ByRef, Penghou.Hetu.CodeIndexingDiagnostics ByRef, Penghou.Hetu.CodeGraphPublication ByRef, Penghou.Hetu.CodeRepositoryIndexState ByRef)",
+          "Void set_Diagnostics(Penghou.Hetu.CodeIndexingDiagnostics)",
+          "Void set_Plan(Penghou.Hetu.CodeIndexPlan)",
+          "Void set_Publication(Penghou.Hetu.CodeGraphPublication)",
+          "Void set_PublishedState(Penghou.Hetu.CodeRepositoryIndexState)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexingService",
+        "members": [
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeFreshnessResult] CheckFreshnessAsync(Penghou.Hetu.CodeRepositoryDescriptor, Penghou.Hetu.CodeIndexingOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeIndexingResult] IndexAsync(Penghou.Hetu.CodeRepositoryDescriptor, Penghou.Hetu.CodeIndexRunId, Penghou.Hetu.CodeIndexingOptions, System.Action\u00601[Penghou.Hetu.CodeIndexingDiagnostics], System.Threading.CancellationToken)",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryProviderRegistry, Penghou.Hetu.CodeGraphPluginRegistry, Penghou.Hetu.ICodeGraphStore, System.TimeProvider)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeLanguageProviderMap",
+        "members": [
+          "Boolean IsEmpty",
+          "Boolean TryGetOrder(System.String, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId] ByRef)",
+          "Boolean get_IsEmpty()",
+          "Penghou.Hetu.CodeLanguageProviderMap Empty",
+          "Penghou.Hetu.CodeLanguageProviderMap get_Empty()",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId]] Orderings",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId]] get_Orderings()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId]])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeNamePatternResult",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeNamePatternResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean Truncated",
+          "Boolean get_Truncated()",
+          "Boolean op_Equality(Penghou.Hetu.CodeNamePatternResult, Penghou.Hetu.CodeNamePatternResult)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeNamePatternResult, Penghou.Hetu.CodeNamePatternResult)",
+          "Int32 AbsoluteMaxResults",
+          "Int32 DefaultMaxResults",
+          "Int32 GetHashCode()",
+          "Int32 TotalMatches",
+          "Int32 get_TotalMatches()",
+          "Penghou.Hetu.CodeNamePatternResult \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] Candidates",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] get_Candidates()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode], Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodePluginIndexingDiagnostics",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodePluginIndexingDiagnostics)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodePluginIndexingDiagnostics, Penghou.Hetu.CodePluginIndexingDiagnostics)",
+          "Boolean op_Inequality(Penghou.Hetu.CodePluginIndexingDiagnostics, Penghou.Hetu.CodePluginIndexingDiagnostics)",
+          "Int32 GetHashCode()",
+          "Int32 ObsoleteIndexUnits",
+          "Int32 SourcesContributingFacts",
+          "Int32 SourcesExamined",
+          "Int32 SourcesSupplied",
+          "Int32 UnresolvedRelationships",
+          "Int32 get_ObsoleteIndexUnits()",
+          "Int32 get_SourcesContributingFacts()",
+          "Int32 get_SourcesExamined()",
+          "Int32 get_SourcesSupplied()",
+          "Int32 get_UnresolvedRelationships()",
+          "Penghou.Hetu.CodePluginId PluginId",
+          "Penghou.Hetu.CodePluginId get_PluginId()",
+          "Penghou.Hetu.CodePluginIndexingDiagnostics \u003CClone\u003E$()",
+          "Penghou.Hetu.CodePluginIndexingStatus Status",
+          "Penghou.Hetu.CodePluginIndexingStatus get_Status()",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] WarningCodes",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] get_WarningCodes()",
+          "System.String PluginVersion",
+          "System.String ToString()",
+          "System.String get_PluginVersion()",
+          "System.TimeSpan Duration",
+          "System.TimeSpan get_Duration()",
+          "Void .ctor(Penghou.Hetu.CodePluginId, System.String, Penghou.Hetu.CodePluginIndexingStatus, System.TimeSpan, Int32, Int32, Int32, Int32, Int32, System.Collections.Generic.IReadOnlyList\u00601[System.String])",
+          "Void Deconstruct(Penghou.Hetu.CodePluginId ByRef, System.String ByRef, Penghou.Hetu.CodePluginIndexingStatus ByRef, System.TimeSpan ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, System.Collections.Generic.IReadOnlyList\u00601[System.String] ByRef)",
+          "Void set_Duration(System.TimeSpan)",
+          "Void set_ObsoleteIndexUnits(Int32)",
+          "Void set_PluginId(Penghou.Hetu.CodePluginId)",
+          "Void set_PluginVersion(System.String)",
+          "Void set_SourcesContributingFacts(Int32)",
+          "Void set_SourcesExamined(Int32)",
+          "Void set_SourcesSupplied(Int32)",
+          "Void set_Status(Penghou.Hetu.CodePluginIndexingStatus)",
+          "Void set_UnresolvedRelationships(Int32)",
+          "Void set_WarningCodes(System.Collections.Generic.IReadOnlyList\u00601[System.String])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodePluginIndexingStatus",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodePluginIndexingStatus Cancelled",
+          "Penghou.Hetu.CodePluginIndexingStatus Completed",
+          "Penghou.Hetu.CodePluginIndexingStatus Failed"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeProviderSelection",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeProviderSelection)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeProviderSelection, Penghou.Hetu.CodeProviderSelection)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeProviderSelection, Penghou.Hetu.CodeProviderSelection)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphCapabilities LostCapabilities",
+          "Penghou.Hetu.CodeGraphCapabilities get_LostCapabilities()",
+          "Penghou.Hetu.CodePluginId Preferred",
+          "Penghou.Hetu.CodePluginId Selected",
+          "Penghou.Hetu.CodePluginId get_Preferred()",
+          "Penghou.Hetu.CodePluginId get_Selected()",
+          "Penghou.Hetu.CodeProviderSelection \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId] Attempted",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId] get_Attempted()",
+          "System.Nullable\u00601[Penghou.Hetu.CodePluginFailureKind] FailureKind",
+          "System.Nullable\u00601[Penghou.Hetu.CodePluginFailureKind] get_FailureKind()",
+          "System.String Language",
+          "System.String Reason",
+          "System.String ToString()",
+          "System.String get_Language()",
+          "System.String get_Reason()",
+          "Void .ctor(System.String, Penghou.Hetu.CodePluginId, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId], Penghou.Hetu.CodePluginId, System.Nullable\u00601[Penghou.Hetu.CodePluginFailureKind], System.String, Penghou.Hetu.CodeGraphCapabilities)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodePublicationSnapshot",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodePublicationSnapshot)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodePublicationSnapshot, Penghou.Hetu.CodePublicationSnapshot)",
+          "Boolean op_Inequality(Penghou.Hetu.CodePublicationSnapshot, Penghou.Hetu.CodePublicationSnapshot)",
+          "Int32 CurrentSchemaVersion",
+          "Int32 GetHashCode()",
+          "Int32 SchemaVersion",
+          "Int32 get_SchemaVersion()",
+          "Penghou.Hetu.CodeIndexRunManifest CompletedRun",
+          "Penghou.Hetu.CodeIndexRunManifest get_CompletedRun()",
+          "Penghou.Hetu.CodePublicationSnapshot \u003CClone\u003E$()",
+          "Penghou.Hetu.CodePublicationSnapshot FromJson(System.String, Penghou.Hetu.CodeSnapshotOptions)",
+          "Penghou.Hetu.CodeRepositoryIndexState IndexState",
+          "Penghou.Hetu.CodeRepositoryIndexState get_IndexState()",
+          "Penghou.Hetu.CodeRepositoryManifest Repository",
+          "Penghou.Hetu.CodeRepositoryManifest get_Repository()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeIndexUnitReplacement] Units",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeIndexUnitReplacement] get_Units()",
+          "System.String IntegrityHash",
+          "System.String ToJson()",
+          "System.String ToString()",
+          "System.String get_IntegrityHash()",
+          "System.Threading.Tasks.ValueTask ImportAsync(Penghou.Hetu.ICodeGraphIndexStore, Penghou.Hetu.CodeSnapshotOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodePublicationSnapshot] ExportAsync(Penghou.Hetu.ICodeGraphStore, Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSnapshotOptions, System.Threading.CancellationToken)",
+          "Void .ctor()",
+          "Void set_CompletedRun(Penghou.Hetu.CodeIndexRunManifest)",
+          "Void set_IndexState(Penghou.Hetu.CodeRepositoryIndexState)",
+          "Void set_IntegrityHash(System.String)",
+          "Void set_Repository(Penghou.Hetu.CodeRepositoryManifest)",
+          "Void set_SchemaVersion(Int32)",
+          "Void set_Units(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeIndexUnitReplacement])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodePublicationSnapshotException",
+        "members": [
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeQueryOperations",
+        "members": [
+          "System.String AffectedTests",
+          "System.String Declarations",
+          "System.String DeclarationsInFile",
+          "System.String DeclarationsInProject",
+          "System.String EnclosingSymbol",
+          "System.String ImpactSets",
+          "System.String PublicSurface",
+          "System.String QualifiedName",
+          "System.String ResolveSymbols",
+          "System.String SymbolDiscovery",
+          "System.String SymbolsInFile",
+          "System.String SymbolsInProject",
+          "System.String Traversal"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryDescriptor",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeRepositoryDescriptor)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeRepositoryDescriptor, Penghou.Hetu.CodeRepositoryDescriptor)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeRepositoryDescriptor, Penghou.Hetu.CodeRepositoryDescriptor)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeRepositoryDescriptor \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeRepositoryId Id",
+          "Penghou.Hetu.CodeRepositoryId get_Id()",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.String] Settings",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.String] get_Settings()",
+          "System.String Location",
+          "System.String ToString()",
+          "System.String get_Location()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryId, System.String, System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.String])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryDiscoveryEventKind",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeRepositoryDiscoveryEventKind DepthLimitReached",
+          "Penghou.Hetu.CodeRepositoryDiscoveryEventKind DirectoryExcluded",
+          "Penghou.Hetu.CodeRepositoryDiscoveryEventKind ReparsePointSkipped"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryEntry",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeRepositoryEntry)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeRepositoryEntry, Penghou.Hetu.CodeRepositoryEntry)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeRepositoryEntry, Penghou.Hetu.CodeRepositoryEntry)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeRepositoryEntry \u003CClone\u003E$()",
+          "System.Nullable\u00601[System.DateTimeOffset] LastModifiedAt",
+          "System.Nullable\u00601[System.DateTimeOffset] get_LastModifiedAt()",
+          "System.Nullable\u00601[System.Int64] Length",
+          "System.Nullable\u00601[System.Int64] get_Length()",
+          "System.String ContentHash",
+          "System.String Path",
+          "System.String ToString()",
+          "System.String Version",
+          "System.String get_ContentHash()",
+          "System.String get_Path()",
+          "System.String get_Version()",
+          "Void .ctor(System.String, System.Nullable\u00601[System.Int64], System.Nullable\u00601[System.DateTimeOffset], System.String, System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryEnumerationLimitException",
+        "members": [
+          "Int32 MaximumEntries",
+          "Int32 get_MaximumEntries()",
+          "Void .ctor(Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryEnumerationOptions",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeRepositoryEnumerationOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeRepositoryEnumerationOptions, Penghou.Hetu.CodeRepositoryEnumerationOptions)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeRepositoryEnumerationOptions, Penghou.Hetu.CodeRepositoryEnumerationOptions)",
+          "Int32 GetHashCode()",
+          "Int32 MaxDepth",
+          "Int32 MaxEntries",
+          "Int32 get_MaxDepth()",
+          "Int32 get_MaxEntries()",
+          "Penghou.Hetu.CodeRepositoryEnumerationOptions \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] ExcludedDirectoryNames",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] get_ExcludedDirectoryNames()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyCollection\u00601[System.String], Int32, Int32, System.Action\u00601[Penghou.Hetu.CodeRepositoryDiscoveryEventKind])",
+          "Void Report(Penghou.Hetu.CodeRepositoryDiscoveryEventKind)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryIndexState",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeRepositoryIndexState)",
+          "Boolean Equals(System.Object)",
+          "Boolean IsConsistentSnapshot",
+          "Boolean get_IsConsistentSnapshot()",
+          "Boolean op_Equality(Penghou.Hetu.CodeRepositoryIndexState, Penghou.Hetu.CodeRepositoryIndexState)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeRepositoryIndexState, Penghou.Hetu.CodeRepositoryIndexState)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeIndexIdentity IndexIdentity",
+          "Penghou.Hetu.CodeIndexIdentity get_IndexIdentity()",
+          "Penghou.Hetu.CodeIndexRunId IndexRunId",
+          "Penghou.Hetu.CodeIndexRunId get_IndexRunId()",
+          "Penghou.Hetu.CodeRepositoryId RepositoryId",
+          "Penghou.Hetu.CodeRepositoryId get_RepositoryId()",
+          "Penghou.Hetu.CodeRepositoryIndexState \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeSourceManifest] Sources",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeSourceManifest] get_Sources()",
+          "System.String SnapshotIdentity",
+          "System.String ToString()",
+          "System.String get_SnapshotIdentity()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeSourceManifest], System.String, Boolean, Penghou.Hetu.CodeIndexIdentity)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryManifest",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeRepositoryManifest)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeRepositoryManifest, Penghou.Hetu.CodeRepositoryManifest)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeRepositoryManifest, Penghou.Hetu.CodeRepositoryManifest)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeRepositoryId Id",
+          "Penghou.Hetu.CodeRepositoryId get_Id()",
+          "Penghou.Hetu.CodeRepositoryManifest \u003CClone\u003E$()",
+          "System.DateTimeOffset RegisteredAt",
+          "System.DateTimeOffset get_RegisteredAt()",
+          "System.String DisplayName",
+          "System.String SourceUri",
+          "System.String ToString()",
+          "System.String get_DisplayName()",
+          "System.String get_SourceUri()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryId, System.String, System.String, System.Nullable\u00601[System.DateTimeOffset])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryProviderNotFoundException",
+        "members": [
+          "Penghou.Hetu.CodeRepositoryDescriptor Repository",
+          "Penghou.Hetu.CodeRepositoryDescriptor get_Repository()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryDescriptor)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryProviderRegistry",
+        "members": [
+          "Penghou.Hetu.ICodeRepositoryProvider Resolve(Penghou.Hetu.CodeRepositoryDescriptor)",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.ICodeRepositoryProvider] FindCandidates(Penghou.Hetu.CodeRepositoryDescriptor)",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.ICodeRepositoryProvider] Providers",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.ICodeRepositoryProvider] get_Providers()",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.ICodeRepositorySource] OpenAsync(Penghou.Hetu.CodeRepositoryDescriptor, System.Threading.CancellationToken)",
+          "Void .ctor(System.Collections.Generic.IEnumerable\u00601[Penghou.Hetu.ICodeRepositoryProvider])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryProviderSelectionException",
+        "members": [
+          "Penghou.Hetu.CodeRepositoryDescriptor Repository",
+          "Penghou.Hetu.CodeRepositoryDescriptor get_Repository()",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] CandidateNames",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] get_CandidateNames()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryDescriptor, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.ICodeRepositoryProvider])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeSnapshotOptions",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeSnapshotOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeSnapshotOptions, Penghou.Hetu.CodeSnapshotOptions)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeSnapshotOptions, Penghou.Hetu.CodeSnapshotOptions)",
+          "Int32 GetHashCode()",
+          "Int32 MaxBytes",
+          "Int32 MaxEdges",
+          "Int32 MaxNodes",
+          "Int32 MaxUnits",
+          "Int32 get_MaxBytes()",
+          "Int32 get_MaxEdges()",
+          "Int32 get_MaxNodes()",
+          "Int32 get_MaxUnits()",
+          "Penghou.Hetu.CodeSnapshotOptions \u003CClone\u003E$()",
+          "System.String ToString()",
+          "Void .ctor()",
+          "Void set_MaxBytes(Int32)",
+          "Void set_MaxEdges(Int32)",
+          "Void set_MaxNodes(Int32)",
+          "Void set_MaxUnits(Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeSourceChangedDuringIndexingException",
+        "members": [
+          "System.String Path",
+          "System.String get_Path()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeSourceManifest",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeSourceManifest)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeSourceManifest, Penghou.Hetu.CodeSourceManifest)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeSourceManifest, Penghou.Hetu.CodeSourceManifest)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodePluginId PluginId",
+          "Penghou.Hetu.CodePluginId get_PluginId()",
+          "Penghou.Hetu.CodeSourceManifest \u003CClone\u003E$()",
+          "System.String PluginVersion",
+          "System.String SourceHash",
+          "System.String SourcePath",
+          "System.String ToString()",
+          "System.String get_PluginVersion()",
+          "System.String get_SourceHash()",
+          "System.String get_SourcePath()",
+          "Void .ctor(Penghou.Hetu.CodePluginId, System.String, System.String, System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeSourceSizeLimitException",
+        "members": [
+          "Boolean IsTotalLimit",
+          "Boolean get_IsTotalLimit()",
+          "Int64 MaximumBytes",
+          "Int64 get_MaximumBytes()",
+          "System.String Path",
+          "System.String get_Path()",
+          "Void .ctor(System.String, Int64, Boolean)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeSymbolDiscoveryQuery",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeSymbolDiscoveryQuery)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeSymbolDiscoveryQuery, Penghou.Hetu.CodeSymbolDiscoveryQuery)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeSymbolDiscoveryQuery, Penghou.Hetu.CodeSymbolDiscoveryQuery)",
+          "Int32 GetHashCode()",
+          "Int32 MaxResults",
+          "Int32 get_MaxResults()",
+          "Penghou.Hetu.CodeNodeId ContainerId",
+          "Penghou.Hetu.CodeNodeId get_ContainerId()",
+          "Penghou.Hetu.CodeSymbolDiscoveryQuery \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeNodeKind] NodeKinds",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeNodeKind] get_NodeKinds()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] Languages",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] get_Languages()",
+          "System.String NamePattern",
+          "System.String ProjectPath",
+          "System.String ToString()",
+          "System.String get_NamePattern()",
+          "System.String get_ProjectPath()",
+          "Void .ctor(System.String, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeNodeKind], System.Collections.Generic.IReadOnlyCollection\u00601[System.String], Penghou.Hetu.CodeNodeId, System.String, Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeSymbolDiscoveryResult",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeSymbolDiscoveryResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean Truncated",
+          "Boolean get_Truncated()",
+          "Boolean op_Equality(Penghou.Hetu.CodeSymbolDiscoveryResult, Penghou.Hetu.CodeSymbolDiscoveryResult)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeSymbolDiscoveryResult, Penghou.Hetu.CodeSymbolDiscoveryResult)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeSymbolDiscoveryResult \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] Symbols",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] get_Symbols()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode], Boolean)",
+          "Void Deconstruct(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] ByRef, Boolean ByRef)",
+          "Void set_Symbols(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode])",
+          "Void set_Truncated(Boolean)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeSymbolLookupResult",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeSymbolLookupResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean IsAmbiguous",
+          "Boolean get_IsAmbiguous()",
+          "Boolean op_Equality(Penghou.Hetu.CodeSymbolLookupResult, Penghou.Hetu.CodeSymbolLookupResult)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeSymbolLookupResult, Penghou.Hetu.CodeSymbolLookupResult)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphNode SingleOrDefault",
+          "Penghou.Hetu.CodeGraphNode get_SingleOrDefault()",
+          "Penghou.Hetu.CodeSymbolLookupResult \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] Candidates",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] get_Candidates()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode])",
+          "Void Deconstruct(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] ByRef)",
+          "Void set_Candidates(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.FileSystemCodeRepositoryProvider",
+        "members": [
+          "Boolean CanOpen(Penghou.Hetu.CodeRepositoryDescriptor)",
+          "System.String Name",
+          "System.String get_Name()",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.ICodeRepositorySource] OpenAsync(Penghou.Hetu.CodeRepositoryDescriptor, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.HetuBuilder",
+        "members": [
+          "Penghou.Hetu.CodeGraphPluginRegistry BuildPluginRegistry()",
+          "Penghou.Hetu.CodeRepositoryProviderRegistry BuildRepositoryProviderRegistry()",
+          "Penghou.Hetu.HetuBuilder AddPlugin(Penghou.Hetu.ICodeGraphPlugin)",
+          "Penghou.Hetu.HetuBuilder AddRepositoryProvider(Penghou.Hetu.ICodeRepositoryProvider)",
+          "Penghou.Hetu.HetuBuilder ClearRepositoryProviders()",
+          "Penghou.Hetu.HetuBuilder WithLanguageProviders(System.String, Penghou.Hetu.CodePluginId[])",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.HetuHost",
+        "members": [
+          "Penghou.Hetu.CodeGraphQueryService Queries",
+          "Penghou.Hetu.CodeGraphQueryService get_Queries()",
+          "Penghou.Hetu.CodeIndexingService Indexing",
+          "Penghou.Hetu.CodeIndexingService get_Indexing()",
+          "Penghou.Hetu.ICodeGraphReader Reader",
+          "Penghou.Hetu.ICodeGraphReader get_Reader()",
+          "System.Threading.Tasks.ValueTask DisposeAsync()",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeFreshnessResult] CheckFreshnessAsync(Penghou.Hetu.CodeRepositoryDescriptor, Penghou.Hetu.CodeIndexingOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphPublicationQuery] OpenLatestPublicationAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeIndexingResult] IndexRepositoryAsync(Penghou.Hetu.CodeRepositoryDescriptor, Penghou.Hetu.CodeIndexRunId, Penghou.Hetu.CodeIndexingOptions, System.Action\u00601[Penghou.Hetu.CodeIndexingDiagnostics], System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.HetuHostHealth] CheckHealthAsync(System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.HetuHostBuilder",
+        "members": [
+          "Penghou.Hetu.HetuHost Build()",
+          "Penghou.Hetu.HetuHostBuilder AddPlugin(Penghou.Hetu.ICodeGraphPlugin)",
+          "Penghou.Hetu.HetuHostBuilder AddRepositoryProvider(Penghou.Hetu.ICodeRepositoryProvider)",
+          "Penghou.Hetu.HetuHostBuilder ClearRepositoryProviders()",
+          "Penghou.Hetu.HetuHostBuilder UseStore(Penghou.Hetu.ICodeGraphStore)",
+          "Penghou.Hetu.HetuHostBuilder UseStore(System.Func\u00601[Penghou.Hetu.ICodeGraphStore])",
+          "Penghou.Hetu.HetuHostBuilder WithIndexingOptions(Penghou.Hetu.CodeIndexingOptions)",
+          "Penghou.Hetu.HetuHostBuilder WithLanguageProviders(System.String, Penghou.Hetu.CodePluginId[])",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.HetuHostHealth",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.HetuHostHealth)",
+          "Boolean Equals(System.Object)",
+          "Boolean IsReady",
+          "Boolean get_IsReady()",
+          "Boolean op_Equality(Penghou.Hetu.HetuHostHealth, Penghou.Hetu.HetuHostHealth)",
+          "Boolean op_Inequality(Penghou.Hetu.HetuHostHealth, Penghou.Hetu.HetuHostHealth)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphStoreHealth Store",
+          "Penghou.Hetu.CodeGraphStoreHealth get_Store()",
+          "Penghou.Hetu.HetuHostHealth \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId] PluginIds",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId] get_PluginIds()",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] RepositoryProviderNames",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] get_RepositoryProviderNames()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeGraphStoreHealth, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId], System.Collections.Generic.IReadOnlyList\u00601[System.String])",
+          "Void Deconstruct(Penghou.Hetu.CodeGraphStoreHealth ByRef, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId] ByRef, System.Collections.Generic.IReadOnlyList\u00601[System.String] ByRef)",
+          "Void set_PluginIds(System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodePluginId])",
+          "Void set_RepositoryProviderNames(System.Collections.Generic.IReadOnlyList\u00601[System.String])",
+          "Void set_Store(Penghou.Hetu.CodeGraphStoreHealth)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.ICodeGraphIndexStore",
+        "members": [
+          "System.Threading.Tasks.ValueTask CompleteIndexRunAsync(Penghou.Hetu.CodeIndexRunManifest, Penghou.Hetu.CodeRepositoryIndexState, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitAsync(Penghou.Hetu.CodeIndexUnitReplacement, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitDeletionAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, Penghou.Hetu.CodePluginId, Penghou.Hetu.CodeIndexUnitId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StoreIndexRunAsync(Penghou.Hetu.CodeIndexRunManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask UpsertRepositoryAsync(Penghou.Hetu.CodeRepositoryManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeIndexRunManifest] GetIndexRunAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeRepositoryIndexState] GetLatestIndexStateAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeRepositoryManifest] GetRepositoryAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.ICodeGraphReader",
+        "members": [
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphNode] FindSymbolAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphNode] GetNodeAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphPublication] GetLatestPublicationAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] TraverseWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]]] GetDeclarationsWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]]] FindNodesByQualifiedNameWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] TraverseAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeNamePatternResult] FindNodesByNamePatternAsync(Penghou.Hetu.CodeRepositoryId, System.String, Int32, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]] GetDeclarationsAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]] FindNodesByQualifiedNameAsync(Penghou.Hetu.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeIndexUnitReplacement]] GetPublishedUnitsAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.ICodeGraphStore",
+        "members": []
+      },
+      {
+        "name": "Penghou.Hetu.ICodeGraphStoreHealthCheck",
+        "members": [
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphStoreHealth] CheckHealthAsync(System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.ICodeRepositoryProvider",
+        "members": [
+          "Boolean CanOpen(Penghou.Hetu.CodeRepositoryDescriptor)",
+          "System.String Name",
+          "System.String get_Name()",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.ICodeRepositorySource] OpenAsync(Penghou.Hetu.CodeRepositoryDescriptor, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.ICodeRepositorySource",
+        "members": [
+          "Boolean IsConsistentSnapshot",
+          "Boolean get_IsConsistentSnapshot()",
+          "Penghou.Hetu.CodeRepositoryId RepositoryId",
+          "Penghou.Hetu.CodeRepositoryId get_RepositoryId()",
+          "System.Collections.Generic.IAsyncEnumerable\u00601[Penghou.Hetu.CodeRepositoryEntry] EnumerateAsync(Penghou.Hetu.CodeRepositoryEnumerationOptions, System.Threading.CancellationToken)",
+          "System.String ProviderName",
+          "System.String SnapshotIdentity",
+          "System.String get_ProviderName()",
+          "System.String get_SnapshotIdentity()",
+          "System.Threading.Tasks.ValueTask\u00601[System.IO.Stream] OpenReadAsync(Penghou.Hetu.CodeRepositoryEntry, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.InMemoryCodeGraphStore",
+        "members": [
+          "System.Threading.Tasks.ValueTask CompleteIndexRunAsync(Penghou.Hetu.CodeIndexRunManifest, Penghou.Hetu.CodeRepositoryIndexState, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitAsync(Penghou.Hetu.CodeIndexUnitReplacement, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitDeletionAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, Penghou.Hetu.CodePluginId, Penghou.Hetu.CodeIndexUnitId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StoreIndexRunAsync(Penghou.Hetu.CodeIndexRunManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask UpsertRepositoryAsync(Penghou.Hetu.CodeRepositoryManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphNode] FindSymbolAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphNode] GetNodeAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphPublication] GetLatestPublicationAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] TraverseWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]]] GetDeclarationsWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]]] FindNodesByQualifiedNameWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphStoreHealth] CheckHealthAsync(System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] TraverseAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeIndexRunManifest] GetIndexRunAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeNamePatternResult] FindNodesByNamePatternAsync(Penghou.Hetu.CodeRepositoryId, System.String, Int32, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeRepositoryIndexState] GetLatestIndexStateAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeRepositoryManifest] GetRepositoryAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]] GetDeclarationsAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]] FindNodesByQualifiedNameAsync(Penghou.Hetu.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeIndexUnitReplacement]] GetPublishedUnitsAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.ProviderFallbackPolicy",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.ProviderFallbackPolicy None",
+          "Penghou.Hetu.ProviderFallbackPolicy OnFailure",
+          "Penghou.Hetu.ProviderFallbackPolicy OnUnavailable"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.ProviderFallbackPolicyExtensions",
+        "members": [
+          "Boolean IsFallbackEligible(Penghou.Hetu.ProviderFallbackPolicy, Penghou.Hetu.CodePluginFailureKind)",
+          "System.String ToWarningCode(Penghou.Hetu.CodePluginFailureKind)"
+        ]
+      }
+    ]
+  },
+  {
+    "assembly": "Penghou.Hetu.Abstractions",
+    "types": [
+      {
+        "name": "Penghou.Hetu.CodeBooleanProperty",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeBooleanProperty)",
+          "Boolean Equals(Penghou.Hetu.CodePropertyValue)",
+          "Boolean Equals(System.Object)",
+          "Boolean Value",
+          "Boolean get_Value()",
+          "Boolean op_Equality(Penghou.Hetu.CodeBooleanProperty, Penghou.Hetu.CodeBooleanProperty)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeBooleanProperty, Penghou.Hetu.CodeBooleanProperty)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeBooleanProperty \u003CClone\u003E$()",
+          "System.String ToString()",
+          "Void .ctor(Boolean)",
+          "Void Deconstruct(Boolean ByRef)",
+          "Void set_Value(Boolean)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeDeclarationId",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeDeclarationId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeDeclarationId, Penghou.Hetu.CodeDeclarationId)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeDeclarationId, Penghou.Hetu.CodeDeclarationId)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeDeclarationId \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeEdgeId",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeEdgeId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeEdgeId, Penghou.Hetu.CodeEdgeId)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeEdgeId, Penghou.Hetu.CodeEdgeId)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeEdgeId \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeEdgeKind",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeEdgeKind)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeEdgeKind, Penghou.Hetu.CodeEdgeKind)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeEdgeKind, Penghou.Hetu.CodeEdgeKind)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeEdgeKind \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeEdgeKinds",
+        "members": [
+          "Penghou.Hetu.CodeEdgeKind Accepts",
+          "Penghou.Hetu.CodeEdgeKind Calls",
+          "Penghou.Hetu.CodeEdgeKind Contains",
+          "Penghou.Hetu.CodeEdgeKind Declares",
+          "Penghou.Hetu.CodeEdgeKind DependsOn",
+          "Penghou.Hetu.CodeEdgeKind ExercisedBy",
+          "Penghou.Hetu.CodeEdgeKind Exports",
+          "Penghou.Hetu.CodeEdgeKind Implements",
+          "Penghou.Hetu.CodeEdgeKind Imports",
+          "Penghou.Hetu.CodeEdgeKind Inherits",
+          "Penghou.Hetu.CodeEdgeKind InvokesName",
+          "Penghou.Hetu.CodeEdgeKind References",
+          "Penghou.Hetu.CodeEdgeKind ResolvesTo",
+          "Penghou.Hetu.CodeEdgeKind Returns"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeEvidence",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeEvidence)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeEvidence, Penghou.Hetu.CodeEvidence)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeEvidence, Penghou.Hetu.CodeEvidence)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeEvidence \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeLocation Location",
+          "Penghou.Hetu.CodeLocation get_Location()",
+          "Penghou.Hetu.EvidenceQuality Quality",
+          "Penghou.Hetu.EvidenceQuality get_Quality()",
+          "System.Nullable\u00601[System.Double] Confidence",
+          "System.Nullable\u00601[System.Double] get_Confidence()",
+          "System.String Provider",
+          "System.String ProviderVersion",
+          "System.String ToString()",
+          "System.String get_Provider()",
+          "System.String get_ProviderVersion()",
+          "Void .ctor(Penghou.Hetu.EvidenceQuality, System.String, System.String, Penghou.Hetu.CodeLocation, System.Nullable\u00601[System.Double])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeFactOrigin",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeFactOrigin)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeFactOrigin, Penghou.Hetu.CodeFactOrigin)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeFactOrigin, Penghou.Hetu.CodeFactOrigin)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeFactOrigin \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeIndexRunId IndexRunId",
+          "Penghou.Hetu.CodeIndexRunId get_IndexRunId()",
+          "Penghou.Hetu.CodeIndexUnitId IndexUnitId",
+          "Penghou.Hetu.CodeIndexUnitId get_IndexUnitId()",
+          "Penghou.Hetu.CodePluginId PluginId",
+          "Penghou.Hetu.CodePluginId get_PluginId()",
+          "Penghou.Hetu.CodeRepositoryId RepositoryId",
+          "Penghou.Hetu.CodeRepositoryId get_RepositoryId()",
+          "System.String PluginVersion",
+          "System.String SourceHash",
+          "System.String SourcePath",
+          "System.String ToString()",
+          "System.String get_PluginVersion()",
+          "System.String get_SourceHash()",
+          "System.String get_SourcePath()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodePluginId, System.String, Penghou.Hetu.CodeIndexRunId, Penghou.Hetu.CodeIndexUnitId, System.String, System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphBatch",
+        "members": [
+          "Boolean CompletesIndexUnit",
+          "Boolean Equals(Penghou.Hetu.CodeGraphBatch)",
+          "Boolean Equals(System.Object)",
+          "Boolean get_CompletesIndexUnit()",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphBatch, Penghou.Hetu.CodeGraphBatch)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphBatch, Penghou.Hetu.CodeGraphBatch)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeFactOrigin Origin",
+          "Penghou.Hetu.CodeFactOrigin get_Origin()",
+          "Penghou.Hetu.CodeGraphBatch \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration] Declarations",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration] get_Declarations()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphEdge] Edges",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphEdge] get_Edges()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] Nodes",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode] get_Nodes()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeFactOrigin, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode], System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration], System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphEdge], Boolean)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphBatchLimits",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphBatchLimits)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphBatchLimits, Penghou.Hetu.CodeGraphBatchLimits)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphBatchLimits, Penghou.Hetu.CodeGraphBatchLimits)",
+          "Int32 GetHashCode()",
+          "Int32 MaxBatchesPerIndexUnit",
+          "Int32 MaxDeclarations",
+          "Int32 MaxEdges",
+          "Int32 MaxFactsPerIndexUnit",
+          "Int32 MaxNodes",
+          "Int32 MaxPropertiesPerFact",
+          "Int32 MaxTextListItems",
+          "Int32 MaxTextPropertyLength",
+          "Int32 get_MaxBatchesPerIndexUnit()",
+          "Int32 get_MaxDeclarations()",
+          "Int32 get_MaxEdges()",
+          "Int32 get_MaxFactsPerIndexUnit()",
+          "Int32 get_MaxNodes()",
+          "Int32 get_MaxPropertiesPerFact()",
+          "Int32 get_MaxTextListItems()",
+          "Int32 get_MaxTextPropertyLength()",
+          "Penghou.Hetu.CodeGraphBatchLimits \u003CClone\u003E$()",
+          "System.String ToString()",
+          "Void .ctor(Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphBatchRejectedException",
+        "members": [
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphValidationError] Errors",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphValidationError] get_Errors()",
+          "Void .ctor(System.String, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphValidationError])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphCapabilities",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeGraphCapabilities Calls",
+          "Penghou.Hetu.CodeGraphCapabilities DataFlow",
+          "Penghou.Hetu.CodeGraphCapabilities Declarations",
+          "Penghou.Hetu.CodeGraphCapabilities Diagnostics",
+          "Penghou.Hetu.CodeGraphCapabilities Imports",
+          "Penghou.Hetu.CodeGraphCapabilities Inheritance",
+          "Penghou.Hetu.CodeGraphCapabilities None",
+          "Penghou.Hetu.CodeGraphCapabilities References",
+          "Penghou.Hetu.CodeGraphCapabilities Symbols",
+          "Penghou.Hetu.CodeGraphCapabilities Syntax",
+          "Penghou.Hetu.CodeGraphCapabilities Types"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphDeclaration",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphDeclaration)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphDeclaration, Penghou.Hetu.CodeGraphDeclaration)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphDeclaration, Penghou.Hetu.CodeGraphDeclaration)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeDeclarationId Id",
+          "Penghou.Hetu.CodeDeclarationId get_Id()",
+          "Penghou.Hetu.CodeGraphDeclaration \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeLocation Location",
+          "Penghou.Hetu.CodeLocation get_Location()",
+          "Penghou.Hetu.CodeNodeId SymbolNodeId",
+          "Penghou.Hetu.CodeNodeId get_SymbolNodeId()",
+          "Penghou.Hetu.CodeSymbolId SymbolId",
+          "Penghou.Hetu.CodeSymbolId get_SymbolId()",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodePropertyValue] Properties",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodePropertyValue] get_Properties()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeDeclarationId, Penghou.Hetu.CodeSymbolId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeLocation, System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodePropertyValue])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphEdge",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphEdge)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphEdge, Penghou.Hetu.CodeGraphEdge)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphEdge, Penghou.Hetu.CodeGraphEdge)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeEdgeId Id",
+          "Penghou.Hetu.CodeEdgeId get_Id()",
+          "Penghou.Hetu.CodeEdgeKind Kind",
+          "Penghou.Hetu.CodeEdgeKind get_Kind()",
+          "Penghou.Hetu.CodeEvidence Evidence",
+          "Penghou.Hetu.CodeEvidence get_Evidence()",
+          "Penghou.Hetu.CodeGraphEdge \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeNodeId SourceId",
+          "Penghou.Hetu.CodeNodeId TargetId",
+          "Penghou.Hetu.CodeNodeId get_SourceId()",
+          "Penghou.Hetu.CodeNodeId get_TargetId()",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodePropertyValue] Properties",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodePropertyValue] get_Properties()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeEdgeId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeEdgeKind, Penghou.Hetu.CodeEvidence, System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodePropertyValue])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphExtractionResult",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphExtractionResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphExtractionResult, Penghou.Hetu.CodeGraphExtractionResult)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphExtractionResult, Penghou.Hetu.CodeGraphExtractionResult)",
+          "Int32 GetHashCode()",
+          "Int32 SourcesContributingFacts",
+          "Int32 SourcesExamined",
+          "Int32 UnresolvedRelationships",
+          "Int32 get_SourcesContributingFacts()",
+          "Int32 get_SourcesExamined()",
+          "Int32 get_UnresolvedRelationships()",
+          "Penghou.Hetu.CodeGraphExtractionResult \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeIndexUnitCoverage] IndexUnitCoverage",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeIndexUnitCoverage] get_IndexUnitCoverage()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeIndexUnitId] ObsoleteIndexUnits",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeIndexUnitId] get_ObsoleteIndexUnits()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeRelationshipCoverage] RelationshipCoverage",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeRelationshipCoverage] get_RelationshipCoverage()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] WarningCodes",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] get_WarningCodes()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeIndexUnitId], Int32, Int32, Int32, System.Collections.Generic.IReadOnlyCollection\u00601[System.String], System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeRelationshipCoverage], System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeIndexUnitCoverage])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphNode",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphNode)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphNode, Penghou.Hetu.CodeGraphNode)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphNode, Penghou.Hetu.CodeGraphNode)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphNode \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeNodeId Id",
+          "Penghou.Hetu.CodeNodeId get_Id()",
+          "Penghou.Hetu.CodeNodeKind Kind",
+          "Penghou.Hetu.CodeNodeKind get_Kind()",
+          "Penghou.Hetu.CodeSymbolId SymbolId",
+          "Penghou.Hetu.CodeSymbolId get_SymbolId()",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodePropertyValue] Properties",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodePropertyValue] get_Properties()",
+          "System.String Name",
+          "System.String QualifiedName",
+          "System.String ToString()",
+          "System.String get_Name()",
+          "System.String get_QualifiedName()",
+          "Void .ctor(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeNodeKind, System.String, System.String, Penghou.Hetu.CodeSymbolId, System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,Penghou.Hetu.CodePropertyValue])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphPluginContext",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphPluginContext)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphPluginContext, Penghou.Hetu.CodeGraphPluginContext)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphPluginContext, Penghou.Hetu.CodeGraphPluginContext)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphPluginContext \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeIndexRunId IndexRunId",
+          "Penghou.Hetu.CodeIndexRunId get_IndexRunId()",
+          "Penghou.Hetu.CodeRepositoryId RepositoryId",
+          "Penghou.Hetu.CodeRepositoryId get_RepositoryId()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeIndexUnitId] PreviousIndexUnits",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeIndexUnitId] get_PreviousIndexUnits()",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.String] Settings",
+          "System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.String] get_Settings()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphSourceChange] Changes",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphSourceChange] get_Changes()",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphSource] Sources",
+          "System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphSource] get_Sources()",
+          "System.String RepositoryLocation",
+          "System.String ToString()",
+          "System.String get_RepositoryLocation()",
+          "Void .ctor(Penghou.Hetu.CodeRepositoryId, System.String, Penghou.Hetu.CodeIndexRunId, System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphSource], System.Collections.Generic.IReadOnlyDictionary\u00602[System.String,System.String], System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphSourceChange], System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeIndexUnitId])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphSource",
+        "members": [
+          "System.String ContentHash",
+          "System.String Path",
+          "System.String get_ContentHash()",
+          "System.String get_Path()",
+          "System.Threading.Tasks.ValueTask\u00601[System.IO.Stream] OpenReadAsync(System.Threading.CancellationToken)",
+          "Void .ctor(System.String, System.String, System.Func\u00602[System.Threading.CancellationToken,System.Threading.Tasks.ValueTask\u00601[System.IO.Stream]])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphSourceChange",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphSourceChange)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphSourceChange, Penghou.Hetu.CodeGraphSourceChange)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphSourceChange, Penghou.Hetu.CodeGraphSourceChange)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphSourceChange \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeGraphSourceChangeKind Kind",
+          "Penghou.Hetu.CodeGraphSourceChangeKind get_Kind()",
+          "System.String CurrentHash",
+          "System.String Path",
+          "System.String PreviousHash",
+          "System.String ToString()",
+          "System.String get_CurrentHash()",
+          "System.String get_Path()",
+          "System.String get_PreviousHash()",
+          "Void .ctor(System.String, Penghou.Hetu.CodeGraphSourceChangeKind, System.String, System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphSourceChangeKind",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeGraphSourceChangeKind Changed",
+          "Penghou.Hetu.CodeGraphSourceChangeKind Deleted",
+          "Penghou.Hetu.CodeGraphSourceChangeKind New",
+          "Penghou.Hetu.CodeGraphSourceChangeKind Unchanged"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphValidationError",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeGraphValidationError)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeGraphValidationError, Penghou.Hetu.CodeGraphValidationError)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeGraphValidationError, Penghou.Hetu.CodeGraphValidationError)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeGraphValidationError \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeGraphValidationErrorKind Kind",
+          "Penghou.Hetu.CodeGraphValidationErrorKind get_Kind()",
+          "System.String Code",
+          "System.String FactId",
+          "System.String Message",
+          "System.String ToString()",
+          "System.String get_Code()",
+          "System.String get_FactId()",
+          "System.String get_Message()",
+          "Void .ctor(Penghou.Hetu.CodeGraphValidationErrorKind, System.String, System.String, System.String)",
+          "Void Deconstruct(Penghou.Hetu.CodeGraphValidationErrorKind ByRef, System.String ByRef, System.String ByRef, System.String ByRef)",
+          "Void set_Code(System.String)",
+          "Void set_FactId(System.String)",
+          "Void set_Kind(Penghou.Hetu.CodeGraphValidationErrorKind)",
+          "Void set_Message(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeGraphValidationErrorKind",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeGraphValidationErrorKind DuplicateFact",
+          "Penghou.Hetu.CodeGraphValidationErrorKind IncompleteIndexUnit",
+          "Penghou.Hetu.CodeGraphValidationErrorKind InvalidIdentity",
+          "Penghou.Hetu.CodeGraphValidationErrorKind InvalidProperty",
+          "Penghou.Hetu.CodeGraphValidationErrorKind LimitExceeded",
+          "Penghou.Hetu.CodeGraphValidationErrorKind MissingEndpoint",
+          "Penghou.Hetu.CodeGraphValidationErrorKind OwnershipMismatch"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexRunId",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexRunId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexRunId, Penghou.Hetu.CodeIndexRunId)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexRunId, Penghou.Hetu.CodeIndexRunId)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeIndexRunId \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexUnitCoverage",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexUnitCoverage)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexUnitCoverage, Penghou.Hetu.CodeIndexUnitCoverage)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexUnitCoverage, Penghou.Hetu.CodeIndexUnitCoverage)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeIndexUnitCoverage \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeIndexUnitId IndexUnitId",
+          "Penghou.Hetu.CodeIndexUnitId get_IndexUnitId()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeRelationshipCoverage] Coverage",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeRelationshipCoverage] get_Coverage()",
+          "System.String ToString()",
+          "Void .ctor(Penghou.Hetu.CodeIndexUnitId, System.Collections.Generic.IReadOnlyCollection\u00601[Penghou.Hetu.CodeRelationshipCoverage])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIndexUnitId",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIndexUnitId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIndexUnitId, Penghou.Hetu.CodeIndexUnitId)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIndexUnitId, Penghou.Hetu.CodeIndexUnitId)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeIndexUnitId \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeIntegerProperty",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeIntegerProperty)",
+          "Boolean Equals(Penghou.Hetu.CodePropertyValue)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeIntegerProperty, Penghou.Hetu.CodeIntegerProperty)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeIntegerProperty, Penghou.Hetu.CodeIntegerProperty)",
+          "Int32 GetHashCode()",
+          "Int64 Value",
+          "Int64 get_Value()",
+          "Penghou.Hetu.CodeIntegerProperty \u003CClone\u003E$()",
+          "System.String ToString()",
+          "Void .ctor(Int64)",
+          "Void Deconstruct(Int64 ByRef)",
+          "Void set_Value(Int64)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeLocation",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeLocation)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeLocation, Penghou.Hetu.CodeLocation)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeLocation, Penghou.Hetu.CodeLocation)",
+          "Int32 EndColumn",
+          "Int32 EndLine",
+          "Int32 GetHashCode()",
+          "Int32 StartColumn",
+          "Int32 StartLine",
+          "Int32 get_EndColumn()",
+          "Int32 get_EndLine()",
+          "Int32 get_StartColumn()",
+          "Int32 get_StartLine()",
+          "Penghou.Hetu.CodeLocation \u003CClone\u003E$()",
+          "System.String Path",
+          "System.String ToString()",
+          "System.String get_Path()",
+          "Void .ctor(System.String, Int32, Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeNodeId",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeNodeId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeNodeId)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeNodeId, Penghou.Hetu.CodeNodeId)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeNodeId \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeNodeKind",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeNodeKind)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeNodeKind, Penghou.Hetu.CodeNodeKind)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeNodeKind, Penghou.Hetu.CodeNodeKind)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeNodeKind \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeNodeKinds",
+        "members": [
+          "Penghou.Hetu.CodeNodeKind Callable",
+          "Penghou.Hetu.CodeNodeKind Export",
+          "Penghou.Hetu.CodeNodeKind Field",
+          "Penghou.Hetu.CodeNodeKind File",
+          "Penghou.Hetu.CodeNodeKind Interface",
+          "Penghou.Hetu.CodeNodeKind Namespace",
+          "Penghou.Hetu.CodeNodeKind Package",
+          "Penghou.Hetu.CodeNodeKind Parameter",
+          "Penghou.Hetu.CodeNodeKind Project",
+          "Penghou.Hetu.CodeNodeKind Property",
+          "Penghou.Hetu.CodeNodeKind Repository",
+          "Penghou.Hetu.CodeNodeKind Type"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeNumberProperty",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeNumberProperty)",
+          "Boolean Equals(Penghou.Hetu.CodePropertyValue)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeNumberProperty, Penghou.Hetu.CodeNumberProperty)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeNumberProperty, Penghou.Hetu.CodeNumberProperty)",
+          "Double Value",
+          "Double get_Value()",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeNumberProperty \u003CClone\u003E$()",
+          "System.String ToString()",
+          "Void .ctor(Double)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodePluginFailureException",
+        "members": [
+          "Penghou.Hetu.CodePluginFailureKind FailureKind",
+          "Penghou.Hetu.CodePluginFailureKind get_FailureKind()",
+          "Void .ctor(Penghou.Hetu.CodePluginFailureKind, System.String, System.Exception)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodePluginFailureKind",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodePluginFailureKind Cancelled",
+          "Penghou.Hetu.CodePluginFailureKind ParseFailure",
+          "Penghou.Hetu.CodePluginFailureKind PartialResult",
+          "Penghou.Hetu.CodePluginFailureKind ProjectLoadFailure",
+          "Penghou.Hetu.CodePluginFailureKind ProviderCrash",
+          "Penghou.Hetu.CodePluginFailureKind ProviderUnavailable",
+          "Penghou.Hetu.CodePluginFailureKind SemanticModelUnavailable",
+          "Penghou.Hetu.CodePluginFailureKind SourceChanged",
+          "Penghou.Hetu.CodePluginFailureKind UnsupportedLanguage",
+          "Penghou.Hetu.CodePluginFailureKind VersionMismatch"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodePluginId",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodePluginId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodePluginId, Penghou.Hetu.CodePluginId)",
+          "Boolean op_Inequality(Penghou.Hetu.CodePluginId, Penghou.Hetu.CodePluginId)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodePluginId \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodePropertyKeys",
+        "members": [
+          "System.String Access",
+          "System.String AssemblyName",
+          "System.String Attributes",
+          "System.String CanonicalKey",
+          "System.String ConstantValue",
+          "System.String ContentHash",
+          "System.String DefineConstants",
+          "System.String DocRemarks",
+          "System.String DocSummary",
+          "System.String ExportKind",
+          "System.String ExportVia",
+          "System.String HttpEndpoint",
+          "System.String ImplicitUsings",
+          "System.String ImportAlias",
+          "System.String ImportGlobal",
+          "System.String ImportScope",
+          "System.String ImportStatic",
+          "System.String Language",
+          "System.String LocalName",
+          "System.String Modifiers",
+          "System.String ModuleReference",
+          "System.String NamespaceProjection",
+          "System.String Nullable",
+          "System.String Obsolete",
+          "System.String PackageCondition",
+          "System.String PackageVersion",
+          "System.String ResolutionPolicy",
+          "System.String ResolutionRule",
+          "System.String RouteTemplate",
+          "System.String Specifier",
+          "System.String SymbolKind",
+          "System.String TargetFramework",
+          "System.String TestMethod",
+          "System.String TestProject",
+          "System.String TypeOnly"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodePropertyValue",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodePropertyValue)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodePropertyValue, Penghou.Hetu.CodePropertyValue)",
+          "Boolean op_Inequality(Penghou.Hetu.CodePropertyValue, Penghou.Hetu.CodePropertyValue)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodePropertyValue \u003CClone\u003E$()",
+          "System.String ToString()"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRelationshipCoverage",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeRelationshipCoverage)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeRelationshipCoverage, Penghou.Hetu.CodeRelationshipCoverage)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeRelationshipCoverage, Penghou.Hetu.CodeRelationshipCoverage)",
+          "Int32 AmbiguousTargets",
+          "Int32 Candidates",
+          "Int32 CrossProjectTargets",
+          "Int32 EdgesEmitted",
+          "Int32 ExternalTargets",
+          "Int32 GetHashCode()",
+          "Int32 InternalTargets",
+          "Int32 UnresolvedTargets",
+          "Int32 UnsupportedTargets",
+          "Int32 get_AmbiguousTargets()",
+          "Int32 get_Candidates()",
+          "Int32 get_CrossProjectTargets()",
+          "Int32 get_EdgesEmitted()",
+          "Int32 get_ExternalTargets()",
+          "Int32 get_InternalTargets()",
+          "Int32 get_UnresolvedTargets()",
+          "Int32 get_UnsupportedTargets()",
+          "Penghou.Hetu.CodeRelationshipCoverage \u003CClone\u003E$()",
+          "Penghou.Hetu.CodeRelationshipCoverageState State",
+          "Penghou.Hetu.CodeRelationshipCoverageState get_State()",
+          "System.String RelationshipKind",
+          "System.String ToString()",
+          "System.String get_RelationshipKind()",
+          "Void .ctor(System.String, Penghou.Hetu.CodeRelationshipCoverageState, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRelationshipCoverageState",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.CodeRelationshipCoverageState NotApplicable",
+          "Penghou.Hetu.CodeRelationshipCoverageState NotProduced",
+          "Penghou.Hetu.CodeRelationshipCoverageState Partial",
+          "Penghou.Hetu.CodeRelationshipCoverageState Produced",
+          "Penghou.Hetu.CodeRelationshipCoverageState Unavailable"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeRepositoryId",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeRepositoryId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeRepositoryId)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeRepositoryId)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeRepositoryId \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeSymbolId",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodeSymbolId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeSymbolId, Penghou.Hetu.CodeSymbolId)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeSymbolId, Penghou.Hetu.CodeSymbolId)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeSymbolId \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeTextListProperty",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodePropertyValue)",
+          "Boolean Equals(Penghou.Hetu.CodeTextListProperty)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeTextListProperty, Penghou.Hetu.CodeTextListProperty)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeTextListProperty, Penghou.Hetu.CodeTextListProperty)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeTextListProperty \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] Values",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] get_Values()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList\u00601[System.String])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CodeTextProperty",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.CodePropertyValue)",
+          "Boolean Equals(Penghou.Hetu.CodeTextProperty)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.CodeTextProperty, Penghou.Hetu.CodeTextProperty)",
+          "Boolean op_Inequality(Penghou.Hetu.CodeTextProperty, Penghou.Hetu.CodeTextProperty)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.CodeTextProperty \u003CClone\u003E$()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.EvidenceQuality",
+        "members": [
+          "Int32 value__",
+          "Penghou.Hetu.EvidenceQuality Derived",
+          "Penghou.Hetu.EvidenceQuality Inferred",
+          "Penghou.Hetu.EvidenceQuality Resolved",
+          "Penghou.Hetu.EvidenceQuality Structural"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.EvidenceQualityExtensions",
+        "members": [
+          "Boolean IsDeterministic(Penghou.Hetu.EvidenceQuality)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.ICodeGraphExtractionSession",
+        "members": [
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphExtractionResult] ExtractAsync(Penghou.Hetu.ICodeGraphSink, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.ICodeGraphPlugin",
+        "members": [
+          "Boolean CanHandle(System.String)",
+          "Penghou.Hetu.CodeGraphCapabilities Capabilities",
+          "Penghou.Hetu.CodeGraphCapabilities get_Capabilities()",
+          "Penghou.Hetu.CodePluginId Id",
+          "Penghou.Hetu.CodePluginId get_Id()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] FileExtensions",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] get_FileExtensions()",
+          "System.String Language",
+          "System.String Version",
+          "System.String get_Language()",
+          "System.String get_Version()",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.ICodeGraphExtractionSession] CreateSessionAsync(Penghou.Hetu.CodeGraphPluginContext, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.ICodeGraphSink",
+        "members": [
+          "Penghou.Hetu.CodeGraphBatchLimits Limits",
+          "Penghou.Hetu.CodeGraphBatchLimits get_Limits()",
+          "System.Threading.Tasks.ValueTask WriteBatchAsync(Penghou.Hetu.CodeGraphBatch, System.Threading.CancellationToken)"
+        ]
+      }
+    ]
+  },
+  {
+    "assembly": "Penghou.Hetu.CSharp",
+    "types": [
+      {
+        "name": "Penghou.Hetu.CSharp.HetuHostBuilderExtensions",
+        "members": [
+          "Penghou.Hetu.HetuHostBuilder AddCSharpPlugin(Penghou.Hetu.HetuHostBuilder)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.CSharpCodeGraphPlugin",
+        "members": [
+          "Boolean CanHandle(System.String)",
+          "Penghou.Hetu.CodeGraphCapabilities Capabilities",
+          "Penghou.Hetu.CodeGraphCapabilities get_Capabilities()",
+          "Penghou.Hetu.CodePluginId Id",
+          "Penghou.Hetu.CodePluginId get_Id()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] FileExtensions",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] get_FileExtensions()",
+          "System.String Language",
+          "System.String Version",
+          "System.String get_Language()",
+          "System.String get_Version()",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.ICodeGraphExtractionSession] CreateSessionAsync(Penghou.Hetu.CodeGraphPluginContext, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      }
+    ]
+  },
+  {
+    "assembly": "Penghou.Hetu.LatticeDb",
+    "types": [
+      {
+        "name": "Penghou.Hetu.LatticeCodeGraphSchemaException",
+        "members": [
+          "Int32 ActualVersion",
+          "Int32 ExpectedVersion",
+          "Int32 get_ActualVersion()",
+          "Int32 get_ExpectedVersion()",
+          "Void .ctor(Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.LatticeCodeGraphStore",
+        "members": [
+          "Int32 CurrentSchemaVersion",
+          "System.Threading.Tasks.Task\u00601[Penghou.Hetu.LatticeCodeGraphStore] OpenAsync(System.String, Penghou.Hetu.LatticeDb.LatticeDbStoreOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.Task\u00601[Penghou.Hetu.LatticeCodeGraphStore] OpenAsync(System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask CompleteIndexRunAsync(Penghou.Hetu.CodeIndexRunManifest, Penghou.Hetu.CodeRepositoryIndexState, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitAsync(Penghou.Hetu.CodeIndexUnitReplacement, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitDeletionAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, Penghou.Hetu.CodePluginId, Penghou.Hetu.CodeIndexUnitId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StoreIndexRunAsync(Penghou.Hetu.CodeIndexRunManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask UpsertRepositoryAsync(Penghou.Hetu.CodeRepositoryManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphNode] FindSymbolAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphNode] GetNodeAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeNodeId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphPublication] GetLatestPublicationAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[Penghou.Hetu.CodeGraphTraversalResult]] TraverseWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]]] GetDeclarationsWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphQueryEnvelope\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]]] FindNodesByQualifiedNameWithProvenanceAsync(Penghou.Hetu.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphStoreHealth] CheckHealthAsync(System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeGraphTraversalResult] TraverseAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeIndexRunManifest] GetIndexRunAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeIndexRunId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeNamePatternResult] FindNodesByNamePatternAsync(Penghou.Hetu.CodeRepositoryId, System.String, Int32, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeRepositoryIndexState] GetLatestIndexStateAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.CodeRepositoryManifest] GetRepositoryAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphDeclaration]] GetDeclarationsAsync(Penghou.Hetu.CodeRepositoryId, Penghou.Hetu.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeGraphNode]] FindNodesByQualifiedNameAsync(Penghou.Hetu.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask\u00601[System.Collections.Generic.IReadOnlyList\u00601[Penghou.Hetu.CodeIndexUnitReplacement]] GetPublishedUnitsAsync(Penghou.Hetu.CodeRepositoryId, System.Threading.CancellationToken)",
+          "Void .ctor(System.String)",
+          "Void .ctor(System.String, Penghou.Hetu.LatticeDb.LatticeDbStoreOptions)",
+          "Void Dispose()"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.LatticeDb.HetuHostBuilderExtensions",
+        "members": [
+          "Penghou.Hetu.HetuHostBuilder UseLatticeStore(Penghou.Hetu.HetuHostBuilder, System.String, Penghou.Hetu.LatticeDb.LatticeDbStoreOptions)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.LatticeDb.LatticeDbStoreOptions",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.LatticeDb.LatticeDbStoreOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean UseNativeTraversal",
+          "Boolean get_UseNativeTraversal()",
+          "Boolean op_Equality(Penghou.Hetu.LatticeDb.LatticeDbStoreOptions, Penghou.Hetu.LatticeDb.LatticeDbStoreOptions)",
+          "Boolean op_Inequality(Penghou.Hetu.LatticeDb.LatticeDbStoreOptions, Penghou.Hetu.LatticeDb.LatticeDbStoreOptions)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.LatticeDb.LatticeDbStoreOptions \u003CClone\u003E$()",
+          "System.Nullable\u00601[System.Boolean] EnableAdjacencyCache",
+          "System.Nullable\u00601[System.Boolean] EnableWal",
+          "System.Nullable\u00601[System.Boolean] get_EnableAdjacencyCache()",
+          "System.Nullable\u00601[System.Boolean] get_EnableWal()",
+          "System.Nullable\u00601[System.UInt32] CacheSizeMb",
+          "System.Nullable\u00601[System.UInt32] PageSize",
+          "System.Nullable\u00601[System.UInt32] get_CacheSizeMb()",
+          "System.Nullable\u00601[System.UInt32] get_PageSize()",
+          "System.String ToString()",
+          "Void .ctor()",
+          "Void set_CacheSizeMb(System.Nullable\u00601[System.UInt32])",
+          "Void set_EnableAdjacencyCache(System.Nullable\u00601[System.Boolean])",
+          "Void set_EnableWal(System.Nullable\u00601[System.Boolean])",
+          "Void set_PageSize(System.Nullable\u00601[System.UInt32])",
+          "Void set_UseNativeTraversal(Boolean)"
+        ]
+      }
+    ]
+  },
+  {
+    "assembly": "Penghou.Hetu.Testing",
+    "types": [
+      {
+        "name": "Penghou.Hetu.Testing.CodeGraphStoreConformanceException",
+        "members": [
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.Testing.CodeGraphStoreConformanceReport",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.Testing.CodeGraphStoreConformanceReport)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.Testing.CodeGraphStoreConformanceReport, Penghou.Hetu.Testing.CodeGraphStoreConformanceReport)",
+          "Boolean op_Inequality(Penghou.Hetu.Testing.CodeGraphStoreConformanceReport, Penghou.Hetu.Testing.CodeGraphStoreConformanceReport)",
+          "Int32 GetHashCode()",
+          "Penghou.Hetu.Testing.CodeGraphStoreConformanceReport \u003CClone\u003E$()",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] PassedChecks",
+          "System.Collections.Generic.IReadOnlyList\u00601[System.String] get_PassedChecks()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList\u00601[System.String])",
+          "Void Deconstruct(System.Collections.Generic.IReadOnlyList\u00601[System.String] ByRef)",
+          "Void set_PassedChecks(System.Collections.Generic.IReadOnlyList\u00601[System.String])"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.Testing.CodeGraphStoreConformanceSuite",
+        "members": [
+          "System.Threading.Tasks.Task\u00601[Penghou.Hetu.Testing.CodeGraphStoreConformanceReport] VerifyAsync(Penghou.Hetu.Testing.ICodeGraphStoreFixture, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.Testing.ICodeGraphStoreFixture",
+        "members": [
+          "Penghou.Hetu.ICodeGraphStore CreateStore()"
+        ]
+      }
+    ]
+  },
+  {
+    "assembly": "Penghou.Hetu.TreeSitter",
+    "types": [
+      {
+        "name": "Penghou.Hetu.TreeSitter.HetuHostBuilderExtensions",
+        "members": [
+          "Penghou.Hetu.HetuHostBuilder AddTreeSitterElixirPlugin(Penghou.Hetu.HetuHostBuilder)",
+          "Penghou.Hetu.HetuHostBuilder AddTreeSitterJavaScriptPlugin(Penghou.Hetu.HetuHostBuilder)",
+          "Penghou.Hetu.HetuHostBuilder AddTreeSitterTypeScriptPlugin(Penghou.Hetu.HetuHostBuilder)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.TreeSitterElixirPlugin",
+        "members": [
+          "Boolean CanHandle(System.String)",
+          "Penghou.Hetu.CodeGraphCapabilities Capabilities",
+          "Penghou.Hetu.CodeGraphCapabilities get_Capabilities()",
+          "Penghou.Hetu.CodePluginId Id",
+          "Penghou.Hetu.CodePluginId get_Id()",
+          "Penghou.Hetu.TreeSitterGrammarDescriptor Grammar",
+          "Penghou.Hetu.TreeSitterGrammarDescriptor get_Grammar()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] FileExtensions",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] get_FileExtensions()",
+          "System.String Language",
+          "System.String Version",
+          "System.String get_Language()",
+          "System.String get_Version()",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.ICodeGraphExtractionSession] CreateSessionAsync(Penghou.Hetu.CodeGraphPluginContext, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.TreeSitterGrammarDescriptor",
+        "members": [
+          "Boolean Equals(Penghou.Hetu.TreeSitterGrammarDescriptor)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Penghou.Hetu.TreeSitterGrammarDescriptor, Penghou.Hetu.TreeSitterGrammarDescriptor)",
+          "Boolean op_Inequality(Penghou.Hetu.TreeSitterGrammarDescriptor, Penghou.Hetu.TreeSitterGrammarDescriptor)",
+          "Int32 AbiVersion",
+          "Int32 GetHashCode()",
+          "Int32 get_AbiVersion()",
+          "Penghou.Hetu.CodeGraphCapabilities Capabilities",
+          "Penghou.Hetu.CodeGraphCapabilities get_Capabilities()",
+          "Penghou.Hetu.TreeSitterGrammarDescriptor \u003CClone\u003E$()",
+          "System.String GrammarCommit",
+          "System.String GrammarId",
+          "System.String GrammarSource",
+          "System.String GrammarVersion",
+          "System.String Language",
+          "System.String LanguageFunction",
+          "System.String NativeLibrary",
+          "System.String ToString()",
+          "System.String get_GrammarCommit()",
+          "System.String get_GrammarId()",
+          "System.String get_GrammarSource()",
+          "System.String get_GrammarVersion()",
+          "System.String get_Language()",
+          "System.String get_LanguageFunction()",
+          "System.String get_NativeLibrary()",
+          "Void .ctor(System.String, System.String, System.String, System.String, System.String, Int32, System.String, System.String, Penghou.Hetu.CodeGraphCapabilities)"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.TreeSitterJavaScriptPlugin",
+        "members": [
+          "Boolean CanHandle(System.String)",
+          "Penghou.Hetu.CodeGraphCapabilities Capabilities",
+          "Penghou.Hetu.CodeGraphCapabilities get_Capabilities()",
+          "Penghou.Hetu.CodePluginId Id",
+          "Penghou.Hetu.CodePluginId get_Id()",
+          "Penghou.Hetu.TreeSitterGrammarDescriptor Grammar",
+          "Penghou.Hetu.TreeSitterGrammarDescriptor get_Grammar()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] FileExtensions",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] get_FileExtensions()",
+          "System.String Language",
+          "System.String Version",
+          "System.String get_Language()",
+          "System.String get_Version()",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.ICodeGraphExtractionSession] CreateSessionAsync(Penghou.Hetu.CodeGraphPluginContext, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Penghou.Hetu.TreeSitterTypeScriptPlugin",
+        "members": [
+          "Boolean CanHandle(System.String)",
+          "Penghou.Hetu.CodeGraphCapabilities Capabilities",
+          "Penghou.Hetu.CodeGraphCapabilities get_Capabilities()",
+          "Penghou.Hetu.CodePluginId Id",
+          "Penghou.Hetu.CodePluginId get_Id()",
+          "Penghou.Hetu.TreeSitterGrammarDescriptor Grammar",
+          "Penghou.Hetu.TreeSitterGrammarDescriptor TsxGrammar",
+          "Penghou.Hetu.TreeSitterGrammarDescriptor get_Grammar()",
+          "Penghou.Hetu.TreeSitterGrammarDescriptor get_TsxGrammar()",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] FileExtensions",
+          "System.Collections.Generic.IReadOnlyCollection\u00601[System.String] get_FileExtensions()",
+          "System.String Language",
+          "System.String Version",
+          "System.String get_Language()",
+          "System.String get_Version()",
+          "System.Threading.Tasks.ValueTask\u00601[Penghou.Hetu.ICodeGraphExtractionSession] CreateSessionAsync(Penghou.Hetu.CodeGraphPluginContext, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      }
+    ]
+  }
+]

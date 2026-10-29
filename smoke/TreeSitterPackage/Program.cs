@@ -1,4 +1,4 @@
-// Pack-consume-load smoke test for the Penghou.Hetu.TreeSitter NuGet package.
+// Pack-consume-load smoke test for all six Penghou.Andirit NuGet packages.
 // This project is intentionally outside the solution: it restores the PACKED
 // package (plus its dependencies) from a package feed, proving the native
 // RID assets resolve and parse through the real NuGet layout rather than a
@@ -6,7 +6,7 @@
 //   dotnet run -p:RestoreSources="<feed>;<nuget.org>" [-p:SmokerPackageVersion=<ver>]
 using System.Security.Cryptography;
 using System.Text;
-using Penghou.Hetu;
+using Penghou.Andirit;
 
 // Elixir's native is checked into the package; TypeScript and JavaScript
 // natives come from the TreeSitter.DotNet dependency. All three must resolve
@@ -62,7 +62,41 @@ Check(
 CheckStructural(javaScript, "javascript");
 Console.WriteLine($"javascript provider version: {javaScriptPlugin.Version}");
 
-Console.WriteLine("PASS: packed Tree-sitter providers resolved and parsed.");
+var csharpPlugin = new CSharpCodeGraphPlugin();
+var csharp = await RunAsync(csharpPlugin, "Smoke.cs", "public class Smoke { public void Run() { } }");
+Check(csharpPlugin.Id.Value == "penghou.hetu.csharp", "historical C# plugin identity");
+Check(csharp.Nodes.Any(node => node.Kind == CodeNodeKinds.Type && node.QualifiedName == "Smoke"), "packed Roslyn extraction");
+Check(typeof(Penghou.Andirit.Testing.CodeGraphStoreConformanceSuite).Assembly.GetName().Name == "Penghou.Andirit.Testing", "testing package loads");
+
+var directory = Directory.CreateTempSubdirectory("andirit-packed-consumer-");
+try
+{
+    await File.WriteAllTextAsync(Path.Combine(directory.FullName, "smoke.ts"), "export class Packed { }");
+    var database = Path.Combine(directory.FullName, "graph.db");
+    var repository = new CodeRepositoryId("repo:packed-andirit");
+    using (var store = new LatticeCodeGraphStore(database))
+    {
+        await using var host = new AndiritHostBuilder().UseStore(store).AddPlugin(new TreeSitterTypeScriptPlugin()).Build();
+        var indexed = await host.Indexing.IndexAsync(new CodeRepositoryDescriptor(repository, directory.FullName), new CodeIndexRunId("run:packed-andirit"));
+        Check(indexed.Diagnostics.Status == CodeIndexRunStatus.Completed, "packed host indexing");
+        Check((await store.CheckHealthAsync()).SchemaVersion == 2, "packed LatticeDB schema 2");
+    }
+    using var reopened = new LatticeCodeGraphStore(database, new Penghou.Andirit.LatticeDb.LatticeDbStoreOptions { UseNativeTraversal = true });
+    Check((await reopened.FindNodesByQualifiedNameAsync(repository, "Packed")).Count(node => node.Kind == CodeNodeKinds.Type) == 1, "packed durable reopen and native mirror");
+    var snapshot = await CodePublicationSnapshot.ExportAsync(reopened, repository);
+    Check(CodePublicationSnapshot.FromJson(snapshot.ToJson()).IntegrityHash == snapshot.IntegrityHash, "packed snapshot integrity");
+}
+finally
+{
+    directory.Delete(recursive: true);
+}
+
+var productAssemblies = new[] { typeof(CodeGraphNode).Assembly, typeof(AndiritHost).Assembly,
+    typeof(CSharpCodeGraphPlugin).Assembly, typeof(TreeSitterTypeScriptPlugin).Assembly,
+    typeof(LatticeCodeGraphStore).Assembly, typeof(Penghou.Andirit.Testing.CodeGraphStoreConformanceSuite).Assembly };
+Check(productAssemblies.All(assembly => assembly.GetName().Name!.StartsWith("Penghou.Andirit", StringComparison.Ordinal)), "all six renamed assemblies");
+Check(productAssemblies.SelectMany(assembly => assembly.GetReferencedAssemblies()).All(reference => !reference.Name!.StartsWith("Penghou.Hetu", StringComparison.Ordinal)), "no old Hetu assembly dependencies");
+Console.WriteLine("PASS: all six packed Andirit packages, managed providers, durable store and Tree-sitter natives resolved.");
 return 0;
 
 static void CheckStructural(Extraction extraction, string language)

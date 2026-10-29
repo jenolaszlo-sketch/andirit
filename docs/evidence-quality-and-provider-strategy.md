@@ -1,4 +1,4 @@
-# ADR: Hetu Code Evidence Quality and Parser Provider Strategy
+# ADR: Andirit Code Evidence Quality and Parser Provider Strategy
 ## Status
 
 Accepted
@@ -18,13 +18,13 @@ pattern relationships (the prototype patterns below); neither implies resolution
 
 ## Context
 
-`Penghou.Hetu` already has the main architectural separation required for multi-language code analysis:
+`Penghou.Andirit` already has the main architectural separation required for multi-language code analysis:
 
-- Hetu owns a normalized code graph rather than parser-specific syntax trees.
+- Andirit owns a normalized code graph rather than parser-specific syntax trees.
 - `ICodeGraphPlugin` provides the extension boundary for language-specific analysis.
 - `CSharpCodeGraphPlugin` provides project-aware Roslyn analysis.
 - Graph facts retain provenance and coverage information.
-- Parser-specific types do not leak into Hetu abstractions.
+- Parser-specific types do not leak into Andirit abstractions.
 
 The architecture therefore does not need a new provider abstraction or a redesign around Tree-sitter.
 
@@ -50,7 +50,7 @@ This is insufficient for the expanded provider model.
 In particular:
 
 - Tree-sitter facts are structural, but `Syntax` does not express their relationship to compiler-resolved facts.
-- deterministic Hetu-derived relationships currently risk being represented as `Semantic` or `Heuristic`,
+- deterministic Andirit-derived relationships currently risk being represented as `Semantic` or `Heuristic`,
 - `Heuristic` conflates deterministic derivation with probabilistic inference,
 - `Semantic` does not clearly distinguish a resolved compiler fact from other forms of semantic analysis.
 
@@ -78,7 +78,7 @@ Tree-sitter will be introduced as another implementation of the existing plugin 
 
 ## 2. Replace the evidence vocabulary with four evidence qualities
 
-Hetu will use:
+Andirit will use:
 
 ```csharp
 public enum EvidenceQuality
@@ -122,7 +122,7 @@ Structural evidence is deterministic but must not be treated as semantic binding
 
 ### Derived
 
-Hetu deterministically computes the fact from other evidence.
+Andirit deterministically computes the fact from other evidence.
 
 Examples:
 
@@ -218,7 +218,7 @@ Roslyn-bound relationships such as:
 
 become `Resolved`.
 
-Existing facts currently marked `Semantic` but actually computed by Hetu must instead become `Derived`.
+Existing facts currently marked `Semantic` but actually computed by Andirit must instead become `Derived`.
 
 ### `Heuristic` → split
 
@@ -351,7 +351,7 @@ Conformance tests should verify that advertised capabilities and emitted graph f
 
 The current registry behavior that rejects multiple matching plugins remains the default.
 
-Hetu must not silently select a lower-fidelity provider.
+Andirit must not silently select a lower-fidelity provider.
 
 Explicit language-provider configuration will later allow ordered selection, for example:
 
@@ -371,7 +371,7 @@ Elixir
 
 Fallback is opt-in behavior.
 
-If fallback occurs, Hetu must record:
+If fallback occurs, Andirit must record:
 
 - requested provider,
 - actual provider,
@@ -389,10 +389,10 @@ Tree-sitter will be introduced in a dedicated package.
 Conceptually:
 
 ```text
-Penghou.Hetu
-Penghou.Hetu.Abstractions
-Penghou.Hetu.CSharp
-Penghou.Hetu.TreeSitter
+Penghou.Andirit
+Penghou.Andirit.Abstractions
+Penghou.Andirit.CSharp
+Penghou.Andirit.TreeSitter
 ```
 
 The Tree-sitter package owns:
@@ -405,9 +405,9 @@ The Tree-sitter package owns:
 - extraction profiles,
 - grammar metadata.
 
-Tree-sitter-native concepts such as `TSNode` and `TSTree` must not enter Hetu core abstractions.
+Tree-sitter-native concepts such as `TSNode` and `TSTree` must not enter Andirit core abstractions.
 
-The plugin converts parser results directly into existing Hetu graph facts.
+The plugin converts parser results directly into existing Andirit graph facts.
 
 ---
 
@@ -415,7 +415,7 @@ The plugin converts parser results directly into existing Hetu graph facts.
 
 Tree-sitter grammars do not expose identical node structures across languages.
 
-Small extraction profiles will map grammar-specific syntax to Hetu concepts.
+Small extraction profiles will map grammar-specific syntax to Andirit concepts.
 
 Examples include:
 
@@ -429,7 +429,7 @@ Examples include:
 
 These profiles are adapters, not parsers.
 
-Hetu will not attempt to define a universal AST.
+Andirit will not attempt to define a universal AST.
 
 ---
 
@@ -455,7 +455,7 @@ Tree-sitter may understand only part of a file because of:
 - malformed source,
 - language extensions.
 
-Hetu may retain valid structural evidence from successfully parsed regions.
+Andirit may retain valid structural evidence from successfully parsed regions.
 
 However, partial analysis must be visible.
 
@@ -486,7 +486,7 @@ The following are intentionally deferred until the parser/provider work has been
 - JEV classification,
 - LLM-derived code interpretation.
 
-These systems may consume normalized Hetu entities later.
+These systems may consume normalized Andirit entities later.
 
 Their output must respect the evidence model.
 
@@ -498,7 +498,7 @@ JEV classification   != resolved code fact
 LLM interpretation   != deterministic evidence
 ```
 
-Probabilistic graph facts enter Hetu as `Inferred`.
+Probabilistic graph facts enter Andirit as `Inferred`.
 
 They cannot overwrite deterministic facts or satisfy deterministic queries.
 
@@ -508,20 +508,20 @@ They cannot overwrite deterministic facts or satisfy deterministic queries.
 
 ### Positive
 
-Hetu keeps its existing architecture rather than introducing another provider abstraction.
+Andirit keeps its existing architecture rather than introducing another provider abstraction.
 
 Parser technology becomes replaceable.
 
 Roslyn remains the preferred C# semantic provider.
 
-Tree-sitter can add broad language coverage without requiring Hetu to implement parsers.
+Tree-sitter can add broad language coverage without requiring Andirit to implement parsers.
 
 Evidence consumers can distinguish:
 
 ```text
 resolved compiler knowledge
 structural parser knowledge
-Hetu-derived knowledge
+Andirit-derived knowledge
 probabilistic interpretation
 ```
 
@@ -552,7 +552,7 @@ The distinction between `Resolved`, `Structural`, and `Derived` introduces stric
 1. Introduce the four-level evidence-quality model.
 2. Provide compatibility shims for existing public contracts where required.
 3. Audit and migrate current evidence production.
-4. Reclassify deterministic Hetu-generated relationships such as `exercised-by` as `Derived`.
+4. Reclassify deterministic Andirit-generated relationships such as `exercised-by` as `Derived`.
 5. Add `invokes-name`.
 6. Enforce that `calls` requires resolved evidence.
 7. Correct `CSharpCodeGraphPlugin` capability reporting.
@@ -600,14 +600,14 @@ Implementation notes (landed):
 
 ### Phase 3: Tree-sitter
 
-1. Add isolated `Penghou.Hetu.TreeSitter`.
+1. Add isolated `Penghou.Andirit.TreeSitter`.
 2. Integrate the Tree-sitter native runtime.
 3. Add grammar registry/version metadata.
 4. Add language extraction profiles.
 5. Start with a small number of languages.
 6. Produce structural graph evidence only.
 7. Support partial parsing and diagnostics.
-8. Verify that no Tree-sitter-native type leaks into Hetu abstractions.
+8. Verify that no Tree-sitter-native type leaks into Andirit abstractions.
 
 Implementation notes, 3A (Elixir, landed):
 
@@ -624,7 +624,7 @@ Implementation notes, 3A (Elixir, landed):
 - Definition heads are visited for structure but never treated as
   invocations; module attributes (`@moduledoc`, `@spec`, ...) are skipped.
 - Rebuild recipe, verification checklist, and upgrade policy live in
-  `src/Penghou.Hetu.TreeSitter/native/grammar-pins.md`.
+  `src/Penghou.Andirit.TreeSitter/native/grammar-pins.md`.
 
 ### Phase 3B: TypeScript/JavaScript as an adversarial test of the profile seam (landed)
 
@@ -645,7 +645,7 @@ per-language special casing.
 The harsher success criterion: TypeScript/JavaScript should add only a
 grammar descriptor, native grammar artifacts, an extraction profile, and
 fixtures/tests — plus small generic abstractions genuinely discovered by
-the second language. If it requires changes to Hetu core, changes to
+the second language. If it requires changes to Andirit core, changes to
 Tree-sitter generic plumbing, or Elixir-specific conditionals in shared
 code, the seam was not right. Two real languages are enough evidence to
 generalize; one is not. Further languages (Python, Go, Rust, ...) wait for
@@ -711,7 +711,7 @@ The following invariants should become tests:
 4. `Derived` evidence cannot present itself as `Resolved`.
 5. deterministic evidence cannot carry probabilistic confidence.
 6. plugin capability declarations must be consistent with emitted fact classes.
-7. parser-specific native types cannot appear in Hetu public abstractions.
+7. parser-specific native types cannot appear in Andirit public abstractions.
 8. fallback to a lower-capability provider must be explicit and diagnosable.
 9. partial parsing cannot be reported as complete analysis.
 10. provider and provider-version provenance must remain available for graph evidence.
@@ -759,7 +759,7 @@ semantically constrained answer reachable only across weaker edges.
 
 ## Decision Summary
 
-Hetu remains a **code evidence and relationship system**, not a parser framework.
+Andirit remains a **code evidence and relationship system**, not a parser framework.
 
 The existing plugin model remains the integration boundary.
 
@@ -776,10 +776,10 @@ Roslyn remains the primary C# provider.
 
 Tree-sitter will provide broad structural language support through an isolated plugin.
 
-Better parsers or semantic providers may be configured later without changing Hetu core.
+Better parsers or semantic providers may be configured later without changing Andirit core.
 
 The governing rule is:
 
 > A provider may contribute only the strength of evidence it can actually establish.
 
-Hetu preserves that distinction through storage, querying, derivation, and future AI enrichment.
+Andirit preserves that distinction through storage, querying, derivation, and future AI enrichment.

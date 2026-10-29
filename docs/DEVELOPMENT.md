@@ -1,6 +1,6 @@
 # Main-first development policy
 
-Canonical repository: `C:\Users\Laszlos\source\repos\Penghou.Hetu`; primary branch `main`. One working checkout; no additional linked worktrees for normal development. The retained bare planning mirror is a historical archive only.
+Canonical repository: `C:\Users\Laszlos\source\repos\Penghou.Andirit`; primary branch `main`. One working checkout; no additional linked worktrees for normal development. The retained bare planning mirror is a historical archive only.
 
 For ordinary work: synchronize main, make a bounded change directly on main, run relevant tests, commit, push normally to origin/main, and confirm applicable CI. Inspect workflow triggers before pushing. Packages and releases require separately authorized stable milestones.
 

@@ -14,8 +14,8 @@ semantic analysis.
 
 ## Working rules
 
-- Roslyn performs C# binding; Hetu never resolves targets from names or text.
-- Relationship targets normalize to existing Hetu identities. Constructed
+- Roslyn performs C# binding; Andirit never resolves targets from names or text.
+- Relationship targets normalize to existing Andirit identities. Constructed
   generics and reduced extension methods map to their source definitions.
 - Only explicit source relationships are stored. Runtime dispatch, transitive
   closure, and heuristic targets stay outside this milestone.

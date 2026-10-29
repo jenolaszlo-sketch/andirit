@@ -1,11 +1,11 @@
-# Penghou.Hetu Roadmap
+# Penghou.Andirit Roadmap
 
 ## Future resource-provider integration — 2026-10-02
 
 Reference: [resource-abstractions architecture](../Penghou/docs/resource-abstractions-architecture.md).
 After RA-5, assess an optional IO-backed implementation of the existing
 repository-source contract. Keep code graph, repository and snapshot semantics
-in Hetu; the immediate correction does not migrate this project.
+in Andirit; the immediate correction does not migrate this project.
 
 - [ ] Map explicit workspace/view/invocation identities and bounded reads/pages.
   Preserve incomplete and authorized-view coverage: excluded/unscanned resources
@@ -25,7 +25,7 @@ the graph model to Roslyn, LatticeDB, or any model provider.
 
 The central invariant is:
 
-> Hetu defines what code means in the graph. Plugins define how those facts are
+> Andirit defines what code means in the graph. Plugins define how those facts are
 > discovered.
 
 ## Architectural laws
@@ -46,7 +46,7 @@ The central invariant is:
   provider-neutral contracts.
 - Queries are bounded, deterministic, provenance-aware, and explicit about
   ambiguity and truncation.
-- Hetu returns attributable facts and candidates. Solo owns interpretation,
+- Andirit returns attributable facts and candidates. Solo owns interpretation,
   ranking, and context composition.
 
 ## Decisions
@@ -55,7 +55,7 @@ Recorded choices with the conditions that would trigger revisiting them:
 
 - **Single target framework net10.0.** Sibling packages multi-target
   net8.0-net10.0; revisit when the first external consumer on an LTS
-  framework needs Hetu, or at general availability.
+  framework needs Andirit, or at general availability.
 - **Lightweight csproj parsing without MSBuild evaluation.** Conditions,
   imports, custom targets, and solution configurations are not interpreted.
   Revisit only as an opt-in provider concern when a real repository fails to
@@ -110,9 +110,9 @@ already completed work.
 
 The current `0.2.0-preview.5` baseline is usable as a bounded, provider-neutral
 graph source for Marang. This is an integration boundary and audit record; it
-does not make Marang workflow semantics part of Hetu.
+does not make Marang workflow semantics part of Andirit.
 
-### Usable now in Hetu
+### Usable now in Andirit
 
 - Stable repository, publication, and source-state identities, including the
   deterministic `CodeIndexIdentity`; symbol, node, and physical declaration
@@ -134,11 +134,11 @@ does not make Marang workflow semantics part of Hetu.
 
 ### Reusable upstream follow-ups
 
-These should remain provider-neutral Hetu work, ordered as Gate 0.5 risks:
+These should remain provider-neutral Andirit work, ordered as Gate 0.5 risks:
 
 1. **P1 — Immutable historical graph snapshots or export references
    (landed on `feature/latticedb-provider`).** A publication-bound view fails
-   when the latest publication moves, but Hetu retains only the latest graph.
+   when the latest publication moves, but Andirit retains only the latest graph.
    `CodePublicationSnapshot` now captures one publication as bounded,
    schema-versioned, SHA-256 integrity-checked units that re-import through
    the normal staging path, so a later query reproduces the original result.
@@ -171,13 +171,13 @@ remain later follow-ups; Marang can compose current traversals in the interim.
 
 Workflow/task/node ownership mapping and `SupervisorContextPackage` shaping,
 ranking, redaction, and final context budgets remain Marang responsibilities.
-The adapter should use Hetu's publication, typed fact identities, locations,
+The adapter should use Andirit's publication, typed fact identities, locations,
 evidence, query descriptor, and contributor provenance as its references rather
-than adding workflow IDs to the Hetu graph model.
+than adding workflow IDs to the Andirit graph model.
 
 ### Security and resource notes
 
-Hetu bounds source enumeration/materialization, ingestion batches, and each
+Andirit bounds source enumeration/materialization, ingestion batches, and each
 query, but there is no global retained-graph or LatticeDb replay cap. Marang must
 apply a total context budget and treat large or highly connected results as
 truncated. Query envelopes may expose repository-relative paths, symbol names,
@@ -189,30 +189,30 @@ redaction and size policy. Source blobs are not persisted by the graph store.
 Status: **design gate recorded; implementation deferred while Fuwen is the
 active priority**
 
-Hongxian sessions must remain fully usable without Hetu. The current source
+Hongxian sessions must remain fully usable without Andirit. The current source
 dependency audit confirms that neither `Penghou.Hongxian` nor
-`Penghou.Hongxian.Sqlite` has a Hetu, parser, graph-store, or Roslyn runtime
+`Penghou.Hongxian.Sqlite` has a Andirit, parser, graph-store, or Roslyn runtime
 dependency. Its public-API analyzer is build-only with `PrivateAssets=all`;
 future packed-consumer tests must prove that it does not flow transitively.
 
 The responsibility split is fixed:
 
 - Hongxian owns session continuity, immutable evidence, and opaque correlation.
-- Hetu owns normalized code facts, language capabilities, publication identity,
+- Andirit owns normalized code facts, language capabilities, publication identity,
   freshness, and code-graph queries.
 - An optional integration adapter may correlate one immutable session resource
-  revision with one exact Hetu publication. It must not copy graph nodes/edges
-  into Hongxian or add session/workflow identities to Hetu's graph model.
+  revision with one exact Andirit publication. It must not copy graph nodes/edges
+  into Hongxian or add session/workflow identities to Andirit's graph model.
 
-Before Hetu multi-repository federation, structural publication deltas, Marang
+Before Andirit multi-repository federation, structural publication deltas, Marang
 MCP exposure, parser evaluation, or delegated-work synchronization through
-Hetu:
+Andirit:
 
-- [ ] Prove an isolated Hongxian consumer has no transitive Hetu, Roslyn, ANTLR,
+- [ ] Prove an isolated Hongxian consumer has no transitive Andirit, Roslyn, ANTLR,
   or LatticeDB dependencies.
 - [ ] Decide the optional integration package's repository ownership without
-  changing dependency direction. `Penghou.Hongxian.Hetu` may depend on both
-  sides; Hongxian core/storage and Hetu core must not depend on it.
+  changing dependency direction. `Penghou.Hongxian.Andirit` may depend on both
+  sides; Hongxian core/storage and Andirit core must not depend on it.
 - [ ] Define exact revision/publication correlation, idempotent synchronization,
   freshness, concurrent publication ordering, superseding revisions, late
   completion, and forward reconciliation after partial failure.
@@ -237,9 +237,9 @@ in this boundary milestone.
 Status: **planned after Fuwen is usable and the Hongxian optional-capability
 boundary is proven**
 
-The product hypothesis is that Hetu can reduce the supervisor's catch-up cost
+The product hypothesis is that Andirit can reduce the supervisor's catch-up cost
 after delegated coding work. Validate that hypothesis in Marang before growing
-Hetu into a broad federation platform.
+Andirit into a broad federation platform.
 
 ### Gate A — reproducible repository publications
 
@@ -288,7 +288,7 @@ reproducible structural snapshot by itself.
 ### Gate D — Marang/Codex evaluation
 
 - [ ] Expose only a minimal, authorization-scoped, bounded code-query and
-  structural-catch-up surface through Marang. Hetu does not acquire an MCP host.
+  structural-catch-up surface through Marang. Andirit does not acquire an MCP host.
 - [ ] Compare paired tasks pinned to the same source/publication state, recording
   source reads, searches, relevant relationships found/missed, false facts,
   elapsed time, and observable token use. Treat token measurements as noisy.
@@ -404,8 +404,8 @@ changes the architectural laws. Effort: S (days), M (weeks), L (longer).
 
 Status: **complete on `main` (unreleased)**. All five query additions landed
 and are exercised by provider-neutral tests and the C#/Elixir dogfood
-(`tests/Penghou.Hetu.Tests/CodeGraphDiscoveryTests.cs`,
-`tests/Penghou.Hetu.TreeSitter.Tests/QueryDogfoodTests.cs`).
+(`tests/Penghou.Andirit.Tests/CodeGraphDiscoveryTests.cs`,
+`tests/Penghou.Andirit.TreeSitter.Tests/QueryDogfoodTests.cs`).
 
 Composable, store-neutral query additions proven against C# and Elixir
 graphs before TypeScript/JavaScript strains the extraction seam:
@@ -457,7 +457,7 @@ Milestone 7.5 is complete, so this milestone is unblocked. It will
 be designed and implemented together with Solo rather than completed
 speculatively.
 
-Index Hetu and the other Penghou repositories, then integrate read-only code
+Index Andirit and the other Penghou repositories, then integrate read-only code
 comprehension into Solo for:
 
 - resolving relevant declarations for a planning task;
@@ -468,15 +468,15 @@ comprehension into Solo for:
 
 Memory/experience boundary:
 
-- Hetu remains authoritative only for code facts at an exact publication and
+- Andirit remains authoritative only for code facts at an exact publication and
   declared extraction-evidence level. It does not store participant beliefs,
   workflow experience, model reputation, or procedural knowledge.
-- Cangjie may relate attributed diary entries to stable Hetu publication/node
+- Cangjie may relate attributed diary entries to stable Andirit publication/node
   references; Hongxian may record which publication/query influenced an
   execution. Neither copies or silently upgrades a code observation into a
   stronger fact.
 - Marang/Guyabano compose bounded code context with working memory and prior
-  experience. Hetu supplies query results, evidence, bounds, and freshness, not
+  experience. Andirit supplies query results, evidence, bounds, and freshness, not
   planning or checkpoint decisions.
 
 During dogfooding, evaluate these usability additions from real workflows:
@@ -491,7 +491,7 @@ During dogfooding, evaluate these usability additions from real workflows:
 
 ### Transactional workspace experiment
 
-Evaluate Hetu as a deterministic model of code Solo is actively constructing,
+Evaluate Andirit as a deterministic model of code Solo is actively constructing,
 not only as an index of the last committed repository. Keep this experimental
 until the read-only integration proves which semantics are genuinely useful.
 
@@ -529,7 +529,7 @@ publications or revisions; source blobs stay out of `ICodeGraphStore` behind a
 future `ICodeWorkspaceStore` whose recovered workloads revalidate their pinned
 base publication.
 
-`BasePublicationId` refers to Hetu's existing successfully published
+`BasePublicationId` refers to Andirit's existing successfully published
 `CodeIndexRunId`; it does not introduce a parallel repository-publication
 identity. A workspace revision uses its own typed `WorkspaceRevisionId`, which
 also identifies the atomically refreshed working graph for that revision.
@@ -565,7 +565,7 @@ Workspace experiment exit criteria:
 - measurements justify whether checkpoints, persistence, graph diff, and
   incremental plugin sessions should become supported product contracts.
 
-Avoid fuzzy symbol selection in Hetu core. Return explicit candidates and let
+Avoid fuzzy symbol selection in Andirit core. Return explicit candidates and let
 Solo rank them.
 
 Before leaving this milestone, review the vocabulary and plugin contract
@@ -692,12 +692,12 @@ claiming one implementation is universally better.
 
 ### Generated language plugins
 
-Reserve `Penghou.Hetu.Generator` for deterministic plugin generation from
+Reserve `Penghou.Andirit.Generator` for deterministic plugin generation from
 grammars and declarative mappings. AI may help author those inputs, but runtime
 AI parsing and arbitrary generated runtime code remain out of scope.
 
 TypeScript/JavaScript landed as the second structural provider in the
-`Penghou.Hetu.TreeSitter` package (Phase 3B), with a concrete consumer in the
+`Penghou.Andirit.TreeSitter` package (Phase 3B), with a concrete consumer in the
 Astro/TypeScript `website` repository. EC-5 records named file-level
 TypeScript/JavaScript variables as `field` declarations with direct written
 `export` metadata; it does not model export bindings, local variables, ambient
@@ -707,7 +707,7 @@ variables from class members. The exact revision and real-repository evidence
 are recorded in `docs/evidence/ec5-variable-declarations-handoff.md`; the
 independent qualification and closure disposition are recorded in
 `docs/evidence/ec5-closure.md`.
-`Penghou.Hetu.Generator` remains reserved for later. The approved expansion
+`Penghou.Andirit.Generator` remains reserved for later. The approved expansion
 sequence is recorded in
 [Milestone 8B](#milestone-8b--language-feature-catalog-and-phased-language-expansion)
 and the [language roadmap](docs/language-support-roadmap.md). It does not require
@@ -747,7 +747,7 @@ integration remain engineering follow-ups before a stable first release.
 10. Solo can assemble explainable, snapshot-validated code context without
     depending on Roslyn or LatticeDB types.
 11. A future deterministic non-C# plugin can implement the public extraction
-    contract without changing Hetu core.
+    contract without changing Andirit core.
 12. Documentation quick-start samples compile against the public packages.
 
 ## Durable store schema evolution
@@ -778,7 +778,7 @@ Cross-repository links assume sibling checkouts.
 - [ ] Allow the host to compare candidate publications and retain which code
   observations informed evaluation or a transition preview, without publishing
   an unselected candidate as the accepted workspace.
-- [ ] Make incomplete structural coverage explicit. Hetu impact neighborhoods
+- [ ] Make incomplete structural coverage explicit. Andirit impact neighborhoods
   may inform application policy but never replace Fuwen/Zhinu data, control,
   validation or external-effect dependency analysis.
 
@@ -793,4 +793,4 @@ is safe to reuse.
   equivalent tasks, causal improvement or authority to reuse an artifact.
 
 This extends existing publication/query seams only when the consumer needs
-them. Hetu does not store workflow reputation, choose winners or learn topology.
+them. Andirit does not store workflow reputation, choose winners or learn topology.
