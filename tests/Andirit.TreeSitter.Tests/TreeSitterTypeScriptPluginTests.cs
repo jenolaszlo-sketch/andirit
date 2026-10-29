@@ -212,7 +212,7 @@ public sealed class TreeSitterTypeScriptPluginTests
         Assert.All(extracted.Edges, edge =>
             Assert.Equal(EvidenceQuality.Structural, edge.Evidence.Quality));
         Assert.All(
-            extracted.Edges.Where(edge => edge.Kind != CodeEdgeKinds.Exports &&
+            extracted.Edges.Where(edge => !edge.Properties.ContainsKey("ec6d.data") && edge.Kind != CodeEdgeKinds.Exports &&
                 edge.Kind != CodeEdgeKinds.ResolvesTo),
             edge => Assert.Equal("penghou.hetu.tree-sitter.typescript", edge.Evidence.Provider));
     }
@@ -602,7 +602,7 @@ public sealed class TreeSitterTypeScriptPluginTests
         var packageVersion = typeof(TreeSitterTypeScriptPlugin).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion.Split('+', 2)[0];
-        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p9", plugin.Version);
+        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p10", plugin.Version);
     }
 
     [Fact]
@@ -795,7 +795,7 @@ public sealed class TreeSitterTypeScriptPluginTests
             var initial = await planner.CreatePlanAsync(source);
             var item = Assert.Single(initial.Items);
             Assert.Equal(CodeIndexPlanStatus.New, item.Status);
-            Assert.EndsWith(".p9", item.Manifest.PluginVersion, StringComparison.Ordinal);
+            Assert.EndsWith(".p10", item.Manifest.PluginVersion, StringComparison.Ordinal);
 
             // A previous publication from an older extraction-profile revision
             // must re-extract even though plugin identity and content are

@@ -133,7 +133,7 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
                 warnings.Add($"{language}.parse-error");
             }
             if (_moduleResolver is not null)
-                moduleFiles.Add(new(source.Path, fileNodeId, extraction.ModuleReferences.ToArray()));
+                moduleFiles.Add(new(source.Path, fileNodeId, extraction.ModuleReferences.ToArray(), extraction.Edges.Values.Where(e => e.Kind.Value is "imports-name" or "export-reference").ToArray()));
 
             var origin = UnitOrigin(source.Path, language, source.ContentHash);
             var nodes = extraction.Nodes.Values.Prepend(fileNode).ToArray();
@@ -188,6 +188,14 @@ internal sealed class TreeSitterExtractionSession : ICodeGraphExtractionSession
                 cancellationToken).ConfigureAwait(false);
         }
 
+        if (_moduleResolver?.Language == "typescript")
+        {
+            var occurrenceOrigin = new CodeFactOrigin(_context.RepositoryId, _pluginId, _pluginVersion,
+                _context.IndexRunId, new CodeIndexUnitId("typescript:interface-resolutions"));
+            await WriteChunksAsync(moduleResolution?.OccurrenceEdges ?? [], sink.Limits.MaxEdges,
+                values => new CodeGraphBatch(occurrenceOrigin, edges: values), sink, cancellationToken).ConfigureAwait(false);
+            await sink.WriteBatchAsync(new CodeGraphBatch(occurrenceOrigin, completesIndexUnit: true), cancellationToken).ConfigureAwait(false);
+        }
         foreach (var change in _context.Changes
                      .Where(c => c.Kind == CodeGraphSourceChangeKind.Deleted)
                      .OrderBy(c => c.Path, StringComparer.Ordinal))

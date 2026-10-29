@@ -373,15 +373,15 @@ public sealed class TreeSitterEcmaExportShapeTests
             ("src/main.js", NormalizeLineEndings(javascriptMain)),
             ("src/dep.js", NormalizeLineEndings(javascriptDep)));
 
-        Assert.Equal(9, EcmaScriptExtractionProfile.ProfileRevision);
-        Assert.EndsWith(".p9", new TreeSitterTypeScriptPlugin().Version);
-        Assert.EndsWith(".p9", new TreeSitterJavaScriptPlugin().Version);
+        Assert.Equal(10, EcmaScriptExtractionProfile.ProfileRevision);
+        Assert.EndsWith(".p10", new TreeSitterTypeScriptPlugin().Version);
+        Assert.EndsWith(".p10", new TreeSitterJavaScriptPlugin().Version);
         Assert.Equal((5, 12, 4, 12, 17), (
             typescript.Nodes.Count(node => node.Kind == CodeNodeKinds.Export),
             typescript.Nodes.Count,
             typescript.Declarations.Count,
-            typescript.Edges.Count(edge => edge.Kind != CodeEdgeKinds.Exports),
-            typescript.Edges.Count));
+            typescript.Edges.Count(edge => !edge.Properties.ContainsKey("ec6d.data") && edge.Kind != CodeEdgeKinds.Exports),
+            typescript.Edges.Count(edge => !edge.Properties.ContainsKey("ec6d.data"))));
         Assert.Equal((5, 12, 4, 12, 17), (
             javascript.Nodes.Count(node => node.Kind == CodeNodeKinds.Export),
             javascript.Nodes.Count,
@@ -437,7 +437,7 @@ public sealed class TreeSitterEcmaExportShapeTests
         {
             Nodes = extraction.Nodes.Where(node => node.Kind != CodeNodeKinds.Export).ToArray(),
             extraction.Declarations,
-            Edges = extraction.Edges.Where(edge => edge.Kind != CodeEdgeKinds.Exports).ToArray()
+            Edges = extraction.Edges.Where(edge => !edge.Properties.ContainsKey("ec6d.data") && edge.Kind != CodeEdgeKinds.Exports).ToArray()
         });
         return Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(json)));
     }

@@ -49,7 +49,7 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
     /// 9: publish accepted structural export entries and per-occurrence
     ///    `exports` edges from the internal syntax observations.
     /// </summary>
-    internal const int ProfileRevision = 9;
+    internal const int ProfileRevision = 10;
 
     // Kinds both grammars can emit. `implements` exists only in TypeScript, so
     // JavaScript reports it as not-produced rather than claiming an empty set.
@@ -111,6 +111,8 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
             fileNodeId,
             _providerVersion,
             _result);
+        if (_language == "typescript")
+            EcmaScriptInterfaceFacts.Publish(root, _path, fileNodeId, _providerVersion, _result);
         return _result;
     }
 
@@ -1323,12 +1325,12 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
 
     private static string ExistingFactProviderVersion(string pluginVersion)
     {
-        const string currentRevision = ".p9";
+        const string currentRevision = ".p10";
         const string existingFactRevision = ".p8";
         if (!pluginVersion.EndsWith(currentRevision, StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
-                "The p9 ECMAScript profile requires a p9 plugin version while preserving p8 evidence for existing facts.");
+                "The p10 ECMAScript profile requires a p10 plugin version while preserving p8 evidence for existing facts.");
         }
 
         return string.Concat(pluginVersion.AsSpan(0, pluginVersion.Length - currentRevision.Length), existingFactRevision);

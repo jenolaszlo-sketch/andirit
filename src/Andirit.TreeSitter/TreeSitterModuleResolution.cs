@@ -14,7 +14,7 @@ internal sealed record TreeSitterModuleReference(
 internal sealed record TreeSitterModuleFile(
     string Path,
     CodeNodeId FileNodeId,
-    IReadOnlyList<TreeSitterModuleReference> References);
+    IReadOnlyList<TreeSitterModuleReference> References, IReadOnlyList<CodeGraphEdge>? InterfaceOccurrences = null);
 
 /// <summary>Outcome counters and facts from one plugin-local module pass.</summary>
 internal sealed record TreeSitterModuleResolutionResult(
@@ -25,7 +25,7 @@ internal sealed record TreeSitterModuleResolutionResult(
     int UnresolvedTargets,
     int ExternalTargets,
     int AmbiguousTargets,
-    int UnsupportedTargets);
+    int UnsupportedTargets, IReadOnlyList<CodeGraphEdge>? OccurrenceEdges = null);
 
 /// <summary>Internal seam for a language plugin's module-resolution pass.</summary>
 internal interface ITreeSitterModuleResolver
@@ -134,7 +134,55 @@ internal sealed class EcmaScriptModuleResolver : ITreeSitterModuleResolver
             }
         }
 
-        var orderedEdges = edges.Values
+        // Additive occurrence-exact resolver outcomes include non-resolved references.
+        // The original resolves-to facts above retain their exact identities and bytes.
+        foreach (var file in files.Values)
+        {
+            foreach (var occurrence in file.InterfaceOccurrences ?? [])
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                using var data = System.Text.Json.JsonDocument.Parse(EcmaScriptInterfaceFacts.Text(occurrence, "ec6d.data")!);
+                var root = data.RootElement;
+                var key = root.GetProperty("resolverKey").GetString()!;
+                var span = occurrence.Evidence.Location!;
+                var counterparts = file.References.Where(r => r.Location == span).ToArray();
+                if (counterparts.Length != 1)
+                    throw new InvalidOperationException("An EC-6D occurrence requires exactly one resolver reference.");
+                var reference = counterparts[0];
+                var outcome = ResolveTarget(file.Path, reference.Specifier, files);
+                var payload = System.Text.Json.JsonSerializer.Serialize(new
+                {
+                    // Owner-authorized relevance only; this never becomes binding resolution.
+                    relevanceTarget = occurrence.Kind.Value == "imports-name" &&
+                        root.GetProperty("form").GetString() is "default" or "namespace" or "import-equals" or "dynamic"
+                        ? ResolveTarget(file.Path, root.GetProperty("moduleSpecifier").GetString(), files).Target?.FileNodeId.Value : null,
+                    relevancePolicy = "relative-v1.relevance-only",
+                    resolverKey = key,
+                    sourceFile = file.FileNodeId.Value,
+                    statementSpan = span,
+                    moduleSpecifier = root.GetProperty("moduleSpecifier").GetString(),
+                    referenceForm = root.GetProperty("referenceForm").GetString(),
+                    resolutionStatus = outcome.Kind.ToString().ToLowerInvariant(),
+                    resolvedTarget = outcome.Target?.FileNodeId.Value,
+                    resolutionRule = outcome.Rule,
+                    policy = Policy,
+                    resolverEdgeId = outcome.Kind == OutcomeKind.Resolved
+                        ? CreateEdge(file, outcome.Target!, reference, outcome.Rule!).Id.Value : null
+                });
+                var id = new CodeEdgeId($"{Language}:resolver-status:{key}");
+                var status = new CodeGraphEdge(id, file.FileNodeId, outcome.Target?.FileNodeId ?? file.FileNodeId,
+                    new CodeEdgeKind("resolver-status"),
+                    new CodeEvidence(EvidenceQuality.Structural, Provider, ProviderVersion, span),
+                    new Dictionary<string, CodePropertyValue> { ["ec6d.data"] = new CodeTextProperty(payload) });
+                if (edges.TryGetValue(id.Value, out var previous))
+                {
+                    if (EcmaScriptInterfaceFacts.Text(previous, "ec6d.data") != payload)
+                        throw new InvalidOperationException("Conflicting resolver-status occurrence identity.");
+                }
+                else edges.Add(id.Value, status);
+            }
+        }
+        var orderedEdges = edges.Values.Where(e => e.Kind == CodeEdgeKinds.ResolvesTo)
             .OrderBy(edge => edge.Kind.Value, StringComparer.Ordinal)
             .ThenBy(edge => edge.SourceId.Value, StringComparer.Ordinal)
             .ThenBy(edge => edge.TargetId.Value, StringComparer.Ordinal)
@@ -148,7 +196,7 @@ internal sealed class EcmaScriptModuleResolver : ITreeSitterModuleResolver
             unresolvedTargets,
             externalTargets,
             0,
-            unsupportedTargets);
+            unsupportedTargets, edges.Values.Where(e => e.Kind.Value == "resolver-status").OrderBy(e => e.Id.Value, StringComparer.Ordinal).ToArray());
     }
 
     private ResolutionOutcome ResolveTarget(

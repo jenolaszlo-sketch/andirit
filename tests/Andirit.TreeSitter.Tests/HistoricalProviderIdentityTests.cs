@@ -11,7 +11,7 @@ public sealed class HistoricalProviderIdentityTests
         Assert.Equal("penghou.hetu.tree-sitter.elixir", new TreeSitterElixirPlugin().Id.Value);
         Assert.Equal("penghou.hetu.tree-sitter.ecmascript-module-resolver", EcmaScriptModuleResolver.ResolverProvider);
         Assert.Equal("penghou.hetu.tree-sitter.ecmascript-export-surface", EcmaScriptExportGraphPublisher.Provider);
-        Assert.Equal(9, EcmaScriptExtractionProfile.ProfileRevision);
+        Assert.Equal(10, EcmaScriptExtractionProfile.ProfileRevision);
         Assert.Equal(2, EcmaScriptModuleResolver.ResolverRevision);
         Assert.Equal("relative-v1", EcmaScriptModuleResolver.Policy);
         Assert.Equal("exports1.local-v1", EcmaScriptExportGraphPublisher.ProviderRevision);
