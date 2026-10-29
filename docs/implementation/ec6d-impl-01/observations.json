@@ -1,0 +1,260 @@
+{
+  "recordedDate": "2026-10-30",
+  "timezone": "Asia/Manila",
+  "sourceCommit": "093004e02a3438d3c1eb6a668602da4aef563d6a",
+  "sourceTree": "89767a4d050aa73248c169a0454ec638c4d7d678",
+  "baselineCommit": "fe1a9e37da49064f8cf6ec7fe9bc5ade7cfd7781",
+  "producerOnly": true,
+  "stores": [
+    "InMemoryCodeGraphStore",
+    "LatticeCodeGraphStore"
+  ],
+  "tests": {
+    "baseline": 391,
+    "final": 505,
+    "core": 274,
+    "csharp": 47,
+    "lattice": 27,
+    "treeSitter": 157,
+    "failed": 0,
+    "skipped": 0
+  },
+  "coverage": {
+    "coreLine": 86.22,
+    "coreBranch": 74.66,
+    "csharpLine": 93.63,
+    "csharpBranch": 80.95,
+    "treeSitterLine": 90.01,
+    "treeSitterBranch": 76.07,
+    "latticeLine": 90.49,
+    "latticeBranch": 77.68
+  },
+  "controlled": {
+    "target": {
+      "DeclarationNodeId": {
+        "Value": "typescript:symbol:b51a8ed921fc9cb1fb535663471cbddd30f86c54397ef59d7c24847cd35e37c4"
+      },
+      "DeclarationRecordId": {
+        "Value": "typescript:6eec129b5b77943d1b7f65f8c12f830680b313ae6d3c933530ec78487ed79abc"
+      },
+      "Name": "Renderable",
+      "QualifiedName": "Renderable",
+      "Path": "src/contracts/Renderable.ts",
+      "Span": {
+        "Path": "src/contracts/Renderable.ts",
+        "StartLine": 1,
+        "StartColumn": 8,
+        "EndLine": 3,
+        "EndColumn": 2
+      }
+    },
+    "confirmed": [
+      {
+        "ClassName": "AbstractRenderer",
+        "Path": "src/renderers/AbstractRenderer.ts",
+        "BindingRoute": "import",
+        "TargetDeclarationRecordId": {
+          "Value": "typescript:6eec129b5b77943d1b7f65f8c12f830680b313ae6d3c933530ec78487ed79abc"
+        },
+        "witnessIds": "binding1.local-v1:223e580014ef58b9994737a5ead750e827024177f5dc3a5e49aeec0b60ae25c2"
+      },
+      {
+        "ClassName": "AliasRenderer",
+        "Path": "src/renderers/AliasRenderer.ts",
+        "BindingRoute": "import",
+        "TargetDeclarationRecordId": {
+          "Value": "typescript:6eec129b5b77943d1b7f65f8c12f830680b313ae6d3c933530ec78487ed79abc"
+        },
+        "witnessIds": "binding1.local-v1:472cf36979ffbf9328e65af4ae4e903423fe716a9a0142615f8e07caa4dd7cc1"
+      },
+      {
+        "ClassName": "HtmlRenderer",
+        "Path": "src/renderers/HtmlRenderer.ts",
+        "BindingRoute": "import",
+        "TargetDeclarationRecordId": {
+          "Value": "typescript:6eec129b5b77943d1b7f65f8c12f830680b313ae6d3c933530ec78487ed79abc"
+        },
+        "witnessIds": "binding1.local-v1:f1dbd73c113338a4c88c31d267546bc2902b9aa72fd67fa6579fdc4a8c0ad651"
+      },
+      {
+        "ClassName": "SvgRenderer",
+        "Path": "src/renderers/SvgRenderer.ts",
+        "BindingRoute": "import",
+        "TargetDeclarationRecordId": {
+          "Value": "typescript:6eec129b5b77943d1b7f65f8c12f830680b313ae6d3c933530ec78487ed79abc"
+        },
+        "witnessIds": "binding1.local-v1:f75d8b0c31d20d9cb8082b9c59bf2189bfa6439695b6afbb90e632da83795c52"
+      }
+    ],
+    "possibleModules": [
+      "src/apps/Preview.ts",
+      "src/renderers/AbstractRenderer.ts",
+      "src/renderers/AliasRenderer.ts",
+      "src/renderers/HtmlRenderer.ts",
+      "src/renderers/SvgRenderer.ts"
+    ],
+    "unknowns": [
+      {
+        "SubjectKind": "occurrence",
+        "Reason": "re-export-barrier",
+        "SubjectId": "typescript:ec6d:be300ea1d51a3efd713b5e460b9122d8be43c3b9592d4ae3d6a4d8d33267c7df",
+        "Span": {
+          "Path": "src/apps/BarrelPreview.ts",
+          "StartLine": 1,
+          "StartColumn": 1,
+          "EndLine": 1,
+          "EndColumn": 40
+        }
+      },
+      {
+        "SubjectKind": "occurrence",
+        "Reason": "unresolved-module",
+        "SubjectId": "typescript:ec6d:848c9d94a2e846faeb71785bda011c17ef15caaac6a5bf86cc511a5f32eeb338",
+        "Span": {
+          "Path": "src/apps/MissingImport.ts",
+          "StartLine": 1,
+          "StartColumn": 1,
+          "EndLine": 1,
+          "EndColumn": 56
+        }
+      }
+    ],
+    "qualification": "qualified",
+    "oldFactsPreserved": {
+      "nodes": 64,
+      "declarations": 23,
+      "edges": 99
+    },
+    "newEdgeTotal": 188
+  },
+  "website": {
+    "commit": "f9cca1773a32bb517e624cc380e1f6d14e0cc317",
+    "verifiedBlobs": 78,
+    "oldFactsPreserved": {
+      "nodes": 161,
+      "declarations": 83,
+      "edges": 313
+    },
+    "newEdgeTotal": 451,
+    "interfaces": [
+      {
+        "name": "ProjectRef",
+        "confirmed": 0,
+        "possibleModules": [
+          null
+        ],
+        "unknownReasons": [
+          "heritage-kind-not-supported"
+        ],
+        "qualification": "qualified"
+      },
+      {
+        "name": "NavItem",
+        "confirmed": 0,
+        "possibleModules": [
+          "src/lib/schema.ts"
+        ],
+        "unknownReasons": [
+          null
+        ],
+        "qualification": "qualified"
+      },
+      {
+        "name": "RuntimeLayer",
+        "confirmed": 0,
+        "possibleModules": [
+          null
+        ],
+        "unknownReasons": [
+          null
+        ],
+        "qualification": "qualified"
+      },
+      {
+        "name": "BreadcrumbItem",
+        "confirmed": 0,
+        "possibleModules": [
+          null
+        ],
+        "unknownReasons": [
+          null
+        ],
+        "qualification": "qualified"
+      },
+      {
+        "name": "SupportingPrimitive",
+        "confirmed": 0,
+        "possibleModules": [
+          null
+        ],
+        "unknownReasons": [
+          null
+        ],
+        "qualification": "qualified"
+      },
+      {
+        "name": "ProjectSchemaInput",
+        "confirmed": 0,
+        "possibleModules": [
+          null
+        ],
+        "unknownReasons": [
+          null
+        ],
+        "qualification": "qualified"
+      },
+      {
+        "name": "BlogPostSchemaInput",
+        "confirmed": 0,
+        "possibleModules": [
+          null
+        ],
+        "unknownReasons": [
+          null
+        ],
+        "qualification": "qualified"
+      },
+      {
+        "name": "FounderProfile",
+        "confirmed": 0,
+        "possibleModules": [
+          "src/lib/schema.ts"
+        ],
+        "unknownReasons": [
+          null
+        ],
+        "qualification": "qualified"
+      },
+      {
+        "name": "StatusDefinition",
+        "confirmed": 0,
+        "possibleModules": [
+          null
+        ],
+        "unknownReasons": [
+          null
+        ],
+        "qualification": "qualified"
+      },
+      {
+        "name": "Category",
+        "confirmed": 0,
+        "possibleModules": [
+          null
+        ],
+        "unknownReasons": [
+          null
+        ],
+        "qualification": "qualified"
+      }
+    ]
+  },
+  "oracle": {
+    "compiler": "5.9.3",
+    "q2Cases": 14,
+    "r2Cases": 23,
+    "website": true
+  },
+  "hostedCI": "pending explicit push approval",
+  "releasePublished": false
+}
