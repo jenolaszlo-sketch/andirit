@@ -1,0 +1,96 @@
+HEAD:src/Penghou.Hetu.Abstractions/CodeEvidence.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodeGraphBatch.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodeGraphCapabilities.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodeGraphExtraction.cs:3:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodeGraphFacts.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodeGraphKinds.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodeGraphSource.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodeGraphValidation.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodeIdentities.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodeLocation.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodePluginFailure.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodePropertyKeys.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/CodePropertyValue.cs:3:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/ContractValue.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.Abstractions/Penghou.Hetu.Abstractions.csproj:7:    <PackageId>Penghou.Hetu.Abstractions</PackageId>
+HEAD:src/Penghou.Hetu.Abstractions/Penghou.Hetu.Abstractions.csproj:12:    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-hetu</RepositoryUrl>
+HEAD:src/Penghou.Hetu.CSharp/CSharpCodeGraphPlugin.Compilation.cs:9:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.CSharp/CSharpCodeGraphPlugin.GraphBuilder.cs:9:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.CSharp/CSharpCodeGraphPlugin.PropertyFactory.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.CSharp/CSharpCodeGraphPlugin.Session.cs:9:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.CSharp/CSharpCodeGraphPlugin.Symbols.cs:9:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.CSharp/CSharpCodeGraphPlugin.cs:9:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.CSharp/CSharpProjectDiscovery.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.CSharp/HetuHostBuilderExtensions.cs:4:namespace Penghou.Hetu.CSharp;
+HEAD:src/Penghou.Hetu.CSharp/Penghou.Hetu.CSharp.csproj:18:    <PackageId>Penghou.Hetu.CSharp</PackageId>
+HEAD:src/Penghou.Hetu.CSharp/Penghou.Hetu.CSharp.csproj:23:    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-hetu</RepositoryUrl>
+HEAD:src/Penghou.Hetu.LatticeDb/HetuHostBuilderExtensions.cs:1:namespace Penghou.Hetu.LatticeDb;
+HEAD:src/Penghou.Hetu.LatticeDb/LatticeCodeGraphStore.cs:7:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.LatticeDb/LatticeCodeGraphStore.cs:39:    private const string MetadataLabel = "HetuMetadata";
+HEAD:src/Penghou.Hetu.LatticeDb/LatticeCodeGraphStore.cs:574:                txn.SetProperty(node, "schemaVersion", LatticeValue.From((long)CurrentSchemaVersion));
+HEAD:src/Penghou.Hetu.LatticeDb/LatticeCodeGraphStore.cs:596:        using var query = _database.Prepare($"MATCH (s:{MetadataLabel}) WHERE s.key = $key RETURN s.schemaVersion");
+HEAD:src/Penghou.Hetu.LatticeDb/LatticeDbStoreOptions.cs:1:namespace Penghou.Hetu.LatticeDb;
+HEAD:src/Penghou.Hetu.LatticeDb/NativeGraphMirror.cs:5:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.LatticeDb/Penghou.Hetu.LatticeDb.csproj:16:    <PackageId>Penghou.Hetu.LatticeDb</PackageId>
+HEAD:src/Penghou.Hetu.LatticeDb/Penghou.Hetu.LatticeDb.csproj:21:    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-hetu</RepositoryUrl>
+HEAD:src/Penghou.Hetu.Testing/CodeGraphStoreConformanceReport.cs:1:namespace Penghou.Hetu.Testing;
+HEAD:src/Penghou.Hetu.Testing/CodeGraphStoreConformanceSuite.cs:1:namespace Penghou.Hetu.Testing;
+HEAD:src/Penghou.Hetu.Testing/ICodeGraphStoreFixture.cs:1:namespace Penghou.Hetu.Testing;
+HEAD:src/Penghou.Hetu.Testing/Penghou.Hetu.Testing.csproj:12:    <PackageId>Penghou.Hetu.Testing</PackageId>
+HEAD:src/Penghou.Hetu.Testing/Penghou.Hetu.Testing.csproj:17:    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-hetu</RepositoryUrl>
+HEAD:src/Penghou.Hetu.TreeSitter/EcmaScriptExportGraphPublisher.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/EcmaScriptExportGraphPublisher.cs:15:    internal const string ProviderRevision = "exports1.local-v1";
+HEAD:src/Penghou.Hetu.TreeSitter/EcmaScriptExportObservation.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/EcmaScriptExtractionProfile.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/EcmaScriptExtractionProfile.cs:92:        // old publications. Export edges derive their own exports1 provider version.
+HEAD:src/Penghou.Hetu.TreeSitter/ElixirExtractionProfile.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/HetuHostBuilderExtensions.cs:3:namespace Penghou.Hetu.TreeSitter;
+HEAD:src/Penghou.Hetu.TreeSitter/Penghou.Hetu.TreeSitter.csproj:16:    <PackageId>Penghou.Hetu.TreeSitter</PackageId>
+HEAD:src/Penghou.Hetu.TreeSitter/Penghou.Hetu.TreeSitter.csproj:21:    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-hetu</RepositoryUrl>
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterElixirPlugin.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterExtraction.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterExtractionSession.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterGrammarDescriptor.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterGrammarRegistry.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterJavaScriptPlugin.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterModuleResolution.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterNative.cs:3:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterPluginSupport.cs:3:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterSessionParser.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterSyntax.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu.TreeSitter/TreeSitterTypeScriptPlugin.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeFreshness.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeGraphBatchValidator.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeGraphIngestionSink.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeGraphPluginRegistry.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeGraphPublicationChangedException.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeGraphPublicationQuery.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeGraphQueryService.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeGraphStoreException.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeGraphStoreModels.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeGraphTraversalPresets.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeIndexIdentity.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeIndexPlanner.cs:3:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeIndexUnitOwner.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeIndexingLifecycle.cs:6:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeJsonConverters.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeLanguageProviderMap.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodePublicationSnapshot.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodePublicationSnapshot.cs:40:    public required string IntegrityHash { get; init; }
+HEAD:src/Penghou.Hetu/CodePublicationSnapshot.cs:86:            IntegrityHash = string.Empty
+HEAD:src/Penghou.Hetu/CodePublicationSnapshot.cs:89:        return snapshot with { IntegrityHash = Hash(payload) };
+HEAD:src/Penghou.Hetu/CodePublicationSnapshot.cs:171:        if (!string.Equals(Hash(payload), IntegrityHash, StringComparison.OrdinalIgnoreCase))
+HEAD:src/Penghou.Hetu/CodePublicationSnapshot.cs:195:            this with { IntegrityHash = string.Empty },
+HEAD:src/Penghou.Hetu/CodeQueryOperations.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeRepositoryProviderRegistry.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeRepositorySource.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/CodeSourceManifest.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/DurableCommandLog.cs:4:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/GraphFactEquality.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/HetuHealth.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/HetuHost.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/ICodeGraphStore.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/InMemoryCodeGraphStore.cs:1:namespace Penghou.Hetu;
+HEAD:src/Penghou.Hetu/Penghou.Hetu.csproj:11:    <PackageId>Penghou.Hetu</PackageId>
+HEAD:src/Penghou.Hetu/Penghou.Hetu.csproj:16:    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-hetu</RepositoryUrl>
+HEAD:src/Penghou.Hetu/PluginSourceKey.cs:1:namespace Penghou.Hetu;
