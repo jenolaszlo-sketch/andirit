@@ -110,6 +110,30 @@ interpret coverage without treating missing facts as proof of absence. Runtime
 improvements require their own implementation and validation work; they are not
 checked off by this documentation change.
 
+## Agent-oriented consumers and TypeScript/JavaScript symbol intelligence
+
+The broader [agent-oriented code intelligence and dependency roadmap](agent-code-intelligence-roadmap.md)
+prioritizes Find Usages, call hierarchy, change impact, refactoring preflight,
+NuGet/external assembly consumption and future npm/workspace dependency
+intelligence as **candidate consumer capabilities**, not implemented language
+support.
+
+EC-6D's accepted, bounded TypeScript interface/import query remains an
+implementation and independent-qualification gate; R16 intended-consumer
+validation is outstanding. Only after that foundation should a separate
+**CI-2** scope consider resolved TypeScript/JavaScript method calls and
+references. Current `invokes-name` observations, policy-scoped module-file
+`resolves-to` edges and positive-only export entries do **not** prove a
+callee or imported declaration. Aliases, shadowing, dynamic import/invocation,
+ambiguous exports, incomplete package-resolution policy and absent source
+coverage must fail closed.
+
+Future **DI-3** npm/workspace support must distinguish written manifests,
+lockfile/manager resolution and actual symbol binding, with per-policy
+qualifications; it does not require third-party implementation source. This
+proposed direction does not change Phase 0, add a language plugin, or authorize
+EC-6D/CI-2/DI-3 implementation.
+
 ## Deferred candidates
 
 The uncommitted candidate backlog is PHP, C++, C, Swift, Ruby, Dart, and Scala.

@@ -672,6 +672,47 @@ storage schemas, catalog loading/persistence, runtime capability changes,
 extractor refactoring, or a new test framework. Generated plugins remain reserved
 future work, not a prerequisite or a newly delivered capability.
 
+## Agent-oriented code intelligence and external dependencies (proposed)
+
+**Product direction:** build a local-first, ReSharper-like **read-only semantic
+index optimized for coding agents**. One evidence-backed query should replace
+repeated `rg` / file-open / project-manifest searches wherever the graph has
+the relevant facts. Agents perform edits; Andirit supplies bounded, verifiable
+usages, dependency paths, impact candidates and follow-up context.
+
+The detailed backlog, proposed query surface, package/assembly evidence rules,
+consumer acceptance and performance hypotheses live in the
+[agent-oriented code intelligence and dependency roadmap](docs/agent-code-intelligence-roadmap.md).
+
+| Candidate | Agent-oriented outcome |
+| --- | --- |
+| **CI-1** | C# Find Usages, call hierarchy and bounded change/blast-radius explanation; extend existing Roslyn `calls`, `references` and impact queries to individual supported source occurrences |
+| **DI-1** | NuGet declared versus evaluated/resolved, direct versus transitive dependencies per project/TFM/RID, versions and inclusion paths |
+| **DI-2** | External .NET public assembly/type/member metadata joined to source usages and exact package ownership, without indexing vendor implementation source |
+| **CI-2** | Conservative TypeScript/JavaScript resolved calls and references after accepted EC-6D symbol/import binding |
+| **RF-1** | Read-only rename/move/delete/signature preflight, publication-bound graph diff and post-edit verification |
+| **TI-1** | Candidate test impact, distinguishing existing narrow `exercised-by` proof from inferred test relevance |
+| **DI-3 / DI-4** | npm/workspace dependencies, and package API/version upgrade impact |
+| **DF-1** | Bounded value origin/data-flow queries when justified by consumer evidence |
+
+The baseline already provides **C#** resolved calls/references, call and impact
+traversals, syntax-level `PackageReference` nodes, and a narrow `exercised-by`
+test link. It does **not** provide evaluated NuGet restore resolution, full
+individual usage occurrences, external package API-to-source binding, or
+TS/JS resolved calls. EC-6D's bounded TypeScript interface query remains
+unimplemented with R16 consumer validation outstanding.
+
+**Sequence:** complete EC6D-R16, then separately authorized EC-6D implementation
+and independent qualification; prioritize CI-1 and DI-1 against real coding-agent
+questions, with DI-2 supplying source-to-external-package API usage. Candidate
+IDs are *backlog labels*, not approved milestones or implementation permission.
+
+Success means **fewer total agent tool calls, fewer unnecessary tokens, and
+faster useful answers**, measured against realistic shell/file-inspection
+workflows including cold/incremental index costs and accuracy, not hypothetical
+query-only speedups. Stale, omitted, unsupported and unverified relationships
+must remain explicit; an empty query does not establish refactoring safety.
+
 ## Later opportunities
 
 ### Deterministic architectural analysis
