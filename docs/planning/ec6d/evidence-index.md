@@ -1,5 +1,19 @@
 # EC-6D planning: evidence index
 
+**Owner-01 update:** Q3 final review is authenticated at
+`f3de16ffd04015f345fcdd65e8ca996fdb19555d` / tree
+`77b5eacf2fdfea8be9f41be10da11c074be566ba`; the corrected contract
+baseline is `cc65338f50e585d78c3a1fa8e06d02c184a10451` / tree
+`9940965196b35488258501e9513ec1d8025d4007`. See the
+[owner record](../../decisions/ec6d-owner-01-contract-acceptance.md),
+[findings closure](owner-01-findings-closure.md),
+[validation commands](owner-01-validation.md),
+[mechanical results](analysis/owner-01-validation.json), and
+[integration handoff](owner-01-integration-handoff.md).
+The earlier prerequisite-status text below records R2's historical state;
+Q3 and planning owner decisions are completed, R16 and downstream gates
+remain open, and production implementation remains unauthorized.
+
 **R2 revision.** This index supersedes the R1 version at commit `0e1b213`
 (additions marked; historical entries preserved). It lists the evidence for
 the recovered original packet, the R1 remediation and the R2 repairs. No

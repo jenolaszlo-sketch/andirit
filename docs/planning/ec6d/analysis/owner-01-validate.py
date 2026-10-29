@@ -140,6 +140,13 @@ for mode in [[], ['--cached']]:
 snapshot = json.loads((ROOT / PREFIX / 'analysis/owner-01-preflight.json').read_text(encoding='utf-8-sig'))
 refs = git('show-ref').decode().splitlines()
 check('all pre-existing mirror refs unchanged', all(ref in refs for ref in snapshot['refs']))
+extra_refs = [ref for ref in refs if ref not in snapshot['refs']]
+check('only acceptance branch added to mirror', len(extra_refs) == 1 and
+      extra_refs[0].endswith(' refs/heads/acceptance/hetu-ec6d-owner-01'))
+before_blocks = '\n'.join(snapshot['worktrees']).strip().split('\n\n')
+after_blocks = git('worktree', 'list', '--porcelain').decode().strip().split('\n\n')
+check('protected mirror worktree identities/inventory unchanged',
+      all(block in after_blocks for block in before_blocks) and len(after_blocks) == len(before_blocks) + 1)
 for entry in snapshot['states']:
     path = entry['path']
     status = git('-C', path, 'status', '--porcelain=v1', '--untracked-files=all').decode().splitlines()
@@ -169,6 +176,21 @@ if args.contracts:
                  'acceptance-contract.md', 'scope-proposal.md']:
         check('accepted contract unchanged since corrected commit: ' + name,
               git('show', f'{args.contracts}:{PREFIX}{name}').decode().replace('\r\n', '\n') == current(name))
+if record.exists():
+    decision = record.read_text(encoding='utf-8')
+    check('three explicit owner decisions and authority', all(text in decision for text in [
+        'explicit owner instruction', 'ADR-1: ACCEPT OPTION A',
+        'ADR-2: ACCEPT QUALIFIED RESULTS WITH MANDATORY SAFEGUARDS',
+        'ADR-3: AUTHORIZE NARROW EC-6D IMPORT/EXPORT ATTRIBUTION ACROSS THE TRACK B DEFERRAL']))
+    check('inherited qualifications and authorization limits explicit', all(text in decision for text in [
+        'R16 remains OPEN', 'WSL2 is not native Linux', 'FQ1-EV-1', 'QN-1',
+        'performance NOT EVALUATED', 'no new facts/query implementation',
+        'does not authorize production', 'ACCEPT WITH QUALIFICATIONS']))
+    canonical = ROOT / PREFIX / 'analysis/owner-01-canonical-validation.json'
+    canonical_report = json.loads(canonical.read_text(encoding='utf-8-sig'))
+    check('separate canonical verification report', canonical_report['result'] == 'PASS' and
+          canonical_report['refsUnchanged'] and canonical_report['worktreeInventoryUnchanged'] and
+          len(canonical_report['worktrees']) == 25 and canonical_report['q3ObjectAbsent'])
 report = {'milestone': 'EC6D-OWNER-01', 'result': 'PASS', 'contracts': contracts,
           'checks': checks, 'commands': commands,
           'limits': ['documentation/provenance verification only', 'no oracle or production tests rerun',

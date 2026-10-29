@@ -1,5 +1,13 @@
 # EC-6D publication policy decision proposal (ADR-2, EC6D-PLAN-R2)
 
+**Owner-01 update:** Design 2, qualified results with all mandatory
+safeguards, is accepted under the
+[owner record §E](../../decisions/ec6d-owner-01-contract-acceptance.md#e-owner-architecture-decisions),
+bound to corrected contract commit `cc65338f50e585d78c3a1fa8e06d02c184a10451`.
+The checked consistent-only authority path remains required. The proposal
+and blank template below remain historical rationale; the completed decision
+is the owner record. No production implementation is authorized.
+
 **Status: proposal for owner decision. Not approved.** No implementation may
 be inferred while this decision is unresolved. It authorizes nothing.
 

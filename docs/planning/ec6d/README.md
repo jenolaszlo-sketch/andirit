@@ -1,5 +1,18 @@
 # EC-6D consumer-intelligence planning
 
+**Current disposition — EC6D-OWNER-01: ACCEPT WITH QUALIFICATIONS.**
+The [owner acceptance record](../../decisions/ec6d-owner-01-contract-acceptance.md)
+binds the corrected contracts at `cc65338f50e585d78c3a1fa8e06d02c184a10451`
+/ tree `9940965196b35488258501e9513ec1d8025d4007`, closes Q3-F01..F05
+and records ADR-1 Option A, ADR-2 qualified results with safeguards and
+ADR-3 narrow attribution authority. [Closure/audit](owner-01-findings-closure.md),
+[validation](owner-01-validation.md), and the
+[HETU-INT-01 handoff](owner-01-integration-handoff.md) are the current entry
+points. The R2 status and proposal language below describe their historical
+authorship state; the owner record supplies current decision status.
+R16 and all inherited qualifications remain open. No implementation,
+integration, rename, publication or release is authorized.
+
 **EC6D-PLAN-R2 status: remediation complete; ready for focused Q3
 verification after the owner decisions listed below are prepared (not yet
 approved).** The recovered EC6D-PLAN-01 packet (commit `91a3ed5`) and the R1

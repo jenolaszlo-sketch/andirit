@@ -1,5 +1,19 @@
 # EC-6D planning: EC-6C integration readiness
 
+**Owner-01 update:** [Planning acceptance](../../decisions/ec6d-owner-01-contract-acceptance.md)
+is complete with qualifications against corrected contract commit
+`cc65338f50e585d78c3a1fa8e06d02c184a10451` / tree
+`9940965196b35488258501e9513ec1d8025d4007`. R2 prerequisite items 1–4
+(contract disposition, ADR-1/2, narrow authority, Q3 verification) are
+satisfied for planning. Item 6, R16, remains open before implementation
+authorization. The owner-directed sequence is now HETU-INT-01, then
+ANDIRIT-RENAME-01, then EC6D-IMPL-01 on the accepted renamed baseline;
+the earlier observation that implementation did not technically require
+integration first is not authorization to bypass this sequence. Integration,
+implementation, migration and release still need separate authorization.
+Use the [immutable handoff](owner-01-integration-handoff.md); all earlier
+qualification and compatibility requirements below remain in force.
+
 **Disposition: READY WITH QUALIFICATIONS**
 
 This is a readiness assessment only. It does not authorize integration. The
