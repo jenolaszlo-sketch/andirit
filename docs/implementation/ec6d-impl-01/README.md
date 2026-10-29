@@ -8,7 +8,7 @@ The controlled corpus returns exactly four confirmed implementations, five
 possible consumer modules, and both required occurrence unknowns. Producer
 validation uses Windows, both stores, authentic p9 durable seeds, and the
 pinned website. This packet does not issue independent acceptance or authorize
-release. Hosted CI and remote synchronization are pending explicit push approval.
+release. Hosted Windows, Ubuntu, macOS and package/native-consumer CI passed on evidence commit `97c81b784a8b068904c8bfa78df3ab937d5d1a29`; main was synchronized by the user-approved normal push. See [CI qualification](ci.md).
 
 ## Evidence index
 
@@ -23,6 +23,8 @@ release. Hosted CI and remote synchronization are pending explicit push approval
 - [Regression commands and results](regression.md)
 - [Independent reproduction instructions](qualification-handoff.md)
 - [Producer handoff](final-handoff.md)
+- [Hosted CI](ci.md)
+- [Git binding](git-binding.md)
 - [Machine-readable producer observations](observations.json)
 
 The accepted owner disposition and five historical contracts remain unchanged.

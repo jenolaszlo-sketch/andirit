@@ -1,9 +1,8 @@
 # EC6D-IMPL-01 producer handoff
 
-**EC6D-IMPL-01 PARTIAL: QUALIFICATIONS OR IMPLEMENTATION GAPS REMAIN**
+**EC6D-IMPL-01 IMPLEMENTED: READY FOR INDEPENDENT QUALIFICATION**
 
-This disposition currently reflects pending hosted CI and remote synchronization,
-not a claim of independent acceptance. The exact source is 093004e02a3438d3c1eb6a668602da4aef563d6a,
+Producer implementation and its required hosted qualification have passed. This does not issue independent acceptance. The exact source is 093004e02a3438d3c1eb6a668602da4aef563d6a,
 tree 89767a4d050aa73248c169a0454ec638c4d7d678. Evidence is committed separately; its eventual containing
 commit is resolved after creation and never cited as its own future hash.
 
@@ -12,10 +11,7 @@ commit is resolved after creation and never cited as its own future hash.
 `jenolaszlo-sketch/andirit`, canonical `D:/projects/Andirit`, main. Baseline
 `fe1a9e37da49064f8cf6ec7fe9bc5ade7cfd7781` / tree
 `181d232646248d62fcf3b43b58ec057e8daef392`. One checkout, no linked worktrees.
-Recoverable all-ref bundle verified externally. Implementation commits and
-final local/remote state are resolved in the final Git binding after evidence
-commits exist. Push requires explicit approval after automatic review rejected
-a direct main push; that rejection has not been bypassed.
+Recoverable all-ref bundle verified externally. Implementation/evidence bindings are recorded in [git-binding.md](git-binding.md). The user explicitly approved the normal main push and subsequent evidence-only CI/handoff updates after the initial automatic-review rejection.
 
 ## B. Production implementation
 
@@ -71,12 +67,11 @@ explanation in website-regression.md. Repeat and reopen are deterministic.
 
 Final local suite: 505 passed, zero failed/skipped. All existing coverage gates
 pass unchanged. Release build/format/whitespace and local package/native
-consumer checks pass. Hosted final-commit CI is pending push approval.
+consumer checks pass. Hosted Windows/Ubuntu/macOS and package/native-consumer CI passed on the exact implementation/evidence commit `97c81b784a8b068904c8bfa78df3ab937d5d1a29`. The containing evidence-only commit is checked again after creation.
 
 ## J. Qualifications
 
-Hosted Ubuntu/macOS/Windows and package CI have not yet validated this commit.
-Independent qualification remains open. Performance, representative scale,
+The exact implementation/evidence commit passed hosted Windows, Ubuntu, macOS and package CI. Independent qualification remains open. Performance, representative scale,
 operational/deployment readiness and the historical unreproducible EC-6C hash
 remain qualified. No release or package was published.
 

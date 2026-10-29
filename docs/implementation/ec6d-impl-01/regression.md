@@ -39,8 +39,13 @@ Q2 and R2 oracle commands used the recorded TypeScript 5.9.3 compiler from
 the website installation, read-only, with committed oracle scripts. The
 website oracle also ran on the verified snapshot. Outputs are external.
 
-Hosted Windows/Ubuntu/macOS and package/native-consumer CI are pending push
-approval. No historical CI run is presented as validation of this source.
-The rejected push was not bypassed. Final source/evidence and CI bindings are
-resolved after commits exist and recorded in the final producer handoff.
+Hosted Windows, Ubuntu, macOS and package/native-consumer CI passed on exact
+implementation/evidence commit `97c81b784a8b068904c8bfa78df3ab937d5d1a29`:
+[run 40955264718](https://github.com/jenolaszlo-sketch/andirit/actions/runs/40955264718).
+Every platform passed 274 core + 47 CSharp + 157 TreeSitter + 27 LatticeDB
+tests, zero failures/skips, and all unchanged coverage gates. See ci.md.
+The user explicitly approved the normal main push and evidence-only follow-ups;
+the initial automatic-review rejection was resolved by that approval.
+The final evidence-only commit's own CI is verified after it exists and its
+exact binding is reported in the final handoff, not borrowed from this run.
 No representative performance/operational readiness claim is made.
