@@ -40,4 +40,4 @@ No CLASS 4 unrelated unfinished work or CLASS 5 dirty/inaccessible checkout was 
 
 For every row, exact common Git directory, full status, ignored paths, locks and unique commit count relative to starting main are recorded in [raw per-checkout inventory](raw/worktrees-before.json). Every historical HEAD has an explicit branch in [canonical](raw/canonical-refs-before.txt) or [mirror](raw/mirror-refs-before.txt), plus a verified bundle. Required tracked evidence is integrated or archived; build artifacts are reproducible. The ignored EC-6B restore trace was additionally preserved externally. No evidence depends on keeping any linked checkout after qualified removal.
 
-After inventory and blockers will be recorded in [retirement](worktree-retirement.md).
+After: canonical repository has one primary working checkout on main and zero linked checkouts. The bare mirror has zero linked working checkouts. All 30 additional checkouts were removed; none retained or blocked. [Exact after inventory and per-removal journal](worktree-retirement.md).

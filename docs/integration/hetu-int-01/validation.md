@@ -39,4 +39,6 @@ Consumer canonical hash `631c0ab3960790d714f824259cede7e7da89c3fc930f410b109c8cc
 
 CI safety: `ci.yml` runs build/test/format/pack on main pushes, without publishing. `publish.yml` triggers only `v*` tags or manual dispatch. Benchmarks are manual. No workflow changed, package was published, release was created, or tag was pushed. Branch metadata showed main unprotected and rulesets empty; no required protection was bypassed.
 
-Remote main advancement and observed CI status will be appended after the validated evidence commit. Local test success is not remote CI success.
+Remote integration CI **passed** for exact main `4aadf0e659e3e536e12c4eb64214a9796f4b323b`: [run 40799525098](https://github.com/jenolaszlo-sketch/penghou-hetu/actions/runs/40799525098). Observed jobs: pack, test (windows-latest), test (ubuntu-latest), test (macos-latest), all success. [Bound CI result](raw/ci-integration.json). These native hosted regression runs do not replace the Windows-focused independent qualification or establish native Linux/macOS migration qualification.
+
+Final retirement/evidence changes are documentation and evidence only. The final handoff separately reports the follow-up documentation push's CI state. Post-retirement connectivity checks passed in both repositories; new evidence hashes/links and final staged whitespace are verified before committing.

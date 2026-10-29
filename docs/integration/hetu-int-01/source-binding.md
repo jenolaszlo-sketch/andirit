@@ -28,3 +28,5 @@ Review merge Q1: `4b9b4be747d365bd170a50bfc14c410a8317aa96`, tree `320726b18a690
 Review merge Q2 / tested history candidate: `5548bf4a870733341a1471eb26a9727192dc9f48`, tree `2cd2ca748fad48c0057ddbe5a2864320d4dacf57`.
 
 See [all exact worktree and branch bindings](raw/worktrees-before.json), [canonical original refs](raw/canonical-refs-before.txt), [mirror original refs](raw/mirror-refs-before.txt), and [integration ancestry](raw/integration-ancestry.txt). These files bind original observations rather than reconstructing historical reports.
+
+Canonical main was advanced by fast-forward, then normally pushed as `4aadf0e659e3e536e12c4eb64214a9796f4b323b`, tree `16947409d9d567c24bd78240c0ee794a88818f33`. Live remote verification matched. This immutable commit contains the complete implementation/planning/review integration and passing local evidence. Its [CI run](https://github.com/jenolaszlo-sketch/penghou-hetu/actions/runs/40799525098) completed successfully. The final retirement record is a subsequent documentation-only main commit, whose exact hash/tree is recorded in the final handoff rather than self-referenced inside its own tree.

@@ -1,8 +1,8 @@
 # HETU-INT-01: accepted history integration and consolidation
 
-Date: 2026-10-29 (Asia/Manila). **Local gates passed; canonical advancement and retirement pending.**
+Date: 2026-10-29 (Asia/Manila). **HETU-INT-01 COMPLETE: INTEGRATED AND CONSOLIDATED.**
 
-The authenticated EC-6B/EC-6C implementation and accepted EC-6D owner contracts are assembled on the existing canonical checkout's temporary integration branch. Original Q1 and superseding Q2 review histories were merged normally, without conflicts or production changes. This milestone implements no EC-6D feature.
+The authenticated EC-6B/EC-6C implementation and accepted EC-6D owner contracts are integrated into canonical main. The temporary integration branch has been retired. Original Q1 and superseding Q2 review histories were merged normally, without conflicts or production changes. This milestone implements no EC-6D feature.
 
 | Record | Contents |
 |---|---|
@@ -23,3 +23,5 @@ These are fresh integration observations, except where explicitly labeled inheri
 Verify hashes and local Markdown links: `python docs/integration/hetu-int-01/tools/check_evidence.py`.
 
 The next milestone is **ANDIRIT-RENAME-01: Controlled Hetu → Andirit Rename**. R16 intended-consumer validation remains open before EC-6D implementation authorization.
+
+All 388 tests, durable direct/staged migration rehearsals, coverage and package smoke checks passed. Integration CI passed on Windows, Ubuntu and macOS. All 30 additional linked worktrees were removed without blockers; one canonical checkout remains on main. See [post-integration binding](raw/post-integration-binding.json) and [retirement journal](raw/retirement-results.json). The final documentation-only commit and exact rename baseline are supplied in the final handoff.
