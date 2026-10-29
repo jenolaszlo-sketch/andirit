@@ -6,7 +6,8 @@
 | --- | --- |
 | Repository | `https://github.com/jenolaszlo-sketch/andirit` (canonical checkout `D:\projects\Andirit`) |
 | Baseline commit / tree | `be85ac6b89399095491fb8adb50fa1f247faba9d` / `d5018a52d21523d4ab6ad65541d97517a5a5f27c` |
-| Evidence commit / tree | this document's containing commit; exact hash/tree recorded in the follow-up binding update and the R16 completion report (a document cannot cite its own future hash) |
+| Evidence commit / tree | `290ec6ec75cdc025dd1ef21684d6630ee9982168` / `494a5bc78a470611ba3630ed12887a62fda623d4` (parent `36ab318273970b929fbbb9bc74cbe624a1835a98`; rebased onto the concurrent docs-only roadmap commits that arrived on `origin/main` during the milestone, then pushed without force) |
+| Binding update (this document's own commit) | recorded in the R16 completion report; a document cannot cite its own future hash |
 | Remote | `origin` = the canonical repository above; `main` pushed normally (no force), local/remote verified equal after the final binding update |
 | Worktrees | exactly one (canonical); no linked worktrees created |
 | Working tree | clean before, at baseline; final clean state verified before push |
