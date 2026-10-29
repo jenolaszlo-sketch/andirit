@@ -365,6 +365,17 @@ same-file proof has **no import, resolution, export or attribution steps**,
 and the referenced interface **need not be exported**. The result records
 `bindingRoute = same-file` with exactly those witness steps.
 
+If the unique eligible module-scope record `D` instead belongs to a
+**different declaration** (including a const/field/alias or another kind),
+omit this candidate from the queried target's result: neither confirmed nor
+unknown for this target, as on the import route (§3.4 step 4). Mere same-file
+presence never proves identity. This disposition applies only after the
+§3.2 gates: multiple physical records still yield
+`ambiguous-local-declaration`; a same-name declaration in another scope is
+not a module-scope candidate (§3.3); nested or otherwise unsupported lexical
+contexts retain their gate reason. The positive short proof is unchanged.
+(EC6D-OWNER-01 / Q3-F03.)
+
 ### 3.6 Evidence classification and witness identity
 
 - Confirmed import bindings carry a **versioned query-derived witness**

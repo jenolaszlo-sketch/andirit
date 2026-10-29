@@ -32,6 +32,14 @@ query with its own result type, exposed additively and opt-in.
   A, B, C and E (the EC-6D provider set, one publication). Non-interface or
   unknown nodes, and publications without the provider set, are **input
   errors**, not empty results.
+- An existing interface node with merged/ambiguous physical declarations
+  is still valid query input. Its `target.declarationRecordId` is `null`
+  (unresolved); do not select a record by order. Import chains into an
+  entry with `ambiguous-declarations` return `ambiguous-export` with all
+  contributor ids and no confirmation (acceptance A24). This is ordinary
+  ambiguity, not an input error or an integrity failure. A unique target
+  physical record remains mandatory for confirmation. (EC6D-OWNER-01 /
+  Q3-F04.)
 - Every join reads facts from exactly one publication; mixed-fact
   inconsistency is handled per §5.
 
@@ -98,16 +106,51 @@ match globally on the target's written name alone.
 
 **Candidate relationships** for the target:
 
-- *Heritage candidates:* heritage context records (fact C) whose
-  `writtenForm = simple` and written name ∈ A2, plus qualified/expression/
-  extends records whose `terminalIdentifier` ∈ A2 (reported through the
-  §3.4 reasons for their kind; relevance via terminal identifier may
-  over-report unknowns and never confirms).
-- *Import bindings:* fact A occurrences (form `named`/`named-aliased`) with
-  `importedName ∈ A2`; the local name links the occurrence to the file's
-  heritage candidates with that written name.
+- *Associated import occurrences:* compute `I` from fact A occurrences
+  with `form ∈ {named, named-aliased}` and `importedName ∈ A2` before
+  selecting simple heritage candidates. For each file `F`, let `L(F)` be
+  the non-null local names of those occurrences whose `sourceFile = F`.
+- *Heritage candidates:* the explicit union of (a) fact C records with
+  `writtenForm = simple` and written name ∈ A2 and (b) fact C records with
+  `writtenForm = simple` and written name ∈ L(sourceFile). Branch (b)
+  reaches `Public as Alias` even when `Alias ∉ A2` (A02). Also retain
+  qualified/expression records whose `terminalIdentifier ∈ A2` and
+  extends records selected by the same relevant-name predicates; these
+  are subject to the existing gate order and never confirm. Terminal
+  identifier matching remains relevance evidence only. (EC6D-OWNER-01 /
+  Q3-F05.)
+- *Import bindings:* occurrences in `I` link only to candidates in the
+  same source file with that occurrence's local written name. Discovery
+  does not choose a binding: evaluate the symbol contract §3.2 gates over
+  **all** bindings for `H`, including ineligible forms, duplicates and
+  conflicting module-scope declarations, then §3.4 or §3.5 in order.
 - *Same-file candidates:* heritage candidates in the target's own file per
   symbol contract §3.5.
+
+Combine these sources before classification. A fact C occurrence reached
+by several names, imports or union branches is one candidate keyed by its
+stored context-record identity; retain all discovery origins (branch,
+associated name, import occurrence id, export-entry/attribution or fact E
+clause ids as applicable) as provenance, without manufacturing new binding
+witnesses. Distinct physical occurrences remain distinct, even with equal
+text or endpoints. Repeated discovery neither multiplies a classified
+relationship nor removes competing declarations/imports. Charge actual
+scans before deduplication (§5), and order results/deduplicate witnesses
+only as specified in §4.
+
+Only simple module-scope class-implements candidates passing every binding
+gate and a complete identity proof may confirm. Qualified, expression,
+extends, nested and other unsupported contexts contribute their prescribed
+unknowns and structured coverage; absent fact C on an otherwise observed
+heritage occurrence retains `binding-context-unavailable`. Candidate
+membership alone never establishes declaration identity. A2's one-hop
+fact E associations may add relevance/unknowns only: they cannot bypass a
+re-export barrier or substitute for a direct proof. Follow no additional
+alias hops. Exclude paths with no stored association, and omit completed
+proofs to another declaration (§3.1); A27's unrelated paths remain absent.
+Unsupported sites remain in the fact inventory/coverage even outside this
+target's candidate set; §6 discloses the not-evaluated frontier. Target-star
+barrel occurrences retain the separate occurrence-level rule below.
 
 **Occurrence-level unknowns (no heritage clause required):** every fact A
 occurrence with `importedName ∈ A2` (or from a target-star-barrel) that is
@@ -135,13 +178,13 @@ emits the reason and a committed fixture or declared synthetic condition.
 | `unresolved-heritage-name` | heritage | no import or module-scope declaration supplies the written name | `wrong-export` |
 | `nested-scope-heritage` | heritage | clause owner is not module-scope | `nested-shadow` |
 | `type-parameter-shadowing` | heritage | owner declares a type parameter named `H` | `fixtures/adversarial` `TypeParam` |
-| `ambient-or-global-context` | heritage | owner is ambient or the file is not a module | r2 `ambient-script` / `ambient-export` |
+| `ambient-or-global-context` | heritage | fact C shows ownerAmbient = true or fileModuleContext ≠ module, after recovered-syntax gate | r2 `ambient-script`; ambient owner via fact C (A26); not r2 `ambient-export` |
 | `recovered-heritage-syntax` | heritage | clause or owner touches recovered/error syntax | r2 `recovered-clause` |
 | `binding-context-unavailable` | heritage | heritage occurrence has no fact C record | synthetic publication (store-level, A21) |
 | `qualified-heritage-unresolved` | heritage | qualified written name with terminal identifier ∈ A2; p9 emits no edge for it | `unsupported` (`NS.Widget`) |
 | `unsupported-heritage-form` | heritage | expression heritage with terminal identifier ∈ A2 | r2 `expression-heritage` |
 | `heritage-kind-not-supported` | heritage | `class-extends`/`interface-extends` clause naming the target; transitive impact stays excluded | r2 `interface-extends` |
-| `unsupported-import-form` | heritage | a default/namespace/import-equals/dynamic import introduces `H` | `unsupported` (`DefaultWidget`) |
+| `unsupported-import-form` | heritage | §3.2 gate 9: fact A default/namespace/import-equals/dynamic import introduces H; OR §3.4 step 1: the single eligible named/named-aliased occurrence has same-publication resolver resolutionStatus = unsupported | `unsupported` (`DefaultWidget`); r2 `forms-import-equals`; synthetic unsupported resolver counterpart (A12) |
 | `duplicate-local-name` | heritage | more than one eligible import occurrence introduces `H` | `duplicate-imports` |
 | `conflicting-local-binding` | heritage | one eligible import and ≥1 module-scope declaration share `H` | `collision` |
 | `ambiguous-local-declaration` | heritage | ≥2 module-scope physical declarations share `H`, no import | r2 `same-file-merged` |
@@ -160,6 +203,21 @@ Unknowns are never silently dropped and never rendered as confirmed or
 possible results. `re-export-barrier` unknowns list the contributing fact E
 records as separate witnesses (never first-wins).
 
+For these two corrected rows, evidence is the stored fact C context or
+fact A occurrence plus its resolver counterpart, with ids, spans, source
+hash/unit and publication. Precedence is unchanged: symbol §3.2 gates run
+first, then the selected route. Recovered syntax precedes ambient/global;
+an ineligible import form precedes duplicate/conflict gates; an eligible
+occurrence reaches the resolver-status path only after those gates pass.
+An ambient exported *target declaration* with an ordinary non-ambient
+consumer reaches fact B `ineligible-declaration-context` and emits
+`ineligible-declaration` (r2 `ambient-export`, A26), not the context reason.
+Resolver `unresolved`/`external` retain their separate reasons. Missing or
+contradictory resolver counterparts are integrity failures (§5), never an
+invented unsupported status. Both corrected reasons are reachable and
+emittable; unsupported states use the existing codes and coverage, while
+the two reserved codes stay non-emittable. (EC6D-OWNER-01 / Q3-F02.)
+
 ### 3.5 Publication qualification
 
 Every result carries `publication { repositoryId, indexRunId,
@@ -176,6 +234,8 @@ InterfaceImpactResultV1
     isConsistentSnapshot, qualification          // derived per publication contract
   target:
     declarationNodeId, declarationRecordId, name, qualifiedName, path, span
+      // declarationRecordId = null for ambiguous/merged target (A24);
+      // node retained; no arbitrary physical span/record selected
   confirmedImplementations[]:
     classNodeId, className, path, heritageSpan
     bindingRoute: "import" | "same-file"

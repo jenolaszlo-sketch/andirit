@@ -44,17 +44,20 @@ is a proposal.
 - Base: R1 `0e1b213737d42c74df20aef4744ab5718058e266`
   (tree `ddf777aa…`), direct parent `91a3ed5…`; ancestry to EC-6C
   acceptance (`2c3090cb`) and canonical main (`558f8ac8`) unchanged.
-- R2 changes exactly ten modified and five added paths, all under
+- R2 changes exactly twelve modified and six added paths, all under
   `docs/planning/ec6d/`; the diff under `src`, `tests` and `docs/reviews`
-  is empty (verified with `git diff --name-status 0e1b213`).
-- Modified: `symbol-binding-contract.md`, `consumer-query-contract.md`,
+  is empty (verified with `git diff --name-status
+  0e1b213737d42c74df20aef4744ab5718058e266
+  3ce7dd93c105e7e7375a04edb083be3a5d97f672`). (EC6D-OWNER-01 / Q3-F01.)
+- Modified: `README.md`, `evidence-index.md`,
+  `symbol-binding-contract.md`, `consumer-query-contract.md`,
   `publication-consistency-contract.md`, `acceptance-contract.md`,
   `scope-proposal.md`, `integration-readiness.md`, `risk-register.md`,
   `q1-findings-disposition.md`, `consumer-baseline.md`,
   `recovery-and-provenance.md`. Added: `q2-findings-disposition.md`,
   `representation-decision-proposal.md`,
   `publication-policy-decision-proposal.md`,
-  `analysis/fixtures/r2/` (`cases.json`, `README.md`),
+  `analysis/fixtures/r2/cases.json`, `analysis/fixtures/r2/README.md`,
   `analysis/r2-typescript-oracle-run.txt`.
 
 ### R2 TypeScript oracle run
