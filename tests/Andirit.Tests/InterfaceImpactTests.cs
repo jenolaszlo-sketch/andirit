@@ -1,7 +1,7 @@
 using System.Reflection;
 using System.Text.Json;
 
-namespace Andirit.TreeSitter.Tests;
+namespace Andirit.Tests;
 
 public sealed class InterfaceImpactTests
 {
