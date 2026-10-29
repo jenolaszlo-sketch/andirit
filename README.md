@@ -37,9 +37,21 @@ ANTLR parsers, hand-written parsers, or other deterministic extraction tools.
 
 ## Status
 
-Andirit 0.2.0-preview.5 has a working preview runtime, C# extractor, durable
-LatticeDb provider, and shared provider conformance suite. The API remains
-preview-quality and is built for .NET 10. See [ROADMAP.md](ROADMAP.md) for the remaining
+Andirit is a **.NET 10 preview** code-graph library. The current source builds
+six packages at version `0.2.0-preview.6`, with indexing, bounded queries,
+in-memory and durable LatticeDB stores, and language plugins for **C#,
+TypeScript, JavaScript, and Elixir**. The standalone `Andirit.*` packages
+have been validated through isolated local package consumers but **have not
+yet been published to NuGet**.
+
+Language coverage varies by provider. C# uses Roslyn to resolve selected
+semantic relationships. TypeScript and JavaScript already support useful
+structural code graphs, conservative relative module-file resolution, and
+positive-only export-name facts, but **not** import-to-declaration binding or
+resolved TypeScript interface-impact queries. The accepted EC-6D contract for
+that capability is planned, not implemented.
+
+The API remains preview-quality. See [ROADMAP.md](ROADMAP.md) for remaining
 semantic milestones and first-release invariants.
 
 ## Packages
@@ -57,31 +69,42 @@ The future `Andirit.Generator` project is reserved for deterministic
 generation of language plugins from grammars and declarative graph mappings.
 It is intentionally outside the first milestone.
 
-## Language Support
+## Language support
 
-| Language | Provider | Current status | Roadmap |
+The following plugins work today; the coverage described is a documented
+subset, not a promise of complete language semantics.
+
+| Language | Plugin / files | Implemented capabilities | Important boundary |
 | --- | --- | --- | --- |
-| C# | Roslyn | Existing semantic extraction with documented limitations | Maintain/enhance |
-| TypeScript | Tree-sitter | Structural subset includes file-level named variables (EC-5); exports are written modifiers, not bindings | Phase 0 improvement |
-| JavaScript | Tree-sitter | Structural subset includes file-level named variables (EC-5); exports are written modifiers, not bindings | Phase 0 improvement |
-| Elixir | Tree-sitter | Existing structural extraction | Maintain |
-| Python | TBD | Planned | Phase 1 |
-| Java | TBD | Planned | Phase 1 |
-| Go | TBD | Planned | Phase 2 |
-| Rust | TBD | Planned | Phase 2 |
-| Kotlin | TBD | Planned | Phase 3 |
+| **C#** | Roslyn, `.cs` | Project-aware declarations and members, semantic references/calls and selected inheritance, implementation and dependency relationships | Lightweight project/solution discovery; does not fully evaluate MSBuild or target-framework references |
+| **TypeScript** | Tree-sitter, `.ts` `.mts` `.cts` `.tsx` | Interfaces, classes and selected members, named file-level variables, structural imports and heritage, conservative relative module-file resolution, and supported structural export-name entries | No imported-symbol-to-declaration binding, resolved `implements` targets, or TS `calls`/`references` edges |
+| **JavaScript** | Tree-sitter, `.js` `.mjs` `.cjs` `.jsx` | Classes, functions, selected members and variables, structural imports, relative module-file resolution, supported export-name entries, and pattern-derived prototype inheritance | No resolved JS `calls`/`references` or imported-symbol binding; derived inheritance is not semantic proof |
+| **Elixir** | Tree-sitter, `.ex` `.exs` | Structural modules, functions, macros, imports, containment and invocation names | No resolved calls or references |
+| Python, Java | None | Planned: Phase 1 | No supported indexer today |
+| Go, Rust | None | Planned: Phase 2 | No supported indexer today |
+| Kotlin | None | Planned: Phase 3 | No supported indexer today |
 
-Planned languages cannot yet be indexed through a supported Andirit plugin.
-Structural support extracts a useful documented subset from syntax. Semantic
-support resolves selected symbols and relationships in a provider's analysis
-context; it is feature-specific, not a claim of complete language coverage.
+For TypeScript and JavaScript, a `resolves-to` edge identifies a **file**
+under a documented relative-path policy. It does not identify the declaration
+bound to an imported name. The p9 export surface publishes a module-scoped
+`export` entry and `exports` occurrence edge for supported written forms.
+It is **positive-only**: an absent entry is not proof of no export. Re-exports,
+CommonJS export assignment and export-to-declaration attribution are outside
+this supported surface.
 
-Support varies by feature and provider. Evidence quality distinguishes structural
-observations, resolved bindings, deterministic derivations, and inferred claims:
-an invocation name is not a resolved call. See the audited
-[feature matrix](docs/language-feature-matrix.md) for current omissions and the
-[language roadmap](docs/language-support-roadmap.md) for phases and deferred
-candidates. The roadmap makes no implementation-date or release commitment.
+Written TypeScript `implements` and `extends` relationships are structural
+observations pointing to declaration-less heritage candidates, not verified
+bindings to interface/class declarations. The proposed EC-6D
+`GetInterfaceImpactV1` query is **not implemented**. See the
+[ECMAScript module and export policy](docs/ecmascript-module-resolution.md)
+and [EC-6D consumer baseline](docs/planning/ec6d/consumer-baseline.md).
+
+Evidence quality distinguishes Structural, Resolved, Derived and Inferred
+relationships. An invocation name is not a resolved call; neither a spelling
+match nor a resolved file implies a symbol binding. Consult the
+[feature matrix](docs/language-feature-matrix.md) for individual capabilities
+and omissions, and the [language roadmap](docs/language-support-roadmap.md)
+for future priorities without schedule commitments.
 
 ## Runtime foundation
 
@@ -288,7 +311,7 @@ await using var host = new AndiritHostBuilder()
     .AddTreeSitterElixirPlugin()
     .AddTreeSitterTypeScriptPlugin()
     .AddTreeSitterJavaScriptPlugin()
-    .UseLatticeStore("C:/data/hetu/my-app.ltdb")
+    .UseLatticeStore("C:/data/andirit/my-app.ltdb")
     .Build();
 
 await host.IndexRepositoryAsync(
@@ -315,11 +338,20 @@ and field initializer invocations attribute to the field. The common
 JavaScript prototype-inheritance idioms
 (`Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`) are
 recognized and emitted as `inherits` with `Derived` evidence — never
-structural or resolved. There are no `calls` or `references` edges. The EC-6B
+structural or resolved. There are no TypeScript/JavaScript `calls` or `references` edges. The EC-6B
 module pass adds `resolves-to` only for supported relative references within
 the owning plugin's indexed source inventory. It identifies a target file;
 it does not bind imported names to declarations or claim compiler, bundler,
-or runtime-equivalent behavior. See the [relative module resolution policy](docs/ecmascript-module-resolution.md).
+or runtime-equivalent behavior.
+
+The EC-6C p9 export pass also publishes an `export` node per supported
+module/exported name and a Structural `exports` edge for each supported
+written occurrence. The export inventory is positive-only: neither absent
+entries nor existing file resolution prove a complete exported surface or
+an imported-symbol binding. Named/star/namespace re-exports and
+export-to-declaration attribution remain unsupported. See the
+[relative module resolution and export policy](docs/ecmascript-module-resolution.md).
+
 Malformed regions keep their valid facts and report
 `<language>.parse-error` with partial coverage instead of failing the run.
 Grammar identity, ABI, and capabilities are recorded on each plugin's
@@ -417,7 +449,7 @@ so each repository maps naturally to one path:
 ```csharp
 await using var host = new AndiritHostBuilder()
     .AddPlugin(new CSharpCodeGraphPlugin())
-    .UseLatticeStore("C:/data/hetu/my-app.ltdb")
+    .UseLatticeStore("C:/data/andirit/my-app.ltdb")
     .Build();
 
 await host.IndexRepositoryAsync(
@@ -455,14 +487,27 @@ traversal remain the deterministic primitives.
 
 ## Intended use
 
-Andirit will help answer questions such as:
+Andirit helps developers and coding agents inspect source-backed facts,
+navigate declarations, explore bounded dependencies and assemble context
+without presenting structural guesses as verified bindings.
 
-- What does this type contain?
-- What calls this method, and what does it call?
-- Which types implement this interface?
-- What references or depends on this symbol?
-- What bounded neighborhood is likely affected by a change?
-- Which source declarations should Solo include in model context?
+Examples using current functionality:
+
+- **C#:** find symbol declarations, selected compiler-resolved calls,
+  references, implementers and dependencies within the plugin's analysis
+  context.
+- **TypeScript/JavaScript:** discover supported classes, interfaces,
+  members, file-level variables, written export names and relative
+  file-to-file dependencies.
+- **Elixir:** navigate observed modules, functions, macros and containment
+  without claiming semantic call resolution.
+- **All providers:** inspect evidence and publication provenance, and
+  distinguish incomplete or truncated results from confirmed facts.
+
+Finding *which TypeScript classes implement a selected interface declaration*
+across named imports and aliases is a **planned EC-6D capability**, not a
+current feature. Current `FindImplementations` queries do not perform that
+symbol binding for the Tree-sitter TypeScript profile.
 
 ## Relationship to the Penghou stack
 
@@ -488,10 +533,11 @@ become a general memory store or workflow engine.
 - AI-generated architectural labels or component clustering;
 - generated non-C# language packages.
 
-The current preview indexes real C# repositories, persists a stable graph,
-survives repeat and incremental indexing, and answers bounded structural and
-dependency queries. The remaining work is semantic expansion, operational
-hardening, and integration evidence rather than proving the basic architecture.
+The current preview indexes real C# repositories and supported
+TypeScript, JavaScript and Elixir sources; persists graph facts; survives
+repeat and incremental indexing; and answers bounded, provider-qualified
+queries. Semantic expansion, operational hardening and broader qualification
+remain active work.
 
 ## Development
 
