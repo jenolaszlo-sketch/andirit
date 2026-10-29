@@ -1,5 +1,17 @@
-# Handoff
+# ANDIRIT-RENAME-01 final handoff
 
-Qualification in progress. Preserve Windows-focused durable evidence; historical unreproducible migration hash qualification; positive-only structural extraction scope; publication/source snapshot consistency limitations; no performance qualification; R16 remains open.
+The existing project and GitHub repository are renamed to Andirit with authenticated history and data continuity. Canonical checkout: **D:\projects\Andirit**, as explicitly selected by the owner. No linked worktrees. Old C: location holds only .vs cache residue and no Git repository.
 
-Next: **EC6D-IMPL-01: TypeScript Consumer Intelligence**, subject to accepted R16 intended-consumer gate. No EC-6D implementation is authorized or started by this rename.
+Original repository `jenolaszlo-sketch/penghou-hetu`; canonical repository [jenolaszlo-sketch/penghou-andirit](https://github.com/jenolaszlo-sketch/penghou-andirit). Repository ID before/after **1345607723**, node ID **R_kgDOUDRYKw**. Origin uses the new .git URL. GitHub redirect, PRs/issues, Actions history, tags and archival refs verified. No releases or packages published.
+
+Starting commit `b8d096672334f6bed443974ca548f558896fe54c`, tree `8c8cdf9e5d486e5c975a8e0304a9261ec2a7e733`. Qualified production rename commit `d2a57c9ea28d3b74b8b1a8e46f12cc9d23debba4`, tree `c319852b7183f827f36123790efe906913cdc805`; hosted Windows/Ubuntu/macOS/pack run [40805404393](https://github.com/jenolaszlo-sketch/penghou-andirit/actions/runs/40805404393) successful. The containing final evidence commit changes only active location guidance and rename evidence; exact final commit/tree, synchronized clean-main observation and its full hosted CI result are recorded in `C:/Users/Laszlos/source/repos/Solo/andirit-rename-01/final-identity.json` and the final user handoff, avoiding a circular self-hash. No promotion is accepted unless that final CI succeeds.
+
+Solution `Penghou.Andirit.slnx`; six source assemblies/packages use Penghou.Andirit and existing suffixes. Namespaces and product host/builder/health/extension types follow the [explicit migration mapping](public-api-migration.md). All 139 exported types and declared public members compare exactly after that mapping. Deliberate pre-1.0 source/binary break; rebuild adopting consumers. No wrappers/type-forwarding aliases. Old published Hetu identities remain available untouched.
+
+**COMPATIBLE WITHOUT MIGRATION** for exercised Windows x64 schema-2 Hetu→Andirit durable stores, both authoritative projection and experimental native traversal. Historical storage labels/plugin/provider IDs, loose C# assembly evidence, p9 and identity/hash algorithms remain stable. Authentic baseline reopen, queries, facts/provenance, publication/snapshot integrity, zero-plugin repeat and cancellation compare exactly. No source consistency guarantee is added.
+
+Local Release restore/build, formatting, all **391 tests** (388 original + 3 protection tests), unchanged four coverage gates, native loading, six-package pack/fresh-cache consumer, active documentation links, Git whitespace and portable cross-version reproducer pass. Hosted Windows, Ubuntu, macOS and pack/native consumer gates pass on the qualified source; final evidence-commit CI is checked at final handoff. No assertions/thresholds were weakened and no dependency/framework/profile upgrades made.
+
+Known qualifications remain: Windows-focused cross-version durable evidence; historical unreproducible migration hash; positive-only structural extraction scope; publication/source consistency limits; no performance qualification; **R16 remains open**. These inherited qualifications are not erased by a product rename. [External documentation follow-ups](external-consumers.md) are outside this repository and do not block its build/runtime. Old .vs residue can be removed by its owning Windows application later; it contains no active checkout.
+
+Next milestone: **EC6D-IMPL-01: TypeScript Consumer Intelligence**, subject to the accepted R16 intended-consumer implementation gate. No EC-6D implementation was begun or authorized here.

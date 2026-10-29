@@ -11,4 +11,6 @@ Formatting verification passes for solution and standalone packed consumer. Acti
 | treesitter | 89.32% | 75.36% |
 | latticedb | 90.49% | 77.68% |
 
-Full durable and packed-consumer comparisons pass. Hosted CI is pending this source commit: required windows-latest, ubuntu-latest, macos-latest test/coverage matrix and Ubuntu pack/all-package native consumer job. No reduction to matrix, thresholds or triggers. Publication remains restricted to configured v-tag/manual triggers; none will be invoked.
+Full durable and packed-consumer comparisons pass. Hosted [source CI run 40805404393](https://github.com/jenolaszlo-sketch/penghou-andirit/actions/runs/40805404393) PASSED on exact rename commit `d2a57c9ea28d3b74b8b1a8e46f12cc9d23debba4`: windows-latest, ubuntu-latest, macos-latest test/coverage and Ubuntu pack/all-package native consumer. This was verified both before and after repository rename. The final evidence-only commit also triggers this same full matrix; its exact result is bound in the external final Git identity report at handoff. No reduction to matrix, thresholds or triggers. Publication remains restricted to configured v-tag/manual triggers; none will be invoked.
+
+Post-relocation restore/build, all 391 tests, final pack and fresh-cache consumer also pass from D:/projects/Andirit; raw final-* evidence and canonical SourceLink capture are included. Hosted runner deprecation/capacity notices are informational; no dependency upgrades were introduced.

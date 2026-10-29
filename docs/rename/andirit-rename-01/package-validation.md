@@ -11,3 +11,5 @@ The original TreeSitterPackage smoke project is expanded to cover all six packag
 No package was published, unlisted or deleted. The publish workflow retains its original five project entries and v-tag/manual triggers; TreeSitter was not added to its publication set.
 
 Historical NuGet inventory confirms five old package IDs retain published previews; Penghou.Hetu.TreeSitter returned 404. See raw/historical-nuget.json. No old package operation was performed.
+
+After remote rename and checkout relocation, all six packages were repacked from exact committed rename source and consumed from a new isolated feed/cache. See raw/final-package-validation.json and raw/final-consumer.txt. SourceLink maps D:/projects/Andirit to canonical penghou-andirit at d2a57c9…; old origin spelling is no longer used for newly built symbols. These final package hashes supersede the pre-commit local hashes for the final local package qualification.
