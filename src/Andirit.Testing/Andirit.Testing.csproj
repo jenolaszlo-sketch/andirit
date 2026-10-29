@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Andirit\Andirit.csproj" />
+    <ProjectReference Include="..\Andirit.Abstractions\Andirit.Abstractions.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>Andirit.Testing</PackageId>
+    <Title>Andirit Testing</Title>
+    <Authors>Andirit contributors</Authors>
+    <Description>Reusable conformance tests for Andirit graph stores.</Description>
+    <PackageTags>code-analysis;knowledge-graph;testing;conformance</PackageTags>
+    <RepositoryUrl>https://github.com/jenolaszlo-sketch/andirit</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/jenolaszlo-sketch/andirit</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IsPackable>true</IsPackable>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

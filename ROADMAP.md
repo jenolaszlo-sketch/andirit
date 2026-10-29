@@ -1,4 +1,4 @@
-# Penghou.Andirit Roadmap
+# Andirit Roadmap
 
 ## Future resource-provider integration — 2026-10-02
 
@@ -404,8 +404,8 @@ changes the architectural laws. Effort: S (days), M (weeks), L (longer).
 
 Status: **complete on `main` (unreleased)**. All five query additions landed
 and are exercised by provider-neutral tests and the C#/Elixir dogfood
-(`tests/Penghou.Andirit.Tests/CodeGraphDiscoveryTests.cs`,
-`tests/Penghou.Andirit.TreeSitter.Tests/QueryDogfoodTests.cs`).
+(`tests/Andirit.Tests/CodeGraphDiscoveryTests.cs`,
+`tests/Andirit.TreeSitter.Tests/QueryDogfoodTests.cs`).
 
 Composable, store-neutral query additions proven against C# and Elixir
 graphs before TypeScript/JavaScript strains the extraction seam:
@@ -692,12 +692,12 @@ claiming one implementation is universally better.
 
 ### Generated language plugins
 
-Reserve `Penghou.Andirit.Generator` for deterministic plugin generation from
+Reserve `Andirit.Generator` for deterministic plugin generation from
 grammars and declarative mappings. AI may help author those inputs, but runtime
 AI parsing and arbitrary generated runtime code remain out of scope.
 
 TypeScript/JavaScript landed as the second structural provider in the
-`Penghou.Andirit.TreeSitter` package (Phase 3B), with a concrete consumer in the
+`Andirit.TreeSitter` package (Phase 3B), with a concrete consumer in the
 Astro/TypeScript `website` repository. EC-5 records named file-level
 TypeScript/JavaScript variables as `field` declarations with direct written
 `export` metadata; it does not model export bindings, local variables, ambient
@@ -707,7 +707,7 @@ variables from class members. The exact revision and real-repository evidence
 are recorded in `docs/evidence/ec5-variable-declarations-handoff.md`; the
 independent qualification and closure disposition are recorded in
 `docs/evidence/ec5-closure.md`.
-`Penghou.Andirit.Generator` remains reserved for later. The approved expansion
+`Andirit.Generator` remains reserved for later. The approved expansion
 sequence is recorded in
 [Milestone 8B](#milestone-8b--language-feature-catalog-and-phased-language-expansion)
 and the [language roadmap](docs/language-support-roadmap.md). It does not require

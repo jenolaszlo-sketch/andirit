@@ -1,0 +1,443 @@
+baseline_path,line,classification,original_text
+.github/workflows/benchmarks.yml,22,must rename: active namespace/build/package/branding,      - run: dotnet restore Penghou.Andirit.slnx
+.github/workflows/benchmarks.yml,24,must rename: active namespace/build/package/branding,        run: dotnet run -c Release --no-restore --project benchmarks/Penghou.Andirit.Benchmarks -- --job ${{ inputs.job }} --filter *LatticeStoreBenchmarks*
+.github/workflows/benchmarks.yml,26,must rename: active namespace/build/package/branding,        run: dotnet run -c Release --no-restore --project benchmarks/Penghou.Andirit.Benchmarks -- --job ${{ inputs.job }} --filter *ExtractionBenchmarks*
+.github/workflows/ci.yml,23,must rename: active namespace/build/package/branding,      - run: dotnet restore Penghou.Andirit.slnx
+.github/workflows/ci.yml,24,must rename: active namespace/build/package/branding,      - run: dotnet format Penghou.Andirit.slnx --verify-no-changes --no-restore
+.github/workflows/ci.yml,27,must rename: active namespace/build/package/branding,          dotnet test tests/Penghou.Andirit.Tests/Penghou.Andirit.Tests.csproj
+.github/workflows/ci.yml,32,must rename: active namespace/build/package/branding,          '/p:Include=[Penghou.Andirit]*%2c[Penghou.Andirit.Abstractions]*'
+.github/workflows/ci.yml,37,must rename: active namespace/build/package/branding,          dotnet test tests/Penghou.Andirit.CSharp.Tests/Penghou.Andirit.CSharp.Tests.csproj
+.github/workflows/ci.yml,42,must rename: active namespace/build/package/branding,          '/p:Include=[Penghou.Andirit.CSharp]*'
+.github/workflows/ci.yml,47,must rename: active namespace/build/package/branding,          dotnet test tests/Penghou.Andirit.TreeSitter.Tests/Penghou.Andirit.TreeSitter.Tests.csproj
+.github/workflows/ci.yml,52,must rename: active namespace/build/package/branding,          '/p:Include=[Penghou.Andirit.TreeSitter]*'
+.github/workflows/ci.yml,57,must rename: active namespace/build/package/branding,          dotnet test tests/Penghou.Andirit.LatticeDb.Tests/Penghou.Andirit.LatticeDb.Tests.csproj
+.github/workflows/ci.yml,62,must rename: active namespace/build/package/branding,          '/p:Include=[Penghou.Andirit.LatticeDb]*'
+.github/workflows/ci.yml,84,must rename: active namespace/build/package/branding,      - run: dotnet restore Penghou.Andirit.slnx
+.github/workflows/ci.yml,85,must rename: active namespace/build/package/branding,      - run: dotnet pack Penghou.Andirit.slnx -c Release --no-restore --output artifacts/packages
+.github/workflows/ci.yml,95,must rename: active namespace/build/package/branding,"          dotnet pack Penghou.Andirit.slnx -c Release --no-restore --output ""${{ github.workspace }}/smoke-packages"" -p:Version=""$SMOKE_VERSION"""
+.github/workflows/publish.yml,35,must rename: active namespace/build/package/branding,            src/Penghou.Andirit.Abstractions/Penghou.Andirit.Abstractions.csproj \
+.github/workflows/publish.yml,36,must rename: active namespace/build/package/branding,            src/Penghou.Andirit/Penghou.Andirit.csproj \
+.github/workflows/publish.yml,37,must rename: active namespace/build/package/branding,            src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj \
+.github/workflows/publish.yml,38,must rename: active namespace/build/package/branding,            src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj \
+.github/workflows/publish.yml,39,must rename: active namespace/build/package/branding,            src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj; do
+BENCHMARKS.md,1,must rename: active namespace/build/package/branding,# Penghou.Andirit Benchmarks
+BENCHMARKS.md,4,must rename: active namespace/build/package/branding,`benchmarks/Penghou.Andirit.Benchmarks`. It exercises durable LatticeDB unit
+BENCHMARKS.md,12,must rename: active namespace/build/package/branding,dotnet run -c Release --project benchmarks/Penghou.Andirit.Benchmarks -- --job short
+BENCHMARKS.md,18,must rename: active namespace/build/package/branding,"dotnet run -c Release --project benchmarks/Penghou.Andirit.Benchmarks -- --filter ""*ExtractionBenchmarks*"" --job short"
+Penghou.Andirit.slnx,3,must rename: active namespace/build/package/branding,"    <Project Path=""src/Penghou.Andirit.Abstractions/Penghou.Andirit.Abstractions.csproj"" />"
+Penghou.Andirit.slnx,4,must rename: active namespace/build/package/branding,"    <Project Path=""src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj"" />"
+Penghou.Andirit.slnx,5,must rename: active namespace/build/package/branding,"    <Project Path=""src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj"" />"
+Penghou.Andirit.slnx,6,must rename: active namespace/build/package/branding,"    <Project Path=""src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj"" />"
+Penghou.Andirit.slnx,7,must rename: active namespace/build/package/branding,"    <Project Path=""src/Penghou.Andirit.TreeSitter/Penghou.Andirit.TreeSitter.csproj"" />"
+Penghou.Andirit.slnx,8,must rename: active namespace/build/package/branding,"    <Project Path=""src/Penghou.Andirit/Penghou.Andirit.csproj"" />"
+Penghou.Andirit.slnx,11,must rename: active namespace/build/package/branding,"    <Project Path=""benchmarks/Penghou.Andirit.Benchmarks/Penghou.Andirit.Benchmarks.csproj"" />"
+Penghou.Andirit.slnx,14,must rename: active namespace/build/package/branding,"    <Project Path=""tests/Penghou.Andirit.CSharp.Tests/Penghou.Andirit.CSharp.Tests.csproj"" />"
+Penghou.Andirit.slnx,15,must rename: active namespace/build/package/branding,"    <Project Path=""tests/Penghou.Andirit.LatticeDb.Tests/Penghou.Andirit.LatticeDb.Tests.csproj"" />"
+Penghou.Andirit.slnx,16,must rename: active namespace/build/package/branding,"    <Project Path=""tests/Penghou.Andirit.Tests/Penghou.Andirit.Tests.csproj"" />"
+Penghou.Andirit.slnx,17,must rename: active namespace/build/package/branding,"    <Project Path=""tests/Penghou.Andirit.TreeSitter.Tests/Penghou.Andirit.TreeSitter.Tests.csproj"" />"
+README.md,1,must rename: active namespace/build/package/branding,# Penghou.Andirit
+README.md,5,external integration: canonical repository URL rename; historical URLs retain redirects,[![CI](https://github.com/jenolaszlo-sketch/penghou-andirit/actions/workflows/ci.yml/badge.svg)](https://github.com/jenolaszlo-sketch/penghou-andirit/actions/workflows/ci.yml)
+README.md,6,must rename: active namespace/build/package/branding,[![License](https://img.shields.io/github/license/jenolaszlo-sketch/penghou-andirit)](LICENSE)
+README.md,8,must rename: active namespace/build/package/branding,"Penghou.Andirit is an embedded, language-neutral code knowledge graph for .NET."
+README.md,49,must rename: active namespace/build/package/branding,"| `Penghou.Andirit.Abstractions` | Parser-independent graph vocabulary, evidence, extraction sessions, and sinks |"
+README.md,50,must rename: active namespace/build/package/branding,"| `Penghou.Andirit` | Indexing orchestration, validation, in-memory storage, and query services |"
+README.md,51,must rename: active namespace/build/package/branding,| `Penghou.Andirit.CSharp` | Roslyn-based C# extraction plugin |
+README.md,52,must rename: active namespace/build/package/branding,"| `Penghou.Andirit.TreeSitter` | Tree-sitter structural extraction plugins (Elixir, TypeScript, and JavaScript) |"
+README.md,53,must rename: active namespace/build/package/branding,| `Penghou.Andirit.LatticeDb` | Embedded LatticeDB graph-store provider |
+README.md,54,must rename: active namespace/build/package/branding,| `Penghou.Andirit.Testing` | Reusable graph-store and plugin contract tests |
+README.md,56,must rename: active namespace/build/package/branding,The future `Penghou.Andirit.Generator` project is reserved for deterministic
+README.md,109,must rename: active namespace/build/package/branding,`Penghou.Andirit.Testing` contains a reusable conformance suite that every durable
+README.md,211,must rename: active namespace/build/package/branding,`Penghou.Andirit.CSharp` now provides the first useful Roslyn plugin. It consumes
+README.md,277,must rename: active namespace/build/package/branding,`Penghou.Andirit.TreeSitter` proves Andirit can ingest non-.NET languages without
+README.md,283,must rename: active namespace/build/package/branding,"`src/Penghou.Andirit.TreeSitter/native/grammar-pins.md`, so indexing stays"
+README.md,398,must rename: active namespace/build/package/branding,"`Penghou.Andirit.LatticeDb` provides `LatticeCodeGraphStore`, an embedded durable"
+README.md,499,must rename: active namespace/build/package/branding,dotnet build Penghou.Andirit.slnx --configuration Release
+README.md,500,must rename: active namespace/build/package/branding,dotnet test Penghou.Andirit.slnx --configuration Release --no-build
+ROADMAP.md,1,must rename: active namespace/build/package/branding,# Penghou.Andirit Roadmap
+ROADMAP.md,407,must rename: active namespace/build/package/branding,"(`tests/Penghou.Andirit.Tests/CodeGraphDiscoveryTests.cs`,"
+ROADMAP.md,408,must rename: active namespace/build/package/branding,`tests/Penghou.Andirit.TreeSitter.Tests/QueryDogfoodTests.cs`).
+ROADMAP.md,695,must rename: active namespace/build/package/branding,Reserve `Penghou.Andirit.Generator` for deterministic plugin generation from
+ROADMAP.md,700,must rename: active namespace/build/package/branding,"`Penghou.Andirit.TreeSitter` package (Phase 3B), with a concrete consumer in the"
+ROADMAP.md,710,must rename: active namespace/build/package/branding,`Penghou.Andirit.Generator` remains reserved for later. The approved expansion
+benchmarks/Penghou.Andirit.Benchmarks/ExtractionBenchmarks.cs,4,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+benchmarks/Penghou.Andirit.Benchmarks/ExtractionBenchmarks.cs,6,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Benchmarks;
+benchmarks/Penghou.Andirit.Benchmarks/Penghou.Andirit.Benchmarks.csproj,13,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.LatticeDb\Penghou.Andirit.LatticeDb.csproj"" />"
+benchmarks/Penghou.Andirit.Benchmarks/Penghou.Andirit.Benchmarks.csproj,14,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.CSharp\Penghou.Andirit.CSharp.csproj"" />"
+benchmarks/Penghou.Andirit.Benchmarks/Program.cs,3,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+benchmarks/Penghou.Andirit.Benchmarks/Program.cs,4,must rename: active namespace/build/package/branding,using Penghou.Andirit.LatticeDb;
+docs/andirit-migration.md,3,rename active identity; retain explicitly labelled historical progression,"Andirit is the new public identity of the existing Penghou code graph project. Solution, six source projects, assemblies and local package IDs use `Penghou.Andirit`; namespaces use `Penghou.Andirit` with the existing nested suffixes. The active solution is `Penghou.Andirit.slnx`."
+docs/andirit-migration.md,5,rename active identity; retain explicitly labelled historical progression,"Replace package references `Penghou.Hetu[.*]` with corresponding `Penghou.Andirit[.*]`, update using directives and replace `HetuBuilder`, `HetuHost`, `HetuHostBuilder`, `HetuHostHealth`, and `HetuHostBuilderExtensions` with their Andirit forms. Rebuild your application and all direct consumers: old binaries do not bind automatically to the renamed assemblies. There are no legacy compatibility wrappers. Other general-purpose type names and graph behavior stay the same."
+docs/andirit-migration.md,11,external integration: canonical repository URL rename; historical URLs retain redirects,"The canonical GitHub URL becomes [penghou-andirit](https://github.com/jenolaszlo-sketch/penghou-andirit) after the gated in-place rename. The old GitHub repository URL redirects; update local remotes to the new URL after that operation. Repository ID, Git history, tags, reviews, issues and archival refs remain the same. Local checkout becomes `D:\projects\Andirit`."
+docs/ecmascript-symbol-identity.md,70,must rename: active namespace/build/package/branding,`tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterTypeScriptPluginTests.cs`):
+docs/ecmascript-symbol-identity.md,112,must rename: active namespace/build/package/branding,`tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaClassIdentityTests.cs`):
+docs/evidence-quality-and-provider-strategy.md,21,must rename: active namespace/build/package/branding,`Penghou.Andirit` already has the main architectural separation required for multi-language code analysis:
+docs/evidence-quality-and-provider-strategy.md,392,must rename: active namespace/build/package/branding,Penghou.Andirit
+docs/evidence-quality-and-provider-strategy.md,393,must rename: active namespace/build/package/branding,Penghou.Andirit.Abstractions
+docs/evidence-quality-and-provider-strategy.md,394,must rename: active namespace/build/package/branding,Penghou.Andirit.CSharp
+docs/evidence-quality-and-provider-strategy.md,395,must rename: active namespace/build/package/branding,Penghou.Andirit.TreeSitter
+docs/evidence-quality-and-provider-strategy.md,603,must rename: active namespace/build/package/branding,1. Add isolated `Penghou.Andirit.TreeSitter`.
+docs/evidence-quality-and-provider-strategy.md,627,must rename: active namespace/build/package/branding,  `src/Penghou.Andirit.TreeSitter/native/grammar-pins.md`.
+docs/language-feature-matrix.md,5,must rename: active namespace/build/package/branding,`jenolaszlo-sketch/penghou-andirit`. Findings describe code and existing fixture
+docs/language-feature-matrix.md,234,must rename: active namespace/build/package/branding,"| CS-D | [Symbols](../src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.Symbols.cs), [GraphBuilder.AddDeclarations/AddSymbol](../src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.GraphBuilder.cs) | [CSharpCodeGraphPluginTests](../tests/Penghou.Andirit.CSharp.Tests/CSharpCodeGraphPluginTests.cs): `ExtractAsync_ModelsPartialTypesMembersParametersAndContainment`; generic/enum/struct declarations are not independently fully asserted there. |"
+docs/language-feature-matrix.md,235,must rename: active namespace/build/package/branding,"| CS-R | [GraphBuilder relationship handlers](../src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.GraphBuilder.cs), [Session coverage](../src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs) | Same C# test file: `ExtractAsync_EmitsInheritanceImplementsAndCallsEdges`, `ExtractAsync_ClassifiesExplicitInterfaceRelationshipsWithoutTransitiveEdges`, `ExtractAsync_EmitsImplicitCreationAndConstructorInitializerCalls`, `ExtractAsync_ModelsLocalFunctionsAndUsesThemAsCallOwners`, `ExtractAsync_ReferencesUseTheSmallestIndexedOwner`, `ExtractAsync_ImportsPreserveAliasFlagsAndSemanticScope`, `ExtractAsync_ResolvesGenericMethodCallsToTheirDefinition`, `ExtractAsync_ResolvesExtensionMethodCallsToTheirDefinition`, `ExtractAsync_ResolvesInterfaceDispatchToTheInterfaceMember`, unresolved/ambiguous/cross-project and per-unit coverage cases. |"
+docs/language-feature-matrix.md,236,must rename: active namespace/build/package/branding,"| CS-P | [PropertyFactory](../src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.PropertyFactory.cs), [project discovery](../src/Penghou.Andirit.CSharp/CSharpProjectDiscovery.cs), GraphBuilder | Same C# test file: `ExtractAsync_EmitsReferencesImportsAndCoverage` asserts a constant field, not enum members; `ExtractAsync_EmitsPackageReferenceNodesWithSyntaxEvidence`, exact test/endpoint allowlist tests, `ExtractAsync_EmitsExercisedByEdgesFromAllowlistedTestMethods`. |"
+docs/language-feature-matrix.md,237,must rename: active namespace/build/package/branding,"| EC-D | [EcmaScriptExtractionProfile.Walk/TryEmitNamed/HandleDeclarator](../src/Penghou.Andirit.TreeSitter/EcmaScriptExtractionProfile.cs) | [TypeScript tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterTypeScriptPluginTests.cs): `ExtractAsync_ModelsClassesInterfacesAndContainment`, `ExtractAsync_TreatsArrowAndFunctionExpressionsAsCallables` asserts `render` (arrow); [JavaScript tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterJavaScriptPluginTests.cs): `ExtractAsync_ModelsClassesFunctionsAndContainment` asserts constructor, methods, and `helper` (function expression). |"
+docs/language-feature-matrix.md,241,must rename: active namespace/build/package/branding,"| EC-C | Same profile: path-scoped class identity, EmitClassMember/HandleClassMethod/MethodShape, file-scoped StructuralTypeNode; policy in [ECMAScript symbol identity](ecmascript-symbol-identity.md) | [Class identity tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaClassIdentityTests.cs): `ExtractAsync_KeepsSameNameClassesAndMethodsDistinctAcrossTypeScriptModules`, `ExtractAsync_KeepsSameNameClassesAndMethodsDistinctAcrossJavaScriptModules`, `ExtractAsync_KeepsSameNameMembersOnUnrelatedClassesDistinct`, `ExtractAsync_KeepsStaticAndInstanceMethodsWithTheSameNameDistinct`, `ExtractAsync_KeepsMethodsAndAccessorsWithTheSameNameDistinct`, `ExtractAsync_KeepsJavaScriptStaticAccessorsAndInstanceMethodsDistinct`, `ExtractAsync_HandlesJavaScriptCombinedStaticGetToken`, `ExtractAsync_KeepsSameNameClassAndInterfaceDistinct`, `ExtractAsync_NestedClassDeclarationsRetainTheirOwnerAndIdentity`, `ExtractAsync_ConvergesDuplicateClassDeclarationsInOneFileWithSeparateDeclarations`, `ExtractAsync_KeepsClassIdentityStableAcrossUnrelatedEdits`, `ExtractAsync_HeritageTargetConvergesWithSameFileClassDeclaration`, `ExtractAsync_HeritagePlaceholdersStayFileScoped`, `ExtractAsync_ImplementsTargetStaysDeclarationLess`; [lifecycle tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaClassLifecycleTests.cs): `IndexAsync_KeepsSameNameClassesDistinctThroughQueries`. |"
+docs/language-feature-matrix.md,242,must rename: active namespace/build/package/branding,"| EC-F | Same profile: HandleClassField/FieldProperties (TypeScript `public_field_definition`, JavaScript `field_definition`) | [Class member tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaClassMemberTests.cs): `ExtractAsync_ModelsTypeScriptClassFieldsWithContainmentAndLocations`, `ExtractAsync_RecordsTypeScriptFieldModifiersAndAccess`, `ExtractAsync_ModelsJavaScriptClassFields`, `ExtractAsync_KeepsFieldAndMethodWithTheSameNameDistinct`, `ExtractAsync_AttributesInitializerInvocationsToTheField`, `ExtractAsync_SkipsComputedPrivateAndAccessorFields`, `ExtractAsync_PreservesValidClassFactsFromPartialFiles`, `ExtractAsync_RepeatsClassMemberFactsDeterministically`, `IndexAsync_AnswersExactClassMemberAndEnclosingSymbolQueries`; [lifecycle tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaClassLifecycleTests.cs): `IndexAsync_RemovesRenamedAndRemovedClassMembers`, `IndexAsync_RemovesFactsForRenamedClasses`, `IndexAsync_RemovesClassFactsWhenSourceFileIsDeleted`. |"
+docs/language-feature-matrix.md,243,must rename: active namespace/build/package/branding,"| EC-5 | Same profile: `HandleVariableDeclaration` for file-level `lexical_declaration`/`variable_declaration`; `field` identity is path-scoped and discriminator-specific. | [Variable tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaVariableTests.cs): `ExtractAsync_ModelsTypeScriptFileVariablesWithWrittenModifiersAndLocations`, `ExtractAsync_ModelsJavaScriptVariablesThroughMjsPipeline`, `ExtractAsync_KeepsVariableIdentitiesFileScopedKindScopedAndDeterministic`, `ExtractAsync_SkipsLocalDestructuredAndMalformedBindings`; [publication tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaVariableLifecycleTests.cs): `IndexAsync_PublishesAndReplacesVariableFactsAcrossIncrementalChanges`, `IndexAsync_IndexesMjsVariablesThroughTheJavaScriptPipeline`; revision invalidation is covered by `TreeSitterTypeScriptPluginTests.Plan_InvalidatesPreviousExtractionProfileRevisions`. |"
+docs/language-feature-matrix.md,244,must rename: active namespace/build/package/branding,"| EC-6B | [Plugin-local resolver](../src/Penghou.Andirit.TreeSitter/TreeSitterModuleResolution.cs), module-shape capture and publication in `EcmaScriptExtractionProfile`/`TreeSitterExtractionSession`; profile p6→p8 (EC-6B; EC-6B-R1). | [Policy and identity tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterModuleResolutionTests.cs): ordered suffix/classification, edge provenance and unit order, occurrence identity/LF-CRLF, cross-plugin boundary, partial coverage and unsupported forms. [Lifecycle/store tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterModuleResolutionLifecycleTests.cs): add/delete/empty replacement, occurrence removal, failure/cancellation retention on both stores, durable reopen and endpoint-order rejection. [Website p6→p8 migration](evidence/ec6b-relative-module-resolution-handoff.md). Closed: **ACCEPTED WITH QUALIFICATIONS** (EC6B-OA2; Q2 **VERIFIED WITH QUALIFICATIONS**; [owner decision](decisions/ec6b-owner-acceptance.md)). |"
+docs/language-feature-matrix.md,245,must rename: active namespace/build/package/branding,"| EC-6C.2 | [Export publisher](../src/Penghou.Andirit.TreeSitter/EcmaScriptExportGraphPublisher.cs) and p9 [extraction profile](../src/Penghou.Andirit.TreeSitter/EcmaScriptExtractionProfile.cs). | [Shape tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaExportShapeTests.cs), [publication/store/query tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaExportPublicationTests.cs), p8-fact regression, and [EC-6C.2 handoff](evidence/ec6c-2-structural-export-publication-handoff.md). Independently qualified by GLM-Q1 and accepted with qualifications: [owner closure](decisions/ec6c-owner-acceptance.md). |"
+docs/language-feature-matrix.md,246,must rename: active namespace/build/package/branding,"| EL-D | [ElixirExtractionProfile](../src/Penghou.Andirit.TreeSitter/ElixirExtractionProfile.cs): module/function target sets, Walk, TryEmitModule/Function | [Elixir tests](../tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterElixirPluginTests.cs): `ExtractAsync_ModelsModulesFunctionsAndContainment`; protocol/macro branches lack dedicated output assertions. |"
+docs/language-feature-matrix.md,345,must rename: active namespace/build/package/branding,The [grammar registry](../src/Penghou.Andirit.TreeSitter/TreeSitterGrammarRegistry.cs)
+docs/language-feature-matrix.md,346,must rename: active namespace/build/package/branding,and [grammar pins](../src/Penghou.Andirit.TreeSitter/native/grammar-pins.md) record
+docs/language-feature-matrix.md,440,must rename: active namespace/build/package/branding,"and the existing extensible [kinds](../src/Penghou.Andirit.Abstractions/CodeGraphKinds.cs),"
+docs/language-feature-matrix.md,441,must rename: active namespace/build/package/branding,"[properties](../src/Penghou.Andirit.Abstractions/CodePropertyKeys.cs),"
+docs/language-feature-matrix.md,442,must rename: active namespace/build/package/branding,"[capabilities](../src/Penghou.Andirit.Abstractions/CodeGraphCapabilities.cs), and"
+docs/language-feature-matrix.md,443,must rename: active namespace/build/package/branding,[coverage contracts](../src/Penghou.Andirit.Abstractions/CodeGraphExtraction.cs).
+smoke/TreeSitterPackage/Program.cs,1,must rename: active namespace/build/package/branding,// Pack-consume-load smoke test for all six Penghou.Andirit NuGet packages.
+smoke/TreeSitterPackage/Program.cs,9,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+smoke/TreeSitterPackage/Program.cs,69,must rename: active namespace/build/package/branding,"Check(typeof(Penghou.Andirit.Testing.CodeGraphStoreConformanceSuite).Assembly.GetName().Name == ""Penghou.Andirit.Testing"", ""testing package loads"");"
+smoke/TreeSitterPackage/Program.cs,84,must rename: active namespace/build/package/branding,"    using var reopened = new LatticeCodeGraphStore(database, new Penghou.Andirit.LatticeDb.LatticeDbStoreOptions { UseNativeTraversal = true });"
+smoke/TreeSitterPackage/Program.cs,96,must rename: active namespace/build/package/branding,"    typeof(LatticeCodeGraphStore).Assembly, typeof(Penghou.Andirit.Testing.CodeGraphStoreConformanceSuite).Assembly };"
+smoke/TreeSitterPackage/Program.cs,97,must rename: active namespace/build/package/branding,"Check(productAssemblies.All(assembly => assembly.GetName().Name!.StartsWith(""Penghou.Andirit"", StringComparison.Ordinal)), ""all six renamed assemblies"");"
+smoke/TreeSitterPackage/TreeSitterPackage.csproj,17,must rename: active namespace/build/package/branding,"    <PackageReference Include=""Penghou.Andirit"" Version=""$(SmokerPackageVersion)"" />"
+smoke/TreeSitterPackage/TreeSitterPackage.csproj,18,must rename: active namespace/build/package/branding,"    <PackageReference Include=""Penghou.Andirit.Abstractions"" Version=""$(SmokerPackageVersion)"" />"
+smoke/TreeSitterPackage/TreeSitterPackage.csproj,19,must rename: active namespace/build/package/branding,"    <PackageReference Include=""Penghou.Andirit.CSharp"" Version=""$(SmokerPackageVersion)"" />"
+smoke/TreeSitterPackage/TreeSitterPackage.csproj,20,must rename: active namespace/build/package/branding,"    <PackageReference Include=""Penghou.Andirit.TreeSitter"" Version=""$(SmokerPackageVersion)"" />"
+smoke/TreeSitterPackage/TreeSitterPackage.csproj,21,must rename: active namespace/build/package/branding,"    <PackageReference Include=""Penghou.Andirit.LatticeDb"" Version=""$(SmokerPackageVersion)"" />"
+smoke/TreeSitterPackage/TreeSitterPackage.csproj,22,must rename: active namespace/build/package/branding,"    <PackageReference Include=""Penghou.Andirit.Testing"" Version=""$(SmokerPackageVersion)"" />"
+src/Penghou.Andirit.Abstractions/CodeEvidence.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodeGraphBatch.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodeGraphCapabilities.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodeGraphExtraction.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodeGraphFacts.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodeGraphKinds.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodeGraphSource.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodeGraphValidation.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodeIdentities.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodeLocation.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodePluginFailure.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodePropertyKeys.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/CodePropertyValue.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/ContractValue.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.Abstractions/Penghou.Andirit.Abstractions.csproj,7,must rename: active namespace/build/package/branding,    <PackageId>Penghou.Andirit.Abstractions</PackageId>
+src/Penghou.Andirit.Abstractions/Penghou.Andirit.Abstractions.csproj,8,must rename: active namespace/build/package/branding,    <Title>Penghou Andirit Abstractions</Title>
+src/Penghou.Andirit.Abstractions/Penghou.Andirit.Abstractions.csproj,9,must rename: active namespace/build/package/branding,    <Authors>Penghou.Andirit contributors</Authors>
+src/Penghou.Andirit.Abstractions/Penghou.Andirit.Abstractions.csproj,12,external integration: canonical repository URL rename; historical URLs retain redirects,    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</RepositoryUrl>
+src/Penghou.Andirit.Abstractions/Penghou.Andirit.Abstractions.csproj,13,external integration: canonical repository URL rename; historical URLs retain redirects,    <PackageProjectUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</PackageProjectUrl>
+src/Penghou.Andirit.CSharp/AndiritHostBuilderExtensions.cs,2,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+src/Penghou.Andirit.CSharp/AndiritHostBuilderExtensions.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.CSharp;
+src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.Compilation.cs,9,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.GraphBuilder.cs,9,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.PropertyFactory.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs,9,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.Symbols.cs,9,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.CSharp/CSharpCodeGraphPlugin.cs,9,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.CSharp/CSharpProjectDiscovery.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj,4,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\Penghou.Andirit.Abstractions\Penghou.Andirit.Abstractions.csproj"" />"
+src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj,5,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\Penghou.Andirit\Penghou.Andirit.csproj"" />"
+src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj,18,must rename: active namespace/build/package/branding,    <PackageId>Penghou.Andirit.CSharp</PackageId>
+src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj,19,must rename: active namespace/build/package/branding,    <Title>Penghou Andirit C# Plugin</Title>
+src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj,20,must rename: active namespace/build/package/branding,    <Authors>Penghou.Andirit contributors</Authors>
+src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj,21,must rename: active namespace/build/package/branding,    <Description>Roslyn-based deterministic C# structural extraction for Penghou.Andirit.</Description>
+src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj,23,external integration: canonical repository URL rename; historical URLs retain redirects,    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</RepositoryUrl>
+src/Penghou.Andirit.CSharp/Penghou.Andirit.CSharp.csproj,24,external integration: canonical repository URL rename; historical URLs retain redirects,    <PackageProjectUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</PackageProjectUrl>
+src/Penghou.Andirit.LatticeDb/AndiritHostBuilderExtensions.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.LatticeDb;
+src/Penghou.Andirit.LatticeDb/AssemblyInfo.cs,3,must rename: active namespace/build/package/branding,"[assembly: InternalsVisibleTo(""Penghou.Andirit.LatticeDb.Tests"")]"
+src/Penghou.Andirit.LatticeDb/LatticeCodeGraphStore.cs,4,must rename: active namespace/build/package/branding,using Penghou.Andirit.LatticeDb;
+src/Penghou.Andirit.LatticeDb/LatticeCodeGraphStore.cs,5,must rename: active namespace/build/package/branding,using static Penghou.Andirit.DurableCommandLog;
+src/Penghou.Andirit.LatticeDb/LatticeCodeGraphStore.cs,7,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.LatticeDb/LatticeDbStoreOptions.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.LatticeDb;
+src/Penghou.Andirit.LatticeDb/NativeGraphMirror.cs,3,must rename: active namespace/build/package/branding,using static Penghou.Andirit.DurableCommandLog;
+src/Penghou.Andirit.LatticeDb/NativeGraphMirror.cs,5,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj,4,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\Penghou.Andirit\Penghou.Andirit.csproj"" />"
+src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj,5,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\Penghou.Andirit.Abstractions\Penghou.Andirit.Abstractions.csproj"" />"
+src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj,16,must rename: active namespace/build/package/branding,    <PackageId>Penghou.Andirit.LatticeDb</PackageId>
+src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj,17,must rename: active namespace/build/package/branding,    <Title>Penghou Andirit LatticeDb Provider</Title>
+src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj,18,must rename: active namespace/build/package/branding,    <Authors>Penghou.Andirit contributors</Authors>
+src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj,19,must rename: active namespace/build/package/branding,    <Description>Durable embedded LatticeDB graph store provider for Penghou.Andirit.</Description>
+src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj,21,external integration: canonical repository URL rename; historical URLs retain redirects,    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</RepositoryUrl>
+src/Penghou.Andirit.LatticeDb/Penghou.Andirit.LatticeDb.csproj,22,external integration: canonical repository URL rename; historical URLs retain redirects,    <PackageProjectUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</PackageProjectUrl>
+src/Penghou.Andirit.Testing/CodeGraphStoreConformanceReport.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Testing;
+src/Penghou.Andirit.Testing/CodeGraphStoreConformanceSuite.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Testing;
+src/Penghou.Andirit.Testing/ICodeGraphStoreFixture.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Testing;
+src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj,4,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\Penghou.Andirit\Penghou.Andirit.csproj"" />"
+src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj,5,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\Penghou.Andirit.Abstractions\Penghou.Andirit.Abstractions.csproj"" />"
+src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj,12,must rename: active namespace/build/package/branding,    <PackageId>Penghou.Andirit.Testing</PackageId>
+src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj,13,must rename: active namespace/build/package/branding,    <Title>Penghou Andirit Testing</Title>
+src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj,14,must rename: active namespace/build/package/branding,    <Authors>Penghou.Andirit contributors</Authors>
+src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj,15,must rename: active namespace/build/package/branding,    <Description>Reusable conformance tests for Penghou.Andirit graph stores.</Description>
+src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj,17,external integration: canonical repository URL rename; historical URLs retain redirects,    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</RepositoryUrl>
+src/Penghou.Andirit.Testing/Penghou.Andirit.Testing.csproj,18,external integration: canonical repository URL rename; historical URLs retain redirects,    <PackageProjectUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</PackageProjectUrl>
+src/Penghou.Andirit.TreeSitter/AndiritHostBuilderExtensions.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/AndiritHostBuilderExtensions.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter;
+src/Penghou.Andirit.TreeSitter/AssemblyInfo.cs,3,must rename: active namespace/build/package/branding,"[assembly: InternalsVisibleTo(""Penghou.Andirit.TreeSitter.Tests"")]"
+src/Penghou.Andirit.TreeSitter/EcmaScriptExportGraphPublisher.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/EcmaScriptExportObservation.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/EcmaScriptExtractionProfile.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/ElixirExtractionProfile.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/Penghou.Andirit.TreeSitter.csproj,4,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\Penghou.Andirit.Abstractions\Penghou.Andirit.Abstractions.csproj"" />"
+src/Penghou.Andirit.TreeSitter/Penghou.Andirit.TreeSitter.csproj,5,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\Penghou.Andirit\Penghou.Andirit.csproj"" />"
+src/Penghou.Andirit.TreeSitter/Penghou.Andirit.TreeSitter.csproj,16,must rename: active namespace/build/package/branding,    <PackageId>Penghou.Andirit.TreeSitter</PackageId>
+src/Penghou.Andirit.TreeSitter/Penghou.Andirit.TreeSitter.csproj,17,must rename: active namespace/build/package/branding,    <Title>Penghou Andirit Tree-sitter Plugin</Title>
+src/Penghou.Andirit.TreeSitter/Penghou.Andirit.TreeSitter.csproj,18,must rename: active namespace/build/package/branding,    <Authors>Penghou.Andirit contributors</Authors>
+src/Penghou.Andirit.TreeSitter/Penghou.Andirit.TreeSitter.csproj,19,must rename: active namespace/build/package/branding,"    <Description>Tree-sitter structural code extraction for Penghou.Andirit. Elixir, TypeScript, and JavaScript through pinned grammars; broader language coverage follows the same provider pattern.</Description>"
+src/Penghou.Andirit.TreeSitter/Penghou.Andirit.TreeSitter.csproj,21,external integration: canonical repository URL rename; historical URLs retain redirects,    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</RepositoryUrl>
+src/Penghou.Andirit.TreeSitter/Penghou.Andirit.TreeSitter.csproj,22,external integration: canonical repository URL rename; historical URLs retain redirects,    <PackageProjectUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</PackageProjectUrl>
+src/Penghou.Andirit.TreeSitter/TreeSitterElixirPlugin.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterExtraction.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterExtractionSession.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterGrammarDescriptor.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterGrammarDescriptor.cs,5,must rename: active namespace/build/package/branding,/// <c>Penghou.Andirit.TreeSitter</c>. Grammars are pinned native dependencies:
+src/Penghou.Andirit.TreeSitter/TreeSitterGrammarRegistry.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterGrammarRegistry.cs,3,must rename: active namespace/build/package/branding,/// <summary>Grammar pins bundled with <c>Penghou.Andirit.TreeSitter</c>.</summary>
+src/Penghou.Andirit.TreeSitter/TreeSitterJavaScriptPlugin.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterModuleResolution.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterNative.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterPluginSupport.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterSessionParser.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterSyntax.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/TreeSitterTypeScriptPlugin.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit.TreeSitter/native/grammar-pins.md,3,must rename: active namespace/build/package/branding,Grammars are pinned native dependencies of `Penghou.Andirit.TreeSitter`.
+src/Penghou.Andirit.TreeSitter/native/grammar-pins.md,28,must rename: active namespace/build/package/branding,grammar revisions behind an unchanged `Penghou.Andirit.TreeSitter` version: the
+src/Penghou.Andirit/AndiritHealth.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/AndiritHost.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/AssemblyInfo.cs,3,must rename: active namespace/build/package/branding,"[assembly: InternalsVisibleTo(""Penghou.Andirit.LatticeDb"")]"
+src/Penghou.Andirit/CodeFreshness.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeGraphBatchValidator.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeGraphIngestionSink.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeGraphPluginRegistry.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeGraphPublicationChangedException.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeGraphPublicationQuery.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeGraphQueryService.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeGraphStoreException.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeGraphStoreModels.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeGraphTraversalPresets.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeIndexIdentity.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeIndexPlanner.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeIndexUnitOwner.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeIndexingLifecycle.cs,6,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeJsonConverters.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeLanguageProviderMap.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodePublicationSnapshot.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeQueryOperations.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeRepositoryProviderRegistry.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeRepositorySource.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/CodeSourceManifest.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/DurableCommandLog.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/GraphFactEquality.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/ICodeGraphStore.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/InMemoryCodeGraphStore.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+src/Penghou.Andirit/Penghou.Andirit.csproj,4,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\Penghou.Andirit.Abstractions\Penghou.Andirit.Abstractions.csproj"" />"
+src/Penghou.Andirit/Penghou.Andirit.csproj,11,must rename: active namespace/build/package/branding,    <PackageId>Penghou.Andirit</PackageId>
+src/Penghou.Andirit/Penghou.Andirit.csproj,12,must rename: active namespace/build/package/branding,    <Title>Penghou Andirit</Title>
+src/Penghou.Andirit/Penghou.Andirit.csproj,13,must rename: active namespace/build/package/branding,    <Authors>Penghou.Andirit contributors</Authors>
+src/Penghou.Andirit/Penghou.Andirit.csproj,16,external integration: canonical repository URL rename; historical URLs retain redirects,    <RepositoryUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</RepositoryUrl>
+src/Penghou.Andirit/Penghou.Andirit.csproj,17,external integration: canonical repository URL rename; historical URLs retain redirects,    <PackageProjectUrl>https://github.com/jenolaszlo-sketch/penghou-andirit</PackageProjectUrl>
+src/Penghou.Andirit/PluginSourceKey.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit;
+tests/Penghou.Andirit.CSharp.Tests/CSharpCodeGraphPluginTests.cs,5,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.CSharp.Tests;
+tests/Penghou.Andirit.CSharp.Tests/CSharpPublicApiContractTests.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+tests/Penghou.Andirit.CSharp.Tests/CSharpPublicApiContractTests.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.CSharp.Tests;
+tests/Penghou.Andirit.CSharp.Tests/CSharpPublicApiContractTests.cs,17,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CSharp.AndiritHostBuilderExtensions"","
+tests/Penghou.Andirit.CSharp.Tests/CSharpPublicApiContractTests.cs,18,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CSharpCodeGraphPlugin"""
+tests/Penghou.Andirit.CSharp.Tests/Penghou.Andirit.CSharp.Tests.csproj,23,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.CSharp\Penghou.Andirit.CSharp.csproj"" />"
+tests/Penghou.Andirit.CSharp.Tests/Penghou.Andirit.CSharp.Tests.csproj,24,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.Testing\Penghou.Andirit.Testing.csproj"" />"
+tests/Penghou.Andirit.LatticeDb.Tests/HistoricalStorageIdentityTests.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.LatticeDb.Tests;
+tests/Penghou.Andirit.LatticeDb.Tests/LatticeCodeGraphStoreTests.cs,2,must rename: active namespace/build/package/branding,using Penghou.Andirit.Testing;
+tests/Penghou.Andirit.LatticeDb.Tests/LatticeCodeGraphStoreTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.LatticeDb.Tests;
+tests/Penghou.Andirit.LatticeDb.Tests/LatticeDbPublicApiContractTests.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+tests/Penghou.Andirit.LatticeDb.Tests/LatticeDbPublicApiContractTests.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.LatticeDb.Tests;
+tests/Penghou.Andirit.LatticeDb.Tests/LatticeDbPublicApiContractTests.cs,17,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.LatticeCodeGraphSchemaException"","
+tests/Penghou.Andirit.LatticeDb.Tests/LatticeDbPublicApiContractTests.cs,18,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.LatticeCodeGraphStore"","
+tests/Penghou.Andirit.LatticeDb.Tests/LatticeDbPublicApiContractTests.cs,19,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.LatticeDb.AndiritHostBuilderExtensions"","
+tests/Penghou.Andirit.LatticeDb.Tests/LatticeDbPublicApiContractTests.cs,20,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.LatticeDb.LatticeDbStoreOptions"""
+tests/Penghou.Andirit.LatticeDb.Tests/NativeGraphMirrorTests.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit.LatticeDb;
+tests/Penghou.Andirit.LatticeDb.Tests/NativeGraphMirrorTests.cs,2,must rename: active namespace/build/package/branding,using Penghou.Andirit.Testing;
+tests/Penghou.Andirit.LatticeDb.Tests/NativeGraphMirrorTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.LatticeDb.Tests;
+tests/Penghou.Andirit.LatticeDb.Tests/Penghou.Andirit.LatticeDb.Tests.csproj,23,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.LatticeDb\Penghou.Andirit.LatticeDb.csproj"" />"
+tests/Penghou.Andirit.LatticeDb.Tests/Penghou.Andirit.LatticeDb.Tests.csproj,24,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.Testing\Penghou.Andirit.Testing.csproj"" />"
+tests/Penghou.Andirit.Tests/AndiritHostTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/CodeGraphDiscoveryTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/CodeGraphIngestionSinkTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/CodeGraphPluginRegistryTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/CodeGraphQueryServiceTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/CodeIndexIdentityTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/CodeIndexPlannerTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/CodeIndexingServiceTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/CodeRepositorySourceTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/ContractValidationTests.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+tests/Penghou.Andirit.Tests/ContractValidationTests.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/GraphSemanticsTests.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+tests/Penghou.Andirit.Tests/GraphSemanticsTests.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/InMemoryCodeGraphStoreTests.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit.Testing;
+tests/Penghou.Andirit.Tests/InMemoryCodeGraphStoreTests.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/Penghou.Andirit.Tests.csproj,23,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit\Penghou.Andirit.csproj"" />"
+tests/Penghou.Andirit.Tests/Penghou.Andirit.Tests.csproj,24,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.Testing\Penghou.Andirit.Testing.csproj"" />"
+tests/Penghou.Andirit.Tests/Penghou.Andirit.Tests.csproj,25,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.Abstractions\Penghou.Andirit.Abstractions.csproj"" />"
+tests/Penghou.Andirit.Tests/PluginContractTests.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+tests/Penghou.Andirit.Tests/PluginContractTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/ProviderFallbackTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,18,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeBooleanProperty"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,19,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeDeclarationId"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,20,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeEdgeId"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,21,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeEdgeKind"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,22,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeEdgeKinds"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,23,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeEvidence"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,24,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.EvidenceQuality"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,25,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.EvidenceQualityExtensions"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,26,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeFactOrigin"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,27,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphBatch"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,28,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphBatchLimits"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,29,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphBatchRejectedException"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,30,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphCapabilities"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,31,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphDeclaration"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,32,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphEdge"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,33,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphExtractionResult"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,34,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphNode"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,35,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphPluginContext"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,36,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphSource"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,37,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphSourceChange"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,38,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphSourceChangeKind"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,39,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodePluginFailureException"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,40,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodePluginFailureKind"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,41,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphValidationError"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,42,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphValidationErrorKind"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,43,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexRunId"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,44,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexUnitCoverage"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,45,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexUnitId"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,46,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIntegerProperty"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,47,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeLocation"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,48,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeNodeId"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,49,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeNodeKind"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,50,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeNodeKinds"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,51,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeNumberProperty"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,52,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodePluginId"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,53,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodePropertyKeys"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,54,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodePropertyValue"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,55,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRelationshipCoverage"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,56,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRelationshipCoverageState"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,57,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryId"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,58,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeSymbolId"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,59,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeTextListProperty"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,60,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeTextProperty"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,61,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ICodeGraphExtractionSession"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,62,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ICodeGraphPlugin"","
+tests/Penghou.Andirit.Tests/PublicApiContractTests.cs,63,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ICodeGraphSink"""
+tests/Penghou.Andirit.Tests/PublicationSnapshotTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,15,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeAffectedTestsResult"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,16,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeEnclosingSymbolResult"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,17,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphBatchValidator"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,18,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphDirection"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,19,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphIngestionDiagnostics"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,20,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphIngestionSink"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,21,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphFactKind"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,22,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphFactProvenance"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,23,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphPluginRegistry"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,24,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphPluginSelectionException"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,25,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphQueryOptions"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,26,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphQueryDescriptor"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,27,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphQueryEnvelope`1"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,28,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphQueryService"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,29,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphPublication"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,30,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphPublicationChangedException"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,31,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphPublicationQuery"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,32,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeFreshnessResult"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,33,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeFreshnessStatus"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,34,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphMultiTraversalResult"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,35,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphStoreException"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,36,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphStoreHealth"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,37,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphStoreHealthStatus"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,38,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphTraversalQuery"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,39,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphTraversalResult"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,40,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeGraphTruncationReason"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,41,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexRunManifest"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,42,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexRunStatus"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,43,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexPlan"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,44,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexPlanItem"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,45,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexPlanner"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,46,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexPlanningOptions"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,47,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexPlanStatus"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,48,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexingDiagnostics"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,49,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexingOptions"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,50,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexingResult"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,51,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexingService"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,52,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeLanguageProviderMap"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,53,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexIdentity"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,54,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodePluginIndexingDiagnostics"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,55,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodePluginIndexingStatus"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,56,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeProviderSelection"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,57,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodePublicationSnapshot"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,58,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodePublicationSnapshotException"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,59,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeSymbolDiscoveryQuery"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,60,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeSymbolDiscoveryResult"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,61,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ProviderFallbackPolicy"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,62,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ProviderFallbackPolicyExtensions"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,63,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeQueryOperations"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,64,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeIndexUnitReplacement"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,65,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeNamePatternResult"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,66,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryManifest"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,67,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryDescriptor"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,68,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryDiscoveryEventKind"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,69,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryEntry"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,70,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryEnumerationLimitException"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,71,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryEnumerationOptions"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,72,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryProviderNotFoundException"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,73,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryProviderRegistry"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,74,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryProviderSelectionException"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,75,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeRepositoryIndexState"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,76,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeSnapshotOptions"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,77,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeSourceManifest"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,78,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeSourceChangedDuringIndexingException"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,79,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeSourceSizeLimitException"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,80,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.CodeSymbolLookupResult"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,81,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.FileSystemCodeRepositoryProvider"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,82,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.AndiritBuilder"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,83,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.AndiritHost"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,84,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.AndiritHostBuilder"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,85,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.AndiritHostHealth"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,86,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ICodeGraphIndexStore"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,87,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ICodeGraphReader"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,88,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ICodeGraphStore"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,89,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ICodeGraphStoreHealthCheck"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,90,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ICodeRepositoryProvider"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,91,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.ICodeRepositorySource"","
+tests/Penghou.Andirit.Tests/RuntimePublicApiContractTests.cs,92,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.InMemoryCodeGraphStore"""
+tests/Penghou.Andirit.Tests/SerializationTests.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+tests/Penghou.Andirit.Tests/SerializationTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/TestingPublicApiContractTests.cs,1,must rename: active namespace/build/package/branding,using Penghou.Andirit.Testing;
+tests/Penghou.Andirit.Tests/TestingPublicApiContractTests.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.Tests;
+tests/Penghou.Andirit.Tests/TestingPublicApiContractTests.cs,17,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.Testing.CodeGraphStoreConformanceException"","
+tests/Penghou.Andirit.Tests/TestingPublicApiContractTests.cs,18,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.Testing.CodeGraphStoreConformanceReport"","
+tests/Penghou.Andirit.Tests/TestingPublicApiContractTests.cs,19,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.Testing.CodeGraphStoreConformanceSuite"","
+tests/Penghou.Andirit.Tests/TestingPublicApiContractTests.cs,20,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.Testing.ICodeGraphStoreFixture"""
+tests/Penghou.Andirit.TreeSitter.Tests/HistoricalProviderIdentityTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/Penghou.Andirit.TreeSitter.Tests.csproj,16,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.TreeSitter\Penghou.Andirit.TreeSitter.csproj"" />"
+tests/Penghou.Andirit.TreeSitter.Tests/Penghou.Andirit.TreeSitter.Tests.csproj,17,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.CSharp\Penghou.Andirit.CSharp.csproj"" />"
+tests/Penghou.Andirit.TreeSitter.Tests/Penghou.Andirit.TreeSitter.Tests.csproj,18,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.LatticeDb\Penghou.Andirit.LatticeDb.csproj"" />"
+tests/Penghou.Andirit.TreeSitter.Tests/Penghou.Andirit.TreeSitter.Tests.csproj,19,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit\Penghou.Andirit.csproj"" />"
+tests/Penghou.Andirit.TreeSitter.Tests/Penghou.Andirit.TreeSitter.Tests.csproj,20,must rename: active namespace/build/package/branding,"    <ProjectReference Include=""..\..\src\Penghou.Andirit.Abstractions\Penghou.Andirit.Abstractions.csproj"" />"
+tests/Penghou.Andirit.TreeSitter.Tests/QueryDogfoodTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterCapabilityContractTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaClassIdentityTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaClassLifecycleTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaClassMemberTests.cs,3,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaExportPublicationTests.cs,5,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaExportShapeTests.cs,5,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaVariableLifecycleTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaVariableTests.cs,1,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterElixirPluginTests.cs,6,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterJavaScriptPluginTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterModuleResolutionLifecycleTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterModuleResolutionTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterPublicApiContractTests.cs,2,must rename: active namespace/build/package/branding,using Penghou.Andirit;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterPublicApiContractTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterPublicApiContractTests.cs,18,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.TreeSitter.AndiritHostBuilderExtensions"","
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterPublicApiContractTests.cs,19,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.TreeSitterElixirPlugin"","
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterPublicApiContractTests.cs,20,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.TreeSitterJavaScriptPlugin"","
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterPublicApiContractTests.cs,21,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.TreeSitterTypeScriptPlugin"","
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterPublicApiContractTests.cs,22,must rename: active namespace/build/package/branding,"            ""Penghou.Andirit.TreeSitterGrammarDescriptor"""
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterTestSupport.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;
+tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterTypeScriptPluginTests.cs,4,must rename: active namespace/build/package/branding,namespace Penghou.Andirit.TreeSitter.Tests;

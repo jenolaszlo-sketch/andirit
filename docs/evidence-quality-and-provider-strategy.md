@@ -18,7 +18,7 @@ pattern relationships (the prototype patterns below); neither implies resolution
 
 ## Context
 
-`Penghou.Andirit` already has the main architectural separation required for multi-language code analysis:
+`Andirit` already has the main architectural separation required for multi-language code analysis:
 
 - Andirit owns a normalized code graph rather than parser-specific syntax trees.
 - `ICodeGraphPlugin` provides the extension boundary for language-specific analysis.
@@ -389,10 +389,10 @@ Tree-sitter will be introduced in a dedicated package.
 Conceptually:
 
 ```text
-Penghou.Andirit
-Penghou.Andirit.Abstractions
-Penghou.Andirit.CSharp
-Penghou.Andirit.TreeSitter
+Andirit
+Andirit.Abstractions
+Andirit.CSharp
+Andirit.TreeSitter
 ```
 
 The Tree-sitter package owns:
@@ -600,7 +600,7 @@ Implementation notes (landed):
 
 ### Phase 3: Tree-sitter
 
-1. Add isolated `Penghou.Andirit.TreeSitter`.
+1. Add isolated `Andirit.TreeSitter`.
 2. Integrate the Tree-sitter native runtime.
 3. Add grammar registry/version metadata.
 4. Add language extraction profiles.
@@ -624,7 +624,7 @@ Implementation notes, 3A (Elixir, landed):
 - Definition heads are visited for structure but never treated as
   invocations; module attributes (`@moduledoc`, `@spec`, ...) are skipped.
 - Rebuild recipe, verification checklist, and upgrade policy live in
-  `src/Penghou.Andirit.TreeSitter/native/grammar-pins.md`.
+  `src/Andirit.TreeSitter/native/grammar-pins.md`.
 
 ### Phase 3B: TypeScript/JavaScript as an adversarial test of the profile seam (landed)
 

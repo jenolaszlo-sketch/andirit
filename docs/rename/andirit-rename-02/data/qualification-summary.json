@@ -1,0 +1,143 @@
+{
+  "public_api": {
+    "assemblies": 6,
+    "types": 139,
+    "comparison": "exact mapped public type and member equality"
+  },
+  "durable": {
+    "projection": {
+      "schema": 2,
+      "reopen_repeat_cancel_after": "exact equality to authentic Hetu observations",
+      "repeat_plugins_executed": 0,
+      "seed_sha256": "5192762d22c2c1eac46b5917874c5ca20e4cf703c9219e98e70387cdcd3f51cc",
+      "snapshot_hashes": {
+        "ts": "bf80bf17060d10d6cf63096db7c3fa6946f08c45db05d809a30b5fa4d6fa45d4",
+        "js": "0b113f91f0c1290fa1c579e12d1132c79109ad0ef6b4e5cf1286ac685c5cedd7"
+      }
+    },
+    "native": {
+      "schema": 2,
+      "reopen_repeat_cancel_after": "exact equality to authentic Hetu observations",
+      "repeat_plugins_executed": 0,
+      "seed_sha256": "88d08ce6c519d7aa5dc2e84055c4c4bb1202242c02e4d9f0c8f429c332b4b98f",
+      "snapshot_hashes": {
+        "ts": "81caf30f496a0abdb173863655d1a4202289ada1401a531efd8cedd7ce42bff5",
+        "js": "1632bb9ce47c7b09110da2406f91b3e84823a5bf5f29db62535d8fcba2c95738"
+      }
+    }
+  },
+  "scope": {
+    "source_and_test_cs_files": 119,
+    "comparison": "exact namespace-prefix-only changes",
+    "historical_groups_unchanged": 8,
+    "shared_build_and_versions": "unchanged"
+  },
+  "packages": [
+    {
+      "id": "Andirit",
+      "version": "0.2.0-preview.6",
+      "sha256": "79a608e573c0613f7d0682647757e6e1a3181cf0097fbd5bfd0cf96c3bfc4ca0",
+      "dependencies": [
+        {
+          "id": "Andirit.Abstractions",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        }
+      ]
+    },
+    {
+      "id": "Andirit.Abstractions",
+      "version": "0.2.0-preview.6",
+      "sha256": "d8687827aab0eeefd3ab1c7ba9452ab0d2a51b71894bdcfa16c9fc5f08977d11",
+      "dependencies": []
+    },
+    {
+      "id": "Andirit.CSharp",
+      "version": "0.2.0-preview.6",
+      "sha256": "72d5e9b3b705d961200f91659a17a88ff202c423408bf98211da210e2a59fc96",
+      "dependencies": [
+        {
+          "id": "Andirit.Abstractions",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Andirit",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Microsoft.CodeAnalysis.CSharp",
+          "version": "5.9.0",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Microsoft.Extensions.DependencyInjection.Abstractions",
+          "version": "10.0.9",
+          "exclude": "Build,Analyzers"
+        }
+      ]
+    },
+    {
+      "id": "Andirit.LatticeDb",
+      "version": "0.2.0-preview.6",
+      "sha256": "c2f9ad721774cabc54b39a6d89eaf056cb1efe17b6ebf56fdcc4fbce4f55d6d6",
+      "dependencies": [
+        {
+          "id": "Andirit.Abstractions",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Andirit",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "LatticeDbSharp",
+          "version": "0.2.0",
+          "exclude": "Build,Analyzers"
+        }
+      ]
+    },
+    {
+      "id": "Andirit.Testing",
+      "version": "0.2.0-preview.6",
+      "sha256": "62a2ce555b21ae417d80774b82420c301212d926e5075607c5aee3beb2e6f8c4",
+      "dependencies": [
+        {
+          "id": "Andirit.Abstractions",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Andirit",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        }
+      ]
+    },
+    {
+      "id": "Andirit.TreeSitter",
+      "version": "0.2.0-preview.6",
+      "sha256": "abd1dc2a5e80327c06fed5a821a65d51f777a5d2b04ef4ca8368cbd4cebd78b4",
+      "dependencies": [
+        {
+          "id": "Andirit.Abstractions",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "Andirit",
+          "version": "0.2.0-preview.6",
+          "exclude": "Build,Analyzers"
+        },
+        {
+          "id": "TreeSitter.DotNet",
+          "version": "1.3.0",
+          "exclude": "Build,Analyzers"
+        }
+      ]
+    }
+  ]
+}

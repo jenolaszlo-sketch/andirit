@@ -67,7 +67,7 @@ Rationale:
   establish that an implementation satisfies a contract.
 
 Resulting behavior (fixture-verified in
-`tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterTypeScriptPluginTests.cs`):
+`tests/Andirit.TreeSitter.Tests/TreeSitterTypeScriptPluginTests.cs`):
 
 - **Same-name interfaces in separate modules** stay distinct symbols with
   distinct declarations and members; exact qualified-name lookup returns
@@ -109,7 +109,7 @@ Rationale:
 - No source offsets are used; identity stays stable under unrelated edits.
 
 Resulting behavior (fixture-verified in
-`tests/Penghou.Andirit.TreeSitter.Tests/TreeSitterEcmaClassIdentityTests.cs`):
+`tests/Andirit.TreeSitter.Tests/TreeSitterEcmaClassIdentityTests.cs`):
 
 - **Same-name classes and methods in separate modules** stay distinct symbols
   with distinct declarations and containment.

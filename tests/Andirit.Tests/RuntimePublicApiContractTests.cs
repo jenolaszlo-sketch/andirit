@@ -1,0 +1,97 @@
+namespace Andirit.Tests;
+
+public sealed class RuntimePublicApiContractTests
+{
+    [Fact]
+    public void Runtime_PublicTypeSnapshot_IsIntentional()
+    {
+        var actual = typeof(ICodeGraphStore).Assembly
+            .GetExportedTypes()
+            .Select(type => type.FullName!)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        var expected = new[]
+        {
+            "Andirit.CodeAffectedTestsResult",
+            "Andirit.CodeEnclosingSymbolResult",
+            "Andirit.CodeGraphBatchValidator",
+            "Andirit.CodeGraphDirection",
+            "Andirit.CodeGraphIngestionDiagnostics",
+            "Andirit.CodeGraphIngestionSink",
+            "Andirit.CodeGraphFactKind",
+            "Andirit.CodeGraphFactProvenance",
+            "Andirit.CodeGraphPluginRegistry",
+            "Andirit.CodeGraphPluginSelectionException",
+            "Andirit.CodeGraphQueryOptions",
+            "Andirit.CodeGraphQueryDescriptor",
+            "Andirit.CodeGraphQueryEnvelope`1",
+            "Andirit.CodeGraphQueryService",
+            "Andirit.CodeGraphPublication",
+            "Andirit.CodeGraphPublicationChangedException",
+            "Andirit.CodeGraphPublicationQuery",
+            "Andirit.CodeFreshnessResult",
+            "Andirit.CodeFreshnessStatus",
+            "Andirit.CodeGraphMultiTraversalResult",
+            "Andirit.CodeGraphStoreException",
+            "Andirit.CodeGraphStoreHealth",
+            "Andirit.CodeGraphStoreHealthStatus",
+            "Andirit.CodeGraphTraversalQuery",
+            "Andirit.CodeGraphTraversalResult",
+            "Andirit.CodeGraphTruncationReason",
+            "Andirit.CodeIndexRunManifest",
+            "Andirit.CodeIndexRunStatus",
+            "Andirit.CodeIndexPlan",
+            "Andirit.CodeIndexPlanItem",
+            "Andirit.CodeIndexPlanner",
+            "Andirit.CodeIndexPlanningOptions",
+            "Andirit.CodeIndexPlanStatus",
+            "Andirit.CodeIndexingDiagnostics",
+            "Andirit.CodeIndexingOptions",
+            "Andirit.CodeIndexingResult",
+            "Andirit.CodeIndexingService",
+            "Andirit.CodeLanguageProviderMap",
+            "Andirit.CodeIndexIdentity",
+            "Andirit.CodePluginIndexingDiagnostics",
+            "Andirit.CodePluginIndexingStatus",
+            "Andirit.CodeProviderSelection",
+            "Andirit.CodePublicationSnapshot",
+            "Andirit.CodePublicationSnapshotException",
+            "Andirit.CodeSymbolDiscoveryQuery",
+            "Andirit.CodeSymbolDiscoveryResult",
+            "Andirit.ProviderFallbackPolicy",
+            "Andirit.ProviderFallbackPolicyExtensions",
+            "Andirit.CodeQueryOperations",
+            "Andirit.CodeIndexUnitReplacement",
+            "Andirit.CodeNamePatternResult",
+            "Andirit.CodeRepositoryManifest",
+            "Andirit.CodeRepositoryDescriptor",
+            "Andirit.CodeRepositoryDiscoveryEventKind",
+            "Andirit.CodeRepositoryEntry",
+            "Andirit.CodeRepositoryEnumerationLimitException",
+            "Andirit.CodeRepositoryEnumerationOptions",
+            "Andirit.CodeRepositoryProviderNotFoundException",
+            "Andirit.CodeRepositoryProviderRegistry",
+            "Andirit.CodeRepositoryProviderSelectionException",
+            "Andirit.CodeRepositoryIndexState",
+            "Andirit.CodeSnapshotOptions",
+            "Andirit.CodeSourceManifest",
+            "Andirit.CodeSourceChangedDuringIndexingException",
+            "Andirit.CodeSourceSizeLimitException",
+            "Andirit.CodeSymbolLookupResult",
+            "Andirit.FileSystemCodeRepositoryProvider",
+            "Andirit.AndiritBuilder",
+            "Andirit.AndiritHost",
+            "Andirit.AndiritHostBuilder",
+            "Andirit.AndiritHostHealth",
+            "Andirit.ICodeGraphIndexStore",
+            "Andirit.ICodeGraphReader",
+            "Andirit.ICodeGraphStore",
+            "Andirit.ICodeGraphStoreHealthCheck",
+            "Andirit.ICodeRepositoryProvider",
+            "Andirit.ICodeRepositorySource",
+            "Andirit.InMemoryCodeGraphStore"
+        }.Order(StringComparer.Ordinal).ToArray();
+
+        Assert.Equal(expected, actual);
+    }
+}

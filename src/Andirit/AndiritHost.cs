@@ -1,0 +1,232 @@
+namespace Andirit;
+
+/// <summary>
+/// Fluent builder for a complete Andirit host: repository providers, plugins,
+/// store selection, indexing, and queries behind one entry point. This is the
+/// canonical entry point; hosts and Solo use this instead of manually
+/// assembling individual services.
+/// </summary>
+public sealed class AndiritHostBuilder
+{
+    private readonly List<ICodeGraphPlugin> _plugins = [];
+    private readonly List<ICodeRepositoryProvider> _repositoryProviders =
+    [
+        new FileSystemCodeRepositoryProvider()
+    ];
+    private readonly Dictionary<string, List<CodePluginId>> _providerOrders = new(StringComparer.Ordinal);
+    private Func<ICodeGraphStore>? _storeFactory;
+    private CodeIndexingOptions? _indexingOptions;
+    private bool _built;
+
+    /// <summary>Sets the graph store. Call once before Build.</summary>
+    public AndiritHostBuilder UseStore(Func<ICodeGraphStore> storeFactory)
+    {
+        ArgumentNullException.ThrowIfNull(storeFactory);
+        _storeFactory = storeFactory;
+        return this;
+    }
+
+    /// <summary>Uses one supplied graph store instance whose ownership transfers to the host.</summary>
+    public AndiritHostBuilder UseStore(ICodeGraphStore store)
+    {
+        ArgumentNullException.ThrowIfNull(store);
+        return UseStore(() => store);
+    }
+
+    /// <summary>Adds a language plugin.</summary>
+    public AndiritHostBuilder AddPlugin(ICodeGraphPlugin plugin)
+    {
+        ArgumentNullException.ThrowIfNull(plugin);
+        _plugins.Add(plugin);
+        return this;
+    }
+
+    /// <summary>
+    /// Configures preferred-first provider order for a language. The first
+    /// identity is preferred; later identities are eligible fallbacks subject
+    /// to the indexing fallback policy. Calling again for a language replaces
+    /// its order. Referenced identities must be registered with
+    /// <see cref="AddPlugin"/> before <see cref="Build"/>.
+    /// </summary>
+    public AndiritHostBuilder WithLanguageProviders(
+        string language,
+        params CodePluginId[] providerIds)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(language);
+        ArgumentNullException.ThrowIfNull(providerIds);
+        if (providerIds.Length == 0)
+            throw new ArgumentException(
+                "A language must list at least one provider.",
+                nameof(providerIds));
+        if (providerIds.Any(id => id is null))
+            throw new ArgumentException(
+                "Provider identities cannot contain null entries.",
+                nameof(providerIds));
+        _providerOrders[language] = providerIds.Distinct().ToList();
+        if (_providerOrders[language].Count != providerIds.Length)
+            throw new ArgumentException(
+                $"Language '{language}' lists a provider more than once.",
+                nameof(providerIds));
+        return this;
+    }
+
+    /// <summary>Registers a repository provider.</summary>
+    public AndiritHostBuilder AddRepositoryProvider(ICodeRepositoryProvider provider)
+    {
+        ArgumentNullException.ThrowIfNull(provider);
+        _repositoryProviders.Add(provider);
+        return this;
+    }
+
+    /// <summary>Removes all repository providers (including the default filesystem provider).</summary>
+    public AndiritHostBuilder ClearRepositoryProviders()
+    {
+        _repositoryProviders.Clear();
+        return this;
+    }
+
+    /// <summary>Sets indexing bounds (concurrency, byte budgets).</summary>
+    public AndiritHostBuilder WithIndexingOptions(CodeIndexingOptions options)
+    {
+        _indexingOptions = options ?? throw new ArgumentNullException(nameof(options));
+        return this;
+    }
+
+    /// <summary>Builds the host.</summary>
+    public AndiritHost Build()
+    {
+        if (_built)
+            throw new InvalidOperationException("A AndiritHostBuilder can build only one host.");
+
+        // Validate registration sets before acquiring an owned store resource.
+        var pluginRegistry = new CodeGraphPluginRegistry(
+            _plugins,
+            new CodeLanguageProviderMap(
+                _providerOrders.ToDictionary(
+                    pair => pair.Key,
+                    pair => (IReadOnlyList<CodePluginId>)pair.Value.AsReadOnly(),
+                    StringComparer.Ordinal)));
+        var repositoryRegistry = new CodeRepositoryProviderRegistry(_repositoryProviders);
+        _built = true;
+        var store = _storeFactory?.Invoke() ?? new InMemoryCodeGraphStore();
+        try
+        {
+            return new AndiritHost(repositoryRegistry, pluginRegistry, store, _indexingOptions);
+        }
+        catch
+        {
+            switch (store)
+            {
+                case IAsyncDisposable asyncDisposable:
+                    asyncDisposable.DisposeAsync().AsTask().GetAwaiter().GetResult();
+                    break;
+                case IDisposable disposable:
+                    disposable.Dispose();
+                    break;
+            }
+            throw;
+        }
+    }
+}
+
+/// <summary>
+/// A ready-to-use Andirit host combining indexing and query services over one
+/// configured store. Hosts call IndexAsync to index repositories and use
+/// Queries for bounded graph queries.
+/// </summary>
+public sealed class AndiritHost : IAsyncDisposable
+{
+    private readonly ICodeGraphStore _store;
+    private readonly CodeIndexingOptions? _indexingOptions;
+    private readonly IReadOnlyList<CodePluginId> _pluginIds;
+    private readonly IReadOnlyList<string> _repositoryProviderNames;
+
+    internal AndiritHost(
+        CodeRepositoryProviderRegistry repositories,
+        CodeGraphPluginRegistry plugins,
+        ICodeGraphStore store,
+        CodeIndexingOptions? indexingOptions)
+    {
+        _store = store ?? throw new ArgumentNullException(nameof(store));
+        _indexingOptions = indexingOptions;
+        _pluginIds = plugins.Plugins
+            .Select(plugin => plugin.Id)
+            .OrderBy(id => id.Value, StringComparer.Ordinal)
+            .ToArray();
+        _repositoryProviderNames = repositories.Providers
+            .Select(provider => provider.Name)
+            .OrderBy(name => name, StringComparer.Ordinal)
+            .ToArray();
+        Indexing = new CodeIndexingService(repositories, plugins, store);
+        Queries = new CodeGraphQueryService(store);
+    }
+
+    /// <summary>Bounded semantic queries against the published graph.</summary>
+    public CodeGraphQueryService Queries { get; }
+
+    /// <summary>The indexing coordinator for this host.</summary>
+    public CodeIndexingService Indexing { get; }
+
+    /// <summary>Read-only store access for advanced scenarios.</summary>
+    public ICodeGraphReader Reader => _store;
+
+    /// <summary>Indexes a repository and publishes its graph atomically.</summary>
+    public ValueTask<CodeIndexingResult> IndexRepositoryAsync(
+        CodeRepositoryDescriptor descriptor,
+        CodeIndexRunId runId,
+        CodeIndexingOptions? options = null,
+        Action<CodeIndexingDiagnostics>? diagnostics = null,
+        CancellationToken cancellationToken = default) =>
+        Indexing.IndexAsync(
+            descriptor,
+            runId,
+            options ?? _indexingOptions,
+            diagnostics,
+            cancellationToken);
+
+    /// <summary>Compares live repository sources with the published state without indexing.</summary>
+    public ValueTask<CodeFreshnessResult> CheckFreshnessAsync(
+        CodeRepositoryDescriptor descriptor,
+        CodeIndexingOptions? options = null,
+        CancellationToken cancellationToken = default) =>
+        Indexing.CheckFreshnessAsync(
+            descriptor,
+            options ?? _indexingOptions,
+            cancellationToken);
+
+    /// <summary>Opens the latest publication for multi-call context assembly.</summary>
+    public ValueTask<CodeGraphPublicationQuery?> OpenLatestPublicationAsync(
+        CodeRepositoryId repositoryId,
+        CancellationToken cancellationToken = default) =>
+        Queries.OpenLatestPublicationAsync(repositoryId, cancellationToken);
+
+    /// <summary>Checks provider-neutral readiness without reading source content.</summary>
+    public async ValueTask<AndiritHostHealth> CheckHealthAsync(
+        CancellationToken cancellationToken = default)
+    {
+        var storeHealth = _store is ICodeGraphStoreHealthCheck healthCheck
+            ? await healthCheck.CheckHealthAsync(cancellationToken)
+                .ConfigureAwait(false)
+            : new CodeGraphStoreHealth(
+                CodeGraphStoreHealthStatus.Unknown,
+                _store.GetType().Name,
+                "The configured store does not implement ICodeGraphStoreHealthCheck.");
+        return new AndiritHostHealth(
+            storeHealth,
+            _pluginIds,
+            _repositoryProviderNames);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        switch (_store)
+        {
+            case IAsyncDisposable asyncDisposable:
+                await asyncDisposable.DisposeAsync().ConfigureAwait(false);
+                break;
+            case IDisposable disposable:
+                disposable.Dispose();
+                break;
+        }
+    }
+}

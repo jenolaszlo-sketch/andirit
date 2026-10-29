@@ -1,11 +1,11 @@
-# Penghou.Andirit
+# Andirit
 
 Migration from historical Hetu: [migration guide](docs/andirit-migration.md).
 
-[![CI](https://github.com/jenolaszlo-sketch/penghou-andirit/actions/workflows/ci.yml/badge.svg)](https://github.com/jenolaszlo-sketch/penghou-andirit/actions/workflows/ci.yml)
-[![License](https://img.shields.io/github/license/jenolaszlo-sketch/penghou-andirit)](LICENSE)
+[![CI](https://github.com/jenolaszlo-sketch/andirit/actions/workflows/ci.yml/badge.svg)](https://github.com/jenolaszlo-sketch/andirit/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/jenolaszlo-sketch/andirit)](LICENSE)
 
-Penghou.Andirit is an embedded, language-neutral code knowledge graph for .NET.
+Andirit is an embedded, language-neutral code knowledge graph for .NET.
 It turns source repositories into a normalized, queryable graph for repository
 understanding, dependency discovery, impact analysis, and context selection.
 
@@ -46,14 +46,14 @@ semantic milestones and first-release invariants.
 
 | Package | Purpose |
 | --- | --- |
-| `Penghou.Andirit.Abstractions` | Parser-independent graph vocabulary, evidence, extraction sessions, and sinks |
-| `Penghou.Andirit` | Indexing orchestration, validation, in-memory storage, and query services |
-| `Penghou.Andirit.CSharp` | Roslyn-based C# extraction plugin |
-| `Penghou.Andirit.TreeSitter` | Tree-sitter structural extraction plugins (Elixir, TypeScript, and JavaScript) |
-| `Penghou.Andirit.LatticeDb` | Embedded LatticeDB graph-store provider |
-| `Penghou.Andirit.Testing` | Reusable graph-store and plugin contract tests |
+| `Andirit.Abstractions` | Parser-independent graph vocabulary, evidence, extraction sessions, and sinks |
+| `Andirit` | Indexing orchestration, validation, in-memory storage, and query services |
+| `Andirit.CSharp` | Roslyn-based C# extraction plugin |
+| `Andirit.TreeSitter` | Tree-sitter structural extraction plugins (Elixir, TypeScript, and JavaScript) |
+| `Andirit.LatticeDb` | Embedded LatticeDB graph-store provider |
+| `Andirit.Testing` | Reusable graph-store and plugin contract tests |
 
-The future `Penghou.Andirit.Generator` project is reserved for deterministic
+The future `Andirit.Generator` project is reserved for deterministic
 generation of language plugins from grammars and declarative graph mappings.
 It is intentionally outside the first milestone.
 
@@ -106,7 +106,7 @@ await using var sink = new CodeGraphIngestionSink(store);
 // Extraction sessions stream owned CodeGraphBatch values to the sink.
 ```
 
-`Penghou.Andirit.Testing` contains a reusable conformance suite that every durable
+`Andirit.Testing` contains a reusable conformance suite that every durable
 store provider must pass.
 
 Repository discovery is provider-based. Local filesystem discovery is
@@ -208,7 +208,7 @@ failure-isolated from indexing behavior.
 
 ## C# structural extraction
 
-`Penghou.Andirit.CSharp` now provides the first useful Roslyn plugin. It consumes
+`Andirit.CSharp` now provides the first useful Roslyn plugin. It consumes
 provider-neutral source readers, discovers SDK-style `.csproj` inputs without
 requiring a physical filesystem or MSBuild, creates one compilation and atomic
 index unit per project, and emits projects, files, namespaces, types,
@@ -274,13 +274,13 @@ references.
 
 ## Tree-sitter structural extraction
 
-`Penghou.Andirit.TreeSitter` proves Andirit can ingest non-.NET languages without
+`Andirit.TreeSitter` proves Andirit can ingest non-.NET languages without
 changing the graph model. It embeds the Tree-sitter runtime through managed
 bindings and exposes one structural plugin per language: Elixir, TypeScript
 (`.ts`/`.mts`/`.cts`/`.tsx`), and JavaScript (`.js`/`.mjs`/`.cjs`/`.jsx`). All
 grammar pins, including which natives ship with the package and which come
 from the pinned `TreeSitter.DotNet` binding, are recorded in
-`src/Penghou.Andirit.TreeSitter/native/grammar-pins.md`, so indexing stays
+`src/Andirit.TreeSitter/native/grammar-pins.md`, so indexing stays
 offline and reproducible:
 
 ```csharp
@@ -395,7 +395,7 @@ state.
 
 ## LatticeDb persistence
 
-`Penghou.Andirit.LatticeDb` provides `LatticeCodeGraphStore`, an embedded durable
+`Andirit.LatticeDb` provides `LatticeCodeGraphStore`, an embedded durable
 implementation of the same `ICodeGraphStore` contract. It uses the community
 LatticeDbSharp 0.2.0 binding for LatticeDB (an embedded single-file
 property-graph database with Cypher, vector search, full-text search, ACID
@@ -496,8 +496,8 @@ hardening, and integration evidence rather than proving the basic architecture.
 ## Development
 
 ```powershell
-dotnet build Penghou.Andirit.slnx --configuration Release
-dotnet test Penghou.Andirit.slnx --configuration Release --no-build
+dotnet build Andirit.slnx --configuration Release
+dotnet test Andirit.slnx --configuration Release --no-build
 ```
 
 See the [roadmap](ROADMAP.md), [benchmark notes](BENCHMARKS.md), and

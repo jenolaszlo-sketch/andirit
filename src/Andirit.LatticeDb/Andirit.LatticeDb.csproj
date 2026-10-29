@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Andirit\Andirit.csproj" />
+    <ProjectReference Include="..\Andirit.Abstractions\Andirit.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LatticeDbSharp" Version="0.2.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>Andirit.LatticeDb</PackageId>
+    <Title>Andirit LatticeDb Provider</Title>
+    <Authors>Andirit contributors</Authors>
+    <Description>Durable embedded LatticeDB graph store provider for Andirit.</Description>
+    <PackageTags>latticedb;graph-database;code-analysis;knowledge-graph</PackageTags>
+    <RepositoryUrl>https://github.com/jenolaszlo-sketch/andirit</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/jenolaszlo-sketch/andirit</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IsPackable>true</IsPackable>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

@@ -20,46 +20,46 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
-      - run: dotnet restore Penghou.Andirit.slnx
-      - run: dotnet format Penghou.Andirit.slnx --verify-no-changes --no-restore
+      - run: dotnet restore Andirit.slnx
+      - run: dotnet format Andirit.slnx --verify-no-changes --no-restore
       - name: Test and coverage (core)
         run: >
-          dotnet test tests/Penghou.Andirit.Tests/Penghou.Andirit.Tests.csproj
+          dotnet test tests/Andirit.Tests/Andirit.Tests.csproj
           -c Release --no-restore
           /p:CollectCoverage=true
           /p:CoverletOutput=${{ github.workspace }}/coverage/
           /p:CoverletOutputFormat=cobertura
-          '/p:Include=[Penghou.Andirit]*%2c[Penghou.Andirit.Abstractions]*'
+          '/p:Include=[Andirit]*%2c[Andirit.Abstractions]*'
           /p:Threshold=55
           /p:ThresholdType=line%2cbranch
       - name: Test and coverage (CSharp)
         run: >
-          dotnet test tests/Penghou.Andirit.CSharp.Tests/Penghou.Andirit.CSharp.Tests.csproj
+          dotnet test tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj
           -c Release --no-restore
           /p:CollectCoverage=true
           /p:CoverletOutput=${{ github.workspace }}/coverage-csharp/
           /p:CoverletOutputFormat=cobertura
-          '/p:Include=[Penghou.Andirit.CSharp]*'
+          '/p:Include=[Andirit.CSharp]*'
           /p:Threshold=75
           /p:ThresholdType=line%2cbranch
       - name: Test and coverage (TreeSitter)
         run: >
-          dotnet test tests/Penghou.Andirit.TreeSitter.Tests/Penghou.Andirit.TreeSitter.Tests.csproj
+          dotnet test tests/Andirit.TreeSitter.Tests/Andirit.TreeSitter.Tests.csproj
           -c Release --no-restore
           /p:CollectCoverage=true
           /p:CoverletOutput=${{ github.workspace }}/coverage-treesitter/
           /p:CoverletOutputFormat=cobertura
-          '/p:Include=[Penghou.Andirit.TreeSitter]*'
+          '/p:Include=[Andirit.TreeSitter]*'
           /p:Threshold=60
           /p:ThresholdType=line%2cbranch
       - name: Test and coverage (LatticeDb)
         run: >
-          dotnet test tests/Penghou.Andirit.LatticeDb.Tests/Penghou.Andirit.LatticeDb.Tests.csproj
+          dotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj
           -c Release --no-restore
           /p:CollectCoverage=true
           /p:CoverletOutput=${{ github.workspace }}/coverage-latticedb/
           /p:CoverletOutputFormat=cobertura
-          '/p:Include=[Penghou.Andirit.LatticeDb]*'
+          '/p:Include=[Andirit.LatticeDb]*'
           /p:Threshold=70
           /p:ThresholdType=line%2cbranch
       - name: Upload coverage
@@ -81,8 +81,8 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
-      - run: dotnet restore Penghou.Andirit.slnx
-      - run: dotnet pack Penghou.Andirit.slnx -c Release --no-restore --output artifacts/packages
+      - run: dotnet restore Andirit.slnx
+      - run: dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages
       # Pack-consume-load smoke test for the Tree-sitter natives: repack with
       # a unique version (a same-version restore could resolve the published
       # previews instead of these bits), then consume the packages from a clean
@@ -92,5 +92,5 @@ jobs:
       - name: Smoke-test all Andirit packages and Tree-sitter natives
         run: |
           SMOKE_VERSION="0.2.0-preview.6-smoke.${{ github.run_id }}"
-          dotnet pack Penghou.Andirit.slnx -c Release --no-restore --output "${{ github.workspace }}/smoke-packages" -p:Version="$SMOKE_VERSION"
+          dotnet pack Andirit.slnx -c Release --no-restore --output "${{ github.workspace }}/smoke-packages" -p:Version="$SMOKE_VERSION"
           SMOKE_FEED="${{ github.workspace }}/smoke-packages" dotnet run --project smoke/TreeSitterPackage/TreeSitterPackage.csproj -c Release -p:SmokerPackageVersion="$SMOKE_VERSION"

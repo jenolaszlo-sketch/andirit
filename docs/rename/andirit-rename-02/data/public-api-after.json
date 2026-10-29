@@ -1,0 +1,2554 @@
+[
+  {
+    "assembly": "Andirit",
+    "types": [
+      {
+        "name": "Andirit.AndiritBuilder",
+        "members": [
+          "Andirit.AndiritBuilder AddPlugin(Andirit.ICodeGraphPlugin)",
+          "Andirit.AndiritBuilder AddRepositoryProvider(Andirit.ICodeRepositoryProvider)",
+          "Andirit.AndiritBuilder ClearRepositoryProviders()",
+          "Andirit.AndiritBuilder WithLanguageProviders(System.String, Andirit.CodePluginId[])",
+          "Andirit.CodeGraphPluginRegistry BuildPluginRegistry()",
+          "Andirit.CodeRepositoryProviderRegistry BuildRepositoryProviderRegistry()",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Andirit.AndiritHost",
+        "members": [
+          "Andirit.CodeGraphQueryService Queries",
+          "Andirit.CodeGraphQueryService get_Queries()",
+          "Andirit.CodeIndexingService Indexing",
+          "Andirit.CodeIndexingService get_Indexing()",
+          "Andirit.ICodeGraphReader Reader",
+          "Andirit.ICodeGraphReader get_Reader()",
+          "System.Threading.Tasks.ValueTask DisposeAsync()",
+          "System.Threading.Tasks.ValueTask`1[Andirit.AndiritHostHealth] CheckHealthAsync(System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeFreshnessResult] CheckFreshnessAsync(Andirit.CodeRepositoryDescriptor, Andirit.CodeIndexingOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphPublicationQuery] OpenLatestPublicationAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeIndexingResult] IndexRepositoryAsync(Andirit.CodeRepositoryDescriptor, Andirit.CodeIndexRunId, Andirit.CodeIndexingOptions, System.Action`1[Andirit.CodeIndexingDiagnostics], System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Andirit.AndiritHostBuilder",
+        "members": [
+          "Andirit.AndiritHost Build()",
+          "Andirit.AndiritHostBuilder AddPlugin(Andirit.ICodeGraphPlugin)",
+          "Andirit.AndiritHostBuilder AddRepositoryProvider(Andirit.ICodeRepositoryProvider)",
+          "Andirit.AndiritHostBuilder ClearRepositoryProviders()",
+          "Andirit.AndiritHostBuilder UseStore(Andirit.ICodeGraphStore)",
+          "Andirit.AndiritHostBuilder UseStore(System.Func`1[Andirit.ICodeGraphStore])",
+          "Andirit.AndiritHostBuilder WithIndexingOptions(Andirit.CodeIndexingOptions)",
+          "Andirit.AndiritHostBuilder WithLanguageProviders(System.String, Andirit.CodePluginId[])",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Andirit.AndiritHostHealth",
+        "members": [
+          "Andirit.AndiritHostHealth <Clone>$()",
+          "Andirit.CodeGraphStoreHealth Store",
+          "Andirit.CodeGraphStoreHealth get_Store()",
+          "Boolean Equals(Andirit.AndiritHostHealth)",
+          "Boolean Equals(System.Object)",
+          "Boolean IsReady",
+          "Boolean get_IsReady()",
+          "Boolean op_Equality(Andirit.AndiritHostHealth, Andirit.AndiritHostHealth)",
+          "Boolean op_Inequality(Andirit.AndiritHostHealth, Andirit.AndiritHostHealth)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId] PluginIds",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId] get_PluginIds()",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] RepositoryProviderNames",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] get_RepositoryProviderNames()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeGraphStoreHealth, System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId], System.Collections.Generic.IReadOnlyList`1[System.String])",
+          "Void Deconstruct(Andirit.CodeGraphStoreHealth ByRef, System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId] ByRef, System.Collections.Generic.IReadOnlyList`1[System.String] ByRef)",
+          "Void set_PluginIds(System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId])",
+          "Void set_RepositoryProviderNames(System.Collections.Generic.IReadOnlyList`1[System.String])",
+          "Void set_Store(Andirit.CodeGraphStoreHealth)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeAffectedTestsResult",
+        "members": [
+          "Andirit.CodeAffectedTestsResult <Clone>$()",
+          "Boolean Equals(Andirit.CodeAffectedTestsResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean Truncated",
+          "Boolean get_Truncated()",
+          "Boolean op_Equality(Andirit.CodeAffectedTestsResult, Andirit.CodeAffectedTestsResult)",
+          "Boolean op_Inequality(Andirit.CodeAffectedTestsResult, Andirit.CodeAffectedTestsResult)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]] TestsBySeed",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]] get_TestsBySeed()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]], Boolean)",
+          "Void Deconstruct(System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]] ByRef, Boolean ByRef)",
+          "Void set_TestsBySeed(System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]])",
+          "Void set_Truncated(Boolean)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeEnclosingSymbolResult",
+        "members": [
+          "Andirit.CodeEnclosingSymbolResult <Clone>$()",
+          "Andirit.CodeGraphDeclaration Declaration",
+          "Andirit.CodeGraphDeclaration get_Declaration()",
+          "Andirit.CodeGraphNode Symbol",
+          "Andirit.CodeGraphNode get_Symbol()",
+          "Boolean Equals(Andirit.CodeEnclosingSymbolResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeEnclosingSymbolResult, Andirit.CodeEnclosingSymbolResult)",
+          "Boolean op_Inequality(Andirit.CodeEnclosingSymbolResult, Andirit.CodeEnclosingSymbolResult)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeGraphNode, Andirit.CodeGraphDeclaration)",
+          "Void Deconstruct(Andirit.CodeGraphNode ByRef, Andirit.CodeGraphDeclaration ByRef)",
+          "Void set_Declaration(Andirit.CodeGraphDeclaration)",
+          "Void set_Symbol(Andirit.CodeGraphNode)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeFreshnessResult",
+        "members": [
+          "Andirit.CodeFreshnessResult <Clone>$()",
+          "Andirit.CodeFreshnessStatus Status",
+          "Andirit.CodeFreshnessStatus get_Status()",
+          "Andirit.CodeGraphPublication Publication",
+          "Andirit.CodeGraphPublication get_Publication()",
+          "Boolean Equals(Andirit.CodeFreshnessResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeFreshnessResult, Andirit.CodeFreshnessResult)",
+          "Boolean op_Inequality(Andirit.CodeFreshnessResult, Andirit.CodeFreshnessResult)",
+          "Int32 ChangedCount",
+          "Int32 DeletedCount",
+          "Int32 GetHashCode()",
+          "Int32 NewCount",
+          "Int32 UnchangedCount",
+          "Int32 get_ChangedCount()",
+          "Int32 get_DeletedCount()",
+          "Int32 get_NewCount()",
+          "Int32 get_UnchangedCount()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeFreshnessStatus, Andirit.CodeGraphPublication, Int32, Int32, Int32, Int32)",
+          "Void Deconstruct(Andirit.CodeFreshnessStatus ByRef, Andirit.CodeGraphPublication ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef)",
+          "Void set_ChangedCount(Int32)",
+          "Void set_DeletedCount(Int32)",
+          "Void set_NewCount(Int32)",
+          "Void set_Publication(Andirit.CodeGraphPublication)",
+          "Void set_Status(Andirit.CodeFreshnessStatus)",
+          "Void set_UnchangedCount(Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeFreshnessStatus",
+        "members": [
+          "Andirit.CodeFreshnessStatus Fresh",
+          "Andirit.CodeFreshnessStatus SourceConflict",
+          "Andirit.CodeFreshnessStatus Stale",
+          "Andirit.CodeFreshnessStatus Unknown",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphBatchValidator",
+        "members": [
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphValidationError] Validate(Andirit.CodeGraphBatch, Andirit.CodeGraphBatchLimits)",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphDirection",
+        "members": [
+          "Andirit.CodeGraphDirection Both",
+          "Andirit.CodeGraphDirection Incoming",
+          "Andirit.CodeGraphDirection Outgoing",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphFactKind",
+        "members": [
+          "Andirit.CodeGraphFactKind Declaration",
+          "Andirit.CodeGraphFactKind Edge",
+          "Andirit.CodeGraphFactKind Node",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphFactProvenance",
+        "members": [
+          "Andirit.CodeGraphFactKind Kind",
+          "Andirit.CodeGraphFactKind get_Kind()",
+          "Andirit.CodeGraphFactProvenance <Clone>$()",
+          "Boolean Equals(Andirit.CodeGraphFactProvenance)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphFactProvenance, Andirit.CodeGraphFactProvenance)",
+          "Boolean op_Inequality(Andirit.CodeGraphFactProvenance, Andirit.CodeGraphFactProvenance)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeFactOrigin] Contributors",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeFactOrigin] get_Contributors()",
+          "System.String FactId",
+          "System.String ToString()",
+          "System.String get_FactId()",
+          "Void .ctor(Andirit.CodeGraphFactKind, System.String, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeFactOrigin])",
+          "Void Deconstruct(Andirit.CodeGraphFactKind ByRef, System.String ByRef, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeFactOrigin] ByRef)",
+          "Void set_Contributors(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeFactOrigin])",
+          "Void set_FactId(System.String)",
+          "Void set_Kind(Andirit.CodeGraphFactKind)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphIngestionDiagnostics",
+        "members": [
+          "Andirit.CodeGraphIngestionDiagnostics <Clone>$()",
+          "Andirit.CodeIndexRunId IndexRunId",
+          "Andirit.CodeIndexRunId get_IndexRunId()",
+          "Andirit.CodeIndexUnitId IndexUnitId",
+          "Andirit.CodeIndexUnitId get_IndexUnitId()",
+          "Andirit.CodeRepositoryId RepositoryId",
+          "Andirit.CodeRepositoryId get_RepositoryId()",
+          "Boolean Equals(Andirit.CodeGraphIngestionDiagnostics)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphIngestionDiagnostics, Andirit.CodeGraphIngestionDiagnostics)",
+          "Boolean op_Inequality(Andirit.CodeGraphIngestionDiagnostics, Andirit.CodeGraphIngestionDiagnostics)",
+          "Int32 BatchesReceived",
+          "Int32 DeclarationsReceived",
+          "Int32 EdgesReceived",
+          "Int32 GetHashCode()",
+          "Int32 NodesReceived",
+          "Int32 RejectedFacts",
+          "Int32 get_BatchesReceived()",
+          "Int32 get_DeclarationsReceived()",
+          "Int32 get_EdgesReceived()",
+          "Int32 get_NodesReceived()",
+          "Int32 get_RejectedFacts()",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] WarningCodes",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] get_WarningCodes()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, Andirit.CodeIndexUnitId, Int32, Int32, Int32, Int32, Int32, System.Collections.Generic.IReadOnlyList`1[System.String])",
+          "Void Deconstruct(Andirit.CodeRepositoryId ByRef, Andirit.CodeIndexRunId ByRef, Andirit.CodeIndexUnitId ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, System.Collections.Generic.IReadOnlyList`1[System.String] ByRef)",
+          "Void set_BatchesReceived(Int32)",
+          "Void set_DeclarationsReceived(Int32)",
+          "Void set_EdgesReceived(Int32)",
+          "Void set_IndexRunId(Andirit.CodeIndexRunId)",
+          "Void set_IndexUnitId(Andirit.CodeIndexUnitId)",
+          "Void set_NodesReceived(Int32)",
+          "Void set_RejectedFacts(Int32)",
+          "Void set_RepositoryId(Andirit.CodeRepositoryId)",
+          "Void set_WarningCodes(System.Collections.Generic.IReadOnlyList`1[System.String])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphIngestionSink",
+        "members": [
+          "Andirit.CodeGraphBatchLimits Limits",
+          "Andirit.CodeGraphBatchLimits get_Limits()",
+          "System.Threading.Tasks.ValueTask CompleteAsync(System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask DisposeAsync()",
+          "System.Threading.Tasks.ValueTask WriteBatchAsync(Andirit.CodeGraphBatch, System.Threading.CancellationToken)",
+          "Void .ctor(Andirit.ICodeGraphIndexStore, Andirit.CodeGraphBatchLimits, Andirit.CodeGraphBatchValidator, System.Action`1[Andirit.CodeGraphIngestionDiagnostics])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphMultiTraversalResult",
+        "members": [
+          "Andirit.CodeGraphMultiTraversalResult <Clone>$()",
+          "Boolean Equals(Andirit.CodeGraphMultiTraversalResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean Truncated",
+          "Boolean get_Truncated()",
+          "Boolean op_Equality(Andirit.CodeGraphMultiTraversalResult, Andirit.CodeGraphMultiTraversalResult)",
+          "Boolean op_Inequality(Andirit.CodeGraphMultiTraversalResult, Andirit.CodeGraphMultiTraversalResult)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodeGraphTraversalResult] Results",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodeGraphTraversalResult] get_Results()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodeGraphTraversalResult])",
+          "Void Deconstruct(System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodeGraphTraversalResult] ByRef)",
+          "Void set_Results(System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodeGraphTraversalResult])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphPluginRegistry",
+        "members": [
+          "Andirit.CodeLanguageProviderMap ProviderMap",
+          "Andirit.CodeLanguageProviderMap get_ProviderMap()",
+          "Andirit.ICodeGraphPlugin Resolve(System.String)",
+          "Boolean TryGetFallback(Andirit.ICodeGraphPlugin, Andirit.ICodeGraphPlugin ByRef)",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.ICodeGraphPlugin] FindCandidates(System.String)",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.ICodeGraphPlugin] Plugins",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.ICodeGraphPlugin] get_Plugins()",
+          "Void .ctor(System.Collections.Generic.IEnumerable`1[Andirit.ICodeGraphPlugin], Andirit.CodeLanguageProviderMap)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphPluginSelectionException",
+        "members": [
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId] CandidateIds",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId] get_CandidateIds()",
+          "System.String Path",
+          "System.String get_Path()",
+          "Void .ctor(System.String, System.Collections.Generic.IReadOnlyList`1[Andirit.ICodeGraphPlugin])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphPublication",
+        "members": [
+          "Andirit.CodeGraphPublication <Clone>$()",
+          "Andirit.CodeIndexIdentity IndexIdentity",
+          "Andirit.CodeIndexIdentity get_IndexIdentity()",
+          "Andirit.CodeIndexRunId IndexRunId",
+          "Andirit.CodeIndexRunId get_IndexRunId()",
+          "Andirit.CodeRepositoryId RepositoryId",
+          "Andirit.CodeRepositoryId get_RepositoryId()",
+          "Boolean Equals(Andirit.CodeGraphPublication)",
+          "Boolean Equals(System.Object)",
+          "Boolean IsConsistentSnapshot",
+          "Boolean get_IsConsistentSnapshot()",
+          "Boolean op_Equality(Andirit.CodeGraphPublication, Andirit.CodeGraphPublication)",
+          "Boolean op_Inequality(Andirit.CodeGraphPublication, Andirit.CodeGraphPublication)",
+          "Int32 GetHashCode()",
+          "System.String SnapshotIdentity",
+          "System.String ToString()",
+          "System.String get_SnapshotIdentity()",
+          "Void .ctor(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, System.String, Boolean, Andirit.CodeIndexIdentity)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphPublicationChangedException",
+        "members": [
+          "Andirit.CodeGraphPublication Actual",
+          "Andirit.CodeGraphPublication Expected",
+          "Andirit.CodeGraphPublication get_Actual()",
+          "Andirit.CodeGraphPublication get_Expected()",
+          "Void .ctor(Andirit.CodeGraphPublication, Andirit.CodeGraphPublication)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphPublicationQuery",
+        "members": [
+          "Andirit.CodeGraphPublication Publication",
+          "Andirit.CodeGraphPublication get_Publication()",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeAffectedTestsResult]] GetAffectedTestsAsync(System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeNodeId], Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphMultiTraversalResult]] GetImpactSetsAsync(System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeNodeId], Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindCalleesAsync(Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindCallersAsync(Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindDependenciesAsync(Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindDependentsAsync(Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindImplementationsAsync(Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindReferencesAsync(Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] GetImpactSetAsync(Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] GetNeighborhoodAsync(Andirit.CodeNodeId, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeEdgeKind], Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeSymbolLookupResult]] FindSymbolAsync(System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodeSymbolLookupResult]]] ResolveSymbolsAsync(System.Collections.Generic.IReadOnlyCollection`1[System.String], System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]]] FindDeclarationsAsync(Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]]] GetDeclarationsInFileAsync(System.String, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]]] GetPublicSurfaceAsync(System.String, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphQueryDescriptor",
+        "members": [
+          "Andirit.CodeGraphQueryDescriptor <Clone>$()",
+          "Andirit.CodeGraphTraversalQuery Traversal",
+          "Andirit.CodeGraphTraversalQuery get_Traversal()",
+          "Boolean Equals(Andirit.CodeGraphQueryDescriptor)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphQueryDescriptor, Andirit.CodeGraphQueryDescriptor)",
+          "Boolean op_Inequality(Andirit.CodeGraphQueryDescriptor, Andirit.CodeGraphQueryDescriptor)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphTraversalQuery] Traversals",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphTraversalQuery] get_Traversals()",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] QualifiedNames",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] get_QualifiedNames()",
+          "System.String Operation",
+          "System.String QualifiedName",
+          "System.String ToString()",
+          "System.String get_Operation()",
+          "System.String get_QualifiedName()",
+          "Void .ctor(System.String, System.String, Andirit.CodeGraphTraversalQuery, System.Collections.Generic.IReadOnlyList`1[System.String], System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphTraversalQuery])",
+          "Void Deconstruct(System.String ByRef, System.String ByRef, Andirit.CodeGraphTraversalQuery ByRef, System.Collections.Generic.IReadOnlyList`1[System.String] ByRef, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphTraversalQuery] ByRef)",
+          "Void set_Operation(System.String)",
+          "Void set_QualifiedName(System.String)",
+          "Void set_QualifiedNames(System.Collections.Generic.IReadOnlyList`1[System.String])",
+          "Void set_Traversal(Andirit.CodeGraphTraversalQuery)",
+          "Void set_Traversals(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphTraversalQuery])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphQueryEnvelope`1",
+        "members": [
+          "Andirit.CodeGraphPublication Publication",
+          "Andirit.CodeGraphPublication get_Publication()",
+          "Andirit.CodeGraphQueryDescriptor Query",
+          "Andirit.CodeGraphQueryDescriptor get_Query()",
+          "Andirit.CodeGraphQueryEnvelope`1[TResult] <Clone>$()",
+          "Boolean Equals(Andirit.CodeGraphQueryEnvelope`1[TResult])",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphQueryEnvelope`1[TResult], Andirit.CodeGraphQueryEnvelope`1[TResult])",
+          "Boolean op_Inequality(Andirit.CodeGraphQueryEnvelope`1[TResult], Andirit.CodeGraphQueryEnvelope`1[TResult])",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphFactProvenance] Provenance",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphFactProvenance] get_Provenance()",
+          "System.String ToString()",
+          "TResult Result",
+          "TResult get_Result()",
+          "Void .ctor(Andirit.CodeGraphPublication, Andirit.CodeGraphQueryDescriptor, TResult, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphFactProvenance])",
+          "Void Deconstruct(Andirit.CodeGraphPublication ByRef, Andirit.CodeGraphQueryDescriptor ByRef, TResult ByRef, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphFactProvenance] ByRef)",
+          "Void set_Provenance(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphFactProvenance])",
+          "Void set_Publication(Andirit.CodeGraphPublication)",
+          "Void set_Query(Andirit.CodeGraphQueryDescriptor)",
+          "Void set_Result(TResult)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphQueryOptions",
+        "members": [
+          "Andirit.CodeGraphQueryOptions <Clone>$()",
+          "Boolean Equals(Andirit.CodeGraphQueryOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphQueryOptions, Andirit.CodeGraphQueryOptions)",
+          "Boolean op_Inequality(Andirit.CodeGraphQueryOptions, Andirit.CodeGraphQueryOptions)",
+          "Int32 GetHashCode()",
+          "Int32 MaxDepth",
+          "Int32 MaxEdges",
+          "Int32 MaxNodes",
+          "Int32 get_MaxDepth()",
+          "Int32 get_MaxEdges()",
+          "Int32 get_MaxNodes()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.EvidenceQuality] EvidenceQualities",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.EvidenceQuality] get_EvidenceQualities()",
+          "System.String ToString()",
+          "Void .ctor(Int32, Int32, Int32, System.Collections.Generic.IReadOnlyCollection`1[Andirit.EvidenceQuality])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphQueryService",
+        "members": [
+          "Andirit.CodeGraphPublicationQuery Bind(Andirit.CodeGraphPublication)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeAffectedTestsResult] GetAffectedTestsAsync(Andirit.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeNodeId], Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeEnclosingSymbolResult] FindEnclosingSymbolAsync(Andirit.CodeRepositoryId, System.String, Int32, Int32, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphMultiTraversalResult] GetImpactSetsAsync(Andirit.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeNodeId], Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphPublicationQuery] OpenLatestPublicationAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeAffectedTestsResult]] GetAffectedTestsWithProvenanceAsync(Andirit.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeNodeId], Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphMultiTraversalResult]] GetImpactSetsWithProvenanceAsync(Andirit.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeNodeId], Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindCalleesWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindCallersWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindDependenciesWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindDependentsWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindImplementationsWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] FindReferencesWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] GetImpactSetWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] GetNeighborhoodWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeEdgeKind], Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] TraverseWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphDirection, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeEdgeKind], Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeSymbolLookupResult]] FindSymbolWithProvenanceAsync(Andirit.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeSymbolLookupResult]] FindSymbolsByQualifiedNameWithProvenanceAsync(Andirit.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodeSymbolLookupResult]]] ResolveSymbolsWithProvenanceAsync(Andirit.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection`1[System.String], System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]]] FindDeclarationsWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]]] GetDeclarationsInFileWithProvenanceAsync(Andirit.CodeRepositoryId, System.String, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]]] GetPublicSurfaceWithProvenanceAsync(Andirit.CodeRepositoryId, System.String, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] FindCalleesAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] FindCallersAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] FindDependenciesAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] FindDependentsAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] FindImplementationsAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] FindReferencesAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] GetImpactSetAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] GetNeighborhoodAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeEdgeKind], Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeNamePatternResult] FindNodesByNamePatternAsync(Andirit.CodeRepositoryId, System.String, Int32, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeSymbolDiscoveryResult] FindSymbolsAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolDiscoveryQuery, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeSymbolLookupResult] FindSymbolAsync(Andirit.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeSymbolLookupResult] FindSymbolsByQualifiedNameAsync(Andirit.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodeSymbolLookupResult]] ResolveSymbolsAsync(Andirit.CodeRepositoryId, System.Collections.Generic.IReadOnlyCollection`1[System.String], System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]] FindDeclarationsAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]] GetDeclarationsInFileAsync(Andirit.CodeRepositoryId, System.String, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]] GetDeclarationsInProjectAsync(Andirit.CodeRepositoryId, System.String, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]] GetPublicSurfaceAsync(Andirit.CodeRepositoryId, System.String, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]] GetSymbolsInFileAsync(Andirit.CodeRepositoryId, System.String, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]] GetSymbolsInProjectAsync(Andirit.CodeRepositoryId, System.String, Andirit.CodeGraphQueryOptions, System.Threading.CancellationToken)",
+          "Void .ctor(Andirit.ICodeGraphReader)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphStoreException",
+        "members": [
+          "System.String NativeErrorCode",
+          "System.String StoreName",
+          "System.String get_NativeErrorCode()",
+          "System.String get_StoreName()",
+          "Void .ctor(System.String, System.String, System.String, System.Exception)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphStoreHealth",
+        "members": [
+          "Andirit.CodeGraphStoreHealth <Clone>$()",
+          "Andirit.CodeGraphStoreHealthStatus Status",
+          "Andirit.CodeGraphStoreHealthStatus get_Status()",
+          "Boolean Equals(Andirit.CodeGraphStoreHealth)",
+          "Boolean Equals(System.Object)",
+          "Boolean IsHealthy",
+          "Boolean get_IsHealthy()",
+          "Boolean op_Equality(Andirit.CodeGraphStoreHealth, Andirit.CodeGraphStoreHealth)",
+          "Boolean op_Inequality(Andirit.CodeGraphStoreHealth, Andirit.CodeGraphStoreHealth)",
+          "Int32 GetHashCode()",
+          "System.Nullable`1[System.Int32] IndexUnitCount",
+          "System.Nullable`1[System.Int32] RepositoryCount",
+          "System.Nullable`1[System.Int32] RunCount",
+          "System.Nullable`1[System.Int32] SchemaVersion",
+          "System.Nullable`1[System.Int32] get_IndexUnitCount()",
+          "System.Nullable`1[System.Int32] get_RepositoryCount()",
+          "System.Nullable`1[System.Int32] get_RunCount()",
+          "System.Nullable`1[System.Int32] get_SchemaVersion()",
+          "System.String Detail",
+          "System.String StoreName",
+          "System.String ToString()",
+          "System.String get_Detail()",
+          "System.String get_StoreName()",
+          "Void .ctor(Andirit.CodeGraphStoreHealthStatus, System.String, System.String, System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], System.Nullable`1[System.Int32], System.Nullable`1[System.Int32])",
+          "Void Deconstruct(Andirit.CodeGraphStoreHealthStatus ByRef, System.String ByRef, System.String ByRef, System.Nullable`1[System.Int32] ByRef, System.Nullable`1[System.Int32] ByRef, System.Nullable`1[System.Int32] ByRef, System.Nullable`1[System.Int32] ByRef)",
+          "Void set_Detail(System.String)",
+          "Void set_IndexUnitCount(System.Nullable`1[System.Int32])",
+          "Void set_RepositoryCount(System.Nullable`1[System.Int32])",
+          "Void set_RunCount(System.Nullable`1[System.Int32])",
+          "Void set_SchemaVersion(System.Nullable`1[System.Int32])",
+          "Void set_Status(Andirit.CodeGraphStoreHealthStatus)",
+          "Void set_StoreName(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphStoreHealthStatus",
+        "members": [
+          "Andirit.CodeGraphStoreHealthStatus Healthy",
+          "Andirit.CodeGraphStoreHealthStatus Unhealthy",
+          "Andirit.CodeGraphStoreHealthStatus Unknown",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphTraversalQuery",
+        "members": [
+          "Andirit.CodeGraphDirection Direction",
+          "Andirit.CodeGraphDirection get_Direction()",
+          "Andirit.CodeGraphTraversalQuery <Clone>$()",
+          "Andirit.CodeNodeId StartNodeId",
+          "Andirit.CodeNodeId get_StartNodeId()",
+          "Boolean Equals(Andirit.CodeGraphTraversalQuery)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphTraversalQuery, Andirit.CodeGraphTraversalQuery)",
+          "Boolean op_Inequality(Andirit.CodeGraphTraversalQuery, Andirit.CodeGraphTraversalQuery)",
+          "Int32 GetHashCode()",
+          "Int32 MaxDepth",
+          "Int32 MaxEdges",
+          "Int32 MaxNodes",
+          "Int32 get_MaxDepth()",
+          "Int32 get_MaxEdges()",
+          "Int32 get_MaxNodes()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeEdgeKind] EdgeKinds",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeEdgeKind] get_EdgeKinds()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.EvidenceQuality] EvidenceQualities",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.EvidenceQuality] get_EvidenceQualities()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeNodeId, Andirit.CodeGraphDirection, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeEdgeKind], System.Collections.Generic.IReadOnlyCollection`1[Andirit.EvidenceQuality], Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphTraversalResult",
+        "members": [
+          "Andirit.CodeGraphTraversalResult <Clone>$()",
+          "Andirit.CodeGraphTruncationReason TruncationReason",
+          "Andirit.CodeGraphTruncationReason get_TruncationReason()",
+          "Boolean Equals(Andirit.CodeGraphTraversalResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean Truncated",
+          "Boolean get_Truncated()",
+          "Boolean op_Equality(Andirit.CodeGraphTraversalResult, Andirit.CodeGraphTraversalResult)",
+          "Boolean op_Inequality(Andirit.CodeGraphTraversalResult, Andirit.CodeGraphTraversalResult)",
+          "Int32 DepthReached",
+          "Int32 EdgesExamined",
+          "Int32 GetHashCode()",
+          "Int32 NodesExamined",
+          "Int32 OmittedFrontierCount",
+          "Int32 get_DepthReached()",
+          "Int32 get_EdgesExamined()",
+          "Int32 get_NodesExamined()",
+          "Int32 get_OmittedFrontierCount()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphEdge] Edges",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphEdge] get_Edges()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] Nodes",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] get_Nodes()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode], System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphEdge], Boolean, Andirit.CodeGraphTruncationReason, Int32, Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphTruncationReason",
+        "members": [
+          "Andirit.CodeGraphTruncationReason MaxDepth",
+          "Andirit.CodeGraphTruncationReason MaxEdges",
+          "Andirit.CodeGraphTruncationReason MaxNodes",
+          "Andirit.CodeGraphTruncationReason None",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexIdentity",
+        "members": [
+          "Andirit.CodeIndexIdentity <Clone>$()",
+          "Boolean Equals(Andirit.CodeIndexIdentity)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexIdentity, Andirit.CodeIndexIdentity)",
+          "Boolean op_Inequality(Andirit.CodeIndexIdentity, Andirit.CodeIndexIdentity)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexPlan",
+        "members": [
+          "Andirit.CodeIndexPlan <Clone>$()",
+          "Boolean Equals(Andirit.CodeIndexPlan)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexPlan, Andirit.CodeIndexPlan)",
+          "Boolean op_Inequality(Andirit.CodeIndexPlan, Andirit.CodeIndexPlan)",
+          "Int32 DepthLimitedDirectories",
+          "Int32 ExcludedDirectories",
+          "Int32 GetHashCode()",
+          "Int32 ReparsePointsSkipped",
+          "Int32 RepositoryEntries",
+          "Int32 UnsupportedEntries",
+          "Int32 get_DepthLimitedDirectories()",
+          "Int32 get_ExcludedDirectories()",
+          "Int32 get_ReparsePointsSkipped()",
+          "Int32 get_RepositoryEntries()",
+          "Int32 get_UnsupportedEntries()",
+          "Int64 HashBytesRead",
+          "Int64 get_HashBytesRead()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeIndexPlanItem] Items",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeIndexPlanItem] get_Items()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeIndexPlanItem], Int32, Int32, Int64, Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexPlanItem",
+        "members": [
+          "Andirit.CodeIndexPlanItem <Clone>$()",
+          "Andirit.CodeIndexPlanStatus Status",
+          "Andirit.CodeIndexPlanStatus get_Status()",
+          "Andirit.CodeRepositoryEntry Source",
+          "Andirit.CodeRepositoryEntry get_Source()",
+          "Andirit.CodeSourceManifest Manifest",
+          "Andirit.CodeSourceManifest get_Manifest()",
+          "Boolean Equals(Andirit.CodeIndexPlanItem)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexPlanItem, Andirit.CodeIndexPlanItem)",
+          "Boolean op_Inequality(Andirit.CodeIndexPlanItem, Andirit.CodeIndexPlanItem)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeIndexPlanStatus, Andirit.CodeSourceManifest, Andirit.CodeRepositoryEntry)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexPlanStatus",
+        "members": [
+          "Andirit.CodeIndexPlanStatus Changed",
+          "Andirit.CodeIndexPlanStatus Deleted",
+          "Andirit.CodeIndexPlanStatus New",
+          "Andirit.CodeIndexPlanStatus Unchanged",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexPlanner",
+        "members": [
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeIndexPlan] CreatePlanAsync(Andirit.ICodeRepositorySource, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeSourceManifest], Andirit.CodeIndexPlanningOptions, System.Threading.CancellationToken)",
+          "Void .ctor(Andirit.CodeGraphPluginRegistry)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexPlanningOptions",
+        "members": [
+          "Andirit.CodeIndexPlanningOptions <Clone>$()",
+          "Andirit.CodeRepositoryEnumerationOptions Enumeration",
+          "Andirit.CodeRepositoryEnumerationOptions get_Enumeration()",
+          "Boolean Equals(Andirit.CodeIndexPlanningOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexPlanningOptions, Andirit.CodeIndexPlanningOptions)",
+          "Boolean op_Inequality(Andirit.CodeIndexPlanningOptions, Andirit.CodeIndexPlanningOptions)",
+          "Int32 GetHashCode()",
+          "Int64 MaxHashSourceBytes",
+          "Int64 MaxHashTotalBytes",
+          "Int64 get_MaxHashSourceBytes()",
+          "Int64 get_MaxHashTotalBytes()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodePluginId] PluginIds",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodePluginId] get_PluginIds()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeRepositoryEnumerationOptions, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodePluginId], Int64, Int64)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexRunManifest",
+        "members": [
+          "Andirit.CodeIndexRunId Id",
+          "Andirit.CodeIndexRunId get_Id()",
+          "Andirit.CodeIndexRunManifest <Clone>$()",
+          "Andirit.CodeIndexRunStatus Status",
+          "Andirit.CodeIndexRunStatus get_Status()",
+          "Andirit.CodeRepositoryId RepositoryId",
+          "Andirit.CodeRepositoryId get_RepositoryId()",
+          "Boolean Equals(Andirit.CodeIndexRunManifest)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexRunManifest, Andirit.CodeIndexRunManifest)",
+          "Boolean op_Inequality(Andirit.CodeIndexRunManifest, Andirit.CodeIndexRunManifest)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodePluginId] Plugins",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodePluginId] get_Plugins()",
+          "System.DateTimeOffset StartedAt",
+          "System.DateTimeOffset get_StartedAt()",
+          "System.Nullable`1[System.DateTimeOffset] CompletedAt",
+          "System.Nullable`1[System.DateTimeOffset] get_CompletedAt()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, System.DateTimeOffset, Andirit.CodeIndexRunStatus, System.Nullable`1[System.DateTimeOffset], System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodePluginId])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexRunStatus",
+        "members": [
+          "Andirit.CodeIndexRunStatus Cancelled",
+          "Andirit.CodeIndexRunStatus Completed",
+          "Andirit.CodeIndexRunStatus Failed",
+          "Andirit.CodeIndexRunStatus Running",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexUnitReplacement",
+        "members": [
+          "Andirit.CodeFactOrigin Origin",
+          "Andirit.CodeFactOrigin get_Origin()",
+          "Andirit.CodeIndexUnitReplacement <Clone>$()",
+          "Boolean Equals(Andirit.CodeIndexUnitReplacement)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexUnitReplacement, Andirit.CodeIndexUnitReplacement)",
+          "Boolean op_Inequality(Andirit.CodeIndexUnitReplacement, Andirit.CodeIndexUnitReplacement)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration] Declarations",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration] get_Declarations()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphEdge] Edges",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphEdge] get_Edges()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] Nodes",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] get_Nodes()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeFactOrigin, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode], System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration], System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphEdge])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexingDiagnostics",
+        "members": [
+          "Andirit.CodeIndexRunId IndexRunId",
+          "Andirit.CodeIndexRunId get_IndexRunId()",
+          "Andirit.CodeIndexRunStatus Status",
+          "Andirit.CodeIndexRunStatus get_Status()",
+          "Andirit.CodeIndexingDiagnostics <Clone>$()",
+          "Andirit.CodeRepositoryId RepositoryId",
+          "Andirit.CodeRepositoryId get_RepositoryId()",
+          "Boolean Equals(Andirit.CodeIndexingDiagnostics)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexingDiagnostics, Andirit.CodeIndexingDiagnostics)",
+          "Boolean op_Inequality(Andirit.CodeIndexingDiagnostics, Andirit.CodeIndexingDiagnostics)",
+          "Int32 DeclarationsProduced",
+          "Int32 DirectoriesDepthLimited",
+          "Int32 DirectoriesExcluded",
+          "Int32 EdgesProduced",
+          "Int32 FilesChanged",
+          "Int32 FilesDeleted",
+          "Int32 FilesDiscovered",
+          "Int32 FilesNew",
+          "Int32 FilesUnchanged",
+          "Int32 FilesUnsupported",
+          "Int32 GetHashCode()",
+          "Int32 IndexUnitsCompleted",
+          "Int32 IndexUnitsDeleted",
+          "Int32 NodesProduced",
+          "Int32 PluginsExecuted",
+          "Int32 RejectedFacts",
+          "Int32 ReparsePointsSkipped",
+          "Int32 UnresolvedRelationships",
+          "Int32 get_DeclarationsProduced()",
+          "Int32 get_DirectoriesDepthLimited()",
+          "Int32 get_DirectoriesExcluded()",
+          "Int32 get_EdgesProduced()",
+          "Int32 get_FilesChanged()",
+          "Int32 get_FilesDeleted()",
+          "Int32 get_FilesDiscovered()",
+          "Int32 get_FilesNew()",
+          "Int32 get_FilesUnchanged()",
+          "Int32 get_FilesUnsupported()",
+          "Int32 get_IndexUnitsCompleted()",
+          "Int32 get_IndexUnitsDeleted()",
+          "Int32 get_NodesProduced()",
+          "Int32 get_PluginsExecuted()",
+          "Int32 get_RejectedFacts()",
+          "Int32 get_ReparsePointsSkipped()",
+          "Int32 get_UnresolvedRelationships()",
+          "Int64 SourceBytesRead",
+          "Int64 get_SourceBytesRead()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginIndexingDiagnostics] Plugins",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginIndexingDiagnostics] get_Plugins()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeProviderSelection] ProviderSelections",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeProviderSelection] get_ProviderSelections()",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] WarningCodes",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] get_WarningCodes()",
+          "System.String ToString()",
+          "System.TimeSpan ExtractionDuration",
+          "System.TimeSpan PersistenceDuration",
+          "System.TimeSpan PlanningDuration",
+          "System.TimeSpan get_ExtractionDuration()",
+          "System.TimeSpan get_PersistenceDuration()",
+          "System.TimeSpan get_PlanningDuration()",
+          "Void .ctor(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, Andirit.CodeIndexRunStatus, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int64, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32, System.TimeSpan, System.TimeSpan, System.TimeSpan, System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginIndexingDiagnostics], System.Collections.Generic.IReadOnlyList`1[System.String], System.Collections.Generic.IReadOnlyList`1[Andirit.CodeProviderSelection])",
+          "Void Deconstruct(Andirit.CodeRepositoryId ByRef, Andirit.CodeIndexRunId ByRef, Andirit.CodeIndexRunStatus ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int64 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, System.TimeSpan ByRef, System.TimeSpan ByRef, System.TimeSpan ByRef, System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginIndexingDiagnostics] ByRef, System.Collections.Generic.IReadOnlyList`1[System.String] ByRef, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeProviderSelection] ByRef)",
+          "Void set_DeclarationsProduced(Int32)",
+          "Void set_DirectoriesDepthLimited(Int32)",
+          "Void set_DirectoriesExcluded(Int32)",
+          "Void set_EdgesProduced(Int32)",
+          "Void set_ExtractionDuration(System.TimeSpan)",
+          "Void set_FilesChanged(Int32)",
+          "Void set_FilesDeleted(Int32)",
+          "Void set_FilesDiscovered(Int32)",
+          "Void set_FilesNew(Int32)",
+          "Void set_FilesUnchanged(Int32)",
+          "Void set_FilesUnsupported(Int32)",
+          "Void set_IndexRunId(Andirit.CodeIndexRunId)",
+          "Void set_IndexUnitsCompleted(Int32)",
+          "Void set_IndexUnitsDeleted(Int32)",
+          "Void set_NodesProduced(Int32)",
+          "Void set_PersistenceDuration(System.TimeSpan)",
+          "Void set_PlanningDuration(System.TimeSpan)",
+          "Void set_Plugins(System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginIndexingDiagnostics])",
+          "Void set_PluginsExecuted(Int32)",
+          "Void set_ProviderSelections(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeProviderSelection])",
+          "Void set_RejectedFacts(Int32)",
+          "Void set_ReparsePointsSkipped(Int32)",
+          "Void set_RepositoryId(Andirit.CodeRepositoryId)",
+          "Void set_SourceBytesRead(Int64)",
+          "Void set_Status(Andirit.CodeIndexRunStatus)",
+          "Void set_UnresolvedRelationships(Int32)",
+          "Void set_WarningCodes(System.Collections.Generic.IReadOnlyList`1[System.String])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexingOptions",
+        "members": [
+          "Andirit.CodeGraphBatchLimits BatchLimits",
+          "Andirit.CodeGraphBatchLimits get_BatchLimits()",
+          "Andirit.CodeIndexPlanningOptions Planning",
+          "Andirit.CodeIndexPlanningOptions get_Planning()",
+          "Andirit.CodeIndexingOptions <Clone>$()",
+          "Andirit.ProviderFallbackPolicy FallbackPolicy",
+          "Andirit.ProviderFallbackPolicy get_FallbackPolicy()",
+          "Boolean Equals(Andirit.CodeIndexingOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexingOptions, Andirit.CodeIndexingOptions)",
+          "Boolean op_Inequality(Andirit.CodeIndexingOptions, Andirit.CodeIndexingOptions)",
+          "Int32 GetHashCode()",
+          "Int32 MaxConcurrentPlugins",
+          "Int32 get_MaxConcurrentPlugins()",
+          "Int64 MaxSourceBytes",
+          "Int64 MaxTotalSourceBytes",
+          "Int64 get_MaxSourceBytes()",
+          "Int64 get_MaxTotalSourceBytes()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeIndexPlanningOptions, Andirit.CodeGraphBatchLimits, Int32, Int64, Int64, Andirit.ProviderFallbackPolicy)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexingResult",
+        "members": [
+          "Andirit.CodeGraphPublication Publication",
+          "Andirit.CodeGraphPublication get_Publication()",
+          "Andirit.CodeIndexPlan Plan",
+          "Andirit.CodeIndexPlan get_Plan()",
+          "Andirit.CodeIndexingDiagnostics Diagnostics",
+          "Andirit.CodeIndexingDiagnostics get_Diagnostics()",
+          "Andirit.CodeIndexingResult <Clone>$()",
+          "Andirit.CodeRepositoryIndexState PublishedState",
+          "Andirit.CodeRepositoryIndexState get_PublishedState()",
+          "Boolean Equals(Andirit.CodeIndexingResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexingResult, Andirit.CodeIndexingResult)",
+          "Boolean op_Inequality(Andirit.CodeIndexingResult, Andirit.CodeIndexingResult)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeIndexPlan, Andirit.CodeIndexingDiagnostics, Andirit.CodeGraphPublication, Andirit.CodeRepositoryIndexState)",
+          "Void Deconstruct(Andirit.CodeIndexPlan ByRef, Andirit.CodeIndexingDiagnostics ByRef, Andirit.CodeGraphPublication ByRef, Andirit.CodeRepositoryIndexState ByRef)",
+          "Void set_Diagnostics(Andirit.CodeIndexingDiagnostics)",
+          "Void set_Plan(Andirit.CodeIndexPlan)",
+          "Void set_Publication(Andirit.CodeGraphPublication)",
+          "Void set_PublishedState(Andirit.CodeRepositoryIndexState)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexingService",
+        "members": [
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeFreshnessResult] CheckFreshnessAsync(Andirit.CodeRepositoryDescriptor, Andirit.CodeIndexingOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeIndexingResult] IndexAsync(Andirit.CodeRepositoryDescriptor, Andirit.CodeIndexRunId, Andirit.CodeIndexingOptions, System.Action`1[Andirit.CodeIndexingDiagnostics], System.Threading.CancellationToken)",
+          "Void .ctor(Andirit.CodeRepositoryProviderRegistry, Andirit.CodeGraphPluginRegistry, Andirit.ICodeGraphStore, System.TimeProvider)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeLanguageProviderMap",
+        "members": [
+          "Andirit.CodeLanguageProviderMap Empty",
+          "Andirit.CodeLanguageProviderMap get_Empty()",
+          "Boolean IsEmpty",
+          "Boolean TryGetOrder(System.String, System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId] ByRef)",
+          "Boolean get_IsEmpty()",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId]] Orderings",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId]] get_Orderings()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId]])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeNamePatternResult",
+        "members": [
+          "Andirit.CodeNamePatternResult <Clone>$()",
+          "Boolean Equals(Andirit.CodeNamePatternResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean Truncated",
+          "Boolean get_Truncated()",
+          "Boolean op_Equality(Andirit.CodeNamePatternResult, Andirit.CodeNamePatternResult)",
+          "Boolean op_Inequality(Andirit.CodeNamePatternResult, Andirit.CodeNamePatternResult)",
+          "Int32 AbsoluteMaxResults",
+          "Int32 DefaultMaxResults",
+          "Int32 GetHashCode()",
+          "Int32 TotalMatches",
+          "Int32 get_TotalMatches()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] Candidates",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] get_Candidates()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode], Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodePluginIndexingDiagnostics",
+        "members": [
+          "Andirit.CodePluginId PluginId",
+          "Andirit.CodePluginId get_PluginId()",
+          "Andirit.CodePluginIndexingDiagnostics <Clone>$()",
+          "Andirit.CodePluginIndexingStatus Status",
+          "Andirit.CodePluginIndexingStatus get_Status()",
+          "Boolean Equals(Andirit.CodePluginIndexingDiagnostics)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodePluginIndexingDiagnostics, Andirit.CodePluginIndexingDiagnostics)",
+          "Boolean op_Inequality(Andirit.CodePluginIndexingDiagnostics, Andirit.CodePluginIndexingDiagnostics)",
+          "Int32 GetHashCode()",
+          "Int32 ObsoleteIndexUnits",
+          "Int32 SourcesContributingFacts",
+          "Int32 SourcesExamined",
+          "Int32 SourcesSupplied",
+          "Int32 UnresolvedRelationships",
+          "Int32 get_ObsoleteIndexUnits()",
+          "Int32 get_SourcesContributingFacts()",
+          "Int32 get_SourcesExamined()",
+          "Int32 get_SourcesSupplied()",
+          "Int32 get_UnresolvedRelationships()",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] WarningCodes",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] get_WarningCodes()",
+          "System.String PluginVersion",
+          "System.String ToString()",
+          "System.String get_PluginVersion()",
+          "System.TimeSpan Duration",
+          "System.TimeSpan get_Duration()",
+          "Void .ctor(Andirit.CodePluginId, System.String, Andirit.CodePluginIndexingStatus, System.TimeSpan, Int32, Int32, Int32, Int32, Int32, System.Collections.Generic.IReadOnlyList`1[System.String])",
+          "Void Deconstruct(Andirit.CodePluginId ByRef, System.String ByRef, Andirit.CodePluginIndexingStatus ByRef, System.TimeSpan ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, Int32 ByRef, System.Collections.Generic.IReadOnlyList`1[System.String] ByRef)",
+          "Void set_Duration(System.TimeSpan)",
+          "Void set_ObsoleteIndexUnits(Int32)",
+          "Void set_PluginId(Andirit.CodePluginId)",
+          "Void set_PluginVersion(System.String)",
+          "Void set_SourcesContributingFacts(Int32)",
+          "Void set_SourcesExamined(Int32)",
+          "Void set_SourcesSupplied(Int32)",
+          "Void set_Status(Andirit.CodePluginIndexingStatus)",
+          "Void set_UnresolvedRelationships(Int32)",
+          "Void set_WarningCodes(System.Collections.Generic.IReadOnlyList`1[System.String])"
+        ]
+      },
+      {
+        "name": "Andirit.CodePluginIndexingStatus",
+        "members": [
+          "Andirit.CodePluginIndexingStatus Cancelled",
+          "Andirit.CodePluginIndexingStatus Completed",
+          "Andirit.CodePluginIndexingStatus Failed",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeProviderSelection",
+        "members": [
+          "Andirit.CodeGraphCapabilities LostCapabilities",
+          "Andirit.CodeGraphCapabilities get_LostCapabilities()",
+          "Andirit.CodePluginId Preferred",
+          "Andirit.CodePluginId Selected",
+          "Andirit.CodePluginId get_Preferred()",
+          "Andirit.CodePluginId get_Selected()",
+          "Andirit.CodeProviderSelection <Clone>$()",
+          "Boolean Equals(Andirit.CodeProviderSelection)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeProviderSelection, Andirit.CodeProviderSelection)",
+          "Boolean op_Inequality(Andirit.CodeProviderSelection, Andirit.CodeProviderSelection)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId] Attempted",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId] get_Attempted()",
+          "System.Nullable`1[Andirit.CodePluginFailureKind] FailureKind",
+          "System.Nullable`1[Andirit.CodePluginFailureKind] get_FailureKind()",
+          "System.String Language",
+          "System.String Reason",
+          "System.String ToString()",
+          "System.String get_Language()",
+          "System.String get_Reason()",
+          "Void .ctor(System.String, Andirit.CodePluginId, System.Collections.Generic.IReadOnlyList`1[Andirit.CodePluginId], Andirit.CodePluginId, System.Nullable`1[Andirit.CodePluginFailureKind], System.String, Andirit.CodeGraphCapabilities)"
+        ]
+      },
+      {
+        "name": "Andirit.CodePublicationSnapshot",
+        "members": [
+          "Andirit.CodeIndexRunManifest CompletedRun",
+          "Andirit.CodeIndexRunManifest get_CompletedRun()",
+          "Andirit.CodePublicationSnapshot <Clone>$()",
+          "Andirit.CodePublicationSnapshot FromJson(System.String, Andirit.CodeSnapshotOptions)",
+          "Andirit.CodeRepositoryIndexState IndexState",
+          "Andirit.CodeRepositoryIndexState get_IndexState()",
+          "Andirit.CodeRepositoryManifest Repository",
+          "Andirit.CodeRepositoryManifest get_Repository()",
+          "Boolean Equals(Andirit.CodePublicationSnapshot)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodePublicationSnapshot, Andirit.CodePublicationSnapshot)",
+          "Boolean op_Inequality(Andirit.CodePublicationSnapshot, Andirit.CodePublicationSnapshot)",
+          "Int32 CurrentSchemaVersion",
+          "Int32 GetHashCode()",
+          "Int32 SchemaVersion",
+          "Int32 get_SchemaVersion()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeIndexUnitReplacement] Units",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeIndexUnitReplacement] get_Units()",
+          "System.String IntegrityHash",
+          "System.String ToJson()",
+          "System.String ToString()",
+          "System.String get_IntegrityHash()",
+          "System.Threading.Tasks.ValueTask ImportAsync(Andirit.ICodeGraphIndexStore, Andirit.CodeSnapshotOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodePublicationSnapshot] ExportAsync(Andirit.ICodeGraphStore, Andirit.CodeRepositoryId, Andirit.CodeSnapshotOptions, System.Threading.CancellationToken)",
+          "Void .ctor()",
+          "Void set_CompletedRun(Andirit.CodeIndexRunManifest)",
+          "Void set_IndexState(Andirit.CodeRepositoryIndexState)",
+          "Void set_IntegrityHash(System.String)",
+          "Void set_Repository(Andirit.CodeRepositoryManifest)",
+          "Void set_SchemaVersion(Int32)",
+          "Void set_Units(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeIndexUnitReplacement])"
+        ]
+      },
+      {
+        "name": "Andirit.CodePublicationSnapshotException",
+        "members": [
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeQueryOperations",
+        "members": [
+          "System.String AffectedTests",
+          "System.String Declarations",
+          "System.String DeclarationsInFile",
+          "System.String DeclarationsInProject",
+          "System.String EnclosingSymbol",
+          "System.String ImpactSets",
+          "System.String PublicSurface",
+          "System.String QualifiedName",
+          "System.String ResolveSymbols",
+          "System.String SymbolDiscovery",
+          "System.String SymbolsInFile",
+          "System.String SymbolsInProject",
+          "System.String Traversal"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryDescriptor",
+        "members": [
+          "Andirit.CodeRepositoryDescriptor <Clone>$()",
+          "Andirit.CodeRepositoryId Id",
+          "Andirit.CodeRepositoryId get_Id()",
+          "Boolean Equals(Andirit.CodeRepositoryDescriptor)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeRepositoryDescriptor, Andirit.CodeRepositoryDescriptor)",
+          "Boolean op_Inequality(Andirit.CodeRepositoryDescriptor, Andirit.CodeRepositoryDescriptor)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.String] Settings",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.String] get_Settings()",
+          "System.String Location",
+          "System.String ToString()",
+          "System.String get_Location()",
+          "Void .ctor(Andirit.CodeRepositoryId, System.String, System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.String])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryDiscoveryEventKind",
+        "members": [
+          "Andirit.CodeRepositoryDiscoveryEventKind DepthLimitReached",
+          "Andirit.CodeRepositoryDiscoveryEventKind DirectoryExcluded",
+          "Andirit.CodeRepositoryDiscoveryEventKind ReparsePointSkipped",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryEntry",
+        "members": [
+          "Andirit.CodeRepositoryEntry <Clone>$()",
+          "Boolean Equals(Andirit.CodeRepositoryEntry)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeRepositoryEntry, Andirit.CodeRepositoryEntry)",
+          "Boolean op_Inequality(Andirit.CodeRepositoryEntry, Andirit.CodeRepositoryEntry)",
+          "Int32 GetHashCode()",
+          "System.Nullable`1[System.DateTimeOffset] LastModifiedAt",
+          "System.Nullable`1[System.DateTimeOffset] get_LastModifiedAt()",
+          "System.Nullable`1[System.Int64] Length",
+          "System.Nullable`1[System.Int64] get_Length()",
+          "System.String ContentHash",
+          "System.String Path",
+          "System.String ToString()",
+          "System.String Version",
+          "System.String get_ContentHash()",
+          "System.String get_Path()",
+          "System.String get_Version()",
+          "Void .ctor(System.String, System.Nullable`1[System.Int64], System.Nullable`1[System.DateTimeOffset], System.String, System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryEnumerationLimitException",
+        "members": [
+          "Int32 MaximumEntries",
+          "Int32 get_MaximumEntries()",
+          "Void .ctor(Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryEnumerationOptions",
+        "members": [
+          "Andirit.CodeRepositoryEnumerationOptions <Clone>$()",
+          "Boolean Equals(Andirit.CodeRepositoryEnumerationOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeRepositoryEnumerationOptions, Andirit.CodeRepositoryEnumerationOptions)",
+          "Boolean op_Inequality(Andirit.CodeRepositoryEnumerationOptions, Andirit.CodeRepositoryEnumerationOptions)",
+          "Int32 GetHashCode()",
+          "Int32 MaxDepth",
+          "Int32 MaxEntries",
+          "Int32 get_MaxDepth()",
+          "Int32 get_MaxEntries()",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] ExcludedDirectoryNames",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] get_ExcludedDirectoryNames()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyCollection`1[System.String], Int32, Int32, System.Action`1[Andirit.CodeRepositoryDiscoveryEventKind])",
+          "Void Report(Andirit.CodeRepositoryDiscoveryEventKind)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryIndexState",
+        "members": [
+          "Andirit.CodeIndexIdentity IndexIdentity",
+          "Andirit.CodeIndexIdentity get_IndexIdentity()",
+          "Andirit.CodeIndexRunId IndexRunId",
+          "Andirit.CodeIndexRunId get_IndexRunId()",
+          "Andirit.CodeRepositoryId RepositoryId",
+          "Andirit.CodeRepositoryId get_RepositoryId()",
+          "Andirit.CodeRepositoryIndexState <Clone>$()",
+          "Boolean Equals(Andirit.CodeRepositoryIndexState)",
+          "Boolean Equals(System.Object)",
+          "Boolean IsConsistentSnapshot",
+          "Boolean get_IsConsistentSnapshot()",
+          "Boolean op_Equality(Andirit.CodeRepositoryIndexState, Andirit.CodeRepositoryIndexState)",
+          "Boolean op_Inequality(Andirit.CodeRepositoryIndexState, Andirit.CodeRepositoryIndexState)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeSourceManifest] Sources",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeSourceManifest] get_Sources()",
+          "System.String SnapshotIdentity",
+          "System.String ToString()",
+          "System.String get_SnapshotIdentity()",
+          "Void .ctor(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeSourceManifest], System.String, Boolean, Andirit.CodeIndexIdentity)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryManifest",
+        "members": [
+          "Andirit.CodeRepositoryId Id",
+          "Andirit.CodeRepositoryId get_Id()",
+          "Andirit.CodeRepositoryManifest <Clone>$()",
+          "Boolean Equals(Andirit.CodeRepositoryManifest)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeRepositoryManifest, Andirit.CodeRepositoryManifest)",
+          "Boolean op_Inequality(Andirit.CodeRepositoryManifest, Andirit.CodeRepositoryManifest)",
+          "Int32 GetHashCode()",
+          "System.DateTimeOffset RegisteredAt",
+          "System.DateTimeOffset get_RegisteredAt()",
+          "System.String DisplayName",
+          "System.String SourceUri",
+          "System.String ToString()",
+          "System.String get_DisplayName()",
+          "System.String get_SourceUri()",
+          "Void .ctor(Andirit.CodeRepositoryId, System.String, System.String, System.Nullable`1[System.DateTimeOffset])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryProviderNotFoundException",
+        "members": [
+          "Andirit.CodeRepositoryDescriptor Repository",
+          "Andirit.CodeRepositoryDescriptor get_Repository()",
+          "Void .ctor(Andirit.CodeRepositoryDescriptor)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryProviderRegistry",
+        "members": [
+          "Andirit.ICodeRepositoryProvider Resolve(Andirit.CodeRepositoryDescriptor)",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.ICodeRepositoryProvider] FindCandidates(Andirit.CodeRepositoryDescriptor)",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.ICodeRepositoryProvider] Providers",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.ICodeRepositoryProvider] get_Providers()",
+          "System.Threading.Tasks.ValueTask`1[Andirit.ICodeRepositorySource] OpenAsync(Andirit.CodeRepositoryDescriptor, System.Threading.CancellationToken)",
+          "Void .ctor(System.Collections.Generic.IEnumerable`1[Andirit.ICodeRepositoryProvider])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryProviderSelectionException",
+        "members": [
+          "Andirit.CodeRepositoryDescriptor Repository",
+          "Andirit.CodeRepositoryDescriptor get_Repository()",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] CandidateNames",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] get_CandidateNames()",
+          "Void .ctor(Andirit.CodeRepositoryDescriptor, System.Collections.Generic.IReadOnlyList`1[Andirit.ICodeRepositoryProvider])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeSnapshotOptions",
+        "members": [
+          "Andirit.CodeSnapshotOptions <Clone>$()",
+          "Boolean Equals(Andirit.CodeSnapshotOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeSnapshotOptions, Andirit.CodeSnapshotOptions)",
+          "Boolean op_Inequality(Andirit.CodeSnapshotOptions, Andirit.CodeSnapshotOptions)",
+          "Int32 GetHashCode()",
+          "Int32 MaxBytes",
+          "Int32 MaxEdges",
+          "Int32 MaxNodes",
+          "Int32 MaxUnits",
+          "Int32 get_MaxBytes()",
+          "Int32 get_MaxEdges()",
+          "Int32 get_MaxNodes()",
+          "Int32 get_MaxUnits()",
+          "System.String ToString()",
+          "Void .ctor()",
+          "Void set_MaxBytes(Int32)",
+          "Void set_MaxEdges(Int32)",
+          "Void set_MaxNodes(Int32)",
+          "Void set_MaxUnits(Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeSourceChangedDuringIndexingException",
+        "members": [
+          "System.String Path",
+          "System.String get_Path()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeSourceManifest",
+        "members": [
+          "Andirit.CodePluginId PluginId",
+          "Andirit.CodePluginId get_PluginId()",
+          "Andirit.CodeSourceManifest <Clone>$()",
+          "Boolean Equals(Andirit.CodeSourceManifest)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeSourceManifest, Andirit.CodeSourceManifest)",
+          "Boolean op_Inequality(Andirit.CodeSourceManifest, Andirit.CodeSourceManifest)",
+          "Int32 GetHashCode()",
+          "System.String PluginVersion",
+          "System.String SourceHash",
+          "System.String SourcePath",
+          "System.String ToString()",
+          "System.String get_PluginVersion()",
+          "System.String get_SourceHash()",
+          "System.String get_SourcePath()",
+          "Void .ctor(Andirit.CodePluginId, System.String, System.String, System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeSourceSizeLimitException",
+        "members": [
+          "Boolean IsTotalLimit",
+          "Boolean get_IsTotalLimit()",
+          "Int64 MaximumBytes",
+          "Int64 get_MaximumBytes()",
+          "System.String Path",
+          "System.String get_Path()",
+          "Void .ctor(System.String, Int64, Boolean)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeSymbolDiscoveryQuery",
+        "members": [
+          "Andirit.CodeNodeId ContainerId",
+          "Andirit.CodeNodeId get_ContainerId()",
+          "Andirit.CodeSymbolDiscoveryQuery <Clone>$()",
+          "Boolean Equals(Andirit.CodeSymbolDiscoveryQuery)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeSymbolDiscoveryQuery, Andirit.CodeSymbolDiscoveryQuery)",
+          "Boolean op_Inequality(Andirit.CodeSymbolDiscoveryQuery, Andirit.CodeSymbolDiscoveryQuery)",
+          "Int32 GetHashCode()",
+          "Int32 MaxResults",
+          "Int32 get_MaxResults()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeNodeKind] NodeKinds",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeNodeKind] get_NodeKinds()",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] Languages",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] get_Languages()",
+          "System.String NamePattern",
+          "System.String ProjectPath",
+          "System.String ToString()",
+          "System.String get_NamePattern()",
+          "System.String get_ProjectPath()",
+          "Void .ctor(System.String, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeNodeKind], System.Collections.Generic.IReadOnlyCollection`1[System.String], Andirit.CodeNodeId, System.String, Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeSymbolDiscoveryResult",
+        "members": [
+          "Andirit.CodeSymbolDiscoveryResult <Clone>$()",
+          "Boolean Equals(Andirit.CodeSymbolDiscoveryResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean Truncated",
+          "Boolean get_Truncated()",
+          "Boolean op_Equality(Andirit.CodeSymbolDiscoveryResult, Andirit.CodeSymbolDiscoveryResult)",
+          "Boolean op_Inequality(Andirit.CodeSymbolDiscoveryResult, Andirit.CodeSymbolDiscoveryResult)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] Symbols",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] get_Symbols()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode], Boolean)",
+          "Void Deconstruct(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] ByRef, Boolean ByRef)",
+          "Void set_Symbols(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode])",
+          "Void set_Truncated(Boolean)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeSymbolLookupResult",
+        "members": [
+          "Andirit.CodeGraphNode SingleOrDefault",
+          "Andirit.CodeGraphNode get_SingleOrDefault()",
+          "Andirit.CodeSymbolLookupResult <Clone>$()",
+          "Boolean Equals(Andirit.CodeSymbolLookupResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean IsAmbiguous",
+          "Boolean get_IsAmbiguous()",
+          "Boolean op_Equality(Andirit.CodeSymbolLookupResult, Andirit.CodeSymbolLookupResult)",
+          "Boolean op_Inequality(Andirit.CodeSymbolLookupResult, Andirit.CodeSymbolLookupResult)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] Candidates",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] get_Candidates()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode])",
+          "Void Deconstruct(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] ByRef)",
+          "Void set_Candidates(System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode])"
+        ]
+      },
+      {
+        "name": "Andirit.FileSystemCodeRepositoryProvider",
+        "members": [
+          "Boolean CanOpen(Andirit.CodeRepositoryDescriptor)",
+          "System.String Name",
+          "System.String get_Name()",
+          "System.Threading.Tasks.ValueTask`1[Andirit.ICodeRepositorySource] OpenAsync(Andirit.CodeRepositoryDescriptor, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Andirit.ICodeGraphIndexStore",
+        "members": [
+          "System.Threading.Tasks.ValueTask CompleteIndexRunAsync(Andirit.CodeIndexRunManifest, Andirit.CodeRepositoryIndexState, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitAsync(Andirit.CodeIndexUnitReplacement, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitDeletionAsync(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, Andirit.CodePluginId, Andirit.CodeIndexUnitId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StoreIndexRunAsync(Andirit.CodeIndexRunManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask UpsertRepositoryAsync(Andirit.CodeRepositoryManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeIndexRunManifest] GetIndexRunAsync(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeRepositoryIndexState] GetLatestIndexStateAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeRepositoryManifest] GetRepositoryAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Andirit.ICodeGraphReader",
+        "members": [
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphNode] FindSymbolAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphNode] GetNodeAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphPublication] GetLatestPublicationAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] TraverseWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]]] GetDeclarationsWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]]] FindNodesByQualifiedNameWithProvenanceAsync(Andirit.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] TraverseAsync(Andirit.CodeRepositoryId, Andirit.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeNamePatternResult] FindNodesByNamePatternAsync(Andirit.CodeRepositoryId, System.String, Int32, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]] GetDeclarationsAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]] FindNodesByQualifiedNameAsync(Andirit.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeIndexUnitReplacement]] GetPublishedUnitsAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Andirit.ICodeGraphStore",
+        "members": []
+      },
+      {
+        "name": "Andirit.ICodeGraphStoreHealthCheck",
+        "members": [
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphStoreHealth] CheckHealthAsync(System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Andirit.ICodeRepositoryProvider",
+        "members": [
+          "Boolean CanOpen(Andirit.CodeRepositoryDescriptor)",
+          "System.String Name",
+          "System.String get_Name()",
+          "System.Threading.Tasks.ValueTask`1[Andirit.ICodeRepositorySource] OpenAsync(Andirit.CodeRepositoryDescriptor, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Andirit.ICodeRepositorySource",
+        "members": [
+          "Andirit.CodeRepositoryId RepositoryId",
+          "Andirit.CodeRepositoryId get_RepositoryId()",
+          "Boolean IsConsistentSnapshot",
+          "Boolean get_IsConsistentSnapshot()",
+          "System.Collections.Generic.IAsyncEnumerable`1[Andirit.CodeRepositoryEntry] EnumerateAsync(Andirit.CodeRepositoryEnumerationOptions, System.Threading.CancellationToken)",
+          "System.String ProviderName",
+          "System.String SnapshotIdentity",
+          "System.String get_ProviderName()",
+          "System.String get_SnapshotIdentity()",
+          "System.Threading.Tasks.ValueTask`1[System.IO.Stream] OpenReadAsync(Andirit.CodeRepositoryEntry, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Andirit.InMemoryCodeGraphStore",
+        "members": [
+          "System.Threading.Tasks.ValueTask CompleteIndexRunAsync(Andirit.CodeIndexRunManifest, Andirit.CodeRepositoryIndexState, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitAsync(Andirit.CodeIndexUnitReplacement, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitDeletionAsync(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, Andirit.CodePluginId, Andirit.CodeIndexUnitId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StoreIndexRunAsync(Andirit.CodeIndexRunManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask UpsertRepositoryAsync(Andirit.CodeRepositoryManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphNode] FindSymbolAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphNode] GetNodeAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphPublication] GetLatestPublicationAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] TraverseWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]]] GetDeclarationsWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]]] FindNodesByQualifiedNameWithProvenanceAsync(Andirit.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphStoreHealth] CheckHealthAsync(System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] TraverseAsync(Andirit.CodeRepositoryId, Andirit.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeIndexRunManifest] GetIndexRunAsync(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeNamePatternResult] FindNodesByNamePatternAsync(Andirit.CodeRepositoryId, System.String, Int32, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeRepositoryIndexState] GetLatestIndexStateAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeRepositoryManifest] GetRepositoryAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]] GetDeclarationsAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]] FindNodesByQualifiedNameAsync(Andirit.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeIndexUnitReplacement]] GetPublishedUnitsAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Andirit.ProviderFallbackPolicy",
+        "members": [
+          "Andirit.ProviderFallbackPolicy None",
+          "Andirit.ProviderFallbackPolicy OnFailure",
+          "Andirit.ProviderFallbackPolicy OnUnavailable",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.ProviderFallbackPolicyExtensions",
+        "members": [
+          "Boolean IsFallbackEligible(Andirit.ProviderFallbackPolicy, Andirit.CodePluginFailureKind)",
+          "System.String ToWarningCode(Andirit.CodePluginFailureKind)"
+        ]
+      }
+    ]
+  },
+  {
+    "assembly": "Andirit.Abstractions",
+    "types": [
+      {
+        "name": "Andirit.CodeBooleanProperty",
+        "members": [
+          "Andirit.CodeBooleanProperty <Clone>$()",
+          "Boolean Equals(Andirit.CodeBooleanProperty)",
+          "Boolean Equals(Andirit.CodePropertyValue)",
+          "Boolean Equals(System.Object)",
+          "Boolean Value",
+          "Boolean get_Value()",
+          "Boolean op_Equality(Andirit.CodeBooleanProperty, Andirit.CodeBooleanProperty)",
+          "Boolean op_Inequality(Andirit.CodeBooleanProperty, Andirit.CodeBooleanProperty)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "Void .ctor(Boolean)",
+          "Void Deconstruct(Boolean ByRef)",
+          "Void set_Value(Boolean)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeDeclarationId",
+        "members": [
+          "Andirit.CodeDeclarationId <Clone>$()",
+          "Boolean Equals(Andirit.CodeDeclarationId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeDeclarationId, Andirit.CodeDeclarationId)",
+          "Boolean op_Inequality(Andirit.CodeDeclarationId, Andirit.CodeDeclarationId)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeEdgeId",
+        "members": [
+          "Andirit.CodeEdgeId <Clone>$()",
+          "Boolean Equals(Andirit.CodeEdgeId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeEdgeId, Andirit.CodeEdgeId)",
+          "Boolean op_Inequality(Andirit.CodeEdgeId, Andirit.CodeEdgeId)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeEdgeKind",
+        "members": [
+          "Andirit.CodeEdgeKind <Clone>$()",
+          "Boolean Equals(Andirit.CodeEdgeKind)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeEdgeKind, Andirit.CodeEdgeKind)",
+          "Boolean op_Inequality(Andirit.CodeEdgeKind, Andirit.CodeEdgeKind)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeEdgeKinds",
+        "members": [
+          "Andirit.CodeEdgeKind Accepts",
+          "Andirit.CodeEdgeKind Calls",
+          "Andirit.CodeEdgeKind Contains",
+          "Andirit.CodeEdgeKind Declares",
+          "Andirit.CodeEdgeKind DependsOn",
+          "Andirit.CodeEdgeKind ExercisedBy",
+          "Andirit.CodeEdgeKind Exports",
+          "Andirit.CodeEdgeKind Implements",
+          "Andirit.CodeEdgeKind Imports",
+          "Andirit.CodeEdgeKind Inherits",
+          "Andirit.CodeEdgeKind InvokesName",
+          "Andirit.CodeEdgeKind References",
+          "Andirit.CodeEdgeKind ResolvesTo",
+          "Andirit.CodeEdgeKind Returns"
+        ]
+      },
+      {
+        "name": "Andirit.CodeEvidence",
+        "members": [
+          "Andirit.CodeEvidence <Clone>$()",
+          "Andirit.CodeLocation Location",
+          "Andirit.CodeLocation get_Location()",
+          "Andirit.EvidenceQuality Quality",
+          "Andirit.EvidenceQuality get_Quality()",
+          "Boolean Equals(Andirit.CodeEvidence)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeEvidence, Andirit.CodeEvidence)",
+          "Boolean op_Inequality(Andirit.CodeEvidence, Andirit.CodeEvidence)",
+          "Int32 GetHashCode()",
+          "System.Nullable`1[System.Double] Confidence",
+          "System.Nullable`1[System.Double] get_Confidence()",
+          "System.String Provider",
+          "System.String ProviderVersion",
+          "System.String ToString()",
+          "System.String get_Provider()",
+          "System.String get_ProviderVersion()",
+          "Void .ctor(Andirit.EvidenceQuality, System.String, System.String, Andirit.CodeLocation, System.Nullable`1[System.Double])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeFactOrigin",
+        "members": [
+          "Andirit.CodeFactOrigin <Clone>$()",
+          "Andirit.CodeIndexRunId IndexRunId",
+          "Andirit.CodeIndexRunId get_IndexRunId()",
+          "Andirit.CodeIndexUnitId IndexUnitId",
+          "Andirit.CodeIndexUnitId get_IndexUnitId()",
+          "Andirit.CodePluginId PluginId",
+          "Andirit.CodePluginId get_PluginId()",
+          "Andirit.CodeRepositoryId RepositoryId",
+          "Andirit.CodeRepositoryId get_RepositoryId()",
+          "Boolean Equals(Andirit.CodeFactOrigin)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeFactOrigin, Andirit.CodeFactOrigin)",
+          "Boolean op_Inequality(Andirit.CodeFactOrigin, Andirit.CodeFactOrigin)",
+          "Int32 GetHashCode()",
+          "System.String PluginVersion",
+          "System.String SourceHash",
+          "System.String SourcePath",
+          "System.String ToString()",
+          "System.String get_PluginVersion()",
+          "System.String get_SourceHash()",
+          "System.String get_SourcePath()",
+          "Void .ctor(Andirit.CodeRepositoryId, Andirit.CodePluginId, System.String, Andirit.CodeIndexRunId, Andirit.CodeIndexUnitId, System.String, System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphBatch",
+        "members": [
+          "Andirit.CodeFactOrigin Origin",
+          "Andirit.CodeFactOrigin get_Origin()",
+          "Andirit.CodeGraphBatch <Clone>$()",
+          "Boolean CompletesIndexUnit",
+          "Boolean Equals(Andirit.CodeGraphBatch)",
+          "Boolean Equals(System.Object)",
+          "Boolean get_CompletesIndexUnit()",
+          "Boolean op_Equality(Andirit.CodeGraphBatch, Andirit.CodeGraphBatch)",
+          "Boolean op_Inequality(Andirit.CodeGraphBatch, Andirit.CodeGraphBatch)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration] Declarations",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration] get_Declarations()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphEdge] Edges",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphEdge] get_Edges()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] Nodes",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode] get_Nodes()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeFactOrigin, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode], System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration], System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphEdge], Boolean)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphBatchLimits",
+        "members": [
+          "Andirit.CodeGraphBatchLimits <Clone>$()",
+          "Boolean Equals(Andirit.CodeGraphBatchLimits)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphBatchLimits, Andirit.CodeGraphBatchLimits)",
+          "Boolean op_Inequality(Andirit.CodeGraphBatchLimits, Andirit.CodeGraphBatchLimits)",
+          "Int32 GetHashCode()",
+          "Int32 MaxBatchesPerIndexUnit",
+          "Int32 MaxDeclarations",
+          "Int32 MaxEdges",
+          "Int32 MaxFactsPerIndexUnit",
+          "Int32 MaxNodes",
+          "Int32 MaxPropertiesPerFact",
+          "Int32 MaxTextListItems",
+          "Int32 MaxTextPropertyLength",
+          "Int32 get_MaxBatchesPerIndexUnit()",
+          "Int32 get_MaxDeclarations()",
+          "Int32 get_MaxEdges()",
+          "Int32 get_MaxFactsPerIndexUnit()",
+          "Int32 get_MaxNodes()",
+          "Int32 get_MaxPropertiesPerFact()",
+          "Int32 get_MaxTextListItems()",
+          "Int32 get_MaxTextPropertyLength()",
+          "System.String ToString()",
+          "Void .ctor(Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphBatchRejectedException",
+        "members": [
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphValidationError] Errors",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphValidationError] get_Errors()",
+          "Void .ctor(System.String, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphValidationError])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphCapabilities",
+        "members": [
+          "Andirit.CodeGraphCapabilities Calls",
+          "Andirit.CodeGraphCapabilities DataFlow",
+          "Andirit.CodeGraphCapabilities Declarations",
+          "Andirit.CodeGraphCapabilities Diagnostics",
+          "Andirit.CodeGraphCapabilities Imports",
+          "Andirit.CodeGraphCapabilities Inheritance",
+          "Andirit.CodeGraphCapabilities None",
+          "Andirit.CodeGraphCapabilities References",
+          "Andirit.CodeGraphCapabilities Symbols",
+          "Andirit.CodeGraphCapabilities Syntax",
+          "Andirit.CodeGraphCapabilities Types",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphDeclaration",
+        "members": [
+          "Andirit.CodeDeclarationId Id",
+          "Andirit.CodeDeclarationId get_Id()",
+          "Andirit.CodeGraphDeclaration <Clone>$()",
+          "Andirit.CodeLocation Location",
+          "Andirit.CodeLocation get_Location()",
+          "Andirit.CodeNodeId SymbolNodeId",
+          "Andirit.CodeNodeId get_SymbolNodeId()",
+          "Andirit.CodeSymbolId SymbolId",
+          "Andirit.CodeSymbolId get_SymbolId()",
+          "Boolean Equals(Andirit.CodeGraphDeclaration)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphDeclaration, Andirit.CodeGraphDeclaration)",
+          "Boolean op_Inequality(Andirit.CodeGraphDeclaration, Andirit.CodeGraphDeclaration)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodePropertyValue] Properties",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodePropertyValue] get_Properties()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeDeclarationId, Andirit.CodeSymbolId, Andirit.CodeNodeId, Andirit.CodeLocation, System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodePropertyValue])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphEdge",
+        "members": [
+          "Andirit.CodeEdgeId Id",
+          "Andirit.CodeEdgeId get_Id()",
+          "Andirit.CodeEdgeKind Kind",
+          "Andirit.CodeEdgeKind get_Kind()",
+          "Andirit.CodeEvidence Evidence",
+          "Andirit.CodeEvidence get_Evidence()",
+          "Andirit.CodeGraphEdge <Clone>$()",
+          "Andirit.CodeNodeId SourceId",
+          "Andirit.CodeNodeId TargetId",
+          "Andirit.CodeNodeId get_SourceId()",
+          "Andirit.CodeNodeId get_TargetId()",
+          "Boolean Equals(Andirit.CodeGraphEdge)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphEdge, Andirit.CodeGraphEdge)",
+          "Boolean op_Inequality(Andirit.CodeGraphEdge, Andirit.CodeGraphEdge)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodePropertyValue] Properties",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodePropertyValue] get_Properties()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeEdgeId, Andirit.CodeNodeId, Andirit.CodeNodeId, Andirit.CodeEdgeKind, Andirit.CodeEvidence, System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodePropertyValue])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphExtractionResult",
+        "members": [
+          "Andirit.CodeGraphExtractionResult <Clone>$()",
+          "Boolean Equals(Andirit.CodeGraphExtractionResult)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphExtractionResult, Andirit.CodeGraphExtractionResult)",
+          "Boolean op_Inequality(Andirit.CodeGraphExtractionResult, Andirit.CodeGraphExtractionResult)",
+          "Int32 GetHashCode()",
+          "Int32 SourcesContributingFacts",
+          "Int32 SourcesExamined",
+          "Int32 UnresolvedRelationships",
+          "Int32 get_SourcesContributingFacts()",
+          "Int32 get_SourcesExamined()",
+          "Int32 get_UnresolvedRelationships()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeIndexUnitCoverage] IndexUnitCoverage",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeIndexUnitCoverage] get_IndexUnitCoverage()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeIndexUnitId] ObsoleteIndexUnits",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeIndexUnitId] get_ObsoleteIndexUnits()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeRelationshipCoverage] RelationshipCoverage",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeRelationshipCoverage] get_RelationshipCoverage()",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] WarningCodes",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] get_WarningCodes()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeIndexUnitId], Int32, Int32, Int32, System.Collections.Generic.IReadOnlyCollection`1[System.String], System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeRelationshipCoverage], System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeIndexUnitCoverage])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphNode",
+        "members": [
+          "Andirit.CodeGraphNode <Clone>$()",
+          "Andirit.CodeNodeId Id",
+          "Andirit.CodeNodeId get_Id()",
+          "Andirit.CodeNodeKind Kind",
+          "Andirit.CodeNodeKind get_Kind()",
+          "Andirit.CodeSymbolId SymbolId",
+          "Andirit.CodeSymbolId get_SymbolId()",
+          "Boolean Equals(Andirit.CodeGraphNode)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphNode, Andirit.CodeGraphNode)",
+          "Boolean op_Inequality(Andirit.CodeGraphNode, Andirit.CodeGraphNode)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodePropertyValue] Properties",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodePropertyValue] get_Properties()",
+          "System.String Name",
+          "System.String QualifiedName",
+          "System.String ToString()",
+          "System.String get_Name()",
+          "System.String get_QualifiedName()",
+          "Void .ctor(Andirit.CodeNodeId, Andirit.CodeNodeKind, System.String, System.String, Andirit.CodeSymbolId, System.Collections.Generic.IReadOnlyDictionary`2[System.String,Andirit.CodePropertyValue])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphPluginContext",
+        "members": [
+          "Andirit.CodeGraphPluginContext <Clone>$()",
+          "Andirit.CodeIndexRunId IndexRunId",
+          "Andirit.CodeIndexRunId get_IndexRunId()",
+          "Andirit.CodeRepositoryId RepositoryId",
+          "Andirit.CodeRepositoryId get_RepositoryId()",
+          "Boolean Equals(Andirit.CodeGraphPluginContext)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphPluginContext, Andirit.CodeGraphPluginContext)",
+          "Boolean op_Inequality(Andirit.CodeGraphPluginContext, Andirit.CodeGraphPluginContext)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeIndexUnitId] PreviousIndexUnits",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeIndexUnitId] get_PreviousIndexUnits()",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.String] Settings",
+          "System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.String] get_Settings()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphSourceChange] Changes",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphSourceChange] get_Changes()",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphSource] Sources",
+          "System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphSource] get_Sources()",
+          "System.String RepositoryLocation",
+          "System.String ToString()",
+          "System.String get_RepositoryLocation()",
+          "Void .ctor(Andirit.CodeRepositoryId, System.String, Andirit.CodeIndexRunId, System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphSource], System.Collections.Generic.IReadOnlyDictionary`2[System.String,System.String], System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphSourceChange], System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeIndexUnitId])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphSource",
+        "members": [
+          "System.String ContentHash",
+          "System.String Path",
+          "System.String get_ContentHash()",
+          "System.String get_Path()",
+          "System.Threading.Tasks.ValueTask`1[System.IO.Stream] OpenReadAsync(System.Threading.CancellationToken)",
+          "Void .ctor(System.String, System.String, System.Func`2[System.Threading.CancellationToken,System.Threading.Tasks.ValueTask`1[System.IO.Stream]])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphSourceChange",
+        "members": [
+          "Andirit.CodeGraphSourceChange <Clone>$()",
+          "Andirit.CodeGraphSourceChangeKind Kind",
+          "Andirit.CodeGraphSourceChangeKind get_Kind()",
+          "Boolean Equals(Andirit.CodeGraphSourceChange)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphSourceChange, Andirit.CodeGraphSourceChange)",
+          "Boolean op_Inequality(Andirit.CodeGraphSourceChange, Andirit.CodeGraphSourceChange)",
+          "Int32 GetHashCode()",
+          "System.String CurrentHash",
+          "System.String Path",
+          "System.String PreviousHash",
+          "System.String ToString()",
+          "System.String get_CurrentHash()",
+          "System.String get_Path()",
+          "System.String get_PreviousHash()",
+          "Void .ctor(System.String, Andirit.CodeGraphSourceChangeKind, System.String, System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphSourceChangeKind",
+        "members": [
+          "Andirit.CodeGraphSourceChangeKind Changed",
+          "Andirit.CodeGraphSourceChangeKind Deleted",
+          "Andirit.CodeGraphSourceChangeKind New",
+          "Andirit.CodeGraphSourceChangeKind Unchanged",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphValidationError",
+        "members": [
+          "Andirit.CodeGraphValidationError <Clone>$()",
+          "Andirit.CodeGraphValidationErrorKind Kind",
+          "Andirit.CodeGraphValidationErrorKind get_Kind()",
+          "Boolean Equals(Andirit.CodeGraphValidationError)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeGraphValidationError, Andirit.CodeGraphValidationError)",
+          "Boolean op_Inequality(Andirit.CodeGraphValidationError, Andirit.CodeGraphValidationError)",
+          "Int32 GetHashCode()",
+          "System.String Code",
+          "System.String FactId",
+          "System.String Message",
+          "System.String ToString()",
+          "System.String get_Code()",
+          "System.String get_FactId()",
+          "System.String get_Message()",
+          "Void .ctor(Andirit.CodeGraphValidationErrorKind, System.String, System.String, System.String)",
+          "Void Deconstruct(Andirit.CodeGraphValidationErrorKind ByRef, System.String ByRef, System.String ByRef, System.String ByRef)",
+          "Void set_Code(System.String)",
+          "Void set_FactId(System.String)",
+          "Void set_Kind(Andirit.CodeGraphValidationErrorKind)",
+          "Void set_Message(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeGraphValidationErrorKind",
+        "members": [
+          "Andirit.CodeGraphValidationErrorKind DuplicateFact",
+          "Andirit.CodeGraphValidationErrorKind IncompleteIndexUnit",
+          "Andirit.CodeGraphValidationErrorKind InvalidIdentity",
+          "Andirit.CodeGraphValidationErrorKind InvalidProperty",
+          "Andirit.CodeGraphValidationErrorKind LimitExceeded",
+          "Andirit.CodeGraphValidationErrorKind MissingEndpoint",
+          "Andirit.CodeGraphValidationErrorKind OwnershipMismatch",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexRunId",
+        "members": [
+          "Andirit.CodeIndexRunId <Clone>$()",
+          "Boolean Equals(Andirit.CodeIndexRunId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexRunId, Andirit.CodeIndexRunId)",
+          "Boolean op_Inequality(Andirit.CodeIndexRunId, Andirit.CodeIndexRunId)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexUnitCoverage",
+        "members": [
+          "Andirit.CodeIndexUnitCoverage <Clone>$()",
+          "Andirit.CodeIndexUnitId IndexUnitId",
+          "Andirit.CodeIndexUnitId get_IndexUnitId()",
+          "Boolean Equals(Andirit.CodeIndexUnitCoverage)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexUnitCoverage, Andirit.CodeIndexUnitCoverage)",
+          "Boolean op_Inequality(Andirit.CodeIndexUnitCoverage, Andirit.CodeIndexUnitCoverage)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeRelationshipCoverage] Coverage",
+          "System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeRelationshipCoverage] get_Coverage()",
+          "System.String ToString()",
+          "Void .ctor(Andirit.CodeIndexUnitId, System.Collections.Generic.IReadOnlyCollection`1[Andirit.CodeRelationshipCoverage])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIndexUnitId",
+        "members": [
+          "Andirit.CodeIndexUnitId <Clone>$()",
+          "Boolean Equals(Andirit.CodeIndexUnitId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIndexUnitId, Andirit.CodeIndexUnitId)",
+          "Boolean op_Inequality(Andirit.CodeIndexUnitId, Andirit.CodeIndexUnitId)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeIntegerProperty",
+        "members": [
+          "Andirit.CodeIntegerProperty <Clone>$()",
+          "Boolean Equals(Andirit.CodeIntegerProperty)",
+          "Boolean Equals(Andirit.CodePropertyValue)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeIntegerProperty, Andirit.CodeIntegerProperty)",
+          "Boolean op_Inequality(Andirit.CodeIntegerProperty, Andirit.CodeIntegerProperty)",
+          "Int32 GetHashCode()",
+          "Int64 Value",
+          "Int64 get_Value()",
+          "System.String ToString()",
+          "Void .ctor(Int64)",
+          "Void Deconstruct(Int64 ByRef)",
+          "Void set_Value(Int64)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeLocation",
+        "members": [
+          "Andirit.CodeLocation <Clone>$()",
+          "Boolean Equals(Andirit.CodeLocation)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeLocation, Andirit.CodeLocation)",
+          "Boolean op_Inequality(Andirit.CodeLocation, Andirit.CodeLocation)",
+          "Int32 EndColumn",
+          "Int32 EndLine",
+          "Int32 GetHashCode()",
+          "Int32 StartColumn",
+          "Int32 StartLine",
+          "Int32 get_EndColumn()",
+          "Int32 get_EndLine()",
+          "Int32 get_StartColumn()",
+          "Int32 get_StartLine()",
+          "System.String Path",
+          "System.String ToString()",
+          "System.String get_Path()",
+          "Void .ctor(System.String, Int32, Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeNodeId",
+        "members": [
+          "Andirit.CodeNodeId <Clone>$()",
+          "Boolean Equals(Andirit.CodeNodeId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeNodeId, Andirit.CodeNodeId)",
+          "Boolean op_Inequality(Andirit.CodeNodeId, Andirit.CodeNodeId)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeNodeKind",
+        "members": [
+          "Andirit.CodeNodeKind <Clone>$()",
+          "Boolean Equals(Andirit.CodeNodeKind)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeNodeKind, Andirit.CodeNodeKind)",
+          "Boolean op_Inequality(Andirit.CodeNodeKind, Andirit.CodeNodeKind)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeNodeKinds",
+        "members": [
+          "Andirit.CodeNodeKind Callable",
+          "Andirit.CodeNodeKind Export",
+          "Andirit.CodeNodeKind Field",
+          "Andirit.CodeNodeKind File",
+          "Andirit.CodeNodeKind Interface",
+          "Andirit.CodeNodeKind Namespace",
+          "Andirit.CodeNodeKind Package",
+          "Andirit.CodeNodeKind Parameter",
+          "Andirit.CodeNodeKind Project",
+          "Andirit.CodeNodeKind Property",
+          "Andirit.CodeNodeKind Repository",
+          "Andirit.CodeNodeKind Type"
+        ]
+      },
+      {
+        "name": "Andirit.CodeNumberProperty",
+        "members": [
+          "Andirit.CodeNumberProperty <Clone>$()",
+          "Boolean Equals(Andirit.CodeNumberProperty)",
+          "Boolean Equals(Andirit.CodePropertyValue)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeNumberProperty, Andirit.CodeNumberProperty)",
+          "Boolean op_Inequality(Andirit.CodeNumberProperty, Andirit.CodeNumberProperty)",
+          "Double Value",
+          "Double get_Value()",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "Void .ctor(Double)"
+        ]
+      },
+      {
+        "name": "Andirit.CodePluginFailureException",
+        "members": [
+          "Andirit.CodePluginFailureKind FailureKind",
+          "Andirit.CodePluginFailureKind get_FailureKind()",
+          "Void .ctor(Andirit.CodePluginFailureKind, System.String, System.Exception)"
+        ]
+      },
+      {
+        "name": "Andirit.CodePluginFailureKind",
+        "members": [
+          "Andirit.CodePluginFailureKind Cancelled",
+          "Andirit.CodePluginFailureKind ParseFailure",
+          "Andirit.CodePluginFailureKind PartialResult",
+          "Andirit.CodePluginFailureKind ProjectLoadFailure",
+          "Andirit.CodePluginFailureKind ProviderCrash",
+          "Andirit.CodePluginFailureKind ProviderUnavailable",
+          "Andirit.CodePluginFailureKind SemanticModelUnavailable",
+          "Andirit.CodePluginFailureKind SourceChanged",
+          "Andirit.CodePluginFailureKind UnsupportedLanguage",
+          "Andirit.CodePluginFailureKind VersionMismatch",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodePluginId",
+        "members": [
+          "Andirit.CodePluginId <Clone>$()",
+          "Boolean Equals(Andirit.CodePluginId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodePluginId, Andirit.CodePluginId)",
+          "Boolean op_Inequality(Andirit.CodePluginId, Andirit.CodePluginId)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodePropertyKeys",
+        "members": [
+          "System.String Access",
+          "System.String AssemblyName",
+          "System.String Attributes",
+          "System.String CanonicalKey",
+          "System.String ConstantValue",
+          "System.String ContentHash",
+          "System.String DefineConstants",
+          "System.String DocRemarks",
+          "System.String DocSummary",
+          "System.String ExportKind",
+          "System.String ExportVia",
+          "System.String HttpEndpoint",
+          "System.String ImplicitUsings",
+          "System.String ImportAlias",
+          "System.String ImportGlobal",
+          "System.String ImportScope",
+          "System.String ImportStatic",
+          "System.String Language",
+          "System.String LocalName",
+          "System.String Modifiers",
+          "System.String ModuleReference",
+          "System.String NamespaceProjection",
+          "System.String Nullable",
+          "System.String Obsolete",
+          "System.String PackageCondition",
+          "System.String PackageVersion",
+          "System.String ResolutionPolicy",
+          "System.String ResolutionRule",
+          "System.String RouteTemplate",
+          "System.String Specifier",
+          "System.String SymbolKind",
+          "System.String TargetFramework",
+          "System.String TestMethod",
+          "System.String TestProject",
+          "System.String TypeOnly"
+        ]
+      },
+      {
+        "name": "Andirit.CodePropertyValue",
+        "members": [
+          "Andirit.CodePropertyValue <Clone>$()",
+          "Boolean Equals(Andirit.CodePropertyValue)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodePropertyValue, Andirit.CodePropertyValue)",
+          "Boolean op_Inequality(Andirit.CodePropertyValue, Andirit.CodePropertyValue)",
+          "Int32 GetHashCode()",
+          "System.String ToString()"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRelationshipCoverage",
+        "members": [
+          "Andirit.CodeRelationshipCoverage <Clone>$()",
+          "Andirit.CodeRelationshipCoverageState State",
+          "Andirit.CodeRelationshipCoverageState get_State()",
+          "Boolean Equals(Andirit.CodeRelationshipCoverage)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeRelationshipCoverage, Andirit.CodeRelationshipCoverage)",
+          "Boolean op_Inequality(Andirit.CodeRelationshipCoverage, Andirit.CodeRelationshipCoverage)",
+          "Int32 AmbiguousTargets",
+          "Int32 Candidates",
+          "Int32 CrossProjectTargets",
+          "Int32 EdgesEmitted",
+          "Int32 ExternalTargets",
+          "Int32 GetHashCode()",
+          "Int32 InternalTargets",
+          "Int32 UnresolvedTargets",
+          "Int32 UnsupportedTargets",
+          "Int32 get_AmbiguousTargets()",
+          "Int32 get_Candidates()",
+          "Int32 get_CrossProjectTargets()",
+          "Int32 get_EdgesEmitted()",
+          "Int32 get_ExternalTargets()",
+          "Int32 get_InternalTargets()",
+          "Int32 get_UnresolvedTargets()",
+          "Int32 get_UnsupportedTargets()",
+          "System.String RelationshipKind",
+          "System.String ToString()",
+          "System.String get_RelationshipKind()",
+          "Void .ctor(System.String, Andirit.CodeRelationshipCoverageState, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRelationshipCoverageState",
+        "members": [
+          "Andirit.CodeRelationshipCoverageState NotApplicable",
+          "Andirit.CodeRelationshipCoverageState NotProduced",
+          "Andirit.CodeRelationshipCoverageState Partial",
+          "Andirit.CodeRelationshipCoverageState Produced",
+          "Andirit.CodeRelationshipCoverageState Unavailable",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.CodeRepositoryId",
+        "members": [
+          "Andirit.CodeRepositoryId <Clone>$()",
+          "Boolean Equals(Andirit.CodeRepositoryId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeRepositoryId, Andirit.CodeRepositoryId)",
+          "Boolean op_Inequality(Andirit.CodeRepositoryId, Andirit.CodeRepositoryId)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeSymbolId",
+        "members": [
+          "Andirit.CodeSymbolId <Clone>$()",
+          "Boolean Equals(Andirit.CodeSymbolId)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeSymbolId, Andirit.CodeSymbolId)",
+          "Boolean op_Inequality(Andirit.CodeSymbolId, Andirit.CodeSymbolId)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.CodeTextListProperty",
+        "members": [
+          "Andirit.CodeTextListProperty <Clone>$()",
+          "Boolean Equals(Andirit.CodePropertyValue)",
+          "Boolean Equals(Andirit.CodeTextListProperty)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeTextListProperty, Andirit.CodeTextListProperty)",
+          "Boolean op_Inequality(Andirit.CodeTextListProperty, Andirit.CodeTextListProperty)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] Values",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] get_Values()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList`1[System.String])"
+        ]
+      },
+      {
+        "name": "Andirit.CodeTextProperty",
+        "members": [
+          "Andirit.CodeTextProperty <Clone>$()",
+          "Boolean Equals(Andirit.CodePropertyValue)",
+          "Boolean Equals(Andirit.CodeTextProperty)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.CodeTextProperty, Andirit.CodeTextProperty)",
+          "Boolean op_Inequality(Andirit.CodeTextProperty, Andirit.CodeTextProperty)",
+          "Int32 GetHashCode()",
+          "System.String ToString()",
+          "System.String Value",
+          "System.String get_Value()",
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.EvidenceQuality",
+        "members": [
+          "Andirit.EvidenceQuality Derived",
+          "Andirit.EvidenceQuality Inferred",
+          "Andirit.EvidenceQuality Resolved",
+          "Andirit.EvidenceQuality Structural",
+          "Int32 value__"
+        ]
+      },
+      {
+        "name": "Andirit.EvidenceQualityExtensions",
+        "members": [
+          "Boolean IsDeterministic(Andirit.EvidenceQuality)"
+        ]
+      },
+      {
+        "name": "Andirit.ICodeGraphExtractionSession",
+        "members": [
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphExtractionResult] ExtractAsync(Andirit.ICodeGraphSink, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Andirit.ICodeGraphPlugin",
+        "members": [
+          "Andirit.CodeGraphCapabilities Capabilities",
+          "Andirit.CodeGraphCapabilities get_Capabilities()",
+          "Andirit.CodePluginId Id",
+          "Andirit.CodePluginId get_Id()",
+          "Boolean CanHandle(System.String)",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] FileExtensions",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] get_FileExtensions()",
+          "System.String Language",
+          "System.String Version",
+          "System.String get_Language()",
+          "System.String get_Version()",
+          "System.Threading.Tasks.ValueTask`1[Andirit.ICodeGraphExtractionSession] CreateSessionAsync(Andirit.CodeGraphPluginContext, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Andirit.ICodeGraphSink",
+        "members": [
+          "Andirit.CodeGraphBatchLimits Limits",
+          "Andirit.CodeGraphBatchLimits get_Limits()",
+          "System.Threading.Tasks.ValueTask WriteBatchAsync(Andirit.CodeGraphBatch, System.Threading.CancellationToken)"
+        ]
+      }
+    ]
+  },
+  {
+    "assembly": "Andirit.CSharp",
+    "types": [
+      {
+        "name": "Andirit.CSharp.AndiritHostBuilderExtensions",
+        "members": [
+          "Andirit.AndiritHostBuilder AddCSharpPlugin(Andirit.AndiritHostBuilder)"
+        ]
+      },
+      {
+        "name": "Andirit.CSharpCodeGraphPlugin",
+        "members": [
+          "Andirit.CodeGraphCapabilities Capabilities",
+          "Andirit.CodeGraphCapabilities get_Capabilities()",
+          "Andirit.CodePluginId Id",
+          "Andirit.CodePluginId get_Id()",
+          "Boolean CanHandle(System.String)",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] FileExtensions",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] get_FileExtensions()",
+          "System.String Language",
+          "System.String Version",
+          "System.String get_Language()",
+          "System.String get_Version()",
+          "System.Threading.Tasks.ValueTask`1[Andirit.ICodeGraphExtractionSession] CreateSessionAsync(Andirit.CodeGraphPluginContext, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      }
+    ]
+  },
+  {
+    "assembly": "Andirit.LatticeDb",
+    "types": [
+      {
+        "name": "Andirit.LatticeCodeGraphSchemaException",
+        "members": [
+          "Int32 ActualVersion",
+          "Int32 ExpectedVersion",
+          "Int32 get_ActualVersion()",
+          "Int32 get_ExpectedVersion()",
+          "Void .ctor(Int32, Int32)"
+        ]
+      },
+      {
+        "name": "Andirit.LatticeCodeGraphStore",
+        "members": [
+          "Int32 CurrentSchemaVersion",
+          "System.Threading.Tasks.Task`1[Andirit.LatticeCodeGraphStore] OpenAsync(System.String, Andirit.LatticeDb.LatticeDbStoreOptions, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.Task`1[Andirit.LatticeCodeGraphStore] OpenAsync(System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask CompleteIndexRunAsync(Andirit.CodeIndexRunManifest, Andirit.CodeRepositoryIndexState, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitAsync(Andirit.CodeIndexUnitReplacement, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StageIndexUnitDeletionAsync(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, Andirit.CodePluginId, Andirit.CodeIndexUnitId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask StoreIndexRunAsync(Andirit.CodeIndexRunManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask UpsertRepositoryAsync(Andirit.CodeRepositoryManifest, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphNode] FindSymbolAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphNode] GetNodeAsync(Andirit.CodeRepositoryId, Andirit.CodeNodeId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphPublication] GetLatestPublicationAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[Andirit.CodeGraphTraversalResult]] TraverseWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]]] GetDeclarationsWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphQueryEnvelope`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]]] FindNodesByQualifiedNameWithProvenanceAsync(Andirit.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphStoreHealth] CheckHealthAsync(System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeGraphTraversalResult] TraverseAsync(Andirit.CodeRepositoryId, Andirit.CodeGraphTraversalQuery, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeIndexRunManifest] GetIndexRunAsync(Andirit.CodeRepositoryId, Andirit.CodeIndexRunId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeNamePatternResult] FindNodesByNamePatternAsync(Andirit.CodeRepositoryId, System.String, Int32, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeRepositoryIndexState] GetLatestIndexStateAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[Andirit.CodeRepositoryManifest] GetRepositoryAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphDeclaration]] GetDeclarationsAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeGraphNode]] FindNodesByQualifiedNameAsync(Andirit.CodeRepositoryId, System.String, System.Threading.CancellationToken)",
+          "System.Threading.Tasks.ValueTask`1[System.Collections.Generic.IReadOnlyList`1[Andirit.CodeIndexUnitReplacement]] GetPublishedUnitsAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+          "Void .ctor(System.String)",
+          "Void .ctor(System.String, Andirit.LatticeDb.LatticeDbStoreOptions)",
+          "Void Dispose()"
+        ]
+      },
+      {
+        "name": "Andirit.LatticeDb.AndiritHostBuilderExtensions",
+        "members": [
+          "Andirit.AndiritHostBuilder UseLatticeStore(Andirit.AndiritHostBuilder, System.String, Andirit.LatticeDb.LatticeDbStoreOptions)"
+        ]
+      },
+      {
+        "name": "Andirit.LatticeDb.LatticeDbStoreOptions",
+        "members": [
+          "Andirit.LatticeDb.LatticeDbStoreOptions <Clone>$()",
+          "Boolean Equals(Andirit.LatticeDb.LatticeDbStoreOptions)",
+          "Boolean Equals(System.Object)",
+          "Boolean UseNativeTraversal",
+          "Boolean get_UseNativeTraversal()",
+          "Boolean op_Equality(Andirit.LatticeDb.LatticeDbStoreOptions, Andirit.LatticeDb.LatticeDbStoreOptions)",
+          "Boolean op_Inequality(Andirit.LatticeDb.LatticeDbStoreOptions, Andirit.LatticeDb.LatticeDbStoreOptions)",
+          "Int32 GetHashCode()",
+          "System.Nullable`1[System.Boolean] EnableAdjacencyCache",
+          "System.Nullable`1[System.Boolean] EnableWal",
+          "System.Nullable`1[System.Boolean] get_EnableAdjacencyCache()",
+          "System.Nullable`1[System.Boolean] get_EnableWal()",
+          "System.Nullable`1[System.UInt32] CacheSizeMb",
+          "System.Nullable`1[System.UInt32] PageSize",
+          "System.Nullable`1[System.UInt32] get_CacheSizeMb()",
+          "System.Nullable`1[System.UInt32] get_PageSize()",
+          "System.String ToString()",
+          "Void .ctor()",
+          "Void set_CacheSizeMb(System.Nullable`1[System.UInt32])",
+          "Void set_EnableAdjacencyCache(System.Nullable`1[System.Boolean])",
+          "Void set_EnableWal(System.Nullable`1[System.Boolean])",
+          "Void set_PageSize(System.Nullable`1[System.UInt32])",
+          "Void set_UseNativeTraversal(Boolean)"
+        ]
+      }
+    ]
+  },
+  {
+    "assembly": "Andirit.Testing",
+    "types": [
+      {
+        "name": "Andirit.Testing.CodeGraphStoreConformanceException",
+        "members": [
+          "Void .ctor(System.String)"
+        ]
+      },
+      {
+        "name": "Andirit.Testing.CodeGraphStoreConformanceReport",
+        "members": [
+          "Andirit.Testing.CodeGraphStoreConformanceReport <Clone>$()",
+          "Boolean Equals(Andirit.Testing.CodeGraphStoreConformanceReport)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.Testing.CodeGraphStoreConformanceReport, Andirit.Testing.CodeGraphStoreConformanceReport)",
+          "Boolean op_Inequality(Andirit.Testing.CodeGraphStoreConformanceReport, Andirit.Testing.CodeGraphStoreConformanceReport)",
+          "Int32 GetHashCode()",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] PassedChecks",
+          "System.Collections.Generic.IReadOnlyList`1[System.String] get_PassedChecks()",
+          "System.String ToString()",
+          "Void .ctor(System.Collections.Generic.IReadOnlyList`1[System.String])",
+          "Void Deconstruct(System.Collections.Generic.IReadOnlyList`1[System.String] ByRef)",
+          "Void set_PassedChecks(System.Collections.Generic.IReadOnlyList`1[System.String])"
+        ]
+      },
+      {
+        "name": "Andirit.Testing.CodeGraphStoreConformanceSuite",
+        "members": [
+          "System.Threading.Tasks.Task`1[Andirit.Testing.CodeGraphStoreConformanceReport] VerifyAsync(Andirit.Testing.ICodeGraphStoreFixture, System.Threading.CancellationToken)"
+        ]
+      },
+      {
+        "name": "Andirit.Testing.ICodeGraphStoreFixture",
+        "members": [
+          "Andirit.ICodeGraphStore CreateStore()"
+        ]
+      }
+    ]
+  },
+  {
+    "assembly": "Andirit.TreeSitter",
+    "types": [
+      {
+        "name": "Andirit.TreeSitter.AndiritHostBuilderExtensions",
+        "members": [
+          "Andirit.AndiritHostBuilder AddTreeSitterElixirPlugin(Andirit.AndiritHostBuilder)",
+          "Andirit.AndiritHostBuilder AddTreeSitterJavaScriptPlugin(Andirit.AndiritHostBuilder)",
+          "Andirit.AndiritHostBuilder AddTreeSitterTypeScriptPlugin(Andirit.AndiritHostBuilder)"
+        ]
+      },
+      {
+        "name": "Andirit.TreeSitterElixirPlugin",
+        "members": [
+          "Andirit.CodeGraphCapabilities Capabilities",
+          "Andirit.CodeGraphCapabilities get_Capabilities()",
+          "Andirit.CodePluginId Id",
+          "Andirit.CodePluginId get_Id()",
+          "Andirit.TreeSitterGrammarDescriptor Grammar",
+          "Andirit.TreeSitterGrammarDescriptor get_Grammar()",
+          "Boolean CanHandle(System.String)",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] FileExtensions",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] get_FileExtensions()",
+          "System.String Language",
+          "System.String Version",
+          "System.String get_Language()",
+          "System.String get_Version()",
+          "System.Threading.Tasks.ValueTask`1[Andirit.ICodeGraphExtractionSession] CreateSessionAsync(Andirit.CodeGraphPluginContext, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Andirit.TreeSitterGrammarDescriptor",
+        "members": [
+          "Andirit.CodeGraphCapabilities Capabilities",
+          "Andirit.CodeGraphCapabilities get_Capabilities()",
+          "Andirit.TreeSitterGrammarDescriptor <Clone>$()",
+          "Boolean Equals(Andirit.TreeSitterGrammarDescriptor)",
+          "Boolean Equals(System.Object)",
+          "Boolean op_Equality(Andirit.TreeSitterGrammarDescriptor, Andirit.TreeSitterGrammarDescriptor)",
+          "Boolean op_Inequality(Andirit.TreeSitterGrammarDescriptor, Andirit.TreeSitterGrammarDescriptor)",
+          "Int32 AbiVersion",
+          "Int32 GetHashCode()",
+          "Int32 get_AbiVersion()",
+          "System.String GrammarCommit",
+          "System.String GrammarId",
+          "System.String GrammarSource",
+          "System.String GrammarVersion",
+          "System.String Language",
+          "System.String LanguageFunction",
+          "System.String NativeLibrary",
+          "System.String ToString()",
+          "System.String get_GrammarCommit()",
+          "System.String get_GrammarId()",
+          "System.String get_GrammarSource()",
+          "System.String get_GrammarVersion()",
+          "System.String get_Language()",
+          "System.String get_LanguageFunction()",
+          "System.String get_NativeLibrary()",
+          "Void .ctor(System.String, System.String, System.String, System.String, System.String, Int32, System.String, System.String, Andirit.CodeGraphCapabilities)"
+        ]
+      },
+      {
+        "name": "Andirit.TreeSitterJavaScriptPlugin",
+        "members": [
+          "Andirit.CodeGraphCapabilities Capabilities",
+          "Andirit.CodeGraphCapabilities get_Capabilities()",
+          "Andirit.CodePluginId Id",
+          "Andirit.CodePluginId get_Id()",
+          "Andirit.TreeSitterGrammarDescriptor Grammar",
+          "Andirit.TreeSitterGrammarDescriptor get_Grammar()",
+          "Boolean CanHandle(System.String)",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] FileExtensions",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] get_FileExtensions()",
+          "System.String Language",
+          "System.String Version",
+          "System.String get_Language()",
+          "System.String get_Version()",
+          "System.Threading.Tasks.ValueTask`1[Andirit.ICodeGraphExtractionSession] CreateSessionAsync(Andirit.CodeGraphPluginContext, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      },
+      {
+        "name": "Andirit.TreeSitterTypeScriptPlugin",
+        "members": [
+          "Andirit.CodeGraphCapabilities Capabilities",
+          "Andirit.CodeGraphCapabilities get_Capabilities()",
+          "Andirit.CodePluginId Id",
+          "Andirit.CodePluginId get_Id()",
+          "Andirit.TreeSitterGrammarDescriptor Grammar",
+          "Andirit.TreeSitterGrammarDescriptor TsxGrammar",
+          "Andirit.TreeSitterGrammarDescriptor get_Grammar()",
+          "Andirit.TreeSitterGrammarDescriptor get_TsxGrammar()",
+          "Boolean CanHandle(System.String)",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] FileExtensions",
+          "System.Collections.Generic.IReadOnlyCollection`1[System.String] get_FileExtensions()",
+          "System.String Language",
+          "System.String Version",
+          "System.String get_Language()",
+          "System.String get_Version()",
+          "System.Threading.Tasks.ValueTask`1[Andirit.ICodeGraphExtractionSession] CreateSessionAsync(Andirit.CodeGraphPluginContext, System.Threading.CancellationToken)",
+          "Void .ctor()"
+        ]
+      }
+    ]
+  }
+]
