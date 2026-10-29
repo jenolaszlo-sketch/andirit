@@ -1,0 +1,319 @@
+{
+  "version": "5.9.3",
+  "cases": {
+    "collision": {
+      "diagnostics": [
+        {
+          "code": 2440,
+          "file": "consumer.ts",
+          "start": 9,
+          "message": "Import declaration conflicts with local declaration of 'Local'."
+        },
+        {
+          "code": 2420,
+          "file": "consumer.ts",
+          "start": 91,
+          "message": "Class 'Ambiguous' incorrectly implements interface 'Local'.   Property 'local' is missing in type 'Ambiguous' but required in type 'Local'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Local",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { remote: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "nested-shadow": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Local",
+          "declarations": [
+            {
+              "file": "consumer.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Local { local: string; }"
+            }
+          ]
+        }
+      ]
+    },
+    "merged": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { a: string; }"
+            },
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget { b: number; }"
+            }
+          ]
+        }
+      ]
+    },
+    "wrong-export": {
+      "diagnostics": [
+        {
+          "code": 2304,
+          "file": "consumer.ts",
+          "start": 64,
+          "message": "Cannot find name 'Widget'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "declarations": []
+        }
+      ]
+    },
+    "nested-export": {
+      "diagnostics": [
+        {
+          "code": 2304,
+          "file": "types.ts",
+          "start": 57,
+          "message": "Cannot find name 'Widget'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "declarations": []
+        }
+      ]
+    },
+    "barrel": {
+      "diagnostics": [
+        {
+          "code": 2307,
+          "file": "missing.ts",
+          "start": 23,
+          "message": "Cannot find module './absent' or its corresponding type declarations."
+        },
+        {
+          "code": 2307,
+          "file": "multi.ts",
+          "start": 39,
+          "message": "Cannot find module './absent' or its corresponding type declarations."
+        },
+        {
+          "code": 2305,
+          "file": "no-declaration.ts",
+          "start": 9,
+          "message": "Module '\"./types\"' has no exported member 'Ghost'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        },
+        {
+          "file": "direct.ts",
+          "text": "Widget",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        }
+      ]
+    },
+    "idle": {
+      "diagnostics": [],
+      "heritage": []
+    },
+    "duplicate-imports": {
+      "diagnostics": [
+        {
+          "code": 2300,
+          "file": "consumer.ts",
+          "start": 24,
+          "message": "Duplicate identifier 'Local'."
+        },
+        {
+          "code": 2300,
+          "file": "consumer.ts",
+          "start": 68,
+          "message": "Duplicate identifier 'Local'."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Local",
+          "declarations": [
+            {
+              "file": "a.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        }
+      ]
+    },
+    "multi-specifier": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "W",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        },
+        {
+          "file": "consumer.ts",
+          "text": "G",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Gadget {}"
+            }
+          ]
+        }
+      ]
+    },
+    "export-alias": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Alias",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Internal {}"
+            }
+          ]
+        }
+      ]
+    },
+    "unsupported": {
+      "diagnostics": [
+        {
+          "code": 2307,
+          "file": "consumer.ts",
+          "start": 106,
+          "message": "Cannot find module './absent' or its corresponding type declarations."
+        }
+      ],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "NS.Widget",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        },
+        {
+          "file": "consumer.ts",
+          "text": "DefaultWidget",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export default interface DefaultWidget {}"
+            }
+          ]
+        },
+        {
+          "file": "consumer.ts",
+          "text": "MissingAlias",
+          "declarations": []
+        }
+      ]
+    },
+    "type-value": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "Widget",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Widget {}"
+            },
+            {
+              "file": "types.ts",
+              "kind": "VariableDeclaration",
+              "text": "Widget = 1"
+            }
+          ]
+        }
+      ]
+    },
+    "same-file": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "types.ts",
+          "text": "Widget",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "export interface Widget {}"
+            }
+          ]
+        }
+      ]
+    },
+    "repeated-export": {
+      "diagnostics": [],
+      "heritage": [
+        {
+          "file": "consumer.ts",
+          "text": "W",
+          "declarations": [
+            {
+              "file": "types.ts",
+              "kind": "InterfaceDeclaration",
+              "text": "interface Widget {}"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
