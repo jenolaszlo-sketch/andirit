@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Andirit.Tests;
 
-public sealed class InterfaceImpactTests
+public sealed partial class InterfaceImpactTests
 {
     private static string RepositoryRoot
     {

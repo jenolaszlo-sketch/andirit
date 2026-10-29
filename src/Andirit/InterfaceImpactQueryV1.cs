@@ -33,10 +33,13 @@ internal sealed class InterfaceImpactQueryV1
     private readonly int[] _charged = new int[5];
     private string? _stage;
     private int _omitted;
+    private int _occurrenceAttributionFrontier;
     private int _evaluatedImports, _heritageEvaluated, _unavailable, _external, _unresolved, _unsupported, _exportUnresolved, _exportUnsupported;
     private string? _targetFile;
     private CodeDeclarationId? _targetRecord;
     private readonly CodeGraphNode _target;
+    private CodeGraphDeclaration? _selectedDeclaration;
+    private string? _targetPath;
 
     private InterfaceImpactQueryV1(CodeGraphPublication publication, CodeGraphNode target, InterfaceImpactOptionsV1 limits, CancellationToken cancellation)
     { _publication = publication; _target = target; _limits = limits; _cancellation = cancellation; }
@@ -45,6 +48,7 @@ internal sealed class InterfaceImpactQueryV1
         IReadOnlyList<CodeIndexUnitReplacement> units, InterfaceImpactOptionsV1 limits, CancellationToken cancellation)
     {
         var query = new InterfaceImpactQueryV1(publication, target, limits, cancellation);
+        query.ValidateInput(units);
         try { query.Run(units); }
         catch (LimitReached) { }
         cancellation.ThrowIfCancellationRequested();
@@ -58,6 +62,39 @@ internal sealed class InterfaceImpactQueryV1
         if (amount > maximum - _charged[kind])
         { _stage ??= stage; _omitted += Math.Max(1, amount); throw new LimitReached(); }
         _charged[kind] += amount;
+    }
+
+    // Mandatory argument validation precedes interruptible relationship classification.
+    // The reader has already materialized this inventory; these checks establish
+    // whether any bounded answer is permitted, including an empty partial one.
+    private void ValidateInput(IReadOnlyList<CodeIndexUnitReplacement> units)
+    {
+        _cancellation.ThrowIfCancellationRequested();
+        if (units.Any(u => u.Origin.PluginId.Value == "penghou.hetu.tree-sitter.typescript" &&
+            !u.Origin.PluginVersion.EndsWith(".rem1.p10", StringComparison.Ordinal)))
+            throw new ArgumentException("Reindex TypeScript with the corrected EC-6D p10 provider before querying.");
+        var records = units.Where(u => u.Origin.PluginId.Value == "penghou.hetu.tree-sitter.typescript")
+            .SelectMany(u => u.Declarations).Where(d => d.SymbolNodeId == _target.Id).DistinctBy(d => d.Id).ToArray();
+        if (records.Length == 0) throw new ArgumentException("Target is not a physical TypeScript interface declaration.");
+        var paths = records.Select(d => d.Location.Path).Distinct(StringComparer.Ordinal).ToArray();
+        if (paths.Length != 1) Fail("Interface declaration crosses file identities.");
+        _targetPath = paths[0];
+        var file = units.SelectMany(u => u.Nodes).FirstOrDefault(n => n.Kind == CodeNodeKinds.File && n.QualifiedName == _targetPath);
+        if (file is null) Fail("Target file is absent.");
+        _targetFile = file!.Id.Value;
+        var supported = units.SelectMany(u => u.Edges).Where(e => e.Kind.Value == "interface-profile" && e.SourceId == file.Id)
+            .Any(e => e.Properties.TryGetValue("ec6d.data", out var value) && value is CodeTextProperty text && HasProfile(text.Value));
+        if (!supported) throw new ArgumentException("Publication lacks the corrected EC-6D provider set.");
+        if (records.Length == 1) { _selectedDeclaration = records[0]; _targetRecord = records[0].Id; }
+    }
+
+    private static bool HasProfile(string json)
+    {
+        using var document = JsonDocument.Parse(json);
+        var data = document.RootElement;
+        return data.TryGetProperty("revision", out var revision) && revision.GetString() == "ec6d-rem-01" &&
+            data.GetProperty("providers").EnumerateArray().Select(p => p.GetString()).Order(StringComparer.Ordinal)
+                .SequenceEqual(new[] { "exports2.local-v1", "heritage1.local-v1", "imports1.local-v1", "module1.local-v1" });
     }
 
     private void Run(IReadOnlyList<CodeIndexUnitReplacement> units)
@@ -176,6 +213,7 @@ internal sealed class InterfaceImpactQueryV1
                 if (!aliases.TryGetValue(import.Edge.SourceId.Value, out var locals)) aliases[import.Edge.SourceId.Value] = locals = new(StringComparer.Ordinal);
                 Associate(locals, local, import.Edge.Id.Value);
             }
+            if (!Visible(import)) continue;
             if (Named(import) && import.Edge.SourceId.Value != _targetFile && resolved.Text("resolvedTarget") == _targetFile && resolved.Text("resolutionStatus") == "resolved")
             {
                 if (_consumers.Sum(c => c.Occurrences.Count) == _limits.MaxOccurrences) { _stage ??= "occurrence-output"; _omitted++; continue; }
@@ -213,13 +251,15 @@ internal sealed class InterfaceImpactQueryV1
         foreach (var import in _imports)
         {
             Charge(0, "binding");
-            if (_consumed.Contains(import.Edge.Id.Value)) continue;
+            if (!Visible(import) || _consumed.Contains(import.Edge.Id.Value)) continue;
             var resolution = Resolve(import);
             if (resolution.Text("resolutionStatus") == "unsupported") continue;
             if (!names.ContainsKey(import.Text("importedName") ?? "") && !starBarrels.Contains(resolution.Text("resolvedTarget") ?? "")) continue;
             if (!Named(import)) continue;
             var reason = ImportRoute(import, resolution, out var proof);
-            if (reason is not null) UnknownView(import, "occurrence", reason, [import, resolution, .. proof], Barriers(resolution), ["associated-import:" + import.Edge.Id.Value]);
+            if (reason is "unresolved-module" or "external-module" or "missing-export" or "re-export-barrier")
+                UnknownView(import, "occurrence", reason, [import, resolution, .. proof], Barriers(resolution), ["associated-import:" + import.Edge.Id.Value]);
+            else if (reason is not null) _occurrenceAttributionFrontier++;
         }
     }
 
@@ -228,7 +268,7 @@ internal sealed class InterfaceImpactQueryV1
         var name = context.Text("writtenName")!;
         var file = context.Edge.TargetId;
         Charge(0, "binding", _imports.Length);
-        var imports = _imports.Where(i => i.Edge.SourceId == file && i.Text("localName") == name).ToArray();
+        var imports = _imports.Where(i => Visible(i) && i.Edge.SourceId == file && i.Text("localName") == name).ToArray();
         foreach (var import in imports) _consumed.Add(import.Edge.Id.Value);
         Charge(0, "binding", _declarationContexts.Length);
         var locals = _declarationContexts.Where(d => d.Edge.TargetId == file && d.Text("Name") == name && d.Flag("ModuleScope")).ToArray();
@@ -236,7 +276,7 @@ internal sealed class InterfaceImpactQueryV1
         var reason = context.Text("clauseSyntaxStatus") == "recovered" ? "recovered-heritage-syntax"
             : context.Flag("ownerAmbient") || context.Text("fileModuleContext") != "module" ? "ambient-or-global-context"
             : context.Text("ownerScope") == "nested" ? "nested-scope-heritage"
-            : context.Text("heritageKind") != "class-implements" && _associatedNames.Contains(name) ? "heritage-kind-not-supported"
+            : context.Text("heritageKind") != "class-implements" && context.Text("writtenForm") == "simple" ? "heritage-kind-not-supported"
             : context.Text("writtenForm") == "qualified" ? "qualified-heritage-unresolved"
             : context.Text("writtenForm") == "expression" ? "unsupported-heritage-form"
             : context.Names("ownerTypeParameterNames").Contains(name, StringComparer.Ordinal) ? "type-parameter-shadowing"
@@ -281,7 +321,7 @@ internal sealed class InterfaceImpactQueryV1
         Charge(0, "binding", Kind("implements").Length);
         var heritage = Kind("implements").Where(f => f.Edge.SourceId == context.Edge.SourceId && f.Edge.Evidence.Location == context.Edge.Evidence.Location).ToArray();
         if (heritage.Length != 1) Fail("Completed binding lacks its unique stored heritage fact.");
-        var steps = new List<Step> { StepView(heritage[0], "heritage"), StepView(context, "context") };
+        var steps = new List<Step> { ChargedStep(heritage[0], "heritage"), ChargedStep(context, "context") };
         if (route == "import")
         {
             var import = proof.Single(f => f.Edge.Kind.Value == "imports-name");
@@ -290,17 +330,19 @@ internal sealed class InterfaceImpactQueryV1
             if (!_edges.TryGetValue(resolverId, out var resolverEdge)) Fail("Resolver witness edge is missing.");
             var attribution = proof.Last();
             var entry = _nodes[attribution.Text("entryNode")!];
-            steps.Add(StepView(import, "import")); steps.Add(StepView(resolverEdge!, "resolution"));
+            steps.Add(ChargedStep(import, "import")); steps.Add(ChargedStep(resolverEdge!, "resolution"));
+            Charge(4, "binding");
             steps.Add(new("export-entry", entry.Id.Value, entry.Id, entry.Id, null, attribution.Origin));
             foreach (var occurrence in attribution.Data.GetProperty("exportSpans").EnumerateArray())
             {
+                Charge(4, "binding");
                 if (!_edges.TryGetValue(occurrence.GetProperty("occurrenceId").GetString()!, out var exportOccurrence)) Fail("Export occurrence witness is missing.");
                 steps.Add(StepView(exportOccurrence!, "export-occurrence"));
             }
-            steps.Add(StepView(attribution, "attribution"));
+            steps.Add(ChargedStep(attribution, "attribution"));
         }
+        Charge(4, "binding");
         steps.Add(new("declaration", declaration.Value.Id.Value, declaration.Value.SymbolNodeId, _target.Id, null, declaration.Origin, declaration.Value.Properties, declaration.Value.Location));
-        Charge(4, "binding", steps.Count);
         var tuple = steps.Select(s => s.FactId).Append(_target.Id.Value).Append("binding1.local-v1").ToArray();
         var witness = new Witness("binding1.local-v1:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(tuple)))), steps.ToArray());
         if (_confirmed.Select(c => (c.ClassNodeId, c.TargetDeclarationRecordId)).Distinct().Count() == _limits.MaxConfirmed && !_confirmed.Any(c => c.ClassNodeId == context.Edge.SourceId))
@@ -350,6 +392,11 @@ internal sealed class InterfaceImpactQueryV1
             if (resolution.Text("resolvedTarget") != resolution.Edge.TargetId.Value || !_nodes.TryGetValue(resolution.Edge.TargetId.Value, out var file) || file.Kind != CodeNodeKinds.File) Fail("Invalid resolved module endpoint.");
             if (!_edges.TryGetValue(resolution.Text("resolverEdgeId")!, out var edge) || edge.Edge.Kind != CodeEdgeKinds.ResolvesTo || edge.Edge.SourceId != occurrence.Edge.SourceId || edge.Edge.TargetId != resolution.Edge.TargetId || edge.Edge.Evidence.Location != occurrence.Edge.Evidence.Location)
                 Fail("Missing or contradictory resolver fact.");
+            if (edge!.Edge.Evidence.Provider != "penghou.hetu.tree-sitter.ecmascript-module-resolver" ||
+                edge.Edge.Evidence.ProviderVersion != ResolverVersion(resolution) ||
+                Property(edge.Edge.Properties, CodePropertyKeys.ResolutionPolicy) != "relative-v1" ||
+                Property(edge.Edge.Properties, CodePropertyKeys.ResolutionRule) != resolution.Text("resolutionRule"))
+                Fail("Resolver proof has mismatched provider/version or policy.");
         }
         else if (resolution.Text("resolvedTarget") is not null || resolution.Edge.SourceId != resolution.Edge.TargetId) Fail("Non-resolved occurrence claims a target.");
         return resolution;
@@ -374,10 +421,11 @@ internal sealed class InterfaceImpactQueryV1
             "export-reference" => (provider + "module-occurrences", "module1.local-v1"),
             "export-attribution" => (provider + "export-attribution", "exports2.local-v1"),
             "interface-profile" => (provider + "profile", "imports1.local-v1"),
-            "resolver-status" => (provider + "module-resolver", edge.Evidence.ProviderVersion!),
+            "resolver-status" => (provider + "module-resolver", ResolverVersion(fact)),
             _ => throw new InvalidOperationException("Unrecognized EC-6D fact vocabulary.")
         };
         if (edge.Evidence.Provider != expected.Item1 || edge.Evidence.ProviderVersion != expected.Item2) Fail("Mismatched fact provider/version.");
+        if (edge.Kind.Value == "resolver-status" && fact.Text("policy") != "relative-v1") Fail("Mismatched resolver policy.");
         if (edge.Kind.Value is "imports-name" or "export-reference" or "resolver-status")
         {
             if (fact.Text("sourceFile") != edge.SourceId.Value || _nodes[edge.SourceId.Value].Kind != CodeNodeKinds.File) Fail("Occurrence source identity is contradictory.");
@@ -405,6 +453,20 @@ internal sealed class InterfaceImpactQueryV1
             var contexts = _declarationContexts.Where(c => c.Text("DeclarationRecordId") == id && c.Edge.TargetId == edge.TargetId && c.Flag("ModuleScope")).ToArray();
             if (contexts.Length != 1 || contexts[0].Flag("Eligible") != candidates.Contains(id, StringComparer.Ordinal)) Fail("Attribution candidate context is missing or contradictory.");
         }
+        // Validate the entire physical universe, not only the IDs B chose to list.
+        var contributors = Kind("exports").Where(e => e.Edge.TargetId == edge.SourceId && e.Edge.SourceId == edge.TargetId).ToArray();
+        var localNames = contributors.Select(e => Property(e.Edge.Properties, CodePropertyKeys.LocalName)).Distinct(StringComparer.Ordinal).ToArray();
+        Charge(0, "discovery", _declarationContexts.Length);
+        var universe = _declarationContexts.Where(c => c.Edge.TargetId == edge.TargetId && c.Flag("ModuleScope") && localNames.Contains(c.Text("Name"), StringComparer.Ordinal)).ToArray();
+        var eligibleIds = universe.Where(c => c.Flag("Eligible")).Select(c => c.Text("DeclarationRecordId")!).Order(StringComparer.Ordinal).ToArray();
+        var ineligibleIds = universe.Where(c => !c.Flag("Eligible")).Select(c => c.Text("DeclarationRecordId")!).Order(StringComparer.Ordinal).ToArray();
+        var expectedStatus = localNames.Length != 1 || eligibleIds.Length > 1 ? "ambiguous-declarations"
+            : eligibleIds.Length == 1 && ineligibleIds.Length == 0 ? "attributed"
+            : ineligibleIds.Length > 0 ? "ineligible-declaration-context" : "missing-declaration";
+        if (!candidates.Order(StringComparer.Ordinal).SequenceEqual(eligibleIds, StringComparer.Ordinal) ||
+            !ineligible.Order(StringComparer.Ordinal).SequenceEqual(ineligibleIds, StringComparer.Ordinal) ||
+            fact.Text("localName") != (localNames.Length == 1 ? localNames[0] : null) || fact.Text("status") != expectedStatus)
+            Fail("Attribution does not describe all physical contributors and export occurrences.");
         var status = fact.Text("status");
         if (status == "attributed")
         {
@@ -430,8 +492,9 @@ internal sealed class InterfaceImpactQueryV1
     private void UnknownView(Fact subject, string kind, string reason, IEnumerable<Fact> evidence, Fact[] barriers, string[] origins)
     {
         if (_unknown.Count == _limits.MaxUnknowns) { _stage ??= "unknown-output"; _omitted++; return; }
-        var facts = evidence.DistinctBy(f => f.Edge.Id).ToArray();
-        Charge(4, "binding", facts.Length + barriers.Length * 2);
+        var contributions = evidence.ToArray();
+        Charge(4, "binding", contributions.Length + barriers.Length * 2);
+        var facts = contributions.DistinctBy(f => f.Edge.Id).ToArray();
         var barrierSteps = barriers.Select(f => StepView(f, "barrier") with
         { SupportingFacts = [StepView(Resolve(f), "export-resolution")] }).ToArray();
         var sourceFile = kind == "heritage" ? _files[subject.Edge.Evidence.Location!.Path].Id : subject.Edge.SourceId;
@@ -455,7 +518,7 @@ internal sealed class InterfaceImpactQueryV1
         var unknowns = _unknown.DistinctBy(u => (u.SubjectId, u.Reason)).OrderBy(u => u.SubjectKind == "heritage" ? 0 : 1)
             .ThenBy(u => u.Span.Path, StringComparer.Ordinal).ThenBy(u => u.ClassNodeId?.Value ?? u.SubjectId, StringComparer.Ordinal)
             .ThenBy(u => u.Span.StartLine).ThenBy(u => u.Span.StartColumn).ThenBy(u => u.Reason, StringComparer.Ordinal).ThenBy(u => u.SubjectId, StringComparer.Ordinal).ToArray();
-        var targetDeclaration = _targetRecord is not null && _declarations.TryGetValue(_targetRecord.Value, out var d) ? d.Value : null;
+        var targetDeclaration = _selectedDeclaration;
         var qualification = _publication.IsConsistentSnapshot && !string.IsNullOrWhiteSpace(_publication.SnapshotIdentity) ? "consistent" : "qualified";
         var coverage = new CoverageInfo("ec6d.typescript.local-v1", qualification, _stage is not null, _evaluatedImports,
             _unsupported, _external, _unresolved,
@@ -464,9 +527,10 @@ internal sealed class InterfaceImpactQueryV1
             _contexts.Count(c => c.Text("writtenForm") == "expression"), _contexts.Count(c => c.Text("heritageKind") != "class-implements"), _unavailable,
             _exports.Length, _exportUnresolved, _exportUnsupported, implementations.Length, consumers.Length,
             new SortedDictionary<string, int>(unknowns.GroupBy(u => u.Reason).ToDictionary(g => g.Key, g => g.Count()), StringComparer.Ordinal),
-            ["renamed/multi-hop re-export paths beyond one hop", "CommonJS/require", "bare packages", "ordinary type-use references and call sites", "implicit structural implementations", "transitive impact", "default/namespace binding forms", "other languages including .astro and cross-plugin symbols"]);
+            ["renamed/multi-hop re-export paths beyond one hop", "CommonJS/require", "bare packages", "ordinary type-use references and call sites", "implicit structural implementations", "transitive impact", "default/namespace binding forms", "other languages including .astro and cross-plugin symbols",
+             .. (_occurrenceAttributionFrontier == 0 ? Array.Empty<string>() : new[] { $"{_occurrenceAttributionFrontier} bare import attribution outcomes have no accepted occurrence-level reason; no type-use conclusion evaluated" })]);
         return new(new(_publication.RepositoryId, _publication.IndexRunId, _publication.IndexIdentity, _publication.SnapshotIdentity, _publication.IsConsistentSnapshot), new(_target.Id, _targetRecord, _target.Name, _target.QualifiedName,
-            targetDeclaration?.Location.Path ?? (_targetFile is null ? null : PathOf(new CodeNodeId(_targetFile))), targetDeclaration?.Location),
+            targetDeclaration?.Location.Path ?? _targetPath, targetDeclaration?.Location),
             implementations, consumers, unknowns, coverage,
             new(_stage is null ? "complete" : "truncated", _stage, new(_charged[0], _charged[1], _charged[2], _charged[3], _charged[4]), _limits, _omitted, _stage is not null));
     }
@@ -476,9 +540,16 @@ internal sealed class InterfaceImpactQueryV1
     private static CodeLocation? Span(Fact fact, string key) => fact.Data.TryGetProperty(key, out var value) && value.ValueKind != JsonValueKind.Null ? value.Deserialize<CodeLocation>() : null;
     private Fact[] Kind(string kind) => (_byKind.GetValueOrDefault(kind) ?? []).OrderBy(f => f.Edge.Evidence.Location?.Path, StringComparer.Ordinal)
         .ThenBy(f => f.Edge.Evidence.Location?.StartLine).ThenBy(f => f.Edge.Evidence.Location?.StartColumn).ThenBy(f => f.Edge.Id.Value, StringComparer.Ordinal).ToArray();
+    private static bool Visible(Fact import) => import.Text("bindingScope") == "module";
     private static bool Named(Fact import) => import.Text("form") is "named" or "named-aliased";
     private string PathOf(CodeNodeId file) => _nodes.TryGetValue(file.Value, out var node) ? node.QualifiedName ?? node.Name : throw new InvalidOperationException("Missing source file.");
     private static string? Property(IReadOnlyDictionary<string, CodePropertyValue> p, string key) => p.TryGetValue(key, out var value) && value is CodeTextProperty text ? text.Value : null;
+    private Step ChargedStep(Fact fact, string kind)
+    {
+        Charge(4, "binding");
+        return StepView(fact, kind);
+    }
+    private static string ResolverVersion(Fact fact) => fact.Origin.PluginVersion.Split('+', 2)[0] + "+resolver2.relative-v1";
     private static Step StepView(Fact fact, string kind) => new(kind, fact.Edge.Id.Value, fact.Edge.SourceId, fact.Edge.TargetId, fact.Edge.Evidence, fact.Origin, fact.Edge.Properties, fact.Edge.Evidence.Location);
     private static string Canonical<T>(T value) => JsonSerializer.Serialize(value, CodeJsonDefaults.Options);
     private static void Associate(Dictionary<string, HashSet<string>> names, string name, string origin)

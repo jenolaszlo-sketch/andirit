@@ -41,18 +41,33 @@ public sealed record InterfaceImpactResultV1(
         : "All participating facts were produced in this index run from per-file hash-verified reads; the run's source provider does not guarantee a single snapshot; results may mix per-file states read at different times and may not reflect sources edited after the run.";
 
     /// <summary>Checked authority path. A consistent source snapshot does not imply complete impact coverage.</summary>
-    public InterfaceImpactResultV1 RequireConsistentSnapshot() => Qualification == "consistent" ? this
-        : throw new InvalidOperationException("Qualified interface impact cannot be used as a consistent-snapshot authority.");
-    public string ToJson() => JsonSerializer.Serialize(this, CodeJsonDefaults.Options);
+    public InterfaceImpactResultV1 RequireConsistentSnapshot()
+    {
+        ValidateEnvelope();
+        return Qualification == "consistent" ? this
+            : throw new InvalidOperationException("Qualified interface impact cannot be used as a consistent-snapshot authority.");
+    }
+    public string ToJson()
+    {
+        ValidateEnvelope();
+        return JsonSerializer.Serialize(this, CodeJsonDefaults.Options);
+    }
     public static InterfaceImpactResultV1 FromJson(string json)
     {
         var result = JsonSerializer.Deserialize<InterfaceImpactResultV1>(json, CodeJsonDefaults.Options)
             ?? throw new ArgumentException("Interface impact JSON is empty.", nameof(json));
-        if (result.Publication is null || result.Target is null || result.Coverage is null || result.Truncation is null ||
-            result.ConfirmedImplementations is null || result.PossibleConsumers is null || result.Unknowns is null ||
-            result.Coverage.Qualification != result.Qualification || result.Coverage.Partial != result.Truncation.CountsAreLowerBounds)
-            throw new ArgumentException("Invalid interface impact envelope.", nameof(json));
+        result.ValidateEnvelope();
         return result;
+    }
+
+    private void ValidateEnvelope()
+    {
+        if (Publication is null || Publication.RepositoryId is null || Publication.IndexRunId is null || Publication.IndexIdentity is null ||
+            Target is null || Target.DeclarationNodeId is null || string.IsNullOrWhiteSpace(Target.Name) ||
+            Coverage is null || Truncation is null || Truncation.ChargedWork is null || Truncation.AppliedLimits is null ||
+            ConfirmedImplementations is null || PossibleConsumers is null || Unknowns is null ||
+            Coverage.Qualification != Qualification || Coverage.Partial != Truncation.CountsAreLowerBounds)
+            throw new ArgumentException("Invalid interface impact envelope: mandatory identity and qualification must be preserved.");
     }
 
     public sealed record PublicationInfo(CodeRepositoryId RepositoryId, CodeIndexRunId IndexRunId, CodeIndexIdentity IndexIdentity, string? SnapshotIdentity, bool IsConsistentSnapshot)

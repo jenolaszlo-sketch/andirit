@@ -602,7 +602,7 @@ public sealed class TreeSitterTypeScriptPluginTests
         var packageVersion = typeof(TreeSitterTypeScriptPlugin).Assembly
             .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
             .InformationalVersion.Split('+', 2)[0];
-        Assert.Equal($"{packageVersion}+v0.23.2.abi14.p10", plugin.Version);
+        Assert.Equal($"{packageVersion}+v0.23.2.abi14.rem1.p10", plugin.Version);
     }
 
     [Fact]

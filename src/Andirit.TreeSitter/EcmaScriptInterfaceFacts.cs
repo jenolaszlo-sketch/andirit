@@ -47,6 +47,7 @@ internal sealed class EcmaScriptInterfaceFacts
         publisher.Attributions();
         publisher.Add("interface-profile", file, file, publisher.Location(root), "profile", "imports1.local-v1", new
         {
+            revision = "ec6d-rem-01",
             providers = new[] { "imports1.local-v1", "heritage1.local-v1", "module1.local-v1", "exports2.local-v1" },
             fileModuleContext = publisher._module ? "module" : "script"
         });
@@ -67,10 +68,21 @@ internal sealed class EcmaScriptInterfaceFacts
             _declarations.Add(declaration.Id.Value, context);
             Add("declaration-context", declaration.SymbolNodeId, _file, declaration.Location, "heritage-context", "heritage1.local-v1", context);
             if (node.Type is "class_declaration" or "abstract_class_declaration" or "interface_declaration")
-                Heritage(node, declaration, context);
+                Heritage(node, declaration.SymbolNodeId, context);
         }
 
-        if (node.Type is "import_statement" or "import_alias") Imports(node);
+        // A context anchor for an unmodeled owner is source syntax, not a
+        // physical declaration or a binding-capable symbol. Never change p9 facts.
+        if (declarations.Length == 0 && node.NamedChildren.Any(n => n.Type is "class_heritage" or "extends_type_clause"))
+        {
+            var owner = new CodeNodeId("typescript:ec6d:owner:" + Hash(JsonSerializer.Serialize(new { path = _path, span = Location(node) })));
+            _facts.Nodes.TryAdd(owner.Value, new CodeGraphNode(owner, CodeNodeKinds.Type, node.ChildByFieldName("name")?.Text ?? "<anonymous class>",
+                properties: new Dictionary<string, CodePropertyValue> { [CodePropertyKeys.Language] = new CodeTextProperty("typescript") }));
+            var scope = ancestors.All(a => a.Type is "program" or "export_statement" or "ambient_declaration");
+            Heritage(node, owner, new("", "", scope, ambient, node.HasError || node.IsMissing, false), modeled: false);
+        }
+
+        if (node.Type is "import_statement" or "import_alias") Imports(node, ancestors.All(a => a.Type == "program"));
         if (node.Type == "export_statement") ExportReference(node);
         if (node.Type == "import_type")
             Import(node, Descendants(node).FirstOrDefault(n => n.Type == "string"), null, null, null, "unsupported", true, "import-type");
@@ -83,18 +95,18 @@ internal sealed class EcmaScriptInterfaceFacts
             Walk(child, [.. ancestors, node], ambient);
     }
 
-    private void Imports(TreeSitterSyntaxNode node)
+    private void Imports(TreeSitterSyntaxNode node, bool moduleScope)
     {
         var token = node.ChildByFieldName("source");
+        var wholeType = node.Children.Any(c => c.Type == "type");
         var equals = Descendants(node).FirstOrDefault(n => n.Type == "import_require_clause");
         if (equals is not null || node.Children.Any(n => n.Type == "="))
         {
             token ??= Descendants(node).FirstOrDefault(n => n.Type == "string");
             var local = Descendants(node).FirstOrDefault(n => n.Type == "identifier");
-            Import(node, token, local, null, local?.Text, "import-equals", false, "import");
+            Import(node, token, local, null, local?.Text, "import-equals", wholeType, "import", moduleScope);
             return;
         }
-        var wholeType = node.Children.Any(c => c.Type == "type");
         var reference = wholeType ? "import-type" : "import";
         var count = 0;
         foreach (var specifier in Descendants(node).Where(n => n.Type == "import_specifier"))
@@ -102,26 +114,26 @@ internal sealed class EcmaScriptInterfaceFacts
             var name = specifier.ChildByFieldName("name");
             var alias = specifier.ChildByFieldName("alias");
             Import(node, token, alias ?? name, name?.Text, (alias ?? name)?.Text,
-                alias is null ? "named" : "named-aliased", wholeType || specifier.Children.Any(c => c.Type == "type"), reference);
+                alias is null ? "named" : "named-aliased", wholeType || specifier.Children.Any(c => c.Type == "type"), reference, moduleScope);
             count++;
         }
         var clause = node.NamedChildren.FirstOrDefault(n => n.Type == "import_clause");
         foreach (var local in clause?.NamedChildren.Where(n => n.Type == "identifier") ?? [])
         {
-            Import(node, token, local, null, local.Text, "default", wholeType, reference);
+            Import(node, token, local, null, local.Text, "default", wholeType, reference, moduleScope);
             count++;
         }
         foreach (var ns in Descendants(node).Where(n => n.Type == "namespace_import"))
         {
             var local = ns.NamedChildren.LastOrDefault();
-            Import(node, token, local, null, local?.Text, "namespace", wholeType, reference);
+            Import(node, token, local, null, local?.Text, "namespace", wholeType, reference, moduleScope);
             count++;
         }
-        if (count == 0) Import(node, token, null, null, null, clause is null && token is not null ? "side-effect" : "unsupported", wholeType, reference);
+        if (count == 0) Import(node, token, null, null, null, clause is null && token is not null ? "side-effect" : "unsupported", wholeType, reference, moduleScope);
     }
 
     private void Import(TreeSitterSyntaxNode statement, TreeSitterSyntaxNode? token, TreeSitterSyntaxNode? binding,
-        string? importedName, string? localName, string form, bool typeOnly, string reference)
+        string? importedName, string? localName, string form, bool typeOnly, string reference, bool moduleScope = false)
     {
         var specifier = Raw(token);
         if (!_facts.ModuleReferences.Any(r => r.Location == Location(statement)))
@@ -139,6 +151,7 @@ internal sealed class EcmaScriptInterfaceFacts
             importedName,
             localName,
             isTypeOnly = typeOnly,
+            bindingScope = moduleScope ? "module" : "nested",
             form,
             referenceForm = reference,
             // A resolver-status counterpart is emitted by the inventory pass.
@@ -173,7 +186,7 @@ internal sealed class EcmaScriptInterfaceFacts
         });
     }
 
-    private void Heritage(TreeSitterSyntaxNode owner, CodeGraphDeclaration declaration, DeclarationContext context)
+    private void Heritage(TreeSitterSyntaxNode owner, CodeNodeId ownerId, DeclarationContext context, bool modeled = true)
     {
         var isInterface = owner.Type == "interface_declaration";
         var container = owner.NamedChildren.FirstOrDefault(n => n.Type is "class_heritage" or "extends_type_clause");
@@ -181,7 +194,7 @@ internal sealed class EcmaScriptInterfaceFacts
         var clauses = container.Type == "extends_type_clause" ? new[] { container } : container.NamedChildren;
         foreach (var clause in clauses)
         {
-            var kind = isInterface ? "interface-extends" : clause.Type == "implements_clause" ? "class-implements" : "class-extends";
+            var kind = !modeled ? "other" : isInterface ? "interface-extends" : clause.Type == "implements_clause" ? "class-implements" : "class-extends";
             var expressions = clause.Type is "implements_clause" or "extends_type_clause"
                 ? clause.NamedChildren : clause.ChildByFieldName("value") is { } value ? new[] { value } : new[] { clause };
             foreach (var expression in expressions)
@@ -189,16 +202,16 @@ internal sealed class EcmaScriptInterfaceFacts
                 var name = expression.Type == "generic_type" ? expression.ChildByFieldName("name") ?? expression.NamedChildren[0] : expression;
                 var form = expression.Type == "generic_type" ? "expression" : name.Type is "identifier" or "type_identifier" ? "simple"
                     : name.Type is "nested_type_identifier" or "member_expression" ? "qualified" : "expression";
-                var terminal = form == "simple" ? name.Text : Descendants(name).LastOrDefault(n => n.Type is "identifier" or "type_identifier" or "property_identifier")?.Text;
+                var terminal = name.Type is "identifier" or "type_identifier" or "property_identifier" ? name.Text : Descendants(name).LastOrDefault(n => n.Type is "identifier" or "type_identifier" or "property_identifier")?.Text;
                 var parameters = owner.ChildByFieldName("type_parameters");
                 var names = parameters is null ? Array.Empty<string>() : parameters.NamedChildren.Select(p => p.ChildByFieldName("name")?.Text ?? p.NamedChildren.FirstOrDefault()?.Text).OfType<string>().ToArray();
-                Add("heritage-context", declaration.SymbolNodeId, _file, Location(expression), "heritage-context", "heritage1.local-v1", new
+                Add("heritage-context", ownerId, _file, Location(expression), "heritage-context", "heritage1.local-v1", new
                 {
                     sourceFile = _file.Value,
-                    ownerNode = declaration.SymbolNodeId.Value,
+                    ownerNode = ownerId.Value,
                     heritageSpan = Location(expression),
                     heritageKind = kind,
-                    ownerKind = isInterface ? "interface" : "class",
+                    ownerKind = !modeled ? "other" : isInterface ? "interface" : "class",
                     writtenForm = form,
                     writtenText = expression.Text,
                     writtenName = name.Text,

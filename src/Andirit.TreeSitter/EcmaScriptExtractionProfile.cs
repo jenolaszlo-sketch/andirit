@@ -1333,7 +1333,8 @@ internal sealed class EcmaScriptExtractionProfile : ITreeSitterExtractionProfile
                 "The p10 ECMAScript profile requires a p10 plugin version while preserving p8 evidence for existing facts.");
         }
 
-        return string.Concat(pluginVersion.AsSpan(0, pluginVersion.Length - currentRevision.Length), existingFactRevision);
+        var suffix = pluginVersion.EndsWith(".rem1.p10", StringComparison.Ordinal) ? ".rem1.p10" : currentRevision;
+        return string.Concat(pluginVersion.AsSpan(0, pluginVersion.Length - suffix.Length), existingFactRevision);
     }
 
     private void WalkChildren(TreeSitterSyntaxNode node, Scope scope, bool isFileLevel = false)

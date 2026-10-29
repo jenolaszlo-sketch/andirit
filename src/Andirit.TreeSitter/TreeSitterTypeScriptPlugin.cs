@@ -25,7 +25,7 @@ public sealed class TreeSitterTypeScriptPlugin : ICodeGraphPlugin
         $"{TreeSitterPluginSupport.PackageVersion(typeof(TreeSitterTypeScriptPlugin))}" +
         $"+{TreeSitterGrammarRegistry.TypeScript.GrammarVersion}" +
         $".abi{TreeSitterGrammarRegistry.TypeScript.AbiVersion}" +
-        $".p{EcmaScriptExtractionProfile.ProfileRevision}";
+        $".rem1.p{EcmaScriptExtractionProfile.ProfileRevision}";
 
     public TreeSitterTypeScriptPlugin()
         : this(new EcmaScriptModuleResolver(
