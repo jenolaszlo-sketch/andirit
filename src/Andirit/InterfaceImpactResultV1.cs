@@ -61,7 +61,7 @@ public sealed record InterfaceImpactResultV1(
     }
     public sealed record TargetInfo(CodeNodeId DeclarationNodeId, CodeDeclarationId? DeclarationRecordId, string Name, string? QualifiedName, string? Path, CodeLocation? Span);
     public sealed record Step(string StepKind, string FactId, CodeNodeId? FromNodeId, CodeNodeId? ToNodeId, CodeEvidence? Evidence, CodeFactOrigin Origin,
-        IReadOnlyDictionary<string, CodePropertyValue>? Properties = null, CodeLocation? SourceLocation = null);
+        IReadOnlyDictionary<string, CodePropertyValue>? Properties = null, CodeLocation? SourceLocation = null, IReadOnlyList<Step>? SupportingFacts = null);
     public sealed record Witness(string WitnessId, IReadOnlyList<Step> Steps, string Policy = "binding1.local-v1", EvidenceQuality Quality = EvidenceQuality.Resolved);
     public sealed record Implementation(CodeNodeId ClassNodeId, string ClassName, string Path, CodeLocation HeritageSpan, string BindingRoute,
         CodeDeclarationId TargetDeclarationRecordId, CodeNodeId TargetDeclarationNodeId, IReadOnlyList<Witness> Witnesses, IReadOnlyList<string> DiscoveryOrigins);

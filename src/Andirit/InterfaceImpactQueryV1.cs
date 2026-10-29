@@ -33,7 +33,7 @@ internal sealed class InterfaceImpactQueryV1
     private readonly int[] _charged = new int[5];
     private string? _stage;
     private int _omitted;
-    private int _evaluatedImports, _heritageEvaluated, _unavailable, _external, _unresolved, _exportUnresolved, _exportUnsupported;
+    private int _evaluatedImports, _heritageEvaluated, _unavailable, _external, _unresolved, _unsupported, _exportUnresolved, _exportUnsupported;
     private string? _targetFile;
     private CodeDeclarationId? _targetRecord;
     private readonly CodeGraphNode _target;
@@ -66,6 +66,8 @@ internal sealed class InterfaceImpactQueryV1
         {
             var origin = unit.Origin;
             if (origin.RepositoryId != _publication.RepositoryId) Fail("Unit belongs to another repository.");
+            if (origin.PluginId.Value == "penghou.hetu.tree-sitter.typescript" && !origin.PluginVersion.EndsWith(".p10", StringComparison.Ordinal))
+                throw new ArgumentException("Publication contains TypeScript units without the EC-6D profile.");
             foreach (var node in unit.Nodes.OrderBy(n => n.Id.Value, StringComparer.Ordinal))
             {
                 Charge(0, "discovery");
@@ -168,6 +170,7 @@ internal sealed class InterfaceImpactQueryV1
             _evaluatedImports++;
             if (resolved.Text("resolutionStatus") == "unresolved") _unresolved++;
             if (resolved.Text("resolutionStatus") == "external") _external++;
+            if (resolved.Text("resolutionStatus") == "unsupported" || !Named(import)) _unsupported++;
             if ((Named(import) && names.ContainsKey(import.Text("importedName") ?? "") || !Named(import) && resolved.Text("relevanceTarget") == _targetFile) && import.Text("localName") is { } local)
             {
                 if (!aliases.TryGetValue(import.Edge.SourceId.Value, out var locals)) aliases[import.Edge.SourceId.Value] = locals = new(StringComparer.Ordinal);
@@ -196,7 +199,7 @@ internal sealed class InterfaceImpactQueryV1
             Bind(candidate.Context, candidate.Origins);
         }
         // Legacy heritage with no context remains observable, with no name fallback for confirmation.
-        foreach (var heritage in Kind("implements").Concat(Kind("inherits")).OrderBy(f => f.Edge.Id.Value, StringComparer.Ordinal))
+        foreach (var heritage in Kind("implements").Concat(Kind("inherits")).Where(f => f.Origin.PluginId.Value == "penghou.hetu.tree-sitter.typescript").OrderBy(f => f.Edge.Id.Value, StringComparer.Ordinal))
         {
             Charge(1, "context-gates");
             Charge(0, "context-gates", _contexts.Length);
@@ -212,6 +215,7 @@ internal sealed class InterfaceImpactQueryV1
             Charge(0, "binding");
             if (_consumed.Contains(import.Edge.Id.Value)) continue;
             var resolution = Resolve(import);
+            if (resolution.Text("resolutionStatus") == "unsupported") continue;
             if (!names.ContainsKey(import.Text("importedName") ?? "") && !starBarrels.Contains(resolution.Text("resolvedTarget") ?? "")) continue;
             if (!Named(import)) continue;
             var reason = ImportRoute(import, resolution, out var proof);
@@ -427,11 +431,13 @@ internal sealed class InterfaceImpactQueryV1
     {
         if (_unknown.Count == _limits.MaxUnknowns) { _stage ??= "unknown-output"; _omitted++; return; }
         var facts = evidence.DistinctBy(f => f.Edge.Id).ToArray();
-        Charge(4, "binding", facts.Length + barriers.Length);
+        Charge(4, "binding", facts.Length + barriers.Length * 2);
+        var barrierSteps = barriers.Select(f => StepView(f, "barrier") with
+        { SupportingFacts = [StepView(Resolve(f), "export-resolution")] }).ToArray();
         var sourceFile = kind == "heritage" ? _files[subject.Edge.Evidence.Location!.Path].Id : subject.Edge.SourceId;
         _unknown.Add(new(kind, sourceFile,
             kind == "heritage" ? subject.Edge.SourceId : null, subject.Edge.Id.Value, subject.Edge.Evidence.Location!, reason,
-            facts.Select(f => StepView(f, f.Edge.Kind.Value)).ToArray(), barriers.Select(f => StepView(f, "barrier")).ToArray(), origins));
+            facts.Select(f => StepView(f, f.Edge.Kind.Value)).ToArray(), barrierSteps, origins));
     }
 
     private InterfaceImpactResultV1 Result()
@@ -452,7 +458,7 @@ internal sealed class InterfaceImpactQueryV1
         var targetDeclaration = _targetRecord is not null && _declarations.TryGetValue(_targetRecord.Value, out var d) ? d.Value : null;
         var qualification = _publication.IsConsistentSnapshot && !string.IsNullOrWhiteSpace(_publication.SnapshotIdentity) ? "consistent" : "qualified";
         var coverage = new CoverageInfo("ec6d.typescript.local-v1", qualification, _stage is not null, _evaluatedImports,
-            _imports.Count(i => !Named(i)), _external, _unresolved,
+            _unsupported, _external, _unresolved,
             _contexts.Length + _unavailable, _heritageEvaluated,
             _contexts.Count(c => c.Text("ownerScope") == "nested"), _contexts.Count(c => c.Text("writtenForm") == "qualified"),
             _contexts.Count(c => c.Text("writtenForm") == "expression"), _contexts.Count(c => c.Text("heritageKind") != "class-implements"), _unavailable,

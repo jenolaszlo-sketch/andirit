@@ -67,6 +67,7 @@ public sealed class InterfaceImpactTests
         Assert.Equal(["re-export-barrier", "unresolved-module"], result.Unknowns.Select(u => u.Reason));
         Assert.All(result.Unknowns, u => Assert.Equal("occurrence", u.SubjectKind));
         Assert.Equal(3, result.Unknowns[0].BarrierWitnesses.Count);
+        Assert.All(result.Unknowns[0].BarrierWitnesses, w => Assert.Equal("export-resolution", Assert.Single(w.SupportingFacts!).StepKind));
         Assert.Equal("qualified", result.Publication.Qualification);
         Assert.Throws<InvalidOperationException>(() => result.RequireConsistentSnapshot());
         Assert.Contains("Absence from the confirmed list is not evidence of absence", result.CoverageStatement);
@@ -298,6 +299,28 @@ public sealed class InterfaceImpactTests
     public void InvalidBounds_AreRejected() => Assert.Throws<ArgumentOutOfRangeException>(() => new InterfaceImpactOptionsV1(maxWitnessSteps: 0));
 
     [Fact]
+    public async Task ForeignLanguageHeritage_DoesNotBecomeATargetRelationship()
+    {
+        using var fixture = new Fixture(false);
+        fixture.Write("types.ts", "export interface Widget {}\n");
+        await fixture.Index();
+        var units = await fixture.Store.GetPublishedUnitsAsync(fixture.Repository);
+        var publication = (await fixture.Store.GetLatestPublicationAsync(fixture.Repository))!;
+        var file = new CodeGraphNode(new("foreign:file"), CodeNodeKinds.File, "Foreign.cs", "Foreign.cs");
+        var owner = new CodeGraphNode(new("foreign:class"), CodeNodeKinds.Type, "Foreign");
+        var placeholder = new CodeGraphNode(new("foreign:placeholder"), CodeNodeKinds.Type, "Widget");
+        var origin = new CodeFactOrigin(fixture.Repository, new("plugin:foreign"), "1.0", publication.IndexRunId, new("foreign:unit"), "Foreign.cs", "sha256:foreign");
+        var edge = new CodeGraphEdge(new("foreign:heritage"), owner.Id, placeholder.Id, CodeEdgeKinds.Implements,
+            new CodeEvidence(EvidenceQuality.Structural, "plugin:foreign", "1.0", new("Foreign.cs", 1, 1, 1, 9)));
+        var synthetic = units.Append(new CodeIndexUnitReplacement(origin, [file, owner, placeholder], edges: [edge])).ToArray();
+        var reader = Proxy(fixture.Store, (method, args) => method == "GetPublishedUnitsAsync" ? new ValueTask<IReadOnlyList<CodeIndexUnitReplacement>>(synthetic) : null);
+        var result = await fixture.Query(await fixture.Target(), reader: reader);
+        Assert.Empty(result.ConfirmedImplementations);
+        Assert.Empty(result.Unknowns);
+        Assert.Equal(0, result.Coverage.HeritageObserved);
+    }
+
+    [Fact]
     public async Task RepeatedClausesAndExportOccurrences_PreserveEveryCompleteWitness()
     {
         using var fixture = new Fixture(false);
@@ -336,12 +359,16 @@ public sealed class InterfaceImpactTests
         Assert.Contains(imports, e => ((CodeTextProperty)e.Properties["ec6d.data"]).Value.Contains("ty\\\\u0070es", StringComparison.Ordinal));
         Assert.Contains(imports, e => ((CodeTextProperty)e.Properties["ec6d.data"]).Value.Contains("import-equals", StringComparison.Ordinal));
         Assert.Single(units.SelectMany(u => u.Edges), e => e.Kind.Value == "export-reference");
+        var result = await fixture.Query(await fixture.Target());
+        Assert.Empty(result.Unknowns);
+        Assert.True(result.Coverage.UnsupportedImportFormOccurrences >= 2);
     }
 
     [Theory]
     [InlineData("type-parameter-shadowing")]
     [InlineData("unresolved-alias")]
     [InlineData("same-file-different-target")]
+    [InlineData("unsupported-resolver")]
     public async Task AdditionalLexicalGuards_PreserveIdentityAndAliasUncertainty(string scenario)
     {
         using var fixture = new Fixture(false);
@@ -350,13 +377,14 @@ public sealed class InterfaceImpactTests
         {
             "type-parameter-shadowing" => "import { Widget } from './types'; export class A<Widget> implements Widget {}\n",
             "unresolved-alias" => "import { Widget as MissingAlias } from './missing'; export class A implements MissingAlias {}\n",
+            "unsupported-resolver" => "import { Widget as Bad } from './ty\\u0070es'; export class A implements Bad {}\n",
             _ => "export const Widget = 1; export class A implements Widget {}\n"
         });
         await fixture.Index();
         var result = await fixture.Query(await fixture.Target());
         Assert.Empty(result.ConfirmedImplementations);
         if (scenario == "same-file-different-target") Assert.Empty(result.Unknowns);
-        else Assert.Equal(scenario == "unresolved-alias" ? "unresolved-module" : scenario, Assert.Single(result.Unknowns).Reason);
+        else Assert.Equal(scenario switch { "unresolved-alias" => "unresolved-module", "unsupported-resolver" => "unsupported-import-form", _ => scenario }, Assert.Single(result.Unknowns).Reason);
     }
 
     [Theory]
