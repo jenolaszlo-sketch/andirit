@@ -20,6 +20,14 @@ public sealed class CodeGraphPublicationQuery
 
     public CodeGraphPublication Publication { get; }
 
+    /// <summary>Gets evidence-backed interface relationships within this bound publication.</summary>
+    public ValueTask<InterfaceImpactResultV1> GetInterfaceImpactV1Async(
+        CodeNodeId interfaceNodeId,
+        InterfaceImpactOptionsV1? options = null,
+        CancellationToken cancellationToken = default) =>
+        _queries.GetInterfaceImpactV1Async(Publication, interfaceNodeId, options, cancellationToken);
+
+
     public async ValueTask<CodeGraphQueryEnvelope<CodeSymbolLookupResult>>
         FindSymbolAsync(
             string qualifiedName,

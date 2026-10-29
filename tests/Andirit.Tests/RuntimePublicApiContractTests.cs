@@ -89,6 +89,19 @@ public sealed class RuntimePublicApiContractTests
             "Andirit.ICodeGraphStoreHealthCheck",
             "Andirit.ICodeRepositoryProvider",
             "Andirit.ICodeRepositorySource",
+            "Andirit.InterfaceImpactResultV1+PublicationInfo",
+            "Andirit.InterfaceImpactOptionsV1",
+            "Andirit.InterfaceImpactResultV1",
+            "Andirit.InterfaceImpactResultV1+TargetInfo",
+            "Andirit.InterfaceImpactResultV1+Step",
+            "Andirit.InterfaceImpactResultV1+Witness",
+            "Andirit.InterfaceImpactResultV1+Implementation",
+            "Andirit.InterfaceImpactResultV1+Occurrence",
+            "Andirit.InterfaceImpactResultV1+Consumer",
+            "Andirit.InterfaceImpactResultV1+Unknown",
+            "Andirit.InterfaceImpactResultV1+CoverageInfo",
+            "Andirit.InterfaceImpactResultV1+Work",
+            "Andirit.InterfaceImpactResultV1+TruncationInfo",
             "Andirit.InMemoryCodeGraphStore"
         }.Order(StringComparer.Ordinal).ToArray();
 

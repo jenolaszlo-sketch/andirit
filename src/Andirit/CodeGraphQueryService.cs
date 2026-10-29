@@ -37,6 +37,28 @@ public sealed record CodeSymbolLookupResult(IReadOnlyList<CodeGraphNode> Candida
 /// <summary>Provides bounded semantic queries without exposing store-specific languages.</summary>
 public sealed class CodeGraphQueryService
 {
+    /// <summary>Answers the bounded EC-6D query from exactly one publication; movement returns no classified output.</summary>
+    public async ValueTask<InterfaceImpactResultV1> GetInterfaceImpactV1Async(
+        CodeGraphPublication publication,
+        CodeNodeId interfaceNodeId,
+        InterfaceImpactOptionsV1? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(publication);
+        ArgumentNullException.ThrowIfNull(interfaceNodeId);
+        cancellationToken.ThrowIfCancellationRequested();
+        EnsurePublication(publication, await _store.GetLatestPublicationAsync(publication.RepositoryId, cancellationToken).ConfigureAwait(false));
+        var target = await _store.GetNodeAsync(publication.RepositoryId, interfaceNodeId, cancellationToken).ConfigureAwait(false);
+        if (target is null || target.Kind != CodeNodeKinds.Interface || target.SymbolId is null ||
+            !target.Properties.TryGetValue(CodePropertyKeys.Language, out var language) || language is not CodeTextProperty { Value: "typescript" })
+            throw new ArgumentException("Select a physical TypeScript interface declaration node.", nameof(interfaceNodeId));
+        var units = await _store.GetPublishedUnitsAsync(publication.RepositoryId, cancellationToken).ConfigureAwait(false);
+        EnsurePublication(publication, await _store.GetLatestPublicationAsync(publication.RepositoryId, cancellationToken).ConfigureAwait(false));
+        var result = InterfaceImpactQueryV1.Execute(publication, target, units, options ?? new(), cancellationToken);
+        EnsurePublication(publication, await _store.GetLatestPublicationAsync(publication.RepositoryId, cancellationToken).ConfigureAwait(false));
+        cancellationToken.ThrowIfCancellationRequested();
+        return result;
+    }
     private const int MaximumBatchSymbols = 100;
     private const int MaximumTraversalSeeds = 32;
     private readonly ICodeGraphReader _store;
