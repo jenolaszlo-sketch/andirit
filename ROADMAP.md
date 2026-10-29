@@ -2,7 +2,7 @@
 
 ## Future resource-provider integration — 2026-10-02
 
-Reference: [resource-abstractions architecture](../Penghou/docs/resource-abstractions-architecture.md).
+Reference: [resource-abstractions architecture](https://github.com/jenolaszlo-sketch/penghou/blob/main/docs/resource-abstractions-architecture.md).
 After RA-5, assess an optional IO-backed implementation of the existing
 repository-source contract. Keep code graph, repository and snapshot semantics
 in Andirit; the immediate correction does not migrate this project.
@@ -766,7 +766,7 @@ Status: **future work after V1; not a current release gate**. Added 2026-09-26.
 V2.1/V2.2/V2.3 name cross-project delivery stages, not package or IR versions.
 Existing near-term priorities and completed work retain their current status.
 
-Architecture and shared acceptance gates: [reviewed V2 specification](../Penghou.Guihua/docs/evidence-driven-workflow-evolution-v2.md).
+Architecture and shared acceptance gates: [reviewed V2 specification](https://github.com/jenolaszlo-sketch/penghou-guihua/blob/main/docs/evidence-driven-workflow-evolution-v2.md).
 Cross-repository links assume sibling checkouts.
 
 ### V2.1/V2.2 — Revision-bound context and impact evidence

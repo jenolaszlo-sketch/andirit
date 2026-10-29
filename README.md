@@ -14,20 +14,20 @@ facts are discovered.
 
 ```text
 Source repository
-       â”‚
-       â–¼
+       │
+       ▼
 Language extraction session
-       â”‚
-       â–¼
+       │
+       ▼
 Owned graph-fact batches
-       â”‚
-       â–¼
+       │
+       ▼
 Andirit validation and persistence
-       â”‚
-       â–¼
+       │
+       ▼
 Bounded deterministic queries
-       â”‚
-       â–¼
+       │
+       ▼
 Solo and other consumers
 ```
 
@@ -155,7 +155,7 @@ Source manifests report changed inputs; they do not dictate extraction
 ownership. A syntax plugin may emit one index unit per file, while a semantic
 plugin may atomically own a project or solution unit. Plugin contexts therefore
 provide repeatable `CodeGraphSource` readers and only an optional provider-defined
-location hintâ€”plugins must not assume repositories live on a local filesystem.
+location hint—plugins must not assume repositories live on a local filesystem.
 
 `CodeIndexingService` now coordinates the first complete lifecycle: repository
 opening, source planning, plugin execution, bounded ingestion, obsolete-unit
@@ -314,7 +314,7 @@ computed, string, numeric, `#private`, and auto-accessor fields are not emitted,
 and field initializer invocations attribute to the field. The common
 JavaScript prototype-inheritance idioms
 (`Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`) are
-recognized and emitted as `inherits` with `Derived` evidence â€” never
+recognized and emitted as `inherits` with `Derived` evidence — never
 structural or resolved. There are no `calls` or `references` edges. The EC-6B
 module pass adds `resolves-to` only for supported relative references within
 the owning plugin's indexed source inventory. It identifies a target file;
@@ -436,7 +436,7 @@ var candidates = view is null
 
 Only one process may own a database file at a time; a second owner fails fast
 with the engine error instead of queuing. Name-pattern search is a bounded,
-case-insensitive substring match callers rank themselves â€” exact lookup and
+case-insensitive substring match callers rank themselves — exact lookup and
 traversal remain the deterministic primitives.
 
 ## Architectural boundaries
@@ -508,4 +508,4 @@ semantic and integration work.
 
 Apache-2.0
 
-Copyright (c) 2026 JenÅ‘ KonrÃ¡d LÃ¡szlÃ³
+Copyright (c) 2026 Jenő Konrád László

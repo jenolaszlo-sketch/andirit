@@ -8,4 +8,4 @@ Use a temporary branch in the same checkout only for risky integration or explic
 
 Independent review still binds an immutable source commit and reproducible evidence. Reviewers must not mutate the artifact under review. If a task cannot be safely isolated in the single checkout, stop and obtain an explicit exception before creating another linked worktree.
 
-Retain the discipline: **Claim â†’ Probe â†’ Evidence â†’ Independent Review â†’ Accept / Revise / Reject**. Workflow simplification changes neither acceptance criteria nor provenance requirements.
+Retain the discipline: **Claim → Probe → Evidence → Independent Review → Accept / Revise / Reject**. Workflow simplification changes neither acceptance criteria nor provenance requirements.
