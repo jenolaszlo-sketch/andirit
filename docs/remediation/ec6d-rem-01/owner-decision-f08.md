@@ -26,4 +26,8 @@ Illustrative result (IDs/steps omitted only in this proposal):
 
 The preserved original probe asserts that the entry's one route describes **every** witness. Under this additive correction that assertion is superseded for mixed routes only; it must remain in the original bundle, continue to run, and be reported explicitly. A separately named supplemental regression must verify every witness route/span, one entity, two complete proofs and unchanged hash derivation. No other assertion is relaxed.
 
-Until an explicit owner answer, this correction is paused while other findings continue.
+## Explicit owner supplement — approved 2026-10-30
+
+The owner answered **“Approve the bounded F08 supplement”** to the concrete proposal above in this remediation task. This ends the earlier pause and authorizes only the per-witness route/span metadata, retained proofs/entity dedup, deterministic legacy entry summary, and explicit supersession of the original mixed-route assertion described here. It does not amend the historical accepted blobs, broaden symbol binding, or issue owner/independent acceptance.
+
+The implementation derives each witness's BindingRoute and HeritageSpan directly from its ordered stored proof steps. The entry summary selects the first proof by full span, route then witness ID; witness output ordering remains by witness ID. Both proofs and the binding1 hash tuple/policy remain intact. This supplement has 2 permanent both-store cases and a separate 15-check executable assertion set. The two original route-evidence assertions remain preserved/executed and are individually reported as owner-superseded, not silently removed or called passing.
