@@ -1,6 +1,8 @@
-# EC6D-REM-01 final-source handoff (hosted gate pending)
+# EC6D-REM-01 final handoff
 
-All eleven source corrections and local qualification gates passed. Exact-commit hosted qualification awaits approval for the concrete normal fast-forward push. Milestone completion is not yet asserted.
+**EC6D-REM-01 COMPLETE: READY FOR INDEPENDENT RE-QUALIFICATION**
+
+All eleven source corrections, local gates, authorized integration and exact-source hosted qualification passed. The final evidence commit’s own CI is verified after creation and its exact binding is recorded externally and in the task handoff. This disposition issues no independent qualification or owner acceptance.
 
 | Role | Exact identity / state |
 | --- | --- |
@@ -16,6 +18,6 @@ All original 505 tests plus 38 new cases pass: **543 passed, zero failed/skipped
 
 Fresh authentic p9 migrations preserve every old fact; actual original p10 publications are refused until normal corrected-profile reindex. Both stores, repeated indexing, replacement/deletion, failure/cancellation retention and separate-process reopen pass. Controlled exact four/five and pinned website expected outcomes/frontiers hold. Metadata changes are query-only relative to the corrected persisted rem1.p10 facts.
 
-Hosted final-remediation-source CI is pending and no push, release or package publication is claimed. Integration must be a normal fast-forward from the verified remote main, with the concrete production/evidence endpoint approved first; prior permission covered the earlier implementation and evidence-only follow-ups. After pushing, verify Windows, Ubuntu, macOS and package/native jobs on the exact head; then record CI evidence separately and run a different reviewer's qualification.
+The owner explicitly approved the normal main fast-forward through e97342a9d1e03d5cccf7677cf9cad4a3b45884ce plus subsequent evidence-only CI/handoff updates. That push succeeded. Exact-head run 40990474092 passed Windows, Ubuntu, macOS (543 tests each; unchanged format/coverage) and package/native consumers. The final evidence-only follow-up is pushed and checked again on its exact SHA; its run/commit/tree binding is preserved after creation in external evidence/ci and git-bindings.json and the task handoff. No force push, release, tag or package publication occurred. Next gate is a different reviewer’s independent re-qualification.
 
 Raw evidence: C:/Users/Laszlos/source/repos/Solo/ec6d-rem-01. This executor is the implementation/qualification author too; no author-disjoint or owner acceptance is declared. Representative performance, load/concurrency, crash/power-loss durability and deployment qualification remain unestablished. Cross-platform hosted tests are a separate gate from local external probes. See reviewer-handoff.md for exact reproduction steps.

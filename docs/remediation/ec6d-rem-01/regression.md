@@ -26,7 +26,7 @@ Preserved probes: baseline 633/24 → post 640/2; original failure IDs show 22 f
 | TreeSitter 60% | 89.85 / 75.45 |
 | LatticeDB 70% | 90.49 / 77.68 |
 
-Raw TRX, Cobertura, pack/consumer and format logs: `C:/Users/Laszlos/source/repos/Solo/ec6d-rem-01/evidence`. Hosted Windows/Ubuntu/macOS/package CI on a remediation commit is **NOT RUN YET**: local gates passed and the concrete fast-forward push is prepared for approval. Old source's green run is not substituted for new-source CI.
+Raw TRX, Cobertura, pack/consumer and format logs: `C:/Users/Laszlos/source/repos/Solo/ec6d-rem-01/evidence`. Hosted Windows/Ubuntu/macOS/package CI **PASSED** on exact remediation/evidence head e97342a9d1e03d5cccf7677cf9cad4a3b45884ce, run 40990474092. Every platform passed 543 tests and all unchanged coverage/format gates; package/native consumer passed. This is the tested production source 701257f4 with documentation-only descendants, verified by exact production/test/workflow diff. The containing final evidence commit is checked again after creation; no older run is substituted. See ci.md.
 
 | Acceptance row | Current evidence / qualification |
 | --- | --- |
@@ -58,4 +58,4 @@ Raw TRX, Cobertura, pack/consumer and format logs: `C:/Users/Laszlos/source/repo
 | A27 / A28 | Target-specific barriers and external-module boundaries pass. |
 | Supplements | Mandatory input validation, provider/version checks, complete JSON identity, actual step charging and closed occurrence subjects tested; zero-result disclaimer/frontiers retained. |
 
-This trace is producer remediation evidence, not independent re-qualification. Different-reviewer verification and remaining authorized-integration/hosted gates are required.
+This trace is producer remediation evidence, not independent re-qualification. Different-reviewer verification and different-reviewer re-qualification gate (final evidence-head CI also verified after creation) are required.
