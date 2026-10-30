@@ -13,7 +13,9 @@ Starting tree: af9202904f8dbf0f696c21b6893b5184fa3b5423.
 Initial clean status, one canonical worktree, no linked worktrees or concurrent
 tracked changes found. Source-binding evidence verifies all 47 real inputs
 against the starting Git blobs. [Git record](evidence/git-binding.txt).
-Delivery content and final synchronization are recorded in
+Planning-content commit: 69d5152cb3ac1f9699e82981e11c122f261ada16;
+tree: fa134d401bd2952484bc25336000084ee503854c.
+Delivery content and synchronization status are recorded in
 [delivery binding](evidence/delivery-binding.txt); the final containing commit
 is necessarily identified externally by Git/the chat handoff, not by its own
 self-referential content hash.
@@ -89,6 +91,14 @@ See [performance plan](performance-evaluation-plan.md) for accounting limits.
 
 These qualifications are visible review inputs, not grounds to claim the
 future implementation works. No accepted EC-6D artifact is modified or reopened.
+
+## Publication permission
+
+The direct ordinary push to origin/main was rejected before execution by
+automatic approval review, citing shared-main collaboration risk and insufficient
+publication authorization. No push or workaround was executed. The complete
+packet remains committed locally; explicit approval is required to retry the push.
+This execution-permission qualification does not authorize production work.
 
 ## Owner decisions and next gate
 

@@ -1,3 +1,30 @@
-Pre-delivery binding: main at cd2b7fb5d73f4dc462b0ef7fcadfd75a91c118a2
-tree af9202904f8dbf0f696c21b6893b5184fa3b5423.
-Planning content binding and synchronization will be recorded after ordinary commit.
+CI-1-SCOPE-01 delivery binding
+Repository: jenolaszlo-sketch/andirit
+Canonical checkout: D:/projects/Andirit
+Branch: main
+
+Starting commit: cd2b7fb5d73f4dc462b0ef7fcadfd75a91c118a2
+Starting tree: af9202904f8dbf0f696c21b6893b5184fa3b5423
+
+Completed planning-content commit: 69d5152cb3ac1f9699e82981e11c122f261ada16
+Completed planning-content tree: fa134d401bd2952484bc25336000084ee503854c
+This following evidence-only commit records delivery status. Its containing
+commit/tree are resolved externally in the chat final report or by:
+  git log -1 --format="%H %T" -- docs/planning/ci1-scope-01/evidence/delivery-binding.txt
+
+Remote publication:
+The attempted ordinary git push origin main was rejected BEFORE execution by
+automatic approval review. No push was performed or retried through another route.
+Stated reason: direct main publication is a shared external mutation with
+potential collaboration impact; the review treated planning authorization as
+insufficient authorization to publish to origin/main.
+The supplied request allowed a planning push when execution permissions permit;
+execution permission did not permit it. Explicit approval is required to retry.
+
+At content-commit verification HEAD/main were 69d5152, origin/main remained
+cd2b7fb. The evidence-only following commit increases local ahead count by one.
+Final synchronization is verified in the chat handoff, not asserted successful.
+No linked worktrees, forced updates, reset, history rewrite or production change.
+Disposition: CI-1-SCOPE-01 READY WITH QUALIFICATIONS.
+Independent scope review and owner acceptance remain pending.
+CI-1 implementation and release remain unauthorized.
