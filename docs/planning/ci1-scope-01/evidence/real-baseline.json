@@ -1,0 +1,3520 @@
+{
+  "BaselineCommit": "cd2b7fb5d73f4dc462b0ef7fcadfd75a91c118a2",
+  "Mode": "real",
+  "Environment": {
+    "Framework": ".NET 10.0.12",
+    "OS": "Microsoft Windows 10.0.26200",
+    "ProcessorCount": 18
+  },
+  "HarnessBoundary": "Public extraction session, recording sink, validated public ingestion, atomic public completion; not full indexing-service timing. Independent Roslyn uses the same project subset and host references plus explicitly declared standard SDK implicit global usings for real mode; plugin inputs remain raw. No MSBuild or restore. Oracle is stronger than plugin context and is not a completeness proof.",
+  "InputFiles": [
+    {
+      "Path": "src/Andirit.Abstractions/Andirit.Abstractions.csproj",
+      "Sha256": "d778d530b7febc88744d4769364e54a17ceba41001bca07a155a7538ccdaa276",
+      "Utf8TextBytes": 1098
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodeEvidence.cs",
+      "Sha256": "22fd08962e04836fad1fc03c3a874c41f4beaf1600ca07c6527fe1d65b7b1e2e",
+      "Utf8TextBytes": 3259
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+      "Sha256": "d566a376237724c13f87d78420dbf590abda33f4af640a0460565b0d07e0fe99",
+      "Utf8TextBytes": 5344
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodeGraphCapabilities.cs",
+      "Sha256": "b50e27933a9b0cec51ee304acfd2d9ff22c712ba1ed23dbfbab276133aa0106d",
+      "Utf8TextBytes": 311
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodeGraphExtraction.cs",
+      "Sha256": "556c7a9bcb78d924821923fc01cde19f07dd7defe485327142fc101d24250466",
+      "Utf8TextBytes": 16320
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodeGraphFacts.cs",
+      "Sha256": "d31c902f32df280d198bce298a018e908b5dccaa83a371c8241ac04bba0e8faa",
+      "Utf8TextBytes": 3832
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodeGraphKinds.cs",
+      "Sha256": "504a4902424d53f58ffef7e4a963ae0f5cc595fa95ff77fccf916d0296c9df27",
+      "Utf8TextBytes": 3046
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodeGraphSource.cs",
+      "Sha256": "57780c2ac7d2833e3a86c28cce97a6b6b419845f5b800f97e999acc85b669ed0",
+      "Utf8TextBytes": 1381
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodeGraphValidation.cs",
+      "Sha256": "86049d4926a24e6b6e3a5a1f3f8f4411f2cab4ec6f7162c78915a412e7e7bf02",
+      "Utf8TextBytes": 948
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodeIdentities.cs",
+      "Sha256": "124f26edadd1bd024986f55b832ebd983058f267f558d8c081530e5d1d819f28",
+      "Utf8TextBytes": 2477
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodeLocation.cs",
+      "Sha256": "dbf54a64920ae674db0a5208ab9544ccc858fbdd2259eb1a40130427f5b7cb66",
+      "Utf8TextBytes": 1129
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodePluginFailure.cs",
+      "Sha256": "dce54d844ee847f2385de1792a07bcd1d395e74fe189fecc63dbf457f8dd8bac",
+      "Utf8TextBytes": 2161
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodePropertyKeys.cs",
+      "Sha256": "4084dfcfc0faa70dd9deb442669754796366501759a9e372c1b46a651090030d",
+      "Utf8TextBytes": 2180
+    },
+    {
+      "Path": "src/Andirit.Abstractions/CodePropertyValue.cs",
+      "Sha256": "55b220685d47635ec028a6c23dd6d1343cd905d2960ff58668d8f63257bc9769",
+      "Utf8TextBytes": 1814
+    },
+    {
+      "Path": "src/Andirit.Abstractions/ContractValue.cs",
+      "Sha256": "0d343d34075bfee92178beb0631fcd6f2c16d707e02647d0cd3c515659dcea33",
+      "Utf8TextBytes": 1331
+    },
+    {
+      "Path": "src/Andirit/Andirit.csproj",
+      "Sha256": "1a393af5ea9fc68da90400ed7fa5123a19b4cef98bf70a2a8256e823bd574f4f",
+      "Utf8TextBytes": 1202
+    },
+    {
+      "Path": "src/Andirit/AndiritHealth.cs",
+      "Sha256": "6f9155982d200e7448a204a9817b53837f2a036bd1852992028ef64cc53e61ca",
+      "Utf8TextBytes": 1079
+    },
+    {
+      "Path": "src/Andirit/AndiritHost.cs",
+      "Sha256": "231a83aebe221da0a9562c67b37eea8511de83014e1d1ad50b344da469c6c0e1",
+      "Utf8TextBytes": 9148
+    },
+    {
+      "Path": "src/Andirit/AssemblyInfo.cs",
+      "Sha256": "83016e2c3c4f6e6a2659507d5de69f6f08e6132bc9bbc0e448bd7b0c075f9da7",
+      "Utf8TextBytes": 92
+    },
+    {
+      "Path": "src/Andirit/CodeFreshness.cs",
+      "Sha256": "cb08c156af1bf5c96ab52e9d770c78f15d9b3e8de11664fd675cc2a3e7feacf9",
+      "Utf8TextBytes": 630
+    },
+    {
+      "Path": "src/Andirit/CodeGraphBatchValidator.cs",
+      "Sha256": "83c2791035d86145a513a473331d6826719bb04d12bd54bde7d8fc27e009e7b2",
+      "Utf8TextBytes": 5625
+    },
+    {
+      "Path": "src/Andirit/CodeGraphIngestionSink.cs",
+      "Sha256": "15de32e1465b9c8dbde2cc5a3b4fe42a4c1b59cf5ed451b5abc8224d6fee8e60",
+      "Utf8TextBytes": 8850
+    },
+    {
+      "Path": "src/Andirit/CodeGraphPluginRegistry.cs",
+      "Sha256": "21b8353a927d0a3613760005311b2afc9f2d039c0645429ac73f3164ae2add2a",
+      "Utf8TextBytes": 9912
+    },
+    {
+      "Path": "src/Andirit/CodeGraphPublicationChangedException.cs",
+      "Sha256": "997c894daa8ef39faae4be7477f26daebcb25ac134462411244675b3abab4ea5",
+      "Utf8TextBytes": 1153
+    },
+    {
+      "Path": "src/Andirit/CodeGraphPublicationQuery.cs",
+      "Sha256": "ae43d8590d6ec62c974866126b7e7e276922b1d1d322c59277fd78d1215cda7d",
+      "Utf8TextBytes": 8811
+    },
+    {
+      "Path": "src/Andirit/CodeGraphQueryService.cs",
+      "Sha256": "f3be2fba5e5ff02a257d3ea54e174ebaee0f05d33a128e8280cc40a438d53b74",
+      "Utf8TextBytes": 49710
+    },
+    {
+      "Path": "src/Andirit/CodeGraphStoreException.cs",
+      "Sha256": "7cc7af71ce34b85a4cc10bf53cb7252ab19201ce3a4262cdee3caf25f70ddc62",
+      "Utf8TextBytes": 750
+    },
+    {
+      "Path": "src/Andirit/CodeGraphStoreModels.cs",
+      "Sha256": "a72f634285d2a7a2f8b8414cd4d8b5cd02425215d46eb0159bed6efbcfe6051c",
+      "Utf8TextBytes": 17556
+    },
+    {
+      "Path": "src/Andirit/CodeGraphTraversalPresets.cs",
+      "Sha256": "fcbbea8be29664d10d75859c34423acd13c8fe75c10088f6fc24c971387ca86b",
+      "Utf8TextBytes": 1179
+    },
+    {
+      "Path": "src/Andirit/CodeIndexIdentity.cs",
+      "Sha256": "441e74f6252317eb490df8b9ea57e728a92c01f836caaf265ed9d9b1c95f56b7",
+      "Utf8TextBytes": 1907
+    },
+    {
+      "Path": "src/Andirit/CodeIndexPlanner.cs",
+      "Sha256": "c6cc9bd31dab2a19ce85bf3fe1970b3035f19a9ce43fdc3bb51830c26791b666",
+      "Utf8TextBytes": 10767
+    },
+    {
+      "Path": "src/Andirit/CodeIndexUnitOwner.cs",
+      "Sha256": "ed6803c5ef2c9a7eea35999b1b67f83d95f5299efc511021f477fa06e45da876",
+      "Utf8TextBytes": 491
+    },
+    {
+      "Path": "src/Andirit/CodeIndexingLifecycle.cs",
+      "Sha256": "7d1d2b2e843f80610fffab74d8081f2a0d4fd8f4faaa982ee675bf76f54f0cab",
+      "Utf8TextBytes": 55294
+    },
+    {
+      "Path": "src/Andirit/CodeJsonConverters.cs",
+      "Sha256": "745fb8cdc7977ee931234fbcc34763f880c2d6d5a7e7fbe8b947c0707e08da40",
+      "Utf8TextBytes": 2136
+    },
+    {
+      "Path": "src/Andirit/CodeLanguageProviderMap.cs",
+      "Sha256": "11cbf98fed65abf1906580bdf88aa623dfab3ba4f5639d3d1bfc735b3d285bc0",
+      "Utf8TextBytes": 2742
+    },
+    {
+      "Path": "src/Andirit/CodePublicationSnapshot.cs",
+      "Sha256": "293891251d7186c2320250a9c170c6833467fc1412d7e53380e87dee1dec850f",
+      "Utf8TextBytes": 9749
+    },
+    {
+      "Path": "src/Andirit/CodeQueryOperations.cs",
+      "Sha256": "2d32f1ca4a93cfe1c9d8dcce1042ddca4c14eab84acff8ce66045b60b9b518bf",
+      "Utf8TextBytes": 1051
+    },
+    {
+      "Path": "src/Andirit/CodeRepositoryProviderRegistry.cs",
+      "Sha256": "d737b01bc2e9842b0e7bb7dbea89433c986c9bf0eb0712a42e5241f1e8846b93",
+      "Utf8TextBytes": 3252
+    },
+    {
+      "Path": "src/Andirit/CodeRepositorySource.cs",
+      "Sha256": "579e3ab2d1694bbbff758896dd5492c3741ac938f9c263d48496ad1e289feaf4",
+      "Utf8TextBytes": 13488
+    },
+    {
+      "Path": "src/Andirit/CodeSourceManifest.cs",
+      "Sha256": "f644e6d10cb9c0d68640204284a4181bf59605be8dd30b6454eacc2002e19904",
+      "Utf8TextBytes": 1333
+    },
+    {
+      "Path": "src/Andirit/DurableCommandLog.cs",
+      "Sha256": "043c44f5091ed410bfda5f2af445866edf3033b550b5c52002a6d6e8cb12d0b6",
+      "Utf8TextBytes": 9277
+    },
+    {
+      "Path": "src/Andirit/GraphFactEquality.cs",
+      "Sha256": "4f0a10e4ce4a98be3ffb1f263a5ec5653bb28acb2119ea39e8a4b02b939daee3",
+      "Utf8TextBytes": 2492
+    },
+    {
+      "Path": "src/Andirit/ICodeGraphStore.cs",
+      "Sha256": "24452c9de55abdf5962092d73148d18a96f7d13e61d18f080ded1bb46bf46e47",
+      "Utf8TextBytes": 5281
+    },
+    {
+      "Path": "src/Andirit/InMemoryCodeGraphStore.cs",
+      "Sha256": "5dfe46450de82aa9053951be18f401e321af9ce52d2a09247aba641d3afd8b0f",
+      "Utf8TextBytes": 48039
+    },
+    {
+      "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+      "Sha256": "4bc4c364a8690c1d174fcd91b8736bd82694137e10b39ac6daf55d125adacf37",
+      "Utf8TextBytes": 44013
+    },
+    {
+      "Path": "src/Andirit/InterfaceImpactResultV1.cs",
+      "Sha256": "2d4b25f6a06da8db1b0f14176d67d6cdcaa54898b0fc20c15db796efbc2031fe",
+      "Utf8TextBytes": 8994
+    },
+    {
+      "Path": "src/Andirit/PluginSourceKey.cs",
+      "Sha256": "ecc63aef36d3f8d8f76feb86e4b3d22f9d129d0e5d670ac7f1c63225261a204d",
+      "Utf8TextBytes": 310
+    }
+  ],
+  "SourceBytesUtf8": 382944,
+  "ExtractionMs": 3045.3709,
+  "PublicationMs": 112.8454,
+  "PluginId": "penghou.hetu.csharp",
+  "PluginVersion": "0.2.0-preview.6",
+  "Publication": {
+    "RepositoryId": {
+      "Value": "repo:ci1-real"
+    },
+    "IndexRunId": {
+      "Value": "run:ci1-baseline"
+    },
+    "SnapshotIdentity": null,
+    "IsConsistentSnapshot": false,
+    "IndexIdentity": {
+      "Value": "719245f5ea6c88079f7ce209c78fdd21ef643ef418eaaccb0170087858964467"
+    }
+  },
+  "Nodes": 1981,
+  "Declarations": 1976,
+  "Edges": 7935,
+  "RecordedFactJsonUtf8Bytes": 6709636,
+  "Coverage": [
+    {
+      "RelationshipKind": "accepts",
+      "State": 2,
+      "EdgesEmitted": 0,
+      "UnresolvedTargets": 0,
+      "Candidates": 0,
+      "InternalTargets": 0,
+      "CrossProjectTargets": 0,
+      "ExternalTargets": 0,
+      "AmbiguousTargets": 0,
+      "UnsupportedTargets": 0
+    },
+    {
+      "RelationshipKind": "calls",
+      "State": 1,
+      "EdgesEmitted": 444,
+      "UnresolvedTargets": 1894,
+      "Candidates": 2514,
+      "InternalTargets": 441,
+      "CrossProjectTargets": 3,
+      "ExternalTargets": 176,
+      "AmbiguousTargets": 0,
+      "UnsupportedTargets": 0
+    },
+    {
+      "RelationshipKind": "exercised-by",
+      "State": 0,
+      "EdgesEmitted": 0,
+      "UnresolvedTargets": 0,
+      "Candidates": 0,
+      "InternalTargets": 0,
+      "CrossProjectTargets": 0,
+      "ExternalTargets": 0,
+      "AmbiguousTargets": 0,
+      "UnsupportedTargets": 0
+    },
+    {
+      "RelationshipKind": "implements",
+      "State": 0,
+      "EdgesEmitted": 6,
+      "UnresolvedTargets": 0,
+      "Candidates": 6,
+      "InternalTargets": 4,
+      "CrossProjectTargets": 2,
+      "ExternalTargets": 0,
+      "AmbiguousTargets": 0,
+      "UnsupportedTargets": 0
+    },
+    {
+      "RelationshipKind": "imports",
+      "State": 0,
+      "EdgesEmitted": 1,
+      "UnresolvedTargets": 0,
+      "Candidates": 23,
+      "InternalTargets": 1,
+      "CrossProjectTargets": 0,
+      "ExternalTargets": 22,
+      "AmbiguousTargets": 0,
+      "UnsupportedTargets": 0
+    },
+    {
+      "RelationshipKind": "inherits",
+      "State": 0,
+      "EdgesEmitted": 7,
+      "UnresolvedTargets": 0,
+      "Candidates": 24,
+      "InternalTargets": 7,
+      "CrossProjectTargets": 0,
+      "ExternalTargets": 17,
+      "AmbiguousTargets": 0,
+      "UnsupportedTargets": 0
+    },
+    {
+      "RelationshipKind": "references",
+      "State": 1,
+      "EdgesEmitted": 5940,
+      "UnresolvedTargets": 4474,
+      "Candidates": 14540,
+      "InternalTargets": 4858,
+      "CrossProjectTargets": 1082,
+      "ExternalTargets": 3727,
+      "AmbiguousTargets": 0,
+      "UnsupportedTargets": 399
+    },
+    {
+      "RelationshipKind": "returns",
+      "State": 2,
+      "EdgesEmitted": 0,
+      "UnresolvedTargets": 0,
+      "Candidates": 0,
+      "InternalTargets": 0,
+      "CrossProjectTargets": 0,
+      "ExternalTargets": 0,
+      "AmbiguousTargets": 0,
+      "UnsupportedTargets": 0
+    }
+  ],
+  "UnitCoverage": [
+    {
+      "IndexUnitId": {
+        "Value": "csharp:project:47335c6ea97165a4733b676c6c0b92e14f2bb3d96d266e22e8b7736be699626e"
+      },
+      "Coverage": [
+        {
+          "RelationshipKind": "accepts",
+          "State": 2,
+          "EdgesEmitted": 0,
+          "UnresolvedTargets": 0,
+          "Candidates": 0,
+          "InternalTargets": 0,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 0,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "calls",
+          "State": 1,
+          "EdgesEmitted": 38,
+          "UnresolvedTargets": 223,
+          "Candidates": 269,
+          "InternalTargets": 38,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 8,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "exercised-by",
+          "State": 0,
+          "EdgesEmitted": 0,
+          "UnresolvedTargets": 0,
+          "Candidates": 0,
+          "InternalTargets": 0,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 0,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "implements",
+          "State": 0,
+          "EdgesEmitted": 0,
+          "UnresolvedTargets": 0,
+          "Candidates": 0,
+          "InternalTargets": 0,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 0,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "imports",
+          "State": 0,
+          "EdgesEmitted": 0,
+          "UnresolvedTargets": 0,
+          "Candidates": 2,
+          "InternalTargets": 0,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 2,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "inherits",
+          "State": 0,
+          "EdgesEmitted": 5,
+          "UnresolvedTargets": 0,
+          "Candidates": 8,
+          "InternalTargets": 5,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 3,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "references",
+          "State": 1,
+          "EdgesEmitted": 588,
+          "UnresolvedTargets": 342,
+          "Candidates": 1247,
+          "InternalTargets": 588,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 313,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 4
+        },
+        {
+          "RelationshipKind": "returns",
+          "State": 2,
+          "EdgesEmitted": 0,
+          "UnresolvedTargets": 0,
+          "Candidates": 0,
+          "InternalTargets": 0,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 0,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        }
+      ]
+    },
+    {
+      "IndexUnitId": {
+        "Value": "csharp:project:86497690024d0c01f659ea396e25c558e983ba18cdb969032c7d476ccf670bae"
+      },
+      "Coverage": [
+        {
+          "RelationshipKind": "accepts",
+          "State": 2,
+          "EdgesEmitted": 0,
+          "UnresolvedTargets": 0,
+          "Candidates": 0,
+          "InternalTargets": 0,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 0,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "calls",
+          "State": 1,
+          "EdgesEmitted": 406,
+          "UnresolvedTargets": 1671,
+          "Candidates": 2245,
+          "InternalTargets": 403,
+          "CrossProjectTargets": 3,
+          "ExternalTargets": 168,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "exercised-by",
+          "State": 0,
+          "EdgesEmitted": 0,
+          "UnresolvedTargets": 0,
+          "Candidates": 0,
+          "InternalTargets": 0,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 0,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "implements",
+          "State": 0,
+          "EdgesEmitted": 6,
+          "UnresolvedTargets": 0,
+          "Candidates": 6,
+          "InternalTargets": 4,
+          "CrossProjectTargets": 2,
+          "ExternalTargets": 0,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "imports",
+          "State": 0,
+          "EdgesEmitted": 1,
+          "UnresolvedTargets": 0,
+          "Candidates": 21,
+          "InternalTargets": 1,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 20,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "inherits",
+          "State": 0,
+          "EdgesEmitted": 2,
+          "UnresolvedTargets": 0,
+          "Candidates": 16,
+          "InternalTargets": 2,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 14,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        },
+        {
+          "RelationshipKind": "references",
+          "State": 1,
+          "EdgesEmitted": 5352,
+          "UnresolvedTargets": 4132,
+          "Candidates": 13293,
+          "InternalTargets": 4270,
+          "CrossProjectTargets": 1082,
+          "ExternalTargets": 3414,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 395
+        },
+        {
+          "RelationshipKind": "returns",
+          "State": 2,
+          "EdgesEmitted": 0,
+          "UnresolvedTargets": 0,
+          "Candidates": 0,
+          "InternalTargets": 0,
+          "CrossProjectTargets": 0,
+          "ExternalTargets": 0,
+          "AmbiguousTargets": 0,
+          "UnsupportedTargets": 0
+        }
+      ]
+    }
+  ],
+  "WarningCodes": [
+    "csharp.roslyn.cs0246",
+    "csharp.roslyn.cs0436"
+  ],
+  "Answers": [
+    {
+      "Requested": "Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication, Andirit.CodeGraphPublication?)",
+      "SelectedQualifiedName": "Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication, Andirit.CodeGraphPublication?)",
+      "NodeId": "csharp:symbol:a5287d55694bff7db04fd2455e3a73515e6fa958f608b1f450806f162b5a7262",
+      "SymbolId": "csharp:a5287d55694bff7db04fd2455e3a73515e6fa958f608b1f450806f162b5a7262",
+      "Declarations": [
+        {
+          "Path": "src/Andirit/CodeGraphQueryService.cs",
+          "StartLine": 1069,
+          "StartColumn": 5,
+          "EndLine": 1076,
+          "EndColumn": 6
+        }
+      ],
+      "Callers": [
+        {
+          "Id": "csharp:fbf963bb9dfaeb142628eb9511e2a2495ef46e0747471cdcbed4416b371db136",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:01f0a83da7032bf994b7ce980e56ca01d4d27284f33929d04e6a25216c817d59",
+          "SourceName": "Andirit.CodeGraphPublicationQuery.Require\u003CTResult\u003E(Andirit.CodeGraphQueryEnvelope\u003CTResult\u003E?)",
+          "TargetId": "csharp:symbol:a5287d55694bff7db04fd2455e3a73515e6fa958f608b1f450806f162b5a7262",
+          "TargetName": "Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication, Andirit.CodeGraphPublication?)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphPublicationQuery.cs",
+              "StartLine": 179,
+              "StartColumn": 9,
+              "EndLine": 181,
+              "EndColumn": 35
+            },
+            "Confidence": null
+          }
+        }
+      ],
+      "References": [
+        {
+          "Id": "csharp:7df7b0162f90d45cf3fe8afaf41252ef53cc0190f22d5da0fe7003da18f5db8e",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:01f0a83da7032bf994b7ce980e56ca01d4d27284f33929d04e6a25216c817d59",
+          "SourceName": "Andirit.CodeGraphPublicationQuery.Require\u003CTResult\u003E(Andirit.CodeGraphQueryEnvelope\u003CTResult\u003E?)",
+          "TargetId": "csharp:symbol:a5287d55694bff7db04fd2455e3a73515e6fa958f608b1f450806f162b5a7262",
+          "TargetName": "Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication, Andirit.CodeGraphPublication?)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphPublicationQuery.cs",
+              "StartLine": 179,
+              "StartColumn": 31,
+              "EndLine": 179,
+              "EndColumn": 48
+            },
+            "Confidence": null
+          }
+        }
+      ],
+      "CallsTruncated": false,
+      "ReferencesTruncated": false,
+      "OracleInvocations": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphPublicationQuery.Require\u0060\u00601(Andirit.CodeGraphQueryEnvelope{\u0060\u00600})",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphPublicationQuery.cs",
+            "StartLine": 179,
+            "StartColumn": 9,
+            "EndLine": 181,
+            "EndColumn": 35
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetInterfaceImpactV1Async(Andirit.CodeGraphPublication,Andirit.CodeNodeId,Andirit.InterfaceImpactOptionsV1,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 50,
+            "StartColumn": 9,
+            "EndLine": 50,
+            "EndColumn": 146
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetInterfaceImpactV1Async(Andirit.CodeGraphPublication,Andirit.CodeNodeId,Andirit.InterfaceImpactOptionsV1,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 56,
+            "StartColumn": 9,
+            "EndLine": 56,
+            "EndColumn": 146
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetInterfaceImpactV1Async(Andirit.CodeGraphPublication,Andirit.CodeNodeId,Andirit.InterfaceImpactOptionsV1,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 58,
+            "StartColumn": 9,
+            "EndLine": 58,
+            "EndColumn": 146
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.ResolveSymbolsWithProvenanceAsync(Andirit.CodeRepositoryId,System.Collections.Generic.IReadOnlyCollection{System.String},System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 371,
+            "StartColumn": 13,
+            "EndLine": 371,
+            "EndColumn": 66
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetDeclarationsInFileWithProvenanceAsync(Andirit.CodeRepositoryId,System.String,Andirit.CodeGraphQueryOptions,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 457,
+            "StartColumn": 9,
+            "EndLine": 457,
+            "EndColumn": 64
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetDeclarationsInFileWithProvenanceAsync(Andirit.CodeRepositoryId,System.String,Andirit.CodeGraphQueryOptions,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 482,
+            "StartColumn": 9,
+            "EndLine": 482,
+            "EndColumn": 63
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetDeclarationsInFileWithProvenanceAsync(Andirit.CodeRepositoryId,System.String,Andirit.CodeGraphQueryOptions,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 494,
+            "StartColumn": 13,
+            "EndLine": 494,
+            "EndColumn": 66
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetPublicSurfaceWithProvenanceAsync(Andirit.CodeRepositoryId,System.String,Andirit.CodeGraphQueryOptions,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 844,
+            "StartColumn": 9,
+            "EndLine": 844,
+            "EndColumn": 67
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetPublicSurfaceWithProvenanceAsync(Andirit.CodeRepositoryId,System.String,Andirit.CodeGraphQueryOptions,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 871,
+            "StartColumn": 9,
+            "EndLine": 871,
+            "EndColumn": 63
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.EnsurePublication(Andirit.CodeGraphPublication,Andirit.CodeGraphPublication)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetImpactSetsWithProvenanceAsync(Andirit.CodeRepositoryId,System.Collections.Generic.IReadOnlyCollection{Andirit.CodeNodeId},Andirit.CodeGraphQueryOptions,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 931,
+            "StartColumn": 13,
+            "EndLine": 931,
+            "EndColumn": 66
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ],
+      "LogicalApiCalls": 4,
+      "QueryElapsedMs": [
+        33.3134,
+        1.5395,
+        5.996,
+        0.1031
+      ],
+      "SerializedEnvelopeUtf8Bytes": 11588
+    },
+    {
+      "Requested": "Andirit.CodeGraphQueryService.FindSymbolsByQualifiedNameAsync(Andirit.CodeRepositoryId, string, System.Threading.CancellationToken)",
+      "SelectedQualifiedName": "Andirit.CodeGraphQueryService.FindSymbolsByQualifiedNameAsync(Andirit.CodeRepositoryId, string, CancellationToken)",
+      "NodeId": "csharp:symbol:66c5748de1fa80af9d143e96340e46dc282fa2edb1163e8c5a3a2b08c126c66c",
+      "SymbolId": "csharp:66c5748de1fa80af9d143e96340e46dc282fa2edb1163e8c5a3a2b08c126c66c",
+      "Declarations": [
+        {
+          "Path": "src/Andirit/CodeGraphQueryService.cs",
+          "StartLine": 90,
+          "StartColumn": 5,
+          "EndLine": 103,
+          "EndColumn": 6
+        }
+      ],
+      "Callers": [
+        {
+          "Id": "csharp:5eb7c084987d510fc72acdfcce6db94db2ad2c9176eefff564719a7d758d214a",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:2f37925f5dbd35dd4b305eeea64ed413f15aa19610b4d2e194c40e70e02de454",
+          "SourceName": "Andirit.CodeGraphQueryService.ResolveSymbolsAsync(Andirit.CodeRepositoryId, IReadOnlyCollection\u003Cstring\u003E, CancellationToken)",
+          "TargetId": "csharp:symbol:66c5748de1fa80af9d143e96340e46dc282fa2edb1163e8c5a3a2b08c126c66c",
+          "TargetName": "Andirit.CodeGraphQueryService.FindSymbolsByQualifiedNameAsync(Andirit.CodeRepositoryId, string, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 327,
+              "StartColumn": 35,
+              "EndLine": 330,
+              "EndColumn": 35
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:95a8911cb5d6bd3574c56b80797972a68edff76fe2362ad9ae00b31a74b46fd3",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:7bbde3215b7498bbdd14613e7e9d5f8b7f7890bd0db1b659a2dc8323ca170367",
+          "SourceName": "Andirit.CodeGraphQueryService.FindSymbolAsync(Andirit.CodeRepositoryId, string, CancellationToken)",
+          "TargetId": "csharp:symbol:66c5748de1fa80af9d143e96340e46dc282fa2edb1163e8c5a3a2b08c126c66c",
+          "TargetName": "Andirit.CodeGraphQueryService.FindSymbolsByQualifiedNameAsync(Andirit.CodeRepositoryId, string, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 110,
+              "StartColumn": 9,
+              "EndLine": 110,
+              "EndColumn": 88
+            },
+            "Confidence": null
+          }
+        }
+      ],
+      "References": [
+        {
+          "Id": "csharp:3bd538feca08409dfa32e1dfc196730b5e5b5dcff424cb85b4a506f752c61006",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:2f37925f5dbd35dd4b305eeea64ed413f15aa19610b4d2e194c40e70e02de454",
+          "SourceName": "Andirit.CodeGraphQueryService.ResolveSymbolsAsync(Andirit.CodeRepositoryId, IReadOnlyCollection\u003Cstring\u003E, CancellationToken)",
+          "TargetId": "csharp:symbol:66c5748de1fa80af9d143e96340e46dc282fa2edb1163e8c5a3a2b08c126c66c",
+          "TargetName": "Andirit.CodeGraphQueryService.FindSymbolsByQualifiedNameAsync(Andirit.CodeRepositoryId, string, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 327,
+              "StartColumn": 35,
+              "EndLine": 327,
+              "EndColumn": 66
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:8ad1ced9ca57d86bc959af44905b7da13034c126c213a3e4216b3942c980045c",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:7bbde3215b7498bbdd14613e7e9d5f8b7f7890bd0db1b659a2dc8323ca170367",
+          "SourceName": "Andirit.CodeGraphQueryService.FindSymbolAsync(Andirit.CodeRepositoryId, string, CancellationToken)",
+          "TargetId": "csharp:symbol:66c5748de1fa80af9d143e96340e46dc282fa2edb1163e8c5a3a2b08c126c66c",
+          "TargetName": "Andirit.CodeGraphQueryService.FindSymbolsByQualifiedNameAsync(Andirit.CodeRepositoryId, string, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 110,
+              "StartColumn": 9,
+              "EndLine": 110,
+              "EndColumn": 40
+            },
+            "Confidence": null
+          }
+        }
+      ],
+      "CallsTruncated": false,
+      "ReferencesTruncated": false,
+      "OracleInvocations": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.FindSymbolsByQualifiedNameAsync(Andirit.CodeRepositoryId,System.String,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.FindSymbolAsync(Andirit.CodeRepositoryId,System.String,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 110,
+            "StartColumn": 9,
+            "EndLine": 110,
+            "EndColumn": 88
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.FindSymbolsByQualifiedNameAsync(Andirit.CodeRepositoryId,System.String,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.ResolveSymbolsAsync(Andirit.CodeRepositoryId,System.Collections.Generic.IReadOnlyCollection{System.String},System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 327,
+            "StartColumn": 35,
+            "EndLine": 330,
+            "EndColumn": 35
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ],
+      "LogicalApiCalls": 4,
+      "QueryElapsedMs": [
+        0.2129,
+        0.6637,
+        0.0657,
+        0.0083
+      ],
+      "SerializedEnvelopeUtf8Bytes": 17181
+    },
+    {
+      "Requested": "Andirit.CodeGraphQueryService.FindDeclarationsWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, System.Threading.CancellationToken)",
+      "SelectedQualifiedName": "Andirit.CodeGraphQueryService.FindDeclarationsWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, CancellationToken)",
+      "NodeId": "csharp:symbol:678e045879012076a41cc250a533418f15b4c35d9d12772f80bc58ebdda35388",
+      "SymbolId": "csharp:678e045879012076a41cc250a533418f15b4c35d9d12772f80bc58ebdda35388",
+      "Declarations": [
+        {
+          "Path": "src/Andirit/CodeGraphQueryService.cs",
+          "StartLine": 169,
+          "StartColumn": 5,
+          "EndLine": 177,
+          "EndColumn": 32
+        }
+      ],
+      "Callers": [
+        {
+          "Id": "csharp:b0814df4151565569071c206aa33c16fbf1885e30d8eb1fcf47cd1b749d99cda",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:f5bc8e0af7b873765f479f605f5357a8f5678e8666ad1ecaf90e97dcf964ffa3",
+          "SourceName": "Andirit.CodeGraphPublicationQuery.FindDeclarationsAsync(Andirit.CodeSymbolId, CancellationToken)",
+          "TargetId": "csharp:symbol:678e045879012076a41cc250a533418f15b4c35d9d12772f80bc58ebdda35388",
+          "TargetName": "Andirit.CodeGraphQueryService.FindDeclarationsWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphPublicationQuery.cs",
+              "StartLine": 55,
+              "StartColumn": 23,
+              "EndLine": 58,
+              "EndColumn": 31
+            },
+            "Confidence": null
+          }
+        }
+      ],
+      "References": [
+        {
+          "Id": "csharp:fe2c47fc18da7394d015f041738fdef4fa064ba4422854b75bc60c528eea1e5f",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:f5bc8e0af7b873765f479f605f5357a8f5678e8666ad1ecaf90e97dcf964ffa3",
+          "SourceName": "Andirit.CodeGraphPublicationQuery.FindDeclarationsAsync(Andirit.CodeSymbolId, CancellationToken)",
+          "TargetId": "csharp:symbol:678e045879012076a41cc250a533418f15b4c35d9d12772f80bc58ebdda35388",
+          "TargetName": "Andirit.CodeGraphQueryService.FindDeclarationsWithProvenanceAsync(Andirit.CodeRepositoryId, Andirit.CodeSymbolId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphPublicationQuery.cs",
+              "StartLine": 55,
+              "StartColumn": 32,
+              "EndLine": 55,
+              "EndColumn": 67
+            },
+            "Confidence": null
+          }
+        }
+      ],
+      "CallsTruncated": false,
+      "ReferencesTruncated": false,
+      "OracleInvocations": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphQueryService.FindDeclarationsWithProvenanceAsync(Andirit.CodeRepositoryId,Andirit.CodeSymbolId,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphPublicationQuery.FindDeclarationsAsync(Andirit.CodeSymbolId,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphPublicationQuery.cs",
+            "StartLine": 55,
+            "StartColumn": 23,
+            "EndLine": 58,
+            "EndColumn": 31
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ],
+      "LogicalApiCalls": 4,
+      "QueryElapsedMs": [
+        0.0742,
+        0.3246,
+        0.0257,
+        0.006
+      ],
+      "SerializedEnvelopeUtf8Bytes": 11662
+    },
+    {
+      "Requested": "Andirit.CodeGraphBatchLimits.Positive(int, string)",
+      "SelectedQualifiedName": "Andirit.CodeGraphBatchLimits.Positive(int, string)",
+      "NodeId": "csharp:symbol:d685bc1af8d69c3702fc551cef2190d5bacaed66e1c664390434e7754bdb77ca",
+      "SymbolId": "csharp:d685bc1af8d69c3702fc551cef2190d5bacaed66e1c664390434e7754bdb77ca",
+      "Declarations": [
+        {
+          "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+          "StartLine": 137,
+          "StartColumn": 5,
+          "EndLine": 140,
+          "EndColumn": 68
+        }
+      ],
+      "Callers": [
+        {
+          "Id": "csharp:783bf7a659ed2604d235c1cbc678bef567a21a239364675e6e69dd6ed8a9460a",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:4a5c6cda422d0d56046ddbc9eedf165d96e3b54d556d325d276f5dc12ef0608f",
+          "SourceName": "Andirit.CodeGraphBatchLimits.CodeGraphBatchLimits(int, int, int, int, int, int, int, int)",
+          "TargetId": "csharp:symbol:d685bc1af8d69c3702fc551cef2190d5bacaed66e1c664390434e7754bdb77ca",
+          "TargetName": "Andirit.CodeGraphBatchLimits.Positive(int, string)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+              "StartLine": 108,
+              "StartColumn": 20,
+              "EndLine": 108,
+              "EndColumn": 56
+            },
+            "Confidence": null
+          }
+        }
+      ],
+      "References": [
+        {
+          "Id": "csharp:30c47bce4f69c12db1e691e6522d5acb30805a5a2aa5a74850033a523028c19c",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:4a5c6cda422d0d56046ddbc9eedf165d96e3b54d556d325d276f5dc12ef0608f",
+          "SourceName": "Andirit.CodeGraphBatchLimits.CodeGraphBatchLimits(int, int, int, int, int, int, int, int)",
+          "TargetId": "csharp:symbol:d685bc1af8d69c3702fc551cef2190d5bacaed66e1c664390434e7754bdb77ca",
+          "TargetName": "Andirit.CodeGraphBatchLimits.Positive(int, string)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+              "StartLine": 108,
+              "StartColumn": 20,
+              "EndLine": 108,
+              "EndColumn": 28
+            },
+            "Confidence": null
+          }
+        }
+      ],
+      "CallsTruncated": true,
+      "ReferencesTruncated": false,
+      "OracleInvocations": [
+        {
+          "Project": "src/Andirit.Abstractions/Andirit.Abstractions.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphBatchLimits.Positive(System.Int32,System.String)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphBatchLimits.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
+          "Location": {
+            "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+            "StartLine": 108,
+            "StartColumn": 20,
+            "EndLine": 108,
+            "EndColumn": 56
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit.Abstractions/Andirit.Abstractions.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphBatchLimits.Positive(System.Int32,System.String)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphBatchLimits.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
+          "Location": {
+            "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+            "StartLine": 109,
+            "StartColumn": 27,
+            "EndLine": 109,
+            "EndColumn": 77
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit.Abstractions/Andirit.Abstractions.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphBatchLimits.Positive(System.Int32,System.String)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphBatchLimits.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
+          "Location": {
+            "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+            "StartLine": 110,
+            "StartColumn": 20,
+            "EndLine": 110,
+            "EndColumn": 56
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit.Abstractions/Andirit.Abstractions.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphBatchLimits.Positive(System.Int32,System.String)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphBatchLimits.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
+          "Location": {
+            "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+            "StartLine": 111,
+            "StartColumn": 32,
+            "EndLine": 113,
+            "EndColumn": 42
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit.Abstractions/Andirit.Abstractions.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphBatchLimits.Positive(System.Int32,System.String)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphBatchLimits.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
+          "Location": {
+            "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+            "StartLine": 114,
+            "StartColumn": 33,
+            "EndLine": 116,
+            "EndColumn": 43
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit.Abstractions/Andirit.Abstractions.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphBatchLimits.Positive(System.Int32,System.String)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphBatchLimits.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
+          "Location": {
+            "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+            "StartLine": 117,
+            "StartColumn": 28,
+            "EndLine": 119,
+            "EndColumn": 38
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit.Abstractions/Andirit.Abstractions.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphBatchLimits.Positive(System.Int32,System.String)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphBatchLimits.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
+          "Location": {
+            "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+            "StartLine": 120,
+            "StartColumn": 34,
+            "EndLine": 122,
+            "EndColumn": 44
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit.Abstractions/Andirit.Abstractions.csproj",
+          "TargetDocumentationId": "M:Andirit.CodeGraphBatchLimits.Positive(System.Int32,System.String)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphBatchLimits.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
+          "Location": {
+            "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+            "StartLine": 123,
+            "StartColumn": 32,
+            "EndLine": 125,
+            "EndColumn": 42
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ],
+      "LogicalApiCalls": 4,
+      "QueryElapsedMs": [
+        0.0952,
+        0.2894,
+        0.0159,
+        0.0065
+      ],
+      "SerializedEnvelopeUtf8Bytes": 11355
+    },
+    {
+      "Requested": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, System.Threading.CancellationToken)",
+      "SelectedQualifiedName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+      "NodeId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+      "SymbolId": "csharp:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+      "Declarations": [
+        {
+          "Path": "src/Andirit/ICodeGraphStore.cs",
+          "StartLine": 59,
+          "StartColumn": 5,
+          "EndLine": 61,
+          "EndColumn": 56
+        }
+      ],
+      "Callers": [
+        {
+          "Id": "csharp:40d343843b427c78a4ddd9f8592ba8591aa81e036ba308842a7a6dca21c7e85b",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:21b476443e87459904e147117eeab16881fb10d2586a7d491ef33422cba43319",
+          "SourceName": "Andirit.CodeGraphQueryService.OpenLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 75,
+              "StartColumn": 33,
+              "EndLine": 77,
+              "EndColumn": 31
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:4e5280a588d96fba0e58ec8615ff34c8a4e7e94e931284a74b4366115522c23e",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:6f4c42590d2fb9b1f5565bddbc2ce86fa80205fcc3035e011d2ca419264bc1b5",
+          "SourceName": "Andirit.CodeGraphQueryService.GetDeclarationsInFileWithProvenanceAsync(Andirit.CodeRepositoryId, string, Andirit.CodeGraphQueryOptions?, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 448,
+              "StartColumn": 33,
+              "EndLine": 450,
+              "EndColumn": 31
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:5b937781e4cd491f8b131663fd3b3c2284c0d118dced909d1e5f840a1e074e9a",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:94f0337b4307ccac125c47bc248f57a4f4b2453e7e3efe4e597261b163cab355",
+          "SourceName": "Andirit.CodeGraphQueryService.GetImpactSetsWithProvenanceAsync(Andirit.CodeRepositoryId, IReadOnlyCollection\u003CAndirit.CodeNodeId\u003E, Andirit.CodeGraphQueryOptions?, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 908,
+              "StartColumn": 33,
+              "EndLine": 910,
+              "EndColumn": 31
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:11fde61c9350b315c5398f48cce479e008ef9b45a9af47566e36c44d11d4273f",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:bd085953b1d75fba91a2f6b492ee0fd1b3d25e6017a7fa955e2f882f0447661d",
+          "SourceName": "Andirit.CodeGraphQueryService.GetPublicSurfaceWithProvenanceAsync(Andirit.CodeRepositoryId, string, Andirit.CodeGraphQueryOptions?, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 835,
+              "StartColumn": 33,
+              "EndLine": 837,
+              "EndColumn": 31
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:f4fff6734ea0410a797ffde4be51caf94dcd0a7da600a26c23fe4ecd8f6a244f",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:d536156e4ffa974d3c11c90b3b42d8363feca6f9559e045ff8c72cb659736931",
+          "SourceName": "Andirit.CodeGraphQueryService.GetInterfaceImpactV1Async(Andirit.CodeGraphPublication, Andirit.CodeNodeId, Andirit.InterfaceImpactOptionsV1?, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 50,
+              "StartColumn": 46,
+              "EndLine": 50,
+              "EndColumn": 123
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:99c7849ee611d7e2ef9099d1887f3a582dfb993b51932ec212bfa37f17d8d9a6",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:f45113667347829c77cb3c48cf9cd0c6b8eb0c56e4784f3a6cc28338ac0e2d53",
+          "SourceName": "Andirit.CodePublicationSnapshot.ExportAsync(Andirit.ICodeGraphStore, Andirit.CodeRepositoryId, Andirit.CodeSnapshotOptions?, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodePublicationSnapshot.cs",
+              "StartLine": 57,
+              "StartColumn": 33,
+              "EndLine": 57,
+              "EndColumn": 98
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:b3d89eb1e7e900055d22823929996cb2e2160ddd626c1fcf7dec1ac6567744f0",
+          "Kind": "calls",
+          "SourceId": "csharp:symbol:fab6f4cc886ea6c93541241cd644a162fcd510fb3e7db2834430761e9d11d6ee",
+          "SourceName": "Andirit.CodeGraphQueryService.ResolveSymbolsWithProvenanceAsync(Andirit.CodeRepositoryId, IReadOnlyCollection\u003Cstring\u003E, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 356,
+              "StartColumn": 33,
+              "EndLine": 358,
+              "EndColumn": 31
+            },
+            "Confidence": null
+          }
+        }
+      ],
+      "References": [
+        {
+          "Id": "csharp:8ea47aa078b5be371280912d23e7fe3cbef36f6c4e56d27a2e02b3e3c213cfa1",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:21b476443e87459904e147117eeab16881fb10d2586a7d491ef33422cba43319",
+          "SourceName": "Andirit.CodeGraphQueryService.OpenLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 75,
+              "StartColumn": 40,
+              "EndLine": 75,
+              "EndColumn": 65
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:a053dcb42ff3dea3289a01a35379b9de290c25c34e888842b0ca6769aa0c6c1e",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:6f4c42590d2fb9b1f5565bddbc2ce86fa80205fcc3035e011d2ca419264bc1b5",
+          "SourceName": "Andirit.CodeGraphQueryService.GetDeclarationsInFileWithProvenanceAsync(Andirit.CodeRepositoryId, string, Andirit.CodeGraphQueryOptions?, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 448,
+              "StartColumn": 40,
+              "EndLine": 448,
+              "EndColumn": 65
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:e15b338ee67f41293b6ce70205bcb4a9b294db25216e2e3fa3fbe093e2c9d4ab",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:94f0337b4307ccac125c47bc248f57a4f4b2453e7e3efe4e597261b163cab355",
+          "SourceName": "Andirit.CodeGraphQueryService.GetImpactSetsWithProvenanceAsync(Andirit.CodeRepositoryId, IReadOnlyCollection\u003CAndirit.CodeNodeId\u003E, Andirit.CodeGraphQueryOptions?, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 908,
+              "StartColumn": 40,
+              "EndLine": 908,
+              "EndColumn": 65
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:44eb6db29be117751e34f87226ea18e0585d13f15d670108084fdbfa848c99c8",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:bd085953b1d75fba91a2f6b492ee0fd1b3d25e6017a7fa955e2f882f0447661d",
+          "SourceName": "Andirit.CodeGraphQueryService.GetPublicSurfaceWithProvenanceAsync(Andirit.CodeRepositoryId, string, Andirit.CodeGraphQueryOptions?, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 835,
+              "StartColumn": 40,
+              "EndLine": 835,
+              "EndColumn": 65
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:85f4c9b5c1de645659870cadee65e68c27f3d7af236090bf8a687a3dcd2785bc",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:d536156e4ffa974d3c11c90b3b42d8363feca6f9559e045ff8c72cb659736931",
+          "SourceName": "Andirit.CodeGraphQueryService.GetInterfaceImpactV1Async(Andirit.CodeGraphPublication, Andirit.CodeNodeId, Andirit.InterfaceImpactOptionsV1?, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 50,
+              "StartColumn": 53,
+              "EndLine": 50,
+              "EndColumn": 78
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:6ba5934cb49f96142795c78c32b03fbc601b4dae68cd1a4aa78459d9f12e5437",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:f45113667347829c77cb3c48cf9cd0c6b8eb0c56e4784f3a6cc28338ac0e2d53",
+          "SourceName": "Andirit.CodePublicationSnapshot.ExportAsync(Andirit.ICodeGraphStore, Andirit.CodeRepositoryId, Andirit.CodeSnapshotOptions?, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodePublicationSnapshot.cs",
+              "StartLine": 57,
+              "StartColumn": 40,
+              "EndLine": 57,
+              "EndColumn": 65
+            },
+            "Confidence": null
+          }
+        },
+        {
+          "Id": "csharp:9b0452ad88728e045f3a6d25075db4e5df7ecc1f2690df1aeccdd2d7980aa13d",
+          "Kind": "references",
+          "SourceId": "csharp:symbol:fab6f4cc886ea6c93541241cd644a162fcd510fb3e7db2834430761e9d11d6ee",
+          "SourceName": "Andirit.CodeGraphQueryService.ResolveSymbolsWithProvenanceAsync(Andirit.CodeRepositoryId, IReadOnlyCollection\u003Cstring\u003E, CancellationToken)",
+          "TargetId": "csharp:symbol:719add305d6618a940324070337e33d3be02ec4854a1442cfbcb6893e5edbd9e",
+          "TargetName": "Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId, CancellationToken)",
+          "Evidence": {
+            "Quality": 1,
+            "Provider": "penghou.hetu.csharp",
+            "ProviderVersion": "0.2.0-preview.6",
+            "Location": {
+              "Path": "src/Andirit/CodeGraphQueryService.cs",
+              "StartLine": 356,
+              "StartColumn": 40,
+              "EndLine": 356,
+              "EndColumn": 65
+            },
+            "Confidence": null
+          }
+        }
+      ],
+      "CallsTruncated": true,
+      "ReferencesTruncated": true,
+      "OracleInvocations": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetInterfaceImpactV1Async(Andirit.CodeGraphPublication,Andirit.CodeNodeId,Andirit.InterfaceImpactOptionsV1,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 50,
+            "StartColumn": 46,
+            "EndLine": 50,
+            "EndColumn": 123
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetInterfaceImpactV1Async(Andirit.CodeGraphPublication,Andirit.CodeNodeId,Andirit.InterfaceImpactOptionsV1,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 56,
+            "StartColumn": 46,
+            "EndLine": 56,
+            "EndColumn": 123
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetInterfaceImpactV1Async(Andirit.CodeGraphPublication,Andirit.CodeNodeId,Andirit.InterfaceImpactOptionsV1,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 58,
+            "StartColumn": 46,
+            "EndLine": 58,
+            "EndColumn": 123
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.OpenLatestPublicationAsync(Andirit.CodeRepositoryId,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 75,
+            "StartColumn": 33,
+            "EndLine": 77,
+            "EndColumn": 31
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.ResolveSymbolsWithProvenanceAsync(Andirit.CodeRepositoryId,System.Collections.Generic.IReadOnlyCollection{System.String},System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 356,
+            "StartColumn": 33,
+            "EndLine": 358,
+            "EndColumn": 31
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetDeclarationsInFileWithProvenanceAsync(Andirit.CodeRepositoryId,System.String,Andirit.CodeGraphQueryOptions,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 448,
+            "StartColumn": 33,
+            "EndLine": 450,
+            "EndColumn": 31
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetPublicSurfaceWithProvenanceAsync(Andirit.CodeRepositoryId,System.String,Andirit.CodeGraphQueryOptions,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 835,
+            "StartColumn": 33,
+            "EndLine": 837,
+            "EndColumn": 31
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodeGraphQueryService.GetImpactSetsWithProvenanceAsync(Andirit.CodeRepositoryId,System.Collections.Generic.IReadOnlyCollection{Andirit.CodeNodeId},Andirit.CodeGraphQueryOptions,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodeGraphQueryService.cs",
+            "StartLine": 908,
+            "StartColumn": 33,
+            "EndLine": 910,
+            "EndColumn": 31
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.ICodeGraphReader.GetLatestPublicationAsync(Andirit.CodeRepositoryId,System.Threading.CancellationToken)",
+          "OwnerDocumentationId": "M:Andirit.CodePublicationSnapshot.ExportAsync(Andirit.ICodeGraphStore,Andirit.CodeRepositoryId,Andirit.CodeSnapshotOptions,System.Threading.CancellationToken)",
+          "Location": {
+            "Path": "src/Andirit/CodePublicationSnapshot.cs",
+            "StartLine": 57,
+            "StartColumn": 33,
+            "EndLine": 57,
+            "EndColumn": 98
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ],
+      "LogicalApiCalls": 4,
+      "QueryElapsedMs": [
+        0.0665,
+        0.0701,
+        0.118,
+        0.0246
+      ],
+      "SerializedEnvelopeUtf8Bytes": 39700
+    }
+  ],
+  "RawFixtureInvocations": null,
+  "FixtureEdges": null,
+  "RepeatedCallerGroups": [
+    {
+      "Project": "src/Andirit/Andirit.csproj",
+      "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+      "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+      "Count": 25,
+      "Sites": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 168,
+            "StartColumn": 49,
+            "EndLine": 168,
+            "EndColumn": 78
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 174,
+            "StartColumn": 23,
+            "EndLine": 174,
+            "EndColumn": 51
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 181,
+            "StartColumn": 46,
+            "EndLine": 181,
+            "EndColumn": 72
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 181,
+            "StartColumn": 92,
+            "EndLine": 181,
+            "EndColumn": 131
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 182,
+            "StartColumn": 34,
+            "EndLine": 182,
+            "EndColumn": 66
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 190,
+            "StartColumn": 17,
+            "EndLine": 190,
+            "EndColumn": 52
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 191,
+            "StartColumn": 17,
+            "EndLine": 191,
+            "EndColumn": 52
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 192,
+            "StartColumn": 17,
+            "EndLine": 192,
+            "EndColumn": 36
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 192,
+            "StartColumn": 57,
+            "EndLine": 192,
+            "EndColumn": 90
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 193,
+            "StartColumn": 17,
+            "EndLine": 193,
+            "EndColumn": 36
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 208,
+            "StartColumn": 17,
+            "EndLine": 208,
+            "EndColumn": 50
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 209,
+            "StartColumn": 17,
+            "EndLine": 209,
+            "EndColumn": 50
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 210,
+            "StartColumn": 17,
+            "EndLine": 210,
+            "EndColumn": 50
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 211,
+            "StartColumn": 53,
+            "EndLine": 211,
+            "EndColumn": 80
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 211,
+            "StartColumn": 109,
+            "EndLine": 211,
+            "EndColumn": 141
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 211,
+            "StartColumn": 161,
+            "EndLine": 211,
+            "EndColumn": 185
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 217,
+            "StartColumn": 79,
+            "EndLine": 217,
+            "EndColumn": 110
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 217,
+            "StartColumn": 129,
+            "EndLine": 217,
+            "EndColumn": 162
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 228,
+            "StartColumn": 24,
+            "EndLine": 228,
+            "EndColumn": 51
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 228,
+            "StartColumn": 66,
+            "EndLine": 228,
+            "EndColumn": 93
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 228,
+            "StartColumn": 96,
+            "EndLine": 228,
+            "EndColumn": 130
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 230,
+            "StartColumn": 17,
+            "EndLine": 230,
+            "EndColumn": 44
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 256,
+            "StartColumn": 17,
+            "EndLine": 256,
+            "EndColumn": 52
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 257,
+            "StartColumn": 36,
+            "EndLine": 257,
+            "EndColumn": 63
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 257,
+            "StartColumn": 96,
+            "EndLine": 257,
+            "EndColumn": 129
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ]
+    },
+    {
+      "Project": "src/Andirit/Andirit.csproj",
+      "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+      "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+      "Count": 23,
+      "Sites": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 415,
+            "StartColumn": 67,
+            "EndLine": 415,
+            "EndColumn": 91
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 428,
+            "StartColumn": 53,
+            "EndLine": 428,
+            "EndColumn": 72
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 431,
+            "StartColumn": 17,
+            "EndLine": 431,
+            "EndColumn": 40
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 433,
+            "StartColumn": 55,
+            "EndLine": 433,
+            "EndColumn": 77
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 433,
+            "StartColumn": 104,
+            "EndLine": 433,
+            "EndColumn": 127
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 437,
+            "StartColumn": 44,
+            "EndLine": 437,
+            "EndColumn": 76
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 439,
+            "StartColumn": 17,
+            "EndLine": 439,
+            "EndColumn": 34
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 443,
+            "StartColumn": 13,
+            "EndLine": 443,
+            "EndColumn": 35
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 443,
+            "StartColumn": 122,
+            "EndLine": 443,
+            "EndColumn": 147
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 453,
+            "StartColumn": 60,
+            "EndLine": 453,
+            "EndColumn": 89
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 460,
+            "StartColumn": 137,
+            "EndLine": 460,
+            "EndColumn": 151
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 461,
+            "StartColumn": 79,
+            "EndLine": 461,
+            "EndColumn": 108
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 462,
+            "StartColumn": 82,
+            "EndLine": 462,
+            "EndColumn": 111
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 468,
+            "StartColumn": 13,
+            "EndLine": 468,
+            "EndColumn": 35
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 468,
+            "StartColumn": 90,
+            "EndLine": 468,
+            "EndColumn": 109
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 470,
+            "StartColumn": 22,
+            "EndLine": 470,
+            "EndColumn": 41
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 473,
+            "StartColumn": 69,
+            "EndLine": 473,
+            "EndColumn": 101
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 474,
+            "StartColumn": 123,
+            "EndLine": 474,
+            "EndColumn": 153
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 475,
+            "StartColumn": 53,
+            "EndLine": 475,
+            "EndColumn": 74
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 475,
+            "StartColumn": 131,
+            "EndLine": 475,
+            "EndColumn": 153
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 479,
+            "StartColumn": 13,
+            "EndLine": 479,
+            "EndColumn": 45
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 479,
+            "StartColumn": 61,
+            "EndLine": 479,
+            "EndColumn": 91
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 479,
+            "StartColumn": 107,
+            "EndLine": 479,
+            "EndColumn": 128
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ]
+    },
+    {
+      "Project": "src/Andirit/Andirit.csproj",
+      "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+      "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+      "Count": 15,
+      "Sites": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 110,
+            "StartColumn": 17,
+            "EndLine": 110,
+            "EndColumn": 39
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 117,
+            "StartColumn": 17,
+            "EndLine": 117,
+            "EndColumn": 39
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 123,
+            "StartColumn": 17,
+            "EndLine": 123,
+            "EndColumn": 39
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 138,
+            "StartColumn": 9,
+            "EndLine": 138,
+            "EndColumn": 52
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 152,
+            "StartColumn": 13,
+            "EndLine": 152,
+            "EndColumn": 35
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 167,
+            "StartColumn": 13,
+            "EndLine": 167,
+            "EndColumn": 64
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 173,
+            "StartColumn": 13,
+            "EndLine": 173,
+            "EndColumn": 35
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 180,
+            "StartColumn": 13,
+            "EndLine": 180,
+            "EndColumn": 35
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 188,
+            "StartColumn": 13,
+            "EndLine": 188,
+            "EndColumn": 35
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 196,
+            "StartColumn": 17,
+            "EndLine": 196,
+            "EndColumn": 39
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 205,
+            "StartColumn": 13,
+            "EndLine": 205,
+            "EndColumn": 35
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 226,
+            "StartColumn": 13,
+            "EndLine": 226,
+            "EndColumn": 39
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 242,
+            "StartColumn": 13,
+            "EndLine": 242,
+            "EndColumn": 39
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 243,
+            "StartColumn": 13,
+            "EndLine": 243,
+            "EndColumn": 57
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Charge(System.Int32,System.String,System.Int32)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 253,
+            "StartColumn": 13,
+            "EndLine": 253,
+            "EndColumn": 33
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ]
+    },
+    {
+      "Project": "src/Andirit/Andirit.csproj",
+      "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+      "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+      "Count": 15,
+      "Sites": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 268,
+            "StartColumn": 20,
+            "EndLine": 268,
+            "EndColumn": 47
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 271,
+            "StartColumn": 84,
+            "EndLine": 271,
+            "EndColumn": 103
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 274,
+            "StartColumn": 81,
+            "EndLine": 274,
+            "EndColumn": 95
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 276,
+            "StartColumn": 22,
+            "EndLine": 276,
+            "EndColumn": 56
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 277,
+            "StartColumn": 47,
+            "EndLine": 277,
+            "EndColumn": 80
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 278,
+            "StartColumn": 15,
+            "EndLine": 278,
+            "EndColumn": 41
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 279,
+            "StartColumn": 15,
+            "EndLine": 279,
+            "EndColumn": 43
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 279,
+            "StartColumn": 69,
+            "EndLine": 279,
+            "EndColumn": 96
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 280,
+            "StartColumn": 15,
+            "EndLine": 280,
+            "EndColumn": 42
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 281,
+            "StartColumn": 15,
+            "EndLine": 281,
+            "EndColumn": 42
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 283,
+            "StartColumn": 32,
+            "EndLine": 283,
+            "EndColumn": 46
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 298,
+            "StartColumn": 44,
+            "EndLine": 298,
+            "EndColumn": 84
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 308,
+            "StartColumn": 33,
+            "EndLine": 308,
+            "EndColumn": 70
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 329,
+            "StartColumn": 30,
+            "EndLine": 329,
+            "EndColumn": 63
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Bind(Andirit.InterfaceImpactQueryV1.Fact,System.String[])",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 332,
+            "StartColumn": 32,
+            "EndLine": 332,
+            "EndColumn": 61
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ]
+    },
+    {
+      "Project": "src/Andirit/Andirit.csproj",
+      "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+      "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+      "Count": 14,
+      "Sites": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 413,
+            "StartColumn": 46,
+            "EndLine": 413,
+            "EndColumn": 108
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 415,
+            "StartColumn": 93,
+            "EndLine": 415,
+            "EndColumn": 147
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 427,
+            "StartColumn": 106,
+            "EndLine": 427,
+            "EndColumn": 147
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 428,
+            "StartColumn": 91,
+            "EndLine": 428,
+            "EndColumn": 126
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 431,
+            "StartColumn": 123,
+            "EndLine": 431,
+            "EndColumn": 175
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 434,
+            "StartColumn": 13,
+            "EndLine": 434,
+            "EndColumn": 66
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 440,
+            "StartColumn": 17,
+            "EndLine": 440,
+            "EndColumn": 88
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 444,
+            "StartColumn": 13,
+            "EndLine": 444,
+            "EndColumn": 63
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 449,
+            "StartColumn": 13,
+            "EndLine": 449,
+            "EndColumn": 71
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 454,
+            "StartColumn": 122,
+            "EndLine": 454,
+            "EndColumn": 188
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 469,
+            "StartColumn": 13,
+            "EndLine": 469,
+            "EndColumn": 100
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 476,
+            "StartColumn": 17,
+            "EndLine": 476,
+            "EndColumn": 84
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 480,
+            "StartColumn": 13,
+            "EndLine": 480,
+            "EndColumn": 73
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.ValidateFact(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 484,
+            "StartColumn": 69,
+            "EndLine": 484,
+            "EndColumn": 144
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ]
+    },
+    {
+      "Project": "src/Andirit/Andirit.csproj",
+      "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+      "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+      "Count": 13,
+      "Sites": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 508,
+            "StartColumn": 31,
+            "EndLine": 515,
+            "EndColumn": 233
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 508,
+            "StartColumn": 31,
+            "EndLine": 515,
+            "EndColumn": 162
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 508,
+            "StartColumn": 31,
+            "EndLine": 515,
+            "EndColumn": 105
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 508,
+            "StartColumn": 113,
+            "EndLine": 511,
+            "EndColumn": 127
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 508,
+            "StartColumn": 113,
+            "EndLine": 511,
+            "EndColumn": 65
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 516,
+            "StartColumn": 25,
+            "EndLine": 520,
+            "EndColumn": 114
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 516,
+            "StartColumn": 111,
+            "EndLine": 519,
+            "EndColumn": 158
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 516,
+            "StartColumn": 111,
+            "EndLine": 519,
+            "EndColumn": 106
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 516,
+            "StartColumn": 111,
+            "EndLine": 519,
+            "EndColumn": 57
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 521,
+            "StartColumn": 24,
+            "EndLine": 523,
+            "EndColumn": 170
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 521,
+            "StartColumn": 24,
+            "EndLine": 523,
+            "EndColumn": 121
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 521,
+            "StartColumn": 24,
+            "EndLine": 522,
+            "EndColumn": 135
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:System.Linq.Enumerable.ThenBy\u0060\u00602(System.Linq.IOrderedEnumerable{\u0060\u00600},System.Func{\u0060\u00600,\u0060\u00601},System.Collections.Generic.IComparer{\u0060\u00601})",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Result",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 521,
+            "StartColumn": 24,
+            "EndLine": 522,
+            "EndColumn": 62
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ]
+    },
+    {
+      "Project": "src/Andirit/Andirit.csproj",
+      "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+      "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+      "Count": 12,
+      "Sites": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 105,
+            "StartColumn": 67,
+            "EndLine": 105,
+            "EndColumn": 110
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 111,
+            "StartColumn": 116,
+            "EndLine": 111,
+            "EndColumn": 150
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 118,
+            "StartColumn": 143,
+            "EndLine": 118,
+            "EndColumn": 193
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 124,
+            "StartColumn": 121,
+            "EndLine": 124,
+            "EndColumn": 155
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 142,
+            "StartColumn": 32,
+            "EndLine": 142,
+            "EndColumn": 86
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 144,
+            "StartColumn": 34,
+            "EndLine": 144,
+            "EndColumn": 64
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 153,
+            "StartColumn": 113,
+            "EndLine": 153,
+            "EndColumn": 146
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 156,
+            "StartColumn": 17,
+            "EndLine": 156,
+            "EndColumn": 73
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 159,
+            "StartColumn": 135,
+            "EndLine": 159,
+            "EndColumn": 178
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 161,
+            "StartColumn": 120,
+            "EndLine": 161,
+            "EndColumn": 170
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 169,
+            "StartColumn": 17,
+            "EndLine": 169,
+            "EndColumn": 90
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fail(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Run(System.Collections.Generic.IReadOnlyList{Andirit.CodeIndexUnitReplacement})",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 175,
+            "StartColumn": 54,
+            "EndLine": 175,
+            "EndColumn": 85
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ]
+    },
+    {
+      "Project": "src/Andirit/Andirit.csproj",
+      "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+      "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+      "Count": 10,
+      "Sites": [
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 387,
+            "StartColumn": 39,
+            "EndLine": 387,
+            "EndColumn": 69
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 389,
+            "StartColumn": 13,
+            "EndLine": 389,
+            "EndColumn": 47
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 389,
+            "StartColumn": 51,
+            "EndLine": 389,
+            "EndColumn": 85
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 389,
+            "StartColumn": 89,
+            "EndLine": 389,
+            "EndColumn": 121
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 389,
+            "StartColumn": 125,
+            "EndLine": 389,
+            "EndColumn": 157
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 390,
+            "StartColumn": 13,
+            "EndLine": 390,
+            "EndColumn": 48
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 392,
+            "StartColumn": 17,
+            "EndLine": 392,
+            "EndColumn": 50
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 393,
+            "StartColumn": 37,
+            "EndLine": 393,
+            "EndColumn": 70
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 398,
+            "StartColumn": 84,
+            "EndLine": 398,
+            "EndColumn": 117
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        },
+        {
+          "Project": "src/Andirit/Andirit.csproj",
+          "TargetDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Fact.Text(System.String)",
+          "OwnerDocumentationId": "M:Andirit.InterfaceImpactQueryV1.Resolve(Andirit.InterfaceImpactQueryV1.Fact)",
+          "Location": {
+            "Path": "src/Andirit/InterfaceImpactQueryV1.cs",
+            "StartLine": 401,
+            "StartColumn": 18,
+            "EndLine": 401,
+            "EndColumn": 51
+          },
+          "CandidateCount": 0,
+          "CandidateReason": "None"
+        }
+      ]
+    }
+  ]
+}

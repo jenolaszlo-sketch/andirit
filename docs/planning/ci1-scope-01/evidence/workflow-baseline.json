@@ -1,0 +1,117 @@
+{
+  "Purpose": "Scripted retrieval baseline, not autonomous task completion or token savings",
+  "SourceCommit": "cd2b7fb5d73f4dc462b0ef7fcadfd75a91c118a2",
+  "Queries": "Reuse the separately timed public-query envelopes in real-baseline.json; timings are not included in RetrievalWallMs",
+  "LogicalQueryCalls": 20,
+  "OpenPublicationCalls": 1,
+  "SourceSearchProcesses": 5,
+  "SourceFilesOpened": 5,
+  "SourceTextBytes": 78895.0,
+  "SearchOutputUtf8Bytes": 4546.0,
+  "QueryEnvelopeUtf8Bytes": 91486.0,
+  "RetrievalWallMs": 200.2101,
+  "ActionableAnswerTime": null,
+  "Tokens": null,
+  "Searches": [
+    {
+      "Pattern": "EnsurePublication",
+      "Milliseconds": 35.3015,
+      "OutputUtf8Bytes": 1500,
+      "Lines": [
+        "src/Andirit\\CodeGraphPublicationQuery.cs:179:        CodeGraphQueryService.EnsurePublication(",
+        "src/Andirit\\CodeGraphQueryService.cs:50:        EnsurePublication(publication, await _store.GetLatestPublicationAsync(publication.RepositoryId, cancellationToken).ConfigureAwait(false));",
+        "src/Andirit\\CodeGraphQueryService.cs:56:        EnsurePublication(publication, await _store.GetLatestPublicationAsync(publication.RepositoryId, cancellationToken).ConfigureAwait(false));",
+        "src/Andirit\\CodeGraphQueryService.cs:58:        EnsurePublication(publication, await _store.GetLatestPublicationAsync(publication.RepositoryId, cancellationToken).ConfigureAwait(false));",
+        "src/Andirit\\CodeGraphQueryService.cs:371:            EnsurePublication(publication, envelope?.Publication);",
+        "src/Andirit\\CodeGraphQueryService.cs:457:        EnsurePublication(publication, fileLookup?.Publication);",
+        "src/Andirit\\CodeGraphQueryService.cs:482:        EnsurePublication(publication, traversal?.Publication);",
+        "src/Andirit\\CodeGraphQueryService.cs:494:            EnsurePublication(publication, envelope?.Publication);",
+        "src/Andirit\\CodeGraphQueryService.cs:844:        EnsurePublication(publication, projectLookup?.Publication);",
+        "src/Andirit\\CodeGraphQueryService.cs:871:        EnsurePublication(publication, traversal?.Publication);",
+        "src/Andirit\\CodeGraphQueryService.cs:931:            EnsurePublication(publication, envelope?.Publication);",
+        "src/Andirit\\CodeGraphQueryService.cs:1069:    internal static void EnsurePublication("
+      ]
+    },
+    {
+      "Pattern": "FindSymbolsByQualifiedNameAsync",
+      "Milliseconds": 30.1143,
+      "OutputUtf8Bytes": 499,
+      "Lines": [
+        "src/Andirit\\CodeGraphQueryService.cs:90:    public async ValueTask<CodeSymbolLookupResult> FindSymbolsByQualifiedNameAsync(",
+        "src/Andirit\\CodeGraphQueryService.cs:105:    [Obsolete(\"Use FindSymbolsByQualifiedNameAsync, which names the lookup key explicitly.\")]",
+        "src/Andirit\\CodeGraphQueryService.cs:110:        FindSymbolsByQualifiedNameAsync(repositoryId, qualifiedName, cancellationToken);",
+        "src/Andirit\\CodeGraphQueryService.cs:327:            results[name] = await FindSymbolsByQualifiedNameAsync("
+      ]
+    },
+    {
+      "Pattern": "FindDeclarationsWithProvenanceAsync",
+      "Milliseconds": 28.3197,
+      "OutputUtf8Bytes": 198,
+      "Lines": [
+        "src/Andirit\\CodeGraphPublicationQuery.cs:55:        Require(await _queries.FindDeclarationsWithProvenanceAsync(",
+        "src/Andirit\\CodeGraphQueryService.cs:170:        FindDeclarationsWithProvenanceAsync("
+      ]
+    },
+    {
+      "Pattern": "Positive",
+      "Milliseconds": 30.0043,
+      "OutputUtf8Bytes": 894,
+      "Lines": [
+        "src/Andirit.Abstractions\\CodeGraphBatch.cs:108:        MaxNodes = Positive(maxNodes, nameof(maxNodes));",
+        "src/Andirit.Abstractions\\CodeGraphBatch.cs:109:        MaxDeclarations = Positive(maxDeclarations, nameof(maxDeclarations));",
+        "src/Andirit.Abstractions\\CodeGraphBatch.cs:110:        MaxEdges = Positive(maxEdges, nameof(maxEdges));",
+        "src/Andirit.Abstractions\\CodeGraphBatch.cs:111:        MaxPropertiesPerFact = Positive(",
+        "src/Andirit.Abstractions\\CodeGraphBatch.cs:114:        MaxTextPropertyLength = Positive(",
+        "src/Andirit.Abstractions\\CodeGraphBatch.cs:117:        MaxTextListItems = Positive(",
+        "src/Andirit.Abstractions\\CodeGraphBatch.cs:120:        MaxBatchesPerIndexUnit = Positive(",
+        "src/Andirit.Abstractions\\CodeGraphBatch.cs:123:        MaxFactsPerIndexUnit = Positive(",
+        "src/Andirit.Abstractions\\CodeGraphBatch.cs:137:    private static int Positive(int value, string parameterName) =>"
+      ]
+    },
+    {
+      "Pattern": "GetLatestPublicationAsync",
+      "Milliseconds": 31.7288,
+      "OutputUtf8Bytes": 1455,
+      "Lines": [
+        "src/Andirit\\InMemoryCodeGraphStore.cs:227:    public ValueTask<CodeGraphPublication?> GetLatestPublicationAsync(",
+        "src/Andirit\\ICodeGraphStore.cs:59:    ValueTask<CodeGraphPublication?> GetLatestPublicationAsync(",
+        "src/Andirit\\CodeGraphQueryService.cs:50:        EnsurePublication(publication, await _store.GetLatestPublicationAsync(publication.RepositoryId, cancellationToken).ConfigureAwait(false));",
+        "src/Andirit\\CodeGraphQueryService.cs:56:        EnsurePublication(publication, await _store.GetLatestPublicationAsync(publication.RepositoryId, cancellationToken).ConfigureAwait(false));",
+        "src/Andirit\\CodeGraphQueryService.cs:58:        EnsurePublication(publication, await _store.GetLatestPublicationAsync(publication.RepositoryId, cancellationToken).ConfigureAwait(false));",
+        "src/Andirit\\CodeGraphQueryService.cs:75:        var publication = await _store.GetLatestPublicationAsync(",
+        "src/Andirit\\CodeGraphQueryService.cs:356:        var publication = await _store.GetLatestPublicationAsync(",
+        "src/Andirit\\CodeGraphQueryService.cs:448:        var publication = await _store.GetLatestPublicationAsync(",
+        "src/Andirit\\CodeGraphQueryService.cs:835:        var publication = await _store.GetLatestPublicationAsync(",
+        "src/Andirit\\CodeGraphQueryService.cs:908:        var publication = await _store.GetLatestPublicationAsync(",
+        "src/Andirit\\CodePublicationSnapshot.cs:57:        var publication = await source.GetLatestPublicationAsync(repositoryId, cancellationToken)"
+      ]
+    }
+  ],
+  "Reads": [
+    {
+      "Path": "src/Andirit.Abstractions/CodeGraphBatch.cs",
+      "Utf8TextBytes": 5344,
+      "Sha256": "d566a376237724c13f87d78420dbf590abda33f4af640a0460565b0d07e0fe99"
+    },
+    {
+      "Path": "src/Andirit/CodeGraphQueryService.cs",
+      "Utf8TextBytes": 49710,
+      "Sha256": "f3be2fba5e5ff02a257d3ea54e174ebaee0f05d33a128e8280cc40a438d53b74"
+    },
+    {
+      "Path": "src/Andirit/CodeGraphPublicationQuery.cs",
+      "Utf8TextBytes": 8811,
+      "Sha256": "ae43d8590d6ec62c974866126b7e7e276922b1d1d322c59277fd78d1215cda7d"
+    },
+    {
+      "Path": "src/Andirit/CodePublicationSnapshot.cs",
+      "Utf8TextBytes": 9749,
+      "Sha256": "293891251d7186c2320250a9c170c6833467fc1412d7e53380e87dee1dec850f"
+    },
+    {
+      "Path": "src/Andirit/ICodeGraphStore.cs",
+      "Utf8TextBytes": 5281,
+      "Sha256": "24452c9de55abdf5962092d73148d18a96f7d13e61d18f080ded1bb46bf46e47"
+    }
+  ]
+}

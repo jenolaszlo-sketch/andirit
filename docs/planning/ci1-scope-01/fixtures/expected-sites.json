@@ -1,0 +1,486 @@
+{
+  "Status": "PROPOSED oracle; independent review pending",
+  "CoordinateConvention": "one-based UTF-16, end-exclusive",
+  "Sites": [
+    {
+      "Case": "C01",
+      "FixturePath": "Repeated.cs",
+      "RepositoryPath": "src/Repeated.cs",
+      "Lexeme": "Logger.Write(\"first\")",
+      "Span": [
+        5,
+        9,
+        5,
+        30
+      ],
+      "ExpectedTargetSourceSignature": "Logger.Write(string)",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C01",
+      "FixturePath": "Repeated.cs",
+      "RepositoryPath": "src/Repeated.cs",
+      "Lexeme": "Logger.Write(\"second\")",
+      "Span": [
+        6,
+        9,
+        6,
+        31
+      ],
+      "ExpectedTargetSourceSignature": "Logger.Write(string)",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C01",
+      "FixturePath": "Repeated.cs",
+      "RepositoryPath": "src/Repeated.cs",
+      "Lexeme": "Logger.Write(\"third\")",
+      "Span": [
+        7,
+        9,
+        7,
+        30
+      ],
+      "ExpectedTargetSourceSignature": "Logger.Write(string)",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C02",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "Hit(1)",
+      "Span": [
+        6,
+        35,
+        6,
+        41
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Overloads.Hit(int)",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C02",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "Hit(\"x\")",
+      "Span": [
+        6,
+        43,
+        6,
+        51
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Overloads.Hit(string)",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C04",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "Echo<int>(1)",
+      "Span": [
+        12,
+        35,
+        12,
+        47
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.GenericExtensions.Echo<T>(T)",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C04",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "\"x\".Mark<string>()",
+      "Span": [
+        12,
+        49,
+        12,
+        67
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.GenericExtensions.Mark<T>(this T)",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C05",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "this(1)",
+      "Span": [
+        20,
+        29,
+        20,
+        36
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Constructors(int)",
+      "ExpectedOutcome": "deferred-constructor",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C05",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "base(value)",
+      "Span": [
+        21,
+        38,
+        21,
+        49
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.ConstructorBase(int)",
+      "ExpectedOutcome": "deferred-constructor",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C05",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "new()",
+      "Span": [
+        22,
+        52,
+        22,
+        57
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Constructors()",
+      "ExpectedOutcome": "deferred-constructor",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C05",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "new Constructors(1)",
+      "Span": [
+        22,
+        67,
+        22,
+        86
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Constructors(int)",
+      "ExpectedOutcome": "deferred-constructor",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C06",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "value.Work()",
+      "Span": [
+        36,
+        55,
+        36,
+        67
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.IWorker.Work()",
+      "ExpectedOutcome": "confirmed-interface-static-target",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C07",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "value.Work()",
+      "Span": [
+        37,
+        52,
+        37,
+        64
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Worker.Work()",
+      "ExpectedOutcome": "confirmed-virtual-static-target",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C07",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "base.Work()",
+      "Span": [
+        32,
+        30,
+        32,
+        41
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Worker.Work()",
+      "ExpectedOutcome": "confirmed-base-static-target",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C08",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "Target.Work",
+      "Span": [
+        45,
+        58,
+        45,
+        69
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Target.Work()",
+      "ExpectedOutcome": "deferred-method-group",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C08",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "action()",
+      "Span": [
+        45,
+        71,
+        45,
+        79
+      ],
+      "ExpectedTargetSourceSignature": "System.Action.Invoke()",
+      "ExpectedOutcome": "external-delegate-invoke-not-Target.Work",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C09",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "typeof(Target)",
+      "Span": [
+        49,
+        43,
+        49,
+        57
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Target",
+      "ExpectedOutcome": "deferred-type-reference",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C09",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "nameof(Target.Work)",
+      "Span": [
+        49,
+        67,
+        49,
+        86
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Target.Work()",
+      "ExpectedOutcome": "deferred-nameof-reference",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C09",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "Target.Work()",
+      "Span": [
+        49,
+        88,
+        49,
+        101
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Target.Work()",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C10",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "System.Console.WriteLine(\"outside\")",
+      "Span": [
+        53,
+        35,
+        53,
+        70
+      ],
+      "ExpectedTargetSourceSignature": "System.Console.WriteLine(string)",
+      "ExpectedOutcome": "external-no-confirmed-local-target",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C11",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "Pick(null)",
+      "Span": [
+        59,
+        35,
+        59,
+        45
+      ],
+      "ExpectedTargetSourceSignature": "unknown-string-or-Exception-overload",
+      "ExpectedOutcome": "ambiguous-no-confirmation",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C11",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "Missing()",
+      "Span": [
+        59,
+        47,
+        59,
+        56
+      ],
+      "ExpectedTargetSourceSignature": "unknown",
+      "ExpectedOutcome": "unresolved-no-confirmation",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C12",
+      "FixturePath": "acceptance/Partial.Two.cs",
+      "RepositoryPath": "src/Partial.Two.cs",
+      "Lexeme": "Work()",
+      "Span": [
+        4,
+        28,
+        4,
+        34
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Partial.Work()",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C19",
+      "FixturePath": "acceptance/Duplicate.One.cs",
+      "RepositoryPath": "src/Duplicate.One.cs",
+      "Lexeme": "Target.Work()",
+      "Span": [
+        4,
+        35,
+        4,
+        48
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Target.Work()",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C19",
+      "FixturePath": "acceptance/Duplicate.Two.cs",
+      "RepositoryPath": "src/Duplicate.Two.cs",
+      "Lexeme": "Target.Work()",
+      "Span": [
+        4,
+        35,
+        4,
+        48
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Target.Work()",
+      "ExpectedOutcome": "confirmed",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C03",
+      "FixturePath": "acceptance/CrossProject/App/App.cs",
+      "RepositoryPath": "App/App.cs",
+      "Lexeme": "Library.Work()",
+      "Span": [
+        4,
+        35,
+        4,
+        49
+      ],
+      "ExpectedTargetSourceSignature": "CI1Cross.Library.Work() in Lib/Lib.csproj",
+      "ExpectedOutcome": "confirmed-cross-project",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C14",
+      "FixturePath": "acceptance/Repeated.AfterDelete.cs.txt",
+      "RepositoryPath": "src/Repeated.cs",
+      "Lexeme": "Logger.Write(\"first\")",
+      "Span": [
+        5,
+        9,
+        5,
+        30
+      ],
+      "ExpectedTargetSourceSignature": "Logger.Write(string)",
+      "ExpectedOutcome": "confirmed-after-replacement",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C14",
+      "FixturePath": "acceptance/Repeated.AfterDelete.cs.txt",
+      "RepositoryPath": "src/Repeated.cs",
+      "Lexeme": "Logger.Write(\"third\")",
+      "Span": [
+        6,
+        9,
+        6,
+        30
+      ],
+      "ExpectedTargetSourceSignature": "Logger.Write(string)",
+      "ExpectedOutcome": "confirmed-after-replacement",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C15",
+      "FixturePath": "acceptance/Repeated.AfterShift.cs.txt",
+      "RepositoryPath": "src/Repeated.cs",
+      "Lexeme": "Logger.Write(\"first\")",
+      "Span": [
+        6,
+        9,
+        6,
+        30
+      ],
+      "ExpectedTargetSourceSignature": "Logger.Write(string)",
+      "ExpectedOutcome": "confirmed-after-replacement",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C15",
+      "FixturePath": "acceptance/Repeated.AfterShift.cs.txt",
+      "RepositoryPath": "src/Repeated.cs",
+      "Lexeme": "Logger.Write(\"second\")",
+      "Span": [
+        7,
+        9,
+        7,
+        31
+      ],
+      "ExpectedTargetSourceSignature": "Logger.Write(string)",
+      "ExpectedOutcome": "confirmed-after-replacement",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C15",
+      "FixturePath": "acceptance/Repeated.AfterShift.cs.txt",
+      "RepositoryPath": "src/Repeated.cs",
+      "Lexeme": "Logger.Write(\"third\")",
+      "Span": [
+        8,
+        9,
+        8,
+        30
+      ],
+      "ExpectedTargetSourceSignature": "Logger.Write(string)",
+      "ExpectedOutcome": "confirmed-after-replacement",
+      "Basis": "Hand-selected source expression/signature; coordinates computed from text, no extractor output"
+    },
+    {
+      "Case": "C20",
+      "FixturePath": "acceptance/Cases.cs",
+      "RepositoryPath": "src/Cases.cs",
+      "Lexeme": "Target.Work()",
+      "Span": [
+        66,
+        9,
+        66,
+        22
+      ],
+      "ExpectedTargetSourceSignature": "CI1Corpus.Target.Work()",
+      "ExpectedOutcome": "inactive-default; confirmed only with CI1_EXTRA",
+      "Basis": "Hand-selected conditional source expression, no extractor output"
+    }
+  ]
+}

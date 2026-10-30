@@ -1,6 +1,6 @@
 # Agent-oriented code intelligence and dependency roadmap
 
-**Status:** Proposed future direction, recorded 2026-10-29. **Documentation only.**
+**Status:** Proposed future direction, recorded 2026-10-29; current status updated 2026-10-30. **Documentation only.**
 No milestone below is authorized for implementation, release, or publication by
 this document. Exact API names are working names, not accepted public contracts.
 
@@ -46,9 +46,10 @@ At the recorded standalone Andirit baseline, the implemented foundation includes
 - Publication identities, deterministic bounded queries, provenance, source
   freshness checks, incremental indexing and two qualified storage providers.
 
-The accepted EC-6D interface/import binding contract is **not yet implemented**;
-R16 intended-consumer validation remains the next gate. Keep these boundaries
-visible in all examples, proposed responses and benchmarks.
+EC-6D implementation and remediation are **accepted and closed with qualifications**
+under [EC6D-OWNER-02](decisions/ec6d-owner-02-acceptance.md). That acceptance record
+is authoritative for implemented binding behavior and retained qualifications.
+The candidate designs below remain proposals; CI-1 scope is pending owner approval.
 
 ## Candidate capability sequence
 
@@ -67,11 +68,10 @@ Their ordering can change on real consumer evidence.
 | **DI-4: Dependency Upgrade Impact** | "Which local call sites rely on API surface that changes from X to Y?" | Requires DI-1/DI-2 and explicit old/new context; static compatibility != runtime behavioral compatibility |
 | **DF-1: Bounded Data Flow / Value Origin** | "Where does this argument/value come from and where can it go?" | Start intraprocedural and explicitly bounded; no whole-program claim |
 
-**Near-term order:** complete EC6D-R16, then separately authorize/implement the
-accepted EC-6D contract; independently qualify it using the controlled fixture
-and pinned `jenolaszlo-sketch/website` source. CI-1 and DI-1 are high-priority
-candidates after that gate; DI-2 makes package intelligence substantially more
-useful. Nothing in this proposal changes EC-6D scope or owner decisions.
+**Current order:** EC-6D implementation/qualification is accepted and closed; see
+[EC6D-OWNER-02](decisions/ec6d-owner-02-acceptance.md). CI-1 and DI-1 remain
+high-priority candidates requiring separate scope approval; DI-2 remains a
+separate candidate. Nothing in this proposal changes EC-6D owner decisions.
 
 ## Agent query surface: answer-oriented, not graph-vocabulary-oriented
 
@@ -194,8 +194,9 @@ Andirit supplies evidence; the agent performs edits and runs tests.
 
 ## CI-2 / DI-3: JavaScript and TypeScript extensions
 
-Wait for EC-6D's accepted interface/import binding work and independent
-qualification before generalizing to calls and references. Start with tightly
+EC-6D's interface/import binding work and independent qualification are accepted
+and closed under [EC6D-OWNER-02](decisions/ec6d-owner-02-acceptance.md). Any
+generalization to calls and references remains separately proposed. Start with tightly
 bounded, provable named imports/exports and ordinary invocation forms, with
 same-name, alias, shadowing, re-export and dynamic-call negatives. Resolved
 module files alone are not evidence of a resolved target callable.
@@ -253,8 +254,9 @@ more expensive.
 
 ## Next planning trigger
 
-After EC6D-R16 and accepted EC-6D implementation/qualification, select the
-first small **agent-useful** vertical slice using a real repository:
+With EC-6D accepted and closed under
+[EC6D-OWNER-02](decisions/ec6d-owner-02-acceptance.md), review and separately
+approve the first small **agent-useful** vertical slice using a real repository:
 
 1. C# method usages/change-impact explanation (CI-1), or
 2. NuGet declared-versus-resolved package provenance (DI-1).
