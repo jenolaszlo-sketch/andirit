@@ -1,6 +1,16 @@
 # EC-6D consumer-intelligence planning
 
-**Current disposition — EC6D-OWNER-01: ACCEPT WITH QUALIFICATIONS.**
+**Current disposition — EC6D-OWNER-02: ACCEPT WITH QUALIFICATIONS.**
+[EC6D-IMPL-01 and EC6D-REM-01 are accepted and closed](../../decisions/ec6d-owner-02-acceptance.md)
+following EC6D-REM-01 and the independent
+[EC6D-QUAL-02 re-qualification](../../reviews/ec6d-qual-02/README.md). Package
+publication, production release, representative performance and deployment
+qualification are **not** authorized or established; the implementation's
+documented limits (published-fact trust boundary, Windows-only independent
+execution, bounded TypeScript analysis) remain in force. The paragraph below is
+the retained historical EC6D-OWNER-01 planning disposition.
+
+**Historical planning disposition — EC6D-OWNER-01: ACCEPT WITH QUALIFICATIONS.**
 The [owner acceptance record](../../decisions/ec6d-owner-01-contract-acceptance.md)
 binds the corrected contracts at `cc65338f50e585d78c3a1fa8e06d02c184a10451`
 / tree `9940965196b35488258501e9513ec1d8025d4007`, closes Q3-F01..F05

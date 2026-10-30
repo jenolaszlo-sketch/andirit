@@ -1,5 +1,15 @@
 # EC6D-IMPL-01 producer implementation
 
+> **Status: ACCEPTED and CLOSED by [EC6D-OWNER-02](../../decisions/ec6d-owner-02-acceptance.md)**
+> after EC6D-REM-01 and the independent
+> [EC6D-QUAL-02 re-qualification](../../reviews/ec6d-qual-02/README.md)
+> (production source `701257f4e6f0dbf71ab57072f8204cfa4cd6cad2` / tree
+> `80d284029f5a82184bb04fd3d0d11fef7b223dc0`). This packet remains the
+> producer record; the remediation packet is at
+> [docs/remediation/ec6d-rem-01](../../remediation/ec6d-rem-01/README.md).
+> Package publication, production release, representative performance and
+> deployment qualification are not authorized or established.
+
 Recorded 2026-10-30 (Asia/Manila). Production source binding: **093004e02a3438d3c1eb6a668602da4aef563d6a**,
 tree **89767a4d050aa73248c169a0454ec638c4d7d678**. Baseline: `fe1a9e37da49064f8cf6ec7fe9bc5ade7cfd7781`.
 

@@ -1,5 +1,13 @@
 # EC6D-REM-01 remediation checkpoint
 
+> **Status: ACCEPTED and CLOSED by [EC6D-OWNER-02](../../decisions/ec6d-owner-02-acceptance.md)**
+> after the independent
+> [EC6D-QUAL-02 re-qualification](../../reviews/ec6d-qual-02/README.md). All 11
+> findings are independently verified corrected; the owner-approved F08
+> supplement is part of the accepted result contract. Package publication,
+> production release, representative performance and deployment qualification
+> are not authorized or established.
+
 **EC6D-REM-01 COMPLETE: READY FOR INDEPENDENT RE-QUALIFICATION**
 
 All eleven findings are corrected and locally qualified. The owner explicitly approved the bounded F08 supplement in [owner-decision-f08.md](owner-decision-f08.md). The authorized fast-forward integration and exact-source hosted qualification passed; the final evidence commit’s own CI is verified after it is created, with its binding preserved externally and in the task handoff. No independent or owner acceptance is claimed; no release or package publication occurred.

@@ -1,0 +1,616 @@
+[
+  {
+    "id": "F01-nested-vs-visible-collision/confirmed",
+    "pass": true,
+    "expected": [
+      "Outside"
+    ],
+    "actual": [
+      "Outside"
+    ]
+  },
+  {
+    "id": "F01-nested-vs-visible-collision/inside-reason",
+    "pass": true,
+    "expected": [
+      "nested-scope-heritage"
+    ],
+    "actual": [
+      "nested-scope-heritage"
+    ]
+  },
+  {
+    "id": "F01-nested-vs-visible-collision/visible-route",
+    "pass": true,
+    "expected": "import route via the visible top-level import",
+    "actual": {
+      "BindingRoute": "import",
+      "Steps": [
+        [
+          "heritage",
+          "context",
+          "import",
+          "resolution",
+          "export-entry",
+          "export-occurrence",
+          "attribution",
+          "declaration"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "F01-nested-only/no-confirm",
+    "pass": true,
+    "expected": 0,
+    "actual": 0
+  },
+  {
+    "id": "F01-nested-only/unresolved",
+    "pass": true,
+    "expected": [
+      "unresolved-heritage-name"
+    ],
+    "actual": [
+      "unresolved-heritage-name"
+    ]
+  },
+  {
+    "id": "F01-nested-only/no-possible",
+    "pass": true,
+    "expected": 0,
+    "actual": 0
+  },
+  {
+    "id": "A03-alias-collision/only-self",
+    "pass": true,
+    "expected": [
+      "ViaSelf"
+    ],
+    "actual": [
+      "ViaSelf"
+    ]
+  },
+  {
+    "id": "A03-alias-collision/no-unknowns",
+    "pass": true,
+    "expected": 0,
+    "actual": []
+  },
+  {
+    "id": "A03-alias-collision/no-possible",
+    "pass": true,
+    "expected": 0,
+    "actual": []
+  },
+  {
+    "id": "boundary-two-targets/Widget-only-A",
+    "pass": true,
+    "expected": [
+      "A"
+    ],
+    "actual": [
+      "A"
+    ]
+  },
+  {
+    "id": "boundary-two-targets/no-unknowns",
+    "pass": true,
+    "expected": 0,
+    "actual": []
+  },
+  {
+    "id": "F04-generic/no-confirm",
+    "pass": true,
+    "expected": 0,
+    "actual": 0
+  },
+  {
+    "id": "F04-generic/unsupported-form",
+    "pass": true,
+    "expected": [
+      "unsupported-heritage-form"
+    ],
+    "actual": [
+      "unsupported-heritage-form"
+    ]
+  },
+  {
+    "id": "F04-generic/terminal-observable",
+    "pass": true,
+    "expected": "terminal Widget in an expression context",
+    "actual": [
+      {
+        "form": "expression",
+        "terminal": "Widget",
+        "kind": "class-implements"
+      }
+    ]
+  },
+  {
+    "id": "F04-anonymous/no-confirm",
+    "pass": true,
+    "expected": 0,
+    "actual": 0
+  },
+  {
+    "id": "F04-anonymous/site-observable",
+    "pass": true,
+    "expected": "source-grounded other-kind context for the clause",
+    "actual": [
+      {
+        "owner": "other",
+        "kind": "other",
+        "written": "Widget"
+      }
+    ]
+  },
+  {
+    "id": "F04-anonymous/closed-reason",
+    "pass": true,
+    "expected": "at least one closed-vocabulary reason",
+    "actual": [
+      "nested-scope-heritage"
+    ]
+  },
+  {
+    "id": "F03-aliased-extends/direct-confirms",
+    "pass": true,
+    "expected": [
+      "Correct"
+    ],
+    "actual": [
+      "Correct"
+    ]
+  },
+  {
+    "id": "F03-aliased-extends/unsupported-kind",
+    "pass": true,
+    "expected": [
+      "heritage-kind-not-supported"
+    ],
+    "actual": [
+      "heritage-kind-not-supported"
+    ]
+  },
+  {
+    "id": "valid-extends-implements/confirmed",
+    "pass": true,
+    "expected": [
+      "Mixed"
+    ],
+    "actual": [
+      "Mixed"
+    ]
+  },
+  {
+    "id": "valid-extends-implements/no-unknowns",
+    "pass": true,
+    "expected": 0,
+    "actual": []
+  },
+  {
+    "id": "F08-triple/one-entity",
+    "pass": true,
+    "expected": "one Multi entity",
+    "actual": "Multi"
+  },
+  {
+    "id": "F08-triple/per-witness-routes",
+    "pass": true,
+    "expected": [
+      "import",
+      "same-file",
+      "same-file"
+    ],
+    "actual": [
+      "import",
+      "same-file",
+      "same-file"
+    ]
+  },
+  {
+    "id": "F08-triple/import-steps",
+    "pass": true,
+    "expected": "complete import proof",
+    "actual": [
+      "heritage",
+      "context",
+      "import",
+      "resolution",
+      "export-entry",
+      "export-occurrence",
+      "attribution",
+      "declaration"
+    ]
+  },
+  {
+    "id": "F08-triple/same-file-steps",
+    "pass": true,
+    "expected": "short same-file proofs",
+    "actual": [
+      [
+        "heritage",
+        "context",
+        "declaration"
+      ],
+      [
+        "heritage",
+        "context",
+        "declaration"
+      ]
+    ]
+  },
+  {
+    "id": "F08-triple/canonical-summary",
+    "pass": true,
+    "expected": {
+      "BindingRoute": "same-file",
+      "HeritageSpan": {
+        "Path": "types.ts",
+        "StartLine": 3,
+        "StartColumn": 31,
+        "EndLine": 3,
+        "EndColumn": 37
+      }
+    },
+    "actual": {
+      "BindingRoute": "same-file",
+      "HeritageSpan": {
+        "Path": "types.ts",
+        "StartLine": 3,
+        "StartColumn": 31,
+        "EndLine": 3,
+        "EndColumn": 37
+      }
+    }
+  },
+  {
+    "id": "F08-triple/hashes-and-spans",
+    "pass": true,
+    "expected": "accepted hash tuple \u002B per-witness span from first step",
+    "actual": [
+      "binding1.local-v1:466a8822352fa3488499d15575ba468ec317590d851f9d121524efa190f43e93",
+      "binding1.local-v1:96caf12fce71816aea32b129898352f001bcaf82da6b793e74bff05487ed75a4",
+      "binding1.local-v1:f457542108093876a5f9112456ec0ca2ee2d50552a4225591181056855373dc4"
+    ]
+  },
+  {
+    "id": "F08-triple/unknowns-empty",
+    "pass": true,
+    "expected": 0,
+    "actual": []
+  },
+  {
+    "id": "F08-triple/json-roundtrip",
+    "pass": true,
+    "expected": true,
+    "actual": true
+  },
+  {
+    "id": "F08-triple/repeat",
+    "pass": true,
+    "expected": true,
+    "actual": true
+  },
+  {
+    "id": "F11-precharge/limit-1-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 1,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-2-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 2,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-3-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 3,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-4-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 4,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-5-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 5,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-6-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 6,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-7-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 7,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-8-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 8,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-9-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 9,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-10-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 10,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-11-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 11,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit-12-no-uncharged-proof",
+    "pass": true,
+    "expected": "charged witness steps never exceed the bound; no complete proof beyond it",
+    "actual": {
+      "charged": 12,
+      "maxWitnessStepsInResult": 0,
+      "confirmed": 0,
+      "partial": true
+    }
+  },
+  {
+    "id": "F11-precharge/limit1-reports-one",
+    "pass": true,
+    "expected": "one charged step, no complete witness",
+    "actual": {
+      "WitnessSteps": 1,
+      "Partial": true,
+      "confirmed": 0
+    }
+  },
+  {
+    "id": "F11-precharge/limit1-deterministic",
+    "pass": true,
+    "expected": true,
+    "actual": true
+  },
+  {
+    "id": "F10-resolver-policy-mutation",
+    "pass": true,
+    "expected": "invalid resolver policy is refused",
+    "actual": "InvalidOperationException: EC-6D integrity failure: Mismatched resolver policy."
+  },
+  {
+    "id": "F10-resolver-edge-version-mutation",
+    "pass": true,
+    "expected": "invalid resolves-to evidence version is refused",
+    "actual": "InvalidOperationException: EC-6D integrity failure: Resolver proof has mismatched provider/version or policy."
+  },
+  {
+    "id": "F06-profile-removed",
+    "pass": true,
+    "expected": "missing corrected provider set is an input error",
+    "actual": "ArgumentException: Publication lacks the corrected EC-6D provider set."
+  },
+  {
+    "id": "F06-revision-marker-mutated",
+    "pass": true,
+    "expected": "unmarked/stale provider set is an input error",
+    "actual": "ArgumentException: Publication lacks the corrected EC-6D provider set."
+  },
+  {
+    "id": "F02-attribution-extra-candidate",
+    "pass": true,
+    "expected": "candidate record with no stored context is refused",
+    "actual": "InvalidOperationException: EC-6D integrity failure: Attribution candidate context is missing or contradictory."
+  },
+  {
+    "id": "F02-attribution-missing-context",
+    "pass": true,
+    "expected": "physical declaration without its context is refused",
+    "actual": "InvalidOperationException: EC-6D integrity failure: Attribution candidate context is missing or contradictory."
+  },
+  {
+    "id": "F06-valid-tiny/partial-with-target",
+    "pass": true,
+    "expected": "partial result still names the target",
+    "actual": {
+      "Partial": true,
+      "node": "typescript:symbol:a3bd3912de7e042d171d76cc7c48b133b02617e14efdd59ff65dd8a68424fc97",
+      "Name": "Widget"
+    }
+  },
+  {
+    "id": "F07-transport/missing-RepositoryId",
+    "pass": true,
+    "expected": "rejected before authority accessor",
+    "actual": "ArgumentException"
+  },
+  {
+    "id": "F07-transport/missing-IndexRunId",
+    "pass": true,
+    "expected": "rejected before authority accessor",
+    "actual": "ArgumentException"
+  },
+  {
+    "id": "F07-transport/missing-IndexIdentity",
+    "pass": true,
+    "expected": "rejected before authority accessor",
+    "actual": "ArgumentException"
+  },
+  {
+    "id": "F07-transport/missing-Target",
+    "pass": true,
+    "expected": "rejected",
+    "actual": "ArgumentException"
+  },
+  {
+    "id": "F07-transport/missing-ChargedWork",
+    "pass": true,
+    "expected": "rejected",
+    "actual": "rejected"
+  },
+  {
+    "id": "F07-transport/valid-roundtrip",
+    "pass": true,
+    "expected": true,
+    "actual": true
+  },
+  {
+    "id": "R1-scope-flag-flip/baseline",
+    "pass": true,
+    "expected": "recording-only observation (not a blocking assertion)",
+    "actual": 0
+  },
+  {
+    "id": "R1-scope-flag-flip/confirmed-after-flip",
+    "pass": true,
+    "expected": "recording-only observation (not a blocking assertion)",
+    "actual": {
+      "confirmed": [
+        "Outside"
+      ],
+      "route": [
+        "import"
+      ]
+    }
+  },
+  {
+    "id": "R2-selfconsistent-removal/baseline",
+    "pass": true,
+    "expected": "recording-only observation (not a blocking assertion)",
+    "actual": 0
+  },
+  {
+    "id": "R2-partial-forgery/refused",
+    "pass": true,
+    "expected": "recording-only observation (not a blocking assertion)",
+    "actual": "InvalidOperationException: EC-6D integrity failure: Attribution candidate context is missing or contradictory."
+  },
+  {
+    "id": "R3-fully-forged-publication/confirmed",
+    "pass": true,
+    "expected": "recording-only observation (not a blocking assertion)",
+    "actual": [
+      "Ambiguous"
+    ]
+  },
+  {
+    "id": "controlled/exact-four",
+    "pass": true,
+    "expected": [
+      "AbstractRenderer",
+      "AliasRenderer",
+      "HtmlRenderer",
+      "SvgRenderer"
+    ],
+    "actual": [
+      "AbstractRenderer",
+      "AliasRenderer",
+      "HtmlRenderer",
+      "SvgRenderer"
+    ]
+  },
+  {
+    "id": "controlled/exact-five",
+    "pass": true,
+    "expected": "five accepted modules",
+    "actual": [
+      "src/apps/Preview.ts",
+      "src/renderers/AbstractRenderer.ts",
+      "src/renderers/AliasRenderer.ts",
+      "src/renderers/HtmlRenderer.ts",
+      "src/renderers/SvgRenderer.ts"
+    ]
+  },
+  {
+    "id": "controlled/unknowns",
+    "pass": true,
+    "expected": [
+      "re-export-barrier",
+      "unresolved-module"
+    ],
+    "actual": [
+      "re-export-barrier",
+      "unresolved-module"
+    ]
+  },
+  {
+    "id": "controlled/negatives-absent",
+    "pass": true,
+    "expected": "OtherRenderer and CanvasRenderer not confirmed",
+    "actual": [
+      "AbstractRenderer",
+      "AliasRenderer",
+      "HtmlRenderer",
+      "SvgRenderer"
+    ]
+  }
+]
