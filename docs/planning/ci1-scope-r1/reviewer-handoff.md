@@ -42,7 +42,11 @@ The Q1 reviewer workspace is preserved intact at
 `C:/Users/Laszlos/source/repos/Solo/ci1-scope-q1` (do not modify it). R1's exact
 commands and results are in `reproduction.md`. Q2 should:
 
-1. Verify canonical Git state and tree (see `final-handoff.md`).
+1. Verify canonical Git state and tree (see `final-handoff.md`). The reviewed
+   packet is published as `e7dc274b2819e2657c9312f711cbf2b47f94bd42` on
+   `origin/main`; CI run `41048530036` for that SHA passed all jobs. Confirm any
+   later commits are docs-only delivery-evidence updates and pin Q2 to the
+   packet content at `e7dc274`.
 2. Read `REPORT.md` and `REPRODUCE.md` in the Q1 workspace first.
 3. Run the reviewer oracle and the wider probe, writing output **outside** the
    Q1 evidence directory, and compare against the Q1 evidence.

@@ -14,6 +14,8 @@ implementation authorization is issued.
 | Starting tree | `ffb6833e74836e2a318ab3c17e39a9c748310268` |
 | Planning content predecessor | `69d5152cb3ac1f9699e82981e11c122f261ada16` |
 | Production baseline | `cd2b7fb5d73f4dc462b0ef7fcadfd75a91c118a2` |
+| R1 documentation commit (published) | `e7dc274b2819e2657c9312f711cbf2b47f94bd42` |
+| R1 documentation tree | `190d6165bdb0ee5ab1c8fd4a44b0d997e55ff137` |
 | Working tree before R1 | clean |
 | Linked worktrees | none |
 
@@ -85,12 +87,29 @@ silently include either fix.
 - `SymbolUnused` and complete-usage claims remain prohibited.
 - No crash/power-loss durability is claimed.
 
-## Publication permission
+## Publication status
 
-This packet is committed to `main` as documentation. Pushing remains subject to
-explicit authorization; the Q1 producer's push was rejected by automatic
-approval review, and no push is attempted or claimed here unless separately
-authorized. See the task handoff for the resolved publish status.
+This packet was published to `origin/main` by ordinary fast-forward on
+2026-10-30:
+
+| Delivery item | Verified value |
+| --- | --- |
+| Push result | `7ab0aa7..e7dc274  main -> main` |
+| Force used | none |
+| `origin/main` after push | `e7dc274b2819e2657c9312f711cbf2b47f94bd42` |
+| Advertised remote ref after push | `e7dc274b2819e2657c9312f711cbf2b47f94bd42` |
+| CI workflow / run | `ci` / [`41048530036`](https://github.com/jenolaszlo-sketch/andirit/actions/runs/41048530036) |
+| CI head SHA | `e7dc274b2819e2657c9312f711cbf2b47f94bd42` |
+| CI conclusion | `success` |
+| CI jobs | `pack`, `test (ubuntu-latest)`, `test (windows-latest)`, `test (macos-latest)` — all success |
+
+The published diff contained only the 17 authorized documentation paths
+(eight marked `R1 amendment` updates under `docs/planning/ci1-scope-01/` and nine
+new files under `docs/planning/ci1-scope-r1/`). No production source, test,
+schema or package content was changed. Publication authorization covered
+documentation only; it does not authorize CI-1A implementation, either defect
+correction, release or package publication. Later docs-only commits that record
+delivery evidence do not alter the reviewed packet content at `e7dc274`.
 
 ## No acceptance issued
 
