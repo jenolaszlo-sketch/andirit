@@ -66,7 +66,9 @@ public sealed record InterfaceImpactResultV1(
             Target is null || Target.DeclarationNodeId is null || string.IsNullOrWhiteSpace(Target.Name) ||
             Coverage is null || Truncation is null || Truncation.ChargedWork is null || Truncation.AppliedLimits is null ||
             ConfirmedImplementations is null || PossibleConsumers is null || Unknowns is null ||
-            Coverage.Qualification != Qualification || Coverage.Partial != Truncation.CountsAreLowerBounds)
+            Coverage.Qualification != Qualification || Coverage.Partial != Truncation.CountsAreLowerBounds ||
+            ConfirmedImplementations.Any(c => c is null || c.Witnesses is null || c.Witnesses.Any(w =>
+                w is null || w.Steps is null || w.Steps.Any(step => step is null))))
             throw new ArgumentException("Invalid interface impact envelope: mandatory identity and qualification must be preserved.");
     }
 
@@ -77,7 +79,13 @@ public sealed record InterfaceImpactResultV1(
     public sealed record TargetInfo(CodeNodeId DeclarationNodeId, CodeDeclarationId? DeclarationRecordId, string Name, string? QualifiedName, string? Path, CodeLocation? Span);
     public sealed record Step(string StepKind, string FactId, CodeNodeId? FromNodeId, CodeNodeId? ToNodeId, CodeEvidence? Evidence, CodeFactOrigin Origin,
         IReadOnlyDictionary<string, CodePropertyValue>? Properties = null, CodeLocation? SourceLocation = null, IReadOnlyList<Step>? SupportingFacts = null);
-    public sealed record Witness(string WitnessId, IReadOnlyList<Step> Steps, string Policy = "binding1.local-v1", EvidenceQuality Quality = EvidenceQuality.Resolved);
+    public sealed record Witness(string WitnessId, IReadOnlyList<Step> Steps, string Policy = "binding1.local-v1", EvidenceQuality Quality = EvidenceQuality.Resolved)
+    {
+        /// <summary>The route of this proof, independent of the entry's canonical first-proof summary.</summary>
+        public string BindingRoute => Steps.Any(step => step.StepKind == "import") ? "import" : "same-file";
+        /// <summary>The source clause proved by this witness; derived from its stored heritage step.</summary>
+        public CodeLocation? HeritageSpan => Steps.FirstOrDefault(step => step.StepKind == "heritage")?.Evidence?.Location;
+    }
     public sealed record Implementation(CodeNodeId ClassNodeId, string ClassName, string Path, CodeLocation HeritageSpan, string BindingRoute,
         CodeDeclarationId TargetDeclarationRecordId, CodeNodeId TargetDeclarationNodeId, IReadOnlyList<Witness> Witnesses, IReadOnlyList<string> DiscoveryOrigins);
     public sealed record Occurrence(string OccurrenceId, string? Specifier, string? ImportedName, string? LocalName, bool IsTypeOnly,

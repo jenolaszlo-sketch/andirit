@@ -505,7 +505,10 @@ internal sealed class InterfaceImpactQueryV1
 
     private InterfaceImpactResultV1 Result()
     {
-        var implementations = _confirmed.GroupBy(c => (c.ClassNodeId, c.TargetDeclarationRecordId)).Select(g => g.First() with
+        var implementations = _confirmed.GroupBy(c => (c.ClassNodeId, c.TargetDeclarationRecordId)).Select(g => g
+            .OrderBy(c => c.HeritageSpan.Path, StringComparer.Ordinal).ThenBy(c => c.HeritageSpan.StartLine).ThenBy(c => c.HeritageSpan.StartColumn)
+            .ThenBy(c => c.HeritageSpan.EndLine).ThenBy(c => c.HeritageSpan.EndColumn)
+            .ThenBy(c => c.BindingRoute, StringComparer.Ordinal).ThenBy(c => c.Witnesses[0].WitnessId, StringComparer.Ordinal).First() with
         {
             Witnesses = g.SelectMany(c => c.Witnesses).DistinctBy(w => w.WitnessId).OrderBy(w => w.WitnessId, StringComparer.Ordinal).ToArray(),
             DiscoveryOrigins = g.SelectMany(c => c.DiscoveryOrigins).Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray()
