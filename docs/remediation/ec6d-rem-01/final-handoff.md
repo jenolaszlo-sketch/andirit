@@ -1,21 +1,21 @@
-# EC6D-REM-01 current handoff
+# EC6D-REM-01 final-source handoff (hosted gate pending)
 
-**EC6D-REM-01 BLOCKED: OWNER DECISION REQUIRED**
+All eleven source corrections and local qualification gates passed. Exact-commit hosted qualification awaits approval for the concrete normal fast-forward push. Milestone completion is not yet asserted.
 
-| Role | Identity / state |
+| Role | Exact identity / state |
 | --- | --- |
-| Starting commit | 514cd7938afff14af20fc5e258577ac2ece6641b |
-| Starting tree | c9a2016dc91b15194fba97f197457972c011a6ae |
-| Unblocked production checkpoint | f9bfab3d8de133ee1d94050fa779ddaef3173c25 |
-| Production checkpoint tree | 59f60b8b8dd60018c23650d8c6a9f7dea487feee |
-| Evidence identity | Resolve the containing evidence-only commit with `git rev-parse HEAD` / `git rev-parse 'HEAD^{tree}'`; its post-commit exact binding is also recorded externally in git-bindings.json and the task handoff. This file does not invent its own future hash. |
-| Canonical branch | D:/projects/Andirit, main, sole checkout; local commits preserved, no push |
-| Remote main | Still the starting reviewed revision; local checkpoint is not synchronized or represented as integrated |
+| Starting commit / tree | 514cd7938afff14af20fc5e258577ac2ece6641b / c9a2016dc91b15194fba97f197457972c011a6ae |
+| Final production commit / tree | 701257f4e6f0dbf71ab57072f8204cfa4cd6cad2 / 80d284029f5a82184bb04fd3d0d11fef7b223dc0 |
+| Initial ten-finding correction | f9bfab3d8de133ee1d94050fa779ddaef3173c25, preserved in ancestry |
+| Evidence identity | The containing evidence-only commit is resolved after creation and recorded in the task handoff and external git-bindings.json; this file does not invent its future hash. |
+| Checkout | D:/projects/Andirit, main, one checkout, no linked worktrees |
 
-F01, F02 and F03 blocking correctness issues are corrected, with real positive contrasts and fail-closed corruption checks. F04, F05, F06, F07, F09, F10 and F11 are corrected with permanent regression tests. **F08 is open and its correction paused**, because the accepted singular route field and all-witness/entity dedup obligations need an explicit mixed-route representation supplement. The concrete proposed additive witness route/span fields and deterministic summary semantics are reviewable in owner-decision-f08.md. The owner input request is pending; silence is not approval.
+F01–F07 and F09–F11 are corrected with permanent regressions. F08 is corrected under the owner's explicit answer **“Approve the bounded F08 supplement”**: each witness exposes its actual route/span, entry fields summarize the canonical first proof, all proofs and entity dedup remain, and binding1 identity inputs are unchanged. Historical accepted contracts and original qualification/producer evidence remain untouched. No finding was dismissed as a probe defect.
 
-All original 505 tests and 36 new cases pass (541 total), zero failures/skips. Original preserved Probe 633/24 → 640/2, with exactly F08 memory/lattice still failing; 22 original failures corrected and seven checks newly reachable. Authority 40/2 → 40/0; Lifecycle 12/2 → 12/0. Four unchanged coverage gates, format, whitespace and local six-package/native/store smoke checks pass. All historical p9 facts are preserved in fresh migrations. Actual old-p10 snapshots are refused until normal replacement, then query/reopen correctly. Controlled exact four/five and website exact module/unsupported/frontier predicates hold.
+All original 505 tests plus 38 new cases pass: **543 passed, zero failed/skipped** (312 core, 47 CSharp, 157 TreeSitter, 27 LatticeDB). Unchanged coverage gates, full formatting/whitespace and final unique-version six-package/native/store smoke pass. The unchanged original Probe yields 633/24 before and 640/2 after: 22 original failures corrected, seven checks newly reached, and exactly two F08 summary assertions explicitly superseded by the owner's approved contract supplement. A separate 15-check supplement passes; original assertions remain preserved and executed. Authority is 40/0 and Lifecycle 12/0. There are no unexplained correctness failures.
 
-Hosted final-remediation-source CI is **not run** and no push is claimed. After the owner resolves F08, complete that narrow correction and tests (or retain it explicitly open), update the source/evidence identities, obtain any required approval for the concrete normal fast-forward push, and verify all four hosted jobs on the exact committed remediation. Prior push permission covered the earlier implementation and evidence-only follow-ups; it is not assumed to authorize new production remediation. No force push, linked worktree, tag, release or package publication occurred.
+Fresh authentic p9 migrations preserve every old fact; actual original p10 publications are refused until normal corrected-profile reindex. Both stores, repeated indexing, replacement/deletion, failure/cancellation retention and separate-process reopen pass. Controlled exact four/five and pinned website expected outcomes/frontiers hold. Metadata changes are query-only relative to the corrected persisted rem1.p10 facts.
 
-Original authority/producer evidence/qualification bundle are unchanged. Complete raw evidence and harnesses are outside the source tree at `C:/Users/Laszlos/source/repos/Solo/ec6d-rem-01`. This executor is not author-disjoint from implementation or qualification; no independent acceptance or owner acceptance is declared. Representative performance, concurrency/load, crash/power-loss durability, deployment qualification and cross-platform execution of the new external probes remain unestablished. Exact next review steps are in reviewer-handoff.md.
+Hosted final-remediation-source CI is pending and no push, release or package publication is claimed. Integration must be a normal fast-forward from the verified remote main, with the concrete production/evidence endpoint approved first; prior permission covered the earlier implementation and evidence-only follow-ups. After pushing, verify Windows, Ubuntu, macOS and package/native jobs on the exact head; then record CI evidence separately and run a different reviewer's qualification.
+
+Raw evidence: C:/Users/Laszlos/source/repos/Solo/ec6d-rem-01. This executor is the implementation/qualification author too; no author-disjoint or owner acceptance is declared. Representative performance, load/concurrency, crash/power-loss durability and deployment qualification remain unestablished. Cross-platform hosted tests are a separate gate from local external probes. See reviewer-handoff.md for exact reproduction steps.

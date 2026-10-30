@@ -40,3 +40,10 @@ No production behavior was changed before this matrix was prepared. Final dispos
 | F11 | Corrected step-before-materialization/pre-dedup charging | WitnessWorkIsChargedAsStepsExecuteBeforeOutput |
 
 No finding was dismissed as a probe defect. F08 demonstrates a genuine shape/semantics conflict; its exact original assertion remains failing and is not silently revised. For the other findings, every original failed assertion now passes. See regression.md for the exact 633→640 count explanation and separate 40/12 suites. New permanent tests total 36 cases. Public-model changes for F08 and hosted integration are not yet authorized/executed.
+
+
+## Final source and approved F08 execution
+
+Final production source 701257f4e6f0dbf71ab57072f8204cfa4cd6cad2 / tree 80d284029f5a82184bb04fd3d0d11fef7b223dc0. The owner explicitly approved the bounded F08 supplement after the earlier checkpoint. F08 is now corrected: every witness derives route/span from its own stored steps; one entity/all proofs and the unchanged binding1 hash tuple remain; legacy summary selection is explicit and deterministic. The earlier OPEN/paused entries above describe historical triage/checkpoint state and are superseded by this execution record.
+
+All eleven confirmed defects now have corrections and permanent coverage. F08's two cases are MixedRoutesRetainPerWitnessMetadataAndCanonicalSummary (both stores, membership/hash, short/import steps, metadata, JSON, reversed enumeration and durable reopen). New total is 38 cases and 543 solution tests. The original two F08 route-evidence assertions remain failing and preserved under their old all-witness summary interpretation; only those expectations are explicitly owner-superseded. The separate 15-check approved supplement passes. Authority 40/0 and Lifecycle 12/0 pass on final source. No remaining assertion failure is unexplained. Hosted integration remains a separate pending approval/CI gate.

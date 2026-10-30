@@ -14,6 +14,7 @@ Final production source `701257f4e6f0dbf71ab57072f8204cfa4cd6cad2` / tree `80d28
 | BareAttributionFrontierDoesNotInventReasonSubjects | 6 | F09 ambiguous/missing/ineligible bare attribution and module-level possible predicate |
 | ResolverVersionAndPolicyAreIndependentIntegrityChecks | 6 | F10 wrong status/proof version/policy and valid contrast |
 | MixedRoutesRetainPerWitnessMetadataAndCanonicalSummary | 2 | F08 approved route/span metadata, all proofs, first-proof summary, hash/JSON/order/reopen |
+| MixedRoutesRetainPerWitnessMetadataAndCanonicalSummary | 2 | F08 approved route/span metadata, all proofs, first-proof summary, hash/JSON/order/reopen |
 | WitnessWorkIsChargedAsStepsExecuteBeforeOutput | 4 | F11 budgets 1/7, repeated exports, complete proofs, deterministic accounting |
 
 Preserved probes: baseline 633/24 → post 640/2; original failure IDs show 22 fixed, the two original F08 summary assertions remain explicitly owner-superseded and fail unchanged; separate supplemental assertions pass 15/15, and seven previously unreachable checks now run. Authority 40/2 → 40/0; Lifecycle 12/2 → 12/0. No probe source or expected result was changed. Formatting verification and git diff --check passed. All six packed package/native/store consumers passed against an isolated local smoke feed; nothing was published.
