@@ -4,6 +4,16 @@
 This is an implementation specification proposal, not implementation approval.
 Independent CI-1-SCOPE-Q1 and an explicit owner decision are the next gate.
 
+> **R1 amendment (CI-1-SCOPE-R1).** `CI-1-SCOPE-Q1` returned **REMEDIATION
+> REQUIRED**. The corrected, independently reviewable packet is
+> [`../ci1-scope-r1/`](../ci1-scope-r1/README.md); its amended disposition is
+> **CI-1-SCOPE-R1 READY WITH QUALIFICATIONS**. Two existing C# defects (F01
+> canonical-ID false confirmation; F02 documented partial-type extraction)
+> require separate production remediation, and ADR-CI1-01 remains open. This
+> document's raw observations are preserved; see
+> [`../ci1-scope-r1/final-handoff.md`](../ci1-scope-r1/final-handoff.md) for the
+> current disposition and owner decisions.
+
 ## Git/source binding
 
 Repository jenolaszlo-sketch/andirit, canonical D:/projects/Andirit, branch main.

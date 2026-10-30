@@ -135,3 +135,25 @@ Unknown: candidate query/index latency, allocations, durable bytes/replay,
 complete task time, tokens, break-even frequency, full real-repository success,
 platform-general performance and operational crash durability. No fabricated
 improvement, savings percentage or total-cost claim is made.
+
+## R1 amendment (CI-1-SCOPE-R1)
+
+Keep these quantities strictly separate; do not combine them into a same-context
+score or a savings claim (S03):
+
+| Quantity | Status |
+| --- | --- |
+| Existing extractor behaviour (occurrence collapse) | independently reproduced |
+| Roslyn oracle behaviour | a stronger context (adds SDK implicit global usings); independently reproduced |
+| Compilation-context difference | recorded, **not** a precision/recall score |
+| Successful 47-file measurements | single observations, not distributions |
+| Failed wider extraction | prerequisite defect, not performance evidence |
+| Query and source-retrieval costs | accounting sums (`174,927` bytes), not model context or tokens |
+| Candidate overhead, tokens, total task cost, break-even | **unmeasured** |
+
+The `EnsurePublication` 11-versus-1 comparison combines binding-context
+omissions with aggregate collapse and must never be reported as ten occurrences
+lost to deduplication. Serialized-byte measurements are not token savings. The
+paired protocol is unchanged and must freeze success criteria and include
+fresh-process cold samples, true host-call counts and real durable bytes before
+any benefit is claimed.

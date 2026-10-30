@@ -5,6 +5,16 @@ Planning and investigation only. Recorded 2026-10-30 (Asia/Manila).
 Next gate: independent CI-1-SCOPE-Q1, then explicit owner decision.
 CI-1 implementation is not approved.
 
+> **R1 amendment (CI-1-SCOPE-R1).** The independent review `CI-1-SCOPE-Q1`
+> returned **REMEDIATION REQUIRED**. This packet's raw observations are
+> preserved; targeted corrections and their rationale are in
+> [`../ci1-scope-r1/`](../ci1-scope-r1/README.md), and marked `R1 amendment`
+> blocks have been appended to the affected documents below. The amended
+> disposition is **CI-1-SCOPE-R1 READY WITH QUALIFICATIONS**: two existing C#
+> defects (F01 canonical-ID false confirmation; F02 documented partial-type
+> extraction) require separate production remediation, and ADR-CI1-01 remains
+> open. See [`../ci1-scope-r1/findings-matrix.md`](../ci1-scope-r1/findings-matrix.md).
+
 The practical question is: "I need to change this method. Show me every usage
 you can actually prove, where it occurs, and what I should inspect next."
 

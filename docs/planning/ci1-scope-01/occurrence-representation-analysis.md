@@ -148,3 +148,21 @@ a sufficient cost argument.
 Owner must decide separate facts versus versioned occurrence edges, exact ID
 tuple/edit stability, producer versioning, historical compatibility and hard
 limits. This packet implements none of them.
+
+## R1 amendment (CI-1-SCOPE-R1)
+
+**Candidate fact identity is exact, not canonical-name coincidence (F01).** The
+candidate fact's "selected normalized target" and the confirmation gate must
+prove correspondence between the bound symbol's defining compilation/assembly and
+definition and the indexed declaration. A unique canonical documentation ID is a
+lookup aid only. Where correspondence is unproven, refuse/qualify; never confirm.
+
+**Source-byte provenance (F03).** The identity tuple's "source content hash" is
+the hash of the exact bytes read, with encoding and line-ending policy recorded;
+Git blob identity is a separate value. Normalized fixture bytes are never claimed
+equivalent to the original source. See `corrections.md` C3.
+
+**Representation preference withdrawn (S01).** The earlier "Recommend separate
+occurrence facts" is superseded by
+[`../ci1-scope-r1/storage-alternatives.md`](../ci1-scope-r1/storage-alternatives.md);
+C and B2 remain qualified alternatives with a minimum comparative experiment.

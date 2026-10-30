@@ -111,3 +111,27 @@ historical compatibility, aggregate queries/legacy traversals, in-memory/Lattice
 parity and ordinary local offline operation. No source modification, graph diff,
 whole-program flow/dispatch, full test impact, MSBuild/NuGet evaluator, assembly
 indexing, TS/JS call binding, MCP/LLM orchestration, package or release work.
+
+## R1 amendment (CI-1-SCOPE-R1)
+
+**Inclusion gate — exact eligible target identity (F01).** The requirement
+"unique indexed identity in the relevant project context" (Inclusion gate above)
+is strengthened. A confirmed occurrence requires an **exact eligible target
+identity**: the bound symbol's defining compilation/assembly **and** its
+definition must be proven to correspond to the indexed declaration in the
+applicable dependency context. A canonical Roslyn documentation ID is a lookup
+aid only, never proof of correspondence. Where correspondence cannot be proven,
+the site is conservatively refused (unresolved/ambiguous) or qualified external;
+it is never promoted to a confirmed local usage. Existing aggregate edge/ID
+semantics are unchanged.
+
+**Coverage is publication-owned (S04).** Category/unit coverage summaries must be
+persisted disjoint outcomes (confirmed, unresolved, ambiguous, external,
+unsupported owner/category, candidate-only, intrinsic/unsupported invocation),
+not reconstructed from existing `calls`/`EdgesEmitted` counters. No
+`SymbolUnused` or complete-usage claim.
+
+**Documented partial types (F02).** The scope's partial-type support excludes
+documented partial types until the separate prerequisite
+[P-DEF-02](../ci1-scope-r1/prerequisite-defects.md) is authorized; those inputs
+must report unavailable/failure state, never a complete-empty result.

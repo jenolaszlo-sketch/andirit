@@ -39,7 +39,7 @@ source revision are distinct fields.
 
 | Section | Required semantics |
 | --- | --- |
-| request | Normalized request/version/selector/categories/changeKind/limits; digest for reproducibility |
+| request | Normalized request/version/selector/categories/limits; digest for reproducibility. R1: `changeKind` is **not** mandatory CI-1A metadata; it belongs only to the future `GetChangeImpactV1`. |
 | selection | Exact node/symbol/project identities, bounded declarations, selection qualification |
 | publication | Exact receipt, source state/revision if known, snapshot consistency, plugin/provider/analyzer and binding-context versions, freshness and checked-publication |
 | usages | Stable evidence handle, target symbol, primary category/facets, lexical source owner/context, path/hash/span, unit, relationship classification, per-proof provenance |
@@ -265,3 +265,26 @@ B cannot claim no usages. An empty partial response is legitimate when work
 ends before any target row. Its external/ambiguous counts are example coverage
 data, not measurements from the real corpus. Production validation must bound
 declarations independently and reserve sufficient identity metadata.
+
+## R1 amendment (CI-1-SCOPE-R1)
+
+**Confirmed selection is exact target identity, not canonical-name coincidence
+(F01).** The rule above — "Confirmed selection requires non-error signature
+identity and unique canonical target in its project context" — is insufficient
+on its own. Confirmation must additionally prove that the bound symbol's
+defining compilation/assembly and definition correspond to the indexed
+declaration in the applicable dependency context. A unique canonical
+documentation ID does not establish that correspondence. Where correspondence
+cannot be proven, return conservative refusal/external qualification, never a
+confirmed local usage. Add the single-indexed-local-versus-external
+documentation-ID collision to mandatory acceptance alongside duplicate keys
+across projects and linked contexts.
+
+**Mandatory CI-1A metadata excludes future-impact fields.** The `FindUsagesV1`
+request carries no `changeKind` and no impact-path fields. `impact` stays
+`notEvaluated` for CI-1A. Statuses, DTO and budgets are frozen minimally.
+
+**External/ambiguous coverage is persisted, not reconstructed.** The
+external/ambiguous counters in these examples are illustration only; production
+coverage must be persisted publication data with disjoint outcomes, and must not
+be derived from legacy `calls` counters (`corrections.md` C8).

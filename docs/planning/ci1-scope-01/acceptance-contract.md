@@ -40,9 +40,9 @@ No positive expectation for a deferred category is smuggled into V1.
 | C07 | M/N | Worker-typed virtual call binds Worker.Work; base.Work binds Worker.Work; no override-target substitution. Member override impact deferred |
 | C08 | N | Target.Work method group is not a supported invocation; action() is delegate Invoke, not confirmed call to Target.Work. Method-group category remains visible/deferred |
 | C09 | M/N | Target.Work() contributes one method invocation. typeof(Target)/nameof(Target.Work)/callee type token do not add independent invocations; non-invocation references deferred |
-| C10 | N | Console.WriteLine is external with no indexed implementation: coverage records boundary, no fake local target/site confirmation |
+| C10 | N | Console.WriteLine is external with no indexed implementation: coverage records boundary, no fake local target/site confirmation. R1 adds the F01 collision variant: a local declaration sharing the documentation ID must not receive the external call |
 | C11 | N | Pick(null) ambiguous string/Exception overload; Missing unresolved. Neither confirms either Pick. Count each attempted invocation's outcome; ambiguity must not disappear through current fall-through |
-| C12 | M/N | Two Partial type declarations, one Work declaration, one cross-file Work() usage; do not duplicate usages for each type part. Partial-method unification separately deferred |
+| C12 | M/N | Two Partial type declarations, one Work declaration, one cross-file Work() usage; do not duplicate usages for each type part. Partial-method unification separately deferred. R1 adds a documented/sealed partial input (F02); plain C12 does not cover it |
 | C13 | M | Reordered file/extraction enumeration, equivalent retry, unchanged source context: same occurrence handles, order, payload and coverage; run receipt may differ |
 | C14 | M | Replace Repeated.cs with AfterDelete bytes: two sites remain; old second occurrence and old-source-hash facts absent from latest publication; source hash means all old file occurrence IDs retire |
 | C15 | M | Replace with AfterShift: three spans shift +1 line, new hash/IDs; no old-source facts or old locations survive latest publication |
@@ -122,3 +122,29 @@ disposition (supported / supported with qualifications / remediation required),
 and a decision-by-decision owner checklist. Do not mark Q1 complete based on this
 author's checks. Owner acceptance follows independently; implementation requires
 a separate explicit authorization.
+
+## R1 amendment (CI-1-SCOPE-R1)
+
+**Oracle strength (F04).** The manifest check must validate full UTF-16 start
+**and end** coordinates, intended semantic target, intended outcome and row
+uniqueness — not only start line and column width. The producer loop accepted a
+wrong target, wrong overload, duplicate row and wrong end line. Lexical manifest
+validation is distinct from candidate-result comparison; the packet's "author
+consistency checks; NOT independent qualification" label is retained, and no
+absent candidate has passed any acceptance test.
+
+**Source-byte provenance (F03).** Fixtures and measured inputs record encoding,
+line endings, path, raw SHA-256 and Git blob identity separately, with the
+checkout/filter policy. A clean `git hash-object` match does not prove byte
+identity. Fixture bytes are not silently normalized and claimed equivalent to the
+original source.
+
+**New mandatory adversary inputs.** Add the single-indexed-local-versus-external
+documentation-ID collision (C10 variant) and the documented/sealed partial type
+(C12 variant); see
+[`../ci1-scope-r1/acceptance-reconciliation.md`](../ci1-scope-r1/acceptance-reconciliation.md).
+
+**Owner-context table (S05).** Freeze a supported lexical-owner table with
+explicit refusal rules; constructor bodies may own ordinary calls; lambda
+ownership is lexical; indexer/event/accessor/initializer contexts are not
+qualified and need a fixture each.

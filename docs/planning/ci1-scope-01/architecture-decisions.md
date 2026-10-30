@@ -168,3 +168,34 @@ deterministic file-hash/span keys, fail-on-change reads, preserved old queries,
 and a separately approved additive version/codec compatibility route.
 Owner decides exact durable/snapshot versioning, legacy loading/reindex behavior,
 snapshot limits, semantic invalidation and identity churn acceptance.
+
+## R1 amendment (CI-1-SCOPE-R1)
+
+**ADR-CI1-01 reopened (S01).** The recommendation "Recommend C with B2 as a
+serious simpler alternative" is withdrawn. Both C (separate source-owned
+occurrence facts) and B2 (new versioned occurrence edge kind) remain qualified
+alternatives; no winner is claimed. See
+[`../ci1-scope-r1/storage-alternatives.md`](../ci1-scope-r1/storage-alternatives.md)
+for the requirement-by-requirement comparison and the minimum comparative
+experiment. The storage choice must not be made irreversible during remediation.
+
+**ADR-CI1-04 amended (F01).** "Keep existing target normalization/edge
+semantics; V1 tightens only its new confirmation gate" is insufficient on its
+own. The V1 confirmation gate must require an **exact eligible target identity**:
+proven correspondence between the bound symbol's defining compilation/assembly
+and definition and the indexed declaration in the applicable dependency context.
+A canonical documentation ID is a lookup aid only. Refuse/qualify when
+correspondence is unproven; never copy current global-key resolution into
+positive facts. Add the single-indexed-local-versus-external collision to
+mandatory acceptance.
+
+**ADR-CI1-05 amended (F02, S02).** The unidentified wider failure is now named: a
+documented `sealed partial` type throws `InvalidCastException` in the
+inconsistency diagnostic (unsafe `modifiers` cast) after the declaration-specific
+`doc-summary` disagreement activates it. This is an explicit prerequisite-or-
+narrowing decision ([P-DEF-02](../ci1-scope-r1/prerequisite-defects.md)), not
+CI-1A work. Before codec work, name and hash real prior-writer databases/
+snapshots, writer package/commit and consumer executable; demonstrate old-query
+preservation and `AnalysisUnavailable`/reindex-required for new queries; decide
+old-reader refusal explicitly; never fabricate occurrences from old aggregate
+edges. Preserve Hetu labels and accepted EC6D contracts.
