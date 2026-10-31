@@ -116,3 +116,48 @@ Reviewer-supported state:
    **No candidate exists; no candidate implementation has passed any acceptance
    test.**
 4. The 32 selected lexemes are not acceptance-suite completeness.
+
+## R2 amendment (CI-1-SCOPE-R2) — F04 outcome validation
+
+> **Status marker.** This block is appended by CI-1-SCOPE-R2. It does not rewrite
+> the R1 text above; it corrects the F04 disposition after independent Q2
+> evidence.
+
+**What R1 originally required.** That a manifest oracle validate full UTF-16
+start/end coordinates, the intended semantic target, the intended outcome and
+row uniqueness (item 2 above).
+
+**What R1 originally claimed was corrected.** Item 2 above asserts, without
+qualification, that "R1's oracle does" reject a wrong outcome. The F04 evidence
+cell in `findings-matrix.md` repeated that R1's independent oracle "already does"
+reject all five corruptions, including a wrong outcome.
+
+**What Q2 disproved.** The cited R1 oracle (Q1 `oracle/Program.cs:143–146`,
+copied unchanged into Q2) accepted four outcome mutations, including
+`external → confirmed` for the C10 platform call. R1's claim was broader than the
+evidence. The oracle validated coordinates, target documentation ID and duplicate
+rows, but it validated only two negative outcome strings and used
+`outcome.StartsWith("confirmed")` as its positive predicate; it never derived the
+outcome from the bound target's eligibility. See
+[`../ci1-scope-r2/f04-root-cause.md`](../ci1-scope-r2/f04-root-cause.md).
+
+**The executable R2 correction.** R2 replaces the outcome check with a semantic
+oracle (`docs/planning/ci1-scope-r2/analysis/oracle/`) that (a) derives the
+occurrence category and outcome class from fixture source and the recorded
+compilation/dependency context, (b) requires a `confirmed` target to be an
+eligible indexed local definition proven by containing assembly plus source
+declaration, (c) enforces an exact declared-outcome vocabulary, and (d) rejects
+any unrecognised string. Item 2 above now has an executable, evidence-backed
+counterpart rather than an unsupported assertion.
+
+**What the new evidence establishes.** All four Q2 failures are rejected for the
+intended semantic reasons; the unchanged 32-row manifest still passes; a no-op
+positive control is accepted; and the F01 collision stays `external` even when an
+unrelated indexed method shares its documentation ID
+(`docs/planning/ci1-scope-r2/evidence/`).
+
+**What remains untested until CI-1A implementation.** Candidate-result
+comparison (step 4 of the oracle contract). No candidate `FindUsagesV1` exists.
+R2 does **not** claim independent qualification of the corrected checker; that is
+Q3's responsibility. F01–F03, S01–S05, P-DEF-01, P-DEF-02 and ADR-CI1-01 remain
+open and unchanged.

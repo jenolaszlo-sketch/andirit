@@ -1,0 +1,2324 @@
+{
+  "harness": "CI-1-SCOPE-R2 corrected planning-only semantic oracle",
+  "independence": "Pure Roslyn compiler oracle; no Andirit plugin reference; no CI-1A output exists or is read",
+  "compiler": {
+    "roslynCSharp": "5.9.0.0",
+    "roslynCommon": "5.9.0.0",
+    "languageVersion": "Latest",
+    "trustedPlatformAssemblies": 175
+  },
+  "sourceInputs": [
+    {
+      "path": "fixtures/References.cs",
+      "sha256": "54b041425462f86982288c306b14f4644a60507c0330acf7ef37553ef5e3ddcd",
+      "bytes": 176
+    },
+    {
+      "path": "fixtures/Repeated.cs",
+      "sha256": "1f41863276dcc45d51ab42cdfd0205f5f337a31d1da5e30e4ee49fbde5c8f886",
+      "bytes": 249
+    },
+    {
+      "path": "fixtures/acceptance/Cases.cs",
+      "sha256": "defce2e4daa9faf41828a6c54f96b6948e2701549f89446a380d3fc8f0899484",
+      "bytes": 1865
+    },
+    {
+      "path": "fixtures/acceptance/CrossProject/App/App.cs",
+      "sha256": "93d895c069fbadb4d716ca767980e07cdf0d74d9ba555dc81d649da88b13011c",
+      "bytes": 109
+    },
+    {
+      "path": "fixtures/acceptance/CrossProject/Lib/Lib.cs",
+      "sha256": "025099b733eba59ac28fb18163910c438635109abc8dbdcfff535700ced985f5",
+      "bytes": 87
+    },
+    {
+      "path": "fixtures/acceptance/Duplicate.One.cs",
+      "sha256": "c4a2ce2a38c4a41b026217bd3c2bb3a9c638a540b1a5f04369237714890a077a",
+      "bytes": 107
+    },
+    {
+      "path": "fixtures/acceptance/Duplicate.Two.cs",
+      "sha256": "dd84b35ce2dfcbc82d1e5ab89e76d66176242aea8eac2260d6f4c75acaf89444",
+      "bytes": 108
+    },
+    {
+      "path": "fixtures/acceptance/Partial.One.cs",
+      "sha256": "9c5f3725a4c9f9a82bbff8801a9d13a75cfb45ed61acad27bf36a3638933fee3",
+      "bytes": 82
+    },
+    {
+      "path": "fixtures/acceptance/Partial.Two.cs",
+      "sha256": "e8321df3145c09ae3324e383b462a96854e641d2e49d1ee938a6cab82f67b0e8",
+      "bytes": 92
+    },
+    {
+      "path": "fixtures/acceptance/Repeated.AfterDelete.cs.txt",
+      "sha256": "37a9c4ac537463bb24b6b52344358353f980cbe4ae04ed7fcaaf61f7f5d392ac",
+      "bytes": 217
+    },
+    {
+      "path": "fixtures/acceptance/Repeated.AfterShift.cs.txt",
+      "sha256": "224d637f0dfd577bab66cab2b94f4f0f0f35e81de4c64e847846c404994f9093",
+      "bytes": 298
+    }
+  ],
+  "projectContext": [
+    {
+      "name": "acceptance",
+      "assemblyIdentity": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "languageVersion": "CSharp14",
+      "preprocessorSymbols": [],
+      "sourceFiles": [
+        "acceptance/Cases.cs",
+        "acceptance/Partial.One.cs",
+        "acceptance/Partial.Two.cs",
+        "acceptance/Duplicate.One.cs",
+        "acceptance/Duplicate.Two.cs"
+      ],
+      "metadataReferenceCount": 175,
+      "sourceProjectReferenceCount": 0
+    },
+    {
+      "name": "enabled",
+      "assemblyIdentity": "enabled, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "languageVersion": "CSharp14",
+      "preprocessorSymbols": [
+        "CI1_EXTRA"
+      ],
+      "sourceFiles": [
+        "acceptance/Cases.cs",
+        "acceptance/Partial.One.cs",
+        "acceptance/Partial.Two.cs",
+        "acceptance/Duplicate.One.cs",
+        "acceptance/Duplicate.Two.cs"
+      ],
+      "metadataReferenceCount": 175,
+      "sourceProjectReferenceCount": 0
+    },
+    {
+      "name": "repeated",
+      "assemblyIdentity": "repeated, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "languageVersion": "CSharp14",
+      "preprocessorSymbols": [],
+      "sourceFiles": [
+        "Repeated.cs",
+        "References.cs"
+      ],
+      "metadataReferenceCount": 175,
+      "sourceProjectReferenceCount": 0
+    },
+    {
+      "name": "deleted",
+      "assemblyIdentity": "deleted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "languageVersion": "CSharp14",
+      "preprocessorSymbols": [],
+      "sourceFiles": [
+        "acceptance/Repeated.AfterDelete.cs.txt"
+      ],
+      "metadataReferenceCount": 175,
+      "sourceProjectReferenceCount": 0
+    },
+    {
+      "name": "shifted",
+      "assemblyIdentity": "shifted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "languageVersion": "CSharp14",
+      "preprocessorSymbols": [],
+      "sourceFiles": [
+        "acceptance/Repeated.AfterShift.cs.txt"
+      ],
+      "metadataReferenceCount": 175,
+      "sourceProjectReferenceCount": 0
+    },
+    {
+      "name": "lib",
+      "assemblyIdentity": "lib, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "languageVersion": "CSharp14",
+      "preprocessorSymbols": [],
+      "sourceFiles": [
+        "acceptance/CrossProject/Lib/Lib.cs"
+      ],
+      "metadataReferenceCount": 175,
+      "sourceProjectReferenceCount": 0
+    },
+    {
+      "name": "app",
+      "assemblyIdentity": "app, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "languageVersion": "CSharp14",
+      "preprocessorSymbols": [],
+      "sourceFiles": [
+        "acceptance/CrossProject/App/App.cs"
+      ],
+      "metadataReferenceCount": 176,
+      "sourceProjectReferenceCount": 1
+    },
+    {
+      "name": "Shadow",
+      "assemblyIdentity": "Shadow, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "languageVersion": "CSharp14",
+      "preprocessorSymbols": [],
+      "sourceFiles": [
+        "f01-collision/A/Shadow.cs"
+      ],
+      "metadataReferenceCount": 175,
+      "sourceProjectReferenceCount": 0
+    },
+    {
+      "name": "App",
+      "assemblyIdentity": "App, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "languageVersion": "CSharp14",
+      "preprocessorSymbols": [],
+      "sourceFiles": [
+        "f01-collision/Z/App.cs"
+      ],
+      "metadataReferenceCount": 175,
+      "sourceProjectReferenceCount": 0
+    }
+  ],
+  "targetVocabulary": [
+    {
+      "signature": "Logger.Write(string)",
+      "doc": "M:Logger.Write(System.String)",
+      "kind": "Method",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Corpus.Overloads.Hit(int)",
+      "doc": "M:CI1Corpus.Overloads.Hit(System.Int32)",
+      "kind": "Method",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Corpus.Overloads.Hit(string)",
+      "doc": "M:CI1Corpus.Overloads.Hit(System.String)",
+      "kind": "Method",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Corpus.GenericExtensions.Echo\u003CT\u003E(T)",
+      "doc": "M:CI1Corpus.GenericExtensions.Echo\u0060\u00601(\u0060\u00600)",
+      "kind": "Method",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Corpus.GenericExtensions.Mark\u003CT\u003E(this T)",
+      "doc": "M:CI1Corpus.GenericExtensions.Mark\u0060\u00601(\u0060\u00600)",
+      "kind": "Method",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Corpus.Constructors(int)",
+      "doc": "M:CI1Corpus.Constructors.#ctor(System.Int32)",
+      "kind": "Constructor",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Corpus.ConstructorBase(int)",
+      "doc": "M:CI1Corpus.ConstructorBase.#ctor(System.Int32)",
+      "kind": "Constructor",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Corpus.Constructors()",
+      "doc": "M:CI1Corpus.Constructors.#ctor",
+      "kind": "Constructor",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Corpus.IWorker.Work()",
+      "doc": "M:CI1Corpus.IWorker.Work",
+      "kind": "Method",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Corpus.Worker.Work()",
+      "doc": "M:CI1Corpus.Worker.Work",
+      "kind": "Method",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Corpus.Target.Work()",
+      "doc": "M:CI1Corpus.Target.Work",
+      "kind": "Method",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "System.Action.Invoke()",
+      "doc": "M:System.Action.Invoke",
+      "kind": "Method",
+      "eligibleLocal": false
+    },
+    {
+      "signature": "CI1Corpus.Target",
+      "doc": "T:CI1Corpus.Target",
+      "kind": "TypeToken",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "System.Console.WriteLine(string)",
+      "doc": "M:System.Console.WriteLine(System.String)",
+      "kind": "Method",
+      "eligibleLocal": false
+    },
+    {
+      "signature": "CI1Corpus.Partial.Work()",
+      "doc": "M:CI1Corpus.Partial.Work",
+      "kind": "Method",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "CI1Cross.Library.Work() in Lib/Lib.csproj",
+      "doc": "M:CI1Cross.Library.Work",
+      "kind": "Method",
+      "eligibleLocal": true
+    },
+    {
+      "signature": "unknown",
+      "doc": "",
+      "kind": "Unresolved",
+      "eligibleLocal": false
+    },
+    {
+      "signature": "unknown-string-or-Exception-overload",
+      "doc": "",
+      "kind": "Ambiguous",
+      "eligibleLocal": false
+    }
+  ],
+  "outcomeVocabulary": [
+    {
+      "declared": "confirmed",
+      "class": "Confirmed",
+      "subtype": null,
+      "contextDependent": false
+    },
+    {
+      "declared": "confirmed-interface-static-target",
+      "class": "Confirmed",
+      "subtype": null,
+      "contextDependent": false
+    },
+    {
+      "declared": "confirmed-virtual-static-target",
+      "class": "Confirmed",
+      "subtype": null,
+      "contextDependent": false
+    },
+    {
+      "declared": "confirmed-base-static-target",
+      "class": "Confirmed",
+      "subtype": null,
+      "contextDependent": false
+    },
+    {
+      "declared": "confirmed-cross-project",
+      "class": "Confirmed",
+      "subtype": null,
+      "contextDependent": false
+    },
+    {
+      "declared": "confirmed-after-replacement",
+      "class": "Confirmed",
+      "subtype": null,
+      "contextDependent": false
+    },
+    {
+      "declared": "inactive-default; confirmed only with CI1_EXTRA",
+      "class": "Confirmed",
+      "subtype": null,
+      "contextDependent": true
+    },
+    {
+      "declared": "external-no-confirmed-local-target",
+      "class": "External",
+      "subtype": null,
+      "contextDependent": false
+    },
+    {
+      "declared": "external-delegate-invoke-not-Target.Work",
+      "class": "External",
+      "subtype": null,
+      "contextDependent": false
+    },
+    {
+      "declared": "ambiguous-no-confirmation",
+      "class": "Ambiguous",
+      "subtype": null,
+      "contextDependent": false
+    },
+    {
+      "declared": "unresolved-no-confirmation",
+      "class": "Unresolved",
+      "subtype": null,
+      "contextDependent": false
+    },
+    {
+      "declared": "deferred-constructor",
+      "class": "Unsupported",
+      "subtype": "constructor",
+      "contextDependent": false
+    },
+    {
+      "declared": "deferred-method-group",
+      "class": "Unsupported",
+      "subtype": "method-group",
+      "contextDependent": false
+    },
+    {
+      "declared": "deferred-type-reference",
+      "class": "Unsupported",
+      "subtype": "type-reference",
+      "contextDependent": false
+    },
+    {
+      "declared": "deferred-nameof-reference",
+      "class": "Unsupported",
+      "subtype": "nameof-reference",
+      "contextDependent": false
+    }
+  ],
+  "baseline": {
+    "sites": 32,
+    "failures": 0
+  },
+  "semanticIdentity": {
+    "allRowsDerivedMatchesDeclared": true,
+    "eligible": 21,
+    "external": 2,
+    "ambiguous": 1,
+    "unresolved": 1,
+    "unsupported": 7
+  },
+  "sites": [
+    {
+      "Case": "C01",
+      "Path": "Repeated.cs",
+      "Span": [
+        5,
+        9,
+        5,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022first\u0022)",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:Logger.Write(System.String)",
+      "BoundContainingAssembly": "repeated, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C01",
+      "Path": "Repeated.cs",
+      "Span": [
+        6,
+        9,
+        6,
+        31
+      ],
+      "Lexeme": "Logger.Write(\u0022second\u0022)",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:Logger.Write(System.String)",
+      "BoundContainingAssembly": "repeated, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C01",
+      "Path": "Repeated.cs",
+      "Span": [
+        7,
+        9,
+        7,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022third\u0022)",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:Logger.Write(System.String)",
+      "BoundContainingAssembly": "repeated, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C02",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        6,
+        35,
+        6,
+        41
+      ],
+      "Lexeme": "Hit(1)",
+      "declaredTarget": "CI1Corpus.Overloads.Hit(int)",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.Overloads.Hit(System.Int32)",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C02",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        6,
+        43,
+        6,
+        51
+      ],
+      "Lexeme": "Hit(\u0022x\u0022)",
+      "declaredTarget": "CI1Corpus.Overloads.Hit(string)",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.Overloads.Hit(System.String)",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C04",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        12,
+        35,
+        12,
+        47
+      ],
+      "Lexeme": "Echo\u003Cint\u003E(1)",
+      "declaredTarget": "CI1Corpus.GenericExtensions.Echo\u003CT\u003E(T)",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.GenericExtensions.Echo\u0060\u00601(\u0060\u00600)",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C04",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        12,
+        49,
+        12,
+        67
+      ],
+      "Lexeme": "\u0022x\u0022.Mark\u003Cstring\u003E()",
+      "declaredTarget": "CI1Corpus.GenericExtensions.Mark\u003CT\u003E(this T)",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.GenericExtensions.Mark\u0060\u00601(\u0060\u00600)",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        20,
+        29,
+        20,
+        36
+      ],
+      "Lexeme": "this(1)",
+      "declaredTarget": "CI1Corpus.Constructors(int)",
+      "declaredOutcome": "deferred-constructor",
+      "derivedClass": 4,
+      "declaredClass": 4,
+      "derivedSubtype": "constructor",
+      "declaredSubtype": "constructor",
+      "BoundTargetDoc": "M:CI1Corpus.Constructors.#ctor(System.Int32)",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        21,
+        38,
+        21,
+        49
+      ],
+      "Lexeme": "base(value)",
+      "declaredTarget": "CI1Corpus.ConstructorBase(int)",
+      "declaredOutcome": "deferred-constructor",
+      "derivedClass": 4,
+      "declaredClass": 4,
+      "derivedSubtype": "constructor",
+      "declaredSubtype": "constructor",
+      "BoundTargetDoc": "M:CI1Corpus.ConstructorBase.#ctor(System.Int32)",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        22,
+        52,
+        22,
+        57
+      ],
+      "Lexeme": "new()",
+      "declaredTarget": "CI1Corpus.Constructors()",
+      "declaredOutcome": "deferred-constructor",
+      "derivedClass": 4,
+      "declaredClass": 4,
+      "derivedSubtype": "constructor",
+      "declaredSubtype": "constructor",
+      "BoundTargetDoc": "M:CI1Corpus.Constructors.#ctor",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        22,
+        67,
+        22,
+        86
+      ],
+      "Lexeme": "new Constructors(1)",
+      "declaredTarget": "CI1Corpus.Constructors(int)",
+      "declaredOutcome": "deferred-constructor",
+      "derivedClass": 4,
+      "declaredClass": 4,
+      "derivedSubtype": "constructor",
+      "declaredSubtype": "constructor",
+      "BoundTargetDoc": "M:CI1Corpus.Constructors.#ctor(System.Int32)",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C06",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        36,
+        55,
+        36,
+        67
+      ],
+      "Lexeme": "value.Work()",
+      "declaredTarget": "CI1Corpus.IWorker.Work()",
+      "declaredOutcome": "confirmed-interface-static-target",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.IWorker.Work",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C07",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        37,
+        52,
+        37,
+        64
+      ],
+      "Lexeme": "value.Work()",
+      "declaredTarget": "CI1Corpus.Worker.Work()",
+      "declaredOutcome": "confirmed-virtual-static-target",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.Worker.Work",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C07",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        32,
+        30,
+        32,
+        41
+      ],
+      "Lexeme": "base.Work()",
+      "declaredTarget": "CI1Corpus.Worker.Work()",
+      "declaredOutcome": "confirmed-base-static-target",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.Worker.Work",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C08",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        45,
+        58,
+        45,
+        69
+      ],
+      "Lexeme": "Target.Work",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "deferred-method-group",
+      "derivedClass": 4,
+      "declaredClass": 4,
+      "derivedSubtype": "method-group",
+      "declaredSubtype": "method-group",
+      "BoundTargetDoc": "M:CI1Corpus.Target.Work",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C08",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        45,
+        71,
+        45,
+        79
+      ],
+      "Lexeme": "action()",
+      "declaredTarget": "System.Action.Invoke()",
+      "declaredOutcome": "external-delegate-invoke-not-Target.Work",
+      "derivedClass": 1,
+      "declaredClass": 1,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:System.Action.Invoke",
+      "BoundContainingAssembly": "System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+      "BoundEligibleLocal": false,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C09",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        49,
+        43,
+        49,
+        57
+      ],
+      "Lexeme": "typeof(Target)",
+      "declaredTarget": "CI1Corpus.Target",
+      "declaredOutcome": "deferred-type-reference",
+      "derivedClass": 4,
+      "declaredClass": 4,
+      "derivedSubtype": "type-reference",
+      "declaredSubtype": "type-reference",
+      "BoundTargetDoc": "T:CI1Corpus.Target",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C09",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        49,
+        67,
+        49,
+        86
+      ],
+      "Lexeme": "nameof(Target.Work)",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "deferred-nameof-reference",
+      "derivedClass": 4,
+      "declaredClass": 4,
+      "derivedSubtype": "nameof-reference",
+      "declaredSubtype": "nameof-reference",
+      "BoundTargetDoc": "M:CI1Corpus.Target.Work",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "MemberGroup",
+      "errors": []
+    },
+    {
+      "Case": "C09",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        49,
+        88,
+        49,
+        101
+      ],
+      "Lexeme": "Target.Work()",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.Target.Work",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C10",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        53,
+        35,
+        53,
+        70
+      ],
+      "Lexeme": "System.Console.WriteLine(\u0022outside\u0022)",
+      "declaredTarget": "System.Console.WriteLine(string)",
+      "declaredOutcome": "external-no-confirmed-local-target",
+      "derivedClass": 1,
+      "declaredClass": 1,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:System.Console.WriteLine(System.String)",
+      "BoundContainingAssembly": "System.Console, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+      "BoundEligibleLocal": false,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C11",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        59,
+        35,
+        59,
+        45
+      ],
+      "Lexeme": "Pick(null)",
+      "declaredTarget": "unknown-string-or-Exception-overload",
+      "declaredOutcome": "ambiguous-no-confirmation",
+      "derivedClass": 2,
+      "declaredClass": 2,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": null,
+      "BoundContainingAssembly": null,
+      "BoundEligibleLocal": false,
+      "CandidateReason": "OverloadResolutionFailure",
+      "errors": []
+    },
+    {
+      "Case": "C11",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        59,
+        47,
+        59,
+        56
+      ],
+      "Lexeme": "Missing()",
+      "declaredTarget": "unknown",
+      "declaredOutcome": "unresolved-no-confirmation",
+      "derivedClass": 3,
+      "declaredClass": 3,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": null,
+      "BoundContainingAssembly": null,
+      "BoundEligibleLocal": false,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C12",
+      "Path": "acceptance/Partial.Two.cs",
+      "Span": [
+        4,
+        28,
+        4,
+        34
+      ],
+      "Lexeme": "Work()",
+      "declaredTarget": "CI1Corpus.Partial.Work()",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.Partial.Work",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C19",
+      "Path": "acceptance/Duplicate.One.cs",
+      "Span": [
+        4,
+        35,
+        4,
+        48
+      ],
+      "Lexeme": "Target.Work()",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.Target.Work",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C19",
+      "Path": "acceptance/Duplicate.Two.cs",
+      "Span": [
+        4,
+        35,
+        4,
+        48
+      ],
+      "Lexeme": "Target.Work()",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "confirmed",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.Target.Work",
+      "BoundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C03",
+      "Path": "acceptance/CrossProject/App/App.cs",
+      "Span": [
+        4,
+        35,
+        4,
+        49
+      ],
+      "Lexeme": "Library.Work()",
+      "declaredTarget": "CI1Cross.Library.Work() in Lib/Lib.csproj",
+      "declaredOutcome": "confirmed-cross-project",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Cross.Library.Work",
+      "BoundContainingAssembly": "lib, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C14",
+      "Path": "acceptance/Repeated.AfterDelete.cs.txt",
+      "Span": [
+        5,
+        9,
+        5,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022first\u0022)",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed-after-replacement",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:Logger.Write(System.String)",
+      "BoundContainingAssembly": "deleted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C14",
+      "Path": "acceptance/Repeated.AfterDelete.cs.txt",
+      "Span": [
+        6,
+        9,
+        6,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022third\u0022)",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed-after-replacement",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:Logger.Write(System.String)",
+      "BoundContainingAssembly": "deleted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C15",
+      "Path": "acceptance/Repeated.AfterShift.cs.txt",
+      "Span": [
+        6,
+        9,
+        6,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022first\u0022)",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed-after-replacement",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:Logger.Write(System.String)",
+      "BoundContainingAssembly": "shifted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C15",
+      "Path": "acceptance/Repeated.AfterShift.cs.txt",
+      "Span": [
+        7,
+        9,
+        7,
+        31
+      ],
+      "Lexeme": "Logger.Write(\u0022second\u0022)",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed-after-replacement",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:Logger.Write(System.String)",
+      "BoundContainingAssembly": "shifted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C15",
+      "Path": "acceptance/Repeated.AfterShift.cs.txt",
+      "Span": [
+        8,
+        9,
+        8,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022third\u0022)",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed-after-replacement",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:Logger.Write(System.String)",
+      "BoundContainingAssembly": "shifted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    },
+    {
+      "Case": "C20",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        66,
+        9,
+        66,
+        22
+      ],
+      "Lexeme": "Target.Work()",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "inactive-default; confirmed only with CI1_EXTRA",
+      "derivedClass": 0,
+      "declaredClass": 0,
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "BoundTargetDoc": "M:CI1Corpus.Target.Work",
+      "BoundContainingAssembly": "enabled, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "BoundEligibleLocal": true,
+      "CandidateReason": "None",
+      "errors": []
+    }
+  ],
+  "siteEvidence": [
+    {
+      "Case": "C01",
+      "Path": "Repeated.cs",
+      "Span": [
+        5,
+        9,
+        5,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022first\u0022)",
+      "compilation": "repeated",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:Logger.Write(System.String)",
+      "boundContainingAssembly": "repeated, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "Repeated.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C01",
+      "Path": "Repeated.cs",
+      "Span": [
+        6,
+        9,
+        6,
+        31
+      ],
+      "Lexeme": "Logger.Write(\u0022second\u0022)",
+      "compilation": "repeated",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:Logger.Write(System.String)",
+      "boundContainingAssembly": "repeated, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "Repeated.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C01",
+      "Path": "Repeated.cs",
+      "Span": [
+        7,
+        9,
+        7,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022third\u0022)",
+      "compilation": "repeated",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:Logger.Write(System.String)",
+      "boundContainingAssembly": "repeated, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "Repeated.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C02",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        6,
+        35,
+        6,
+        41
+      ],
+      "Lexeme": "Hit(1)",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Overloads.Hit(int)",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.Overloads.Hit(System.Int32)",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C02",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        6,
+        43,
+        6,
+        51
+      ],
+      "Lexeme": "Hit(\u0022x\u0022)",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Overloads.Hit(string)",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.Overloads.Hit(System.String)",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C04",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        12,
+        35,
+        12,
+        47
+      ],
+      "Lexeme": "Echo\u003Cint\u003E(1)",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.GenericExtensions.Echo\u003CT\u003E(T)",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.GenericExtensions.Echo\u0060\u00601(\u0060\u00600)",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C04",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        12,
+        49,
+        12,
+        67
+      ],
+      "Lexeme": "\u0022x\u0022.Mark\u003Cstring\u003E()",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.GenericExtensions.Mark\u003CT\u003E(this T)",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.GenericExtensions.Mark\u0060\u00601(\u0060\u00600)",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        20,
+        29,
+        20,
+        36
+      ],
+      "Lexeme": "this(1)",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Constructors(int)",
+      "declaredOutcome": "deferred-constructor",
+      "category": "Constructor",
+      "boundTargetDoc": "M:CI1Corpus.Constructors.#ctor(System.Int32)",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Unsupported",
+      "declaredClass": "Unsupported",
+      "derivedSubtype": "constructor",
+      "declaredSubtype": "constructor",
+      "errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        21,
+        38,
+        21,
+        49
+      ],
+      "Lexeme": "base(value)",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.ConstructorBase(int)",
+      "declaredOutcome": "deferred-constructor",
+      "category": "Constructor",
+      "boundTargetDoc": "M:CI1Corpus.ConstructorBase.#ctor(System.Int32)",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Unsupported",
+      "declaredClass": "Unsupported",
+      "derivedSubtype": "constructor",
+      "declaredSubtype": "constructor",
+      "errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        22,
+        52,
+        22,
+        57
+      ],
+      "Lexeme": "new()",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Constructors()",
+      "declaredOutcome": "deferred-constructor",
+      "category": "Constructor",
+      "boundTargetDoc": "M:CI1Corpus.Constructors.#ctor",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Unsupported",
+      "declaredClass": "Unsupported",
+      "derivedSubtype": "constructor",
+      "declaredSubtype": "constructor",
+      "errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        22,
+        67,
+        22,
+        86
+      ],
+      "Lexeme": "new Constructors(1)",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Constructors(int)",
+      "declaredOutcome": "deferred-constructor",
+      "category": "Constructor",
+      "boundTargetDoc": "M:CI1Corpus.Constructors.#ctor(System.Int32)",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Unsupported",
+      "declaredClass": "Unsupported",
+      "derivedSubtype": "constructor",
+      "declaredSubtype": "constructor",
+      "errors": []
+    },
+    {
+      "Case": "C06",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        36,
+        55,
+        36,
+        67
+      ],
+      "Lexeme": "value.Work()",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.IWorker.Work()",
+      "declaredOutcome": "confirmed-interface-static-target",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.IWorker.Work",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C07",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        37,
+        52,
+        37,
+        64
+      ],
+      "Lexeme": "value.Work()",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Worker.Work()",
+      "declaredOutcome": "confirmed-virtual-static-target",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.Worker.Work",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C07",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        32,
+        30,
+        32,
+        41
+      ],
+      "Lexeme": "base.Work()",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Worker.Work()",
+      "declaredOutcome": "confirmed-base-static-target",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.Worker.Work",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C08",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        45,
+        58,
+        45,
+        69
+      ],
+      "Lexeme": "Target.Work",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "deferred-method-group",
+      "category": "MethodGroup",
+      "boundTargetDoc": "M:CI1Corpus.Target.Work",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Unsupported",
+      "declaredClass": "Unsupported",
+      "derivedSubtype": "method-group",
+      "declaredSubtype": "method-group",
+      "errors": []
+    },
+    {
+      "Case": "C08",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        45,
+        71,
+        45,
+        79
+      ],
+      "Lexeme": "action()",
+      "compilation": "acceptance",
+      "declaredTarget": "System.Action.Invoke()",
+      "declaredOutcome": "external-delegate-invoke-not-Target.Work",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:System.Action.Invoke",
+      "boundContainingAssembly": "System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+      "boundSourceDeclarations": [],
+      "boundEligibleLocal": false,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "External",
+      "declaredClass": "External",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C09",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        49,
+        43,
+        49,
+        57
+      ],
+      "Lexeme": "typeof(Target)",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Target",
+      "declaredOutcome": "deferred-type-reference",
+      "category": "TypeOf",
+      "boundTargetDoc": "T:CI1Corpus.Target",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Unsupported",
+      "declaredClass": "Unsupported",
+      "derivedSubtype": "type-reference",
+      "declaredSubtype": "type-reference",
+      "errors": []
+    },
+    {
+      "Case": "C09",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        49,
+        67,
+        49,
+        86
+      ],
+      "Lexeme": "nameof(Target.Work)",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "deferred-nameof-reference",
+      "category": "NameOf",
+      "boundTargetDoc": "M:CI1Corpus.Target.Work",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [
+        "M:CI1Corpus.Target.Work"
+      ],
+      "candidateReason": "MemberGroup",
+      "derivedClass": "Unsupported",
+      "declaredClass": "Unsupported",
+      "derivedSubtype": "nameof-reference",
+      "declaredSubtype": "nameof-reference",
+      "errors": []
+    },
+    {
+      "Case": "C09",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        49,
+        88,
+        49,
+        101
+      ],
+      "Lexeme": "Target.Work()",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.Target.Work",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C10",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        53,
+        35,
+        53,
+        70
+      ],
+      "Lexeme": "System.Console.WriteLine(\u0022outside\u0022)",
+      "compilation": "acceptance",
+      "declaredTarget": "System.Console.WriteLine(string)",
+      "declaredOutcome": "external-no-confirmed-local-target",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:System.Console.WriteLine(System.String)",
+      "boundContainingAssembly": "System.Console, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+      "boundSourceDeclarations": [],
+      "boundEligibleLocal": false,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "External",
+      "declaredClass": "External",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C11",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        59,
+        35,
+        59,
+        45
+      ],
+      "Lexeme": "Pick(null)",
+      "compilation": "acceptance",
+      "declaredTarget": "unknown-string-or-Exception-overload",
+      "declaredOutcome": "ambiguous-no-confirmation",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": null,
+      "boundContainingAssembly": null,
+      "boundSourceDeclarations": [],
+      "boundEligibleLocal": false,
+      "candidateDocs": [
+        "M:CI1Corpus.Ambiguous.Pick(System.String)",
+        "M:CI1Corpus.Ambiguous.Pick(System.Exception)"
+      ],
+      "candidateReason": "OverloadResolutionFailure",
+      "derivedClass": "Ambiguous",
+      "declaredClass": "Ambiguous",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C11",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        59,
+        47,
+        59,
+        56
+      ],
+      "Lexeme": "Missing()",
+      "compilation": "acceptance",
+      "declaredTarget": "unknown",
+      "declaredOutcome": "unresolved-no-confirmation",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": null,
+      "boundContainingAssembly": null,
+      "boundSourceDeclarations": [],
+      "boundEligibleLocal": false,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Unresolved",
+      "declaredClass": "Unresolved",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C12",
+      "Path": "acceptance/Partial.Two.cs",
+      "Span": [
+        4,
+        28,
+        4,
+        34
+      ],
+      "Lexeme": "Work()",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Partial.Work()",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.Partial.Work",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Partial.One.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C19",
+      "Path": "acceptance/Duplicate.One.cs",
+      "Span": [
+        4,
+        35,
+        4,
+        48
+      ],
+      "Lexeme": "Target.Work()",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.Target.Work",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C19",
+      "Path": "acceptance/Duplicate.Two.cs",
+      "Span": [
+        4,
+        35,
+        4,
+        48
+      ],
+      "Lexeme": "Target.Work()",
+      "compilation": "acceptance",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "confirmed",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.Target.Work",
+      "boundContainingAssembly": "acceptance, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C03",
+      "Path": "acceptance/CrossProject/App/App.cs",
+      "Span": [
+        4,
+        35,
+        4,
+        49
+      ],
+      "Lexeme": "Library.Work()",
+      "compilation": "app",
+      "declaredTarget": "CI1Cross.Library.Work() in Lib/Lib.csproj",
+      "declaredOutcome": "confirmed-cross-project",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Cross.Library.Work",
+      "boundContainingAssembly": "lib, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/CrossProject/Lib/Lib.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C14",
+      "Path": "acceptance/Repeated.AfterDelete.cs.txt",
+      "Span": [
+        5,
+        9,
+        5,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022first\u0022)",
+      "compilation": "deleted",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed-after-replacement",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:Logger.Write(System.String)",
+      "boundContainingAssembly": "deleted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Repeated.AfterDelete.cs.txt"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C14",
+      "Path": "acceptance/Repeated.AfterDelete.cs.txt",
+      "Span": [
+        6,
+        9,
+        6,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022third\u0022)",
+      "compilation": "deleted",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed-after-replacement",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:Logger.Write(System.String)",
+      "boundContainingAssembly": "deleted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Repeated.AfterDelete.cs.txt"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C15",
+      "Path": "acceptance/Repeated.AfterShift.cs.txt",
+      "Span": [
+        6,
+        9,
+        6,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022first\u0022)",
+      "compilation": "shifted",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed-after-replacement",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:Logger.Write(System.String)",
+      "boundContainingAssembly": "shifted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Repeated.AfterShift.cs.txt"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C15",
+      "Path": "acceptance/Repeated.AfterShift.cs.txt",
+      "Span": [
+        7,
+        9,
+        7,
+        31
+      ],
+      "Lexeme": "Logger.Write(\u0022second\u0022)",
+      "compilation": "shifted",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed-after-replacement",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:Logger.Write(System.String)",
+      "boundContainingAssembly": "shifted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Repeated.AfterShift.cs.txt"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C15",
+      "Path": "acceptance/Repeated.AfterShift.cs.txt",
+      "Span": [
+        8,
+        9,
+        8,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022third\u0022)",
+      "compilation": "shifted",
+      "declaredTarget": "Logger.Write(string)",
+      "declaredOutcome": "confirmed-after-replacement",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:Logger.Write(System.String)",
+      "boundContainingAssembly": "shifted, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Repeated.AfterShift.cs.txt"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    },
+    {
+      "Case": "C20",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        66,
+        9,
+        66,
+        22
+      ],
+      "Lexeme": "Target.Work()",
+      "compilation": "enabled",
+      "declaredTarget": "CI1Corpus.Target.Work()",
+      "declaredOutcome": "inactive-default; confirmed only with CI1_EXTRA",
+      "category": "OrdinaryInvocation",
+      "boundTargetDoc": "M:CI1Corpus.Target.Work",
+      "boundContainingAssembly": "enabled, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "boundSourceDeclarations": [
+        "acceptance/Cases.cs"
+      ],
+      "boundEligibleLocal": true,
+      "candidateDocs": [],
+      "candidateReason": "None",
+      "derivedClass": "Confirmed",
+      "declaredClass": "Confirmed",
+      "derivedSubtype": null,
+      "declaredSubtype": null,
+      "errors": []
+    }
+  ],
+  "mutations": [
+    {
+      "id": "M01-external-to-confirmed",
+      "description": "C10 external platform call relabelled confirmed",
+      "originalValue": "external-no-confirmed-local-target",
+      "mutatedValue": "confirmed",
+      "expectedRejectionReason": "OUTCOME_CLASS_MISMATCH",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "OUTCOME_CLASS_MISMATCH",
+      "reasonCodes": [
+        "OUTCOME_CLASS_MISMATCH"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C10",
+          "Path": "acceptance/Cases.cs",
+          "codes": [
+            "OUTCOME_CLASS_MISMATCH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M02-confirmed-to-external",
+      "description": "C01 confirmed local call relabelled external",
+      "originalValue": "confirmed",
+      "mutatedValue": "external-no-confirmed-local-target",
+      "expectedRejectionReason": "OUTCOME_CLASS_MISMATCH",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "OUTCOME_CLASS_MISMATCH",
+      "reasonCodes": [
+        "OUTCOME_CLASS_MISMATCH"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C01",
+          "Path": "Repeated.cs",
+          "codes": [
+            "OUTCOME_CLASS_MISMATCH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M03-confirmed-to-deferred",
+      "description": "C01 confirmed local call relabelled deferred",
+      "originalValue": "confirmed",
+      "mutatedValue": "deferred-method-group",
+      "expectedRejectionReason": "OUTCOME_CLASS_MISMATCH",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "OUTCOME_CLASS_MISMATCH",
+      "reasonCodes": [
+        "OUTCOME_CLASS_MISMATCH"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C01",
+          "Path": "Repeated.cs",
+          "codes": [
+            "OUTCOME_CLASS_MISMATCH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M04-invalid-outcome",
+      "description": "C01 recognised outcome replaced with an unrecognised string",
+      "originalValue": "confirmed",
+      "mutatedValue": "invalid-q2-outcome",
+      "expectedRejectionReason": "OUTCOME_UNRECOGNIZED",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "OUTCOME_UNRECOGNIZED",
+      "reasonCodes": [
+        "OUTCOME_UNRECOGNIZED"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C01",
+          "Path": "Repeated.cs",
+          "codes": [
+            "OUTCOME_UNRECOGNIZED"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M05-ambiguous-to-confirmed",
+      "description": "C11 ambiguous Pick(null) relabelled confirmed",
+      "originalValue": "ambiguous-no-confirmation",
+      "mutatedValue": "confirmed",
+      "expectedRejectionReason": "OUTCOME_CLASS_MISMATCH",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "OUTCOME_CLASS_MISMATCH",
+      "reasonCodes": [
+        "OUTCOME_CLASS_MISMATCH"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C11",
+          "Path": "acceptance/Cases.cs",
+          "codes": [
+            "OUTCOME_CLASS_MISMATCH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M06-unresolved-to-confirmed",
+      "description": "C11 unresolved Missing() relabelled confirmed",
+      "originalValue": "unresolved-no-confirmation",
+      "mutatedValue": "confirmed",
+      "expectedRejectionReason": "OUTCOME_CLASS_MISMATCH",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "OUTCOME_CLASS_MISMATCH",
+      "reasonCodes": [
+        "OUTCOME_CLASS_MISMATCH"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C11",
+          "Path": "acceptance/Cases.cs",
+          "codes": [
+            "OUTCOME_CLASS_MISMATCH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M07-wrong-overload",
+      "description": "C02 Hit(1) declared target changed to the string overload",
+      "originalValue": "CI1Corpus.Overloads.Hit(int)",
+      "mutatedValue": "CI1Corpus.Overloads.Hit(string)",
+      "expectedRejectionReason": "TARGET_IDENTITY_MISMATCH",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "TARGET_IDENTITY_MISMATCH",
+      "reasonCodes": [
+        "TARGET_IDENTITY_MISMATCH"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C02",
+          "Path": "acceptance/Cases.cs",
+          "codes": [
+            "TARGET_IDENTITY_MISMATCH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M08-confirmed-to-wrong-assembly",
+      "description": "C03 cross-project target changed to a different-assembly external target",
+      "originalValue": "CI1Cross.Library.Work() in Lib/Lib.csproj",
+      "mutatedValue": "System.Console.WriteLine(string)",
+      "expectedRejectionReason": "TARGET_IDENTITY_MISMATCH",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "TARGET_IDENTITY_MISMATCH",
+      "reasonCodes": [
+        "TARGET_IDENTITY_MISMATCH"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C03",
+          "Path": "acceptance/CrossProject/App/App.cs",
+          "codes": [
+            "TARGET_IDENTITY_MISMATCH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M09-confirmed-to-unrelated-indexed-method",
+      "description": "C01 declared target changed to an unrelated indexed local method",
+      "originalValue": "Logger.Write(string)",
+      "mutatedValue": "CI1Corpus.Target.Work()",
+      "expectedRejectionReason": "TARGET_IDENTITY_MISMATCH",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "TARGET_IDENTITY_MISMATCH",
+      "reasonCodes": [
+        "TARGET_IDENTITY_MISMATCH"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C01",
+          "Path": "Repeated.cs",
+          "codes": [
+            "TARGET_IDENTITY_MISMATCH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M10-correct-target-incorrect-span",
+      "description": "C01 start column corrupted",
+      "originalValue": "[5,9,5,30]",
+      "mutatedValue": "[5,10,5,30]",
+      "expectedRejectionReason": "COORDINATE_LEXEME_MISMATCH",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "COORDINATE_LEXEME_MISMATCH",
+      "reasonCodes": [
+        "COORDINATE_LEXEME_MISMATCH"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C01",
+          "Path": "Repeated.cs",
+          "codes": [
+            "COORDINATE_LEXEME_MISMATCH"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M11-duplicate-entry",
+      "description": "C01 first site duplicated",
+      "originalValue": "32 unique rows",
+      "mutatedValue": "33 rows with duplicate occurrence",
+      "expectedRejectionReason": "DUPLICATE_OCCURRENCE",
+      "detected": true,
+      "failingRows": 1,
+      "primaryReasonCode": "DUPLICATE_OCCURRENCE",
+      "reasonCodes": [
+        "DUPLICATE_OCCURRENCE"
+      ],
+      "rejectedForIntendedReason": true,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": [
+        {
+          "Case": "C01",
+          "Path": "Repeated.cs",
+          "codes": [
+            "DUPLICATE_OCCURRENCE"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "P01-correct-outcome-accepted",
+      "description": "positive control: unchanged manifest, no corruption",
+      "originalValue": "(unchanged)",
+      "mutatedValue": "(unchanged)",
+      "expectedRejectionReason": null,
+      "detected": false,
+      "failingRows": 0,
+      "primaryReasonCode": null,
+      "reasonCodes": [],
+      "rejectedForIntendedReason": false,
+      "unrelatedValidationFailedFirst": false,
+      "failingCases": []
+    }
+  ],
+  "adversarialScenarios": [
+    {
+      "name": "F01 external/local documentation-ID collision",
+      "documentedIdCoincides": true,
+      "documentationId": "M:System.Console.WriteLine(System.String)",
+      "indexedLocalDeclaration": {
+        "assembly": "Shadow, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "sourceLocations": 1
+      },
+      "boundTarget": {
+        "assembly": "System.Console, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+        "sourceLocations": 0
+      },
+      "indexedLocalIsEligible": true,
+      "boundTargetIsEligibleLocal": false,
+      "derivedClassForBoundCall": "external",
+      "requirementSatisfied": true
+    }
+  ],
+  "collisionFixtureFiles": [
+    {
+      "path": "f01-collision/A/Shadow.cs",
+      "sha256": "be005bb2e7dd5910dfeb50594494e68e5a2a45776559c5a46647a11ab0ef8708",
+      "bytes": 96
+    },
+    {
+      "path": "f01-collision/A/Shadow.csproj",
+      "sha256": "91275edd3790c4f0cb484653195ccd8ad6af2f1a0a69b84fdb26b88c0b52407f",
+      "bytes": 117
+    },
+    {
+      "path": "f01-collision/Z/App.cs",
+      "sha256": "15c8cc0bea74c7a7e66e671038963fb09a779a28f35d7eddd8b441715fef8933",
+      "bytes": 80
+    },
+    {
+      "path": "f01-collision/Z/App.csproj",
+      "sha256": "91275edd3790c4f0cb484653195ccd8ad6af2f1a0a69b84fdb26b88c0b52407f",
+      "bytes": 117
+    }
+  ],
+  "summary": {
+    "q2NamedRegressionsRejected": true,
+    "allRequiredMutationsRejected": true,
+    "positiveControlAccepted": true,
+    "noUnrelatedFirstFailure": true,
+    "baselineClean": true,
+    "all32RowsRetainSemantics": true,
+    "collisionRequirementSatisfied": true
+  }
+}

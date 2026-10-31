@@ -1,0 +1,594 @@
+{
+  "Reviewer": "CI-1-SCOPE-R2 before-harness: faithful pure-Roslyn transcription of the cited prior checker",
+  "Sites": [
+    {
+      "Case": "C01",
+      "Path": "Repeated.cs",
+      "Span": [
+        5,
+        9,
+        5,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022first\u0022)",
+      "Target": "M:Logger.Write(System.String)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:Worker.Execute",
+      "Errors": []
+    },
+    {
+      "Case": "C01",
+      "Path": "Repeated.cs",
+      "Span": [
+        6,
+        9,
+        6,
+        31
+      ],
+      "Lexeme": "Logger.Write(\u0022second\u0022)",
+      "Target": "M:Logger.Write(System.String)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:Worker.Execute",
+      "Errors": []
+    },
+    {
+      "Case": "C01",
+      "Path": "Repeated.cs",
+      "Span": [
+        7,
+        9,
+        7,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022third\u0022)",
+      "Target": "M:Logger.Write(System.String)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:Worker.Execute",
+      "Errors": []
+    },
+    {
+      "Case": "C02",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        6,
+        35,
+        6,
+        41
+      ],
+      "Lexeme": "Hit(1)",
+      "Target": "M:CI1Corpus.Overloads.Hit(System.Int32)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Overloads.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C02",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        6,
+        43,
+        6,
+        51
+      ],
+      "Lexeme": "Hit(\u0022x\u0022)",
+      "Target": "M:CI1Corpus.Overloads.Hit(System.String)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Overloads.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C04",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        12,
+        35,
+        12,
+        47
+      ],
+      "Lexeme": "Echo\u003Cint\u003E(1)",
+      "Target": "M:CI1Corpus.GenericExtensions.Echo\u0060\u00601(\u0060\u00600)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.GenericExtensions.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C04",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        12,
+        49,
+        12,
+        67
+      ],
+      "Lexeme": "\u0022x\u0022.Mark\u003Cstring\u003E()",
+      "Target": "M:CI1Corpus.GenericExtensions.Mark\u0060\u00601(\u0060\u00600)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.GenericExtensions.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        20,
+        29,
+        20,
+        36
+      ],
+      "Lexeme": "this(1)",
+      "Target": "M:CI1Corpus.Constructors.#ctor(System.Int32)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Constructors.#ctor",
+      "Errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        21,
+        38,
+        21,
+        49
+      ],
+      "Lexeme": "base(value)",
+      "Target": "M:CI1Corpus.ConstructorBase.#ctor(System.Int32)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Constructors.#ctor(System.Int32)",
+      "Errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        22,
+        52,
+        22,
+        57
+      ],
+      "Lexeme": "new()",
+      "Target": "M:CI1Corpus.Constructors.#ctor",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Constructors.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C05",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        22,
+        67,
+        22,
+        86
+      ],
+      "Lexeme": "new Constructors(1)",
+      "Target": "M:CI1Corpus.Constructors.#ctor(System.Int32)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Constructors.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C06",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        36,
+        55,
+        36,
+        67
+      ],
+      "Lexeme": "value.Work()",
+      "Target": "M:CI1Corpus.IWorker.Work",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Dispatch.InterfaceCall(CI1Corpus.IWorker)",
+      "Errors": []
+    },
+    {
+      "Case": "C07",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        37,
+        52,
+        37,
+        64
+      ],
+      "Lexeme": "value.Work()",
+      "Target": "M:CI1Corpus.Worker.Work",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Dispatch.VirtualCall(CI1Corpus.Worker)",
+      "Errors": []
+    },
+    {
+      "Case": "C07",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        32,
+        30,
+        32,
+        41
+      ],
+      "Lexeme": "base.Work()",
+      "Target": "M:CI1Corpus.Worker.Work",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.OverrideWorker.BaseCall",
+      "Errors": []
+    },
+    {
+      "Case": "C08",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        45,
+        58,
+        45,
+        69
+      ],
+      "Lexeme": "Target.Work",
+      "Target": "M:CI1Corpus.Target.Work",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.MethodGroups.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C08",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        45,
+        71,
+        45,
+        79
+      ],
+      "Lexeme": "action()",
+      "Target": "M:System.Action.Invoke",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.MethodGroups.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C09",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        49,
+        43,
+        49,
+        57
+      ],
+      "Lexeme": "typeof(Target)",
+      "Target": "T:CI1Corpus.Target",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.References.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C09",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        49,
+        67,
+        49,
+        86
+      ],
+      "Lexeme": "nameof(Target.Work)",
+      "Target": "M:CI1Corpus.Target.Work",
+      "CandidateTargets": [
+        "M:CI1Corpus.Target.Work"
+      ],
+      "CandidateReason": "MemberGroup",
+      "Owner": "M:CI1Corpus.References.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C09",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        49,
+        88,
+        49,
+        101
+      ],
+      "Lexeme": "Target.Work()",
+      "Target": "M:CI1Corpus.Target.Work",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.References.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C10",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        53,
+        35,
+        53,
+        70
+      ],
+      "Lexeme": "System.Console.WriteLine(\u0022outside\u0022)",
+      "Target": "M:System.Console.WriteLine(System.String)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.External.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C11",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        59,
+        35,
+        59,
+        45
+      ],
+      "Lexeme": "Pick(null)",
+      "Target": null,
+      "CandidateTargets": [
+        "M:CI1Corpus.Ambiguous.Pick(System.String)",
+        "M:CI1Corpus.Ambiguous.Pick(System.Exception)"
+      ],
+      "CandidateReason": "OverloadResolutionFailure",
+      "Owner": "M:CI1Corpus.Ambiguous.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C11",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        59,
+        47,
+        59,
+        56
+      ],
+      "Lexeme": "Missing()",
+      "Target": null,
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Ambiguous.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C12",
+      "Path": "acceptance/Partial.Two.cs",
+      "Span": [
+        4,
+        28,
+        4,
+        34
+      ],
+      "Lexeme": "Work()",
+      "Target": "M:CI1Corpus.Partial.Work",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Partial.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C19",
+      "Path": "acceptance/Duplicate.One.cs",
+      "Span": [
+        4,
+        35,
+        4,
+        48
+      ],
+      "Lexeme": "Target.Work()",
+      "Target": "M:CI1Corpus.Target.Work",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.FirstFile.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C19",
+      "Path": "acceptance/Duplicate.Two.cs",
+      "Span": [
+        4,
+        35,
+        4,
+        48
+      ],
+      "Lexeme": "Target.Work()",
+      "Target": "M:CI1Corpus.Target.Work",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.SecondFile.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C03",
+      "Path": "acceptance/CrossProject/App/App.cs",
+      "Span": [
+        4,
+        35,
+        4,
+        49
+      ],
+      "Lexeme": "Library.Work()",
+      "Target": "M:CI1Cross.Library.Work",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Cross.Application.Caller",
+      "Errors": []
+    },
+    {
+      "Case": "C14",
+      "Path": "acceptance/Repeated.AfterDelete.cs.txt",
+      "Span": [
+        5,
+        9,
+        5,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022first\u0022)",
+      "Target": "M:Logger.Write(System.String)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:Worker.Execute",
+      "Errors": []
+    },
+    {
+      "Case": "C14",
+      "Path": "acceptance/Repeated.AfterDelete.cs.txt",
+      "Span": [
+        6,
+        9,
+        6,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022third\u0022)",
+      "Target": "M:Logger.Write(System.String)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:Worker.Execute",
+      "Errors": []
+    },
+    {
+      "Case": "C15",
+      "Path": "acceptance/Repeated.AfterShift.cs.txt",
+      "Span": [
+        6,
+        9,
+        6,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022first\u0022)",
+      "Target": "M:Logger.Write(System.String)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:Worker.Execute",
+      "Errors": []
+    },
+    {
+      "Case": "C15",
+      "Path": "acceptance/Repeated.AfterShift.cs.txt",
+      "Span": [
+        7,
+        9,
+        7,
+        31
+      ],
+      "Lexeme": "Logger.Write(\u0022second\u0022)",
+      "Target": "M:Logger.Write(System.String)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:Worker.Execute",
+      "Errors": []
+    },
+    {
+      "Case": "C15",
+      "Path": "acceptance/Repeated.AfterShift.cs.txt",
+      "Span": [
+        8,
+        9,
+        8,
+        30
+      ],
+      "Lexeme": "Logger.Write(\u0022third\u0022)",
+      "Target": "M:Logger.Write(System.String)",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:Worker.Execute",
+      "Errors": []
+    },
+    {
+      "Case": "C20",
+      "Path": "acceptance/Cases.cs",
+      "Span": [
+        66,
+        9,
+        66,
+        22
+      ],
+      "Lexeme": "Target.Work()",
+      "Target": "M:CI1Corpus.Target.Work",
+      "CandidateTargets": [],
+      "CandidateReason": "None",
+      "Owner": "M:CI1Corpus.Conditional.Caller",
+      "Errors": []
+    }
+  ],
+  "MutationChecks": [
+    {
+      "Name": "wrong-target",
+      "Detected": true,
+      "FailingRows": 1
+    },
+    {
+      "Name": "wrong-coordinate",
+      "Detected": true,
+      "FailingRows": 1
+    },
+    {
+      "Name": "duplicate-row",
+      "Detected": true,
+      "FailingRows": 1
+    },
+    {
+      "Name": "wrong-overload",
+      "Detected": true,
+      "FailingRows": 1
+    },
+    {
+      "Name": "wrong-outcome",
+      "Detected": true,
+      "FailingRows": 1
+    },
+    {
+      "Name": "wrong-end-line",
+      "Detected": true,
+      "FailingRows": 1
+    },
+    {
+      "Name": "wrong-end-column",
+      "Detected": true,
+      "FailingRows": 1
+    },
+    {
+      "Name": "wrong-start-line",
+      "Detected": true,
+      "FailingRows": 1
+    },
+    {
+      "Name": "outcome-confirmed-to-external",
+      "Detected": false,
+      "FailingRows": 0
+    },
+    {
+      "Name": "outcome-confirmed-to-deferred",
+      "Detected": false,
+      "FailingRows": 0
+    },
+    {
+      "Name": "outcome-invalid-enum",
+      "Detected": false,
+      "FailingRows": 0
+    },
+    {
+      "Name": "outcome-ambiguous-to-confirmed",
+      "Detected": true,
+      "FailingRows": 1
+    },
+    {
+      "Name": "outcome-external-to-confirmed",
+      "Detected": false,
+      "FailingRows": 0
+    }
+  ],
+  "CollisionActualTarget": {
+    "Doc": "M:System.Console.WriteLine(System.String)",
+    "Assembly": "System.Console, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+    "SourceLocations": 0
+  }
+}

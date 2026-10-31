@@ -157,3 +157,35 @@ change to `src/**` or existing tests, which this packet does not authorize.
 | S03 | P2 | Context-separated measurements | none |
 | S04 | P2 | Persisted disjoint coverage contract | none (new CI-1 contract) |
 | S05 | P3 | Executable adversary obligations + owner-context table | none |
+
+## R2 amendment (CI-1-SCOPE-R2) — F04 disposition correction
+
+> **Status marker.** Appended by CI-1-SCOPE-R2. The F04 table above is preserved
+> unchanged; this note corrects its "Evidence required for independent re-review"
+> claim after independent Q2 evidence.
+
+The F04 row above states that "R1's independent oracle already does" reject a
+wrong outcome. **Independent Q2 disproved the breadth of that claim.** The cited
+R1 oracle accepted four outcome mutations (`Q2-F04-01 / P2`), including promoting
+the external C10 `System.Console.WriteLine` call to `confirmed`.
+
+- **What R1 required:** full start/end coordinates, semantic target, intended
+  outcome and row uniqueness.
+- **What R1 claimed:** its independent oracle already rejected all of these,
+  including a wrong outcome.
+- **What Q2 disproved:** outcome validation was limited to a
+  `confirmed`-prefix-gated positive check plus two narrow negative strings; the
+  oracle never derived an outcome from bound target eligibility or rejected
+  unrecognised outcome strings.
+- **R2 executable correction:**
+  `docs/planning/ci1-scope-r2/analysis/oracle/` derives the outcome class from
+  fixture source and the recorded compilation/dependency context and enforces an
+  exact declared-outcome vocabulary.
+- **New evidence:** all four Q2 failures are rejected for the intended semantic
+  reasons; the unchanged 32-row manifest still passes; the F01 collision stays
+  `external`; a no-op positive control is accepted
+  (`docs/planning/ci1-scope-r2/evidence/`).
+- **Untested until CI-1A:** candidate-result comparison. No candidate exists. R2
+  does not claim independent qualification of the corrected checker; that is
+  Q3's responsibility. F01–F03, S01–S05, P-DEF-01 and P-DEF-02 are unchanged and
+  remain open.

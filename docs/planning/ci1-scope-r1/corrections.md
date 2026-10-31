@@ -95,6 +95,22 @@ qualification") is retained. No absent candidate implementation has passed any
 acceptance test. Applied to `ci1-scope-01/acceptance-contract.md` "Independent
 expected outcomes".
 
+## R2 amendment (CI-1-SCOPE-R2) — C4 outcome validation
+
+> **Status marker.** Appended by CI-1-SCOPE-R2; the R1 text above is preserved.
+
+C4 correctly listed "validate the intended outcome" as a requirement, but the
+R1 checker cited as satisfying it did not actually derive outcomes from semantics.
+Independent Q2 showed the cited oracle accepted a wrong outcome, including
+promoting the external C10 `System.Console.WriteLine` call to `confirmed`
+(`Q2-F04-01 / P2`). The executable correction is the R2 semantic oracle at
+`docs/planning/ci1-scope-r2/analysis/oracle/`, which validates an outcome only
+against source/compiler-derived evidence and an exact declared-outcome
+vocabulary. Candidate-result comparison remains unexecuted. R2 does not claim
+independent qualification of the corrected checker; that is Q3's responsibility.
+See `docs/planning/ci1-scope-r2/f04-root-cause.md` and
+`docs/planning/ci1-scope-r2/oracle-contract.md`.
+
 ## C5 — ADR-CI1-01 reopened (S01)
 
 **Removes** the recommendation preference for separate facts. Both Option C

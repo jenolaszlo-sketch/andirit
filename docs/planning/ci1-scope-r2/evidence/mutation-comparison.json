@@ -1,0 +1,235 @@
+{
+  "priorChecker": {
+    "source": "evidence/before/before-run.json",
+    "sites": 32,
+    "baselineFailures": 0,
+    "mutations": 13,
+    "undetectedMutations": [
+      "outcome-confirmed-to-external",
+      "outcome-confirmed-to-deferred",
+      "outcome-invalid-enum",
+      "outcome-external-to-confirmed"
+    ]
+  },
+  "correctedOracle": {
+    "source": "evidence/after/after-run.json",
+    "sites": 32,
+    "baselineFailures": 0,
+    "mutations": 12,
+    "summary": {
+      "q2NamedRegressionsRejected": true,
+      "allRequiredMutationsRejected": true,
+      "positiveControlAccepted": true,
+      "noUnrelatedFirstFailure": true,
+      "baselineClean": true,
+      "all32RowsRetainSemantics": true,
+      "collisionRequirementSatisfied": true
+    }
+  },
+  "comparison": [
+    {
+      "semanticCase": "External -> confirmed",
+      "priorCheckerMutation": "outcome-external-to-confirmed",
+      "priorCheckerRejected": false,
+      "priorCheckerFailingRows": 0,
+      "correctedOracleMutation": "M01-external-to-confirmed",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "OUTCOME_CLASS_MISMATCH",
+      "correctedOraclePrimaryReason": "OUTCOME_CLASS_MISMATCH",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Confirmed -> external",
+      "priorCheckerMutation": "outcome-confirmed-to-external",
+      "priorCheckerRejected": false,
+      "priorCheckerFailingRows": 0,
+      "correctedOracleMutation": "M02-confirmed-to-external",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "OUTCOME_CLASS_MISMATCH",
+      "correctedOraclePrimaryReason": "OUTCOME_CLASS_MISMATCH",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Confirmed -> deferred",
+      "priorCheckerMutation": "outcome-confirmed-to-deferred",
+      "priorCheckerRejected": false,
+      "priorCheckerFailingRows": 0,
+      "correctedOracleMutation": "M03-confirmed-to-deferred",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "OUTCOME_CLASS_MISMATCH",
+      "correctedOraclePrimaryReason": "OUTCOME_CLASS_MISMATCH",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Unrecognised outcome string",
+      "priorCheckerMutation": "outcome-invalid-enum",
+      "priorCheckerRejected": false,
+      "priorCheckerFailingRows": 0,
+      "correctedOracleMutation": "M04-invalid-outcome",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "OUTCOME_UNRECOGNIZED",
+      "correctedOraclePrimaryReason": "OUTCOME_UNRECOGNIZED",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Ambiguous -> confirmed",
+      "priorCheckerMutation": "outcome-ambiguous-to-confirmed",
+      "priorCheckerRejected": true,
+      "priorCheckerFailingRows": 1,
+      "correctedOracleMutation": "M05-ambiguous-to-confirmed",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "OUTCOME_CLASS_MISMATCH",
+      "correctedOraclePrimaryReason": "OUTCOME_CLASS_MISMATCH",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Unresolved -> confirmed",
+      "priorCheckerMutation": null,
+      "priorCheckerRejected": null,
+      "priorCheckerFailingRows": null,
+      "correctedOracleMutation": "M06-unresolved-to-confirmed",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "OUTCOME_CLASS_MISMATCH",
+      "correctedOraclePrimaryReason": "OUTCOME_CLASS_MISMATCH",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Confirmed -> wrong overload",
+      "priorCheckerMutation": "wrong-overload",
+      "priorCheckerRejected": true,
+      "priorCheckerFailingRows": 1,
+      "correctedOracleMutation": "M07-wrong-overload",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "TARGET_IDENTITY_MISMATCH",
+      "correctedOraclePrimaryReason": "TARGET_IDENTITY_MISMATCH",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Confirmed -> wrong assembly",
+      "priorCheckerMutation": null,
+      "priorCheckerRejected": null,
+      "priorCheckerFailingRows": null,
+      "correctedOracleMutation": "M08-confirmed-to-wrong-assembly",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "TARGET_IDENTITY_MISMATCH",
+      "correctedOraclePrimaryReason": "TARGET_IDENTITY_MISMATCH",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Confirmed -> unrelated indexed method",
+      "priorCheckerMutation": "wrong-target",
+      "priorCheckerRejected": true,
+      "priorCheckerFailingRows": 1,
+      "correctedOracleMutation": "M09-confirmed-to-unrelated-indexed-method",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "TARGET_IDENTITY_MISMATCH",
+      "correctedOraclePrimaryReason": "TARGET_IDENTITY_MISMATCH",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Correct target -> incorrect span",
+      "priorCheckerMutation": "wrong-coordinate",
+      "priorCheckerRejected": true,
+      "priorCheckerFailingRows": 1,
+      "correctedOracleMutation": "M10-correct-target-incorrect-span",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "COORDINATE_LEXEME_MISMATCH",
+      "correctedOraclePrimaryReason": "COORDINATE_LEXEME_MISMATCH",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Correct entry -> duplicate entry",
+      "priorCheckerMutation": "duplicate-row",
+      "priorCheckerRejected": true,
+      "priorCheckerFailingRows": 1,
+      "correctedOracleMutation": "M11-duplicate-entry",
+      "correctedOracleRejected": true,
+      "correctedOracleExpectedReason": "DUPLICATE_OCCURRENCE",
+      "correctedOraclePrimaryReason": "DUPLICATE_OCCURRENCE",
+      "correctedOracleRejectedForIntendedReason": true,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Correct expected outcome (positive control)",
+      "priorCheckerMutation": null,
+      "priorCheckerRejected": null,
+      "priorCheckerFailingRows": null,
+      "correctedOracleMutation": "P01-correct-outcome-accepted",
+      "correctedOracleRejected": false,
+      "correctedOracleExpectedReason": null,
+      "correctedOraclePrimaryReason": null,
+      "correctedOracleRejectedForIntendedReason": false,
+      "correctedOracleUnrelatedFailedFirst": false
+    },
+    {
+      "semanticCase": "Wrong start line",
+      "priorCheckerMutation": "wrong-start-line",
+      "priorCheckerRejected": true,
+      "priorCheckerFailingRows": 1,
+      "correctedOracleMutation": null,
+      "correctedOracleRejected": null,
+      "correctedOracleExpectedReason": null,
+      "correctedOraclePrimaryReason": null,
+      "correctedOracleRejectedForIntendedReason": null,
+      "correctedOracleUnrelatedFailedFirst": null
+    },
+    {
+      "semanticCase": "Wrong end line",
+      "priorCheckerMutation": "wrong-end-line",
+      "priorCheckerRejected": true,
+      "priorCheckerFailingRows": 1,
+      "correctedOracleMutation": null,
+      "correctedOracleRejected": null,
+      "correctedOracleExpectedReason": null,
+      "correctedOraclePrimaryReason": null,
+      "correctedOracleRejectedForIntendedReason": null,
+      "correctedOracleUnrelatedFailedFirst": null
+    },
+    {
+      "semanticCase": "Wrong end column",
+      "priorCheckerMutation": "wrong-end-column",
+      "priorCheckerRejected": true,
+      "priorCheckerFailingRows": 1,
+      "correctedOracleMutation": null,
+      "correctedOracleRejected": null,
+      "correctedOracleExpectedReason": null,
+      "correctedOraclePrimaryReason": null,
+      "correctedOracleRejectedForIntendedReason": null,
+      "correctedOracleUnrelatedFailedFirst": null
+    },
+    {
+      "semanticCase": "Semantic target mismatch (original name)",
+      "priorCheckerMutation": "wrong-target",
+      "priorCheckerRejected": true,
+      "priorCheckerFailingRows": 1,
+      "correctedOracleMutation": null,
+      "correctedOracleRejected": null,
+      "correctedOracleExpectedReason": null,
+      "correctedOraclePrimaryReason": null,
+      "correctedOracleRejectedForIntendedReason": null,
+      "correctedOracleUnrelatedFailedFirst": null
+    },
+    {
+      "semanticCase": "Outcome consistency (original name)",
+      "priorCheckerMutation": "wrong-outcome",
+      "priorCheckerRejected": true,
+      "priorCheckerFailingRows": 1,
+      "correctedOracleMutation": null,
+      "correctedOracleRejected": null,
+      "correctedOracleExpectedReason": null,
+      "correctedOraclePrimaryReason": null,
+      "correctedOracleRejectedForIntendedReason": null,
+      "correctedOracleUnrelatedFailedFirst": null
+    }
+  ]
+}
