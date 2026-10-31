@@ -224,3 +224,11 @@ sections above are preserved unchanged.
 
 Recorded by the follow-up bookkeeping commit after the acceptance commit was
 created (a file cannot contain its own commit's hash).
+
+| Item | Value |
+| --- | --- |
+| Acceptance commit | `288f7c3cf564891dc5b380a186a379d64d3c2c3c` — `docs(csharp): record correctness owner acceptance with qualifications` |
+| Acceptance tree | `8cb5e94794ca88a4f115afe748353861938ccc4a` |
+| Contents | `docs/decisions/csharp-correctness-owner-01-acceptance.md` (new), `README.md`, `compatibility-assessment.md`, `final-handoff.md` (documentation only) |
+| Parent | `92fc99df2323ef1bd8282c6a1cb3b1f79995779b` (independently reviewed HEAD; production source tree unchanged by the acceptance) |
+| Publication | local `main` only; **not pushed** — the reviewed implementation commits and the acceptance commits are published together after separate authorization |
