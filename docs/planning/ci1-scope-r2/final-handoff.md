@@ -19,7 +19,8 @@ CI-1A, does not fix production defects, and does not grant owner acceptance.
 | Advertised `origin/main` at start | `f1605e9e02fc383cf776127c67369ab7815cd546` |
 | Worktrees | one (`D:/projects/Andirit f1605e9 [main]`) |
 | SDK / compiler | .NET SDK `10.0.401`; Roslyn `5.9.0` |
-| Final delivery commit / tree | recorded at delivery (see the R2 session report) |
+| R2 delivery commit / tree | `cb2733394053c57a20228d8f61442cb32489ef31` / `ec588ad1ab45507a9addc4d70bc2dd4125012410` |
+| Final HEAD after bookkeeping update | recorded in the R2 session report (parent = the R2 delivery commit above) |
 
 No linked worktrees or branches were created. Only `docs/planning/ci1-scope-r2/`
 was added and three R1 documents received appended R2 amendments.
