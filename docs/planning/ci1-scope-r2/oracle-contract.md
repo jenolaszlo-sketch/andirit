@@ -158,3 +158,95 @@ The following are **not** established and must not be read into a passing run:
 - Independent qualification of this oracle is the responsibility of Q3, not of
   R2. R2 claims only that the four Q2 failures are now rejected for the intended
   semantic reasons and that positive controls pass.
+# Integration amendment — oracle contract (CI-1-SCOPE-R3)
+
+> **APPEND-ONLY AMENDMENT BLOCK** — proposed by CI-1-SCOPE-R3 for
+> `docs/planning/ci1-scope-r2/oracle-contract.md`. Append verbatim after the
+> existing content. Historical R2 text above remains unchanged and remains the
+> record of what R2 claimed.
+
+---
+
+## R3 amendment (CI-1-SCOPE-R3) — typed semantic assertion model
+
+Status: proposed by R3, pending independent review (Q4). The corrected oracle
+is `analysis/oracle-r3/` (assertion-model version
+`ci1-scope-r3/semantic-assertions/1`). It supersedes `analysis/oracle/` as the
+acceptance oracle for the frozen CI-1A corpus.
+
+### A. What changed and why
+
+Q3 demonstrated (Q3-F01, Q3-F02) that class-level validation plus
+source-built-set membership accepts recognized-but-incorrect labels and cannot
+establish exact target identity. R3 replaces the classification model with a
+typed assertion model: each declared label claims specific facts (binding
+outcome, unsupported subtype, dispatch characteristic, cross-project,
+after-replacement, conditional activity, lifecycle), each fact is derived
+independently from the fixture source and compilation context, and every claim
+is compared. A label alone can never satisfy a check.
+
+### B. Re-scoped rules
+
+1. **Exact target identity (replaces R2 §3 rule 7's set-membership test).**
+   Each target-table entry names an expected declaring project
+   (`audited` / `lib` / `metadata` / `none`). The expected definition is
+   resolved inside that compilation by documentation ID and must be unique;
+   the bound definition — normalized through `ReducedFrom`/`OriginalDefinition`
+   — must equal it in defining compilation, defining assembly identity,
+   documentation ID and declaration location. New codes:
+   `TARGET_DEFINING_PROJECT_MISMATCH`, `TARGET_IDENTITY_UNVERIFIED`
+   (bounded explicit result; never guessed). Metadata targets additionally
+   require that no source-built compilation declares the documentation ID.
+2. **Outcome provenance (new).** Dispatch characteristic (InterfaceMember /
+   VirtualMember / BaseReceiver / DelegateInvoke / Plain — mutually exclusive,
+   documented precedence), cross-project (defining compilation ≠ audited ∧
+   recorded project-reference edge) and after-replacement (replacement-snapshot
+   context) are derived per row and compared to the label's claims
+   (`OUTCOME_PROVENANCE_MISMATCH`).
+3. **Conditional activity (new, label-independent).** Every row is re-parsed
+   with the empty define set and with `CI1_EXTRA`; conditional-only sites must
+   match a label that asserts conditionality and vice versa
+   (`CONDITIONAL_ACTIVITY_MISMATCH`; `DEFAULT_CONTEXT_ACTIVE` retained).
+4. **Corpus completeness (new, closes the R2 §6 out-of-scope item).** A frozen
+   32-key occurrence universe is enforced:
+   `CORPUS_ROW_MISSING` / `CORPUS_ROW_UNEXPECTED` / `CORPUS_CONTRADICTION`;
+   duplicates remain `DUPLICATE_OCCURRENCE`. Row count alone is not accepted as
+   completeness.
+5. **Input robustness (new, closes the R2 crash boundary).** Malformed
+   structure yields `MANIFEST_STRUCTURE_INVALID` (per row or global); the run
+   fails with structured diagnostics and a non-zero exit; unreadable input is
+   never treated as an empty success.
+6. **Owner identity (new).** The lexical owner (nearest enclosing method-like
+   declaration; lexical containment, not runtime attribution) is compared to a
+   frozen per-occurrence expectation table (`OWNER_MISMATCH`).
+7. **RepositoryPath / Basis (new).** `RepositoryPath` is validated against the
+   authorized fixture→repository mapping (`REPOSITORY_PATH_MISMATCH`). `Basis`
+   must be one of the two recognized provenance statements
+   (`BASIS_UNRECOGNIZED`); its claims are classified — the coordinate claim is
+   corroborated by the span check, the "hand-selected" and "no extractor
+   output" claims are human-reviewed and recorded as
+   `BASIS_NOT_MECHANICALLY_QUALIFIED`.
+8. **Case label (closes Q3-F07).** `Case` is part of the frozen occurrence
+   identity key.
+
+### C. Explicit non-qualifications (unchanged in spirit, now structured)
+
+- The after-replacement **lifecycle** assertion (publication replacement,
+  stale-fact retirement, lifecycle correctness) is not mechanically
+  qualifiable from single-compilation evidence. Rows asserting it are accepted
+  only on their confirmable facets and carry an explicit
+  `LIFECYCLE_NOT_QUALIFIED` qualification. The original expectations are
+  preserved unchanged.
+- Candidate-result comparison remains unqualified; no CI-1A implementation
+  exists.
+- The oracle is a mechanism oracle on the frozen corpus; it does not qualify
+  runtime dispatch, constructor discovery, method-group invocation,
+  local-function targets, indirect impact, P-DEF-01 or P-DEF-02.
+
+### D. Acceptance gate
+
+The R3 oracle embeds its own gate: baseline 32/0 with full typed agreement,
+all Q2-named, R2-required, Q3-adversarial and R3-regression mutations rejected
+for their intended reasons, both positive controls accepted, the A/B identity
+and collision requirements satisfied, and zero crashes — `Pass=true`, exit 0.
+Any regression of these properties fails the run.

@@ -90,3 +90,44 @@ external call. Fixtures:
 See [`reproduction.md`](reproduction.md). The raw hashes of every checker source
 and evidence file are in
 [`evidence/evidence-hashes.json`](evidence/evidence-hashes.json).
+# Integration amendment — mutation matrix (CI-1-SCOPE-R3)
+
+> **APPEND-ONLY AMENDMENT BLOCK** — proposed by CI-1-SCOPE-R3 for
+> `docs/planning/ci1-scope-r2/mutation-matrix.md`. Append verbatim. Historical
+> R2 content above remains unchanged.
+
+---
+
+## R3 mutation matrix (CI-1-SCOPE-R3)
+
+The corrected oracle is `analysis/oracle-r3/`. Full raw results are recorded in
+the R3 evidence packet (`evidence/tier1-r3/r3-run.json` in the R3 review
+workspace; regenerate with the command in the R3 handoff).
+
+Totals: **198 mutations** (tier A: Q2 named + R2 required set, 12; tier B:
+complete Q3 adversarial set replayed, 38; tier C: R3 regressions, 148).
+**196 rejected for the intended reason; 2 positive controls accepted
+(P01, R14); 0 crashes; no unrelated-only rejections.** Baseline: 32 sites,
+0 failures, universe complete, class distribution confirmed 21 / external 2 /
+ambiguous 1 / unresolved 1 / unsupported 7.
+
+| Group | Result |
+| --- | --- |
+| Q2 named (M01–M04) | rejected, same intended reason codes as R2 |
+| R2 required set (M05–M11) | rejected, same intended reason codes as R2 |
+| Q3 OUT-01…OUT-10 (accepted by R2: 9) | all rejected — `OUTCOME_PROVENANCE_MISMATCH` / `CONDITIONAL_ACTIVITY_MISMATCH` |
+| Q3 VOCAB-01…10 | all rejected — `OUTCOME_UNRECOGNIZED` |
+| Q3 TARGET-01…07 (accepted by R2: TARGET-02/03/07) | all rejected — `CORPUS_ROW_*` / `REPOSITORY_PATH_MISMATCH` / `BASIS_UNRECOGNIZED` / `TARGET_IDENTITY_MISMATCH` |
+| Q3 CORPUS-01…04 (accepted by R2) | all rejected — `CORPUS_ROW_MISSING` / `CORPUS_ROW_UNEXPECTED` |
+| Q3 MAL-01…07 (crashed by R2: MAL-02/03/04) | all rejected without crash — `COORDINATE_LEXEME_MISMATCH` / `MANIFEST_STRUCTURE_INVALID` |
+| R01 confirmed-family substitution sweep (21 rows × 6 labels = 126) | 126/126 rejected — 100 × `OUTCOME_PROVENANCE_MISMATCH`, 26 × `CONDITIONAL_ACTIVITY_MISMATCH` (with documented co-fires) |
+| R02–R13 named regressions (external subtypes, conditional bypass, wrong definition/overload/owner/path/basis, missing/extra rows, malformed structure, unverifiable identity) | all rejected for their intended reasons |
+| A/B two-assembly identity scenario | wrong-assembly expectation rejected (`TARGET_DEFINING_PROJECT_MISMATCH`); correct expectation accepted |
+| F01 collision scenario | platform call stays external; metadata rule now structurally rejects a source-built same-doc-ID shadow |
+| Positive controls (P01, R14) | accepted |
+
+Replay notes: Q3's OUT-08 probe selected the method-group row via
+`SiteByCase("C08")`; the R3 replay implements the intended delegate-row pair
+(by outcome value) and rejects both directions. M10 additionally trips the
+occurrence-universe check because the span is part of the frozen occurrence
+identity — the intended `COORDINATE_LEXEME_MISMATCH` still fires first.
