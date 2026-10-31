@@ -2,13 +2,15 @@
 
 Bounded production remediation of the two existing C# extractor defects
 P-DEF-01 and P-DEF-02, named by the independent Q1 review and recorded in
-[`ci1-scope-r1/prerequisite-defects.md`](../../ci1-scope-r1/prerequisite-defects.md).
+[`ci1-scope-r1/prerequisite-defects.md`](../ci1-scope-r1/prerequisite-defects.md).
 Both defects predate CI-1. CI-1A implementation, occurrence storage, query API
 changes and package publication remain out of scope and were not touched.
 
-**Disposition: `CSHARP-CORRECTNESS-01 READY FOR INDEPENDENT REVIEW`** (local
-commit only; not pushed, not tagged, not released; independent review remains
-mandatory and this packet is not self-approval).
+**Disposition: `CSHARP-CORRECTNESS-01 ACCEPTED AND CLOSED`** (owner
+acceptance with qualifications recorded in
+[`docs/decisions/csharp-correctness-owner-01-acceptance.md`](../../decisions/csharp-correctness-owner-01-acceptance.md)
+after the independent `CSHARP-CORRECTNESS-Q1` review returned `SUPPORTED WITH
+QUALIFICATIONS`. Local commits only; not pushed, not tagged, not released.)
 
 ## Bindings
 

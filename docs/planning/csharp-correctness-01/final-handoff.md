@@ -1,9 +1,16 @@
 # Final handoff — ANDIRIT-CSharp-CORRECTNESS-01
 
-**Disposition: `CSHARP-CORRECTNESS-01 READY FOR INDEPENDENT REVIEW`**
+**Disposition: `CSHARP-CORRECTNESS-01 ACCEPTED AND CLOSED`**
 
-(Independent review remains mandatory and has not been performed by the
-implementing agent. No push, tag, package or release was made.)
+(Updated after acceptance: the independent `CSHARP-CORRECTNESS-Q1` review
+returned `SUPPORTED WITH QUALIFICATIONS` and the owner accepted both
+corrections with qualifications —
+[`docs/decisions/csharp-correctness-owner-01-acceptance.md`](../../decisions/csharp-correctness-owner-01-acceptance.md).
+The delivery-time sections below preserve the implementing agent's report
+unchanged; post-review reconciliation is recorded in
+[`compatibility-assessment.md`](compatibility-assessment.md) §5–8 and in the
+"Owner acceptance record" section at the end of this document. No push, tag,
+package or release has been made.)
 
 ## A. Git / source bindings
 
@@ -14,8 +21,8 @@ implementing agent. No push, tag, package or release was made.)
 | Starting baseline tree | `e61994289e5f96203ded37be000b0ed3bb3b79a2` (clean; `main` = `origin/main` = baseline) |
 | Implementation commit | `80edf9302d3fa813aebf761db47d16a24667ef11` (tree `2085752eb5c1189f596a0b8baf48662fbf55002a`) |
 | Evidence commit | `01365a2213e9d53a11d6ffe2197395c258d9d081` (tree `63e529351cf5c9bc55f9e706eb86df8b92db921a`) |
-| Final HEAD | tip of local `main` at delivery (descendant of the evidence commit); exact hash is stated in the delivery report and verifiable via `git rev-parse HEAD` |
-| Local vs remote | local `main` is 2 commits ahead of `origin/main`; **not pushed** (no authorization) |
+| Final HEAD | tip of local `main` at delivery (descendant of the evidence commit); exact hash is stated in the delivery report and verifiable via `git rev-parse HEAD`; independently verified by CSHARP-CORRECTNESS-Q1 §A as `92fc99df2323ef1bd8282c6a1cb3b1f79995779b` (tree `52e74a04aa6a9e8bd9199a1c4facbdf397a8dccb`) |
+| Local vs remote | local `main` is 3 commits ahead of `origin/main` (2 at delivery, plus the evidence-commit-binding commit); **not pushed** (no authorization) |
 | Worktree model | single checkout, no branches, no linked worktrees created |
 | Environment | Windows (win32), .NET SDK `10.0.401`, Roslyn 5.9.0 |
 
@@ -154,3 +161,66 @@ CI-1A implementation; occurrence-level storage; new public FindUsages APIs;
 graph schema migrations; unrelated refactoring; compiler infrastructure
 replacement; NuGet evaluation; TS/JS changes; sandbox/AAAW changes; release or
 package publication; push/tag.
+
+## Owner acceptance record (post-review — CSHARP-CORRECTNESS-OWNER-01)
+
+Added after independent review and owner acceptance; the delivery-time
+sections above are preserved unchanged.
+
+| Item | Value |
+| --- | --- |
+| Independent review | `CSHARP-CORRECTNESS-Q1 SUPPORTED WITH QUALIFICATIONS`; artifacts preserved outside the checkout at `C:\Users\Laszlos\source\repos\Solo\csharp-correctness-q1\` (SHA-256 identities in the owner decision record) |
+| Independently reviewed HEAD | `92fc99df2323ef1bd8282c6a1cb3b1f79995779b` (tree `52e74a04aa6a9e8bd9199a1c4facbdf397a8dccb`) |
+| Owner decision | `ACCEPT WITH QUALIFICATIONS` — P-DEF-01b (provider-level) and P-DEF-02 accepted and closed; record: [`docs/decisions/csharp-correctness-owner-01-acceptance.md`](../../decisions/csharp-correctness-owner-01-acceptance.md) |
+| Qualification basis | 22/22 new regressions, 69/69 C# suite, 565/565 solution, 15/22 failing-before reproduced, original false confirmation and partial-type failure reproduced and corrected, real three-project extraction completes with 9,401 structurally valid edges and 0 dangling endpoints, Windows-only, 12/12 producer evidence hashes verified |
+
+### Documentation reconciliation performed under the acceptance
+
+1. **p18 unowned-namespace capture** — the reviewer-discovered additional
+   corrected behavior is now recorded in
+   [`compatibility-assessment.md`](compatibility-assessment.md) §5: baseline
+   published a false resolved `imports` edge from `src/B/Program.cs`
+   (`using System;`) to unrelated project A's `namespace System` node
+   (`csharp:symbol:ff9ec621…`); the corrected resolver emits no edge and
+   counts `Ambiguous`.
+2. **Documentation truncation** — the exact 2048-character bound, deterministic
+   ordinal ordering, deduplication, truncation rule and the absence of an
+   in-band truncation indicator are recorded in
+   [`compatibility-assessment.md`](compatibility-assessment.md) §6. Explicit
+   truncation metadata remains a possible future improvement, not a
+   prerequisite of this acceptance; no new public property or schema was
+   added.
+3. **`calls` ambiguity** — the reviewer's finding that genuine `calls`
+   ambiguity is practically unreachable under the corrected resolver, the
+   formerly ambiguous relationship that is now provable, the genuinely
+   ambiguous cases that remain possible, and how the retargeted test preserves
+   its legitimate intent are recorded in
+   [`compatibility-assessment.md`](compatibility-assessment.md) §7. No test
+   was weakened and no incorrect ambiguity was resurrected.
+4. **Unreachable fallback branch** — the dead second
+   `definitionCandidates.Length == 1` check
+   (`CSharpCodeGraphPlugin.GraphBuilder.cs`, `TryResolveTarget`, lines
+   722–729 at `92fc99d`) is documented with the reviewer's evidence as
+   **deferred cleanup** in
+   [`compatibility-assessment.md`](compatibility-assessment.md) §8. No
+   implementation change was made in this acceptance task.
+
+### Carried-forward obligations (qualifications, not resolved defects)
+
+- Windows-only qualification; Linux/macOS requires hosted CI results on the
+  final published commit (notably `PathComparer` case-sensitivity and
+  path-provenance matching).
+- Performance, deployment readiness, power-loss durability and complete
+  real-world compilation-context coverage are **not established**.
+- Documentation truncation at 2048 characters is not signaled in-band.
+- Partial-method definition/implementation unification remains deferred and
+  unqualified.
+- CI-1A is not accepted or implemented by this acceptance; ADR-CI1-01 (C vs
+  B2) remains open; the CI-1-SCOPE-R3 oracle work remains subject to its own
+  independent qualification gate.
+- Publication (push/tag/package/release) requires separate authorization.
+
+### Acceptance commit binding
+
+Recorded by the follow-up bookkeeping commit after the acceptance commit was
+created (a file cannot contain its own commit's hash).
