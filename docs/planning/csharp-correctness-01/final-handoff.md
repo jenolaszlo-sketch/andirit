@@ -13,8 +13,8 @@ implementing agent. No push, tag, package or release was made.)
 | Starting baseline commit | `5c89ac0b3d0e87c0112880cf985826ded42b21b2` |
 | Starting baseline tree | `e61994289e5f96203ded37be000b0ed3bb3b79a2` (clean; `main` = `origin/main` = baseline) |
 | Implementation commit | `80edf9302d3fa813aebf761db47d16a24667ef11` (tree `2085752eb5c1189f596a0b8baf48662fbf55002a`) |
-| Evidence commit | recorded below (docs + raw evidence) |
-| Final HEAD | recorded below |
+| Evidence commit | `01365a2213e9d53a11d6ffe2197395c258d9d081` (tree `63e529351cf5c9bc55f9e706eb86df8b92db921a`) |
+| Final HEAD | tip of local `main` at delivery (descendant of the evidence commit); exact hash is stated in the delivery report and verifiable via `git rev-parse HEAD` |
 | Local vs remote | local `main` is 2 commits ahead of `origin/main`; **not pushed** (no authorization) |
 | Worktree model | single checkout, no branches, no linked worktrees created |
 | Environment | Windows (win32), .NET SDK `10.0.401`, Roslyn 5.9.0 |
