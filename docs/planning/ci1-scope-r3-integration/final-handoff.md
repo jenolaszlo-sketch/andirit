@@ -11,9 +11,9 @@ acceptance evidence reproduced byte-identically from the canonical repository.
 | Role | Commit | Tree |
 | --- | --- | --- |
 | Starting published HEAD | `d02baaa8e7e8704f2f5dac9ab549779f45fa5cb6` | `406282797948c035b3dda4f70b9ec5c5b536a6d7` |
-| Integration / acceptance commit | recorded by the follow-up bookkeeping commit (this file cannot contain its own commit's hash) | — |
-| Bookkeeping commit | — | — |
-| Final local `main` | — | — |
+| Integration / acceptance commit | `b767db13bba9024354e9334fa17e3edf8a649c9e` | `ede4ca2a4ec601a811de9097f4e261995086b05b` |
+| Bookkeeping commit (this commit) | immediately follows the integration commit; its exact hash is recorded in the milestone final report and verifiable via `git log` | — |
+| Final local `main` | the bookkeeping commit; exact hash recorded in the milestone final report | — |
 
 R3 frozen qualification baseline: `5c89ac0b3d0e87c0112880cf985826ded42b21b2`
 (tree `e61994289e5f96203ded37be000b0ed3bb3b79a2`).
