@@ -14,7 +14,8 @@ public sealed partial class CSharpCodeGraphPlugin
         CodeGraphPluginContext context,
         CSharpCodeGraphPlugin plugin,
         CSharpProjectModel project,
-        IReadOnlySet<string> availableDependencies,
+        CSharpCompilation compilation,
+        IReadOnlyDictionary<string, CSharpCompilation> availableCompilations,
         RunSymbols runSymbols)
     {
         private readonly SortedDictionary<string, CodeGraphNode> _nodes =
@@ -28,6 +29,12 @@ public sealed partial class CSharpCodeGraphPlugin
         private readonly List<(string Path, SyntaxNode Root, SemanticModel Model)> _syntax = [];
         private readonly Dictionary<string, RelationshipCounters> _counters =
             new(StringComparer.Ordinal);
+        private readonly SortedDictionary<string, SortedDictionary<string, SortedSet<string>>> _documentation =
+            new(StringComparer.Ordinal);
+
+        private const int MaxMergedDocumentationLength = 2048;
+        private static readonly string[] MergedDocumentationKeys =
+            [CodePropertyKeys.DocSummary, CodePropertyKeys.DocRemarks];
 
         private static readonly HashSet<string> TestPackageReferences = new(
             [
@@ -77,7 +84,7 @@ public sealed partial class CSharpCodeGraphPlugin
                     project.Path,
                     properties: properties));
             foreach (var reference in project.ProjectReferences.Where(
-                         availableDependencies.Contains))
+                         availableCompilations.ContainsKey))
             {
                 AddEdge(
                     CodeEdgeKinds.DependsOn,
@@ -250,6 +257,7 @@ public sealed partial class CSharpCodeGraphPlugin
             ICodeGraphSink sink,
             CancellationToken cancellationToken)
         {
+            ApplyMergedDocumentation();
             var origin = new CodeFactOrigin(
                 context.RepositoryId,
                 plugin.Id,
@@ -293,31 +301,42 @@ public sealed partial class CSharpCodeGraphPlugin
 
             // Register in the run-wide map before constructing properties so
             // later projects can resolve this symbol as a relationship target.
-            // The canonical key is already globally unique (doc-comment ID or
-            // fully qualified display string); no project prefix needed.
-            runSymbols.Register(CanonicalSymbolKey(symbol), nodeId);
+            // The canonical key is a lookup aid; the registration also carries
+            // this project's provenance, definition fingerprint and declaration
+            // paths so a target can never be confirmed from the key alone.
+            runSymbols.Register(
+                CanonicalSymbolKey(symbol),
+                project.Path,
+                nodeId,
+                DefinitionFingerprint(symbol),
+                path);
 
+            var properties = CSharpSymbolPropertyFactory.BuildProperties(symbol, syntax);
+            var declarationDocumentation = ExtractDeclarationDocumentation(properties);
             var node = new CodeGraphNode(
                 nodeId,
                 kind,
                 DisplayName(symbol),
                 qualifiedName,
                 symbolId,
-                CSharpSymbolPropertyFactory.BuildProperties(symbol, syntax));
+                properties);
             if (_nodes.TryGetValue(nodeId.Value, out var existing) && !NodesEquivalent(existing, node))
             {
-                var differingKeys = string.Join(", ", existing.Properties.Keys
+                var differingKeys = existing.Properties.Keys
                     .Union(node.Properties.Keys)
                     .Where(key => !Equals(
                         existing.Properties.TryGetValue(key, out var firstValue) ? firstValue : null,
-                        node.Properties.TryGetValue(key, out var secondValue) ? secondValue : null)));
+                        node.Properties.TryGetValue(key, out var secondValue) ? secondValue : null))
+                    .Order(StringComparer.Ordinal)
+                    .ToArray();
+                var differingValues = string.Join(", ", differingKeys.Select(key =>
+                    $"{key}=[existing:{FormatProperty(existing.Properties, key)}|new:{FormatProperty(node.Properties, key)}]"));
                 throw new InvalidOperationException(
                     $"Roslyn produced inconsistent facts for symbol '{canonical}'; " +
-                    $"differing: [{differingKeys}]; " +
-                    $"existing modifiers={(existing.Properties.ContainsKey("modifiers") ? string.Join("/", ((CodeTextListProperty)existing.Properties["modifiers"]).Values) : "none")}; " +
-                    $"new modifiers={(node.Properties.ContainsKey("modifiers") ? string.Join("/", ((CodeTextListProperty)node.Properties["modifiers"]).Values) : "none")}.");
+                    $"differing: [{differingValues}].");
             }
             _nodes[nodeId.Value] = node;
+            AccumulateDocumentation(nodeId, declarationDocumentation);
 
             var declarationId = new CodeDeclarationId(
                 $"csharp:{Hash($"{canonical}\n{path}\n{location.StartLine}:{location.StartColumn}:{location.EndLine}:{location.EndColumn}")}");
@@ -352,6 +371,106 @@ public sealed partial class CSharpCodeGraphPlugin
         }
 
 
+        private static Dictionary<string, string> ExtractDeclarationDocumentation(
+            Dictionary<string, CodePropertyValue> properties)
+        {
+            var documentation = new Dictionary<string, string>(StringComparer.Ordinal);
+            foreach (var key in MergedDocumentationKeys)
+            {
+                if (!properties.TryGetValue(key, out var value))
+                    continue;
+                if (value is not CodeTextProperty text)
+                    continue;
+
+                documentation[key] = text.Value;
+                properties.Remove(key);
+            }
+
+            return documentation;
+        }
+
+        /// <summary>
+        /// Documentation is declaration-specific. Each physical partial part
+        /// contributes its value to a set; the logical node receives the
+        /// ordinally sorted distinct values joined by a blank line and bounded
+        /// to <see cref="MaxMergedDocumentationLength"/> characters. This is
+        /// independent of source enumeration order and never drops one part in
+        /// favour of whichever declaration happened to be visited last.
+        /// </summary>
+        private void AccumulateDocumentation(
+            CodeNodeId nodeId,
+            IReadOnlyDictionary<string, string> documentation)
+        {
+            if (documentation.Count == 0)
+                return;
+
+            if (!_documentation.TryGetValue(nodeId.Value, out var byKey))
+            {
+                byKey = new SortedDictionary<string, SortedSet<string>>(StringComparer.Ordinal);
+                _documentation[nodeId.Value] = byKey;
+            }
+
+            foreach (var (key, value) in documentation)
+            {
+                if (!byKey.TryGetValue(key, out var values))
+                {
+                    values = new SortedSet<string>(StringComparer.Ordinal);
+                    byKey[key] = values;
+                }
+
+                values.Add(value);
+            }
+        }
+
+        private void ApplyMergedDocumentation()
+        {
+            foreach (var (nodeKey, byKey) in _documentation)
+            {
+                if (!_nodes.TryGetValue(nodeKey, out var node))
+                    continue;
+
+                var properties = new SortedDictionary<string, CodePropertyValue>(
+                    StringComparer.Ordinal);
+                foreach (var (key, value) in node.Properties)
+                    properties[key] = value;
+                foreach (var (key, values) in byKey)
+                {
+                    var merged = string.Join("\n\n", values);
+                    if (merged.Length > MaxMergedDocumentationLength)
+                        merged = merged[..MaxMergedDocumentationLength];
+                    properties[key] = new CodeTextProperty(merged);
+                }
+
+                _nodes[nodeKey] = new CodeGraphNode(
+                    node.Id,
+                    node.Kind,
+                    node.Name,
+                    node.QualifiedName,
+                    node.SymbolId,
+                    properties);
+            }
+        }
+
+        private static string FormatProperty(
+            IReadOnlyDictionary<string, CodePropertyValue> properties,
+            string key)
+        {
+            if (!properties.TryGetValue(key, out var value))
+                return "none";
+
+            return value switch
+            {
+                CodeTextProperty text => text.Value,
+                CodeTextListProperty list => string.Join("/", list.Values),
+                CodeIntegerProperty integer => integer.Value.ToString(
+                    System.Globalization.CultureInfo.InvariantCulture),
+                CodeNumberProperty number => number.Value.ToString(
+                    "R",
+                    System.Globalization.CultureInfo.InvariantCulture),
+                CodeBooleanProperty boolean => boolean.Value ? "true" : "false",
+                _ => value.GetType().Name
+            };
+        }
 
         private string ScopedSymbolKey(ISymbol symbol) =>
             $"{project.Path}\n{CanonicalSymbolKey(symbol)}";
@@ -363,6 +482,12 @@ public sealed partial class CSharpCodeGraphPlugin
             1,
             1);
 
+        /// <summary>
+        /// Compares logical-symbol invariants. Declaration-specific
+        /// documentation is removed before this comparison and merged by
+        /// <see cref="AccumulateDocumentation"/>; every remaining property must
+        /// agree, so a genuine invariant conflict still fails extraction.
+        /// </summary>
         private static bool NodesEquivalent(CodeGraphNode first, CodeGraphNode second) =>
             first.Id == second.Id &&
             first.Kind == second.Kind &&
@@ -457,32 +582,171 @@ public sealed partial class CSharpCodeGraphPlugin
             Ambiguous
         }
 
+        /// <summary>
+        /// Confirms a bound Roslyn target only when its defining compilation and
+        /// definition correspond to an indexed declaration. The run-wide
+        /// canonical map is a lookup aid; canonical documentation IDs and
+        /// assembly names never establish identity on their own. A target that
+        /// cannot be proven to belong to the current project or an eligible
+        /// dependency is external, and a target with competing eligible
+        /// declarations is ambiguous.
+        /// </summary>
         private TargetMatch TryResolveTarget(
             ISymbol target,
             out CodeNodeId nodeId)
         {
             nodeId = null!;
 
+            var canonical = CanonicalSymbolKey(target);
+            var fingerprint = DefinitionFingerprint(target);
             var scopedId = NodeId("symbol", ScopedSymbolKey(target));
-            if (_nodes.ContainsKey(scopedId.Value))
+
+            var belongsToCurrentCompilation =
+                target.ContainingAssembly is not null &&
+                SymbolEqualityComparer.Default.Equals(
+                    target.ContainingAssembly,
+                    compilation.Assembly);
+            var isUnownedNamespace = target is INamespaceSymbol
+            {
+                ContainingAssembly: null
+            };
+
+            // Same compilation: the project-scoped node is the exact declaration.
+            // A merged namespace can have no containing assembly even when the
+            // current project contributes a declaration, so keep that local case.
+            if ((belongsToCurrentCompilation || isUnownedNamespace) &&
+                _nodes.ContainsKey(scopedId.Value))
             {
                 nodeId = scopedId;
                 return TargetMatch.Found;
             }
 
-            var canonical = CanonicalSymbolKey(target);
-            if (runSymbols.GlobalNodes.TryGetValue(
-                    canonical,
-                    out var globalNodeId))
+            if (belongsToCurrentCompilation)
             {
-                if (runSymbols.Ambiguous.Contains(canonical))
-                    return TargetMatch.Ambiguous;
+                // Declared in this compilation but not an indexed declaration
+                // (for example an implicit constructor). Never fall through to
+                // an unrelated project's canonical match.
+                return TargetMatch.External;
+            }
 
-                nodeId = globalNodeId;
+            var exactCompilations = availableCompilations
+                .Where(pair =>
+                    target.ContainingAssembly is not null &&
+                    SymbolEqualityComparer.Default.Equals(
+                        target.ContainingAssembly,
+                        pair.Value.Assembly))
+                .Select(pair => pair.Key)
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+            if (exactCompilations.Length == 1)
+            {
+                return ResolveFromProject(
+                    exactCompilations[0],
+                    canonical,
+                    fingerprint,
+                    out nodeId);
+            }
+
+            if (exactCompilations.Length > 1)
+                return TargetMatch.Ambiguous;
+
+            // A namespace can merge declarations from several assemblies, in
+            // which case Roslyn exposes no owning assembly. If any indexed
+            // project contributes the name, selecting one would be a guess.
+            if (isUnownedNamespace)
+            {
+                return runSymbols.CountDistinctNodes(canonical) == 0
+                    ? TargetMatch.External
+                    : TargetMatch.Ambiguous;
+            }
+
+            // Fallback for metadata-symbol targets: require full assembly
+            // identity, the definition fingerprint and - when the target has
+            // source locations - matching declaration provenance. This keeps a
+            // same-named unrelated project from being accepted by name equality.
+            var identityCandidates = availableCompilations
+                .Where(pair =>
+                    target.ContainingAssembly is not null &&
+                    target.ContainingAssembly.Identity.Equals(
+                        pair.Value.Assembly.Identity))
+                .Select(pair => pair.Key)
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+            if (identityCandidates.Length == 0)
+                return TargetMatch.External;
+
+            var definitionCandidates = identityCandidates
+                .Where(projectPath =>
+                    runSymbols.HasDefinition(canonical, projectPath, fingerprint))
+                .ToArray();
+            if (definitionCandidates.Length == 0)
+                return TargetMatch.External;
+
+            if (definitionCandidates.Length == 1)
+            {
+                return ResolveFromProject(
+                    definitionCandidates[0],
+                    canonical,
+                    fingerprint,
+                    out nodeId);
+            }
+
+            var targetPaths = target.Locations
+                .Where(location => location.IsInSource)
+                .Select(location => location.SourceTree!.FilePath)
+                .Distinct(CSharpProjectDiscovery.PathComparer)
+                .ToArray();
+            if (targetPaths.Length > 0)
+            {
+                var provenanceCandidates = definitionCandidates
+                    .Where(projectPath => runSymbols.DeclaredIn(
+                        canonical,
+                        projectPath,
+                        targetPaths,
+                        fingerprint))
+                    .ToArray();
+                if (provenanceCandidates.Length == 1)
+                {
+                    return ResolveFromProject(
+                        provenanceCandidates[0],
+                        canonical,
+                        fingerprint,
+                        out nodeId);
+                }
+
+                return provenanceCandidates.Length > 1
+                    ? TargetMatch.Ambiguous
+                    : TargetMatch.External;
+            }
+
+            if (definitionCandidates.Length == 1)
+            {
+                return ResolveFromProject(
+                    definitionCandidates[0],
+                    canonical,
+                    fingerprint,
+                    out nodeId);
+            }
+
+            return TargetMatch.Ambiguous;
+        }
+
+        private TargetMatch ResolveFromProject(
+            string projectPath,
+            string canonical,
+            string fingerprint,
+            out CodeNodeId nodeId)
+        {
+            nodeId = null!;
+            if (runSymbols.TryGet(canonical, projectPath, fingerprint, out var registration))
+            {
+                nodeId = registration.NodeId;
                 return TargetMatch.Found;
             }
 
-            return TargetMatch.External;
+            return runSymbols.HasConflict(canonical, projectPath)
+                ? TargetMatch.Ambiguous
+                : TargetMatch.External;
         }
 
         private void TryAddRelationshipEdge(

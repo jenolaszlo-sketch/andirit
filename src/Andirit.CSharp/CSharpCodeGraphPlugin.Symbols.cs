@@ -73,6 +73,55 @@ public sealed partial class CSharpCodeGraphPlugin
         return $"{symbol.Kind}:{symbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}";
     }
 
+    /// <summary>
+    /// Builds a definition-level fingerprint independent of the compilation that
+    /// produced the symbol. Documentation IDs are lookup keys only; this
+    /// fingerprint proves that a bound target and an indexed declaration describe
+    /// the same definition after generics/reduced extension methods normalize.
+    /// </summary>
+    private static string DefinitionFingerprint(ISymbol symbol)
+    {
+        var normalized = Normalize(symbol);
+        var builder = new StringBuilder();
+        builder.Append(normalized.Kind).Append('\n');
+        switch (normalized)
+        {
+            case IMethodSymbol method:
+                builder.Append(method.MethodKind).Append('\n')
+                    .Append(method.MetadataName).Append('\n')
+                    .Append(method.Arity).Append('\n');
+                foreach (var parameter in method.Parameters)
+                    builder.Append(TypeIdentity(parameter.Type)).Append(',');
+                builder.Append('\n').Append(TypeIdentity(method.ReturnType));
+                break;
+            case INamedTypeSymbol type:
+                builder.Append(type.TypeKind).Append('\n')
+                    .Append(type.MetadataName).Append('\n')
+                    .Append(type.Arity);
+                break;
+            case IPropertySymbol property:
+                builder.Append(property.MetadataName).Append('\n')
+                    .Append(TypeIdentity(property.Type));
+                break;
+            case IFieldSymbol field:
+                builder.Append(field.MetadataName).Append('\n')
+                    .Append(TypeIdentity(field.Type));
+                break;
+            case IParameterSymbol parameter:
+                builder.Append(parameter.Ordinal).Append('\n')
+                    .Append(TypeIdentity(parameter.Type));
+                break;
+            case INamespaceSymbol @namespace:
+                builder.Append(@namespace.ToDisplayString());
+                break;
+        }
+
+        return builder.ToString();
+    }
+
+    private static string TypeIdentity(ITypeSymbol type) =>
+        type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+
     private static CodeNodeId NodeId(string category, string canonical) =>
         new($"csharp:{category}:{Hash(canonical)}");
 

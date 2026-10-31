@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Andirit.CSharp.Tests;
 
-public sealed class CSharpCodeGraphPluginTests
+public sealed partial class CSharpCodeGraphPluginTests
 {
     [Fact]
     public async Task ExtractAsync_ModelsPartialTypesMembersParametersAndContainment()
@@ -1674,10 +1674,11 @@ public sealed class CSharpCodeGraphPluginTests
     }
 
     [Fact]
-    public async Task ExtractAsync_AmbiguousTargetsAreCountedNeverGuessed()
+    public async Task ExtractAsync_UnrelatedDuplicateDoesNotMakeAnExactDependencyAmbiguous()
     {
-        // Zpp sorts after both libraries, so both Example.Helper
-        // registrations land before its call resolves: genuinely ambiguous.
+        // Lib2 is not referenced by Zpp. The bound target belongs to Lib1,
+        // which is an exact dependency, so the unrelated duplicate must not
+        // turn a provable cross-project call into an ambiguous one.
         var extracted = await ExtractAsync(
             ("src/Lib1/Lib1.csproj", """
                 <Project Sdk="Microsoft.NET.Sdk">
@@ -1727,12 +1728,17 @@ public sealed class CSharpCodeGraphPluginTests
 
         var calls = extracted.Result.RelationshipCoverage.Single(value =>
             value.RelationshipKind == CodeEdgeKinds.Calls.Value);
-        Assert.True(calls.AmbiguousTargets > 0, $"ambiguous={calls.AmbiguousTargets}");
+        Assert.Equal(0, calls.AmbiguousTargets);
+        Assert.Equal(1, calls.CrossProjectTargets);
         var program = extracted.Nodes.Single(node =>
             node.Kind == CodeNodeKinds.Callable && node.Name == "Run");
-        Assert.DoesNotContain(
+        Assert.Contains(
             extracted.Edges,
-            edge => edge.Kind == CodeEdgeKinds.Calls && edge.SourceId == program.Id);
+            edge => edge.Kind == CodeEdgeKinds.Calls &&
+                edge.SourceId == program.Id &&
+                edge.TargetId == ScopedSymbolNodeId(
+                    "src/Lib1/Lib1.csproj",
+                    "M:Example.Helper.Go"));
     }
 
     [Fact]

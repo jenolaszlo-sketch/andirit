@@ -62,10 +62,14 @@ public sealed partial class CSharpCodeGraphPlugin
                         cancellationToken: cancellationToken))
                     .ToArray();
                 var references = CreatePlatformReferences().ToList();
-                var availableDependencies = project.ProjectReferences
+                var availableProjectReferences = project.ProjectReferences
                     .Where(compilations.ContainsKey)
-                    .ToHashSet(CSharpProjectDiscovery.PathComparer);
-                references.AddRange(availableDependencies
+                    .ToArray();
+                var availableCompilations = availableProjectReferences.ToDictionary(
+                    reference => reference,
+                    reference => compilations[reference],
+                    CSharpProjectDiscovery.PathComparer);
+                references.AddRange(availableProjectReferences
                     .Select(reference => compilations[reference].ToMetadataReference()));
                 if (project.ProjectReferences.Any(reference => !projectByPath.ContainsKey(reference)))
                     warningCodes.Add("csharp.project.reference-missing");
@@ -79,7 +83,8 @@ public sealed partial class CSharpCodeGraphPlugin
                     context,
                     plugin,
                     project,
-                    availableDependencies,
+                    compilation,
+                    availableCompilations,
                     runSymbols);
                 builder.AddProject();
                 foreach (var tree in trees)
@@ -226,30 +231,104 @@ public sealed partial class CSharpCodeGraphPlugin
         public ValueTask DisposeAsync() => ValueTask.CompletedTask;
     }
 
-    /// <summary>Symbols shared across every project in one extraction run.</summary>
+    /// <summary>
+    /// Symbols shared across every project in one extraction run. Registrations
+    /// are keyed by canonical documentation ID for lookup, but every entry keeps
+    /// its project provenance, definition fingerprint and declaration paths.
+    /// Canonical IDs never establish target identity on their own.
+    /// </summary>
     private sealed class RunSymbols
     {
-        public Dictionary<string, CodeNodeId> GlobalNodes { get; } =
+        private readonly SortedDictionary<string, SortedDictionary<string, Registration>> _registrations =
             new(StringComparer.Ordinal);
 
-        public HashSet<string> Ambiguous { get; } = new(StringComparer.Ordinal);
-
-        /// <summary>
-        /// Registers a symbol's node. Re-registering the same canonical key
-        /// with the same node id (partial types across files) is a no-op.
-        /// Only a different node id for the same key is ambiguous.
-        /// </summary>
-        public void Register(string canonicalKey, CodeNodeId nodeId)
+        public void Register(
+            string canonicalKey,
+            string projectPath,
+            CodeNodeId nodeId,
+            string definitionFingerprint,
+            string declarationPath)
         {
-            if (GlobalNodes.TryGetValue(canonicalKey, out var existing))
+            if (!_registrations.TryGetValue(canonicalKey, out var byProject))
             {
-                if (existing != nodeId)
-                    Ambiguous.Add(canonicalKey);
+                byProject = new(StringComparer.Ordinal);
+                _registrations[canonicalKey] = byProject;
             }
-            else
+
+            if (!byProject.TryGetValue(projectPath, out var registration))
             {
-                GlobalNodes[canonicalKey] = nodeId;
+                registration = new Registration(nodeId, definitionFingerprint);
+                byProject[projectPath] = registration;
             }
+            else if (registration.NodeId != nodeId ||
+                     !string.Equals(
+                         registration.DefinitionFingerprint,
+                         definitionFingerprint,
+                         StringComparison.Ordinal))
+            {
+                registration.Conflicting = true;
+            }
+
+            registration.DeclarationPaths.Add(declarationPath);
+        }
+
+        public bool TryGet(
+            string canonicalKey,
+            string projectPath,
+            string definitionFingerprint,
+            out Registration registration)
+        {
+            registration = null!;
+            return _registrations.TryGetValue(canonicalKey, out var byProject) &&
+                byProject.TryGetValue(projectPath, out registration!) &&
+                !registration.Conflicting &&
+                string.Equals(
+                    registration.DefinitionFingerprint,
+                    definitionFingerprint,
+                    StringComparison.Ordinal);
+        }
+
+        public bool HasDefinition(
+            string canonicalKey,
+            string projectPath,
+            string definitionFingerprint) =>
+            TryGet(canonicalKey, projectPath, definitionFingerprint, out _);
+
+        public bool HasConflict(string canonicalKey, string projectPath) =>
+            _registrations.TryGetValue(canonicalKey, out var byProject) &&
+            byProject.TryGetValue(projectPath, out var registration) &&
+            registration.Conflicting;
+
+        public bool DeclaredIn(
+            string canonicalKey,
+            string projectPath,
+            IReadOnlyCollection<string> paths,
+            string definitionFingerprint)
+        {
+            if (!TryGet(canonicalKey, projectPath, definitionFingerprint, out var registration))
+                return false;
+
+            return paths.Any(path => registration.DeclarationPaths.Contains(path));
+        }
+
+        public int CountDistinctNodes(string canonicalKey) =>
+            _registrations.TryGetValue(canonicalKey, out var byProject)
+                ? byProject.Values
+                    .Where(registration => !registration.Conflicting)
+                    .Select(registration => registration.NodeId)
+                    .Distinct()
+                    .Count()
+                : 0;
+
+        public sealed class Registration(
+            CodeNodeId nodeId,
+            string definitionFingerprint)
+        {
+            public CodeNodeId NodeId { get; } = nodeId;
+            public string DefinitionFingerprint { get; } = definitionFingerprint;
+            public SortedSet<string> DeclarationPaths { get; } =
+                new(CSharpProjectDiscovery.PathComparer);
+            public bool Conflicting { get; set; }
         }
     }
 
