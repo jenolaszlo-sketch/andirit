@@ -58,6 +58,11 @@ question is resolved:
 recorded and B2 preserved as an evaluated, non-selected alternative. This is an
 architecture decision only: CI-1A implementation remains unimplemented and
 unauthorized, pending the separately authorized `ADR-CI1-01-CI1A-IMPL-01` scope.
+The owner has since accepted the independent decision review
+([`ADR-CI1-01-OWNER-01-Q1`](decisions/adr-ci1-01-owner-01-q1-acceptance.md),
+`SUPPORTED WITH QUALIFICATIONS`) and the CI-1A implementation specification is
+prepared at [`docs/planning/adr-ci1-01-ci1a-impl-01/`](planning/adr-ci1-01-ci1a-impl-01/README.md);
+implementation remains unauthorized.
 
 ## Candidate capability sequence
 
