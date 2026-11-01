@@ -64,6 +64,14 @@ The owner has since accepted the independent decision review
 prepared at [`docs/planning/adr-ci1-01-ci1a-impl-01/`](planning/adr-ci1-01-ci1a-impl-01/README.md);
 implementation remains unauthorized.
 
+**CI-1A corrected foundation status (2026-11-02).** Stage 1's native vertical
+slice was implemented and accepted within its tested scope. REM-01-Q1 has now
+independently qualified the corrected foundation, and OWNER-01 accepts REM-01
+with qualifications. S2.1 verified source acquisition and compilation provenance
+is eligible for a separate implementation commission; Stage 2 remains
+unauthorized. The obligation register retains all later correctness gates.
+See [OWNER-01 handoff](planning/adr-ci1-01-ci1a-s2-rem-01-owner-handoff.md).
+
 ## Candidate capability sequence
 
 These identifiers label **backlog candidates**, not approved scope or schedules.

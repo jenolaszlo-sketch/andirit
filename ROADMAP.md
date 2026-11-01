@@ -719,6 +719,14 @@ and the CI-1A implementation specification is prepared at
 [`docs/planning/adr-ci1-01-ci1a-impl-01/`](docs/planning/adr-ci1-01-ci1a-impl-01/README.md);
 implementation remains unauthorized. The candidate IDs above remain backlog labels.
 
+**CI-1A corrected foundation status (2026-11-02).** Stage 1's native vertical
+slice was implemented and accepted within its tested scope. REM-01-Q1 has now
+independently qualified the corrected foundation, and OWNER-01 accepts REM-01
+with qualifications. S2.1 verified source acquisition and compilation provenance
+is eligible for a separate implementation commission; Stage 2 remains
+unauthorized. The obligation register retains all later correctness gates.
+See [OWNER-01 handoff](docs/planning/adr-ci1-01-ci1a-s2-rem-01-owner-handoff.md).
+
 Success means **fewer total agent tool calls, fewer unnecessary tokens, and
 faster useful answers**, measured against realistic shell/file-inspection
 workflows including cold/incremental index costs and accuracy, not hypothetical

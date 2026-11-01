@@ -113,3 +113,52 @@ manifest or alter the frozen package. Future citations must distinguish:
 
 The Stage 1 storage acceptance is not revoked by this erratum. The claim that
 the package is fully source-bound is qualified.
+
+---
+
+## 4. OWNER-01 additive correction (2026-11-02)
+
+Authority: REM-01-Q1 `NEW-FINDINGS.md` NEW-03 and
+`EVIDENCE-INTEGRITY-REVIEW.md` §§1–4, manifest-verified by OWNER-01.
+This section corrects the statements above additively; it preserves the earlier
+text and every frozen package/manifest. The later correction controls citations.
+
+### 4.1 The Stage 1 manifest does not record the observed hash
+
+Section 1.1's “Recorded actual in manifest”, “Observed matches recorded actual”
+and “The manifest itself records both values” are inaccurate. The original
+`evidence/q1-reviewer-manifest.txt` records only expected
+`1543cd4a80933506a64ddeaf578c08922ff640d2a6d365fd567d0c9e30007f48`.
+Observed `283de40be767002d06ac1f05f86cea334b2898414045316aca7caf9ec10bf457`
+is a reviewer/erratum/OWNER-01 measurement of the current `FINAL-HANDOFF.md`,
+not a second self-declared manifest row. No assertion that the original package
+self-recorded this mismatch should be inferred. Material discrepancy remains.
+
+OWNER-01 rehashed 15/16 reviewer rows and 6/6 producer rows: **21/22** relevant
+rows reproduce. `REPORT.md` is still absent. The claimed Stage 1 aggregate tree
+remains unverified; no aggregate algorithm has been recovered. Technical review
+files and six producer artifacts remain reproducible; bounded storage conclusions
+remain supportable. This does not verify the entire historical package.
+
+### 4.2 Codex row identifies Git blob bytes, not materialized bytes
+
+Artifact `src/Andirit.CSharp/CSharpProjectDiscovery.cs`; Git blob
+`8f921e383a9320726696694546418cdad9f9cbf2` at both pinned commits
+`76ebaae84d741a38f92d2422c63742197c36bc82` and
+`4c6d26a1d103a62fffe2e2743467eedb5f21afc2`.
+
+| Representation | SHA-256 | Bytes | Line-ending condition measured in OWNER-01 |
+| --- | --- | ---: | --- |
+| Raw pinned Git blob (`git cat-file blob`) | `c66c641137e6d3d237e65864d40e52a90348a380784de104544706e20a6a288e` | 15,464 | 369 LF, zero CRLF pairs |
+| Materialized canonical working file at reviewed source | `38c1bf9fd8a6ca48dd27af4d85e0601d7d592fef4a954fcdece6fc3a5a485a44` | 15,466 | 369 LF bytes, two occur in CRLF pairs |
+
+Binary comparison after replacing CRLF pairs with LF is exactly equal.
+The two extra CR bytes explain the byte/hash discrepancy. The declared SHA/size
+are exactly correct for the pinned blob, and must not be cited as working-file
+identity. This refines the cause to line-ending materialization; it is not a
+source-content mismatch. No missing hash was reconstructed or invented.
+
+The interrupted Codex draft remains supporting history, not a materialized
+accepted independent review. Stage 1 aggregate integrity remains qualified.
+OWNER-01's acceptance is the additive historical owner-acceptance reference;
+original Stage 1 decision text and frozen evidence remain unchanged.

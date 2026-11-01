@@ -328,7 +328,7 @@ The Stage 2 commission must not implicitly authorize:
 | Native-node-ID optimization | Explicitly deferred |
 | Incremental index redesign | Explicitly deferred |
 | Package publication | Separate milestone |
-| Full cross-platform certification by default | Stage 2 deliverable (Linux CI) |
+| Full cross-platform certification | Stage 6; expanded Linux native suite is required evidence before Stage 2 acceptance (S2.5), not full certification |
 | Claims of universal semantic completeness | Scope-relative only |
 
 Any newly required work outside the accepted architecture must be separately scoped and authorized.

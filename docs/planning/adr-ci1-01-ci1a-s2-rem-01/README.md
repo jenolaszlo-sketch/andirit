@@ -1,8 +1,10 @@
 # ADR-CI1-01-CI1A-S2-BOUNDARY-REM-01
 
-**Status:** `CI1A-S2-BOUNDARY-REM-01 READY FOR Q1 WITH QUALIFICATIONS`.
-Remediation is complete for the foundation scope; independent `REM-01-Q1` review
-is required. Stage 2 remains **unauthorized**.
+**Status (2026-11-02):** `ADR-CI1-01-CI1A-S2-BOUNDARY-REM-01 ACCEPTED WITH QUALIFICATIONS`.
+Independent `REM-01-Q1` reports `SUPPORTED WITH QUALIFICATIONS`; the owner has
+accepted the bounded foundation. See the [owner handoff](../adr-ci1-01-ci1a-s2-rem-01-owner-handoff.md)
+and [obligation register](../../decisions/adr-ci1-01-ci1a-s2-obligation-register.md).
+S2.1 is eligible for separate commissioning. Stage 2 remains **unauthorized**.
 
 **Starting evidence:** Q1B independent review, disposition
 `REMEDIATION REQUIRED` (6 blocking, 8 significant, 2 minor; 23 probes).

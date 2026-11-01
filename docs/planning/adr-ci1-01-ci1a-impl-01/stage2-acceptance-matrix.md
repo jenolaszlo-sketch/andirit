@@ -22,18 +22,31 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 
 | # | Requirement | Observable Behavior | Positive Test | Negative/Adversarial Test | Env | Independent Stage |
 |---|-------------|---------------------|---------------|---------------------------|-----|-------------------|
-| 1 | `usage4` identity: repo + target + category + span + content hash | Identical physical invocation → same `CodeOccurrenceId` | Same invocation in same unit → same ID | Different span → different ID | native | S2 implementation |
-| 2 | `asmctx3` identity: compctx1 + metadata + module + identifier + declaration + shape | Same defining compilation → same `CodeOccurrenceTargetId` | Two units invoking same method → same target ID | Different defining compilation → different target ID | native | S2 implementation |
-| 3 | Contributor excluded from occurrence identity | Identical fact from different units → same ID, unioned contributors | Unit A + Unit B same invocation → 1 fact, 2 contributors | — | native | S2 implementation |
+| 1 | `usage4`: repository, plugin, R2 semantics version, semantic source unit, path, source hash, start line, start column, end line, end column, target document, `asmctx3`, category (exact order) | Exact R2 tuple/encoding → same `CodeOccurrenceId`; site content hash is payload evidence, not an identity field | Frozen R2 vectors independently recompute; same semantic fact via two storage contributors retains ID | Change plugin, semantic unit, source hash, target doc, span or defining context → different ID; forged ID refused | native + independent identity oracle | REM-01 independently verified; S2.2 semantic minting/S2.5 acceptance |
+| 2 | `asmctx3`: `asmctx3-context`, `compctx1`, canonical context value, metadata identity, module name, identifier digest, full-declaration digest, shape digest | `asmctx3:sha256:` + accepted digest; exact live defining-compilation/declaration correspondence required before minting | Frozen components and valid cross-project defining context independently reproduce target identity | Different defining context/component → different target; unavailable/external/unbound context → refusal, no fact | native + independent identity oracle | REM-01 structural helper verified; S2.2 live minting/S2.5 acceptance |
+| 3 | Storage contributor unit excluded; plugin and semantic source unit included in `usage4` | Identical semantic fact via two storage units → same ID, unioned contributors | Same semantic source unit/site through storage units A/B → 1 fact, 2 contributors | Different semantic source units or plugins → distinct facts | native | S2.2/S2.3 implementation; S2.5 acceptance |
 | 4 | Payload hash detects conflict | Same ID, different immutable payload → rejection | Conflicting payload → `CodeGraphBatchRejectedException` | — | native | S2 implementation |
 
 ---
+
+**OWNER-01 / NEW-02 identity correction (2026-11-02).** Frozen authority is R2
+`PROVENANCE-CONTRACT.md` §§4–5 and Q3 `TARGET-IDENTITY-REVIEW.md`, incorporated
+by owner §F; production mapping and vectors are in
+[`identity-contract.md`](../adr-ci1-01-ci1a-s2-rem-01/identity-contract.md).
+`usage4` starts with domain `usage4`; semantics string is
+`usage4-b2c-exp-r2-20261101`; category is `method-invocation`. Each UTF-8 part
+has a 32-bit big-endian byte-length prefix; coordinates are invariant decimal
+strings. SHA-256 yields 64 lowercase hex with no occurrence prefix.
+`asmctx3` uses the same encoding; component domains are `asmctx3-identifier`,
+`asmctx3-declarations`, `asmctx3-target`. Test both frozen usage vectors and
+every tuple/component discriminator using an oracle independent of the helper.
+Source-unit identity and storage-contributor identity must not be conflated.
 
 ## 3. Cross-Project Binding
 
 | # | Requirement | Observable Behavior | Positive Test | Negative/Adversarial Test | Env | Independent Stage |
 |---|-------------|---------------------|---------------|---------------------------|-----|-------------------|
-| 1 | Target in dependency binds to dependency's verified compilation | `asmctx3` constructed from dependency's `compctx1` | Project A calls Project B method → target ID uses Project B's `compctx1` | Dependency not in universe → `External`/`Unresolved` | native | S2 independent review |
+| 1 | Target in dependency binds to dependency's verified compilation | `asmctx3` constructed from dependency's `compctx1` | Project A calls Project B method → target ID uses Project B's `compctx1` | Dependency outside verified universe → no fact; `UnsupportedExternalEvidence`/`External` refusal, or `MissingDefiningCompilation` when defining evidence is missing | native | S2 independent review |
 | 2 | Calling unit owns occurrence; defining unit owns target | `SourceUnitId` = caller; `TargetId` = callee's compilation | Project A unit has fact with Project B target | — | native | S2 implementation |
 
 ---
@@ -106,7 +119,7 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 | 1: Accepted generation only | Queries use only current publication | Query with stale handle → `StalePublication` | — | native | S2 independent review |
 | 2: Stale index refused | Schema/availability checks enforced | Graph-only → `AnalysisUnavailable`; stale → `StalePublication` | — | native | S2 independent review |
 | 3: No unbounded scan | `Examined` = target-index entries read, never unrelated repository facts | Query large repo → `Examined` covers the target page only | — | native | S2 independent review |
-| 4: Failed staging preserves prior | N6 equivalent with real facts | Known pre-commit fault → prior facts visible | — | native | S2 independent review |
+| 4: Failed staging preserves prior publication and corresponding projection | NEW-01 reproduction with real facts; assert graph AND occurrence availability, coverage, publication binding and conflict validation before reopen, then compare durable authority and reopen | Known pre-commit/apply failure preserves prior facts and successful recovered availability; post-recovery cross-unit conflict still refused | Unknown-outcome quarantine remains distinct; no reopen-only assertion may satisfy this gate | native | NEW-01 independently qualified before S2.3/recovery reliance; S2.5 integrated evidence |
 | 5: Cancelled staging exposes no partial data | Stage 1 cancellation behavior preserved | Dedicated native cancel-path test | — | native | Stage 6 (explicitly deferred; not counted as exercised) |
 | 6: Superseded cannot replace newer | Baseline check inherited | Superseded run rejected | — | native | S2 independent review |
 | 7: Reopen equivalent index | N5 equivalent with real facts | Reopen → byte-equal query results | — | native | S2 independent review |
@@ -135,7 +148,7 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 |---|-------------|---------------------|-------------------|-----|-------------------|
 | 1 | Real-project publication cost measured | Publication time recorded for fixture | Measurement log | native | S2 independent review |
 | 2 | Real-project reopen cost measured | Reopen time recorded | Measurement log | native | S2 independent review |
-| 3 | Query latency bounded | `Examined` = page size; query time recorded | Measurement log | native | S2 independent review |
+| 3 | Query latency bounded | `Examined` = target-index entries read; query time recorded | Measurement log | native | S2 independent review |
 | 4 | Cross-platform native tests pass | Linux CI executes `Andirit.LatticeDb.Tests` | CI logs | Linux CI | S2 independent review |
 
 ---
@@ -169,7 +182,7 @@ prior-writer gate, and infeasibility returns to the owner for an amendment.
 
 | Requirement | Observable Behavior | Evidence Required |
 |-------------|---------------------|-------------------|
-| Linux CI executes native tests | `Andirit.LatticeDb.Tests` 38/38 pass on Linux | CI pipeline logs |
+| Linux CI executes native tests | Entire current expanded `Andirit.LatticeDb.Tests` suite passes on Linux; retain the original 38 Stage 1 tests plus additions (REM-01 reviewed 43 on Windows) | CI pipeline logs, before S2.5 acceptance |
 | Platform-specific behavior documented | File locking, WAL, memory mapping differences noted | Behavior matrix |
 
 **Scope.** The Linux native suite is a Stage 2 acceptance gate. Full
