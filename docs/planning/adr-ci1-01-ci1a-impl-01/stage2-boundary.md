@@ -61,8 +61,8 @@ Stage 2 is authorized to implement the following components **only**:
 
 ### 3.5 Exact Target Identity from Roslyn (asmctx3)
 - For each invocation occurrence, resolve the target symbol via Roslyn semantic model.
-- Construct `asmctx3` from the **verified defining compilation**: compilation context + metadata identity + module name + identifier-token digest + full-declaration digest + shape digest.
-- Reject if target cannot be bound to a verified defining compilation.
+- Construct `asmctx3` from the **verified defining compilation**: `compctx1` + metadata identity + module name + identifier-token digest + full-declaration digest + shape digest, using the accepted canonical format.
+- Reject if the target cannot be bound to a verified defining compilation; an external or out-of-scope target is an explicit refusal, not a confirmed fact.
 
 ### 3.6 Source Occurrence Extraction
 - Extract supported invocation occurrences from the **same live Roslyn compilation** used for graph relationships.
@@ -70,15 +70,16 @@ Stage 2 is authorized to implement the following components **only**:
 - Unsupported categories recorded in coverage, never as facts.
 
 ### 3.7 Conversion to Accepted `usage4` Occurrence Facts
-- Construct `CodeOccurrenceFact` with:
-  - `usage4` identity (repository, target, category, span, content hash)
-  - `asmctx3` target identity
-  - Source unit ownership (calling project)
-  - Contributor = (plugin, unit)
-  - Source hash (actual indexed bytes)
-  - Content hash (invocation site)
-  - Declaration span (perpendicular evidence)
-  - Semantics version = 4
+- Construct `CodeOccurrenceFact` with the accepted R2 inputs:
+  - `usage4` identity over repository, plugin, R2 semantics version, semantic
+    source unit, path, source hash, span, target document, `asmctx3`, category;
+  - `asmctx3` canonical target identity;
+  - Semantic source unit ownership (calling project) and a separate storage
+    contributor `(plugin, storage unit)`;
+  - Source hash (actual indexed bytes);
+  - Content hash (invocation site; payload evidence, not an identity field);
+  - Declaration span (perpendicular evidence);
+  - Semantics version = 4.
 - Refuse/record coverage for: ambiguous binding, missing defining compilation, unsupported target kind, incomplete universe.
 
 ### 3.8 Publication into Stage 1 Native Storage
@@ -107,8 +108,8 @@ Stage 2 must preserve the accepted identity contracts **without substitution**:
 
 | Identity | Contract | Authority |
 |----------|----------|-----------|
-| `usage4` | Domain-separated SHA-256: repository, target, category, span, content hash | `ADR-CI1-01-OWNER-DECISION` §F |
-| `asmctx3` | Domain-separated SHA-256: compctx1 + metadata + module + identifier + declaration + shape | `ADR-CI1-01-OWNER-DECISION` §F |
+| `usage4` | Domain-separated SHA-256 over repository, plugin, R2 semantics version, semantic source unit, path, source hash, span, target document, `asmctx3`, category (big-endian length-prefixed parts) | `ADR-CI1-01-OWNER-DECISION` §F; R2 §5 |
+| `asmctx3` | `asmctx3:sha256:` + domain-separated SHA-256 over `compctx1`, metadata identity, module, identifier digest, full-declaration digest, shape digest; exact declaration correspondence required | `ADR-CI1-01-OWNER-DECISION` §F; R2 §4 |
 | `compctx1` | Compilation descriptors from actual indexed source bytes | S-01; `ADR-CI1-01-OWNER-DECISION` §F |
 | `analysisscope1` | Declared unit set for the run | S-01; `ADR-CI1-01-OWNER-DECISION` §F |
 | `compilation-universe1` | Verified live compilations | S-01; `ADR-CI1-01-OWNER-DECISION` §F |
@@ -127,10 +128,11 @@ Stage 2 must distinguish and correctly report:
 | Verified defining compilation | Target identity `asmctx3` bound to exact compilation |
 | Missing defining compilation | Refusal with `MissingDefiningCompilation` / `Unresolved` coverage |
 | Ambiguous matching declarations | Refusal with `Ambiguous` coverage |
-| Valid cross-project invocation | Target bound to dependency's verified compilation; `External` coverage if dependency not in universe |
+| Valid cross-project invocation | Target bound to dependency's verified compilation; `Confirmed` when the defining compilation is in the declared universe |
+| External/out-of-scope target | `UnsupportedExternalEvidence` / `External` refusal; no fact, no canonical `asmctx3` |
 | Unsupported target kind | `Unsupported` coverage; no fact emitted |
-| Incomplete compilation universe | `Incomplete` / `Unresolved` refusal; no partial facts |
-| Valid complete-empty analysis | `Available` with zero facts; `AnalysisUnavailable` only if no analysis performed |
+| Incomplete compilation universe | `Incomplete` / `Unresolved` refusal; no partial facts and no complete-empty claim |
+| Valid complete-empty analysis | `Available` with zero facts only when the declared scope is verified complete; `AnalysisUnavailable` only if no analysis was performed |
 
 ---
 
@@ -174,11 +176,16 @@ Stage 1 rebuilds target pages per repository per completion (O(total facts)). Re
 - Confirm Stage 1 owner acceptance (`ADR-CI1-01-CI1A-S1-OWNER-ACCEPTANCE`).
 - Establish Stage 2 start prerequisites per obligation reconciliation.
 - Pin current compilation-source interfaces (`CSharpCodeGraphPlugin`, `CSharpProjectDiscovery`).
-- Define coverage/refusal vocabulary (IF-03 resolution).
-- Identify real-project fixture repository.
+- Fix contract-level resolution/coverage/availability semantics (IF-03); the
+  production type implementation is a separately authorized slice.
+- Record the SQ-02 outcome/retry policy and the accepted serialized SQ-03 model.
+- Identify and freeze a real-project fixture and independent oracle, or
+  explicitly authorize a bounded S2.0 preparation slice to create them.
 - Record baseline native tests.
 
-**Gate:** Obligation reconciliation prerequisites resolved (SQ-02, SQ-03, S-01, IF-03 documented in Stage 2 spec).
+**Gate:** Preauthorization contracts are fixed (S-01 trust chain, IF-03
+semantics, SQ-02 policy, SQ-03 model, fixture timing). Future implementation and
+evidence are not credited as passed at this gate.
 
 ### S2.1: Verified Source and Compilation Context
 - Bind actual source inputs to Roslyn syntax tree construction.
@@ -262,6 +269,12 @@ Stage 2 must use an actual C# repository (owned or reproducible) covering:
 
 **Expected results must be independently established** (not generated by the same extractor being tested).
 
+The repository currently contains a small real fixture at
+`docs/planning/ci1-scope-01/fixtures/` with 9 C# files and a 32-row proposed
+oracle. It is below these minima, is not referenced by Stage 2 and is not a
+qualifying fixture. It is a seed for an authorized preparation slice, not an
+accepted oracle.
+
 ---
 
 ## 10. Stage 2 Query and Coverage Boundary
@@ -276,12 +289,18 @@ Before Stage 2 implementation begins, define:
 
 | Coverage State | Meaning | Refusal Mapping |
 |----------------|---------|-----------------|
-| `Confirmed` | Occurrence fact emitted, fully verified | `Available` |
-| `External` | Target in dependency not in universe | `Available` with `External` coverage |
-| `Ambiguous` | Multiple matching declarations | Refusal / `Ambiguous` |
+| `Confirmed` | Occurrence fact emitted, fully verified | `Available` only when the declared scope is complete |
+| `External` | Target is external or the defining unit is outside the declared universe | Refusal / `External`; no canonical fact |
+| `Ambiguous` | Multiple live defining bindings | Refusal / `Ambiguous` |
 | `Unresolved` | Binding incomplete (missing compilation, etc.) | Refusal / `Unresolved` |
-| `Unsupported` | Target kind not supported (ctor, property, etc.) | Refusal / `Unsupported` |
-| `ConditionalInactive` | Conditionally compiled out | `Available` with `ConditionalInactive` |
+| `Unsupported` | Target kind or source construct not supported | Refusal/coverage; no fact |
+| `ConditionalInactive` | Conditionally compiled out under the declared configuration | Exclusion/coverage; not a confirmed fact |
+| `Incomplete` | Analysis ran but the declared scope is not proven complete | `IncompleteAnalysis`; no complete-empty claim |
+
+Coverage resolution is not the same as publication availability. A query result
+must carry the analysis state and scope identity; it must not infer complete-empty
+from an empty fact collection. See
+`docs/planning/adr-ci1-01-ci1a-s2-rem-01/coverage-and-availability.md`.
 
 ### Public API Exclusion (Mandatory)
 - Stage 2 **must not** implement the complete public Find Usages API.
@@ -329,9 +348,9 @@ Any newly required work outside the accepted architecture must be separately sco
 | D3 | Synthetic corpus qualified | Real-project preservation | Before/after graph observations | S2 independent review |
 | D4 | Partial native qualification | Preserve applicable invariants | Native publication evidence | S2 independent review |
 | D5 | Stage 1 supported | No incompatible re-interpretation | Schema/refusal tests | CI-1A acceptance |
-| SQ-02 (unknown outcome) | Qualified S1 boundary | Documented conservative behavior | Stage 2 spec section | S2 spec review |
-| SQ-03 (concurrency) | Serialization only | Declared concurrency model | Stage 2 spec section | S2 spec review |
-| IF-03 (coverage) | Open | Full vocabulary defined | Updated abstractions | **Pre-S2 auth** |
+| SQ-02 (unknown outcome) | Qualified S1 boundary | Documented conservative behavior | REM-01 policy + native ack-loss test | S2.3/S2.5 |
+| SQ-03 (concurrency) | Serialization only | Declared concurrency model | REM-01 model + native schedule test | S2.3/S2.5 |
+| IF-03 (coverage) | Contract fixed by REM-01 | Full vocabulary defined | Contract + production coverage/reopen evidence | **Pre-S2 auth contract**; S2 acceptance evidence |
 | Historical fixture (SQ-04) | Not generated | Immutable master + copies | Fixture hashes + refusal tests | S2 independent review |
 | Cross-platform (SQ-05) | Windows only | Linux CI + tests | Linux CI pass | S2 independent review |
 | Namespace mismatch test (SQ-06) | Missing | New test added | Test passing | S2 independent review |
@@ -344,9 +363,10 @@ Any newly required work outside the accepted architecture must be separately sco
 
 | Document | Path | Status |
 |----------|------|--------|
-| Stage 2 specification | `docs/planning/adr-ci1-01-ci1a-impl-01/specification.md` (update) | This document |
-| Stage 2 acceptance matrix | `docs/planning/adr-ci1-01-ci1a-impl-01/stage2-acceptance-matrix.md` | To be created |
-| Stage 2 handoff | `docs/planning/adr-ci1-01-ci1a-impl-01/stage2-handoff.md` | To be created |
+| Stage 2 boundary | `docs/planning/adr-ci1-01-ci1a-impl-01/stage2-boundary.md` | This document |
+| Stage 2 acceptance matrix | `docs/planning/adr-ci1-01-ci1a-impl-01/stage2-acceptance-matrix.md` | Committed |
+| Stage 2 handoff | `docs/planning/adr-ci1-01-ci1a-impl-01/stage2-handoff.md` | Committed |
+| REM-01 reconciliation | `docs/planning/adr-ci1-01-ci1a-s2-rem-01/` | Committed |
 | Updated roadmap | `ROADMAP.md`, `docs/agent-code-intelligence-roadmap.md` | To be updated |
 
 ### Next Commission (Not Authorized)

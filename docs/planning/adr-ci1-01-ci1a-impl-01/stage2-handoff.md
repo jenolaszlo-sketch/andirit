@@ -32,14 +32,16 @@ The following must be resolved **before** Stage 2 implementation may begin:
 
 | Prerequisite | Source | Status | Resolution Required |
 |--------------|--------|--------|---------------------|
-| **S-01 Provenance chain specified** | Obligation reconciliation | Open | Stage 2 spec must define: source acquisition → hash → compctx1 → semantic binding → usage4 |
-| **IF-03 Coverage vocabulary defined** | Obligation reconciliation | Open | `CodeOccurrenceCoverage` extended with 6 states; refusal mapping documented |
-| **SQ-02 Unknown outcome model declared** | Obligation reconciliation | Open | Stage 2 spec section: conservative behavior on persistence failure |
-| **SQ-03 Concurrency model declared** | Obligation reconciliation | Open | Stage 2 spec section: serialization contract or MVCC proposal with qualification plan |
+| **S-01 Provenance chain specified** | Obligation reconciliation | Contract partly fixed by REM-01 | REM-01 fixes canonical identity inputs; S2.1 must define and implement source acquisition → hash → `compctx1` → live universe → semantic binding → `usage4` |
+| **IF-03 Coverage vocabulary defined** | Obligation reconciliation | Contract fixed by REM-01; Stage 2 implementation remains | Resolution/coverage/availability dimensions and complete-empty rules are recorded; Stage 2 owns production extraction and reader integration |
+| **SQ-02 Unknown outcome model declared** | Obligation reconciliation | Fixed by REM-01 | Conservative quarantine/reopen policy recorded and tested for the ordinary path; crash/multi-process remains later |
+| **SQ-03 Concurrency model declared** | Obligation reconciliation | Fixed by REM-01 | Serialized `_writeGate` model accepted; native schedule test remains a Stage 2 acceptance item |
 | **Stage 1 owner acceptance recorded** | `adr-ci1-01-ci1a-s1-owner-acceptance.md` | ✅ Done | — |
 | **Obligation reconciliation complete** | `adr-ci1-01-ci1a-s1-obligation-reconciliation.md` | ✅ Done | — |
 
-**No Stage 2 implementation commission may be authorized until all five prerequisites are resolved.**
+**No Stage 2 implementation commission may be authorized until the four open
+prerequisites are resolved.** Stage 1 owner acceptance and obligation
+reconciliation are already recorded and do not count as open work.
 
 ---
 
@@ -52,7 +54,7 @@ The following must be resolved **before** Stage 2 implementation may begin:
 | Analysis scope / universe | `CodeGraphIngestionSink` / `CodeIndexingService` integration | Declare project set; verify live compilations |
 | Target identity (asmctx3) | `CodeOccurrenceIdentity` (extend) | Resolve via Roslyn; construct from verified defining compilation |
 | Occurrence extraction | `CSharpCodeGraphPlugin` session/graph builder | Extract `Invocation` occurrences from live compilation |
-| Fact conversion (usage4) | `CodeOccurrenceFact.Create` (existing) | Convert Roslyn semantic data → accepted `usage4` records |
+| Fact conversion (usage4) | `CodeOccurrenceFact.Create` plus the canonical R2 identity inputs | Convert Roslyn semantic data → accepted `usage4` records; pass semantic source unit, target document, `asmctx3` and source hash; do not use the pre-REM four-field target helper |
 | Coverage/refusal emission | `CodeGraphExtractionResult` extension | Emit `Confirmed`/`External`/`Ambiguous`/`Unresolved`/`Unsupported`/`ConditionalInactive` |
 | Publication integration | Existing `CodeGraphBatch` → `CodeGraphIngestionSink` → `StageIndexUnitAsync` | No new publication path; uses Stage 1 atomic transaction |
 | Internal reader extensions | `CodeOccurrenceReader.cs` / `ICodeOccurrenceReader` | Pagination token, coverage reporting (IF-04) |
@@ -120,7 +122,9 @@ Before Stage 2 implementation is authorized, an **independent specification revi
 2. Verify IF-03 coverage vocabulary is fully defined in abstractions.
 3. Verify SQ-02/SQ-03 concurrency and unknown-outcome models are explicitly declared.
 4. Verify Stage 2 scope matches this handoff (no scope creep).
-5. Verify real-project fixture identified and expected results independently established.
+5. Verify a real-project fixture is identified and frozen, or that a bounded
+   S2.0 preparation slice is explicitly authorized, with expected results
+   independently established before extractor qualification.
 6. Verify all exclusions are enforced in the specification.
 
 The independent reviewer must not be the implementation agent.
@@ -146,12 +150,12 @@ The independent reviewer must not be the implementation agent.
 |------------|--------------|-------|
 | S-02 Full native D4 qualification | Stage 6 | All 10 invariants native; true concurrent stress; unknown outcome |
 | Full D3 regression (real corpus) | Stage 6 | Before/after graph observations across full C# plugin corpus |
-| Historical fixture SQ-04 | Stage 2+ | Immutable master + disposable copies + refusal tests |
-| Cross-platform full certification | Stage 6 | Windows + Linux + macOS native qualification |
+| Historical fixture SQ-04 | Stage 2 acceptance (available formats) | Immutable master + disposable copies + refusal tests; formats with no authentic prior writer are an explicit limitation, not replaced by fresh-store tampering |
+| Linux native minimum | Stage 2 acceptance | Expanded applicable native suite on Linux; full Windows/Linux/macOS certification remains Stage 6 |
 | Native-node-ID page optimization | Stage 6/B2 | If measurement warrants |
 | Incremental page maintenance | Stage 6 | If measurement warrants |
 | Public Find Usages API | ADR-CI1-02 | Separate owner decision |
-| S-01 independent qualification | Stage 2 review | Already gated in Stage 2 |
+| S-01 independent qualification | Stage 2 acceptance | Required before Stage 2 owner acceptance; not implemented by REM-01 |
 
 ---
 
@@ -163,14 +167,16 @@ The independent reviewer must not be the implementation agent.
 | Real-project publication cost exceeds acceptable threshold | Medium | Medium | Measure in S2.3; defer incremental to Stage 6 |
 | Cross-project binding fails for complex dependencies | Medium | High | Fixture includes multi-project; adversarial target-binding tests |
 | S-01 provenance chain cannot be fully automated | Low | High | Specify manual verification steps if needed; document gap |
-| Historical fixture generation proves infeasible | Low | Medium | Document as known limitation; rely on tampered-store tests + producer evidence |
+| Historical fixture generation proves infeasible | Low | Medium | Document the unavailable-writer limitation and return to the owner for an explicit amendment; do not substitute tampered fresh stores for an authentic prior-writer gate |
 
 ---
 
 ## 11. Next Actions
 
 1. **Independent specification review** of `stage2-boundary.md` and `stage2-acceptance-matrix.md`.
-2. **Resolve 5 prerequisites** (S-01, IF-03, SQ-02, SQ-03, Stage 1 acceptance).
+2. **Resolve the four open prerequisites** (S-01 contract, IF-03 contract,
+   SQ-02 policy, SQ-03 model); Stage 1 owner acceptance and obligation
+   reconciliation are already recorded.
 3. **Authorize Stage 2 implementation** via separate commission `ADR-CI1-01-CI1A-IMPL-01-S2`.
 4. **Execute Stage 2** in bounded increments (S2.0 → S2.5).
 5. **Independent Stage 2 review** → Stage 2 owner acceptance.

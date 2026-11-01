@@ -12,9 +12,9 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 
 | # | Requirement | Observable Behavior | Positive Test | Negative/Adversarial Test | Env | Independent Stage |
 |---|-------------|---------------------|---------------|---------------------------|-----|-------------------|
-| 1 | Descriptor hashes actual indexed source bytes | `compctx1` source hash matches bytes fed to Roslyn | Changed source bytes → new `compctx1`/`asmctx3`/`usage4` | Supplied bytes ≠ indexed bytes → refusal | native (real Roslyn) | S2 spec review |
-| 2 | Compilation options/references in context | `compctx1` includes options + reference identities | Changed options → new `compctx1` | Missing reference → refusal | native | S2 spec review |
-| 3 | Semantic binding against verified compilation | Roslyn binding uses the exact compilation from `compctx1` | Cross-project target binds to dependency's verified compilation | Target in missing compilation → refusal | native | S2 spec review |
+| 1 | Descriptor hashes actual indexed source bytes | `compctx1` source hash matches bytes fed to Roslyn | Changed source bytes → new `compctx1`/`asmctx3`/`usage4` | Supplied bytes ≠ indexed bytes → refusal | native (real Roslyn) | S2.1 implementation; S2.5 independent acceptance |
+| 2 | Compilation options/references in context | `compctx1` includes options + reference identities | Changed options → new `compctx1` | Missing reference → refusal | native | S2.1 implementation; S2.5 independent acceptance |
+| 3 | Semantic binding against verified compilation | Roslyn binding uses the exact compilation from `compctx1` | Cross-project target binds to dependency's verified compilation | Target in missing compilation → refusal | native | S2.1/S2.2 implementation; S2.5 independent acceptance |
 
 ---
 
@@ -54,11 +54,13 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 | # | Requirement | Observable Behavior | Positive Test | Negative/Adversarial Test | Env | Independent Stage |
 |---|-------------|---------------------|---------------|---------------------------|-----|-------------------|
 | 1 | `Confirmed` coverage | Fully verified occurrence → fact + `Confirmed` | Valid invocation in complete scope → fact with `Confirmed` | — | native | S2 implementation |
-| 2 | `External` coverage | Target in dependency not in universe | Dependency outside universe → fact with `External` | — | native | S2 implementation |
-| 3 | `Ambiguous` refusal | Multiple matching declarations → refusal | Two matching overloads without disambiguation → `CodeGraphBatchRejectedException` | — | native | S2 implementation |
-| 4 | `Unresolved` refusal | Missing defining compilation/universe | Defining compilation not in universe → refusal | — | native | S2 implementation |
-| 5 | `Unsupported` coverage | Unsupported target kind (ctor, property, etc.) | Constructor call → `UnsupportedCategories++`, no fact | — | native | S2 implementation |
-| 6 | `ConditionalInactive` coverage | Conditionally compiled out | `#if DEBUG` method not compiled → `ConditionalInactive` | — | native | S2 implementation |
+| 2 | `External` refusal | Target is external or the defining unit is outside the declared universe | Dependency outside universe → no fact; `External`/`UnsupportedExternalEvidence` refusal | — | native | S2.2 implementation; S2.5 independent acceptance |
+| 3 | `Ambiguous` refusal | Multiple live defining bindings → refusal | Two live bindings without a unique defining compilation → `CodeGraphBatchRejectedException`/refusal | — | native | S2.2 implementation; S2.5 independent acceptance |
+| 4 | `Unresolved` refusal | Missing defining compilation/universe | Defining compilation not in universe → refusal | — | native | S2.2 implementation; S2.5 independent acceptance |
+| 5 | `Unsupported` coverage | Unsupported target kind (ctor, property, etc.) | Constructor call → `UnsupportedCategories++`, no fact | — | native | S2.2 implementation; S2.5 independent acceptance |
+| 6 | `ConditionalInactive` coverage | Conditionally compiled out under the declared configuration | `#if DEBUG` method not compiled → `ConditionalInactive`, no confirmed fact | — | native | S2.2 implementation; S2.5 independent acceptance |
+| 7 | `Incomplete` coverage | Declared scope not fully analyzed | One declared unit missing → `IncompleteAnalysis`, no complete-empty | — | native | S2.2/S2.4 implementation; S2.5 independent acceptance |
+| 8 | Complete-empty | Complete declared scope with zero facts | Complete coverage, target absent → `Available` with zero facts and complete coverage | Incomplete scope → not `Available` | native | S2.3/S2.4 implementation; S2.5 independent acceptance |
 
 ---
 
@@ -69,7 +71,7 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 | 1 | Calling unit owns occurrence | `SourceUnitId` = caller's project unit | Project A unit has facts for its invocations | Project B's facts not in Project A unit | native | S2 implementation |
 | 2 | Replacement retires caller's facts | Source unit replacement → old facts gone, new facts visible | Change invocation site in Project A → old fact gone, new fact visible | Project B facts unchanged | native | S2 implementation |
 | 3 | Deletion removes caller's contributions | Source unit deletion → its facts removed; others preserved | Delete Project A unit → its facts gone; Project B facts remain | — | native | S2 implementation |
-| 4 | Contributor union across units | Identical fact from Project A + Project B → 1 fact, 2 contributors | Both projects call same method → 1 fact, 2 contributors | — | native | S2 implementation |
+| 4 | Contributor union only for identical semantic facts | Same semantic occurrence contributed by two storage units → 1 fact, 2 contributors | Distinct semantic projects/sites → distinct `usage4` facts; same semantic site via two storage units → 1 fact, 2 contributors | Two different semantic units at the same span/target → 2 facts | native | S2 implementation |
 | 5 | Conflict rejection preserves state | Conflicting payload for same ID → rejection, prior state intact | Stage 2 equivalent of N4 | — | native | S2 implementation |
 
 ---
@@ -103,8 +105,9 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 |-----------|---------------------|---------------|---------------------------|-----|-------------------|
 | 1: Accepted generation only | Queries use only current publication | Query with stale handle → `StalePublication` | — | native | S2 independent review |
 | 2: Stale index refused | Schema/availability checks enforced | Graph-only → `AnalysisUnavailable`; stale → `StalePublication` | — | native | S2 independent review |
-| 3: No unbounded scan | `Examined` = page size | Query large repo → `Examined` = target facts only | — | native | S2 independent review |
-| 4: Failed staging preserves prior | N6 equivalent with real facts | Fault at commit → prior facts visible | — | native | S2 independent review |
+| 3: No unbounded scan | `Examined` = target-index entries read, never unrelated repository facts | Query large repo → `Examined` covers the target page only | — | native | S2 independent review |
+| 4: Failed staging preserves prior | N6 equivalent with real facts | Known pre-commit fault → prior facts visible | — | native | S2 independent review |
+| 5: Cancelled staging exposes no partial data | Stage 1 cancellation behavior preserved | Dedicated native cancel-path test | — | native | Stage 6 (explicitly deferred; not counted as exercised) |
 | 6: Superseded cannot replace newer | Baseline check inherited | Superseded run rejected | — | native | S2 independent review |
 | 7: Reopen equivalent index | N5 equivalent with real facts | Reopen → byte-equal query results | — | native | S2 independent review |
 | 8: Contributor/deletion consistent | N4 equivalent with real facts | Union/deletion/conflict correct | — | native | S2 independent review |
@@ -142,8 +145,8 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 | Invariant | Stage 2 Status | Stage 6 Requirement |
 |-----------|----------------|---------------------|
 | 1-4, 6-9 | Exercised native (above) | Complete native matrix |
-| 5: Cancelled staging | Not in Stage 2 | Cancel path test native |
-| 10: Snapshot contract | Serialization declared | True concurrent qualification |
+| 5: Cancelled staging | Explicitly deferred to Stage 6 | Cancel path test native |
+| 10: Snapshot contract | Serialized freshness declared; native schedule test is a Stage 2 acceptance item | True concurrent qualification |
 
 ---
 
@@ -155,6 +158,11 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 | Disposable copy procedure | Tests use disposable copies with per-instance hashes | Procedure documented + hashes |
 | Refusal tests execute against fixtures | Open/import/query old formats → refusal | Test results against historical fixtures |
 
+**Timing and availability.** Authentic prior-writer formats are Stage 2
+acceptance evidence. A format with no authentic prior writer is recorded as an
+explicit limitation; fresh-store tampering is not a substitute for an authentic
+prior-writer gate, and infeasibility returns to the owner for an amendment.
+
 ---
 
 ## 14. Cross-Platform (SQ-05)
@@ -163,6 +171,9 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 |-------------|---------------------|-------------------|
 | Linux CI executes native tests | `Andirit.LatticeDb.Tests` 38/38 pass on Linux | CI pipeline logs |
 | Platform-specific behavior documented | File locking, WAL, memory mapping differences noted | Behavior matrix |
+
+**Scope.** The Linux native suite is a Stage 2 acceptance gate. Full
+Windows/Linux/macOS certification remains a Stage 6 obligation.
 
 ---
 
@@ -174,12 +185,12 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 
 ---
 
-## 15. Gate Summary
+## 16. Gate Summary
 
 | Gate | Requirements | Blocking Stage 2 Auth? | Blocking Stage 2 Accept? |
 |------|--------------|------------------------|---------------------------|
-| S-01 Provenance | 3 | **Yes** (prerequisite) | No |
-| IF-03 Coverage | 6 | **Yes** (prerequisite) | No |
+| S-01 Provenance | 3 | **Yes** (contract fixed by REM-01) | **Yes** (independent evidence) |
+| IF-03 Coverage | 8 | **Yes** (contract fixed by REM-01) | **Yes** (production coverage/reopen evidence) |
 | Semantic Identity | 4 | No | **Yes** |
 | Cross-Project | 2 | No | **Yes** |
 | Roslyn Extraction | 4 | No | **Yes** |
@@ -189,7 +200,7 @@ This matrix binds each Stage 2 requirement to a required observable behavior, a 
 | D3 Real Project | 4 | No | **Yes** |
 | D4 Invariants | 10 | No | **Yes** |
 | Schema/D5 | 6 | No | **Yes** |
-| SQ-02/03 Concurrency | 2 | **Yes** (declared in spec) | No |
+| SQ-02/03 Concurrency | 2 | **Yes** (policy/model fixed by REM-01) | **Yes** (native schedule; unknown-outcome handling) |
 | Historical Fixture | 3 | No | **Yes** |
 | Cross-Platform | 2 | No | **Yes** |
 | Namespace Test | 1 | No | **Yes** |
