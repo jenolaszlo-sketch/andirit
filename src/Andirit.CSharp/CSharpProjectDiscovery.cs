@@ -207,6 +207,11 @@ internal static partial class CSharpProjectDiscovery
         }
     }
 
+    internal static IEnumerable<string> DeclaredSolutionProjects(string path, string text) =>
+        path.EndsWith(".slnx", StringComparison.OrdinalIgnoreCase)
+            ? ParseSolutionXmlProjects(text, Directory(path))
+            : ParseSolutionProjects(text, Directory(path));
+
     public static string IndexUnitId(string projectPath) =>
         $"csharp:project:{IdentityHash(projectPath)}";
 
@@ -340,7 +345,7 @@ internal static partial class CSharpProjectDiscovery
         ? path[..path.LastIndexOf('/')]
         : string.Empty;
 
-    private static string Combine(string directory, string value)
+    internal static string Combine(string directory, string value)
     {
         var segments = new List<string>();
         foreach (var segment in $"{directory}/{value}"

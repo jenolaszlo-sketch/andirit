@@ -18,6 +18,17 @@ public sealed class CodeGraphSource
             throw new ArgumentNullException(nameof(openReadAsync));
     }
 
+    // This handoff is available only to the lifecycle and C# implementation.
+    // The lifecycle retains ownership and never exposes a writable stream/array publicly.
+    internal ReadOnlyMemory<byte>? MaterializedBytes { get; private init; }
+    internal string? MaterializedByteHash { get; private init; }
+    internal static CodeGraphSource FromMaterialized(string path, string contentHash,
+        byte[] buffer, int length, string byteHash) => new(path, contentHash, cancellationToken =>
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return new ValueTask<Stream>(new MemoryStream(buffer, 0, length, writable: false, publiclyVisible: false));
+        }) { MaterializedBytes = buffer.AsMemory(0, length), MaterializedByteHash = byteHash };
+
     public string Path { get; }
     public string ContentHash { get; }
 

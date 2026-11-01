@@ -12,73 +12,33 @@ public sealed partial class CSharpCodeGraphPlugin
 {
     private sealed class Session(
         CodeGraphPluginContext context,
-        CSharpCodeGraphPlugin plugin) : ICodeGraphExtractionSession
+        CSharpCodeGraphPlugin plugin) : ICodeGraphExtractionSession, IVerifiedCSharpSession
     {
+        public VerifiedCSharpAnalysis? Provenance { get; private set; }
         public async ValueTask<CodeGraphExtractionResult> ExtractAsync(
             ICodeGraphSink sink,
             CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(sink);
-            var content = new SortedDictionary<string, string>(StringComparer.Ordinal);
+            Provenance = null;
+            var analysis = await PrepareAnalysisAsync(context, cancellationToken).ConfigureAwait(false);
             var sourcesByPath = context.Sources.ToDictionary(source => source.Path, StringComparer.Ordinal);
-            foreach (var source in context.Sources.OrderBy(source => source.Path, StringComparer.Ordinal))
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await using var stream = await source.OpenReadAsync(cancellationToken).ConfigureAwait(false);
-                using var reader = new StreamReader(
-                    stream,
-                    Encoding.UTF8,
-                    detectEncodingFromByteOrderMarks: true,
-                    leaveOpen: false);
-                content.Add(
-                    source.Path,
-                    await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false));
-            }
-
-            var discovery = CSharpProjectDiscovery.Discover(content);
-            var projects = discovery.Projects;
-            var projectByPath = projects.ToDictionary(
-                project => project.Path,
-                CSharpProjectDiscovery.PathComparer);
-            var compilations = new Dictionary<string, CSharpCompilation>(
-                CSharpProjectDiscovery.PathComparer);
+            var projects = analysis.Projects.Select(p => p.Project).ToArray();
             var allDiagnostics = new List<Diagnostic>();
             var warningCodes = new HashSet<string>(StringComparer.Ordinal);
-            warningCodes.UnionWith(discovery.Warnings);
+            warningCodes.UnionWith(analysis.DiscoveryWarnings);
+            if (!analysis.Universe.IsComplete) warningCodes.Add("csharp.provenance.incomplete");
             var contributingSources = new HashSet<string>(StringComparer.Ordinal);
             var runSymbols = new RunSymbols();
             var relationshipTotals = new Dictionary<string, RelationshipCounters>(
                 StringComparer.Ordinal);
             var indexUnitCoverage = new List<CodeIndexUnitCoverage>();
-            foreach (var project in OrderProjects(projects, projectByPath, warningCodes))
+            foreach (var prepared in analysis.Projects)
             {
-                var parseOptions = CreateParseOptions(project);
-                var trees = project.SourcePaths
-                    .Where(content.ContainsKey)
-                    .Select(path => CSharpSyntaxTree.ParseText(
-                        content[path],
-                        parseOptions,
-                        path,
-                        cancellationToken: cancellationToken))
-                    .ToArray();
-                var references = CreatePlatformReferences().ToList();
-                var availableProjectReferences = project.ProjectReferences
-                    .Where(compilations.ContainsKey)
-                    .ToArray();
-                var availableCompilations = availableProjectReferences.ToDictionary(
-                    reference => reference,
-                    reference => compilations[reference],
-                    CSharpProjectDiscovery.PathComparer);
-                references.AddRange(availableProjectReferences
-                    .Select(reference => compilations[reference].ToMetadataReference()));
-                if (project.ProjectReferences.Any(reference => !projectByPath.ContainsKey(reference)))
-                    warningCodes.Add("csharp.project.reference-missing");
-                var compilation = CSharpCompilation.Create(
-                    project.AssemblyName,
-                    trees,
-                    references,
-                    CreateCompilationOptions(project));
-                compilations[project.Path] = compilation;
+                var project = prepared.Project;
+                var compilation = prepared.Compilation;
+                var trees = compilation.SyntaxTrees.ToArray();
+                var availableCompilations = prepared.AvailableCompilations;
                 var builder = new GraphBuilder(
                     context,
                     plugin,
@@ -145,6 +105,8 @@ public sealed partial class CSharpCodeGraphPlugin
                 .Distinct()
                 .OrderBy(unit => unit.Value, StringComparer.Ordinal)
                 .ToArray();
+            cancellationToken.ThrowIfCancellationRequested();
+            Provenance = analysis;
             return new CodeGraphExtractionResult(
                 obsoleteUnits,
                 sourcesExamined: context.Sources.Count,
@@ -153,7 +115,7 @@ public sealed partial class CSharpCodeGraphPlugin
                     diagnostic.Severity == DiagnosticSeverity.Error &&
                     UnresolvedDiagnosticIds.Contains(diagnostic.Id)),
                 warningCodes: warningCodes.Order(StringComparer.Ordinal).Take(100).ToArray(),
-                relationshipCoverage: BuildCoverage(relationshipTotals, hasSources: projects.Count > 0),
+                relationshipCoverage: BuildCoverage(relationshipTotals, hasSources: projects.Length > 0),
                 indexUnitCoverage: indexUnitCoverage);
         }
 
@@ -228,7 +190,11 @@ public sealed partial class CSharpCodeGraphPlugin
                 counters.UnsupportedTargets);
         }
 
-        public ValueTask DisposeAsync() => ValueTask.CompletedTask;
+        public ValueTask DisposeAsync()
+        {
+            Provenance = null;
+            return ValueTask.CompletedTask;
+        }
     }
 
     /// <summary>

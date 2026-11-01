@@ -818,20 +818,9 @@ public sealed class CodeIndexingService
             .Select(item =>
             {
                 var source = materialized[new PluginSourceKey(item.Manifest.PluginId, item.Manifest.SourcePath)];
-                return new CodeGraphSource(
-                    item.Manifest.SourcePath,
-                    item.Manifest.SourceHash,
-                    cancellationToken =>
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        Stream stream = new MemoryStream(
-                            source.Buffer,
-                            0,
-                            source.Length,
-                            writable: false,
-                            publiclyVisible: false);
-                        return new ValueTask<Stream>(stream);
-                    });
+                return CodeGraphSource.FromMaterialized(
+                    item.Manifest.SourcePath, item.Manifest.SourceHash,
+                    source.Buffer, source.Length, source.ByteHash);
             })
             .ToArray();
         var changes = ordered.Select(item => new CodeGraphSourceChange(
@@ -1148,14 +1137,14 @@ public sealed class CodeIndexingService
 
             if (!output.TryGetBuffer(out var content))
                 throw new InvalidOperationException("Hetu could not access its materialized source buffer.");
+            var actual = $"sha256:{Convert.ToHexStringLower(SHA256.HashData(content.AsSpan()))}";
             if (item.Manifest.SourceHash.StartsWith("sha256:", StringComparison.OrdinalIgnoreCase))
             {
-                var actual = $"sha256:{Convert.ToHexStringLower(SHA256.HashData(content.AsSpan()))}";
                 if (!string.Equals(actual, item.Manifest.SourceHash, StringComparison.OrdinalIgnoreCase))
                     throw new CodeSourceChangedDuringIndexingException(entry.Path);
             }
 
-            var materialized = new MaterializedSource(content.Array!, content.Count);
+            var materialized = new MaterializedSource(content.Array!, content.Count, actual);
             sourcesByPath.Add(entry.Path, materialized);
             result.Add(
                 new PluginSourceKey(item.Manifest.PluginId, item.Manifest.SourcePath),
@@ -1179,7 +1168,7 @@ public sealed class CodeIndexingService
         }
     }
 
-    private sealed record MaterializedSource(byte[] Buffer, int Length);
+    private sealed record MaterializedSource(byte[] Buffer, int Length, string ByteHash);
 
     private sealed class PluginScopedSink(
         ICodeGraphSink inner,
