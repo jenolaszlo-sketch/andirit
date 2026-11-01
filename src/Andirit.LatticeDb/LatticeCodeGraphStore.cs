@@ -32,9 +32,15 @@ namespace Andirit;
 public sealed class LatticeCodeGraphStore :
     ICodeGraphStore,
     ICodeGraphStoreHealthCheck,
+    ICodeOccurrenceReader,
     IDisposable
 {
     public const int CurrentSchemaVersion = 2;
+
+    /// <summary>Schema version of the additive production occurrence tables.</summary>
+    public const int CurrentOccurrenceSchemaVersion = 1;
+
+    internal const string OccurrenceNamespace = "andirit-occurrence-facts/1";
 
     // Schema-2 protocol identities survive the Andirit product rename.
     private const string MetadataLabel = "HetuMetadata";
@@ -44,6 +50,11 @@ public sealed class LatticeCodeGraphStore :
     private const string UnitLabel = "HetuUnit";
     private const string StageLabel = "HetuStage";
     private const string BaselineLabel = "HetuBaseline";
+    // Additive occurrence labels are deliberately distinct from the Hetu* graph
+    // labels: occurrence facts are never legacy graph nodes or edges.
+    private const string OccurrenceUnitLabel = "AndiritOccurrenceUnit";
+    private const string OccurrencePageLabel = "AndiritOccurrencePage";
+    private const string OccurrenceMetaLabel = "AndiritOccurrenceMeta";
     private const string SchemaKey = "schema";
 
     private readonly LatticeDatabase _database;
@@ -108,6 +119,7 @@ public sealed class LatticeCodeGraphStore :
                 _baselines.Add(key, string.IsNullOrEmpty(baseline) ? null : baseline);
             }
             RestoreBaselines(_inner);
+            RestoreOccurrences(cancellationToken);
             cancellationToken.ThrowIfCancellationRequested();
             if (_nativeTraversal)
             {
@@ -236,6 +248,24 @@ public sealed class LatticeCodeGraphStore :
         CodeSymbolId symbolId,
         CancellationToken cancellationToken = default) =>
         ReadAsync(store => store.GetDeclarationsWithProvenanceAsync(repositoryId, symbolId, cancellationToken), cancellationToken);
+
+    public async ValueTask<CodeOccurrenceQueryResult> FindOccurrencesAsync(
+        CodeOccurrenceQuery query,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(query);
+        await _writeGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            ThrowIfDisposed();
+            return await _inner.FindOccurrencesAsync(query, cancellationToken)
+                .ConfigureAwait(false);
+        }
+        finally
+        {
+            _writeGate.Release();
+        }
+    }
 
     private CodeGraphStoreHealth CheckHealth()
     {
@@ -425,6 +455,240 @@ public sealed class LatticeCodeGraphStore :
         _mirrors = mirrors;
     }
 
+    private void RestoreOccurrences(CancellationToken cancellationToken)
+    {
+        var metaPairs = ReadPairs(OccurrenceMetaLabel);
+        var unitPairs = ReadPairs(OccurrenceUnitLabel);
+        var pagePairs = ReadPairs(OccurrencePageLabel);
+        if (metaPairs.Count == 0)
+        {
+            if (unitPairs.Count != 0 || pagePairs.Count != 0)
+            {
+                throw new CodeOccurrenceSchemaException(
+                    0,
+                    CurrentOccurrenceSchemaVersion,
+                    "Occurrence records exist without a schema manifest.");
+            }
+            // Graph-only history: occurrence analysis is unavailable, never empty-success.
+            return;
+        }
+
+        var metas = new Dictionary<string, PersistedOccurrenceMeta>(StringComparer.Ordinal);
+        foreach (var pair in metaPairs)
+        {
+            var meta = DeserializeOccurrence<PersistedOccurrenceMeta>(pair.Payload);
+            if (meta.SchemaVersion != CurrentOccurrenceSchemaVersion ||
+                !string.Equals(meta.Namespace, OccurrenceNamespace, StringComparison.Ordinal))
+            {
+                throw new CodeOccurrenceSchemaException(
+                    meta.SchemaVersion,
+                    CurrentOccurrenceSchemaVersion,
+                    "The occurrence schema version or namespace is unsupported.");
+            }
+            metas[meta.RepositoryId] = meta;
+        }
+
+        var unitsByRepository =
+            new Dictionary<string, List<PersistedOccurrenceUnit>>(StringComparer.Ordinal);
+        foreach (var pair in unitPairs)
+        {
+            var unit = DeserializeOccurrence<PersistedOccurrenceUnit>(pair.Payload);
+            if (!metas.ContainsKey(unit.RepositoryId))
+            {
+                throw new CodeOccurrenceSchemaException(
+                    0,
+                    CurrentOccurrenceSchemaVersion,
+                    "Occurrence unit records exist without a repository schema manifest.");
+            }
+            if (!unitsByRepository.TryGetValue(unit.RepositoryId, out var units))
+            {
+                units = [];
+                unitsByRepository[unit.RepositoryId] = units;
+            }
+            units.Add(unit);
+        }
+
+        foreach (var pair in pagePairs)
+        {
+            var page = DeserializeOccurrence<PersistedOccurrencePage>(pair.Payload);
+            if (!metas.TryGetValue(page.RepositoryId, out var meta) ||
+                !string.Equals(
+                    page.PublicationIndexRunId,
+                    meta.PublicationIndexRunId,
+                    StringComparison.Ordinal))
+            {
+                throw new CodeOccurrenceIndexException(
+                    "An occurrence page is not bound to the accepted occurrence publication.");
+            }
+        }
+
+        foreach (var meta in metas.Values)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            if (unitsByRepository.TryGetValue(meta.RepositoryId, out var units))
+            {
+                foreach (var unit in units)
+                {
+                    _inner.RestorePublishedOccurrencesAsync(
+                            new CodeRepositoryId(unit.RepositoryId),
+                            new CodePluginId(unit.PluginId),
+                            unit.IndexUnitId,
+                            unit.Facts,
+                            unit.AnalysisIncluded,
+                            cancellationToken)
+                        .GetAwaiter().GetResult();
+                }
+            }
+
+            _inner.RestoreOccurrencePublication(
+                new CodeRepositoryId(meta.RepositoryId),
+                new CodeGraphPublication(
+                    new CodeRepositoryId(meta.RepositoryId),
+                    new CodeIndexRunId(meta.PublicationIndexRunId),
+                    meta.SnapshotIdentity,
+                    meta.IsConsistentSnapshot,
+                    new CodeIndexIdentity(meta.IndexIdentity)),
+                meta.AnalysisIncluded);
+        }
+    }
+
+    private void PersistOccurrences(
+        LatticeTransaction txn,
+        CodeIndexRunManifest run,
+        CodeRepositoryIndexState state)
+    {
+        var repositoryId = run.RepositoryId.Value;
+        var unitPairs = ReadPairsInTxn(txn, OccurrenceUnitLabel);
+        var units = unitPairs
+            .Select(pair => DeserializeOccurrence<PersistedOccurrenceUnit>(pair.Payload))
+            .Where(unit => string.Equals(unit.RepositoryId, repositoryId, StringComparison.Ordinal))
+            .ToDictionary(OccurrenceUnitKey, StringComparer.Ordinal);
+        var analysisIncluded = units.Count > 0;
+        foreach (var command in _commands.Where(command => MatchesRun(command, run)))
+        {
+            if (command.Kind == "stage-delete")
+            {
+                units.Remove(UnitKey(
+                    command.RepositoryId!,
+                    command.PluginId!,
+                    command.UnitId!));
+                continue;
+            }
+
+            if (command.Kind != "stage-replace")
+                continue;
+            var replacement = command.Replacement!;
+            var key = UnitKey(replacement.Origin);
+            if (replacement.OccurrenceAnalysisIncluded ||
+                replacement.Occurrences.Count > 0)
+            {
+                units[key] = new PersistedOccurrenceUnit(
+                    repositoryId,
+                    replacement.Origin.PluginId.Value,
+                    replacement.Origin.IndexUnitId.Value,
+                    true,
+                    replacement.Occurrences);
+                analysisIncluded = true;
+            }
+            else
+            {
+                units.Remove(key);
+            }
+        }
+
+        var unitKeys = unitPairs
+            .Select(pair => pair.Key)
+            .Where(key => key.StartsWith(repositoryId + "\n", StringComparison.Ordinal))
+            .ToArray();
+        if (unitKeys.Length > 0)
+            DeleteMany(txn, OccurrenceUnitLabel, unitKeys);
+        UpsertMany(
+            txn,
+            OccurrenceUnitLabel,
+            units.Select(pair => (pair.Key, Serialize(pair.Value))).ToArray());
+
+        var pagePairs = ReadPairsInTxn(txn, OccurrencePageLabel);
+        var pageKeys = pagePairs
+            .Select(pair => pair.Key)
+            .Where(key => key.StartsWith(repositoryId + "\n", StringComparison.Ordinal))
+            .ToArray();
+        if (units.Count == 0 && !analysisIncluded)
+        {
+            if (pageKeys.Length > 0)
+                DeleteMany(txn, OccurrencePageLabel, pageKeys);
+            if (ReadPairsInTxn(txn, OccurrenceMetaLabel)
+                .Any(pair => string.Equals(pair.Key, repositoryId, StringComparison.Ordinal)))
+            {
+                DeleteMany(txn, OccurrenceMetaLabel, [repositoryId]);
+            }
+            return;
+        }
+
+        var pages = units.Values
+            .SelectMany(unit => unit.Facts)
+            .GroupBy(fact => fact.TargetId.Value, StringComparer.Ordinal)
+            .Select(group => new PersistedOccurrencePage(
+                repositoryId,
+                group.Key,
+                state.IndexRunId.Value,
+                group
+                    .OrderBy(fact => fact.Span.Path, StringComparer.Ordinal)
+                    .ThenBy(fact => fact.Span.StartLine)
+                    .ThenBy(fact => fact.Span.StartColumn)
+                    .ThenBy(fact => fact.Span.EndLine)
+                    .ThenBy(fact => fact.Span.EndColumn)
+                    .ThenBy(fact => fact.Id.Value, StringComparer.Ordinal)
+                    .Select(fact => fact.Id.Value)
+                    .Distinct(StringComparer.Ordinal)
+                    .ToArray()))
+            .ToArray();
+        if (pageKeys.Length > 0)
+            DeleteMany(txn, OccurrencePageLabel, pageKeys);
+        UpsertMany(
+            txn,
+            OccurrencePageLabel,
+            pages.Select(page => (
+                repositoryId + "\n" + page.TargetId,
+                Serialize(page))).ToArray());
+
+        var meta = new PersistedOccurrenceMeta(
+            CurrentOccurrenceSchemaVersion,
+            OccurrenceNamespace,
+            repositoryId,
+            state.IndexRunId.Value,
+            state.IndexIdentity.Value,
+            state.SnapshotIdentity,
+            state.IsConsistentSnapshot,
+            units.Values.Sum(unit => unit.Facts.Count),
+            units.Count,
+            pages.Length,
+            analysisIncluded);
+        Upsert(txn, OccurrenceMetaLabel, repositoryId, Serialize(meta));
+    }
+
+    private List<(string Key, string Payload)> ReadPairsInTxn(
+        LatticeTransaction txn,
+        string label)
+    {
+        using var query = _database.Prepare($"MATCH (s:{label}) RETURN s.key, s.payload");
+        using var result = query.Execute(txn);
+        return result.ReadAll()
+            .Select(row => (row.GetValue(0).AsString(), row.GetValue(1).AsString()))
+            .ToList();
+    }
+
+    private static T DeserializeOccurrence<T>(string payload) =>
+        JsonSerializer.Deserialize<T>(
+            Convert.FromBase64String(payload),
+            SerializerOptions)
+        ?? throw new InvalidDataException("Occurrence record payload is invalid.");
+
+    private static string OccurrenceUnitKey(PersistedOccurrenceUnit unit) =>
+        UnitKey(
+            new CodeRepositoryId(unit.RepositoryId),
+            new CodePluginId(unit.PluginId),
+            new CodeIndexUnitId(unit.IndexUnitId));
+
     private NativeGraphMirror? Persist(PersistedCommand command, string? baseline, CancellationToken cancellationToken)
     {
         NativeGraphMirror? mirror = null;
@@ -454,6 +718,7 @@ public sealed class LatticeCodeGraphStore :
                     Upsert(txn, RunLabel, RunKey(command.Run!), Serialize(command.Run));
                     Upsert(txn, IndexStateLabel, command.State!.RepositoryId.Value, Serialize(command.State));
                     DeleteMany(txn, BaselineLabel, [RunKey(command.Run!)]);
+                    PersistOccurrences(txn, command.Run!, command.State!);
                     if (_nativeTraversal)
                     {
                         var completed = command.Run!;
@@ -535,18 +800,23 @@ public sealed class LatticeCodeGraphStore :
     {
         if (records.Count == 0)
             return;
-        DeleteMany(txn, label, records.Select(record => record.Key).ToArray());
-        var statement = new StringBuilder();
-        for (var index = 0; index < records.Count; index++)
-            statement.Append($"CREATE (:{label} {{key: $k{index}, payload: $p{index}}}) ");
-        using var query = _database.Prepare(statement.ToString());
-        for (var index = 0; index < records.Count; index++)
+        // Native statement/parameter bounds are implementation-defined; write in
+        // bounded chunks so large occurrence pages cannot overflow the planner.
+        foreach (var chunk in records.Chunk(8))
         {
-            query.Bind($"k{index}", LatticeValue.From(records[index].Key));
-            query.Bind($"p{index}", LatticeValue.From(records[index].Payload));
+            DeleteMany(txn, label, chunk.Select(record => record.Key).ToArray());
+            var statement = new StringBuilder();
+            for (var index = 0; index < chunk.Length; index++)
+                statement.Append($"CREATE (:{label} {{key: $k{index}, payload: $p{index}}}) ");
+            using var query = _database.Prepare(statement.ToString());
+            for (var index = 0; index < chunk.Length; index++)
+            {
+                query.Bind($"k{index}", LatticeValue.From(chunk[index].Key));
+                query.Bind($"p{index}", LatticeValue.From(chunk[index].Payload));
+            }
+            using var result = query.Execute(txn);
+            result.ReadAll();
         }
-        using var result = query.Execute(txn);
-        result.ReadAll();
     }
 
     private void DeleteMany(LatticeTransaction txn, string label, IReadOnlyList<string> keys)
@@ -722,5 +992,58 @@ public sealed class LatticeCodeGraphSchemaException : Exception
 
     public int ActualVersion { get; }
     public int ExpectedVersion { get; }
+}
+
+/// <summary>Internal durable record: one unit's published occurrence contribution.</summary>
+internal sealed record PersistedOccurrenceUnit(
+    string RepositoryId,
+    string PluginId,
+    string IndexUnitId,
+    bool AnalysisIncluded,
+    IReadOnlyList<CodeOccurrenceFact> Facts);
+
+/// <summary>Internal durable record: the accepted occurrence schema/publication manifest.</summary>
+internal sealed record PersistedOccurrenceMeta(
+    int SchemaVersion,
+    string Namespace,
+    string RepositoryId,
+    string PublicationIndexRunId,
+    string IndexIdentity,
+    string? SnapshotIdentity,
+    bool IsConsistentSnapshot,
+    int FactCount,
+    int UnitCount,
+    int PageCount,
+    bool AnalysisIncluded);
+
+/// <summary>Internal durable record: one target-index page.</summary>
+internal sealed record PersistedOccurrencePage(
+    string RepositoryId,
+    string TargetId,
+    string PublicationIndexRunId,
+    IReadOnlyList<string> OccurrenceIds);
+
+/// <summary>An occurrence format is unsupported or inconsistent with its schema.</summary>
+internal sealed class CodeOccurrenceSchemaException : Exception
+{
+    public CodeOccurrenceSchemaException(
+        int actualVersion,
+        int expectedVersion,
+        string message)
+        : base(message)
+    {
+        ActualVersion = actualVersion;
+        ExpectedVersion = expectedVersion;
+    }
+
+    public int ActualVersion { get; }
+    public int ExpectedVersion { get; }
+}
+
+/// <summary>The durable occurrence index is internally inconsistent.</summary>
+internal sealed class CodeOccurrenceIndexException : Exception
+{
+    public CodeOccurrenceIndexException(string message)
+        : base(message) { }
 }
 
