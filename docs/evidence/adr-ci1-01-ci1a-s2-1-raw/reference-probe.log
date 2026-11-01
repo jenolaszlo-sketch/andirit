@@ -1,0 +1,159 @@
+{
+  "Commission": "ADR-CI1-01-CI1A-IMPL-01-S2.1",
+  "Status": "REPRODUCED: canonical R2 project-reference representation omits material dependency inputs",
+  "Runtime": ".NET 10.0.12",
+  "Roslyn": "Microsoft.CodeAnalysis.CSharp, Version=5.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35",
+  "SourceBytesHash": "80423f73c15eb377b2f7d09c415df94f5fc7a3da43fdd53de8a26773807079ba",
+  "OriginalAuthoritySha256": "3703d83660b50765cb744dc9639aa5b2d3b787d0477c145d93a2bde107a5d938",
+  "DefiningContexts": [
+    {
+      "ContractVersion": "compctx1",
+      "RepositoryId": "fixture:s2.1",
+      "ProjectUnitId": "Lib/Lib.csproj",
+      "AssemblyName": "Lib",
+      "MetadataIdentity": "Lib|0.0.0.0||",
+      "ModuleName": "Lib.dll",
+      "OptionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+      "Sources": [
+        {
+          "Path": "Lib/Lib.cs",
+          "ContentHash": "sha256:80423f73c15eb377b2f7d09c415df94f5fc7a3da43fdd53de8a26773807079ba",
+          "LanguageVersion": "CSharp14",
+          "PreprocessorSymbols": "",
+          "CanonicalForm": "Lib/Lib.cs|sha256:80423f73c15eb377b2f7d09c415df94f5fc7a3da43fdd53de8a26773807079ba|CSharp14|"
+        }
+      ],
+      "References": [
+        "file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/System.Private.CoreLib.dll|1125acc8106c43fc8bad2d203c4c4485df6182d292846c2fff415c1040c54678"
+      ],
+      "DescriptorDigest": "compctx1:sha256:6e893ac443fea21d104a9d54afca4d7d485c9ed1a911797d33cdae1dd35a099d"
+    },
+    {
+      "ContractVersion": "compctx1",
+      "RepositoryId": "fixture:s2.1",
+      "ProjectUnitId": "Lib/Lib.csproj",
+      "AssemblyName": "Lib",
+      "MetadataIdentity": "Lib|0.0.0.0||",
+      "ModuleName": "Lib.dll",
+      "OptionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+      "Sources": [
+        {
+          "Path": "Lib/Lib.cs",
+          "ContentHash": "sha256:80423f73c15eb377b2f7d09c415df94f5fc7a3da43fdd53de8a26773807079ba",
+          "LanguageVersion": "CSharp14",
+          "PreprocessorSymbols": "FEATURE",
+          "CanonicalForm": "Lib/Lib.cs|sha256:80423f73c15eb377b2f7d09c415df94f5fc7a3da43fdd53de8a26773807079ba|CSharp14|FEATURE"
+        }
+      ],
+      "References": [
+        "file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/System.Private.CoreLib.dll|1125acc8106c43fc8bad2d203c4c4485df6182d292846c2fff415c1040c54678"
+      ],
+      "DescriptorDigest": "compctx1:sha256:a6d8920584c9b1b82836bd1299e25cc648213e0c2abe4450f3abadeb440b026e"
+    },
+    {
+      "ContractVersion": "compctx1",
+      "RepositoryId": "fixture:s2.1",
+      "ProjectUnitId": "Lib/Lib.csproj",
+      "AssemblyName": "Lib",
+      "MetadataIdentity": "Lib|0.0.0.0||",
+      "ModuleName": "Lib.dll",
+      "OptionsDigest": "d758658c5448515c1c54412182ccb723c8ae0ba40ef512957283cb838c9ddb44",
+      "Sources": [
+        {
+          "Path": "Lib/Lib.cs",
+          "ContentHash": "sha256:80423f73c15eb377b2f7d09c415df94f5fc7a3da43fdd53de8a26773807079ba",
+          "LanguageVersion": "CSharp14",
+          "PreprocessorSymbols": "",
+          "CanonicalForm": "Lib/Lib.cs|sha256:80423f73c15eb377b2f7d09c415df94f5fc7a3da43fdd53de8a26773807079ba|CSharp14|"
+        }
+      ],
+      "References": [
+        "file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/System.Private.CoreLib.dll|1125acc8106c43fc8bad2d203c4c4485df6182d292846c2fff415c1040c54678"
+      ],
+      "DescriptorDigest": "compctx1:sha256:1b808a71535de778f516ef724e9f814da289abdbf6f106d0363af898c817f7d5"
+    }
+  ],
+  "CallingContexts": [
+    {
+      "ContractVersion": "compctx1",
+      "RepositoryId": "fixture:s2.1",
+      "ProjectUnitId": "App/App.csproj",
+      "AssemblyName": "App",
+      "MetadataIdentity": "App|0.0.0.0||",
+      "ModuleName": "App.dll",
+      "OptionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+      "Sources": [
+        {
+          "Path": "App/App.cs",
+          "ContentHash": "sha256:8c346ab71fc013c069c00ca3fb2b3984fbaea2b0f118690c4f82059ec8ce0ee8",
+          "LanguageVersion": "CSharp14",
+          "PreprocessorSymbols": "",
+          "CanonicalForm": "App/App.cs|sha256:8c346ab71fc013c069c00ca3fb2b3984fbaea2b0f118690c4f82059ec8ce0ee8|CSharp14|"
+        }
+      ],
+      "References": [
+        "compilation|Lib|Lib|0.0.0.0|||Lib/Lib.cs=80423f73c15eb377b2f7d09c415df94f5fc7a3da43fdd53de8a26773807079ba",
+        "file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/System.Private.CoreLib.dll|1125acc8106c43fc8bad2d203c4c4485df6182d292846c2fff415c1040c54678"
+      ],
+      "DescriptorDigest": "compctx1:sha256:53303d0b867027032233c945f19987988ebdf72bb66804aef00ecc6a77203da4"
+    },
+    {
+      "ContractVersion": "compctx1",
+      "RepositoryId": "fixture:s2.1",
+      "ProjectUnitId": "App/App.csproj",
+      "AssemblyName": "App",
+      "MetadataIdentity": "App|0.0.0.0||",
+      "ModuleName": "App.dll",
+      "OptionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+      "Sources": [
+        {
+          "Path": "App/App.cs",
+          "ContentHash": "sha256:8c346ab71fc013c069c00ca3fb2b3984fbaea2b0f118690c4f82059ec8ce0ee8",
+          "LanguageVersion": "CSharp14",
+          "PreprocessorSymbols": "",
+          "CanonicalForm": "App/App.cs|sha256:8c346ab71fc013c069c00ca3fb2b3984fbaea2b0f118690c4f82059ec8ce0ee8|CSharp14|"
+        }
+      ],
+      "References": [
+        "compilation|Lib|Lib|0.0.0.0|||Lib/Lib.cs=80423f73c15eb377b2f7d09c415df94f5fc7a3da43fdd53de8a26773807079ba",
+        "file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/System.Private.CoreLib.dll|1125acc8106c43fc8bad2d203c4c4485df6182d292846c2fff415c1040c54678"
+      ],
+      "DescriptorDigest": "compctx1:sha256:53303d0b867027032233c945f19987988ebdf72bb66804aef00ecc6a77203da4"
+    },
+    {
+      "ContractVersion": "compctx1",
+      "RepositoryId": "fixture:s2.1",
+      "ProjectUnitId": "App/App.csproj",
+      "AssemblyName": "App",
+      "MetadataIdentity": "App|0.0.0.0||",
+      "ModuleName": "App.dll",
+      "OptionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+      "Sources": [
+        {
+          "Path": "App/App.cs",
+          "ContentHash": "sha256:8c346ab71fc013c069c00ca3fb2b3984fbaea2b0f118690c4f82059ec8ce0ee8",
+          "LanguageVersion": "CSharp14",
+          "PreprocessorSymbols": "",
+          "CanonicalForm": "App/App.cs|sha256:8c346ab71fc013c069c00ca3fb2b3984fbaea2b0f118690c4f82059ec8ce0ee8|CSharp14|"
+        }
+      ],
+      "References": [
+        "compilation|Lib|Lib|0.0.0.0|||Lib/Lib.cs=80423f73c15eb377b2f7d09c415df94f5fc7a3da43fdd53de8a26773807079ba",
+        "file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/System.Private.CoreLib.dll|1125acc8106c43fc8bad2d203c4c4485df6182d292846c2fff415c1040c54678"
+      ],
+      "DescriptorDigest": "compctx1:sha256:53303d0b867027032233c945f19987988ebdf72bb66804aef00ecc6a77203da4"
+    }
+  ],
+  "ObservedReturnTypes": [
+    "int",
+    "string"
+  ],
+  "Assertions": [
+    "All six real Roslyn compilations have zero error diagnostics",
+    "Exact dependency source bytes/path/assembly identity are unchanged",
+    "FEATURE changes referenced Value return type from int to string",
+    "Dependency compctx1 changes for FEATURE and nullable option variants",
+    "Caller compctx1 and recorded reference identities remain equal",
+    "No production Andirit code or accepted contract modified"
+  ]
+}

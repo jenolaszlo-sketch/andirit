@@ -1,6 +1,6 @@
 # S2.1 provenance contract
 
-**Status:** Owner-authorized narrow amendment. Frozen R2 compctx1 behavior and vectors remain unchanged. Verified production project-reference contexts use compctx2. Implementation and tests are pending.
+**Status:** Owner-authorized narrow amendment implemented. Frozen R2 compctx1 behavior and vectors remain unchanged. Verified production project-reference contexts use compctx2. Final producer regression passed 645/645; independent Q1 qualification and owner acceptance remain pending.
 
 ## 1. Frozen legacy compctx1
 
@@ -38,8 +38,8 @@ Retain immutable owned source buffers, decode them with explicit BOM-aware rules
 
 Capture actual compilation options. Construct PE references from captured PE images. Bind project references by exact live compilation-instance association and verified dependency compctx2. Refuse when that proof is missing or cyclic; never convert refusal to successful empty analysis.
 
-This is a planning contract. No implementation, test result, or independent acceptance is claimed.
+This is the implementation contract. See [producer provenance evidence](../../evidence/adr-ci1-01-ci1a-s2-1-provenance.md) and [commission traceability](acceptance-matrix.md) for results and remaining review work. Producer results do not constitute independent acceptance.
 
-## Planned internal API outline
+## Implemented internal API outline
 
-The implementation plan uses internal-only VerifiedCSharpSource.ReadAsync, VerifiedMetadataReference.Capture, VerifiedCSharpCompilation.Create, and CompilationProvenanceDescriptor. Source capture owns/reuses existing bytes and exposes normalized path, hash, SourceText, encoding, and refusal. Metadata capture binds an immutable PE image to the Roslyn reference and identity. Compilation creation verifies actual options, exact source/tree correspondence, PE references, and dependency wrappers, returning the live compilation and verified descriptor. Construction stays private and invalid inputs throw InvalidDataException. The descriptor holds the R2 fields with immutable arrays and recomputing ComputeDigest/Verified methods. Tests use the existing friend-assembly mechanism; public API changes are not assumed. Exact production source binding and signatures remain to be reviewed before implementation.
+The internal-only VerifiedCSharpSource.ReadAsync, VerifiedMetadataReference.Capture, VerifiedCSharpCompilation.Create, and CompilationProvenanceDescriptor are implemented. Source capture retains the input bytes and exposes normalized path, hash, SourceText, encoding, and refusal. Metadata capture binds an immutable PE image to the Roslyn reference and identity. Compilation creation verifies actual options, exact source/tree correspondence, PE references, and dependency wrappers, returning the live compilation and verified descriptor. Construction stays private and invalid inputs throw InvalidDataException. The descriptor holds R2 fields with immutable arrays and recomputing ComputeDigest/Verified methods. Tests use the existing friend-assembly mechanism; no public API changes were introduced. Independent source binding review remains pending.

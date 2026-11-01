@@ -1,0 +1,21 @@
+# S2.1 provenance evidence
+
+**Evidence class:** producer observations. Producer digests and test results are not independent Q1 acceptance.
+
+## Canonical identity model
+
+Frozen R2 compctx1 remains unchanged. Verified contexts use explicit compctx2 versioning while preserving R2 tuple order, length-prefixed UTF-8 digest encoding, options/source serialization, and captured PE file identity. The owner-authorized project-reference item is `compilation-context|<verified dependency compctx2>`, bound to the exact live `CompilationReference`. Dependency proof is constructed bottom-up; unresolved, cyclic, conflicting, or unverified dependency graphs refuse strong proof without a text-only fallback.
+
+`analysisscope1` is unchanged. `compilation-universe1` keeps its existing formula, uses contract version compctx2, and includes only ordered compctx2 digests. Mixed-version universes are refused. Legacy `asmctx3` and `usage4` helpers remain unchanged and do not consume compctx2.
+
+## Captured producer artifacts
+
+The canonical raw files are packaged under `docs/evidence/adr-ci1-01-ci1a-s2-1-raw/`.
+
+1. [`reference-probe.log`](adr-ci1-01-ci1a-s2-1-raw/reference-probe.log) and [`reference-probe-repeat.log`](adr-ci1-01-ci1a-s2-1-raw/reference-probe-repeat.log) reproduce the R2 reference omission: three dependency contexts vary by parse symbols/options while their caller compctx1 and text/tree-only project reference remain equal. [`independent-tuple-check.log`](adr-ci1-01-ci1a-s2-1-raw/independent-tuple-check.log) reports six exact compctx1 tuples independently recomputed; the captured R2 source hash is `3703d83660b50765cb744dc9639aa5b2d3b787d0477c145d93a2bde107a5d938`.
+2. [`production-probe-final.log`](adr-ci1-01-ci1a-s2-1-raw/production-probe-final.log) records two projects and three source files through the verified path. A feature-enabled dependency changes its public API from `int` to `string`; the actual live caller uses the feature-specific compilation reference and receives a different compctx2. The probe records source hashes, option digests, PE identities, descriptors, scope, and universe. Its outputs independently recomputed by the Python checker include `analysisscope1:sha256:3c841fe16a02258c73b2dd015e5e3ffc6234af1d1ab28ffca6c96e0fff707681` and `compilation-universe1:sha256:b7fe7bffc8470843489ac5695074b260cf802fcdbd7f7a5468b13d5b72cd3dca`. The second process reproduced digest hash `c0a8e212cbf90a28888f5578b880dd77e3bda73d22d9649d416832bfa8604dd5` with `run:one` / `run:two` fixture arguments.
+3. The original fixture preparation measured 574.61 ms on the first run and 5.56 ms on the second; the final probe measured 469.65 ms and 5.13 ms. First-call timings include lazy platform-reference image capture. These small-fixture measurements are diagnostic and do not support a general performance claim.
+4. [`independent-production-check.log`](adr-ci1-01-ci1a-s2-1-raw/independent-production-check.log) independently checked exact byte/text/tree membership, all four actual live `OptionsDigest` values, metadata-file hashes, context descriptors, scopes, and universes. The Python checker did not import or call the producer hashing implementation; it reported `PASS`.
+5. The producer-focused TRX history is retained in the raw folder: `provenance-factory_net10.0_20261102005924.trx`, `provenance-focused_net10.0_20261102010125.trx`, `provenance-focused-final_net10.0_20261102010221.trx`, `provenance-final_net10.0_20261102010234.trx`, and `provenance-passed_net10.0_20261102010253.trx`. The first three PE-caller extensions failed with `ReferenceMembershipMismatch` because the test's declared metadata inventory omitted a platform reference present in the actual compilation. The test input inventory was corrected to equal the live references; the implementation contract and production code were not relaxed. The focused 48-case run then passed, followed by final full regression.
+
+Final tests demonstrate producer behavior but do not independently establish canonical agreement. An independent reviewer must recompute compctx1/compctx2 identities from accepted authority, exact source/PE bytes, actual options, and live reference instances. See the [nine-part traceability matrix](../planning/adr-ci1-01-ci1a-s2-1/acceptance-matrix.md) and [Q1 handoff](adr-ci1-01-ci1a-s2-1-q1-handoff.md).

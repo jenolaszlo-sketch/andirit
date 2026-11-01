@@ -1,12 +1,12 @@
 # S2.1 specification — Verified Source Acquisition and Compilation Provenance
 
-**Status:** Owner-authorized contract amendment, planning only. Production edits have not started; tests and independent acceptance are pending.
+**Status:** Owner-authorized contract implemented and committed. Final producer regression passed 645/645; independent Q1 qualification and owner acceptance remain pending.
 
 ## Authority and purpose
 
-Follow the owner-recorded [S2.1 authorization boundary](../../decisions/adr-ci1-01-ci1a-s2-1-authorization-boundary.md), accepted Stage 2 boundary, R2 provenance contract, owner decision §F, and the local [owner amendment draft](../../decisions/adr-ci1-01-ci1a-s2-1-project-reference-amendment.md). The owner authorized a narrow, explicitly versioned project-reference amendment so the mandatory contract is buildable without silently changing frozen R2 compctx1 identities.
+Follow the owner-recorded [S2.1 authorization boundary](../../decisions/adr-ci1-01-ci1a-s2-1-authorization-boundary.md), accepted Stage 2 boundary, R2 provenance contract, owner decision §F, and canonical [owner amendment](../../decisions/adr-ci1-01-ci1a-s2-1-project-reference-amendment.md). The owner authorized a narrow, explicitly versioned project-reference amendment so the mandatory contract is buildable without silently changing frozen R2 compctx1 identities.
 
-The amendment preserves the exact R2 compctx1 descriptor algorithm and vectors for legacy use when no authoritative project references need representation. Verified production contexts use compctx2. This defines design authority only; production implementation and tests are not complete.
+The amendment preserves the exact R2 compctx1 descriptor algorithm and vectors for legacy use when no authoritative project references need representation. Verified production contexts use compctx2. Implementation and producer tests are complete; independent Q1 qualification and owner acceptance are not.
 
 ## Proposed verified identity
 
@@ -38,11 +38,11 @@ This slice establishes source and compilation provenance only. No extraction, us
 
 Do not use occurrence coverage merge as the scope/universe oracle. NEW-04 must be fixed before any S2.1 reliance on it; otherwise it remains due during S2.2. NEW-01 must be fixed before S2.3 or earlier recovery reliance.
 
-The reference contract is now owner-authorized at planning level. P6/N05/N09 are implementable contract checks but remain pending code/tests. All P1–P7 and N01–N10 remain unimplemented and unpassed. No Q1 readiness or acceptance claim is made.
+The reference contract is owner-authorized and implemented. The producer traceability matrix records the exact commission labels and final producer-test status. No independent Q1 readiness or acceptance claim is made.
 
 ## Planned internal implementation shape
 
-The proposed surface is internal and remains a plan until the commissioned source/tree review binds it:
+The implemented surface is internal and remains subject to independent source/tree review:
 
 - VerifiedCSharpSource.ReadAsync(CodeGraphSource, cancellationToken) owns or reuses the exact materialized bytes and exposes normalized Path, ContentHash, Text as Roslyn SourceText, EncodingName, and an optional Refusal reason. Construction remains private/static.
 - VerifiedMetadataReference.Capture(path, cancellationToken) captures an immutable PE image, creates the Roslyn MetadataReference from that image, and exposes Reference and canonical Identity.
@@ -50,6 +50,6 @@ The proposed surface is internal and remains a plan until the commissioned sourc
 - CompilationProvenanceDescriptor is an internal record with ContractVersion, RepositoryId, ProjectUnitId, AssemblyName, MetadataIdentity, ModuleName, OptionsDigest, ImmutableArray source identities, ImmutableArray reference identities, and DescriptorDigest. ComputeDigest and Verified recompute from fields. compctx1 and compctx2 use the exact R2 tuple/options/source serialization; only compctx2 uses verified dependency compctx2 reference items.
 - Scope and CompilationUniverse construction remain separate internal types. Use friend-assembly tests rather than public API changes.
 
-These names and signatures are planned, not implemented or accepted. Any required public surface returns to the owner before code.
+These surfaces are internal and implemented. No public API expansion is claimed. Any future public surface returns to the owner before implementation.
 
-Until the amendment is placed in the canonical authority set, implemented, and accepted, make no strong authoritative project-reference provenance claim. This local planning record is not itself runtime proof.
+The amendment is in the canonical authority set and implemented. Runtime producer results are recorded in [`docs/evidence`](../../evidence/adr-ci1-01-ci1a-s2-1-provenance.md); this specification is not itself runtime proof or independent qualification.
