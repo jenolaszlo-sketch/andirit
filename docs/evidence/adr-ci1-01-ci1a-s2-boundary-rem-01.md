@@ -1,13 +1,15 @@
 # Evidence — ADR-CI1-01-CI1A-S2-BOUNDARY-REM-01
 
-**Status:** producer evidence for independent `REM-01-Q1` review.
+**Status:** `CI1A-S2-BOUNDARY-REM-01 READY FOR Q1 WITH QUALIFICATIONS`. Producer
+evidence for independent `REM-01-Q1` review.
 **Starting commit:** `4c6d26a1d103a62fffe2e2743467eedb5f21afc2`
 **Starting tree:** `320e965f219d0b615da29665d7fa3e85f8bbfc15`
 **Contract commit:** `c13137d54e0ee48c0f7c7383b03bf43bed74a936` (tree
 `380104122e96e5a164a2a8375ffdd7f37c513e1f`)
 **Implementation commit:** `fc515ffbc20adc286fb57339130fa5ccbf466bb8` (tree
 `8c2d7d08be0f7294332d48ec8cb3b2c98476a9fa`)
-**Evidence commit:** the commit that adds this document and the Q1 handoff.
+**Evidence commit:** `e7b4258a3e4c00d25ad609c13ce90eb2d6f65298` (tree
+`04af74d1134d98567a771674c46db77787d8ed47`).
 **Stage 2:** remains unauthorized.
 
 ---

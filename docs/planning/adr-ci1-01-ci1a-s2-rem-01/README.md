@@ -1,7 +1,8 @@
 # ADR-CI1-01-CI1A-S2-BOUNDARY-REM-01
 
-**Status:** Remediation complete for the foundation scope; ready for independent
-`REM-01-Q1` review. Stage 2 remains **unauthorized**.
+**Status:** `CI1A-S2-BOUNDARY-REM-01 READY FOR Q1 WITH QUALIFICATIONS`.
+Remediation is complete for the foundation scope; independent `REM-01-Q1` review
+is required. Stage 2 remains **unauthorized**.
 
 **Starting evidence:** Q1B independent review, disposition
 `REMEDIATION REQUIRED` (6 blocking, 8 significant, 2 minor; 23 probes).

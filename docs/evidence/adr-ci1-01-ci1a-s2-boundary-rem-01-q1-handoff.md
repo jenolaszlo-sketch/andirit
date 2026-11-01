@@ -17,7 +17,7 @@
 | Contract tree | `380104122e96e5a164a2a8375ffdd7f37c513e1f` |
 | Implementation commit | `fc515ffbc20adc286fb57339130fa5ccbf466bb8` |
 | Implementation tree | `8c2d7d08be0f7294332d48ec8cb3b2c98476a9fa` |
-| Evidence/handoff commit | the commit that adds this file and the evidence record |
+| Evidence/handoff commit | `e7b4258a3e4c00d25ad609c13ce90eb2d6f65298` (tree `04af74d1134d98567a771674c46db77787d8ed47`) |
 | Branch/worktree | `main`, single canonical worktree; no push |
 
 Expected linear ancestry:
