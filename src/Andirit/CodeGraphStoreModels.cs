@@ -146,15 +146,20 @@ public sealed record CodeIndexUnitReplacement
         CodeFactOrigin origin,
         IReadOnlyList<CodeGraphNode>? nodes = null,
         IReadOnlyList<CodeGraphDeclaration>? declarations = null,
-        IReadOnlyList<CodeGraphEdge>? edges = null)
+        IReadOnlyList<CodeGraphEdge>? edges = null,
+        IReadOnlyList<CodeOccurrenceFact>? occurrences = null,
+        bool occurrenceAnalysisIncluded = false)
     {
         Origin = origin ?? throw new ArgumentNullException(nameof(origin));
         Nodes = nodes?.ToArray() ?? [];
         Declarations = declarations?.ToArray() ?? [];
         Edges = edges?.ToArray() ?? [];
+        Occurrences = occurrences?.ToArray() ?? [];
+        OccurrenceAnalysisIncluded = occurrenceAnalysisIncluded;
         if (Nodes.Any(node => node is null) ||
             Declarations.Any(declaration => declaration is null) ||
-            Edges.Any(edge => edge is null))
+            Edges.Any(edge => edge is null) ||
+            Occurrences.Any(occurrence => occurrence is null))
         {
             throw new ArgumentException(
                 "Index-unit replacements cannot contain null facts.");
@@ -165,6 +170,22 @@ public sealed record CodeIndexUnitReplacement
     public IReadOnlyList<CodeGraphNode> Nodes { get; }
     public IReadOnlyList<CodeGraphDeclaration> Declarations { get; }
     public IReadOnlyList<CodeGraphEdge> Edges { get; }
+
+    /// <summary>
+    /// Additive, source-unit-owned occurrence facts. Never serialized into the
+    /// legacy graph unit record and never visible as graph nodes or edges; the
+    /// native occurrence tables store these under distinct production labels.
+    /// </summary>
+    [System.Text.Json.Serialization.JsonIgnore]
+    public IReadOnlyList<CodeOccurrenceFact> Occurrences { get; }
+
+    /// <summary>
+    /// True when this unit ran an occurrence analysis pass, even if it produced
+    /// no facts. Distinguishes "analysis ran and was empty" from "no occurrence
+    /// analysis exists".
+    /// </summary>
+    [System.Text.Json.Serialization.JsonIgnore]
+    public bool OccurrenceAnalysisIncluded { get; }
 }
 
 public enum CodeGraphDirection

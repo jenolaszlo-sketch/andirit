@@ -54,12 +54,14 @@ public sealed record CodeGraphBatch
         IReadOnlyList<CodeGraphNode>? nodes = null,
         IReadOnlyList<CodeGraphDeclaration>? declarations = null,
         IReadOnlyList<CodeGraphEdge>? edges = null,
-        bool completesIndexUnit = false)
+        bool completesIndexUnit = false,
+        IReadOnlyList<CodeOccurrenceFact>? occurrences = null)
     {
         Origin = origin ?? throw new ArgumentNullException(nameof(origin));
         Nodes = Copy(nodes, nameof(nodes));
         Declarations = Copy(declarations, nameof(declarations));
         Edges = Copy(edges, nameof(edges));
+        Occurrences = Copy(occurrences, nameof(occurrences));
         CompletesIndexUnit = completesIndexUnit;
     }
 
@@ -67,6 +69,12 @@ public sealed record CodeGraphBatch
     public IReadOnlyList<CodeGraphNode> Nodes { get; }
     public IReadOnlyList<CodeGraphDeclaration> Declarations { get; }
     public IReadOnlyList<CodeGraphEdge> Edges { get; }
+
+    /// <summary>
+    /// Additive occurrence contribution for this batch. Occurrences are not
+    /// legacy graph nodes or edges and never enter graph traversal.
+    /// </summary>
+    public IReadOnlyList<CodeOccurrenceFact> Occurrences { get; }
 
     /// <summary>
     /// Indicates that this is the final batch for the index unit. A sink must
@@ -103,7 +111,8 @@ public sealed record CodeGraphBatchLimits
         int maxTextPropertyLength = 32_768,
         int maxTextListItems = 1_024,
         int maxBatchesPerIndexUnit = 1_024,
-        int maxFactsPerIndexUnit = 1_000_000)
+        int maxFactsPerIndexUnit = 1_000_000,
+        int maxOccurrences = 100_000)
     {
         MaxNodes = Positive(maxNodes, nameof(maxNodes));
         MaxDeclarations = Positive(maxDeclarations, nameof(maxDeclarations));
@@ -123,6 +132,7 @@ public sealed record CodeGraphBatchLimits
         MaxFactsPerIndexUnit = Positive(
             maxFactsPerIndexUnit,
             nameof(maxFactsPerIndexUnit));
+        MaxOccurrences = Positive(maxOccurrences, nameof(maxOccurrences));
     }
 
     public int MaxNodes { get; }
@@ -133,6 +143,7 @@ public sealed record CodeGraphBatchLimits
     public int MaxTextListItems { get; }
     public int MaxBatchesPerIndexUnit { get; }
     public int MaxFactsPerIndexUnit { get; }
+    public int MaxOccurrences { get; }
 
     private static int Positive(int value, string parameterName) =>
         value > 0

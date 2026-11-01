@@ -20,13 +20,24 @@ public sealed class CodeGraphBatchValidator
             "declarations",
             errors);
         CheckLimit(batch.Edges.Count, limits.MaxEdges, "edges", errors);
+        CheckLimit(
+            batch.Occurrences.Count,
+            limits.MaxOccurrences,
+            "occurrences",
+            errors);
         CheckDuplicates(batch.Nodes.Select(node => node.Id.Value), "node", errors);
         CheckDuplicates(
             batch.Declarations.Select(declaration => declaration.Id.Value),
             "declaration",
             errors);
         CheckDuplicates(batch.Edges.Select(edge => edge.Id.Value), "edge", errors);
+        CheckDuplicates(
+            batch.Occurrences.Select(occurrence => occurrence.Id.Value),
+            "occurrence",
+            errors);
 
+        foreach (var occurrence in batch.Occurrences)
+            CheckOccurrence(occurrence, batch.Origin, errors);
         foreach (var node in batch.Nodes)
             CheckProperties(node.Id.Value, node.Properties, limits, errors);
         foreach (var declaration in batch.Declarations)
@@ -76,6 +87,48 @@ public sealed class CodeGraphBatchValidator
                 $"batch.{factKind}.duplicate",
                 $"Batch contains duplicate {factKind} identity.",
                 duplicate));
+        }
+    }
+
+    private static void CheckOccurrence(
+        CodeOccurrenceFact occurrence,
+        CodeFactOrigin origin,
+        ICollection<CodeGraphValidationError> errors)
+    {
+        if (occurrence.RepositoryId != origin.RepositoryId)
+        {
+            errors.Add(new CodeGraphValidationError(
+                CodeGraphValidationErrorKind.InvalidIdentity,
+                "occurrence.repository.mismatch",
+                "An occurrence fact must belong to the batch repository.",
+                occurrence.Id.Value));
+            return;
+        }
+
+        if (!string.Equals(
+                occurrence.SourceUnitId,
+                origin.IndexUnitId.Value,
+                StringComparison.Ordinal) ||
+            occurrence.Contributor.PluginId != origin.PluginId ||
+            !string.Equals(
+                occurrence.Contributor.IndexUnitId,
+                origin.IndexUnitId.Value,
+                StringComparison.Ordinal))
+        {
+            errors.Add(new CodeGraphValidationError(
+                CodeGraphValidationErrorKind.OwnershipMismatch,
+                "occurrence.unit.ownership",
+                "An occurrence fact must be owned by the batch's source unit and contributor.",
+                occurrence.Id.Value));
+        }
+
+        if (occurrence.SemanticsVersion != 4)
+        {
+            errors.Add(new CodeGraphValidationError(
+                CodeGraphValidationErrorKind.InvalidProperty,
+                "occurrence.semantics.unsupported",
+                "Only occurrence semantics version 4 is supported in Stage 1.",
+                occurrence.Id.Value));
         }
     }
 

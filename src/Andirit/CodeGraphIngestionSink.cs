@@ -75,7 +75,8 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
             var prospectiveFacts = pending.FactCount +
                 batch.Nodes.Count +
                 batch.Declarations.Count +
-                batch.Edges.Count;
+                batch.Edges.Count +
+                batch.Occurrences.Count;
             if (prospectiveBatches > Limits.MaxBatchesPerIndexUnit ||
                 prospectiveFacts > Limits.MaxFactsPerIndexUnit)
             {
@@ -232,10 +233,12 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
         private readonly List<CodeGraphNode> _nodes = [];
         private readonly List<CodeGraphDeclaration> _declarations = [];
         private readonly List<CodeGraphEdge> _edges = [];
+        private readonly List<CodeOccurrenceFact> _occurrences = [];
 
         public CodeFactOrigin Origin { get; } = origin;
         public int BatchesReceived { get; private set; }
-        public int FactCount => _nodes.Count + _declarations.Count + _edges.Count;
+        public int FactCount =>
+            _nodes.Count + _declarations.Count + _edges.Count + _occurrences.Count;
 
         public void Append(CodeGraphBatch batch)
         {
@@ -243,10 +246,17 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
             _nodes.AddRange(batch.Nodes);
             _declarations.AddRange(batch.Declarations);
             _edges.AddRange(batch.Edges);
+            _occurrences.AddRange(batch.Occurrences);
         }
 
         public CodeIndexUnitReplacement ToReplacement() =>
-            new(Origin, _nodes, _declarations, _edges);
+            new(
+                Origin,
+                _nodes,
+                _declarations,
+                _edges,
+                _occurrences,
+                occurrenceAnalysisIncluded: _occurrences.Count > 0);
 
         public CodeGraphIngestionDiagnostics ToDiagnostics(
             int rejectedFacts = 0,

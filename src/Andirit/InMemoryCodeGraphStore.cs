@@ -3,7 +3,8 @@ namespace Andirit;
 /// <summary>A thread-safe in-memory graph store with atomic index-unit replacement.</summary>
 public sealed class InMemoryCodeGraphStore :
     ICodeGraphStore,
-    ICodeGraphStoreHealthCheck
+    ICodeGraphStoreHealthCheck,
+    ICodeOccurrenceReader
 {
     private readonly object _gate = new();
     private readonly Dictionary<string, CodeRepositoryManifest> _repositories =
@@ -15,6 +16,12 @@ public sealed class InMemoryCodeGraphStore :
     private readonly Dictionary<RunKey, StagedRun> _staged = [];
     private readonly Dictionary<RunKey, string?> _runBaselines = [];
     private readonly Dictionary<string, MaterializedGraph> _materialized =
+        new(StringComparer.Ordinal);
+    private Dictionary<OwnerKey, IReadOnlyList<CodeOccurrenceFact>> _occurrences = [];
+    private HashSet<string> _occurrenceAvailable = new(StringComparer.Ordinal);
+    private Dictionary<string, CodeGraphPublication> _occurrencePublications =
+        new(StringComparer.Ordinal);
+    private Dictionary<string, List<OccurrenceTargetEntry>> _occurrenceIndex =
         new(StringComparer.Ordinal);
 
     public ValueTask UpsertRepositoryAsync(
@@ -202,8 +209,34 @@ public sealed class InMemoryCodeGraphStore :
                     "The staged index run would violate graph invariants.",
                     errors);
             }
+
+            var occurrenceProspective = ApplyStagedOccurrences(key);
+            var occurrenceErrors = ValidateOccurrences(
+                completedRun.RepositoryId,
+                occurrenceProspective);
+            if (occurrenceErrors.Count > 0)
+            {
+                throw new CodeGraphBatchRejectedException(
+                    "The staged index run would violate occurrence invariants.",
+                    occurrenceErrors);
+            }
+
+            var occurrenceAvailability = ApplyStagedOccurrenceAvailability(key);
             cancellationToken.ThrowIfCancellationRequested();
             _units = prospective;
+            _occurrences = occurrenceProspective;
+            _occurrenceAvailable = occurrenceAvailability;
+            var publication = new CodeGraphPublication(
+                state.RepositoryId,
+                state.IndexRunId,
+                state.SnapshotIdentity,
+                state.IsConsistentSnapshot,
+                state.IndexIdentity);
+            if (occurrenceAvailability.Contains(state.RepositoryId.Value))
+                _occurrencePublications[state.RepositoryId.Value] = publication;
+            else
+                _occurrencePublications.Remove(state.RepositoryId.Value);
+            RebuildOccurrenceIndex();
             _materialized.Remove(completedRun.RepositoryId.Value);
             _runs[key] = completedRun;
             _indexStates[state.RepositoryId.Value] = state;
@@ -293,6 +326,24 @@ public sealed class InMemoryCodeGraphStore :
                 throw new CodeGraphBatchRejectedException(
                     "The index-unit replacement would violate graph invariants.",
                     errors);
+
+            var occurrenceProspective = ApplyStagedOccurrences(runKey);
+            if (replacement.OccurrenceAnalysisIncluded ||
+                replacement.Occurrences.Count > 0)
+            {
+                occurrenceProspective[owner] = replacement.Occurrences;
+            }
+            else
+            {
+                occurrenceProspective.Remove(owner);
+            }
+            var occurrenceErrors = ValidateOccurrences(
+                replacement.Origin.RepositoryId,
+                occurrenceProspective);
+            if (occurrenceErrors.Count > 0)
+                throw new CodeGraphBatchRejectedException(
+                    "The index-unit replacement would violate occurrence invariants.",
+                    occurrenceErrors);
 
             cancellationToken.ThrowIfCancellationRequested();
             staged.Deletions.Remove(owner);
@@ -602,6 +653,302 @@ public sealed class InMemoryCodeGraphStore :
         return new(Traverse(graph, query, cancellationToken));
     }
 
+    public ValueTask<CodeOccurrenceQueryResult> FindOccurrencesAsync(
+        CodeOccurrenceQuery query,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(query);
+        cancellationToken.ThrowIfCancellationRequested();
+        lock (_gate)
+        {
+            if (!TryGetPublication(query.RepositoryId, out var publication))
+            {
+                return new(new CodeOccurrenceQueryResult(
+                    CodeOccurrenceAvailability.AnalysisUnavailable,
+                    null,
+                    [],
+                    0,
+                    0,
+                    "The repository has no successful publication."));
+            }
+
+            if (query.ExpectedPublication is { } expected &&
+                expected != publication)
+            {
+                return new(new CodeOccurrenceQueryResult(
+                    CodeOccurrenceAvailability.StalePublication,
+                    publication,
+                    [],
+                    0,
+                    0,
+                    "The requested publication is not the accepted occurrence publication."));
+            }
+
+            if (!_occurrenceAvailable.Contains(query.RepositoryId.Value))
+            {
+                return new(new CodeOccurrenceQueryResult(
+                    CodeOccurrenceAvailability.AnalysisUnavailable,
+                    publication,
+                    [],
+                    0,
+                    0,
+                    "Occurrence analysis is unavailable for this publication; reindex required."));
+            }
+
+            if (_occurrencePublications.TryGetValue(
+                    query.RepositoryId.Value,
+                    out var occurrencePublication) &&
+                occurrencePublication != publication)
+            {
+                return new(new CodeOccurrenceQueryResult(
+                    CodeOccurrenceAvailability.StalePublication,
+                    publication,
+                    [],
+                    0,
+                    0,
+                    "The occurrence index is bound to a different publication; reindex required."));
+            }
+
+            var indexKey = query.RepositoryId.Value + "\n" + query.TargetId.Value;
+            if (!_occurrenceIndex.TryGetValue(indexKey, out var entries))
+            {
+                return new(new CodeOccurrenceQueryResult(
+                    CodeOccurrenceAvailability.Available,
+                    publication,
+                    [],
+                    0,
+                    0));
+            }
+
+            var hits = entries
+                .OrderBy(entry => entry.Span.Path, StringComparer.Ordinal)
+                .ThenBy(entry => entry.Span.StartLine)
+                .ThenBy(entry => entry.Span.StartColumn)
+                .ThenBy(entry => entry.Span.EndLine)
+                .ThenBy(entry => entry.Span.EndColumn)
+                .ThenBy(entry => entry.Id.Value, StringComparer.Ordinal)
+                .Take(query.MaxResults)
+                .Select(entry => new CodeOccurrenceHit(
+                    entry.Id,
+                    entry.TargetId,
+                    entry.Category,
+                    entry.Span,
+                    entry.SourceUnitId,
+                    entry.Contributors,
+                    entry.SemanticsVersion))
+                .ToArray();
+            return new(new CodeOccurrenceQueryResult(
+                CodeOccurrenceAvailability.Available,
+                publication,
+                hits,
+                entries.Count,
+                entries.Count));
+        }
+    }
+
+    /// <summary>
+    /// Restores one published unit's occurrence contribution from durable
+    /// storage during open. Native providers call this after graph replay so the
+    /// occurrence view is derived from the accepted publication, not a transient
+    /// cache.
+    /// </summary>
+    internal ValueTask RestorePublishedOccurrencesAsync(
+        CodeRepositoryId repositoryId,
+        CodePluginId pluginId,
+        string indexUnitId,
+        IReadOnlyList<CodeOccurrenceFact> facts,
+        bool analysisIncluded,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(repositoryId);
+        ArgumentNullException.ThrowIfNull(pluginId);
+        ArgumentException.ThrowIfNullOrWhiteSpace(indexUnitId);
+        ArgumentNullException.ThrowIfNull(facts);
+        cancellationToken.ThrowIfCancellationRequested();
+        lock (_gate)
+        {
+            var owner = new OwnerKey(
+                repositoryId.Value,
+                pluginId.Value,
+                indexUnitId);
+            if (analysisIncluded || facts.Count > 0)
+            {
+                _occurrences[owner] = facts.ToArray();
+                _occurrenceAvailable.Add(repositoryId.Value);
+            }
+            else
+            {
+                _occurrences.Remove(owner);
+            }
+            RebuildOccurrenceIndex();
+        }
+        return ValueTask.CompletedTask;
+    }
+
+    /// <summary>
+    /// Binds the restored occurrence view to the durable occurrence publication.
+    /// A graph-only store leaves this unset, so occurrence queries report
+    /// <see cref="CodeOccurrenceAvailability.AnalysisUnavailable"/> rather than a
+    /// false empty result.
+    /// </summary>
+    internal void RestoreOccurrencePublication(
+        CodeRepositoryId repositoryId,
+        CodeGraphPublication? publication,
+        bool analysisIncluded)
+    {
+        ArgumentNullException.ThrowIfNull(repositoryId);
+        lock (_gate)
+        {
+            if (analysisIncluded && publication is not null)
+            {
+                _occurrenceAvailable.Add(repositoryId.Value);
+                _occurrencePublications[repositoryId.Value] = publication;
+            }
+            else
+            {
+                _occurrenceAvailable.Remove(repositoryId.Value);
+                _occurrencePublications.Remove(repositoryId.Value);
+            }
+        }
+    }
+
+    private Dictionary<OwnerKey, IReadOnlyList<CodeOccurrenceFact>> ApplyStagedOccurrences(
+        RunKey key)
+    {
+        var prospective =
+            new Dictionary<OwnerKey, IReadOnlyList<CodeOccurrenceFact>>(_occurrences);
+        if (!_staged.TryGetValue(key, out var staged))
+            return prospective;
+        foreach (var owner in staged.Deletions)
+            prospective.Remove(owner);
+        foreach (var (owner, replacement) in staged.Replacements)
+        {
+            if (replacement.OccurrenceAnalysisIncluded ||
+                replacement.Occurrences.Count > 0)
+            {
+                prospective[owner] = replacement.Occurrences;
+            }
+            else
+            {
+                prospective.Remove(owner);
+            }
+        }
+        return prospective;
+    }
+
+    private HashSet<string> ApplyStagedOccurrenceAvailability(RunKey key)
+    {
+        var prospective = new HashSet<string>(
+            _occurrenceAvailable,
+            StringComparer.Ordinal);
+        if (!_staged.TryGetValue(key, out var staged))
+            return prospective;
+        foreach (var (owner, replacement) in staged.Replacements)
+        {
+            if (replacement.OccurrenceAnalysisIncluded ||
+                replacement.Occurrences.Count > 0)
+            {
+                prospective.Add(owner.RepositoryId);
+            }
+        }
+        return prospective;
+    }
+
+    private static IReadOnlyList<CodeGraphValidationError> ValidateOccurrences(
+        CodeRepositoryId repositoryId,
+        IReadOnlyDictionary<OwnerKey, IReadOnlyList<CodeOccurrenceFact>> prospective)
+    {
+        var errors = new List<CodeGraphValidationError>();
+        var byId = new Dictionary<string, CodeOccurrenceFact>(StringComparer.Ordinal);
+        foreach (var facts in prospective.Values)
+        {
+            foreach (var fact in facts)
+            {
+                if (fact.RepositoryId != repositoryId)
+                    continue;
+                if (byId.TryGetValue(fact.Id.Value, out var existing))
+                {
+                    if (!string.Equals(
+                            existing.PayloadHash,
+                            fact.PayloadHash,
+                            StringComparison.Ordinal))
+                    {
+                        errors.Add(new CodeGraphValidationError(
+                            CodeGraphValidationErrorKind.InvalidProperty,
+                            "occurrence.payload.conflict",
+                            "Conflicting immutable payloads exist for one occurrence identity.",
+                            fact.Id.Value));
+                    }
+                }
+                else
+                {
+                    byId[fact.Id.Value] = fact;
+                }
+            }
+        }
+        return errors;
+    }
+
+    private void RebuildOccurrenceIndex()
+    {
+        var index =
+            new Dictionary<string, Dictionary<string, OccurrenceTargetEntry>>(
+                StringComparer.Ordinal);
+        foreach (var facts in _occurrences.Values)
+        {
+            foreach (var fact in facts)
+            {
+                var key = fact.RepositoryId.Value + "\n" + fact.TargetId.Value;
+                if (!index.TryGetValue(key, out var byId))
+                {
+                    byId = new Dictionary<string, OccurrenceTargetEntry>(
+                        StringComparer.Ordinal);
+                    index[key] = byId;
+                }
+
+                if (byId.TryGetValue(fact.Id.Value, out var existing))
+                {
+                    if (!existing.Contributors.Any(contributor =>
+                            contributor.PluginId == fact.Contributor.PluginId &&
+                            string.Equals(
+                                contributor.IndexUnitId,
+                                fact.Contributor.IndexUnitId,
+                                StringComparison.Ordinal)))
+                    {
+                        byId[fact.Id.Value] = existing with
+                        {
+                            Contributors = existing.Contributors
+                                .Append(fact.Contributor)
+                                .OrderBy(
+                                    contributor => contributor.PluginId.Value,
+                                    StringComparer.Ordinal)
+                                .ThenBy(
+                                    contributor => contributor.IndexUnitId,
+                                    StringComparer.Ordinal)
+                                .ToArray()
+                        };
+                    }
+                }
+                else
+                {
+                    byId[fact.Id.Value] = new OccurrenceTargetEntry(
+                        fact.Id,
+                        fact.TargetId,
+                        fact.Category,
+                        fact.Span,
+                        fact.SourceUnitId,
+                        fact.PayloadHash,
+                        fact.SemanticsVersion,
+                        [fact.Contributor]);
+                }
+            }
+        }
+        _occurrenceIndex = index.ToDictionary(
+            pair => pair.Key,
+            pair => pair.Value.Values.ToList(),
+            StringComparer.Ordinal);
+    }
+
     private void EnsureKnownOwnership(CodeFactOrigin origin)
     {
         if (!_repositories.ContainsKey(origin.RepositoryId.Value))
@@ -739,6 +1086,9 @@ public sealed class InMemoryCodeGraphStore :
             if (errors.Count > 0)
                 throw new CodeGraphBatchRejectedException("The restored graph is invalid.", errors);
             _units = prospective;
+            _occurrences = ApplyStagedOccurrences(key);
+            _occurrenceAvailable = ApplyStagedOccurrenceAvailability(key);
+            RebuildOccurrenceIndex();
             _materialized.Remove(completedRun.RepositoryId.Value);
             _runs[key] = completedRun;
             _indexStates[state.RepositoryId.Value] = state;
@@ -1193,6 +1543,16 @@ public sealed class InMemoryCodeGraphStore :
         public Dictionary<OwnerKey, CodeIndexUnitReplacement> Replacements { get; } = [];
         public HashSet<OwnerKey> Deletions { get; } = [];
     }
+
+    private sealed record OccurrenceTargetEntry(
+        CodeOccurrenceId Id,
+        CodeOccurrenceTargetId TargetId,
+        CodeOccurrenceCategory Category,
+        CodeLocation Span,
+        string SourceUnitId,
+        string PayloadHash,
+        int SemanticsVersion,
+        IReadOnlyList<CodeOccurrenceContributor> Contributors);
 
     private sealed record MaterializedGraph(
         IReadOnlyDictionary<string, CodeGraphNode> Nodes,
