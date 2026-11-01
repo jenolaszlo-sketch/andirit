@@ -1,6 +1,6 @@
 # Agent-oriented code intelligence and dependency roadmap
 
-**Status:** Proposed future direction, recorded 2026-10-29; current status updated 2026-10-30. **Documentation only.**
+**Status:** Proposed future direction, recorded 2026-10-29; current status updated 2026-11-01. **Documentation only.**
 No milestone below is authorized for implementation, release, or publication by
 this document. Exact API names are working names, not accepted public contracts.
 
@@ -50,6 +50,14 @@ EC-6D implementation and remediation are **accepted and closed with qualificatio
 under [EC6D-OWNER-02](decisions/ec6d-owner-02-acceptance.md). That acceptance record
 is authoritative for implemented binding behavior and retained qualifications.
 The candidate designs below remain proposals; CI-1 scope is pending owner approval.
+
+**CI-1 architecture status (2026-11-01).** The ADR-CI1-01 storage-selection
+question is resolved:
+[`ADR-CI1-01-OWNER-01`](decisions/adr-ci1-01-owner-decision.md) selects
+**Candidate C (separate source-owned occurrence facts)**, with D3/D4/D5 policy
+recorded and B2 preserved as an evaluated, non-selected alternative. This is an
+architecture decision only: CI-1A implementation remains unimplemented and
+unauthorized, pending the separately authorized `ADR-CI1-01-CI1A-IMPL-01` scope.
 
 ## Candidate capability sequence
 

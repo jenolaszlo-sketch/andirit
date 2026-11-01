@@ -199,3 +199,34 @@ snapshots, writer package/commit and consumer executable; demonstrate old-query
 preservation and `AnalysisUnavailable`/reindex-required for new queries; decide
 old-reader refusal explicitly; never fabricate occurrences from old aggregate
 edges. Preserve Hetu labels and accepted EC6D contracts.
+
+## Addendum — 2026-11-01 (ADR-CI1-01-OWNER-01)
+
+> **Dated owner addendum. This block is appended; it does not rewrite the
+> original ADR-CI1-01 text or the R1 amendment above.**
+
+**ADR-CI1-01 status: RESOLVED — CANDIDATE C SELECTED, WITH QUALIFICATIONS.**
+
+The owner selected **Candidate C: separate typed, source-owned occurrence
+facts**, closing the architecture-selection question left open by the R1
+amendment (S01). Candidate **B2 remains EVALUATED — NOT SELECTED** and
+technically viable.
+
+The full owner decision, including the rationale, the D3/D4/D5 policy decisions,
+the preserved prior decisions, the accepted technical invariants, the Q3
+qualifications, the implementation implications and the CI-1A
+(`ADR-CI1-01-CI1A-IMPL-01`) handoff proposal, is recorded in
+[`docs/decisions/adr-ci1-01-owner-decision.md`](../../decisions/adr-ci1-01-owner-decision.md).
+The companion Q3-F-NEW-01 evidence-packaging erratum is
+[`docs/decisions/adr-ci1-01-q3-f-new-01-evidence-erratum.md`](../../decisions/adr-ci1-01-q3-f-new-01-evidence-erratum.md).
+
+Basis: EXP-01 and EXP-02, their independent reviews Q1 (`SELECT C NOT
+SUPPORTED`) and Q2 (`FURTHER REMEDIATION REQUIRED`), the R1/R2 remediations, and
+Q3 (`Q3 SUPPORTED WITH QUALIFICATIONS`, with Q2-F01/F02/F03 closed and no new
+blocking defect). The earlier negative verdicts are preserved, not rewritten.
+
+This addendum and the linked decision are documentation only. They do **not**
+implement CI-1A, do not change production source, tests, schema or packages, and
+do **not** authorize package publication, release or push. B2 must not be
+introduced as a parallel production representation without a separate
+architecture amendment.

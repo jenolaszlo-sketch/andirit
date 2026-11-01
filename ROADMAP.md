@@ -707,6 +707,14 @@ and independent qualification; prioritize CI-1 and DI-1 against real coding-agen
 questions, with DI-2 supplying source-to-external-package API usage. Candidate
 IDs are *backlog labels*, not approved milestones or implementation permission.
 
+**CI-1 architecture status (2026-11-01).** ADR-CI1-01 is resolved: the owner
+selected **Candidate C (separate source-owned occurrence facts)** over Candidate
+B2 (recorded as evaluated, not selected), with the D3 legacy-graph, D4
+index/lifecycle and D5 no-experimental-migration policies recorded. See
+[`docs/decisions/adr-ci1-01-owner-decision.md`](docs/decisions/adr-ci1-01-owner-decision.md).
+Implementation (CI-1A) is **not** authorized by that decision; the proposed next
+scope is `ADR-CI1-01-CI1A-IMPL-01`. The candidate IDs above remain backlog labels.
+
 Success means **fewer total agent tool calls, fewer unnecessary tokens, and
 faster useful answers**, measured against realistic shell/file-inspection
 workflows including cold/incremental index costs and accuracy, not hypothetical
