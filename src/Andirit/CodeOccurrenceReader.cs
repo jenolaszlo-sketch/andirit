@@ -16,7 +16,14 @@ public enum CodeOccurrenceAvailability
     StalePublication = 3,
 
     /// <summary>The occurrence index is missing entries or is internally inconsistent.</summary>
-    CorruptedIndex = 4
+    CorruptedIndex = 4,
+
+    /// <summary>
+    /// Occurrence analysis ran, but the declared analysis scope is not proven
+    /// complete. Results may be partial; a zero-result answer is not a complete
+    /// negative.
+    /// </summary>
+    IncompleteAnalysis = 5
 }
 
 /// <summary>A bounded, target-scoped occurrence request. Not a public Find Usages API.</summary>
@@ -62,9 +69,18 @@ public sealed record CodeOccurrenceQueryResult(
     IReadOnlyList<CodeOccurrenceHit> Occurrences,
     int TotalMatches,
     int Examined,
-    string? RefusalReason = null)
+    string? RefusalReason = null,
+    CodeOccurrenceCoverage? Coverage = null)
 {
     public bool Truncated => TotalMatches > Occurrences.Count;
+
+    /// <summary>
+    /// True only when the publication is current, the target belongs to a
+    /// completely analyzed declared scope, and the result is a valid
+    /// complete-empty answer.
+    /// </summary>
+    public bool IsComplete => Availability == CodeOccurrenceAvailability.Available &&
+        Coverage?.IsComplete == true;
 }
 
 /// <summary>

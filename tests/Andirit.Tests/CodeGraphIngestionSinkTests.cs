@@ -143,6 +143,34 @@ public sealed class CodeGraphIngestionSinkTests
     }
 
     [Fact]
+    public async Task CompleteEmptyCoverage_PropagatesThroughSinkAndQuery()
+    {
+        var setup = await SetupAsync();
+        var target = Target();
+        await using var sink = new CodeGraphIngestionSink(setup.Store);
+        await sink.WriteBatchAsync(new CodeGraphBatch(
+            setup.Origin,
+            nodes: [Node("empty-analysis")],
+            completesIndexUnit: true,
+            occurrenceCoverage: new CodeOccurrenceCoverage(
+                0,
+                0,
+                CodeRelationshipCoverageState.Produced,
+                scopeId: "analysisscope1:sha256:" + new string('a', 64),
+                universeId: "compilation-universe1:sha256:" + new string('b', 64),
+                declaredUnitCount: 1,
+                verifiedUnitCount: 1)));
+
+        await PublishAsync(setup);
+
+        var result = await setup.Store.FindOccurrencesAsync(
+            new CodeOccurrenceQuery(setup.RepositoryId, target));
+        Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
+        Assert.Empty(result.Occurrences);
+        Assert.True(result.Coverage!.IsComplete);
+    }
+
+    [Fact]
     public void Validator_RejectsDuplicateFactsAndOversizedText()
     {
         var node = Node(
@@ -184,6 +212,15 @@ public sealed class CodeGraphIngestionSinkTests
             "1.0.0",
             new CodeIndexRunId("run:test"),
             new CodeIndexUnitId("unit:test"));
+
+    private static CodeOccurrenceTargetId Target() =>
+        CodeOccurrenceIdentity.ComputeTargetId(
+            "compctx1:sha256:" + new string('c', 64),
+            "meta:test",
+            "module:test",
+            CodeOccurrenceIdentity.ComputeIdentifierDigest(["src/test.cs|1|2"]),
+            CodeOccurrenceIdentity.ComputeDeclarationDigest(["src/test.cs|1|2|0|10|1|1|1|2|1|1|1|10"]),
+            CodeOccurrenceIdentity.ComputeShapeDigest("shape:test"));
 
     private static CodeGraphNode Node(
         string id,

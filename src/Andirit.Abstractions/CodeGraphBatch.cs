@@ -55,13 +55,15 @@ public sealed record CodeGraphBatch
         IReadOnlyList<CodeGraphDeclaration>? declarations = null,
         IReadOnlyList<CodeGraphEdge>? edges = null,
         bool completesIndexUnit = false,
-        IReadOnlyList<CodeOccurrenceFact>? occurrences = null)
+        IReadOnlyList<CodeOccurrenceFact>? occurrences = null,
+        CodeOccurrenceCoverage? occurrenceCoverage = null)
     {
         Origin = origin ?? throw new ArgumentNullException(nameof(origin));
         Nodes = Copy(nodes, nameof(nodes));
         Declarations = Copy(declarations, nameof(declarations));
         Edges = Copy(edges, nameof(edges));
         Occurrences = Copy(occurrences, nameof(occurrences));
+        OccurrenceCoverage = occurrenceCoverage;
         CompletesIndexUnit = completesIndexUnit;
     }
 
@@ -75,6 +77,13 @@ public sealed record CodeGraphBatch
     /// legacy graph nodes or edges and never enter graph traversal.
     /// </summary>
     public IReadOnlyList<CodeOccurrenceFact> Occurrences { get; }
+
+    /// <summary>
+    /// Resolution and analysis-completeness evidence for this batch. A batch
+    /// that ran an occurrence pass and produced zero facts must still carry a
+    /// complete coverage record; absence of facts is not evidence of no analysis.
+    /// </summary>
+    public CodeOccurrenceCoverage? OccurrenceCoverage { get; }
 
     /// <summary>
     /// Indicates that this is the final batch for the index unit. A sink must

@@ -10,6 +10,7 @@ public sealed class LatticeCodeGraphStoreTests
     {
         Assert.Equal(
             [
+                typeof(CodeGraphCommitOutcomeUnknownException),
                 typeof(LatticeCodeGraphSchemaException),
                 typeof(LatticeCodeGraphStore),
                 typeof(AndiritHostBuilderExtensions),

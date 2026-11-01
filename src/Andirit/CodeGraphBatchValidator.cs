@@ -105,11 +105,7 @@ public sealed class CodeGraphBatchValidator
             return;
         }
 
-        if (!string.Equals(
-                occurrence.SourceUnitId,
-                origin.IndexUnitId.Value,
-                StringComparison.Ordinal) ||
-            occurrence.Contributor.PluginId != origin.PluginId ||
+        if (occurrence.Contributor.PluginId != origin.PluginId ||
             !string.Equals(
                 occurrence.Contributor.IndexUnitId,
                 origin.IndexUnitId.Value,
@@ -118,7 +114,7 @@ public sealed class CodeGraphBatchValidator
             errors.Add(new CodeGraphValidationError(
                 CodeGraphValidationErrorKind.OwnershipMismatch,
                 "occurrence.unit.ownership",
-                "An occurrence fact must be owned by the batch's source unit and contributor.",
+                "An occurrence fact's contributor must be the batch's plugin and storage unit.",
                 occurrence.Id.Value));
         }
 
@@ -128,6 +124,46 @@ public sealed class CodeGraphBatchValidator
                 CodeGraphValidationErrorKind.InvalidProperty,
                 "occurrence.semantics.unsupported",
                 "Only occurrence semantics version 4 is supported in Stage 1.",
+                occurrence.Id.Value));
+        }
+
+        if (!CodeOccurrenceIdentity.IsCanonicalTarget(occurrence.TargetId.Value))
+        {
+            errors.Add(new CodeGraphValidationError(
+                CodeGraphValidationErrorKind.InvalidIdentity,
+                "occurrence.target.canonical",
+                "The occurrence target must be a canonical asmctx3 identity.",
+                occurrence.Id.Value));
+            return;
+        }
+
+        var expectedId = CodeOccurrenceIdentity.ComputeOccurrenceId(
+            occurrence.RepositoryId,
+            occurrence.Contributor.PluginId,
+            occurrence.SourceUnitId,
+            occurrence.Span.Path,
+            occurrence.SourceHash,
+            occurrence.Span,
+            occurrence.TargetDocumentId,
+            occurrence.TargetId,
+            occurrence.Category);
+        if (!string.Equals(expectedId.Value, occurrence.Id.Value, StringComparison.Ordinal))
+        {
+            errors.Add(new CodeGraphValidationError(
+                CodeGraphValidationErrorKind.InvalidIdentity,
+                "occurrence.identity.recomputed",
+                "The occurrence identity does not match the canonical R2 usage4 tuple.",
+                occurrence.Id.Value));
+            return;
+        }
+
+        var expectedPayload = CodeOccurrenceIdentity.ComputePayloadHash(occurrence);
+        if (!string.Equals(expectedPayload, occurrence.PayloadHash, StringComparison.Ordinal))
+        {
+            errors.Add(new CodeGraphValidationError(
+                CodeGraphValidationErrorKind.InvalidProperty,
+                "occurrence.payload.recomputed",
+                "The occurrence payload hash does not match its immutable payload.",
                 occurrence.Id.Value));
         }
     }

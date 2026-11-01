@@ -18,6 +18,7 @@ public sealed class InMemoryCodeGraphStore :
     private readonly Dictionary<string, MaterializedGraph> _materialized =
         new(StringComparer.Ordinal);
     private Dictionary<OwnerKey, IReadOnlyList<CodeOccurrenceFact>> _occurrences = [];
+    private Dictionary<OwnerKey, CodeOccurrenceCoverage> _occurrenceCoverage = [];
     private HashSet<string> _occurrenceAvailable = new(StringComparer.Ordinal);
     private Dictionary<string, CodeGraphPublication> _occurrencePublications =
         new(StringComparer.Ordinal);
@@ -221,18 +222,17 @@ public sealed class InMemoryCodeGraphStore :
                     occurrenceErrors);
             }
 
-            var occurrenceAvailability = ApplyStagedOccurrenceAvailability(key);
-            cancellationToken.ThrowIfCancellationRequested();
             _units = prospective;
             _occurrences = occurrenceProspective;
-            _occurrenceAvailable = occurrenceAvailability;
+            _occurrenceCoverage = ApplyStagedOccurrenceCoverage(key);
+            RebuildOccurrenceAvailability();
             var publication = new CodeGraphPublication(
                 state.RepositoryId,
                 state.IndexRunId,
                 state.SnapshotIdentity,
                 state.IsConsistentSnapshot,
                 state.IndexIdentity);
-            if (occurrenceAvailability.Contains(state.RepositoryId.Value))
+            if (_occurrenceAvailable.Contains(state.RepositoryId.Value))
                 _occurrencePublications[state.RepositoryId.Value] = publication;
             else
                 _occurrencePublications.Remove(state.RepositoryId.Value);
@@ -328,8 +328,7 @@ public sealed class InMemoryCodeGraphStore :
                     errors);
 
             var occurrenceProspective = ApplyStagedOccurrences(runKey);
-            if (replacement.OccurrenceAnalysisIncluded ||
-                replacement.Occurrences.Count > 0)
+            if (TryGetCoverage(replacement, out var coverage))
             {
                 occurrenceProspective[owner] = replacement.Occurrences;
             }
@@ -684,7 +683,8 @@ public sealed class InMemoryCodeGraphStore :
                     "The requested publication is not the accepted occurrence publication."));
             }
 
-            if (!_occurrenceAvailable.Contains(query.RepositoryId.Value))
+            var coverage = RepositoryCoverage(query.RepositoryId.Value);
+            if (coverage is null || !coverage.AnalysisPerformed)
             {
                 return new(new CodeOccurrenceQueryResult(
                     CodeOccurrenceAvailability.AnalysisUnavailable,
@@ -692,7 +692,8 @@ public sealed class InMemoryCodeGraphStore :
                     [],
                     0,
                     0,
-                    "Occurrence analysis is unavailable for this publication; reindex required."));
+                    "Occurrence analysis is unavailable for this publication; reindex required.",
+                    coverage));
             }
 
             if (_occurrencePublications.TryGetValue(
@@ -706,18 +707,28 @@ public sealed class InMemoryCodeGraphStore :
                     [],
                     0,
                     0,
-                    "The occurrence index is bound to a different publication; reindex required."));
+                    "The occurrence index is bound to a different publication; reindex required.",
+                    coverage));
             }
+
+            var availability = coverage.IsComplete
+                ? CodeOccurrenceAvailability.Available
+                : CodeOccurrenceAvailability.IncompleteAnalysis;
+            var refusalReason = coverage.IsComplete
+                ? null
+                : "The declared analysis scope is not proven complete; a zero-result answer is not a complete negative.";
 
             var indexKey = query.RepositoryId.Value + "\n" + query.TargetId.Value;
             if (!_occurrenceIndex.TryGetValue(indexKey, out var entries))
             {
                 return new(new CodeOccurrenceQueryResult(
-                    CodeOccurrenceAvailability.Available,
+                    availability,
                     publication,
                     [],
                     0,
-                    0));
+                    0,
+                    refusalReason,
+                    coverage));
             }
 
             var hits = entries
@@ -738,11 +749,13 @@ public sealed class InMemoryCodeGraphStore :
                     entry.SemanticsVersion))
                 .ToArray();
             return new(new CodeOccurrenceQueryResult(
-                CodeOccurrenceAvailability.Available,
+                availability,
                 publication,
                 hits,
                 entries.Count,
-                entries.Count));
+                entries.Count,
+                refusalReason,
+                coverage));
         }
     }
 
@@ -758,6 +771,7 @@ public sealed class InMemoryCodeGraphStore :
         string indexUnitId,
         IReadOnlyList<CodeOccurrenceFact> facts,
         bool analysisIncluded,
+        CodeOccurrenceCoverage? coverage = null,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(repositoryId);
@@ -771,15 +785,24 @@ public sealed class InMemoryCodeGraphStore :
                 repositoryId.Value,
                 pluginId.Value,
                 indexUnitId);
-            if (analysisIncluded || facts.Count > 0)
+            var effective = coverage ??
+                (analysisIncluded || facts.Count > 0
+                    ? new CodeOccurrenceCoverage(
+                        facts.Count,
+                        0,
+                        CodeRelationshipCoverageState.Partial)
+                    : null);
+            if (effective?.AnalysisPerformed == true)
             {
                 _occurrences[owner] = facts.ToArray();
-                _occurrenceAvailable.Add(repositoryId.Value);
+                _occurrenceCoverage[owner] = effective;
             }
             else
             {
                 _occurrences.Remove(owner);
+                _occurrenceCoverage.Remove(owner);
             }
+            RebuildOccurrenceAvailability();
             RebuildOccurrenceIndex();
         }
         return ValueTask.CompletedTask;
@@ -794,12 +817,14 @@ public sealed class InMemoryCodeGraphStore :
     internal void RestoreOccurrencePublication(
         CodeRepositoryId repositoryId,
         CodeGraphPublication? publication,
-        bool analysisIncluded)
+        bool analysisIncluded,
+        CodeOccurrenceCoverage? coverage = null)
     {
         ArgumentNullException.ThrowIfNull(repositoryId);
         lock (_gate)
         {
-            if (analysisIncluded && publication is not null)
+            if ((analysisIncluded || coverage?.AnalysisPerformed == true) &&
+                publication is not null)
             {
                 _occurrenceAvailable.Add(repositoryId.Value);
                 _occurrencePublications[repositoryId.Value] = publication;
@@ -823,8 +848,7 @@ public sealed class InMemoryCodeGraphStore :
             prospective.Remove(owner);
         foreach (var (owner, replacement) in staged.Replacements)
         {
-            if (replacement.OccurrenceAnalysisIncluded ||
-                replacement.Occurrences.Count > 0)
+            if (TryGetCoverage(replacement, out _))
             {
                 prospective[owner] = replacement.Occurrences;
             }
@@ -836,22 +860,73 @@ public sealed class InMemoryCodeGraphStore :
         return prospective;
     }
 
-    private HashSet<string> ApplyStagedOccurrenceAvailability(RunKey key)
+    private Dictionary<OwnerKey, CodeOccurrenceCoverage> ApplyStagedOccurrenceCoverage(
+        RunKey key)
     {
-        var prospective = new HashSet<string>(
-            _occurrenceAvailable,
-            StringComparer.Ordinal);
+        var prospective =
+            new Dictionary<OwnerKey, CodeOccurrenceCoverage>(_occurrenceCoverage);
         if (!_staged.TryGetValue(key, out var staged))
             return prospective;
+        foreach (var owner in staged.Deletions)
+            prospective.Remove(owner);
         foreach (var (owner, replacement) in staged.Replacements)
         {
-            if (replacement.OccurrenceAnalysisIncluded ||
-                replacement.Occurrences.Count > 0)
-            {
-                prospective.Add(owner.RepositoryId);
-            }
+            if (TryGetCoverage(replacement, out var coverage))
+                prospective[owner] = coverage;
+            else
+                prospective.Remove(owner);
         }
         return prospective;
+    }
+
+    private static bool TryGetCoverage(
+        CodeIndexUnitReplacement replacement,
+        out CodeOccurrenceCoverage coverage)
+    {
+        if (replacement.OccurrenceCoverage is { } declared)
+        {
+            coverage = declared.State == CodeRelationshipCoverageState.NotProduced &&
+                (replacement.OccurrenceAnalysisIncluded || replacement.Occurrences.Count > 0)
+                ? declared.WithState(CodeRelationshipCoverageState.Partial)
+                : declared;
+            return coverage.AnalysisPerformed;
+        }
+
+        if (replacement.OccurrenceAnalysisIncluded || replacement.Occurrences.Count > 0)
+        {
+            // Legacy contributions did not carry completeness evidence. They
+            // prove that analysis ran, not that the declared scope was complete.
+            coverage = new CodeOccurrenceCoverage(
+                replacement.Occurrences.Count,
+                0,
+                CodeRelationshipCoverageState.Partial);
+            return true;
+        }
+
+        coverage = new CodeOccurrenceCoverage();
+        return false;
+    }
+
+    private CodeOccurrenceCoverage? RepositoryCoverage(string repositoryId)
+    {
+        var coverages = _occurrenceCoverage
+            .Where(pair => string.Equals(pair.Key.RepositoryId, repositoryId, StringComparison.Ordinal))
+            .Select(pair => pair.Value)
+            .ToArray();
+        if (coverages.Length == 0)
+            return null;
+        var merged = coverages[0];
+        for (var index = 1; index < coverages.Length; index++)
+            merged = merged.Merge(coverages[index]);
+        return merged;
+    }
+
+    private void RebuildOccurrenceAvailability()
+    {
+        _occurrenceAvailable = _occurrenceCoverage
+            .Where(pair => pair.Value.AnalysisPerformed)
+            .Select(pair => pair.Key.RepositoryId)
+            .ToHashSet(StringComparer.Ordinal);
     }
 
     private static IReadOnlyList<CodeGraphValidationError> ValidateOccurrences(
@@ -1087,7 +1162,8 @@ public sealed class InMemoryCodeGraphStore :
                 throw new CodeGraphBatchRejectedException("The restored graph is invalid.", errors);
             _units = prospective;
             _occurrences = ApplyStagedOccurrences(key);
-            _occurrenceAvailable = ApplyStagedOccurrenceAvailability(key);
+            _occurrenceCoverage = ApplyStagedOccurrenceCoverage(key);
+            RebuildOccurrenceAvailability();
             RebuildOccurrenceIndex();
             _materialized.Remove(completedRun.RepositoryId.Value);
             _runs[key] = completedRun;

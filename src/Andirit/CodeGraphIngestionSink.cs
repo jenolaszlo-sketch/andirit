@@ -234,6 +234,7 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
         private readonly List<CodeGraphDeclaration> _declarations = [];
         private readonly List<CodeGraphEdge> _edges = [];
         private readonly List<CodeOccurrenceFact> _occurrences = [];
+        private CodeOccurrenceCoverage? _coverage;
 
         public CodeFactOrigin Origin { get; } = origin;
         public int BatchesReceived { get; private set; }
@@ -247,6 +248,12 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
             _declarations.AddRange(batch.Declarations);
             _edges.AddRange(batch.Edges);
             _occurrences.AddRange(batch.Occurrences);
+            if (batch.OccurrenceCoverage is { } coverage)
+            {
+                _coverage = _coverage is null
+                    ? coverage
+                    : _coverage.Merge(coverage);
+            }
         }
 
         public CodeIndexUnitReplacement ToReplacement() =>
@@ -256,7 +263,9 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
                 _declarations,
                 _edges,
                 _occurrences,
-                occurrenceAnalysisIncluded: _occurrences.Count > 0);
+                occurrenceAnalysisIncluded: _occurrences.Count > 0 ||
+                    _coverage?.AnalysisPerformed == true,
+                occurrenceCoverage: _coverage);
 
         public CodeGraphIngestionDiagnostics ToDiagnostics(
             int rejectedFacts = 0,

@@ -68,8 +68,19 @@ public sealed class OccurrenceStage1PerformanceProbe
         }
     }
 
-    private static CodeOccurrenceTargetId Target(CodeRepositoryId repo, string name) =>
-        CodeOccurrenceIdentity.ComputeTargetId(repo, $"compctx:{name}", $"module:{name}", $"decl:{name}");
+    private static CodeOccurrenceTargetId Target(CodeRepositoryId repo, string name)
+    {
+        var context = "compctx1:sha256:" + Convert.ToHexStringLower(
+            System.Security.Cryptography.SHA256.HashData(
+                System.Text.Encoding.UTF8.GetBytes(repo.Value + "|" + name)));
+        return CodeOccurrenceIdentity.ComputeTargetId(
+            context,
+            "meta:" + name,
+            "module:" + name,
+            CodeOccurrenceIdentity.ComputeIdentifierDigest([$"src/{name}.cs|1|2"]),
+            CodeOccurrenceIdentity.ComputeDeclarationDigest([$"src/{name}.cs|1|2|0|10|1|1|1|2|1|1|1|10"]),
+            CodeOccurrenceIdentity.ComputeShapeDigest("shape:" + name));
+    }
 
     private static CodeOccurrenceFact[] Facts(
         CodeRepositoryId repo,
@@ -86,6 +97,7 @@ public sealed class OccurrenceStage1PerformanceProbe
                 facts.Add(CodeOccurrenceFact.Create(
                     repo,
                     id,
+                    id.Value,
                     unit,
                     new CodeOccurrenceContributor(Plugin, unit),
                     CodeOccurrenceCategory.Invocation,
@@ -109,7 +121,11 @@ public sealed class OccurrenceStage1PerformanceProbe
             new CodeFactOrigin(repo, Plugin, "1.0.0", runId, new CodeIndexUnitId("unit:perf")),
             [new CodeGraphNode(new CodeNodeId("node:perf"), CodeNodeKinds.Callable, "perf", "perf")],
             occurrences: facts,
-            occurrenceAnalysisIncluded: true));
+            occurrenceAnalysisIncluded: true,
+            occurrenceCoverage: new CodeOccurrenceCoverage(
+                facts.Count,
+                0,
+                CodeRelationshipCoverageState.Produced)));
         await store.CompleteIndexRunAsync(
             new(repo, runId, Started, CodeIndexRunStatus.Completed, Started.AddSeconds(1), [Plugin]),
             new(repo, runId, []));

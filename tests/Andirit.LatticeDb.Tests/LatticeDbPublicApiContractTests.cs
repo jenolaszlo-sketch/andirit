@@ -14,6 +14,7 @@ public sealed class LatticeDbPublicApiContractTests
             .ToArray();
         var expected = new[]
         {
+            "Andirit.CodeGraphCommitOutcomeUnknownException",
             "Andirit.LatticeCodeGraphSchemaException",
             "Andirit.LatticeCodeGraphStore",
             "Andirit.LatticeDb.AndiritHostBuilderExtensions",

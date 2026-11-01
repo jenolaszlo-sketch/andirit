@@ -67,6 +67,7 @@ public sealed class LatticeCodeGraphStore :
         new(StringComparer.Ordinal);
     private bool _disposed;
     private readonly Action<string>? _faultInjector;
+    private bool _outcomeUnknown;
 
     public LatticeCodeGraphStore(string databasePath)
         : this(databasePath, null, null)
@@ -210,6 +211,7 @@ public sealed class LatticeCodeGraphStore :
         try
         {
             ThrowIfDisposed();
+            ThrowIfUncertain();
             if (_nativeTraversal &&
                 query.EvidenceQualities.Count == 0 &&
                 _mirrors.TryGetValue(repositoryId.Value, out var mirror))
@@ -258,6 +260,7 @@ public sealed class LatticeCodeGraphStore :
         try
         {
             ThrowIfDisposed();
+            ThrowIfUncertain();
             return await _inner.FindOccurrencesAsync(query, cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -334,6 +337,7 @@ public sealed class LatticeCodeGraphStore :
         try
         {
             ThrowIfDisposed();
+            ThrowIfUncertain();
             var runKey = command.Run is null ? null : RunKey(command.Run);
             string? baseline = null;
             if (command is { Kind: "run", Run.Status: CodeIndexRunStatus.Running })
@@ -345,32 +349,59 @@ public sealed class LatticeCodeGraphStore :
                 }
             }
             var next = Apply(_commands, command);
-            await ApplyCommandAsync(_inner, command, cancellationToken).ConfigureAwait(false);
+
+            // Apply to the in-memory projection first so ordinary validation
+            // failures happen before any native write. The command log is not
+            // advanced until the native write returns.
             try
             {
-                var mirror = TranslateNative(() => Persist(command, baseline, cancellationToken), "persist mutation");
-                _commands = next;
-                if (command is { Kind: "run", Run.Status: CodeIndexRunStatus.Running })
-                    _baselines.TryAdd(runKey!, baseline);
-                else if (command.Kind == "complete" ||
-                         command is { Kind: "run", Run.Status: not CodeIndexRunStatus.Running })
-                    _baselines.Remove(runKey!);
-
-                if (command.Kind == "complete" && command.Run is not null)
-                {
-                    var mirrors = new Dictionary<string, NativeGraphMirror>(_mirrors, StringComparer.Ordinal);
-                    if (mirror is null)
-                        mirrors.Remove(command.Run.RepositoryId.Value);
-                    else
-                        mirrors[command.Run.RepositoryId.Value] = mirror;
-                    _mirrors = mirrors;
-                }
+                await ApplyCommandAsync(_inner, command, cancellationToken).ConfigureAwait(false);
             }
             catch
             {
                 _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
                 RestoreBaselines(_inner);
                 throw;
+            }
+
+            NativeGraphMirror? mirror;
+            try
+            {
+                mirror = TranslateNative(
+                    () => Persist(command, baseline, cancellationToken),
+                    "persist mutation");
+            }
+            catch (CodeGraphCommitOutcomeUnknownException)
+            {
+                // The write may have committed. Do not claim a rollback or
+                // advance the command log; quarantine the instance instead.
+                _outcomeUnknown = true;
+                throw;
+            }
+            catch
+            {
+                // Known failure before commit: restore the projection from the
+                // unchanged command log.
+                _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
+                RestoreBaselines(_inner);
+                throw;
+            }
+
+            _commands = next;
+            if (command is { Kind: "run", Run.Status: CodeIndexRunStatus.Running })
+                _baselines.TryAdd(runKey!, baseline);
+            else if (command.Kind == "complete" ||
+                     command is { Kind: "run", Run.Status: not CodeIndexRunStatus.Running })
+                _baselines.Remove(runKey!);
+
+            if (command.Kind == "complete" && command.Run is not null)
+            {
+                var mirrors = new Dictionary<string, NativeGraphMirror>(_mirrors, StringComparer.Ordinal);
+                if (mirror is null)
+                    mirrors.Remove(command.Run.RepositoryId.Value);
+                else
+                    mirrors[command.Run.RepositoryId.Value] = mirror;
+                _mirrors = mirrors;
             }
         }
         finally
@@ -387,6 +418,7 @@ public sealed class LatticeCodeGraphStore :
         try
         {
             ThrowIfDisposed();
+            ThrowIfUncertain();
             return await read(_inner).ConfigureAwait(false);
         }
         finally
@@ -525,20 +557,44 @@ public sealed class LatticeCodeGraphStore :
         foreach (var meta in metas.Values)
         {
             cancellationToken.ThrowIfCancellationRequested();
+            CodeOccurrenceCoverage? repositoryCoverage = null;
             if (unitsByRepository.TryGetValue(meta.RepositoryId, out var units))
             {
                 foreach (var unit in units)
                 {
+                    var coverage = CoverageForRestore(unit);
+                    if (coverage?.AnalysisPerformed == true)
+                    {
+                        repositoryCoverage = repositoryCoverage is null
+                            ? coverage
+                            : repositoryCoverage.Merge(coverage);
+                    }
                     _inner.RestorePublishedOccurrencesAsync(
                             new CodeRepositoryId(unit.RepositoryId),
                             new CodePluginId(unit.PluginId),
                             unit.IndexUnitId,
                             unit.Facts,
                             unit.AnalysisIncluded,
+                            coverage,
                             cancellationToken)
                         .GetAwaiter().GetResult();
                 }
             }
+
+            // Older schema-version-1 records have no completeness evidence. A
+            // non-empty analysis is restored as Partial, never as complete.
+            repositoryCoverage ??= meta.AnalysisIncluded
+                ? new CodeOccurrenceCoverage(
+                    meta.FactCount,
+                    0,
+                    CodeRelationshipCoverageState.Partial,
+                    meta.ScopeId,
+                    meta.UniverseId,
+                    meta.UnitCount,
+                    meta.UnitCount)
+                : null;
+            if (meta.CompleteCoverage && repositoryCoverage is not null)
+                repositoryCoverage = repositoryCoverage.WithState(CodeRelationshipCoverageState.Produced);
 
             _inner.RestoreOccurrencePublication(
                 new CodeRepositoryId(meta.RepositoryId),
@@ -548,7 +604,8 @@ public sealed class LatticeCodeGraphStore :
                     meta.SnapshotIdentity,
                     meta.IsConsistentSnapshot,
                     new CodeIndexIdentity(meta.IndexIdentity)),
-                meta.AnalysisIncluded);
+                meta.AnalysisIncluded || repositoryCoverage?.AnalysisPerformed == true,
+                repositoryCoverage);
         }
     }
 
@@ -563,7 +620,6 @@ public sealed class LatticeCodeGraphStore :
             .Select(pair => DeserializeOccurrence<PersistedOccurrenceUnit>(pair.Payload))
             .Where(unit => string.Equals(unit.RepositoryId, repositoryId, StringComparison.Ordinal))
             .ToDictionary(OccurrenceUnitKey, StringComparer.Ordinal);
-        var analysisIncluded = units.Count > 0;
         foreach (var command in _commands.Where(command => MatchesRun(command, run)))
         {
             if (command.Kind == "stage-delete")
@@ -579,22 +635,25 @@ public sealed class LatticeCodeGraphStore :
                 continue;
             var replacement = command.Replacement!;
             var key = UnitKey(replacement.Origin);
-            if (replacement.OccurrenceAnalysisIncluded ||
-                replacement.Occurrences.Count > 0)
+            if (TryGetCoverage(replacement, out var coverage))
             {
                 units[key] = new PersistedOccurrenceUnit(
                     repositoryId,
                     replacement.Origin.PluginId.Value,
                     replacement.Origin.IndexUnitId.Value,
                     true,
-                    replacement.Occurrences);
-                analysisIncluded = true;
+                    replacement.Occurrences,
+                    coverage);
             }
             else
             {
                 units.Remove(key);
             }
         }
+
+        var analysisIncluded = units.Values.Any(unit =>
+            unit.AnalysisIncluded || unit.Facts.Count > 0 || unit.Coverage?.AnalysisPerformed == true);
+        var repositoryCoverage = AggregateCoverage(units.Values);
 
         var unitKeys = unitPairs
             .Select(pair => pair.Key)
@@ -662,8 +721,67 @@ public sealed class LatticeCodeGraphStore :
             units.Values.Sum(unit => unit.Facts.Count),
             units.Count,
             pages.Length,
-            analysisIncluded);
+            analysisIncluded,
+            repositoryCoverage?.State ?? CodeRelationshipCoverageState.NotProduced,
+            repositoryCoverage?.ScopeId,
+            repositoryCoverage?.UniverseId,
+            repositoryCoverage?.IsComplete == true);
         Upsert(txn, OccurrenceMetaLabel, repositoryId, Serialize(meta));
+    }
+
+    private static bool TryGetCoverage(
+        CodeIndexUnitReplacement replacement,
+        out CodeOccurrenceCoverage coverage)
+    {
+        if (replacement.OccurrenceCoverage is { } declared)
+        {
+            coverage = declared.State == CodeRelationshipCoverageState.NotProduced &&
+                (replacement.OccurrenceAnalysisIncluded || replacement.Occurrences.Count > 0)
+                ? declared.WithState(CodeRelationshipCoverageState.Partial)
+                : declared;
+            return coverage.AnalysisPerformed;
+        }
+
+        if (replacement.OccurrenceAnalysisIncluded || replacement.Occurrences.Count > 0)
+        {
+            // Legacy contributions prove analysis ran, not that it was complete.
+            coverage = new CodeOccurrenceCoverage(
+                replacement.Occurrences.Count,
+                0,
+                CodeRelationshipCoverageState.Partial);
+            return true;
+        }
+
+        coverage = new CodeOccurrenceCoverage();
+        return false;
+    }
+
+    private static CodeOccurrenceCoverage? CoverageForRestore(PersistedOccurrenceUnit unit)
+    {
+        if (unit.Coverage is not null)
+            return unit.Coverage;
+        if (unit.AnalysisIncluded || unit.Facts.Count > 0)
+        {
+            return new CodeOccurrenceCoverage(
+                unit.Facts.Count,
+                0,
+                CodeRelationshipCoverageState.Partial);
+        }
+        return null;
+    }
+
+    private static CodeOccurrenceCoverage? AggregateCoverage(
+        IEnumerable<PersistedOccurrenceUnit> units)
+    {
+        CodeOccurrenceCoverage? result = null;
+        foreach (var unit in units)
+        {
+            var coverage = CoverageForRestore(unit);
+            if (coverage?.AnalysisPerformed != true)
+                continue;
+            result = result is null ? coverage : result.Merge(coverage);
+        }
+        return result;
     }
 
     private List<(string Key, string Payload)> ReadPairsInTxn(
@@ -677,11 +795,26 @@ public sealed class LatticeCodeGraphStore :
             .ToList();
     }
 
-    private static T DeserializeOccurrence<T>(string payload) =>
-        JsonSerializer.Deserialize<T>(
-            Convert.FromBase64String(payload),
-            SerializerOptions)
-        ?? throw new InvalidDataException("Occurrence record payload is invalid.");
+    private static T DeserializeOccurrence<T>(string payload)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<T>(
+                Convert.FromBase64String(payload),
+                SerializerOptions)
+                ?? throw new InvalidDataException("Occurrence record payload is invalid.");
+        }
+        catch (Exception exception) when (exception is JsonException or ArgumentException or FormatException)
+        {
+            // A pre-REM record may contain a non-canonical occurrence/target
+            // identity or an incompatible payload shape. Refuse it explicitly
+            // rather than reinterpreting it as the corrected contract.
+            throw new CodeOccurrenceSchemaException(
+                0,
+                CurrentOccurrenceSchemaVersion,
+                "The occurrence payload is not canonical or is incompatible with the accepted occurrence contract.");
+        }
+    }
 
     private static string OccurrenceUnitKey(PersistedOccurrenceUnit unit) =>
         UnitKey(
@@ -755,8 +888,30 @@ public sealed class LatticeCodeGraphStore :
                 default: throw new InvalidDataException($"Unknown persisted Hetu command '{command.Kind}'.");
             }
             _faultInjector?.Invoke("before-commit");
-            txn.Commit();
+            var commitAttempted = true;
+            try
+            {
+                txn.Commit();
+                _faultInjector?.Invoke("after-commit");
+            }
+            catch (Exception exception)
+            {
+                if (!txn.IsCompleted)
+                    txn.Rollback();
+                if (commitAttempted)
+                {
+                    throw new CodeGraphCommitOutcomeUnknownException(
+                        "The native publication commit outcome could not be established. " +
+                        "The durable state must be corroborated before any retry or current-state claim.",
+                        exception);
+                }
+                throw;
+            }
             return mirror;
+        }
+        catch (CodeGraphCommitOutcomeUnknownException)
+        {
+            throw;
         }
         catch
         {
@@ -979,6 +1134,23 @@ public sealed class LatticeCodeGraphStore :
     }
 
     private void ThrowIfDisposed() => ObjectDisposedException.ThrowIf(_disposed, this);
+
+    /// <summary>
+    /// Refuses current-state claims after a native write whose commit outcome
+    /// could not be established. Reopening the store reconstructs the durable
+    /// accepted state and clears the uncertainty; blind retry on this instance
+    /// is not permitted.
+    /// </summary>
+    private void ThrowIfUncertain()
+    {
+        if (_outcomeUnknown)
+        {
+            throw new CodeGraphCommitOutcomeUnknownException(
+                "A native publication commit outcome is unknown. " +
+                "Refusing current-state claims and mutations until the durable " +
+                "publication is corroborated by reopening the store.");
+        }
+    }
 }
 
 public sealed class LatticeCodeGraphSchemaException : Exception
@@ -1000,7 +1172,8 @@ internal sealed record PersistedOccurrenceUnit(
     string PluginId,
     string IndexUnitId,
     bool AnalysisIncluded,
-    IReadOnlyList<CodeOccurrenceFact> Facts);
+    IReadOnlyList<CodeOccurrenceFact> Facts,
+    CodeOccurrenceCoverage? Coverage = null);
 
 /// <summary>Internal durable record: the accepted occurrence schema/publication manifest.</summary>
 internal sealed record PersistedOccurrenceMeta(
@@ -1014,7 +1187,11 @@ internal sealed record PersistedOccurrenceMeta(
     int FactCount,
     int UnitCount,
     int PageCount,
-    bool AnalysisIncluded);
+    bool AnalysisIncluded,
+    CodeRelationshipCoverageState CoverageState = CodeRelationshipCoverageState.NotProduced,
+    string? ScopeId = null,
+    string? UniverseId = null,
+    bool CompleteCoverage = false);
 
 /// <summary>Internal durable record: one target-index page.</summary>
 internal sealed record PersistedOccurrencePage(
@@ -1022,6 +1199,19 @@ internal sealed record PersistedOccurrencePage(
     string TargetId,
     string PublicationIndexRunId,
     IReadOnlyList<string> OccurrenceIds);
+
+/// <summary>
+/// A native mutation's commit outcome is unknown. The store refuses
+/// current-state claims until durable state is corroborated by reopening.
+/// </summary>
+public sealed class CodeGraphCommitOutcomeUnknownException : Exception
+{
+    public CodeGraphCommitOutcomeUnknownException(string message)
+        : base(message) { }
+
+    public CodeGraphCommitOutcomeUnknownException(string message, Exception innerException)
+        : base(message, innerException) { }
+}
 
 /// <summary>An occurrence format is unsupported or inconsistent with its schema.</summary>
 internal sealed class CodeOccurrenceSchemaException : Exception

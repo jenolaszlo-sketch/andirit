@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using Andirit;
 
 namespace Andirit.Tests;
@@ -56,9 +58,9 @@ public sealed class OccurrenceInMemoryParityTests
         var t1 = Target(repo, "T1");
         await PublishAsync(store, repo, "run:1",
             Unit(repo, "run:1", "unit:a", [],
-                [Fact(repo, "unit:a", t1, "src/Shared.cs", 1, 1)]),
+                [Fact(repo, "unit:a", t1, "src/Shared.cs", 1, 1, "mem:semantic")]),
             Unit(repo, "run:1", "unit:b", [],
-                [Fact(repo, "unit:b", t1, "src/Shared.cs", 1, 1)]));
+                [Fact(repo, "unit:b", t1, "src/Shared.cs", 1, 1, "mem:semantic")]));
         var union = await store.FindOccurrencesAsync(new(repo, t1));
         Assert.Single(union.Occurrences);
         Assert.Equal(2, union.Occurrences[0].Contributors.Count);
@@ -69,17 +71,18 @@ public sealed class OccurrenceInMemoryParityTests
         Assert.Single(remaining.Occurrences[0].Contributors);
 
         await store.StoreIndexRunAsync(new(repo, new CodeIndexRunId("run:conflict"), Started, plugins: [Plugin]));
-        var conflicting = Fact(repo, "unit:c", t1, "src/Shared.cs", 1, 1);
+        var conflicting = Fact(repo, "unit:c", t1, "src/Shared.cs", 1, 1, "mem:semantic");
         var different = new CodeOccurrenceFact(
             conflicting.Id,
             conflicting.TargetId,
+            conflicting.TargetDocumentId,
             conflicting.RepositoryId,
             conflicting.Category,
-            "unit:c",
+            conflicting.SourceUnitId,
             new CodeOccurrenceContributor(Plugin, "unit:c"),
             conflicting.Span,
-            sourceHash: "sha256:other",
-            conflicting.ContentHash,
+            conflicting.SourceHash,
+            contentHash: "content:other",
             conflicting.DeclarationSpan,
             conflicting.SemanticsVersion);
         await Assert.ThrowsAsync<CodeGraphBatchRejectedException>(async () =>
@@ -126,8 +129,20 @@ public sealed class OccurrenceInMemoryParityTests
         Assert.Equal(CodeOccurrenceAvailability.AnalysisUnavailable, unavailable.Availability);
     }
 
-    private static CodeOccurrenceTargetId Target(CodeRepositoryId repo, string name) =>
-        CodeOccurrenceIdentity.ComputeTargetId(repo, $"compctx:{name}", $"module:{name}", $"decl:{name}");
+    private static CodeOccurrenceTargetId Target(CodeRepositoryId repo, string name)
+    {
+        var context = "compctx1:sha256:" + Hex(repo.Value + "|" + name);
+        return CodeOccurrenceIdentity.ComputeTargetId(
+            context,
+            "meta:" + name,
+            "module:" + name,
+            CodeOccurrenceIdentity.ComputeIdentifierDigest([$"src/{name}.cs|1|2"]),
+            CodeOccurrenceIdentity.ComputeDeclarationDigest([$"src/{name}.cs|1|2|0|10|1|1|1|2|1|1|1|10"]),
+            CodeOccurrenceIdentity.ComputeShapeDigest("shape:" + name));
+    }
+
+    private static string Hex(string value) =>
+        Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(value)));
 
     private static CodeOccurrenceFact Fact(
         CodeRepositoryId repo,
@@ -135,9 +150,10 @@ public sealed class OccurrenceInMemoryParityTests
         CodeOccurrenceTargetId target,
         string path,
         int line,
-        int column) =>
+        int column,
+        string? semanticUnitId = null) =>
         CodeOccurrenceFact.Create(
-            repo, target, unitId,
+            repo, target, target.Value, semanticUnitId ?? unitId,
             new CodeOccurrenceContributor(Plugin, unitId),
             CodeOccurrenceCategory.Invocation,
             new CodeLocation(path, line, column, line, column + 4),
@@ -157,7 +173,13 @@ public sealed class OccurrenceInMemoryParityTests
             new CodeFactOrigin(repo, Plugin, "1.0.0", new CodeIndexRunId(run), new CodeIndexUnitId(unit)),
             nodes,
             occurrences: occurrences,
-            occurrenceAnalysisIncluded: occurrences.Count > 0);
+            occurrenceAnalysisIncluded: occurrences.Count > 0,
+            occurrenceCoverage: occurrences.Count > 0
+                ? new CodeOccurrenceCoverage(
+                    occurrences.Count,
+                    0,
+                    CodeRelationshipCoverageState.Produced)
+                : null);
 
     private static async Task PublishAsync(
         InMemoryCodeGraphStore store,

@@ -148,14 +148,17 @@ public sealed record CodeIndexUnitReplacement
         IReadOnlyList<CodeGraphDeclaration>? declarations = null,
         IReadOnlyList<CodeGraphEdge>? edges = null,
         IReadOnlyList<CodeOccurrenceFact>? occurrences = null,
-        bool occurrenceAnalysisIncluded = false)
+        bool occurrenceAnalysisIncluded = false,
+        CodeOccurrenceCoverage? occurrenceCoverage = null)
     {
         Origin = origin ?? throw new ArgumentNullException(nameof(origin));
         Nodes = nodes?.ToArray() ?? [];
         Declarations = declarations?.ToArray() ?? [];
         Edges = edges?.ToArray() ?? [];
         Occurrences = occurrences?.ToArray() ?? [];
-        OccurrenceAnalysisIncluded = occurrenceAnalysisIncluded;
+        OccurrenceCoverage = occurrenceCoverage;
+        OccurrenceAnalysisIncluded = occurrenceAnalysisIncluded ||
+            occurrenceCoverage?.AnalysisPerformed == true;
         if (Nodes.Any(node => node is null) ||
             Declarations.Any(declaration => declaration is null) ||
             Edges.Any(edge => edge is null) ||
@@ -186,6 +189,13 @@ public sealed record CodeIndexUnitReplacement
     /// </summary>
     [System.Text.Json.Serialization.JsonIgnore]
     public bool OccurrenceAnalysisIncluded { get; }
+
+    /// <summary>
+    /// Resolution and completeness evidence for this contribution. Persisted
+    /// independently of the fact count so a complete-empty analysis remains
+    /// distinguishable from no analysis.
+    /// </summary>
+    public CodeOccurrenceCoverage? OccurrenceCoverage { get; }
 }
 
 public enum CodeGraphDirection

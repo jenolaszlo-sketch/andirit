@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using System.Text;
 using LatticeDbSharp;
 using Andirit;
 using Andirit.LatticeDb;
@@ -174,9 +176,9 @@ public sealed class OccurrenceStage1NativeTests
                 repo,
                 new CodeIndexRunId("run:n4:1"),
                 Unit(repo, "run:n4:1", "unit:n4:a", [Node("node:n4:a")],
-                    [Fact(repo, "unit:n4:a", t1, "src/Shared.cs", 1, 1)]),
+                    [Fact(repo, "unit:n4:a", t1, "src/Shared.cs", 1, 1, "n4:semantic")]),
                 Unit(repo, "run:n4:1", "unit:n4:b", [Node("node:n4:b")],
-                    [Fact(repo, "unit:n4:b", t1, "src/Shared.cs", 1, 1)]),
+                    [Fact(repo, "unit:n4:b", t1, "src/Shared.cs", 1, 1, "n4:semantic")]),
                 Unit(repo, "run:n4:1", "unit:n4:c", [Node("node:n4:c")],
                     [Fact(repo, "unit:n4:c", t1, "src/C.cs", 1, 1)]));
 
@@ -200,17 +202,18 @@ public sealed class OccurrenceStage1NativeTests
             // A conflicting immutable payload for the same identity is rejected.
             await store.StoreIndexRunAsync(new(repo, new CodeIndexRunId("run:n4:4"), Started.AddSeconds(10), plugins: [Plugin]));
             // Same identity as the surviving unit:n4:c fact, incompatible payload.
-            var conflicting = Fact(repo, "unit:n4:d", t1, "src/C.cs", 1, 1);
+            var conflicting = Fact(repo, "unit:n4:d", t1, "src/C.cs", 1, 1, "unit:n4:c");
             var differentPayload = new CodeOccurrenceFact(
                 conflicting.Id,
                 conflicting.TargetId,
+                conflicting.TargetDocumentId,
                 conflicting.RepositoryId,
                 conflicting.Category,
-                "unit:n4:d",
+                conflicting.SourceUnitId,
                 new CodeOccurrenceContributor(Plugin, "unit:n4:d"),
                 conflicting.Span,
-                sourceHash: "sha256:different",
-                conflicting.ContentHash,
+                conflicting.SourceHash,
+                contentHash: "content:different",
                 conflicting.DeclarationSpan,
                 conflicting.SemanticsVersion);
             await Assert.ThrowsAsync<CodeGraphBatchRejectedException>(async () =>
@@ -548,12 +551,20 @@ public sealed class OccurrenceStage1NativeTests
         txn.Commit();
     }
 
-    private static CodeOccurrenceTargetId Target(CodeRepositoryId repo, string name) =>
-        CodeOccurrenceIdentity.ComputeTargetId(
-            repo,
-            $"compctx:{name}",
-            $"module:{name}",
-            $"decl:{name}");
+    private static CodeOccurrenceTargetId Target(CodeRepositoryId repo, string name)
+    {
+        var context = "compctx1:sha256:" + Hex(repo.Value + "|" + name);
+        return CodeOccurrenceIdentity.ComputeTargetId(
+            context,
+            "meta:" + name,
+            "module:" + name,
+            CodeOccurrenceIdentity.ComputeIdentifierDigest([$"src/{name}.cs|1|2"]),
+            CodeOccurrenceIdentity.ComputeDeclarationDigest([$"src/{name}.cs|1|2|0|10|1|1|1|2|1|1|1|10"]),
+            CodeOccurrenceIdentity.ComputeShapeDigest("shape:" + name));
+    }
+
+    private static string Hex(string value) =>
+        Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(value)));
 
     private static CodeOccurrenceFact Fact(
         CodeRepositoryId repo,
@@ -561,11 +572,13 @@ public sealed class OccurrenceStage1NativeTests
         CodeOccurrenceTargetId target,
         string path,
         int line,
-        int column) =>
+        int column,
+        string? semanticUnitId = null) =>
         CodeOccurrenceFact.Create(
             repo,
             target,
-            unitId,
+            target.Value,
+            semanticUnitId ?? unitId,
             new CodeOccurrenceContributor(Plugin, unitId),
             CodeOccurrenceCategory.Invocation,
             new CodeLocation(path, line, column, line, column + 4),
@@ -586,7 +599,13 @@ public sealed class OccurrenceStage1NativeTests
             new CodeFactOrigin(repo, Plugin, "1.0.0", new CodeIndexRunId(run), new CodeIndexUnitId(unit)),
             nodes,
             occurrences: occurrences,
-            occurrenceAnalysisIncluded: occurrences.Count > 0);
+            occurrenceAnalysisIncluded: occurrences.Count > 0,
+            occurrenceCoverage: occurrences.Count > 0
+                ? new CodeOccurrenceCoverage(
+                    occurrences.Count,
+                    0,
+                    CodeRelationshipCoverageState.Produced)
+                : null);
 
     private static CodeIndexUnitReplacement GraphUnit(
         CodeRepositoryId repo,
@@ -624,7 +643,13 @@ public sealed class OccurrenceStage1NativeTests
             nodes,
             edges: edges,
             occurrences: occurrences,
-            occurrenceAnalysisIncluded: occurrences.Length > 0);
+            occurrenceAnalysisIncluded: occurrences.Length > 0,
+            occurrenceCoverage: occurrences.Length > 0
+                ? new CodeOccurrenceCoverage(
+                    occurrences.Length,
+                    0,
+                    CodeRelationshipCoverageState.Produced)
+                : null);
     }
 
     private static async Task PublishAsync(
