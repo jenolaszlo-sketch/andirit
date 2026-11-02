@@ -249,6 +249,7 @@ public static class Program
             ("T.Direct", CoreUnit, "M:Corpus.Core.Methods.Direct(System.Int32)", 1),
             ("T.Static", CoreUnit, "M:Corpus.Core.Methods.Static(System.Int32)", 1),
             ("T.Add2", CoreUnit, "M:Corpus.Core.Methods.Add(System.Int32,System.Int32)", 2),
+            ("T.Add3", CoreUnit, "M:Corpus.Core.Methods.Add(System.Int32,System.Int32,System.Int32)", 3),
             ("T.Conditional", CoreUnit, "M:Corpus.Core.ConditionalApi.Value", 0),
             ("T.LeafCompute", LeafUnit, "M:Corpus.Leaf.Helper.Compute(System.Int32)", 1),
         };
@@ -265,8 +266,10 @@ public static class Program
             asmctx3.Values.All(v => v.StartsWith("asmctx3:sha256:", StringComparison.Ordinal) && v.Length == "asmctx3:sha256:".Length + 64),
             "all asmctx3 values canonical"));
         checks.Add(new Check("identity.asmctx3.distinct-declarations", "identity",
-            asmctx3["T.Direct"] != asmctx3["T.Static"] && asmctx3["T.Static"] != asmctx3["T.LeafCompute"],
-            "distinct declarations yield distinct asmctx3"));
+            asmctx3["T.Direct"] != asmctx3["T.Static"] &&
+            asmctx3["T.Static"] != asmctx3["T.LeafCompute"] &&
+            asmctx3["T.Add2"] != asmctx3["T.Add3"],
+            "distinct declarations and distinct overloads yield distinct asmctx3"));
 
         // usage4 for the S01 site and its source-changed twin, plus a bulk site.
         var app = baseline.Get(AppUnit);

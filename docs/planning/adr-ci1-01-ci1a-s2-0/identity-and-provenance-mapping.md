@@ -70,6 +70,7 @@ from the pinned runtime 10.0.12 files and recorded in the frozen oracle.
 | `Methods.Direct(int)` | `asmctx3:sha256:42a30aaf20d663a3115234de4d7adc42cc3b6a18144d0c7e44746f1d1670513a` |
 | `Methods.Static(int)` | `asmctx3:sha256:4eb4bd02228c0a52b09a546c9b872bfe06cb7e9d411256c71440d35c50eb6f6a` |
 | `Methods.Add(int,int)` | `asmctx3:sha256:adcc221501d9d95b6dbb5c3f797f0954d05043064e63c75fc904faad6c93a5cc` |
+| `Methods.Add(int,int,int)` | `asmctx3:sha256:46fcba57e8d04a8f3d812d6dbb2f43cb7555d25f0ab5c67aefd5e1a35e84388a` |
 | `ConditionalApi.Value` | `asmctx3:sha256:82246b216b702a3cf541579cf1f0e0f0625b2a01a2427a468c0f3d92f5731c77` |
 | `Leaf.Helper.Compute(int)` | `asmctx3:sha256:a8c76853f52d8d49fc64335ed55a11b8ccd0f087559b7b7630d6ba6ccadfc05a` |
 
