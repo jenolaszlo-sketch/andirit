@@ -2,7 +2,7 @@
 
 Every case names: the actual source marker, the syntactic operation, the
 independently established Roslyn resolution, and the accepted-S2.2 scope
-classification. Original Q1 values remain frozen in `oracle/expected/oracle-expected.json`; R1 selects `oracle/expected/oracle-expected-r1.json`. the symbol key is
+classification. Original Q1 values remain frozen in `oracle/expected/oracle-expected.json`; R1 selects `oracle/expected/oracle-expected-r1.json`. The symbol key is
 `<assembly>!<documentation-comment-id>` (the defining declaration; for
 constructed generics the original definition is used).
 

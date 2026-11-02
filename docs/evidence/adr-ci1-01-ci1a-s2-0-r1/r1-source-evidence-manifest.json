@@ -1,0 +1,305 @@
+{
+  "Package": "ADR-CI1-01-CI1A-IMPL-01-S2.0-CORPUS-01-R1",
+  "SourceBinding": {
+    "StartingCommit": "82f101c24e21828a41a30d4342ba73db9376e24e",
+    "StartingTree": "75faf3eb0fcdab8ad78142617d1d7ee3dfce95c0",
+    "StartingOwnerBaseline": "b7fea0d219409b279b78317e32bdc3c8b5ae61ee",
+    "StartingOwnerTree": "b4a764637498ed8e8bddac28fb0b0b3716b7ffee",
+    "Branch": "main",
+    "ProductionExtractionChanged": false
+  },
+  "HashScheme": "sha256 of exact working-tree bytes; forward-slash repo-relative paths; R1 manifest self-excluded",
+  "PlanningDocuments": [
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/.gitattributes",
+      "Sha256": "bd7d36bd7494025881eaf95664ccee1a43904f9d731564ff0a405904995ec675",
+      "Bytes": 152
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/case-matrix.md",
+      "Sha256": "fc459037979c0cf0a70c9986e441a77f8debc9e7d3dc5868368efd2a8f00b55b",
+      "Bytes": 8593
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/identity-and-provenance-mapping.md",
+      "Sha256": "63bd1444dce81e6839e76b0aa4b9fcde04d02285b989083b005b8ddeadcc97ec",
+      "Bytes": 7343
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle-contract.md",
+      "Sha256": "3350a7f9c59e0def46f6f2a807557f8e1a1449790121653e32e7e63fc989221b",
+      "Bytes": 4713
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/q1-handoff.md",
+      "Sha256": "b60811714ea330acc38fe0312a4c21ea06a2cca183537add4d69e4720d3f9a9f",
+      "Bytes": 3815
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/qualification-plan.md",
+      "Sha256": "b0e2ab3b2fa9f70a608ac5ac2da9756aef47bb6b54bd6bd9e9e37428a8bde347",
+      "Bytes": 5085
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/README.md",
+      "Sha256": "3f60d5c105a28790c7f71c9b12f0798db67dcc7bfb4db07db9cb223e2da4cbec",
+      "Bytes": 3286
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/semantic-corpus-specification.md",
+      "Sha256": "5303ab75122d791e60dc6bd130c85fcfeb39e2a879ab65621ddef078a0eed24f",
+      "Bytes": 5968
+    }
+  ],
+  "CorpusFixtures": [
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/App/App.csproj",
+      "Sha256": "875b972c134e8c78a9d67355029ab213bfc549d1ba0158d37b2981356d5c6e34",
+      "Bytes": 378
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/App/Bulk.cs",
+      "Sha256": "46fd7103dbef4d73e60dc76381f47e3b42acbfd24c428a219c4e929a4a32e272",
+      "Bytes": 3758
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/App/Sites.cs",
+      "Sha256": "786b189ff0aca5c886d6e84fb9f862017ea2b0bc1259cef9537e9e936339bdb1",
+      "Bytes": 1985
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Core/Core.csproj",
+      "Sha256": "a10779122a426f8e824e4f80545423790929185b4dd7a1728bbf961867cce93b",
+      "Bytes": 324
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Core/Extensions.cs",
+      "Sha256": "711e9419ad6af66ce434a837a676448a946d2a7032a0cada8433cdbb7587f46f",
+      "Bytes": 224
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Core/LeafUser.cs",
+      "Sha256": "02f93c6cc73b992344c37fa97d5384415bd62441c918b22f46dd418020ed713c",
+      "Bytes": 277
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Core/Methods.cs",
+      "Sha256": "82158b625ce989dd62dd5b66a8e63dc3ddcb8e0ba1bbf401a42b062a54f8673a",
+      "Bytes": 1360
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Core/Types.cs",
+      "Sha256": "3a74ae4d66c2aaf43e362989fb40ae7d3c03a63357fb7910dcbc5a7b176560c5",
+      "Bytes": 578
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/External/ExternalLib.cs",
+      "Sha256": "d6600dda26f800483dd1ededa4e7b5b1c0f1730479807f658a01533db3642b13",
+      "Bytes": 396
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Leaf/Helper.cs",
+      "Sha256": "18eee8cce256076d6906a645b4510add6273362a6fea706407373465c7b00d0a",
+      "Bytes": 495
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Leaf/Leaf.csproj",
+      "Sha256": "c184a87b0f67249d52e5ab6539e80ea0c464448b0e03464f2ff173b511694949",
+      "Bytes": 240
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Negatives/External.cs",
+      "Sha256": "f919da30e80ee7dfd7c8c6160e0bb4c3d79daecbc4258b25c9142a879dfc47e5",
+      "Bytes": 396
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Negatives/Negatives.csproj",
+      "Sha256": "578cc0888e31e0bd5fd024ba2827e85ad1a732558901d136224ec0a61e91ba3f",
+      "Bytes": 329
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Negatives/NegativeSites.cs",
+      "Sha256": "65c2a47d527733e1276aaf2b01d914fa7d950470c05a527d3759b382b151bd07",
+      "Bytes": 921
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Solo/Declarations.cs",
+      "Sha256": "762714765fe6bab1aff65fb757bada25878b78461efd89ab7156fa5816239fe1",
+      "Bytes": 537
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Solo/Solo.csproj",
+      "Sha256": "2380bc455127f11bad949b0723b53982e947e2202589f028adf1fea002767a68",
+      "Bytes": 240
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/variants/source-changed/App/Sites.cs",
+      "Sha256": "3d9a65f6e4cfc84432b8e1f00f405d29ab9862a4a262023762f2e8b9bb098a35",
+      "Bytes": 2008
+    }
+  ],
+  "OracleSources": [
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Corpus.cs",
+      "Sha256": "99dd24534e2b058df79131a5c910098e192c8365bfdfee0e3fcbc470b1a80d84",
+      "Bytes": 10998
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected-r1.json",
+      "Sha256": "1a53633eef9517128edfe90e8e715c513056488e430860462ab76bf0db3ad085",
+      "Bytes": 94800
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected.json",
+      "Sha256": "d5f507ddf2220df556702982e3be1f86cde698195aea66872f488e96ede5c0d7",
+      "Bytes": 73633
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/IdentityOracle.cs",
+      "Sha256": "440708a7c3b664644bc1f1ad7bae4e9ca7bdcbd56fd2f70d19b622c4e712643c",
+      "Bytes": 4558
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs",
+      "Sha256": "3fb0946e0387cd976ed521dda5a95b8cbdf7e12911e620102e2a9f8ed79c5277",
+      "Bytes": 54382
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/R2Identity.cs",
+      "Sha256": "c1a69c641e75ff39ac34a9dfb3a7347dbf500ac17071aaba96244c11ead1d1b0",
+      "Bytes": 8701
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticCorpusOracle.csproj",
+      "Sha256": "fea75589ad624a61e1be138d176215e8854744a9e043d144b8fdbfe977fff1ff",
+      "Bytes": 748
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticInspector.cs",
+      "Sha256": "8ae150779d979c7faa0bcb548192d1a5149c73f48f3c3c6d1d79610232125f52",
+      "Bytes": 6197
+    }
+  ],
+  "EvidenceFiles": [
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/build-manifest.py",
+      "Sha256": "9c35703a4e5bfc576b895f1b548f4c55ff0cc564c72975e08d7b0732c1706807",
+      "Bytes": 1731
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/CHANGED-CASE-LEDGER.md",
+      "Sha256": "de72289afdb7920e6c12bc2858d19df5bbd7abc740bb1c96cbb701586d179d15",
+      "Bytes": 1606
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/COMPILATION-OPTIONS-REVIEW.md",
+      "Sha256": "c180737f0f79f35adc7707d856ef85d76d71e18e591193fd6611f0e56ed1886b",
+      "Bytes": 825
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/E02-REVIEW.md",
+      "Sha256": "abf3394517c658eaf25b60202c9c6ac54c1553739df4c968a7178e33b1386e09",
+      "Bytes": 838
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/historical-oracle-82f101c.json",
+      "Sha256": "9831fb36767be335ec8780e909b63d4e516b2036189cf89718545592604e0b3e",
+      "Bytes": 74323
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/HISTORICAL-ORACLE-PRESERVATION.md",
+      "Sha256": "a9cf43c218cf897f64c5457c5b985fef3c69b423121d203981dc9f5c71bcaa50",
+      "Bytes": 687
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/LIFECYCLE-REVIEW.md",
+      "Sha256": "122309143a41422fd3959faf29a33d3cf5e3de456831d3c91f9934bacf837122",
+      "Bytes": 1449
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/ORACLE-CORRECTIONS.md",
+      "Sha256": "b39b353e772e293deeed091d2ca9bd69d9ed9882bd99e414484646ea16f9f851",
+      "Bytes": 658
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/oracle-r1-candidate.json",
+      "Sha256": "1a53633eef9517128edfe90e8e715c513056488e430860462ab76bf0db3ad085",
+      "Bytes": 94800
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/oracle-r1-run-1.json",
+      "Sha256": "0a7bb361509aebee70a1305679ee22c6c35ecc92e3b973c2a5d08e6854049ccc",
+      "Bytes": 95627
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/oracle-r1-run-1.log",
+      "Sha256": "2163b01c10cc01f36778315db0b54e4e447b0c0f6aa77e744964e913c6acd690",
+      "Bytes": 47
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/oracle-r1-run-2.json",
+      "Sha256": "0a7bb361509aebee70a1305679ee22c6c35ecc92e3b973c2a5d08e6854049ccc",
+      "Bytes": 95627
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/oracle-r1-run-2.log",
+      "Sha256": "2163b01c10cc01f36778315db0b54e4e447b0c0f6aa77e744964e913c6acd690",
+      "Bytes": 47
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/Q2-HANDOFF.md",
+      "Sha256": "a68436bb3ad92ba3529ada53cf03e9041f298dc08866b2c41ae4e9f7793a81b4",
+      "Bytes": 2763
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/README.md",
+      "Sha256": "e40cfb3eed59e3b4d709a229efd88ed911e5540d94f6b728ec9eee6a683451e7",
+      "Bytes": 532
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/REGRESSION-RESULTS.md",
+      "Sha256": "02746f72e902ffc4830b745818d3f73ebaf84c599674167400732358d00f7802",
+      "Bytes": 2353
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/REMAINING-QUALIFICATIONS.md",
+      "Sha256": "2eeff224de8c240b856ecbcaabcd2d22dd94406be83ba2736b4763f0a390bd1a",
+      "Bytes": 1137
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/REMEDIATION-MATRIX.md",
+      "Sha256": "2ad661e01a5c98f50c25ca22ec12362caf4519a70f81eb8055977b676b4b8ee0",
+      "Bytes": 3850
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/SOURCE-BINDING.md",
+      "Sha256": "c5454b1610d73d3aaf73ceb1267efcfda49a48f621e430004a754a9cf233a98f",
+      "Bytes": 781
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/trx/Andirit.CSharp.Tests-r1.trx",
+      "Sha256": "9761e9fd377165721d89b69ab2972ec143f679f1cd12eefaf7dd352c2b67178c",
+      "Bytes": 171923
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/trx/Andirit.LatticeDb.Tests-r1.trx",
+      "Sha256": "f283668674a3668ff186b4a1388ab2d927f75f7c543c91c63f852589ed62d05d",
+      "Bytes": 61081
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/trx/Andirit.Tests-r1.trx",
+      "Sha256": "ea4666661d0faac982d3f823c377a8ddf8fda8cdfa76b0e481c94384fcc48412",
+      "Bytes": 453685
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/trx/Andirit.TreeSitter.Tests-r1.trx",
+      "Sha256": "41bc87f5c601ac133f4f12d625ccd160bbc313625cbf06ef6c1ea2fa38c9236f",
+      "Bytes": 228381
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r1/verify-manifest.py",
+      "Sha256": "600efb65341684f4327abb9a0fd52e5849855054d91a1c9e9a657524bd5f4da5",
+      "Bytes": 3694
+    }
+  ]
+}

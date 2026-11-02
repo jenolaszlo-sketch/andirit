@@ -454,6 +454,22 @@
       "detail": "ambiguous: OverloadResolutionFailure candidates=2 diagnostics=CS0121"
     },
     {
+      "Id": "CLS01",
+      "File": "Negatives/NegativeSites.cs",
+      "Category": "genuine-ambiguity",
+      "Support": "negative",
+      "resolution": "Ambiguous",
+      "symbolKey": null,
+      "assembly": null,
+      "span": {
+        "startLine": 15,
+        "startColumn": 27,
+        "endLine": 15,
+        "endColumn": 30
+      },
+      "detail": "ambiguous: OverloadResolutionFailure candidates=2 diagnostics=CS0121"
+    },
+    {
       "Id": "N02",
       "File": "Negatives/NegativeSites.cs",
       "Category": "unresolved",
@@ -1350,6 +1366,22 @@
       "detail": "resolved"
     },
     {
+      "Id": "S15-handler",
+      "File": "App/Sites.cs",
+      "Category": "event-handler-method",
+      "Support": "qualification",
+      "resolution": "Resolved",
+      "symbolKey": "Corpus.App!M:Corpus.App.Sites.OnChanged",
+      "assembly": "Corpus.App",
+      "span": {
+        "startLine": 0,
+        "startColumn": 0,
+        "endLine": 0,
+        "endColumn": 0
+      },
+      "detail": "handler method is a distinct symbol from the subscribed event member"
+    },
+    {
       "Id": "E02",
       "File": "App/Sites.cs",
       "Category": "resolved-external-to-requesting-project-missing-defining-provenance",
@@ -1684,6 +1716,21 @@
           "fb42e6f8c4976ec42462da28816d71063075ac0f6c241cfc2d1ad81f27023938"
         ]
       },
+      "unitId": "App/App.csproj",
+      "projectUniverse": [
+        "App/App.csproj",
+        "Core/Core.csproj",
+        "Leaf/Leaf.csproj",
+        "Negatives/Negatives.csproj",
+        "Solo/Solo.csproj"
+      ],
+      "verifiedProjectUnits": [
+        "App/App.csproj",
+        "Core/Core.csproj",
+        "Leaf/Leaf.csproj",
+        "Negatives/Negatives.csproj",
+        "Solo/Solo.csproj"
+      ],
       "complete": true,
       "compctx1": "compctx1:sha256:4acfb0e2d8298ed5471e68b31057e0ed8fcdd70525b3f65d6975a7b57ff93bad",
       "compctx2": "compctx2:sha256:bc1d418ecc266c615fbc4f673163f448c6577c51faf1e72fc6987253ed90e2fe"
@@ -1733,6 +1780,21 @@
       },
       "removedSourceUnits": [
         "App/Sites.cs"
+      ],
+      "unitId": "App/App.csproj",
+      "projectUniverse": [
+        "App/App.csproj",
+        "Core/Core.csproj",
+        "Leaf/Leaf.csproj",
+        "Negatives/Negatives.csproj",
+        "Solo/Solo.csproj"
+      ],
+      "verifiedProjectUnits": [
+        "App/App.csproj",
+        "Core/Core.csproj",
+        "Leaf/Leaf.csproj",
+        "Negatives/Negatives.csproj",
+        "Solo/Solo.csproj"
       ],
       "complete": true,
       "compctx1": "compctx1:sha256:ddff108973f2f3282883200c8f45aa9cb49cd32fbea6c2213aa365a2b7f1bbfd",
@@ -1976,6 +2038,12 @@
     },
     {
       "Id": "semantic.N01",
+      "Kind": "semantic",
+      "Pass": true,
+      "Detail": "Ambiguous - (expected Ambiguous -)"
+    },
+    {
+      "Id": "semantic.CLS01",
       "Kind": "semantic",
       "Pass": true,
       "Detail": "Ambiguous - (expected Ambiguous -)"
@@ -2317,6 +2385,12 @@
       "Detail": "Resolved Corpus.Core!M:Corpus.Core.Methods.Direct(System.Int32) (expected Resolved Corpus.Core!M:Corpus.Core.Methods.Direct(System.Int32))"
     },
     {
+      "Id": "semantic.S15-handler",
+      "Kind": "semantic",
+      "Pass": true,
+      "Detail": "event=Corpus.Core!E:Corpus.Core.Methods.Changed; handler=Corpus.App!M:Corpus.App.Sites.OnChanged; distinct=True"
+    },
+    {
       "Id": "semantic.E02",
       "Kind": "semantic",
       "Pass": true,
@@ -2546,8 +2620,8 @@
     }
   ],
   "summary": {
-    "total": 122,
-    "passed": 122,
+    "total": 124,
+    "passed": 124,
     "failed": 0
   },
   "corpusRoot": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus"

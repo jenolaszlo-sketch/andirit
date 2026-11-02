@@ -130,6 +130,32 @@ public static class Program
             });
         }
 
+        // S15 event target and handler method are separate Roslyn symbols.
+        var s15Tree = app.Compilation.SyntaxTrees.Single(t => t.FilePath == "App/Sites.cs");
+        var s15Model = app.Compilation.GetSemanticModel(s15Tree);
+        var handlerNode = s15Tree.GetRoot().DescendantNodes().OfType<IdentifierNameSyntax>()
+            .Single(n => n.Identifier.ValueText == "OnChanged" && n.Parent is AssignmentExpressionSyntax);
+        var handlerInfo = s15Model.GetSymbolInfo(handlerNode);
+        var handlerKey = handlerInfo.Symbol is null ? null : SemanticInspector.SymbolKey(handlerInfo.Symbol);
+        var eventNode = SemanticInspector.Locate(s15Tree, "@S15", SyntaxKind.SimpleMemberAccessExpression);
+        var eventKey = eventNode is null ? null : SemanticInspector.SymbolKey(s15Model.GetSymbolInfo(eventNode).Symbol!);
+        var eventHandlerDistinct = eventKey == Core("E:Corpus.Core.Methods.Changed") &&
+            handlerKey == "Corpus.App!M:Corpus.App.Sites.OnChanged" && eventKey != handlerKey;
+        checks.Add(new Check("semantic.S15-handler", "semantic", eventHandlerDistinct,
+            $"event={eventKey}; handler={handlerKey}; distinct={eventKey != handlerKey}"));
+        results.Add(new
+        {
+            Id = "S15-handler",
+            File = "App/Sites.cs",
+            Category = "event-handler-method",
+            Support = "qualification",
+            resolution = handlerInfo.Symbol is null ? Resolution.Unresolved.ToString() : Resolution.Resolved.ToString(),
+            symbolKey = handlerKey,
+            assembly = handlerInfo.Symbol?.ContainingAssembly?.Name,
+            span = new { startLine = 0, startColumn = 0, endLine = 0, endColumn = 0 },
+            detail = "handler method is a distinct symbol from the subscribed event member",
+        });
+
         // E02 is an actual Roslyn resolution with missing authoritative defining-context provenance.
         var e02Tree = app.Compilation.SyntaxTrees.Single(t => t.FilePath == "App/Sites.cs");
         var e02 = SemanticInspector.Inspect(app.Compilation, e02Tree, "@S01", SyntaxKind.InvocationExpression);
@@ -206,6 +232,7 @@ public static class Program
             new("S25", AppUnit, "App/Sites.cs", "@S25", "InvocationExpression", Resolution.Resolved, Core("M:Corpus.Core.ConditionalApi.Value"), "invocation", "mandatory"),
             new("S26", AppUnit, "App/Sites.cs", "@S26", "InvocationExpression", Resolution.Resolved, "Corpus.Leaf!M:Corpus.Leaf.Helper.Compute(System.Int32)", "invocation", "mandatory"),
             new("N01", "Negatives/Negatives.csproj", "Negatives/NegativeSites.cs", "@N01", "InvocationExpression", Resolution.Ambiguous, null, "ambiguous", "negative"),
+            new("CLS01", "Negatives/Negatives.csproj", "Negatives/NegativeSites.cs", "@N01", "InvocationExpression", Resolution.Ambiguous, null, "genuine-ambiguity", "negative"),
             new("N02", "Negatives/Negatives.csproj", "Negatives/NegativeSites.cs", "@N02", "InvocationExpression", Resolution.Unresolved, null, "unresolved", "negative"),
             new("N03", "Negatives/Negatives.csproj", "Negatives/NegativeSites.cs", "@N03", "InvocationExpression", Resolution.Dynamic, null, "dynamic", "negative"),
             new("CLS02", "Negatives/Negatives.csproj", "Negatives/NegativeSites.cs", "@CLS02", "InvocationExpression", Resolution.InvalidInvocation, null, "invalid-invocation", "negative"),
@@ -503,6 +530,7 @@ public static class Program
         var after = AppFacts(reduced, reducedIdentity);
         var priorPaths = baseline.Get(AppUnit).SourcePaths.Order(StringComparer.Ordinal).ToArray();
         var currentPaths = reduced.Get(AppUnit).SourcePaths.Order(StringComparer.Ordinal).ToArray();
+        var projectUniverse = baseline.Projects.Keys.Order(StringComparer.Ordinal).ToArray();
         var removed = priorPaths.Except(currentPaths, StringComparer.Ordinal).ToArray();
         var expectedAfter = before.Where(pair => currentPaths.Contains(pair.Key, StringComparer.Ordinal))
             .ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
@@ -539,8 +567,8 @@ public static class Program
         return new Dictionary<string, object?>(StringComparer.Ordinal)
         {
             ["caseId"] = "DEL01",
-            ["snapshotA"] = new { authoritativeSourceUnits = priorPaths, sourceHashes = baseline.Get(AppUnit).SourcePaths.ToDictionary(path => path, path => baselineIdentity.SourceHash(AppUnit, path), StringComparer.Ordinal), sourceOwnedOccurrences = before, complete = true, compctx1 = baselineIdentity.Compctx1[AppUnit], compctx2 = baselineIdentity.Compctx2[AppUnit] },
-            ["snapshotB"] = new { authoritativeSourceUnits = currentPaths, sourceHashes = reduced.Get(AppUnit).SourcePaths.ToDictionary(path => path, path => reducedIdentity.SourceHash(AppUnit, path), StringComparer.Ordinal), sourceOwnedOccurrences = after, removedSourceUnits = removed, complete, compctx1 = reducedIdentity.Compctx1[AppUnit], compctx2 = reducedIdentity.Compctx2[AppUnit] },
+            ["snapshotA"] = new { authoritativeSourceUnits = priorPaths, sourceHashes = baseline.Get(AppUnit).SourcePaths.ToDictionary(path => path, path => baselineIdentity.SourceHash(AppUnit, path), StringComparer.Ordinal), sourceOwnedOccurrences = before, unitId = AppUnit, projectUniverse, verifiedProjectUnits = projectUniverse, complete = true, compctx1 = baselineIdentity.Compctx1[AppUnit], compctx2 = baselineIdentity.Compctx2[AppUnit] },
+            ["snapshotB"] = new { authoritativeSourceUnits = currentPaths, sourceHashes = reduced.Get(AppUnit).SourcePaths.ToDictionary(path => path, path => reducedIdentity.SourceHash(AppUnit, path), StringComparer.Ordinal), sourceOwnedOccurrences = after, removedSourceUnits = removed, unitId = AppUnit, projectUniverse, verifiedProjectUnits = projectUniverse, complete, compctx1 = reducedIdentity.Compctx1[AppUnit], compctx2 = reducedIdentity.Compctx2[AppUnit] },
             ["removedContributions"] = before.GetValueOrDefault("App/Sites.cs", []),
             ["preservedContributions"] = after.GetValueOrDefault("App/Bulk.cs", []),
             ["negativeControls"] = new { DEL_N1 = deletedAbsent, DEL_N2 = missingRequiredIncomplete, DEL_N3 = staleRejected },
