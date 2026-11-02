@@ -31,4 +31,4 @@ Executed `dotnet test Andirit.slnx`; all four projects passed with zero failures
 
 ## Integrity and archive probes
 
-The R1 verifier and clean archive/tamper results are recorded after the final source-bound manifest is built. The archive trust anchor is the manifest SHA-256 printed in the final handoff.
+The clean Git archive, one-byte tamper, missing-file, modified-oracle, and restored-archive probes passed; see `ARCHIVE-VERIFICATION-RESULTS.md`. Git checkout mode separately verifies the branch and pinned ancestry. The final archive trust anchor is the manifest SHA-256 printed in the final handoff.
