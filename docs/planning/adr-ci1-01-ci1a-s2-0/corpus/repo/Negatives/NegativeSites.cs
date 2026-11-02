@@ -15,6 +15,12 @@ public sealed class NegativeSites
         return /*@N01*/ m.Amb(1, 1);
     }
 
+    public int InvalidStaticAccess()
+    {
+        var m = new Methods();
+        return /*@CLS02*/ m.Static(1);
+    }
+
     public int Dynamic()
     {
         dynamic d = new Methods();

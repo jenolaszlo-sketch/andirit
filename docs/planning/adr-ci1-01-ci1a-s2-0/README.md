@@ -40,3 +40,10 @@ against this frozen oracle, not allowed to define its own expected behaviour.
 [qualification-plan.md §6](qualification-plan.md) for the bounded qualifications.
 Producer completion does not constitute independent acceptance; F12 closes only
 with independent qualification and an explicit owner disposition.
+
+
+## Frozen oracle versions
+
+- Historical Q1 oracle: `oracle/expected/oracle-expected.json` (preserved byte-for-byte).
+- Active R1 oracle: `oracle/expected/oracle-expected-r1.json`; run it explicitly with the Q2 command in `docs/evidence/adr-ci1-01-ci1a-s2-0-r1/Q2-HANDOFF.md`.
+- R1 identity: `CI1A-S2.0-CORPUS-R1`. This is a test oracle only; no production extraction, publication, or F12 closure is authorized.

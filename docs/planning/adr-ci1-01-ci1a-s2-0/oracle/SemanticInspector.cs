@@ -11,6 +11,7 @@ public enum Resolution
     Ambiguous,
     Unresolved,
     Dynamic,
+    InvalidInvocation,
     Inactive,
 }
 
@@ -63,6 +64,10 @@ public static class SemanticInspector
 
         var info = model.GetSymbolInfo(symbolNode!);
         var operation = model.GetOperation(node);
+        var diagnostics = model.GetDiagnostics(node.Span).Where(d => d.Severity == DiagnosticSeverity.Error).ToArray();
+        if (diagnostics.Any(d => d.Id == "CS0176"))
+            return new SemanticResult(Resolution.InvalidInvocation, null, null, span.Item1, span.Item2, span.Item3, span.Item4,
+                "invalid invocation: " + string.Join(",", diagnostics.Select(d => d.Id)));
         if (operation is IDynamicInvocationOperation or IDynamicMemberReferenceOperation)
             return new SemanticResult(Resolution.Dynamic, null, null, span.Item1, span.Item2, span.Item3, span.Item4,
                 "dynamic binding: no statically resolved symbol");
@@ -73,8 +78,13 @@ public static class SemanticInspector
                 span.Item1, span.Item2, span.Item3, span.Item4, "resolved");
 
         if (info.CandidateSymbols.Length > 0)
-            return new SemanticResult(Resolution.Ambiguous, null, null, span.Item1, span.Item2, span.Item3, span.Item4,
-                "ambiguous: " + info.CandidateReason + " candidates=" + info.CandidateSymbols.Length);
+        {
+            var isAmbiguous = info.CandidateReason == CandidateReason.Ambiguous || diagnostics.Any(d => d.Id == "CS0121");
+            var resolution = isAmbiguous ? Resolution.Ambiguous : Resolution.InvalidInvocation;
+            return new SemanticResult(resolution, null, null, span.Item1, span.Item2, span.Item3, span.Item4,
+                (isAmbiguous ? "ambiguous: " : "invalid invocation: ") + info.CandidateReason +
+                " candidates=" + info.CandidateSymbols.Length + " diagnostics=" + string.Join(",", diagnostics.Select(d => d.Id)));
+        }
 
         return new SemanticResult(Resolution.Unresolved, null, null, span.Item1, span.Item2, span.Item3, span.Item4,
             "no unique symbol: " + info.CandidateReason);

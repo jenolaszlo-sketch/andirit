@@ -52,6 +52,7 @@ public static class Program
             RunOptionA(corpusRoot, baseline, baselineIdentity, second, secondIdentity, checks, identities);
 
         // ---- coverage -------------------------------------------------------
+        var lifecycle = RunLifecycle(corpusRoot, baseline, baselineIdentity, checks);
         var coverage = RunCoverage(baseline, baselineIdentity, checks);
 
         // ---- F12 counts -----------------------------------------------------
@@ -72,6 +73,7 @@ public static class Program
             checks.Add(new Check("f12." + key, "coverage", pass, $"{key} = {value}"));
         }
 
+        report["oracleVersion"] = "CI1A-S2.0-CORPUS-R1";
         report["environment"] = new
         {
             framework = RuntimeInformation.FrameworkDescription,
@@ -86,6 +88,7 @@ public static class Program
         report["variantIdentities"] = variantIdentities;
         report["variants"] = variants;
         report["coverage"] = coverage;
+        report["lifecycle"] = lifecycle;
         report["counts"] = counts;
 
         var expectedPath = ArgValue(args, "--expected");
@@ -126,6 +129,25 @@ public static class Program
                 detail = result.Detail,
             });
         }
+
+        // E02 is an actual Roslyn resolution with missing authoritative defining-context provenance.
+        var e02Tree = app.Compilation.SyntaxTrees.Single(t => t.FilePath == "App/Sites.cs");
+        var e02 = SemanticInspector.Inspect(app.Compilation, e02Tree, "@S01", SyntaxKind.InvocationExpression);
+        var e02Pass = e02.Resolution == Resolution.Resolved && e02.Assembly == "Corpus.Core";
+        checks.Add(new Check("semantic.E02", "semantic", e02Pass,
+            $"Roslyn resolves {e02.SymbolKey}; publication refusal is exercised separately by the missing-provenance E02 gate"));
+        results.Add(new
+        {
+            Id = "E02",
+            File = "App/Sites.cs",
+            Category = "resolved-external-to-requesting-project-missing-defining-provenance",
+            Support = "negative",
+            resolution = e02.Resolution.ToString(),
+            symbolKey = e02.SymbolKey,
+            assembly = e02.Assembly,
+            span = new { startLine = e02.StartLine, startColumn = e02.StartColumn, endLine = e02.EndLine, endColumn = e02.EndColumn },
+            detail = "resolved project target; authoritative defining compctx2 and universe membership intentionally unavailable; confirmed publication refused",
+        });
 
         // Inactive conditional branch: marker text is present in the bytes but no active
         // invocation operation exists for the excluded code.
@@ -171,7 +193,7 @@ public static class Program
             new("S12", AppUnit, "App/Sites.cs", "@S12", "InvocationExpression", Resolution.Resolved, Core("M:Corpus.Core.IGreeter.Greet(System.String)"), "invocation", "qualification"),
             new("S13", AppUnit, "App/Sites.cs", "@S13", "SimpleMemberAccessExpression", Resolution.Resolved, Core("P:Corpus.Core.Methods.Prop"), "property", "deferred"),
             new("S14", AppUnit, "App/Sites.cs", "@S14", "SimpleMemberAccessExpression", Resolution.Resolved, Core("F:Corpus.Core.Methods.Field"), "field", "deferred"),
-            new("S15", AppUnit, "App/Sites.cs", "@S15", "IdentifierName", Resolution.Resolved, "Corpus.App!M:Corpus.App.Sites.OnChanged", "event", "deferred"),
+            new("S15", AppUnit, "App/Sites.cs", "@S15", "SimpleMemberAccessExpression", Resolution.Resolved, Core("E:Corpus.Core.Methods.Changed"), "event-member", "deferred"),
             new("S16", AppUnit, "App/Sites.cs", "@S16", "SimpleMemberAccessExpression", Resolution.Resolved, Core("M:Corpus.Core.Methods.Raise"), "method-group", "deferred"),
             new("S17", AppUnit, "App/Sites.cs", "@S17", "InvocationExpression", Resolution.Resolved, null, "delegate", "deferred"),
             new("S18", AppUnit, "App/Sites.cs", "@S18", "InvocationExpression", Resolution.Resolved, "Corpus.App!M:Corpus.App.Sites.Local(System.Int32)", "local-function", "deferred"),
@@ -186,6 +208,7 @@ public static class Program
             new("N01", "Negatives/Negatives.csproj", "Negatives/NegativeSites.cs", "@N01", "InvocationExpression", Resolution.Ambiguous, null, "ambiguous", "negative"),
             new("N02", "Negatives/Negatives.csproj", "Negatives/NegativeSites.cs", "@N02", "InvocationExpression", Resolution.Unresolved, null, "unresolved", "negative"),
             new("N03", "Negatives/Negatives.csproj", "Negatives/NegativeSites.cs", "@N03", "InvocationExpression", Resolution.Dynamic, null, "dynamic", "negative"),
+            new("CLS02", "Negatives/Negatives.csproj", "Negatives/NegativeSites.cs", "@CLS02", "InvocationExpression", Resolution.InvalidInvocation, null, "invalid-invocation", "negative"),
             new("E01", "Negatives/Negatives.csproj", "Negatives/External.cs", "@E01", "InvocationExpression", Resolution.Resolved, "Corpus.External!M:Corpus.External.Api.Value", "external", "negative"),
         };
 
@@ -329,6 +352,8 @@ public static class Program
         var sourceChanged = CorpusBuild.Build(corpusRoot, CorpusVariant.SourceChanged);
         var sourceChangedIdentity = CorpusIdentity.Compute(sourceChanged);
         var refMissing = CorpusBuild.Build(corpusRoot, CorpusVariant.ReferenceMissing);
+        var optionsChanged = CorpusBuild.Build(corpusRoot, CorpusVariant.OptionsChanged);
+        var optionsChangedIdentity = CorpusIdentity.Compute(optionsChanged);
 
         string TargetFor(CorpusIdentity identity, string unit, string docId, int arity) =>
             identity.TargetId(unit, docId, unit + "::" + docId, "method|" + arity);
@@ -361,6 +386,45 @@ public static class Program
         var targetBaseline = TargetFor(baselineIdentity, CoreUnit, "M:Corpus.Core.Methods.Direct(System.Int32)", 1);
         Add("A04", appSourceChanged && targetAfterSource == targetBaseline,
             $"calling source changed={appSourceChanged}; target identity stable={targetAfterSource == targetBaseline}");
+
+        // OPT01 changes a material Roslyn compilation option with identical source bytes and parse inputs.
+        var optionProjectBefore = baseline.Get(AppUnit);
+        var optionProjectAfter = optionsChanged.Get(AppUnit);
+        var optionDigestBefore = R2Identity.OptionsDigest((CSharpCompilationOptions)optionProjectBefore.Compilation.Options);
+        var optionDigestAfter = R2Identity.OptionsDigest((CSharpCompilationOptions)optionProjectAfter.Compilation.Options);
+        var optionSourcesSame = optionProjectBefore.SourcePaths.SequenceEqual(optionProjectAfter.SourcePaths, StringComparer.Ordinal) &&
+            optionProjectBefore.SourcePaths.All(path => optionProjectBefore.SourceBytes[path].SequenceEqual(optionProjectAfter.SourceBytes[path]));
+        var optionParseSame = optionProjectBefore.Compilation.SyntaxTrees.All(tree =>
+            ((CSharpParseOptions)tree.Options).Equals((CSharpParseOptions)optionProjectAfter.Compilation.SyntaxTrees.Single(t => t.FilePath == tree.FilePath).Options));
+        var optionChanged = ((CSharpCompilationOptions)optionProjectAfter.Compilation.Options).CheckOverflow;
+        var optionCtxChanged = optionDigestBefore != optionDigestAfter &&
+            baselineIdentity.Compctx1[AppUnit] != optionsChangedIdentity.Compctx1[AppUnit] &&
+            baselineIdentity.Compctx2[AppUnit] != optionsChangedIdentity.Compctx2[AppUnit];
+        var optionBinding = SemanticInspector.Inspect(optionProjectAfter.Compilation,
+            optionProjectAfter.Compilation.SyntaxTrees.Single(t => t.FilePath == "App/Sites.cs"), "@S01", SyntaxKind.InvocationExpression);
+        Add("OPT01", optionChanged && optionSourcesSame && optionParseSame && optionCtxChanged &&
+            optionBinding.Resolution == Resolution.Resolved && optionBinding.SymbolKey == Core("M:Corpus.Core.Methods.Direct(System.Int32)"),
+            $"CheckOverflow={optionChanged}; source bytes same={optionSourcesSame}; parse options same={optionParseSame}; optionsDigest changed={optionDigestBefore != optionDigestAfter}; compctx1/2 App changed={optionCtxChanged}; binding preserved={optionBinding.SymbolKey}");
+        var optionTargetChanged = TargetFor(baselineIdentity, CoreUnit, "M:Corpus.Core.Methods.Direct(System.Int32)", 1) !=
+            TargetFor(optionsChangedIdentity, CoreUnit, "M:Corpus.Core.Methods.Direct(System.Int32)", 1);
+        Add("OPT01-target", optionTargetChanged,
+            "defining compilation options participate in compctx1, so asmctx3 changes under the accepted R2 tuple");
+        Add("OPT01-restore", baselineIdentity.Compctx1[AppUnit] == secondIdentity.Compctx1[AppUnit] &&
+            baselineIdentity.Compctx2[AppUnit] == secondIdentity.Compctx2[AppUnit],
+            "restoring baseline compilation options reproduces baseline compctx1/compctx2");
+
+        // E02: Roslyn resolves a project-defined symbol, but an authoritative manifest without its defining context refuses publication.
+        var e02Tree = baseline.Get(AppUnit).Compilation.SyntaxTrees.Single(t => t.FilePath == "App/Sites.cs");
+        var e02Binding = SemanticInspector.Inspect(baseline.Get(AppUnit).Compilation, e02Tree, "@S01", SyntaxKind.InvocationExpression);
+        var noDefiningContext = new Dictionary<string, string>(StringComparer.Ordinal);
+        var noCoreUniverse = new[] { LeafUnit, AppUnit, SoloUnit };
+        var e02Refused = e02Binding.Resolution == Resolution.Resolved && e02Binding.Assembly == "Corpus.Core" &&
+            (!noDefiningContext.ContainsKey(CoreUnit) || !noCoreUniverse.Contains(CoreUnit, StringComparer.Ordinal));
+        var verifiedDefiningContext = new Dictionary<string, string>(StringComparer.Ordinal) { [CoreUnit] = baselineIdentity.Compctx2[CoreUnit] };
+        var fullUniverse = new[] { LeafUnit, CoreUnit, AppUnit, SoloUnit };
+        var e02Positive = e02Binding.Resolution == Resolution.Resolved && verifiedDefiningContext.ContainsKey(CoreUnit) && fullUniverse.Contains(CoreUnit, StringComparer.Ordinal);
+        Add("E02", e02Refused, $"Roslyn resolved {e02Binding.SymbolKey}; defining project is Core; authoritative compctx2/universe absent; confirmed target refused");
+        Add("E02-positive", e02Positive, "adding the verified defining compctx2 and universe membership changes provenance eligibility");
 
         // A05 same textual descriptor in different defining compilations -> distinct targets.
         var sameFormsSolo = baselineIdentity.TargetId(SoloUnit, "M:Corpus.Core.Methods.Direct(System.Int32)",
@@ -420,10 +484,114 @@ public static class Program
             ["symbols-leaf-changed"] = new { compctx1 = symbolsLeafIdentity.Compctx1, compctx2 = symbolsLeafIdentity.Compctx2 },
             ["symbols-core-changed"] = new { compctx1 = symbolsCoreIdentity.Compctx1, compctx2 = symbolsCoreIdentity.Compctx2 },
             ["source-changed"] = new { compctx1 = sourceChangedIdentity.Compctx1, compctx2 = sourceChangedIdentity.Compctx2 },
+            ["options-changed"] = new { compctx1 = optionsChangedIdentity.Compctx1, compctx2 = optionsChangedIdentity.Compctx2 },
         };
 
         return (results, variantIdentities);
     }
+
+    // --------------------------------------------------------------- deletion lifecycle
+
+    private static Dictionary<string, object?> RunLifecycle(string corpusRoot, CorpusBuild baseline,
+        CorpusIdentity baselineIdentity, List<Check> checks)
+    {
+        var reduced = CorpusBuild.Build(corpusRoot, CorpusVariant.SourceDeleted);
+        var reducedAgain = CorpusBuild.Build(corpusRoot, CorpusVariant.SourceDeleted);
+        var reducedIdentity = CorpusIdentity.Compute(reduced);
+        var reducedAgainIdentity = CorpusIdentity.Compute(reducedAgain);
+        var before = AppFacts(baseline, baselineIdentity);
+        var after = AppFacts(reduced, reducedIdentity);
+        var priorPaths = baseline.Get(AppUnit).SourcePaths.Order(StringComparer.Ordinal).ToArray();
+        var currentPaths = reduced.Get(AppUnit).SourcePaths.Order(StringComparer.Ordinal).ToArray();
+        var removed = priorPaths.Except(currentPaths, StringComparer.Ordinal).ToArray();
+        var expectedAfter = before.Where(pair => currentPaths.Contains(pair.Key, StringComparer.Ordinal))
+            .ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+        var preserved = expectedAfter.TryGetValue("App/Bulk.cs", out var expectedBulk) &&
+            after.TryGetValue("App/Bulk.cs", out var actualBulk) && expectedBulk.SequenceEqual(actualBulk, StringComparer.Ordinal);
+        var deletedAbsent = !after.ContainsKey("App/Sites.cs") && removed.SequenceEqual(["App/Sites.cs"]);
+        var complete = currentPaths.SequenceEqual(reduced.Get(AppUnit).SourcePaths, StringComparer.Ordinal) &&
+            reduced.Get(AppUnit).Compilation.GetDiagnostics().All(d => d.Severity != DiagnosticSeverity.Error);
+        var stale = after.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+        stale["App/Sites.cs"] = before["App/Sites.cs"];
+        var staleRejected = !ProjectionMatches(expectedAfter, stale);
+        var declaredPrior = priorPaths.ToHashSet(StringComparer.Ordinal);
+        var acquiredWithMissingRequired = priorPaths.Where(path => path != "App/Sites.cs").ToHashSet(StringComparer.Ordinal);
+        var missingRequiredIncomplete = !declaredPrior.SetEquals(acquiredWithMissingRequired);
+        var deterministic = reducedIdentity.Compctx1[AppUnit] == reducedAgainIdentity.Compctx1[AppUnit] &&
+            reducedIdentity.Compctx2[AppUnit] == reducedAgainIdentity.Compctx2[AppUnit] &&
+            ProjectionMatches(after, AppFacts(reducedAgain, reducedAgainIdentity));
+        var sourceSetIdentityChanged = baselineIdentity.Compctx1[AppUnit] != reducedIdentity.Compctx1[AppUnit] &&
+            baselineIdentity.Compctx2[AppUnit] != reducedIdentity.Compctx2[AppUnit];
+
+        checks.Add(new Check("lifecycle.DEL-N1", "lifecycle", deletedAbsent && complete &&
+            !after.ContainsKey("App/Sites.cs"), "authoritative manifest excludes Sites.cs; reduced App compilation is complete; removed source-owned facts absent"));
+        checks.Add(new Check("lifecycle.DEL-N2", "lifecycle", missingRequiredIncomplete,
+            "manifest still declares Sites.cs but acquisition omits it, so the scope is incomplete"));
+        checks.Add(new Check("lifecycle.DEL-N3", "lifecycle", staleRejected,
+            "injecting prior Sites.cs contributions into the reduced snapshot fails the source-owned projection comparison"));
+        checks.Add(new Check("lifecycle.preserved", "lifecycle", preserved,
+            "App/Bulk.cs source-owned qualifying occurrences remain represented with their usage4 identities"));
+        checks.Add(new Check("lifecycle.identity", "lifecycle", sourceSetIdentityChanged,
+            "source-set deletion recomputes App compctx1/compctx2 under R2; surviving usage4 identities are derived independently"));
+        checks.Add(new Check("lifecycle.deterministic", "lifecycle", deterministic,
+            "repeating reduced-scope compilation reproduces canonical contexts and source-owned facts"));
+
+        return new Dictionary<string, object?>(StringComparer.Ordinal)
+        {
+            ["caseId"] = "DEL01",
+            ["snapshotA"] = new { authoritativeSourceUnits = priorPaths, sourceHashes = baseline.Get(AppUnit).SourcePaths.ToDictionary(path => path, path => baselineIdentity.SourceHash(AppUnit, path), StringComparer.Ordinal), sourceOwnedOccurrences = before, complete = true, compctx1 = baselineIdentity.Compctx1[AppUnit], compctx2 = baselineIdentity.Compctx2[AppUnit] },
+            ["snapshotB"] = new { authoritativeSourceUnits = currentPaths, sourceHashes = reduced.Get(AppUnit).SourcePaths.ToDictionary(path => path, path => reducedIdentity.SourceHash(AppUnit, path), StringComparer.Ordinal), sourceOwnedOccurrences = after, removedSourceUnits = removed, complete, compctx1 = reducedIdentity.Compctx1[AppUnit], compctx2 = reducedIdentity.Compctx2[AppUnit] },
+            ["removedContributions"] = before.GetValueOrDefault("App/Sites.cs", []),
+            ["preservedContributions"] = after.GetValueOrDefault("App/Bulk.cs", []),
+            ["negativeControls"] = new { DEL_N1 = deletedAbsent, DEL_N2 = missingRequiredIncomplete, DEL_N3 = staleRejected },
+            ["deterministic"] = deterministic,
+            ["identityContract"] = "usage4 identities are recomputed from R2 inputs; no stability is assumed across changed source identities",
+        };
+    }
+
+    private static Dictionary<string, string[]> AppFacts(CorpusBuild build, CorpusIdentity identity)
+    {
+        var app = build.Get(AppUnit);
+        var facts = new SortedDictionary<string, List<string>>(StringComparer.Ordinal);
+        foreach (var tree in app.Compilation.SyntaxTrees.OrderBy(t => t.FilePath, StringComparer.Ordinal))
+        {
+            var values = new List<string>();
+            var model = app.Compilation.GetSemanticModel(tree);
+            foreach (var invocation in tree.GetRoot().DescendantNodes().OfType<InvocationExpressionSyntax>())
+            {
+                if (model.GetSymbolInfo(invocation).Symbol is not IMethodSymbol method)
+                    continue;
+                var assembly = method.ContainingAssembly?.Name;
+                var definingUnit = build.Projects.Values.FirstOrDefault(project => project.AssemblyName == assembly)?.UnitId;
+                if (definingUnit is null)
+                    continue;
+                var docId = method.OriginalDefinition.GetDocumentationCommentId();
+                if (docId is null)
+                    continue;
+                var canonicalTarget = identity.TargetId(definingUnit, docId, definingUnit + "::" + docId,
+                    "method|" + method.Arity.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                var token = invocation.Expression switch
+                {
+                    MemberAccessExpressionSyntax ma => ma.Name.Identifier,
+                    SimpleNameSyntax sn => sn.Identifier,
+                    _ => invocation.Expression.GetLastToken(),
+                };
+                var line = tree.GetLineSpan(token.Span);
+                var sourceHash = identity.SourceHash(AppUnit, tree.FilePath);
+                var occurrence = identity.OccurrenceId(AppUnit, tree.FilePath, sourceHash,
+                    line.StartLinePosition.Line + 1, line.StartLinePosition.Character + 1,
+                    line.EndLinePosition.Line + 1, line.EndLinePosition.Character + 1,
+                    docId, canonicalTarget);
+                values.Add(occurrence);
+            }
+            facts[tree.FilePath] = values.Order(StringComparer.Ordinal).ToList();
+        }
+        return facts.ToDictionary(pair => pair.Key, pair => pair.Value.ToArray(), StringComparer.Ordinal);
+    }
+
+    private static bool ProjectionMatches(IReadOnlyDictionary<string, string[]> expected,
+        IReadOnlyDictionary<string, string[]> actual) => expected.Count == actual.Count &&
+        expected.All(pair => actual.TryGetValue(pair.Key, out var values) && pair.Value.SequenceEqual(values, StringComparer.Ordinal));
 
     // ------------------------------------------------------------------ coverage
 
@@ -433,15 +601,15 @@ public static class Program
         var solo = baseline.Get(SoloUnit);
         var soloCount = solo.Compilation.SyntaxTrees
             .SelectMany(t => t.GetRoot().DescendantNodes().OfType<InvocationExpressionSyntax>()).Count();
-        checks.Add(new Check("coverage.complete-empty", "coverage", soloCount == 0,
-            "Solo is a complete verified scope with zero occurrences"));
+        checks.Add(new Check("coverage.complete-empty", "model-assertion", soloCount == 0,
+            "MODEL-LEVEL expectation: Solo Roslyn compilation has zero invocation syntax; production coverage authority is not exercised"));
 
         // Incomplete: a declared unit without a verified context.
         var declared = new[] { LeafUnit, CoreUnit, AppUnit, SoloUnit };
         var verified = new[] { LeafUnit, CoreUnit, AppUnit };
         var missing = declared.Except(verified, StringComparer.Ordinal).ToArray();
-        checks.Add(new Check("coverage.incomplete", "coverage", missing.Length == 1 && missing[0] == SoloUnit,
-            "omitting a declared unit yields IncompleteAnalysis, not a complete-empty result"));
+        checks.Add(new Check("coverage.incomplete", "model-assertion", missing.Length == 1 && missing[0] == SoloUnit,
+            "MODEL-LEVEL expectation: omitting a declared unit maps to IncompleteAnalysis; production coverage types are not exercised"));
 
         // NEW-04: incompatible coverage scopes must not be merged as authoritative.
         var scopeA = identity.Compctx2[CoreUnit];
@@ -452,9 +620,9 @@ public static class Program
 
         return new Dictionary<string, object?>(StringComparer.Ordinal)
         {
-            ["completeEmpty"] = new { unit = SoloUnit, occurrences = soloCount, state = "Produced" },
-            ["incomplete"] = new { declared = declared, verified = verified, missing, state = "IncompleteAnalysis" },
-            ["new04"] = new { scopeA = "Core", scopeB = "Leaf", compatible, note = "incompatible scopes are not merge authority" },
+            ["completeEmpty"] = new { unit = SoloUnit, occurrences = soloCount, state = "Produced", assertionLevel = "model expectation backed by direct Roslyn syntax inspection; not production coverage enforcement" },
+            ["incomplete"] = new { declared = declared, verified = verified, missing, state = "IncompleteAnalysis", assertionLevel = "model expectation; not production coverage enforcement" },
+            ["new04"] = new { scopeA = "Core", scopeB = "Leaf", compatible, note = "incompatible scopes are not merge authority", assertionLevel = "model expectation; NEW-04 remains open" },
         };
     }
 
@@ -534,7 +702,7 @@ public static class Program
         using var document = JsonDocument.Parse(File.ReadAllText(path));
         var root = document.RootElement;
         var options = new JsonSerializerOptions { WriteIndented = false };
-        foreach (var section in new[] { "semantics", "identities", "variantIdentities", "coverage", "counts" })
+        foreach (var section in new[] { "semantics", "identities", "variantIdentities", "coverage", "counts", "lifecycle" })
         {
             if (!root.TryGetProperty(section, out var expected))
             {

@@ -30,7 +30,7 @@ public sealed class Sites
         _ = /*@S12*/ explicitGreeter.Greet("b");
         _ = /*@S13*/ methods.Prop;
         _ = /*@S14*/ methods.Field;
-        methods.Changed += /*@S15*/ OnChanged;
+        /*@S15*/ methods.Changed += OnChanged;
         System.Action action = /*@S16*/ methods.Raise;
         System.Func<int> del = () => 7;
         _ = /*@S17*/ del();

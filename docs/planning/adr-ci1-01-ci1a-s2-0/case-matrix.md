@@ -2,8 +2,7 @@
 
 Every case names: the actual source marker, the syntactic operation, the
 independently established Roslyn resolution, and the accepted-S2.2 scope
-classification. Expected values are frozen in
-`oracle/expected/oracle-expected.json`; the symbol key is
+classification. Original Q1 values remain frozen in `oracle/expected/oracle-expected.json`; R1 selects `oracle/expected/oracle-expected-r1.json`. the symbol key is
 `<assembly>!<documentation-comment-id>` (the defining declaration; for
 constructed generics the original definition is used).
 
@@ -52,7 +51,7 @@ These resolve to a real symbol but are **outside the initial S2.2 supported
 | S07 | constructor invocation | `Corpus.Core!M:Corpus.Core.Methods.#ctor` | constructor |
 | S13 | property read | `Corpus.Core!P:Corpus.Core.Methods.Prop` | property |
 | S14 | field read | `Corpus.Core!F:Corpus.Core.Methods.Field` | field |
-| S15 | event subscription | `Corpus.App!M:Corpus.App.Sites.OnChanged` | event (local handler) |
+| S15 | event subscription member | `Corpus.Core!E:Corpus.Core.Methods.Changed` | event member (handler is a separate method symbol) |
 | S16 | method group | `Corpus.Core!M:Corpus.Core.Methods.Raise` | method group |
 | S17 | delegate invocation | `System.Private.CoreLib!M:System.Func`1.Invoke` | delegate (external target) |
 | S18 | local function | `Corpus.App!M:Corpus.App.Sites.Local(System.Int32)` | local function |
@@ -74,11 +73,14 @@ These resolve to a real symbol but are **outside the initial S2.2 supported
 | N01 | ambiguous overloads (`Amb(1,1)`) | `Ambiguous` (overload resolution failure; candidates present) | no confirmed target; `Ambiguous` coverage/refusal |
 | N02 | missing reference/type | `Unresolved` (`CS0103`-class) | no confirmed target; `Unresolved` |
 | N03 | dynamic invocation | `Dynamic` (no static symbol; `IDynamicInvocationOperation`) | no confirmed target; unsupported/unresolved statically |
-| E01 | external metadata target | `Resolved` → `Corpus.External!M:Corpus.External.Api.Value` | resolved symbol is **not** a publishable source-defined target; external refusal |
+| E01 | external metadata target | `Resolved` → `Corpus.External!M:Corpus.External.Api.Value` | metadata-defined symbol without a source-defined `asmctx3`; external refusal |
+| E02 | resolved project target without defining authority | `Resolved` → `Corpus.Core!M:Corpus.Core.Methods.Direct(System.Int32)` | Roslyn resolves the symbol, but missing verified defining `compctx2`/universe membership refuses confirmation |
 | I01 | inactive `#if` branch | node absent from active compilation; bytes retained | not an occurrence fact; `ConditionalInactive` coverage, never a confirmed fact |
 | RM01 | `reference-missing` variant (`@S01`) | not resolved | unresolved refusal |
 | CE01 | `Solo` complete scope | zero invocations | complete-empty `Produced`, distinct from unavailable |
-| IN01 | declared scope omits a unit | — | `IncompleteAnalysis`; not a complete-empty negative |
+| IN01 | declared scope omits a unit | — | model-level `IncompleteAnalysis`; not a complete-empty negative |
+| DEL01 | authoritative source deletion | Roslyn compiles reduced source set completely | removed source contributions retire; surviving source-owned facts remain; distinct from missing required source |
+| OPT01 | material compilation option change | `CheckOverflow` differs with identical source bytes and parse options | `optionsDigest`, `compctx1`, `compctx2`, and defining `asmctx3` change per R2; restoring options reproduces baseline |
 | NEW-04 | two incompatible coverage scopes | — | must not be merged as authoritative (defect preserved, not closed) |
 
 ## 6. Volume cases
@@ -96,7 +98,10 @@ These resolve to a real symbol but are **outside the initial S2.2 supported
 | conditional public API | C01 (S25) |
 | transitive dependency change | T01 (A02, A08) |
 | ambiguity / unresolved / dynamic | N01–N03 |
-| external verified / missing defining context | E01, E02 |
+| external metadata / resolved target without defining provenance | E01, E02 |
 | inactive branches | I01 |
-| complete-empty / incomplete / NEW-04 | CE01, IN01, NEW-04 |
+| complete-empty / incomplete / NEW-04 | CE01, IN01, NEW-04 (model-level assertions) |
+| source deletion / missing required source | DEL01, DEL-N1..DEL-N3 |
+| material compilation option | OPT01, OPT01-restore, OPT01-target |
+| invalid invocation vs ambiguity | CLS01 (`CS0121`), CLS02 (`CS0176`) |
 | Option A identity/provenance | A01–A10 |

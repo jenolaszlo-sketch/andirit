@@ -47,7 +47,8 @@ public sealed record CorpusVariant(
     string CoreSymbols,
     string LeafSymbols,
     bool IncludeCoreReference,
-    bool IncludeLeafReference)
+    bool IncludeLeafReference,
+    bool IncludeAppSites = true)
 {
     public static readonly CorpusVariant Baseline =
         new("baseline", "App/Sites.cs", "repo/App/Sites.cs", "", "", true, true);
@@ -59,6 +60,10 @@ public sealed record CorpusVariant(
         new("symbols-leaf-changed", "App/Sites.cs", "repo/App/Sites.cs", "", "LEAF_TRACE", true, true);
     public static readonly CorpusVariant ReferenceMissing =
         new("reference-missing", "App/Sites.cs", "repo/App/Sites.cs", "", "", false, true);
+    public static readonly CorpusVariant OptionsChanged =
+        new("options-changed", "App/Sites.cs", "repo/App/Sites.cs", "", "", true, true);
+    public static readonly CorpusVariant SourceDeleted =
+        new("source-deleted", "App/Sites.cs", "repo/App/Sites.cs", "", "", true, true, false);
 }
 
 /// <summary>A constructed corpus for one variant: all project builds plus the external image.</summary>
@@ -120,6 +125,7 @@ public sealed class CorpusBuild
             var options = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary,
                 optimizationLevel: OptimizationLevel.Release,
                 nullableContextOptions: NullableContextOptions.Disable,
+                checkOverflow: variant.Name == "options-changed",
                 deterministic: true,
                 concurrentBuild: false);
             var references = frameworkReferences.Concat(projectReferences).ToArray();
@@ -144,8 +150,11 @@ public sealed class CorpusBuild
             appReferences.Add(core.Compilation.ToMetadataReference());
         if (variant.IncludeLeafReference)
             appReferences.Add(leaf.Compilation.ToMetadataReference());
-        var app = Compile("App/App.csproj", "Corpus.App",
-            [(variant.AppSitesLogicalPath, variant.AppSitesPhysicalPath), ("App/Bulk.cs", "repo/App/Bulk.cs")],
+        var appSources = new List<(string Logical, string Physical)>();
+        if (variant.IncludeAppSites)
+            appSources.Add((variant.AppSitesLogicalPath, variant.AppSitesPhysicalPath));
+        appSources.Add(("App/Bulk.cs", "repo/App/Bulk.cs"));
+        var app = Compile("App/App.csproj", "Corpus.App", appSources.ToArray(),
             "", appReferences.ToArray());
 
         var solo = Compile("Solo/Solo.csproj", "Corpus.Solo",
