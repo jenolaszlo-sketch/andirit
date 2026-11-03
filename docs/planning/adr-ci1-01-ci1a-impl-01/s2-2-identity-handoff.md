@@ -4,6 +4,15 @@
 **Authority:** [S2.1 owner acceptance](../../decisions/adr-ci1-01-ci1a-s2-1-owner-acceptance.md), [S2.2 target identity decision](../../decisions/adr-ci1-01-ci1a-s2-2-target-identity-decision.md), [pre-release compatibility policy](../../decisions/adr-ci1-01-pre-release-compatibility-policy.md), [obligation register](../../decisions/adr-ci1-01-ci1a-s2-obligation-register.md).
 **Status:** Planning handoff only. S2.2 implementation is NOT authorized.
 
+**Readiness update (2026-11-03):** [S2.0/F12 OWNER-01](../../decisions/adr-ci1-01-ci1a-s2-0-corpus-01-owner-acceptance.md)
+accepts the frozen R2 corpus **WITH QUALIFICATIONS**. Q3 remains **SUPPORTED
+WITH QUALIFICATIONS**. The F12 reference prerequisite before S2.2
+qualification-test authoring is now complete; other authoring/minting/acceptance
+gates are unchanged. **S2.2 SEMANTIC EXTRACTION — NOT AUTHORIZED BY OWNER-01**.
+See [current reference status, gate order and work queue](s2-0-owner-handoff.md).
+Fixture acceptance supplies no production canonicalization/provenance or native
+publication qualification.
+
 ## 1. Selected identity direction
 
 **`S2.2-ID OPTION A ACCEPTED`** — `asmctx3` remains the semantic target identity; `compctx2` governs provenance validity and invalidation. No new target identity version is introduced.
@@ -49,7 +58,7 @@ Per the pre-release policy: superseded experimental occurrence identities/schema
 
 ## 5. Required S2.0/F12 semantic corpus (before S2.2 qualification-test authoring)
 
-The corpus must have reproducible C# source, independently established expected relationships, cross-project references, multiple defining compilation contexts, conditional compilation, equivalent and distinct target cases, negative/refusal cases, and frozen expected identity/resolution outcomes, independently accepted before S2.2 qualification tests. The existing 9-file/32-row fixture does not satisfy this; the minima in the obligation register (F12) apply. This handoff does not perform S2.0 work.
+The corpus must have reproducible C# source, independently established expected relationships, cross-project references, multiple defining compilation contexts, conditional compilation, equivalent and distinct target cases, negative/refusal cases, and frozen expected identity/resolution outcomes, independently accepted before S2.2 qualification tests. **Satisfied at the reference boundary by S2.0 OWNER-01 (2026-11-03):** source-bound R2 base corpus independently supports 11 files, 53 invocations, 21 method references, 5 overloads, 5 namespaces, 5 projects and 52 cross-project invocations. The former 9-file/32-row seed was nonqualifying; its history is preserved. All original native end-to-end and later production gates remain. Frozen S2.0 artifacts are unchanged; the owner handoff records current status.
 
 ## 6. Authorization prerequisites (all distinct; none waived by S2.1 acceptance)
 
@@ -58,7 +67,7 @@ The corpus must have reproducible C# source, independently established expected 
 | S2.1 owner acceptance | **Complete** (S21A) |
 | S2.2 identity mapping decision | **Complete** (S22ID, Option A) |
 | S2.2 mapping contract implemented + independently reviewed | Before S2.2 target minting |
-| S2.0/F12 frozen semantic oracle accepted | Before S2.2 qualification-test authoring |
+| S2.0/F12 frozen semantic oracle accepted | **Complete with qualifications** (S2.0 OWNER-01, 2026-11-03); prerequisite before S2.2 qualification-test authoring satisfied; F16/NEW-02 confirmation and all other gates remain |
 | NEW-04 coverage merge disposition | Before any coverage reliance; otherwise before S2.2 acceptance |
 | Q-F2 encoding boundary | Before S2.2 acceptance |
 | Q-F3 metadata validity | Before S2.2 semantic acceptance |

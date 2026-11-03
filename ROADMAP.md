@@ -730,6 +730,17 @@ S2.2 implementation remains separately authorized; Stage 2 remains
 unauthorized. The obligation register retains all later correctness gates.
 See [OWNER-01 handoff](docs/planning/adr-ci1-01-ci1a-s2-rem-01-owner-handoff.md).
 
+**S2.0/F12 owner status (2026-11-03).** The source-bound R2 semantic corpus
+is **ACCEPTED WITH QUALIFICATIONS** as the independent correctness reference.
+F12 is closed at that reference boundary; its native end-to-end integration
+requirements remain open at S2.3–S2.5. Independent Q3 remains **SUPPORTED WITH
+QUALIFICATIONS**; Q1/Q2 remediation-required history is preserved.
+**S2.2 SEMANTIC EXTRACTION — NOT AUTHORIZED BY OWNER-01.** Stage 2 remains
+incomplete and S2.3/later stages remain gated. Next eligible action is a
+separately commissioned S2.2 scope/entry-criteria preparation, retaining Option A
+and every remaining prerequisite. See [the owner decision](docs/decisions/adr-ci1-01-ci1a-s2-0-corpus-01-owner-acceptance.md)
+and [current status/work queue](docs/planning/adr-ci1-01-ci1a-impl-01/s2-0-owner-handoff.md).
+
 Success means **fewer total agent tool calls, fewer unnecessary tokens, and
 faster useful answers**, measured against realistic shell/file-inspection
 workflows including cold/incremental index costs and accuracy, not hypothetical

@@ -1,7 +1,24 @@
 # ADR-CI1-01-CI1A-IMPL-01 — Candidate C production integration (specification)
 
 **Status: `CI1A-IMPL-01 SPECIFIED — READY FOR INDEPENDENT SPECIFICATION REVIEW.`**
-**Production implementation: NOT AUTHORIZED.**
+**Production implementation: NOT AUTHORIZED by this specification.**
+
+**Current status, 2026-11-03:** Stage 1, REM-01 and S2.1 have qualified owner
+acceptance in their recorded scopes. S2.0/F12 is now **ACCEPTED WITH
+QUALIFICATIONS** as the frozen R2 independent semantic reference under
+[OWNER-01](../../decisions/adr-ci1-01-ci1a-s2-0-corpus-01-owner-acceptance.md).
+Q3 remains **SUPPORTED WITH QUALIFICATIONS**. S2.2 remains **NOT AUTHORIZED**;
+S2.3 and later remain gated, and Stage 2 remains incomplete. The earlier
+specification status below is historical, not a claim that accepted foundation
+work is absent. See [current S2.0 status and work queue](s2-0-owner-handoff.md).
+
+| Work queue | Current disposition |
+| --- | --- |
+| S2.0/F12 frozen R2 reference | Closed — accepted with qualifications; native integration requirements retained |
+| S2.2 scope and entry-criteria preparation | Next eligible separate commission; preserve Option A, Q-F2/Q-F3, NEW-04, F16 and live S-01 gates |
+| S2.2 semantic extraction | Not authorized; requires separate implementation commission and independent qualification |
+| NEW-01 recovery / S2.3 publication | Recovery correction independently accepted before S2.3 or earlier recovery reliance; native publication separately authorized |
+| S2.4/S2.5 and later qualification | Remain gated under the obligation register; no full Stage 2 acceptance |
 
 This directory specifies the production integration and qualification of
 **Candidate C** (separate, source-owned occurrence facts with native LatticeDB

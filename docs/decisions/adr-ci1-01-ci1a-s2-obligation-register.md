@@ -6,6 +6,13 @@ at reviewed `aaea1ca7f32a666bc9c6480e91c75c7dd14779d4` /
 `4012bf14e680a742da7a3785831fb578d9f92eb4`.
 No Stage 2 production implementation is authorized by this register.
 
+**Current owner update, 2026-11-03:** [S2.0/F12 OWNER-01](adr-ci1-01-ci1a-s2-0-corpus-01-owner-acceptance.md)
+records `F12 CLOSED — ACCEPTED WITH QUALIFICATIONS` for the source-bound R2
+corpus/reference oracle. Q3 remains `SUPPORTED WITH QUALIFICATIONS`.
+`S2.2 SEMANTIC EXTRACTION — NOT AUTHORIZED BY OWNER-01`.
+F12's native end-to-end obligations remain mandatory at S2.3–S2.5; all other
+gates and earlier-reliance rules below are unchanged.
+
 ## 1. Sources and closure rules
 
 Authority keys (paths relative to the canonical repository unless external):
@@ -56,7 +63,7 @@ claim; deferred capabilities are not implemented or independently qualified.
 | F09 / Significant / B §F09; REM F09; Q requalification F09 | Contract closed; extractor correctly deferred. ConditionalInactive vocabulary and declared configuration rule fixed in S2B §10/S2M §5.6; no inactive confirmed-fact path. | Require actual disabled-text scanning bound to language/preprocessor configuration; contract closure is not scanner completion. | S2.2 implementation/acceptance, independently reproduced positives/negatives by S2.5; IR+O. |
 | F10 / Significant / B §F10; REM F10; Q requalification F10, COVERAGE review | Partially corrected, independently verified: coverage attached, IncompleteAnalysis and missing-target semantics, Examined=target-index entries (P05/P07). | Require bounded pagination/continuation and applicable cross-target internal contract; no public API. | S2.4 acceptance and S2.5 review: continuation across publication changes, ordering/limits, completeness/availability assertions; IR+O. |
 | F11 / Significant / B §F11; REM F11; Q requalification F11, S2-1-READINESS | **S2.1 ACCEPTED WITH QUALIFICATIONS** (S21A, independent S21Q1): lifecycle-owned immutable buffers, single acquisition, raw-byte SHA-256, strict BOM-aware decoding, Roslyn text/tree correspondence, actual options/references, live dependency `compctx2`. Corrected: actual per-document hashes/options/references, compctx1/compctx2, scope/universe/live membership. | Remaining: Q-F2 encoding boundary before S2.2 acceptance; Q-F3 metadata validity before S2.2 semantic acceptance; full semantic correspondence S2.2; S-01 integrated proof S2.5. Existing discovery is bounded, not general MSBuild equivalence. | S2.1 accepted (S21A). S2.2 semantic tests before S2.2 acceptance; integrated S-01 proof S2.5; IR+O. |
-| F12 / Significant / B §F12 + REAL-PROJECT-FIXTURE-AUDIT §§1–5; REM gate reconciliation §6; Q requalification F12 + OWNER-HANDOFF §2 | Open qualification: nine C# files/32 proposed rows below minima; current fixture explicitly not qualifying. OWNER-01 recounted files/rows, not a full semantic oracle. | Accepted deferred qualification; owner chooses existing bounded S2.0 preparation route for separate commissioning. See §5. No corpus acceptance or execution authorization. | Decision recorded now; corpus/oracle frozen and independently accepted before S2.2 qualification; stricter S2.2 test-authoring gate adopted here; IR+O. |
+| F12 / Significant / B §F12 + REAL-PROJECT-FIXTURE-AUDIT §§1–5; REM gate reconciliation §6; Q requalification F12 + OWNER-HANDOFF §2 | **F12 CLOSED — ACCEPTED WITH QUALIFICATIONS** at the S2.0 corpus/reference-oracle boundary (2026-11-03 OWNER-01; independent corpus Q3 SUPPORTED WITH QUALIFICATIONS). Base corpus independently supports 11 files/53 invocations/21 method references/5 overloads/5 namespaces/5 projects/52 cross-project calls. Both Q2 defects independently closed. | Frozen R2 reference accepted; fixture components, runtime artifacts, model authority and Windows scope qualified. Original native publication/reopen/internal-lookup and integrated end-to-end obligations remain open at S2.3–S2.5. §5 preserves the original definition and deferred-route history. No production acceptance. | Corpus freeze/independent owner acceptance prerequisite before S2.2 qualification-test authoring is satisfied. F16/NEW-02 and all remaining S2.2 minting/acceptance gates still apply; S2.2 is NOT AUTHORIZED. Native integration requires separate authorization and IR+O; no gate waived. |
 | F13 / Significant / B §F13; REM evidence-integrity-erratum; Q EVIDENCE-INTEGRITY-REVIEW/requalification F13 | Erratum verified with two corrections NEW-03. Historical technical evidence traceable/nonblocking with provenance qualifications. | Accept bounded technical evidence, qualify old full-integrity claim; append exact measured identities. Frozen packages remain untouched. | NEW-03 correction completed OWNER-01, O-doc. Historical aggregate tree/report remain unverified; no closure without authentic evidence. |
 | F14 / Minor / B §F14; REM F14; Q requalification F14 | Corrected where claimed: duplicate §15, stale path and five/six count. NEW-02 residual fixed OWNER-01. | Accept corrected docs; no broader identity implementation defect inferred. | O-doc; later reviewer verifies corrected matrix before S2.2 test authoring. |
 | F15 / Significant / B §F15; REM gate reconciliation §7; Q requalification F15 + STAGE2-GATE-REVIEW §4 | Reconciled independently: available authentic writers and Linux minimum at S2 acceptance; full certification Stage 6. Ambiguous S2B §11 wording aligned now. | Require immutable authentic fixture/copies; no-writer format requires explicit limitation and owner amendment, not tampered substitute. | Wording corrected before any S2 authorization (O-doc); available formats and Linux minimum S2.5 acceptance (IR+O); full certification Stage 6. |
@@ -89,6 +96,19 @@ Sources: S21A §F (owner dispositions) and S21Q1 (`NEW-FINDINGS.md`, `REPORT.md`
 | S2.2-ID / S21A, S22ID | **`S2.2-ID OPTION A ACCEPTED`**: retain `asmctx3` as semantic target identity; `compctx2` governs provenance validity/invalidation; exact mapping contract and required tests recorded. | **Before S2.2 target minting:** implement and independently review the mapping contract (R2-faithful `compctx1` derivation, durable `compctx2` association, invalidation, no churn). If durability cannot be enforced, return to owner (possible Option B). IR+O. |
 
 
+
+## 5. F12 corpus acceptance and retained integration requirements
+
+**Current disposition (2026-11-03): `F12 CLOSED — ACCEPTED WITH QUALIFICATIONS`**
+for the frozen R2 corpus as an independent correctness reference, under
+[the S2.0 OWNER-01 decision](adr-ci1-01-ci1a-s2-0-corpus-01-owner-acceptance.md).
+Both Q2 findings are independently closed by authenticated Q3. The corpus
+freeze/acceptance prerequisite is satisfied; native end-to-end integration
+described below is still required at S2.3–S2.5 and any earlier dependent reliance.
+No production or Stage 2 completion claim follows. Current work queue and S2.2
+entry criteria are in [the owner handoff](../planning/adr-ci1-01-ci1a-impl-01/s2-0-owner-handoff.md).
+
+### Historical route decision (2026-11-02; preparation now completed)
 
 **Selected disposition: Accepted deferred qualification.** The actual issue is
 qualification evidence and timing, not contract identity or an implementation
@@ -178,7 +198,7 @@ explicitly classified O-doc or a standing accepted limitation.
 
 | Stage | Implementation boundary and mandatory incoming/acceptance gates |
 | --- | --- |
-| S2.0 | Existing contracts/authority and bounded corpus preparation route; separate commission required for preparation; no new milestone invented. |
+| S2.0 | **ACCEPTED WITH QUALIFICATIONS** for the frozen R2 semantic corpus/reference oracle (OWNER-01, 2026-11-03); corpus preparation and independent acceptance prerequisite complete. Original native/integrated F12 path remains S2.3–S2.5. No S2.2 implementation authorization. |
 | S2.1 | Verified source acquisition/compilation provenance under [the separate boundary](adr-ci1-01-ci1a-s2-1-authorization-boundary.md). **ACCEPTED WITH QUALIFICATIONS** (S21A) on the independent S21Q1 evidence; Q-F2/Q-F3 gates carried to S2.1-dependent stages. Accepted contracts/foundation were required, not already-completed S-01 code. Accepted positive/negative evidence is recorded; S2.2 remains separately authorized. |
 | S2.2 | Real Roslyn extraction, canonical minting/external refusal, inactive scanning; F12 frozen independent oracle, NEW-04 correction and accepted S2.1 evidence. **Identity direction decided (S22ID, Option A)** with the mapping contract and required tests; target minting blocked until that mapping and the listed prerequisites are implemented and reviewed. |
 | S2.3 | Native source-owned publication integration; NEW-01 fixed and independently qualified before reliance, real N1–N8 equivalents, replacement/deletion/reopen/conflict, applicable D4 and real-project D3. |

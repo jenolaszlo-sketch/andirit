@@ -9,6 +9,18 @@
 **Obligation reconciliation:** `docs/decisions/adr-ci1-01-ci1a-s1-obligation-reconciliation.md`  
 **Recorded:** 2026-11-01
 
+**Current handoff update (2026-11-03):** S2.0/F12 is **ACCEPTED WITH
+QUALIFICATIONS** for the source-bound R2 semantic reference; Q3 remains
+**SUPPORTED WITH QUALIFICATIONS**. Stage 1/REM-01/S2.1 qualified acceptances
+stand. [OWNER-01](../../decisions/adr-ci1-01-ci1a-s2-0-corpus-01-owner-acceptance.md)
+closes the corpus prerequisite and preserves the original native/integrated
+F12 requirements at S2.3–S2.5. **S2.2 SEMANTIC EXTRACTION — NOT AUTHORIZED BY
+OWNER-01**; S2.3 and later remain gated. Current gate order and next eligible
+separate S2.2 scope-preparation commission are in
+[the owner handoff/work queue](s2-0-owner-handoff.md). The dated specification
+history below grants no present implementation authority; the consolidated
+obligation register and later accepted slice decisions control current gates.
+
 ---
 
 ## 1. Handoff Summary
