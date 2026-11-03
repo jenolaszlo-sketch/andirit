@@ -81,6 +81,14 @@ from the pinned runtime 10.0.12 files and recorded in the frozen oracle.
 | `S01` (`App/Sites.cs` 15:30) | `a87ee10ca6c6d0732feca73c5ae73d5abd773399ea370173eddacf2b1cad20cd` |
 | `INV-01` (`App/Bulk.cs` 20:30) | `699a94f4e670ec85df318174f0ec235d58fd33e157b186dc9b30dbd8c76df0c5` |
 
+> **R1/R2 note (S01).** The `S01` row above is the historical Q1-era vector,
+> preserved in the original `oracle-expected.json`. Since the R1 oracle
+> corrections, the accepted canonical S01 `usage4` is
+> `d1ae71fc315d0c1a5b41559e4ba7a6b10c9dc417eb3a52b9cd0781fb67b0b556`
+> (`oracle-expected-r1.json`; confirmed by the independent Q2 review and
+> reproduced identically by the R2 cross-view section). `INV-01` is unchanged
+> across all three revisions.
+
 ## 5. Component-digest qualification
 
 `identifierDigest`, `declarationDigest` and `shapeDigest` are R2 inputs supplied
@@ -119,3 +127,29 @@ membership. The `source-changed` variant shows a new `usage4` with an unchanged
 target; `symbols-leaf-changed` shows an unchanged target with invalidated
 provenance. No target identity churn is created for a dependency-context-only
 change.
+
+## 8. R2 revision (Q2-F01 / Q2-F02 remediation)
+
+R2 does not redefine any tuple above. It enforces two consistency obligations
+inside the oracle:
+
+1. **One canonical target description (Q2-F01).** The identifier digest input is
+   the defining declaration's documentation id; the declaration digest input is
+   `<definingUnit>::<documentId>`; the shape digest input is the fixture-declared
+   `method|<parameterCount>` — never Roslyn generic arity. Reduced extension
+   methods normalize `ReducedFrom` then `OriginalDefinition` before any of these
+   inputs are taken. The main identity view and the source-lifecycle projection
+   share one implementation (`oracle/CanonicalTarget.cs`). Frozen R2 cross-view
+   values for the nine designated sites are in
+   [R2 evidence / canonical identity review](../../evidence/adr-ci1-01-ci1a-s2-0-r2/CANONICAL-IDENTITY-REVIEW.md).
+2. **One validity predicate (Q2-F02).** A recorded defining `compctx2` confirms
+   occurrence evidence only when it equals the independently derived current
+   verified context of the defining compilation **and** the compilation-universe
+   membership carries that same verified context for the defining unit
+   (`oracle/ProvenanceGate.cs`). This sharpens mapping rule 7 above: identity
+   equality, canonical digest shape, member count, or `asmctx3` equality each
+   establish nothing on their own.
+
+Historical revisions remain in force: the original and R1 frozen expected
+documents are preserved byte-for-byte, and each revision names itself in its
+output (`CI1A-S2.0-CORPUS-R1`, `CI1A-S2.0-CORPUS-R2`).

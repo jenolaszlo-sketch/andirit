@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -51,8 +52,15 @@ public static class Program
         var (variants, variantIdentities) =
             RunOptionA(corpusRoot, baseline, baselineIdentity, second, secondIdentity, checks, identities);
 
+        // ---- cross-view canonical occurrence consistency --------------------
+        var baselineFacts = AppFacts(baseline, baselineIdentity);
+        var crossView = RunCrossView(corpusRoot, baseline, baselineIdentity, baselineFacts, checks);
+
+        // ---- E02 defining-provenance authority ------------------------------
+        var e02 = RunE02(corpusRoot, baseline, baselineIdentity, checks);
+
         // ---- coverage -------------------------------------------------------
-        var lifecycle = RunLifecycle(corpusRoot, baseline, baselineIdentity, checks);
+        var lifecycle = RunLifecycle(corpusRoot, baseline, baselineIdentity, baselineFacts, checks);
         var coverage = RunCoverage(baseline, baselineIdentity, checks);
 
         // ---- F12 counts -----------------------------------------------------
@@ -73,7 +81,7 @@ public static class Program
             checks.Add(new Check("f12." + key, "coverage", pass, $"{key} = {value}"));
         }
 
-        report["oracleVersion"] = "CI1A-S2.0-CORPUS-R1";
+        report["oracleVersion"] = "CI1A-S2.0-CORPUS-R2";
         report["environment"] = new
         {
             framework = RuntimeInformation.FrameworkDescription,
@@ -87,6 +95,8 @@ public static class Program
         report["identities"] = identities;
         report["variantIdentities"] = variantIdentities;
         report["variants"] = variants;
+        report["crossView"] = crossView;
+        report["e02"] = e02;
         report["coverage"] = coverage;
         report["lifecycle"] = lifecycle;
         report["counts"] = counts;
@@ -294,7 +304,7 @@ public static class Program
 
     private static Dictionary<string, object?> RunIdentities(CorpusBuild baseline, CorpusIdentity identity, List<Check> checks)
     {
-        var targets = new (string Id, string Unit, string DocId, int Arity)[]
+        var targets = new (string Id, string Unit, string DocId, int ParameterCount)[]
         {
             ("T.Direct", CoreUnit, "M:Corpus.Core.Methods.Direct(System.Int32)", 1),
             ("T.Static", CoreUnit, "M:Corpus.Core.Methods.Static(System.Int32)", 1),
@@ -309,12 +319,16 @@ public static class Program
         {
             // Fixture-supplied canonical component inputs. The corpus does not claim
             // to freeze S2.2's source canonicalization; it supplies the R2 site forms.
-            asmctx3[t.Id] = identity.TargetId(t.Unit, t.DocId, t.Unit + "::" + t.DocId, "method|" + t.Arity);
+            asmctx3[t.Id] = CanonicalTarget.TargetId(identity,
+                CanonicalTarget.Fixture(t.Unit, t.DocId, t.ParameterCount));
         }
 
         checks.Add(new Check("identity.asmctx3.canonical", "identity",
             asmctx3.Values.All(v => v.StartsWith("asmctx3:sha256:", StringComparison.Ordinal) && v.Length == "asmctx3:sha256:".Length + 64),
             "all asmctx3 values canonical"));
+        checks.Add(new Check("identity.asmctx3.frozen-vectors", "identity",
+            targets.All(t => string.Equals(asmctx3[t.Id], FrozenExpectations.Asmctx3[t.Id], StringComparison.Ordinal)),
+            "all six named asmctx3 vectors equal the accepted frozen R2 contract values"));
         checks.Add(new Check("identity.asmctx3.distinct-declarations", "identity",
             asmctx3["T.Direct"] != asmctx3["T.Static"] &&
             asmctx3["T.Static"] != asmctx3["T.LeafCompute"] &&
@@ -328,13 +342,20 @@ public static class Program
         var bulkTree = app.Compilation.SyntaxTrees.Single(t => t.FilePath == "App/Bulk.cs");
         var inv01 = SemanticInspector.Inspect(app.Compilation, bulkTree, "@INV-01", SyntaxKind.InvocationExpression);
         var sitesHash = identity.SourceHash(AppUnit, "App/Sites.cs");
-        var usage4S01 = identity.OccurrenceId(AppUnit, "App/Sites.cs", sitesHash,
-            s01.StartLine, s01.StartColumn, s01.EndLine, s01.EndColumn, "M:Corpus.Core.Methods.Direct(System.Int32)", asmctx3["T.Direct"]);
-        var usage4Inv01 = identity.OccurrenceId(AppUnit, "App/Bulk.cs", identity.SourceHash(AppUnit, "App/Bulk.cs"),
-            inv01.StartLine, inv01.StartColumn, inv01.EndLine, inv01.EndColumn, "M:Corpus.Core.Methods.Add(System.Int32,System.Int32)", asmctx3["T.Add2"]);
+        var directTarget = CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Direct(System.Int32)", 1);
+        var add2Target = CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Add(System.Int32,System.Int32)", 2);
+        var usage4S01 = CanonicalTarget.OccurrenceId(identity, directTarget, AppUnit, "App/Sites.cs",
+            sitesHash, s01.StartLine, s01.StartColumn, s01.EndLine, s01.EndColumn);
+        var usage4Inv01 = CanonicalTarget.OccurrenceId(identity, add2Target, AppUnit, "App/Bulk.cs",
+            identity.SourceHash(AppUnit, "App/Bulk.cs"),
+            inv01.StartLine, inv01.StartColumn, inv01.EndLine, inv01.EndColumn);
 
         checks.Add(new Check("identity.usage4.canonical", "identity",
             usage4S01.Length == 64 && usage4S01.All(char.IsAsciiHexDigitLower), usage4S01));
+        checks.Add(new Check("identity.usage4.frozen-vectors", "identity",
+            string.Equals(usage4S01, FrozenExpectations.Usage4["S01"], StringComparison.Ordinal) &&
+            string.Equals(usage4Inv01, FrozenExpectations.Usage4["INV-01"], StringComparison.Ordinal),
+            "S01/INV-01 usage4 equal the independently qualified frozen main identity vectors"));
 
         return new Dictionary<string, object?>(StringComparer.Ordinal)
         {
@@ -443,13 +464,16 @@ public static class Program
         // E02: Roslyn resolves a project-defined symbol, but an authoritative manifest without its defining context refuses publication.
         var e02Tree = baseline.Get(AppUnit).Compilation.SyntaxTrees.Single(t => t.FilePath == "App/Sites.cs");
         var e02Binding = SemanticInspector.Inspect(baseline.Get(AppUnit).Compilation, e02Tree, "@S01", SyntaxKind.InvocationExpression);
-        var noDefiningContext = new Dictionary<string, string>(StringComparer.Ordinal);
-        var noCoreUniverse = new[] { LeafUnit, AppUnit, SoloUnit };
+        var noCoreUniverse = ProvenanceGate.Universe(baselineIdentity, LeafUnit, AppUnit, SoloUnit);
         var e02Refused = e02Binding.Resolution == Resolution.Resolved && e02Binding.Assembly == "Corpus.Core" &&
-            (!noDefiningContext.ContainsKey(CoreUnit) || !noCoreUniverse.Contains(CoreUnit, StringComparer.Ordinal));
-        var verifiedDefiningContext = new Dictionary<string, string>(StringComparer.Ordinal) { [CoreUnit] = baselineIdentity.Compctx2[CoreUnit] };
-        var fullUniverse = new[] { LeafUnit, CoreUnit, AppUnit, SoloUnit };
-        var e02Positive = e02Binding.Resolution == Resolution.Resolved && verifiedDefiningContext.ContainsKey(CoreUnit) && fullUniverse.Contains(CoreUnit, StringComparer.Ordinal);
+            !ProvenanceGate.Eligible(null, baselineIdentity.Compctx2, noCoreUniverse, CoreUnit);
+        var verifiedDefiningContext = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [CoreUnit] = baselineIdentity.Compctx2[CoreUnit],
+        };
+        var fullUniverse = ProvenanceGate.Universe(baselineIdentity, LeafUnit, CoreUnit, AppUnit, SoloUnit);
+        var e02Positive = e02Binding.Resolution == Resolution.Resolved &&
+            ProvenanceGate.Eligible(verifiedDefiningContext[CoreUnit], baselineIdentity.Compctx2, fullUniverse, CoreUnit);
         Add("E02", e02Refused, $"Roslyn resolved {e02Binding.SymbolKey}; defining project is Core; authoritative compctx2/universe absent; confirmed target refused");
         Add("E02-positive", e02Positive, "adding the verified defining compctx2 and universe membership changes provenance eligibility");
 
@@ -462,29 +486,25 @@ public static class Program
             "identical declared site forms in different defining compilations yield distinct asmctx3");
 
         // Validity gate: a fact confirms only when its recorded compctx2 is the
-        // defining context's current verified compctx2 and the defining unit is in
-        // the universe. Identity equality alone is not validity.
-        static bool Valid(string? recorded, IReadOnlyDictionary<string, string> current,
-            string unit, IReadOnlyCollection<string> universe) =>
-            recorded is not null && current.TryGetValue(unit, out var cur) && cur == recorded && universe.Contains(unit);
-
-        var universe = new[] { LeafUnit, CoreUnit, AppUnit, SoloUnit };
+        // defining context's current verified compctx2 and the universe membership
+        // carries that same verified context. Identity equality alone is not validity.
+        var universe = ProvenanceGate.Universe(baselineIdentity, LeafUnit, CoreUnit, AppUnit, SoloUnit);
 
         // A06 missing current compctx2 -> no confirmed occurrence.
-        Add("A06", !Valid(null, baselineIdentity.Compctx2, CoreUnit, universe),
+        Add("A06", !ProvenanceGate.Eligible(null, baselineIdentity.Compctx2, universe, CoreUnit),
             "a fact without a current defining compctx2 association cannot confirm");
 
         // A07 missing universe membership -> refuse.
-        var universeWithoutCore = new[] { LeafUnit, AppUnit };
-        Add("A07", !Valid(baselineIdentity.Compctx2[CoreUnit], baselineIdentity.Compctx2, CoreUnit, universeWithoutCore),
+        var universeWithoutCore = ProvenanceGate.Universe(baselineIdentity, LeafUnit, AppUnit);
+        Add("A07", !ProvenanceGate.Eligible(baselineIdentity.Compctx2[CoreUnit], baselineIdentity.Compctx2, universeWithoutCore, CoreUnit),
             "defining unit outside the verified universe refuses confirmation");
 
         // A08 stale dependency provenance -> invalid, re-ingest.
-        Add("A08", !Valid(baselineIdentity.Compctx2[AppUnit], symbolsLeafIdentity.Compctx2, AppUnit, universe),
+        Add("A08", !ProvenanceGate.Eligible(baselineIdentity.Compctx2[AppUnit], symbolsLeafIdentity.Compctx2, universe, AppUnit),
             "recorded compctx2 differing from the current context is stale and must be refused or re-ingested");
 
         // A01 positive control on the same gate.
-        Add("A01-gate", Valid(baselineIdentity.Compctx2[AppUnit], baselineIdentity.Compctx2, AppUnit, universe),
+        Add("A01-gate", ProvenanceGate.Eligible(baselineIdentity.Compctx2[AppUnit], baselineIdentity.Compctx2, universe, AppUnit),
             "unchanged, universe-member context is valid");
 
         // A09 re-ingestion determinism.
@@ -520,14 +540,16 @@ public static class Program
     // --------------------------------------------------------------- deletion lifecycle
 
     private static Dictionary<string, object?> RunLifecycle(string corpusRoot, CorpusBuild baseline,
-        CorpusIdentity baselineIdentity, List<Check> checks)
+        CorpusIdentity baselineIdentity, IReadOnlyDictionary<string, LifecycleFact[]> baselineFacts,
+        List<Check> checks)
     {
         var reduced = CorpusBuild.Build(corpusRoot, CorpusVariant.SourceDeleted);
         var reducedAgain = CorpusBuild.Build(corpusRoot, CorpusVariant.SourceDeleted);
         var reducedIdentity = CorpusIdentity.Compute(reduced);
         var reducedAgainIdentity = CorpusIdentity.Compute(reducedAgain);
-        var before = AppFacts(baseline, baselineIdentity);
-        var after = AppFacts(reduced, reducedIdentity);
+        var before = ProjectUsage4(baselineFacts);
+        var afterFacts = AppFacts(reduced, reducedIdentity);
+        var after = ProjectUsage4(afterFacts);
         var priorPaths = baseline.Get(AppUnit).SourcePaths.Order(StringComparer.Ordinal).ToArray();
         var currentPaths = reduced.Get(AppUnit).SourcePaths.Order(StringComparer.Ordinal).ToArray();
         var projectUniverse = baseline.Projects.Keys.Order(StringComparer.Ordinal).ToArray();
@@ -547,9 +569,13 @@ public static class Program
         var missingRequiredIncomplete = !declaredPrior.SetEquals(acquiredWithMissingRequired);
         var deterministic = reducedIdentity.Compctx1[AppUnit] == reducedAgainIdentity.Compctx1[AppUnit] &&
             reducedIdentity.Compctx2[AppUnit] == reducedAgainIdentity.Compctx2[AppUnit] &&
-            ProjectionMatches(after, AppFacts(reducedAgain, reducedAgainIdentity));
+            ProjectionMatches(after, ProjectUsage4(AppFacts(reducedAgain, reducedAgainIdentity)));
         var sourceSetIdentityChanged = baselineIdentity.Compctx1[AppUnit] != reducedIdentity.Compctx1[AppUnit] &&
             baselineIdentity.Compctx2[AppUnit] != reducedIdentity.Compctx2[AppUnit];
+        var sitesBefore = before.GetValueOrDefault("App/Sites.cs", []).Length;
+        var bulkBefore = before.GetValueOrDefault("App/Bulk.cs", []).Length;
+        var bulkAfter = after.GetValueOrDefault("App/Bulk.cs", []).Length;
+        var countsPreserved = sitesBefore == 20 && bulkBefore == 32 && bulkAfter == 32 && !after.ContainsKey("App/Sites.cs");
 
         checks.Add(new Check("lifecycle.DEL-N1", "lifecycle", deletedAbsent && complete &&
             !after.ContainsKey("App/Sites.cs"), "authoritative manifest excludes Sites.cs; reduced App compilation is complete; removed source-owned facts absent"));
@@ -557,8 +583,10 @@ public static class Program
             "manifest still declares Sites.cs but acquisition omits it, so the scope is incomplete"));
         checks.Add(new Check("lifecycle.DEL-N3", "lifecycle", staleRejected,
             "injecting prior Sites.cs contributions into the reduced snapshot fails the source-owned projection comparison"));
+        checks.Add(new Check("lifecycle.DEL-counts", "lifecycle", countsPreserved,
+            $"Snapshot A source-owned facts Sites={sitesBefore} Bulk={bulkBefore}; Snapshot B Bulk={bulkAfter} and no Sites.cs"));
         checks.Add(new Check("lifecycle.preserved", "lifecycle", preserved,
-            "App/Bulk.cs source-owned qualifying occurrences remain represented with their usage4 identities"));
+            "App/Bulk.cs source-owned qualifying occurrences remain represented with their corrected canonical usage4 identities"));
         checks.Add(new Check("lifecycle.identity", "lifecycle", sourceSetIdentityChanged,
             "source-set deletion recomputes App compctx1/compctx2 under R2; surviving usage4 identities are derived independently"));
         checks.Add(new Check("lifecycle.deterministic", "lifecycle", deterministic,
@@ -572,32 +600,52 @@ public static class Program
             ["removedContributions"] = before.GetValueOrDefault("App/Sites.cs", []),
             ["preservedContributions"] = after.GetValueOrDefault("App/Bulk.cs", []),
             ["negativeControls"] = new { DEL_N1 = deletedAbsent, DEL_N2 = missingRequiredIncomplete, DEL_N3 = staleRejected },
+            ["counts"] = new { sitesBefore, bulkBefore, bulkAfter },
             ["deterministic"] = deterministic,
             ["identityContract"] = "usage4 identities are recomputed from R2 inputs; no stability is assumed across changed source identities",
         };
     }
 
-    private static Dictionary<string, string[]> AppFacts(CorpusBuild build, CorpusIdentity identity)
+    /// <summary>One source-owned occurrence as the lifecycle view represents it.</summary>
+    private sealed record LifecycleFact(
+        string Usage4,
+        string DefiningUnit,
+        string DocumentId,
+        string DeclarationForm,
+        string Shape,
+        string Asmctx3,
+        int StartLine,
+        int StartColumn,
+        int EndLine,
+        int EndColumn);
+
+    private static Dictionary<string, string[]> ProjectUsage4(
+        IReadOnlyDictionary<string, LifecycleFact[]> facts) =>
+        facts.ToDictionary(pair => pair.Key, pair => pair.Value.Select(f => f.Usage4).ToArray(),
+            StringComparer.Ordinal);
+
+    /// <summary>
+    /// The source lifecycle projection. It now uses the single
+    /// <see cref="CanonicalTarget"/> pathway (unreduced defining declaration,
+    /// fixture parameter-count shape) instead of Roslyn generic arity and a raw
+    /// <c>OriginalDefinition</c>.
+    /// </summary>
+    private static Dictionary<string, LifecycleFact[]> AppFacts(CorpusBuild build, CorpusIdentity identity)
     {
         var app = build.Get(AppUnit);
-        var facts = new SortedDictionary<string, List<string>>(StringComparer.Ordinal);
+        var facts = new SortedDictionary<string, List<LifecycleFact>>(StringComparer.Ordinal);
         foreach (var tree in app.Compilation.SyntaxTrees.OrderBy(t => t.FilePath, StringComparer.Ordinal))
         {
-            var values = new List<string>();
+            var values = new List<LifecycleFact>();
             var model = app.Compilation.GetSemanticModel(tree);
             foreach (var invocation in tree.GetRoot().DescendantNodes().OfType<InvocationExpressionSyntax>())
             {
                 if (model.GetSymbolInfo(invocation).Symbol is not IMethodSymbol method)
                     continue;
-                var assembly = method.ContainingAssembly?.Name;
-                var definingUnit = build.Projects.Values.FirstOrDefault(project => project.AssemblyName == assembly)?.UnitId;
-                if (definingUnit is null)
+                var target = CanonicalTarget.Describe(method, assembly =>
+                    build.Projects.Values.FirstOrDefault(project => project.AssemblyName == assembly)?.UnitId);
+                if (target is null)
                     continue;
-                var docId = method.OriginalDefinition.GetDocumentationCommentId();
-                if (docId is null)
-                    continue;
-                var canonicalTarget = identity.TargetId(definingUnit, docId, definingUnit + "::" + docId,
-                    "method|" + method.Arity.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 var token = invocation.Expression switch
                 {
                     MemberAccessExpressionSyntax ma => ma.Name.Identifier,
@@ -606,13 +654,17 @@ public static class Program
                 };
                 var line = tree.GetLineSpan(token.Span);
                 var sourceHash = identity.SourceHash(AppUnit, tree.FilePath);
-                var occurrence = identity.OccurrenceId(AppUnit, tree.FilePath, sourceHash,
-                    line.StartLinePosition.Line + 1, line.StartLinePosition.Character + 1,
-                    line.EndLinePosition.Line + 1, line.EndLinePosition.Character + 1,
-                    docId, canonicalTarget);
-                values.Add(occurrence);
+                var startLine = line.StartLinePosition.Line + 1;
+                var startColumn = line.StartLinePosition.Character + 1;
+                var endLine = line.EndLinePosition.Line + 1;
+                var endColumn = line.EndLinePosition.Character + 1;
+                var occurrence = CanonicalTarget.OccurrenceId(identity, target.Value, AppUnit, tree.FilePath,
+                    sourceHash, startLine, startColumn, endLine, endColumn);
+                values.Add(new LifecycleFact(occurrence, target.Value.DefiningUnit, target.Value.DocumentId,
+                    target.Value.DeclarationForm, target.Value.Shape,
+                    CanonicalTarget.TargetId(identity, target.Value), startLine, startColumn, endLine, endColumn));
             }
-            facts[tree.FilePath] = values.Order(StringComparer.Ordinal).ToList();
+            facts[tree.FilePath] = values.OrderBy(value => value.Usage4, StringComparer.Ordinal).ToList();
         }
         return facts.ToDictionary(pair => pair.Key, pair => pair.Value.ToArray(), StringComparer.Ordinal);
     }
@@ -620,6 +672,438 @@ public static class Program
     private static bool ProjectionMatches(IReadOnlyDictionary<string, string[]> expected,
         IReadOnlyDictionary<string, string[]> actual) => expected.Count == actual.Count &&
         expected.All(pair => actual.TryGetValue(pair.Key, out var values) && pair.Value.SequenceEqual(values, StringComparer.Ordinal));
+
+    // ------------------------------------------------------- cross-view consistency
+
+    private static readonly (string Id, string File, string Marker, SyntaxKind Kind)[] CrossViewSites =
+    [
+        ("S01", "App/Sites.cs", "@S01", SyntaxKind.InvocationExpression),
+        ("S02", "App/Sites.cs", "@S02", SyntaxKind.InvocationExpression),
+        ("S03", "App/Sites.cs", "@S03", SyntaxKind.InvocationExpression),
+        ("S06", "App/Sites.cs", "@S06", SyntaxKind.InvocationExpression),
+        ("S21", "App/Sites.cs", "@S21", SyntaxKind.InvocationExpression),
+        ("S26", "App/Sites.cs", "@S26", SyntaxKind.InvocationExpression),
+        ("INV-01", "App/Bulk.cs", "@INV-01", SyntaxKind.InvocationExpression),
+        ("INV-11", "App/Bulk.cs", "@INV-11", SyntaxKind.InvocationExpression),
+        ("INV-31", "App/Bulk.cs", "@INV-31", SyntaxKind.InvocationExpression),
+    ];
+
+    /// <summary>
+    /// The main identity view's canonical tuple for a designated site, declared
+    /// explicitly from the named R2 vectors (not derived from the lifecycle path).
+    /// </summary>
+    private static TargetDescription CrossViewFixture(string id) => id switch
+    {
+        "S01" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Direct(System.Int32)", 1),
+        "S02" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Static(System.Int32)", 1),
+        "S03" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Add(System.Int32,System.Int32)", 2),
+        "S06" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.StringExtensions.Shout(System.String)", 1),
+        "S21" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Add(System.Int32,System.Int32,System.Int32)", 3),
+        "S26" => CanonicalTarget.Fixture(LeafUnit, "M:Corpus.Leaf.Helper.Compute(System.Int32)", 1),
+        "INV-01" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Add(System.Int32,System.Int32)", 2),
+        "INV-11" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Direct(System.Int32)", 1),
+        "INV-31" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.StringExtensions.WordCount(System.String)", 1),
+        _ => throw new InvalidOperationException("no cross-view fixture tuple for " + id),
+    };
+
+    private static string? NamedVectorId(string id) => id switch
+    {
+        "S01" or "INV-11" => "T.Direct",
+        "S02" => "T.Static",
+        "S03" or "INV-01" => "T.Add2",
+        "S21" => "T.Add3",
+        "S26" => "T.LeafCompute",
+        _ => null,
+    };
+
+    private sealed record CrossViewRow(string Id, string File, string SourceHash, SemanticResult Inspected,
+        IMethodSymbol Method, TargetDescription Target, string Asmctx3, string Usage4, LifecycleFact? Fact);
+
+    private static Dictionary<string, object?> RunCrossView(string corpusRoot, CorpusBuild baseline,
+        CorpusIdentity identity, IReadOnlyDictionary<string, LifecycleFact[]> baselineFacts, List<Check> checks)
+    {
+        var app = baseline.Get(AppUnit);
+        var rows = new List<object>();
+        var byId = new Dictionary<string, CrossViewRow>(StringComparer.Ordinal);
+        var allAgree = true;
+        var allFrozen = true;
+
+        foreach (var site in CrossViewSites)
+        {
+            var tree = app.Compilation.SyntaxTrees.Single(t => t.FilePath == site.File);
+            var model = app.Compilation.GetSemanticModel(tree);
+            var node = SemanticInspector.Locate(tree, site.Marker, site.Kind)
+                ?? throw new InvalidOperationException("cross-view marker not found: " + site.Marker);
+            var inspected = SemanticInspector.Inspect(app.Compilation, tree, site.Marker, site.Kind);
+            var method = model.GetSymbolInfo(node).Symbol as IMethodSymbol
+                ?? throw new InvalidOperationException("cross-view site is not a method: " + site.Id);
+            var sourceHash = identity.SourceHash(AppUnit, site.File);
+
+            var main = CrossViewFixture(site.Id);
+            var mainAsmctx3 = CanonicalTarget.TargetId(identity, main);
+            var mainParts = CanonicalTarget.Usage4Parts(identity, main, AppUnit, site.File, sourceHash,
+                inspected.StartLine, inspected.StartColumn, inspected.EndLine, inspected.EndColumn);
+            var mainUsage = R2Identity.Hash("usage4", mainParts);
+            var mainBytes = R2Identity.EncodedTuple("usage4", mainParts);
+
+            var fact = baselineFacts.TryGetValue(site.File, out var facts)
+                ? facts.SingleOrDefault(value => value.StartLine == inspected.StartLine && value.StartColumn == inspected.StartColumn)
+                : null;
+            var lifecycleParts = fact is null
+                ? []
+                : R2Identity.Usage4Parts(CorpusBuild.RepoId, CorpusBuild.PluginId, AppUnit, site.File,
+                    sourceHash, fact.StartLine, fact.StartColumn, fact.EndLine, fact.EndColumn,
+                    fact.DocumentId, fact.Asmctx3);
+            var lifecycleBytes = fact is null ? [] : R2Identity.EncodedTuple("usage4", lifecycleParts);
+
+            var fields = new (string Name, string? Main, string? Lifecycle)[]
+            {
+                ("semanticUnit", AppUnit, fact is null ? null : AppUnit),
+                ("path", site.File, fact is null ? null : site.File),
+                ("sourceHash", sourceHash, fact is null ? null : sourceHash),
+                ("startLine", inspected.StartLine.ToString(CultureInfo.InvariantCulture), fact?.StartLine.ToString(CultureInfo.InvariantCulture)),
+                ("startColumn", inspected.StartColumn.ToString(CultureInfo.InvariantCulture), fact?.StartColumn.ToString(CultureInfo.InvariantCulture)),
+                ("endLine", inspected.EndLine.ToString(CultureInfo.InvariantCulture), fact?.EndLine.ToString(CultureInfo.InvariantCulture)),
+                ("endColumn", inspected.EndColumn.ToString(CultureInfo.InvariantCulture), fact?.EndColumn.ToString(CultureInfo.InvariantCulture)),
+                ("definingUnit", main.DefiningUnit, fact?.DefiningUnit),
+                ("targetDocumentId", main.DocumentId, fact?.DocumentId),
+                ("declarationForm", main.DeclarationForm, fact?.DeclarationForm),
+                ("shape", main.Shape, fact?.Shape),
+                ("asmctx3", mainAsmctx3, fact?.Asmctx3),
+                ("usage4", mainUsage, fact?.Usage4),
+            };
+            var firstDivergence = fields.FirstOrDefault(field =>
+                !string.Equals(field.Main, field.Lifecycle, StringComparison.Ordinal));
+            var agree = fact is not null && firstDivergence == default &&
+                mainBytes.SequenceEqual(lifecycleBytes);
+            allAgree &= agree;
+
+            var asmctx3Frozen = NamedVectorId(site.Id) is not { } vectorId ||
+                string.Equals(mainAsmctx3, FrozenExpectations.Asmctx3[vectorId], StringComparison.Ordinal);
+            var usage4Frozen = !FrozenExpectations.Usage4.TryGetValue(site.Id, out var frozenUsage) ||
+                string.Equals(mainUsage, frozenUsage, StringComparison.Ordinal);
+            allFrozen &= asmctx3Frozen && usage4Frozen;
+
+            checks.Add(new Check("crossView." + site.Id, "cross-view", agree,
+                agree
+                    ? $"{main.DeclarationForm} {main.Shape} {mainUsage}"
+                    : $"first divergent field: {(firstDivergence.Name ?? "missing-lifecycle-fact")}; main={firstDivergence.Main}; lifecycle={firstDivergence.Lifecycle}"));
+            checks.Add(new Check("crossView." + site.Id + ".frozen", "cross-view", asmctx3Frozen && usage4Frozen,
+                $"main identity agrees with the accepted frozen anchor (asmctx3={asmctx3Frozen}, usage4={usage4Frozen})"));
+
+            byId[site.Id] = new CrossViewRow(site.Id, site.File, sourceHash, inspected, method, main, mainAsmctx3, mainUsage, fact);
+            rows.Add(new
+            {
+                id = site.Id,
+                snapshot = "A",
+                sourceUnit = AppUnit,
+                file = site.File,
+                sourceHash,
+                span = new { startLine = inspected.StartLine, startColumn = inspected.StartColumn, endLine = inspected.EndLine, endColumn = inspected.EndColumn },
+                category = R2Identity.InvocationCategory,
+                resolvedSymbol = inspected.SymbolKey,
+                roslynShape = new { genericArity = method.Arity, parameterCount = method.Parameters.Length, reducedFrom = method.ReducedFrom?.GetDocumentationCommentId(), originalDefinition = method.OriginalDefinition.GetDocumentationCommentId() },
+                main = new
+                {
+                    definingUnit = main.DefiningUnit,
+                    targetDocumentId = main.DocumentId,
+                    declarationForm = main.DeclarationForm,
+                    shape = main.Shape,
+                    asmctx3 = mainAsmctx3,
+                    usage4 = mainUsage,
+                    encodedBytesSha256 = R2Identity.Sha256Hex(mainBytes),
+                    encodedBytesHex = Convert.ToHexStringLower(mainBytes),
+                },
+                lifecycle = fact is null ? null : new
+                {
+                    definingUnit = fact.DefiningUnit,
+                    targetDocumentId = fact.DocumentId,
+                    declarationForm = fact.DeclarationForm,
+                    shape = fact.Shape,
+                    asmctx3 = fact.Asmctx3,
+                    usage4 = fact.Usage4,
+                    encodedBytesSha256 = R2Identity.Sha256Hex(lifecycleBytes),
+                    encodedBytesHex = Convert.ToHexStringLower(lifecycleBytes),
+                },
+                fieldsAgree = agree,
+                firstDivergence = agree ? null : (firstDivergence.Name ?? "missing-lifecycle-fact"),
+                asmctx3Frozen,
+                usage4Frozen,
+            });
+        }
+
+        // ID-2: two distinct source sites may share a defining target (asmctx3)
+        // while retaining distinct occurrence identities (usage4).
+        var id2 = string.Equals(byId["S01"].Asmctx3, byId["INV-11"].Asmctx3, StringComparison.Ordinal) &&
+            !string.Equals(byId["S01"].Usage4, byId["INV-11"].Usage4, StringComparison.Ordinal);
+        checks.Add(new Check("crossView.ID-2-target-vs-occurrence", "cross-view", id2,
+            "S01 and INV-11 share Methods.Direct asmctx3 while their usage4 identities differ"));
+
+        // ---- Snapshot B: retained Bulk facts and removed Sites facts ----------
+        var reduced = CorpusBuild.Build(corpusRoot, CorpusVariant.SourceDeleted);
+        var reducedIdentity = CorpusIdentity.Compute(reduced);
+        var reducedFacts = AppFacts(reduced, reducedIdentity);
+        var bulkStable = baselineFacts.TryGetValue("App/Bulk.cs", out var bulkBefore) &&
+            reducedFacts.TryGetValue("App/Bulk.cs", out var bulkAfter) &&
+            bulkBefore.Length == 32 && bulkAfter.Length == 32 &&
+            bulkBefore.SequenceEqual(bulkAfter);
+        var removedSites = baselineFacts.GetValueOrDefault("App/Sites.cs", []);
+        var reducedUsage = reducedFacts.Values.SelectMany(value => value).Select(value => value.Usage4).ToHashSet(StringComparer.Ordinal);
+        var removedAbsent = !reducedFacts.ContainsKey("App/Sites.cs") &&
+            removedSites.Length == 20 && removedSites.All(value => !reducedUsage.Contains(value.Usage4));
+        checks.Add(new Check("crossView.snapshotB-retained", "cross-view", bulkStable,
+            "the 32 App/Bulk.cs source-owned facts retain identical canonical tuples and usage4 in Snapshot B"));
+        checks.Add(new Check("crossView.snapshotB-removed", "cross-view", removedAbsent,
+            "all 20 App/Sites.cs source-owned facts are absent from Snapshot B"));
+
+        // ID-3: source ownership is retained by the owning source unit, not by target identity.
+        var ownership = baselineFacts.TryGetValue("App/Sites.cs", out var sitesFacts) &&
+            baselineFacts.TryGetValue("App/Bulk.cs", out var bulkFacts) &&
+            sitesFacts.Length == 20 && bulkFacts.Length == 32 &&
+            reducedFacts.TryGetValue("App/Bulk.cs", out var bulkRetained) && bulkRetained.Length == 32;
+        checks.Add(new Check("crossView.ID-3-source-ownership", "cross-view", ownership,
+            "source-owned facts are keyed by their owning source unit (Sites=20, Bulk=32; retained Bulk=32 in B)"));
+
+        // ---- Negative controls -------------------------------------------------
+        var s01 = byId["S01"];
+        var s01Span = (StartLine: s01.Inspected.StartLine, StartColumn: s01.Inspected.StartColumn,
+            EndLine: s01.Inspected.EndLine, EndColumn: s01.Inspected.EndColumn);
+
+        // ID-N1: change one target-shape field but retain the original expected identity.
+        var shapeMutated = s01.Target with { Shape = "method|2" };
+        var shapeMutatedUsage = CanonicalTarget.OccurrenceId(identity, shapeMutated, AppUnit, s01.File, s01.SourceHash,
+            s01Span.StartLine, s01Span.StartColumn, s01Span.EndLine, s01Span.EndColumn);
+        var idN1 = !string.Equals(shapeMutatedUsage, FrozenExpectations.Usage4["S01"], StringComparison.Ordinal) &&
+            !string.Equals(CanonicalTarget.TargetId(identity, shapeMutated), FrozenExpectations.Asmctx3["T.Direct"], StringComparison.Ordinal);
+        checks.Add(new Check("crossView.ID-N1-shape-mutation", "cross-view", idN1,
+            $"changing shape {s01.Target.Shape}->method|2 changes asmctx3 and usage4 ({shapeMutatedUsage})"));
+
+        // ID-N2: disable reduced-extension normalization.
+        var s06 = byId["S06"];
+        var unnormalizedDocId = s06.Method.OriginalDefinition.GetDocumentationCommentId()!;
+        var unnormalized = new TargetDescription(CoreUnit, unnormalizedDocId,
+            CoreUnit + "::" + unnormalizedDocId, CanonicalTarget.ShapeFor(s06.Method.Arity));
+        var unnormalizedUsage = CanonicalTarget.OccurrenceId(identity, unnormalized, AppUnit, s06.File, s06.SourceHash,
+            s06.Inspected.StartLine, s06.Inspected.StartColumn, s06.Inspected.EndLine, s06.Inspected.EndColumn);
+        var idN2 = !string.Equals(unnormalizedDocId, s06.Target.DocumentId, StringComparison.Ordinal) &&
+            !string.Equals(unnormalizedUsage, s06.Usage4, StringComparison.Ordinal);
+        checks.Add(new Check("crossView.ID-N2-reduced-normalization", "cross-view", idN2,
+            $"retaining the reduced shape {unnormalizedDocId} produces {unnormalizedUsage}, not the canonical {s06.Usage4}"));
+
+        // ID-N3: reuse a target identity from an incompatible defining snapshot.
+        var coreChanged = CorpusIdentity.Compute(CorpusBuild.Build(corpusRoot, CorpusVariant.SymbolsCoreChanged));
+        var leafChanged = CorpusIdentity.Compute(CorpusBuild.Build(corpusRoot, CorpusVariant.SymbolsLeafChanged));
+        var incompatibleTarget = CanonicalTarget.TargetId(coreChanged, s01.Target);
+        var incompatibleUsage = CanonicalTarget.OccurrenceId(coreChanged, s01.Target, AppUnit, s01.File, s01.SourceHash,
+            s01Span.StartLine, s01Span.StartColumn, s01Span.EndLine, s01Span.EndColumn);
+        var idN3 = !string.Equals(incompatibleTarget, s01.Asmctx3, StringComparison.Ordinal) &&
+            !string.Equals(incompatibleUsage, s01.Usage4, StringComparison.Ordinal);
+        checks.Add(new Check("crossView.ID-N3-incompatible-snapshot", "cross-view", idN3,
+            "reusing a defining-context identity from a changed Core compilation changes asmctx3 and usage4"));
+
+        // Option A distinction: a transitive-only dependency change leaves the
+        // defining compctx1-derived target identity stable.
+        var optionAStable = string.Equals(CanonicalTarget.TargetId(leafChanged, s01.Target), s01.Asmctx3, StringComparison.Ordinal) &&
+            !string.Equals(leafChanged.Compctx2[CoreUnit], identity.Compctx2[CoreUnit], StringComparison.Ordinal);
+        checks.Add(new Check("crossView.ID-4-option-a-snapshot", "cross-view", optionAStable,
+            "transitive-only dependency change keeps Direct asmctx3 stable while Core compctx2 changes"));
+
+        // ID-N4: reintroduce a deleted-source contribution.
+        var reducedProjection = ProjectUsage4(reducedFacts).ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+        var expectedAfter = ProjectUsage4(baselineFacts)
+            .Where(pair => pair.Key != "App/Sites.cs")
+            .ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+        var staleInjected = reducedProjection.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+        staleInjected["App/Sites.cs"] = ProjectUsage4(baselineFacts)["App/Sites.cs"];
+        var idN4 = !ProjectionMatches(expectedAfter, staleInjected) &&
+            ProjectUsage4(baselineFacts)["App/Sites.cs"].All(value => !reducedUsage.Contains(value));
+        checks.Add(new Check("crossView.ID-N4-deleted-contribution", "cross-view", idN4,
+            "reintroducing the 20 deleted App/Sites.cs contributions fails the Snapshot B projection comparison"));
+
+        // ID-N5: substitute a different valid overload with a similar descriptor.
+        var s02 = byId["S02"];
+        var substitutedUsage = CanonicalTarget.OccurrenceId(identity, s02.Target, AppUnit, s01.File, s01.SourceHash,
+            s01Span.StartLine, s01Span.StartColumn, s01Span.EndLine, s01Span.EndColumn);
+        var idN5 = !string.Equals(s02.Asmctx3, s01.Asmctx3, StringComparison.Ordinal) &&
+            !string.Equals(substitutedUsage, s01.Usage4, StringComparison.Ordinal);
+        checks.Add(new Check("crossView.ID-N5-overload-substitution", "cross-view", idN5,
+            "substituting Methods.Static(int) for Methods.Direct(int) changes asmctx3 and usage4 despite the same shape"));
+
+        // ID-4: an unchanged textual expression in a changed calling source may
+        // legitimately change usage4 while the defining target stays stable.
+        var sourceChanged = CorpusIdentity.Compute(CorpusBuild.Build(corpusRoot, CorpusVariant.SourceChanged));
+        var changedHash = sourceChanged.SourceHash(AppUnit, "App/Sites.cs");
+        var changedUsage = CanonicalTarget.OccurrenceId(sourceChanged, s01.Target, AppUnit, "App/Sites.cs", changedHash,
+            s01Span.StartLine, s01Span.StartColumn, s01Span.EndLine, s01Span.EndColumn);
+        var id4 = !string.Equals(changedHash, s01.SourceHash, StringComparison.Ordinal) &&
+            !string.Equals(changedUsage, s01.Usage4, StringComparison.Ordinal) &&
+            string.Equals(CanonicalTarget.TargetId(sourceChanged, s01.Target), s01.Asmctx3, StringComparison.Ordinal);
+        checks.Add(new Check("crossView.ID-4-calling-source-change", "cross-view", id4,
+            "changed calling source changes usage4 while the defining Methods.Direct asmctx3 remains stable"));
+
+        checks.Add(new Check("crossView.all-sites-agree", "cross-view", allAgree,
+            "every designated source occurrence agrees across the identity and lifecycle views"));
+        checks.Add(new Check("crossView.all-frozen-anchors", "cross-view", allFrozen,
+            "every designated source occurrence agrees with its accepted frozen anchor where one exists"));
+
+        return new Dictionary<string, object?>(StringComparer.Ordinal)
+        {
+            ["caseId"] = "ID-1..ID-5",
+            ["sites"] = rows,
+            ["counts"] = new { sites = CrossViewSites.Length, agreeing = allAgree ? CrossViewSites.Length : 0, frozenAnchors = allFrozen },
+            ["snapshotB"] = new { retainedBulkFacts = 32, removedSitesFacts = removedSites.Length, sitesAbsent = !reducedFacts.ContainsKey("App/Sites.cs"), retainedBulkStable = bulkStable, removedContributionsAbsent = removedAbsent },
+            ["negativeControls"] = new { ID_N1 = idN1, ID_N2 = idN2, ID_N3 = idN3, ID_N4 = idN4, ID_N5 = idN5 },
+            ["optionA"] = new { transitiveTargetStable = optionAStable },
+            ["invariants"] = new
+            {
+                ID_1 = allAgree,
+                ID_2 = id2,
+                ID_3 = ownership,
+                ID_4 = id4,
+                ID_5 = allFrozen,
+            },
+        };
+    }
+
+    // --------------------------------------------------- defining provenance (E02)
+
+    private static Dictionary<string, object?> RunE02(string corpusRoot, CorpusBuild baseline,
+        CorpusIdentity baselineIdentity, List<Check> checks)
+    {
+        var app = baseline.Get(AppUnit);
+        var tree = app.Compilation.SyntaxTrees.Single(t => t.FilePath == "App/Sites.cs");
+        var binding = SemanticInspector.Inspect(app.Compilation, tree, "@S01", SyntaxKind.InvocationExpression);
+        var directTarget = CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Direct(System.Int32)", 1);
+        var targetAsmctx3 = CanonicalTarget.TargetId(baselineIdentity, directTarget);
+
+        // Independently derived current authority: computed from the verified
+        // fixture inputs, never read from the candidate evidence being validated.
+        var current = baselineIdentity.Compctx2;
+        var currentCore = current[CoreUnit];
+
+        checks.Add(new Check("e02.authority.frozen-compctx2", "provenance",
+            string.Equals(currentCore, FrozenExpectations.CoreCompctx2, StringComparison.Ordinal),
+            $"derived Core compctx2 equals the accepted frozen contract value {currentCore}"));
+        checks.Add(new Check("e02.authority.frozen-compctx1", "provenance",
+            string.Equals(baselineIdentity.Compctx1[CoreUnit], FrozenExpectations.CoreCompctx1, StringComparison.Ordinal),
+            "derived Core compctx1 equals the accepted frozen contract value"));
+
+        var fullUniverse = ProvenanceGate.Universe(baselineIdentity, LeafUnit, CoreUnit, AppUnit, SoloUnit);
+        var noCoreUniverse = ProvenanceGate.Universe(baselineIdentity, LeafUnit, AppUnit);
+        var coreChanged = CorpusIdentity.Compute(CorpusBuild.Build(corpusRoot, CorpusVariant.SymbolsCoreChanged));
+        var leafChanged = CorpusIdentity.Compute(CorpusBuild.Build(corpusRoot, CorpusVariant.SymbolsLeafChanged));
+
+        var zero = "compctx2:sha256:" + new string('0', 64);
+        var staleCore = coreChanged.Compctx2[CoreUnit];
+        var wrongCompilation = baselineIdentity.Compctx2[AppUnit];
+        var incompatibleUniverse = ProvenanceGate.Universe(coreChanged, LeafUnit, CoreUnit, AppUnit, SoloUnit);
+
+        static bool Canonical(string value) =>
+            value.StartsWith("compctx2:sha256:", StringComparison.Ordinal) &&
+            value.Length == "compctx2:sha256:".Length + 64;
+
+        var definitions = new (string Id, string? Supplied,
+            IReadOnlyDictionary<string, string> Current,
+            IReadOnlyDictionary<string, string> Universe,
+            bool ExpectedEligible, string Detail)[]
+        {
+            ("E02-R2-01-valid", currentCore, current, fullUniverse, true,
+                "verified current defining compctx2 with matching universe membership is eligible"),
+            ("E02-R2-02-missing", null, current, fullUniverse, false,
+                "missing defining-context evidence is refused"),
+            ("E02-R2-03-stale", staleCore, current, fullUniverse, false,
+                "a previously valid but no longer current compctx2 is refused"),
+            ("E02-R2-04-all-zero", zero, current, fullUniverse, false,
+                "a canonical all-zero compctx2 is not authority"),
+            ("E02-R2-05-wrong-compilation", wrongCompilation, current, fullUniverse, false,
+                "a valid canonical context belonging to a different compilation is refused"),
+            ("E02-R2-06-missing-universe", currentCore, current, noCoreUniverse, false,
+                "the correct compctx2 without Core universe membership is refused"),
+            ("E02-R2-07-incompatible-universe", currentCore, current, incompatibleUniverse, false,
+                "universe membership carrying an incompatible defining context is refused"),
+            ("E02-R2-08-restored", currentCore, current, fullUniverse, true,
+                "restoring the verified current context and matching membership removes the provenance refusal"),
+        };
+
+        var results = new List<object>();
+        foreach (var definition in definitions)
+        {
+            var eligible = ProvenanceGate.Eligible(definition.Supplied, definition.Current,
+                definition.Universe, CoreUnit);
+            checks.Add(new Check("e02." + definition.Id, "provenance", eligible == definition.ExpectedEligible,
+                $"{definition.Id}: eligible={eligible} expected={definition.ExpectedEligible}; {definition.Detail}"));
+            results.Add(new
+            {
+                id = definition.Id,
+                suppliedCompctx2 = definition.Supplied,
+                suppliedIsCanonicalShape = definition.Supplied is not null && Canonical(definition.Supplied),
+                definingUnit = CoreUnit,
+                universeMember = definition.Universe.TryGetValue(CoreUnit, out var member) ? member : null,
+                eligible,
+                expectedEligible = definition.ExpectedEligible,
+                detail = definition.Detail,
+            });
+        }
+
+        // PROV-1: a supplied digest cannot establish its own authority.
+        var prov1 = Canonical(zero) && !ProvenanceGate.Eligible(zero, current, fullUniverse, CoreUnit);
+        // PROV-2: changing the candidate does not silently redefine current authority.
+        var currentBefore = current[CoreUnit];
+        var tampered = zero;
+        var prov2 = string.Equals(currentBefore, current[CoreUnit], StringComparison.Ordinal) &&
+            !string.Equals(tampered, current[CoreUnit], StringComparison.Ordinal) &&
+            !ProvenanceGate.Eligible(tampered, current, fullUniverse, CoreUnit);
+        // PROV-3: a changed verified defining compilation invalidates prior evidence.
+        var changedUniverse = ProvenanceGate.Universe(coreChanged, LeafUnit, CoreUnit, AppUnit, SoloUnit);
+        var prov3 = !string.Equals(coreChanged.Compctx2[CoreUnit], currentCore, StringComparison.Ordinal) &&
+            !ProvenanceGate.Eligible(currentCore, coreChanged.Compctx2, changedUniverse, CoreUnit);
+        // PROV-4: correct context without membership is insufficient.
+        var prov4 = !ProvenanceGate.Eligible(currentCore, current, noCoreUniverse, CoreUnit);
+        // PROV-5: membership must carry the same verified context, not a count or copied digest.
+        var prov5 = !ProvenanceGate.Eligible(currentCore, current, incompatibleUniverse, CoreUnit);
+        // PROV-6: a resolved Roslyn symbol may remain nonpublishable without authority.
+        var prov6 = binding.Resolution == Resolution.Resolved &&
+            !ProvenanceGate.Eligible(null, current, fullUniverse, CoreUnit);
+        // PROV-7: asmctx3 equality does not prove current compctx2 validity.
+        var leafTargetSame = string.Equals(CanonicalTarget.TargetId(leafChanged, directTarget), targetAsmctx3, StringComparison.Ordinal);
+        var leafUniverse = ProvenanceGate.Universe(leafChanged, LeafUnit, CoreUnit, AppUnit, SoloUnit);
+        var leafEvidenceInvalid = !ProvenanceGate.Eligible(currentCore, leafChanged.Compctx2, leafUniverse, CoreUnit);
+        var prov7 = leafTargetSame && leafEvidenceInvalid &&
+            !string.Equals(leafChanged.Compctx2[CoreUnit], currentCore, StringComparison.Ordinal);
+        // PROV-8: both the authority field and the resulting eligibility are frozen
+        // and independently anchored (the e02 section is compared to the expected file).
+        var prov8 = string.Equals(currentCore, FrozenExpectations.CoreCompctx2, StringComparison.Ordinal) &&
+            string.Equals(binding.SymbolKey, "Corpus.Core!M:Corpus.Core.Methods.Direct(System.Int32)", StringComparison.Ordinal) &&
+            targetAsmctx3 == FrozenExpectations.Asmctx3["T.Direct"];
+
+        var invariants = new (string Id, bool Pass, string Detail)[]
+        {
+            ("PROV-1", prov1, "a supplied digest cannot establish its own authority"),
+            ("PROV-2", prov2, "changing the supplied candidate does not redefine current authority"),
+            ("PROV-3", prov3, "a changed verified defining compilation invalidates incompatible prior evidence"),
+            ("PROV-4", prov4, "a correct compctx2 without universe membership is insufficient"),
+            ("PROV-5", prov5, "universe membership must carry the same verified defining context"),
+            ("PROV-6", prov6, "a resolved Roslyn symbol can remain nonpublishable without provenance"),
+            ("PROV-7", prov7, "asmctx3 equality does not prove current compctx2 validity"),
+            ("PROV-8", prov8, "expected authority and eligibility are independently anchored and frozen"),
+        };
+        foreach (var invariant in invariants)
+            checks.Add(new Check("e02." + invariant.Id, "provenance", invariant.Pass, invariant.Detail));
+
+        return new Dictionary<string, object?>(StringComparer.Ordinal)
+        {
+            ["caseId"] = "E02",
+            ["resolvedSymbol"] = binding.SymbolKey,
+            ["resolution"] = binding.Resolution.ToString(),
+            ["definingUnit"] = CoreUnit,
+            ["actualDefiningCompctx1"] = baselineIdentity.Compctx1[CoreUnit],
+            ["currentAuthorityCompctx2"] = currentCore,
+            ["targetAsmctx3"] = targetAsmctx3,
+            ["trustBoundary"] = "verified fixture compilation -> independently derived current context -> candidate evidence validation -> eligibility",
+            ["cases"] = results,
+            ["invariants"] = invariants.Select(invariant => new { id = invariant.Id, pass = invariant.Pass, detail = invariant.Detail }).ToArray(),
+        };
+    }
 
     // ------------------------------------------------------------------ coverage
 
@@ -730,7 +1214,7 @@ public static class Program
         using var document = JsonDocument.Parse(File.ReadAllText(path));
         var root = document.RootElement;
         var options = new JsonSerializerOptions { WriteIndented = false };
-        foreach (var section in new[] { "semantics", "identities", "variantIdentities", "coverage", "counts", "lifecycle" })
+        foreach (var section in new[] { "semantics", "identities", "variantIdentities", "variants", "crossView", "e02", "coverage", "counts", "lifecycle" })
         {
             if (!root.TryGetProperty(section, out var expected))
             {

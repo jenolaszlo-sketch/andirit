@@ -1,0 +1,13 @@
+diff --git a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
+index 17dcf88..191cf99 100644
+--- a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
++++ b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
+@@ -1007,7 +1007,7 @@ public static class Program
+             IReadOnlyDictionary<string, string> Universe,
+             bool ExpectedEligible, string Detail)[]
+         {
+-            ("E02-R2-01-valid", currentCore, current, fullUniverse, true,
++            ("E02-R2-01-valid", zero, current, fullUniverse, true,
+                 "verified current defining compctx2 with matching universe membership is eligible"),
+             ("E02-R2-02-missing", null, current, fullUniverse, false,
+                 "missing defining-context evidence is refused"),

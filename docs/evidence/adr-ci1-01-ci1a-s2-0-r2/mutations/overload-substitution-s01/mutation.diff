@@ -1,0 +1,13 @@
+diff --git a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
+index 17dcf88..d21d8fc 100644
+--- a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
++++ b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
+@@ -694,7 +694,7 @@ public static class Program
+     /// </summary>
+     private static TargetDescription CrossViewFixture(string id) => id switch
+     {
+-        "S01" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Direct(System.Int32)", 1),
++        "S01" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Static(System.Int32)", 1),
+         "S02" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Static(System.Int32)", 1),
+         "S03" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.Methods.Add(System.Int32,System.Int32)", 2),
+         "S06" => CanonicalTarget.Fixture(CoreUnit, "M:Corpus.Core.StringExtensions.Shout(System.String)", 1),

@@ -11,6 +11,8 @@
 | R4 | Identity/validity oracle | `oracle/R2Identity.cs`, `oracle/IdentityOracle.cs`; Option A cases |
 | R5 | Producer qualification | 114/114 oracle checks; 645/645 regression |
 | R6 | Q1 handoff | [q1-handoff.md](q1-handoff.md); frozen manifest |
+| R1 rev (Q2) | Producer remediation | 130/130 R1 oracle checks; 645/645 regression; R1 evidence package |
+| R2 rev (Q3) | Oracle remediation | Q2-F01/Q2-F02 corrections; `oracle-expected-r2.json`; **185/185** qualified checks; 645/645 regression; [R2 evidence](../../evidence/adr-ci1-01-ci1a-s2-0-r2/README.md) |
 
 ## 2. Gate results
 
@@ -39,6 +41,18 @@ python -X utf8 docs/evidence/adr-ci1-01-ci1a-s2-0/verify-manifest.py
 - Regression: **645/645 passed** (4 TRX files; 43 LatticeDb + 157 TreeSitter + 325 Andirit + 120 CSharp). Identical total to the accepted S2.1 baseline; no production file changed.
 - Determinism: two runs in separate processes produced byte-identical output.
 - Environment: .NET SDK 10.0.401, runtime 10.0.12, Windows x64, Roslyn 5.9.0.
+
+### R2 remediation results (recorded)
+
+- R2 oracle: **185/185 passed, 0 failed** against the frozen
+  `oracle-expected-r2.json`, two processes byte-identical; 645/645 regression
+  unchanged (`../../evidence/adr-ci1-01-ci1a-s2-0-r2/REGRESSION-RESULTS.md`).
+- Historical reproductions from isolated pinned archives: 114/114 (Q1 pin) and
+  130/130 (R1 pin); historical expected files byte-identical to pins.
+- External mutation controls: ten targeted regressions (both Q2 findings
+  verbatim, gate components, frozen-expected tampering, deleted-contribution
+  reinjection, overload substitution) all exit 1 with the expected failing
+  checks (`../../evidence/adr-ci1-01-ci1a-s2-0-r2/PROVENANCE-MUTATION-RESULTS.md`).
 
 ## 5. Preserved qualifications (not closed by S2.0)
 

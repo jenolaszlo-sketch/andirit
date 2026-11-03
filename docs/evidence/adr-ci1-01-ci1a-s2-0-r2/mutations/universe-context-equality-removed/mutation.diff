@@ -1,0 +1,14 @@
+diff --git a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/ProvenanceGate.cs b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/ProvenanceGate.cs
+index 044ded8..f697b36 100644
+--- a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/ProvenanceGate.cs
++++ b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/ProvenanceGate.cs
+@@ -23,8 +23,7 @@ public static class ProvenanceGate
+         recorded is not null &&
+         current.TryGetValue(unit, out var currentContext) &&
+         string.Equals(currentContext, recorded, StringComparison.Ordinal) &&
+-        universe.TryGetValue(unit, out var memberContext) &&
+-        string.Equals(memberContext, currentContext, StringComparison.Ordinal);
++        universe.ContainsKey(unit);
+ 
+     /// <summary>
+     /// Universe membership bound to the verified per-unit contexts of the

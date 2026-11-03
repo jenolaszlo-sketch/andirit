@@ -1,0 +1,10 @@
+S2.0 oracle: 176/185 checks passed, 9 failed.
+  FAIL semantic.S06: Resolved Corpus.Core!M:Corpus.Core.StringExtensions.Shout (expected Resolved Corpus.Core!M:Corpus.Core.StringExtensions.Shout(System.String))
+  FAIL semantic.INV-31: Resolved Corpus.Core!M:Corpus.Core.StringExtensions.WordCount (expected Resolved Corpus.Core!M:Corpus.Core.StringExtensions.WordCount(System.String))
+  FAIL semantic.INV-32: Resolved Corpus.Core!M:Corpus.Core.StringExtensions.WordCount (expected Resolved Corpus.Core!M:Corpus.Core.StringExtensions.WordCount(System.String))
+  FAIL crossView.S06: first divergent field: targetDocumentId; main=M:Corpus.Core.StringExtensions.Shout(System.String); lifecycle=M:Corpus.Core.StringExtensions.Shout
+  FAIL crossView.INV-31: first divergent field: targetDocumentId; main=M:Corpus.Core.StringExtensions.WordCount(System.String); lifecycle=M:Corpus.Core.StringExtensions.WordCount
+  FAIL crossView.all-sites-agree: every designated source occurrence agrees across the identity and lifecycle views
+  FAIL expected.semantics: differs from frozen oracle
+  FAIL expected.crossView: differs from frozen oracle
+  FAIL expected.lifecycle: differs from frozen oracle

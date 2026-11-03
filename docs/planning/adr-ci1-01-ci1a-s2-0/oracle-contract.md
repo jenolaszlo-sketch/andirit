@@ -52,6 +52,17 @@ Both are implemented independently.
   and `counts` sections (`--expected`). It was produced once from the independent
   inspector, reviewed, and frozen; it is never regenerated silently, and it is
   listed in the evidence manifest so drift is detectable.
+- R2 (`oracle/expected/oracle-expected-r2.json`) extends the compared sections
+  to `semantics`, `identities`, `variantIdentities`, `variants`, `crossView`,
+  `e02`, `coverage`, `counts`, `lifecycle`. The `crossView` section enforces
+  Q2-F01 (one canonical target-description pathway: reduced symbols normalize
+  `ReducedFrom` then `OriginalDefinition`; shape is the fixture-declared
+  `method|parameterCount`, never Roslyn generic arity) against independently
+  transcribed anchors in `oracle/FrozenExpectations.cs`, and the `e02` section
+  enforces Q2-F02 (defining-provenance eligibility through the single
+  `ProvenanceGate` predicate: recorded == current verified == universe-member
+  context). `checks`, `summary`, `environment`, `fixtureManifest` and
+  `corpusRoot` are not compared.
 - No test regenerates expected results from the same code path it checks.
 
 ## 4. Record shape

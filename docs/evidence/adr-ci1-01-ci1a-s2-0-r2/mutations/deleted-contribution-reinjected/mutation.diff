@@ -1,0 +1,12 @@
+diff --git a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
+index 17dcf88..f2d8e90 100644
+--- a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
++++ b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
+@@ -550,6 +550,7 @@ public static class Program
+         var before = ProjectUsage4(baselineFacts);
+         var afterFacts = AppFacts(reduced, reducedIdentity);
+         var after = ProjectUsage4(afterFacts);
++        after["App/Sites.cs"] = before["App/Sites.cs"];
+         var priorPaths = baseline.Get(AppUnit).SourcePaths.Order(StringComparer.Ordinal).ToArray();
+         var currentPaths = reduced.Get(AppUnit).SourcePaths.Order(StringComparer.Ordinal).ToArray();
+         var projectUniverse = baseline.Projects.Keys.Order(StringComparer.Ordinal).ToArray();

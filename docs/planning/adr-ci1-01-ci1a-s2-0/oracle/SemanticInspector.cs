@@ -100,7 +100,7 @@ public static class SemanticInspector
     {
         var assembly = symbol.ContainingAssembly?.Name ?? "(none)";
         var canonical = symbol is IMethodSymbol method
-            ? (ISymbol?)method.ReducedFrom ?? method.OriginalDefinition
+            ? (ISymbol)CanonicalTarget.CanonicalSymbol(method)
             : symbol.OriginalDefinition;
         var docId = canonical.GetDocumentationCommentId();
         if (docId is not null)

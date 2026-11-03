@@ -1,0 +1,520 @@
+{
+  "Package": "ADR-CI1-01-CI1A-IMPL-01-S2.0-CORPUS-01-R2",
+  "SourceBinding": {
+    "StartingCommit": "9fc2115622c93fa54f5f7882b117185a017703bb",
+    "StartingTree": "547af9c3c7d37132b93944cf8b3dbf284872450f",
+    "PriorPinCommit": "82f101c24e21828a41a30d4342ba73db9376e24e",
+    "PriorPinTree": "75faf3eb0fcdab8ad78142617d1d7ee3dfce95c0",
+    "Branch": "main",
+    "ProductionExtractionChanged": false
+  },
+  "HashScheme": "sha256 of exact working-tree bytes; forward-slash repo-relative paths; R2 manifest self-excluded",
+  "PlanningDocuments": [
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/.gitattributes",
+      "Sha256": "bd7d36bd7494025881eaf95664ccee1a43904f9d731564ff0a405904995ec675",
+      "Bytes": 152
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/case-matrix.md",
+      "Sha256": "97a1b10e0af1911502369549b5430c96288df9f8da73e9c3151e538e6000744d",
+      "Bytes": 9476
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/identity-and-provenance-mapping.md",
+      "Sha256": "98146aad2bab6b8af3641a95a6da0ff633e9a56dea22c50cec6e6552c8538384",
+      "Bytes": 9377
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle-contract.md",
+      "Sha256": "6a9af8d81a4251e1c277fdc44436a658e5a386366d7e1d1ef9ee7fd8b0366cce",
+      "Bytes": 5505
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/q1-handoff.md",
+      "Sha256": "b60811714ea330acc38fe0312a4c21ea06a2cca183537add4d69e4720d3f9a9f",
+      "Bytes": 3815
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/qualification-plan.md",
+      "Sha256": "3c4645ef08e3c1385262d86df88c0b98685ef13ae4e0c9987124db52e3d24658",
+      "Bytes": 6114
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/README.md",
+      "Sha256": "d602b674811008365924039258fcf39a0280cbf69df40aa6cdacffed86f4b805",
+      "Bytes": 3804
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/semantic-corpus-specification.md",
+      "Sha256": "5303ab75122d791e60dc6bd130c85fcfeb39e2a879ab65621ddef078a0eed24f",
+      "Bytes": 5968
+    }
+  ],
+  "CorpusFixtures": [
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/App/App.csproj",
+      "Sha256": "875b972c134e8c78a9d67355029ab213bfc549d1ba0158d37b2981356d5c6e34",
+      "Bytes": 378
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/App/Bulk.cs",
+      "Sha256": "46fd7103dbef4d73e60dc76381f47e3b42acbfd24c428a219c4e929a4a32e272",
+      "Bytes": 3758
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/App/Sites.cs",
+      "Sha256": "786b189ff0aca5c886d6e84fb9f862017ea2b0bc1259cef9537e9e936339bdb1",
+      "Bytes": 1985
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Core/Core.csproj",
+      "Sha256": "a10779122a426f8e824e4f80545423790929185b4dd7a1728bbf961867cce93b",
+      "Bytes": 324
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Core/Extensions.cs",
+      "Sha256": "711e9419ad6af66ce434a837a676448a946d2a7032a0cada8433cdbb7587f46f",
+      "Bytes": 224
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Core/LeafUser.cs",
+      "Sha256": "02f93c6cc73b992344c37fa97d5384415bd62441c918b22f46dd418020ed713c",
+      "Bytes": 277
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Core/Methods.cs",
+      "Sha256": "82158b625ce989dd62dd5b66a8e63dc3ddcb8e0ba1bbf401a42b062a54f8673a",
+      "Bytes": 1360
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Core/Types.cs",
+      "Sha256": "3a74ae4d66c2aaf43e362989fb40ae7d3c03a63357fb7910dcbc5a7b176560c5",
+      "Bytes": 578
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/External/ExternalLib.cs",
+      "Sha256": "d6600dda26f800483dd1ededa4e7b5b1c0f1730479807f658a01533db3642b13",
+      "Bytes": 396
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Leaf/Helper.cs",
+      "Sha256": "18eee8cce256076d6906a645b4510add6273362a6fea706407373465c7b00d0a",
+      "Bytes": 495
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Leaf/Leaf.csproj",
+      "Sha256": "c184a87b0f67249d52e5ab6539e80ea0c464448b0e03464f2ff173b511694949",
+      "Bytes": 240
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Negatives/External.cs",
+      "Sha256": "f919da30e80ee7dfd7c8c6160e0bb4c3d79daecbc4258b25c9142a879dfc47e5",
+      "Bytes": 396
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Negatives/Negatives.csproj",
+      "Sha256": "578cc0888e31e0bd5fd024ba2827e85ad1a732558901d136224ec0a61e91ba3f",
+      "Bytes": 329
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Negatives/NegativeSites.cs",
+      "Sha256": "65c2a47d527733e1276aaf2b01d914fa7d950470c05a527d3759b382b151bd07",
+      "Bytes": 921
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Solo/Declarations.cs",
+      "Sha256": "762714765fe6bab1aff65fb757bada25878b78461efd89ab7156fa5816239fe1",
+      "Bytes": 537
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/repo/Solo/Solo.csproj",
+      "Sha256": "2380bc455127f11bad949b0723b53982e947e2202589f028adf1fea002767a68",
+      "Bytes": 240
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/corpus/variants/source-changed/App/Sites.cs",
+      "Sha256": "3d9a65f6e4cfc84432b8e1f00f405d29ab9862a4a262023762f2e8b9bb098a35",
+      "Bytes": 2008
+    }
+  ],
+  "OracleSources": [
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/CanonicalTarget.cs",
+      "Sha256": "41983865e1f830f057e7a7c789a98658d4c32b6cb0792621b58db527a0364671",
+      "Bytes": 4031
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Corpus.cs",
+      "Sha256": "99dd24534e2b058df79131a5c910098e192c8365bfdfee0e3fcbc470b1a80d84",
+      "Bytes": 10998
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected-r1.json",
+      "Sha256": "1a53633eef9517128edfe90e8e715c513056488e430860462ab76bf0db3ad085",
+      "Bytes": 94800
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected-r2.json",
+      "Sha256": "274a7aae9eb6724879d619416e449c52759b44085d7b718dad3434b15387cbbf",
+      "Bytes": 145620
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected.json",
+      "Sha256": "d5f507ddf2220df556702982e3be1f86cde698195aea66872f488e96ede5c0d7",
+      "Bytes": 73633
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/FrozenExpectations.cs",
+      "Sha256": "fbbf3a4df99e71e4d448b89526bad6e05cc4f459bec847954a3087229ed4abba",
+      "Bytes": 2823
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/IdentityOracle.cs",
+      "Sha256": "440708a7c3b664644bc1f1ad7bae4e9ca7bdcbd56fd2f70d19b622c4e712643c",
+      "Bytes": 4558
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs",
+      "Sha256": "aa6d7e4963fc4dc0e3eaa5641faf0638d238156ba45ad3934254dcab252aa2a7",
+      "Bytes": 87619
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/ProvenanceGate.cs",
+      "Sha256": "52076f1578f03f4de080f5f6126e7618b6eaa50b46514be34a2c4810a5e2c57d",
+      "Bytes": 1605
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/R2Identity.cs",
+      "Sha256": "5c8cc149b419994f90d3688139500fd422603838467123edb475de297b9a2670",
+      "Bytes": 9726
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticCorpusOracle.csproj",
+      "Sha256": "fea75589ad624a61e1be138d176215e8854744a9e043d144b8fdbfe977fff1ff",
+      "Bytes": 748
+    },
+    {
+      "Path": "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticInspector.cs",
+      "Sha256": "bc86eaf8ef7a2603d14b18fe5d1a2f098b687bc6af4fdf650ed70f1ced155647",
+      "Bytes": 6188
+    }
+  ],
+  "EvidenceFiles": [
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/.gitattributes",
+      "Sha256": "a79691a93b46e49ce460c26ef22afcc03d6eca1e63bf2edbc20e96159510f6c9",
+      "Bytes": 14
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/build-manifest.py",
+      "Sha256": "3676f633b38f32296fa2c800c6a4419fed5f9e11c64c272a9e70e09b2924b9ee",
+      "Bytes": 1706
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/CANONICAL-IDENTITY-REVIEW.md",
+      "Sha256": "b4700b133966c1fe4ab0eeb425edf47611f5d80f0cb4855dac96450ed4f2fe40",
+      "Bytes": 5356
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/DEFINING-PROVENANCE-REVIEW.md",
+      "Sha256": "41187c7b4a8268511fa0ccd9599c40c60b130418c4fd5c8209a55a52b0723e59",
+      "Bytes": 3989
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/historical-oracle-82f101c.json",
+      "Sha256": "a5c0a4850fb418b92ab97eb4292cd9afa20dacd3bba15822fe9276fcf2a6b339",
+      "Bytes": 72082
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/historical-oracle-82f101c.log",
+      "Sha256": "f5415748c3e55b52e6ce5f0460772c745df7b2f388eea64d1cd2baa3f40b33ad",
+      "Bytes": 46
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/historical-oracle-r1-9fc2115.json",
+      "Sha256": "72a18d26a8c26cd283b0b5860cca3e59cf9909f4810bc9495a90798b84d78a42",
+      "Bytes": 92964
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/historical-oracle-r1-9fc2115.log",
+      "Sha256": "6a0e34d866e47bd8e53412c75cfe973ae5db79787cef124e39fe2e83f838d5cd",
+      "Bytes": 46
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/HISTORICAL-PRESERVATION.md",
+      "Sha256": "9e7f159b8803050a7ade630639ad8becda0034c103bb39d6ed25f61f0eb81814",
+      "Bytes": 2771
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/LIFECYCLE-CONSISTENCY.md",
+      "Sha256": "ab0653fb9bb8b67c732bd13ac570d31ad60a928f3f07112d024a5a09882dea14",
+      "Bytes": 2665
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/deleted-contribution-reinjected/mutation.diff",
+      "Sha256": "54da61ee8a180a98d40818e589be5101ce23149f7f9f6e8717ac9c8124d37e31",
+      "Bytes": 834
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/deleted-contribution-reinjected/out.json",
+      "Sha256": "950de1ecb169b8febd57b660caae8802f12846571bd68c04d30dd6e1526200a4",
+      "Bytes": 144887
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/deleted-contribution-reinjected/run.log",
+      "Sha256": "b03399f14456f302bcec988799b4c73b51fec6c2b177639e0e563d391760cb0d",
+      "Bytes": 471
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/e02-zero-supplied-context/mutation.diff",
+      "Sha256": "27c49bc5fd80c5073270ce00e8ddba54ca58e60b35400a8e95d81a841aa26267",
+      "Bytes": 824
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/e02-zero-supplied-context/out.json",
+      "Sha256": "e2b581fdbcf548c481ea75ae2519d08e464ec0f2d561959dfde7511561092663",
+      "Bytes": 143289
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/e02-zero-supplied-context/run.log",
+      "Sha256": "885aed98e00e5da77bae564630d141d5315343ce201d1a28881affe35395f83f",
+      "Bytes": 250
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/frozen-expected-e02-authority-zeroed/mutation.diff",
+      "Sha256": "f6f8fca54253fab54f2eef6c1c39f213b1cae5f488a58301bd9d47ff1b535e37",
+      "Bytes": 1079
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/frozen-expected-e02-authority-zeroed/out.json",
+      "Sha256": "ff1ee283cbaaf1704b1f1b87034684325b058558ca3bf8ba96c962777e542e20",
+      "Bytes": 143286
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/frozen-expected-e02-authority-zeroed/run.log",
+      "Sha256": "f071f3283dd069130dabaa21418d167e1c4b7ac6852642aa15fefcbda58eb110",
+      "Bytes": 94
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/frozen-expected-s01-usage4-altered/mutation.diff",
+      "Sha256": "796f8c400ffff9f00bd1b99ca5924ca6e98a4e33046cde0b66fd5030b97f6f08",
+      "Bytes": 5794
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/frozen-expected-s01-usage4-altered/out.json",
+      "Sha256": "d66e301e9b4e994cb36c3b741aa74f7dd148545c07f6ed810eab22090ef28526",
+      "Bytes": 143298
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/frozen-expected-s01-usage4-altered/run.log",
+      "Sha256": "be84ea97dab1f3ee8a0ee6748897805d13de50f1844a207cd0ec677c1a7a1b30",
+      "Bytes": 209
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/overload-substitution-s01/mutation.diff",
+      "Sha256": "554d2be06e9ef9a9e4b313375f4eb74a8cb56ed071fce6c1eaa51797bc58c684",
+      "Bytes": 952
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/overload-substitution-s01/out.json",
+      "Sha256": "b2dd527f6eb119b8e97cc7fc5a90122371b703ed0c7ccc8d594ef90692002839",
+      "Bytes": 143324
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/overload-substitution-s01/run.log",
+      "Sha256": "ddddaccebff6654ba7953e2480fa91d81e07ff3086db56a078d681094f54474c",
+      "Bytes": 899
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/q2-f01-lifecycle-regression/mutation.diff",
+      "Sha256": "3d9667983a1bbc0e61daef74cfe17d59a6aa745ef7aac8a5850e4af74cb17a9b",
+      "Bytes": 1273
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/q2-f01-lifecycle-regression/out.json",
+      "Sha256": "5b7c4234bf9c1e43844cfdb5788d214461490761af96c9f68062a5ab51dd111c",
+      "Bytes": 142710
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/q2-f01-lifecycle-regression/run.log",
+      "Sha256": "a3b4a069f2566e38aaec706c78399c5d2a7b7b4205fcca57510aa81684bb24e4",
+      "Bytes": 1226
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/q2-f02-presence-only-gate/mutation.diff",
+      "Sha256": "99cb484a77273149dbd968bc1197fda964623c06125f5ad12c1e4701e4bd4bd1",
+      "Bytes": 919
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/q2-f02-presence-only-gate/out.json",
+      "Sha256": "6f4ddc39b3bff5e57827bdba81981c82fcc7f99a0ab340e3690d7b91c6224e49",
+      "Bytes": 143301
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/q2-f02-presence-only-gate/run.log",
+      "Sha256": "be0784387281f50165151d5ab9834ffdfc21f80c71752c642eeb1907b54fccf1",
+      "Bytes": 1302
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/reduced-normalization-disabled/mutation.diff",
+      "Sha256": "8ad48f994fbca987f6fb0f75e64c917b7ac0a75028d6b3d7aadc9dc95c56d4b3",
+      "Bytes": 764
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/reduced-normalization-disabled/out.json",
+      "Sha256": "eba06ffd319d15fc03e3f4a201209dab8088ec201e210d96369b67c6d9dea075",
+      "Bytes": 143103
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/reduced-normalization-disabled/run.log",
+      "Sha256": "56d7a80957995865f840df1c69c1dc3b0405823c0a838aa71f2589ad3cd027c8",
+      "Bytes": 1182
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/universe-context-equality-removed/mutation.diff",
+      "Sha256": "36cc6e5d67903a1cce05949aa85df18e9b08ac23f7c2e39e628bc8361576e0d5",
+      "Bytes": 800
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/universe-context-equality-removed/out.json",
+      "Sha256": "15ff93570a0d98e584ed0614218814f1aafba91e787d0ab42c06c0a01f7716d1",
+      "Bytes": 143287
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/universe-context-equality-removed/run.log",
+      "Sha256": "d857269980853eb0c0646a9bb0002378f8317815b3c0b68363306d5f4c499f7b",
+      "Bytes": 359
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/universe-membership-removed/mutation.diff",
+      "Sha256": "6f3c6f0fa80749f249c463641093f92cb436b77814d03bdeca0273f82d1a11f4",
+      "Bytes": 864
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/universe-membership-removed/out.json",
+      "Sha256": "48c6e351b51d71c087818b928c4bdf94e3fa6e86a436860d30b680f60dc8b783",
+      "Bytes": 143296
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/mutations/universe-membership-removed/run.log",
+      "Sha256": "6b598d4b636239196e17e05b6ef31d17a4d930bf344e0cac96b4ae5f9f825963",
+      "Bytes": 741
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/oracle-r2-run-1.json",
+      "Sha256": "577603295884242155facf737066d019c60198de31e6a01fbed644c9ce40891d",
+      "Bytes": 143280
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/oracle-r2-run-1.log",
+      "Sha256": "8eaf5de025176a177d901c28ddf80856e5cdcd928e26dcff0cabba668199da65",
+      "Bytes": 46
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/oracle-r2-run-2.json",
+      "Sha256": "577603295884242155facf737066d019c60198de31e6a01fbed644c9ce40891d",
+      "Bytes": 143280
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/oracle-r2-run-2.log",
+      "Sha256": "8eaf5de025176a177d901c28ddf80856e5cdcd928e26dcff0cabba668199da65",
+      "Bytes": 46
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/PROVENANCE-MUTATION-RESULTS.md",
+      "Sha256": "60a128505f6f9e68ad1cdd4eb08afa99d3b988f3266013f2ae128822153c3992",
+      "Bytes": 4066
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/q2-f01-preflight.json",
+      "Sha256": "ddc39a28578452bc1daade9bc002704acb01a93820f3975d775305c260046153",
+      "Bytes": 23767
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/q2-f01-preflight.log",
+      "Sha256": "64f6274ac3cf1496d6b5c551ce39123150bb4e7533c73436e9a9f940d080e3ac",
+      "Bytes": 49
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/q2-f02-clean-r1.json",
+      "Sha256": "72a18d26a8c26cd283b0b5860cca3e59cf9909f4810bc9495a90798b84d78a42",
+      "Bytes": 92964
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/q2-f02-clean-r1.log",
+      "Sha256": "6a0e34d866e47bd8e53412c75cfe973ae5db79787cef124e39fe2e83f838d5cd",
+      "Bytes": 46
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/q2-f02-mutated-r1.json",
+      "Sha256": "72a18d26a8c26cd283b0b5860cca3e59cf9909f4810bc9495a90798b84d78a42",
+      "Bytes": 92964
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/q2-f02-mutated-r1.log",
+      "Sha256": "6a0e34d866e47bd8e53412c75cfe973ae5db79787cef124e39fe2e83f838d5cd",
+      "Bytes": 46
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/Q2-REMEDIATION-MATRIX.md",
+      "Sha256": "46c7b55fd062df2e05cdb9917890332e0147fa4b0174fd8fb1cccb047c773fff",
+      "Bytes": 3554
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/Q3-HANDOFF.md",
+      "Sha256": "6e497fd22ce6d8eb992c12c39397d50db58dcfc41a9a51669a99c58ac92cc496",
+      "Bytes": 3995
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/README.md",
+      "Sha256": "37fbdc68d90faefb77996ded305af49643d1b400d9526d4ee753655084b883a7",
+      "Bytes": 2701
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/REDUCED-EXTENSION-REVIEW.md",
+      "Sha256": "67fc7bbf44d68a53d355b98c2b6e29d794a6158d3fb72f8aa2b3601debe279ef",
+      "Bytes": 1731
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/REGRESSION-RESULTS.md",
+      "Sha256": "99ccdd8431fb7b2338ad8941619561203f6ca7fe155e6d5912f9afb702607eaf",
+      "Bytes": 2826
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/solution-test.log",
+      "Sha256": "8bd1fb8967e5d230d64ca13e45c9b19fcbf2c3f80fd8155e798e552767baeb82",
+      "Bytes": 4062
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/SOURCE-BINDING.md",
+      "Sha256": "f9e340289108c41b9efbab32777d4a370afd6950c8a8e4997ebc14b9a5dc7e4a",
+      "Bytes": 1907
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/trx/andirit-csharp-tests.trx",
+      "Sha256": "7567f451e152c66f3a7cae74d5511a3beceddef486a0ee76347ea5809adf8bd5",
+      "Bytes": 171178
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/trx/andirit-latticedb-tests.trx",
+      "Sha256": "375c11a11ed5510fa163a72e8ef350aaf766e79c22c8298c5824701dcb06e8a6",
+      "Bytes": 60794
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/trx/andirit-tests.trx",
+      "Sha256": "819b543f575e1e06b0166899920b0ce14b0d2095301623d25dfa82a91d6206c7",
+      "Bytes": 451710
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/trx/andirit-treesitter-tests.trx",
+      "Sha256": "c5a20775df695453604c82df1685634a1dc883544172cfb146973d718892583b",
+      "Bytes": 227414
+    },
+    {
+      "Path": "docs/evidence/adr-ci1-01-ci1a-s2-0-r2/verify-manifest.py",
+      "Sha256": "98d62a4e2b3cb2b3026070c4218b031fac8d63ae5400300820bf2f2c26f71a30",
+      "Bytes": 3609
+    }
+  ]
+}

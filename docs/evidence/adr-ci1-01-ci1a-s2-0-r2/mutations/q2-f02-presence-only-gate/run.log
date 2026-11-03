@@ -1,0 +1,13 @@
+S2.0 oracle: 173/185 checks passed, 12 failed.
+  FAIL optionA.A08: recorded compctx2 differing from the current context is stale and must be refused or re-ingested
+  FAIL e02.E02-R2-03-stale: E02-R2-03-stale: eligible=True expected=False; a previously valid but no longer current compctx2 is refused
+  FAIL e02.E02-R2-04-all-zero: E02-R2-04-all-zero: eligible=True expected=False; a canonical all-zero compctx2 is not authority
+  FAIL e02.E02-R2-05-wrong-compilation: E02-R2-05-wrong-compilation: eligible=True expected=False; a valid canonical context belonging to a different compilation is refused
+  FAIL e02.E02-R2-07-incompatible-universe: E02-R2-07-incompatible-universe: eligible=True expected=False; universe membership carrying an incompatible defining context is refused
+  FAIL e02.PROV-1: a supplied digest cannot establish its own authority
+  FAIL e02.PROV-2: changing the supplied candidate does not redefine current authority
+  FAIL e02.PROV-3: a changed verified defining compilation invalidates incompatible prior evidence
+  FAIL e02.PROV-5: universe membership must carry the same verified defining context
+  FAIL e02.PROV-7: asmctx3 equality does not prove current compctx2 validity
+  FAIL expected.variants: differs from frozen oracle
+  FAIL expected.e02: differs from frozen oracle

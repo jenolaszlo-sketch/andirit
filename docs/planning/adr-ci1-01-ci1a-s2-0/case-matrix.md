@@ -2,9 +2,21 @@
 
 Every case names: the actual source marker, the syntactic operation, the
 independently established Roslyn resolution, and the accepted-S2.2 scope
-classification. Original Q1 values remain frozen in `oracle/expected/oracle-expected.json`; R1 selects `oracle/expected/oracle-expected-r1.json`. The symbol key is
+classification. Original Q1 values remain frozen in `oracle/expected/oracle-expected.json`; R1 selects `oracle/expected/oracle-expected-r1.json`; R2 selects `oracle/expected/oracle-expected-r2.json`. The symbol key is
 `<assembly>!<documentation-comment-id>` (the defining declaration; for
-constructed generics the original definition is used).
+constructed generics the original definition is used; reduced extension methods
+normalize through `ReducedFrom` then `OriginalDefinition`).
+
+**R2 additions.** Q2-F01/Q2-F02 did not change any case expectation above; they
+corrected the oracle's internal consistency and added two frozen sections: a
+`crossView` section (nine designated sites — S01, S02, S03, S06, S21, S26,
+INV-01, INV-11, INV-31 — checked field-by-field between the main identity view
+and the source-lifecycle projection, and against the independently transcribed
+anchors in `oracle/FrozenExpectations.cs`) and an `e02` section (eight
+defining-provenance case definitions plus PROV-1..8 invariants routed through a
+single `ProvenanceGate` predicate). The DEL01 lifecycle counts (Snapshot A:
+20 Sites + 32 Bulk; Snapshot B: 32 Bulk) are unchanged and now carry corrected
+canonical `usage4` identities.
 
 **Scope classification** (from the S2.2 acceptance matrix): `mandatory` =
 supported `Invocation` category; `qualification` = relevant to binding but not a

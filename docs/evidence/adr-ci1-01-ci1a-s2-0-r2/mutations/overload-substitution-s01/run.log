@@ -1,0 +1,8 @@
+S2.0 oracle: 178/185 checks passed, 7 failed.
+  FAIL crossView.S01: first divergent field: targetDocumentId; main=M:Corpus.Core.Methods.Static(System.Int32); lifecycle=M:Corpus.Core.Methods.Direct(System.Int32)
+  FAIL crossView.S01.frozen: main identity agrees with the accepted frozen anchor (asmctx3=False, usage4=False)
+  FAIL crossView.ID-2-target-vs-occurrence: S01 and INV-11 share Methods.Direct asmctx3 while their usage4 identities differ
+  FAIL crossView.ID-N5-overload-substitution: substituting Methods.Static(int) for Methods.Direct(int) changes asmctx3 and usage4 despite the same shape
+  FAIL crossView.all-sites-agree: every designated source occurrence agrees across the identity and lifecycle views
+  FAIL crossView.all-frozen-anchors: every designated source occurrence agrees with its accepted frozen anchor where one exists
+  FAIL expected.crossView: differs from frozen oracle

@@ -1,0 +1,13 @@
+diff --git a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/CanonicalTarget.cs b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/CanonicalTarget.cs
+index b1f80ae..f412c12 100644
+--- a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/CanonicalTarget.cs
++++ b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/CanonicalTarget.cs
+@@ -34,7 +34,7 @@ public static class CanonicalTarget
+ 
+     /// <summary>The accepted defining-declaration normalization.</summary>
+     public static IMethodSymbol CanonicalSymbol(IMethodSymbol method) =>
+-        method.ReducedFrom ?? method.OriginalDefinition;
++        method.OriginalDefinition;
+ 
+     /// <summary>Canonical shape input: <c>method|</c> plus the canonical parameter count.</summary>
+     public static string ShapeFor(int parameterCount) =>

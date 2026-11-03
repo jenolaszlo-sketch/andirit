@@ -1,0 +1,19 @@
+diff --git a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
+index 17dcf88..322ff49 100644
+--- a/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
++++ b/docs/planning/adr-ci1-01-ci1a-s2-0/oracle/Program.cs
+@@ -642,8 +642,12 @@ public static class Program
+             {
+                 if (model.GetSymbolInfo(invocation).Symbol is not IMethodSymbol method)
+                     continue;
+-                var target = CanonicalTarget.Describe(method, assembly =>
+-                    build.Projects.Values.FirstOrDefault(project => project.AssemblyName == assembly)?.UnitId);
++                var definingUnit = build.Projects.Values.FirstOrDefault(project => project.AssemblyName == method.ContainingAssembly?.Name)?.UnitId;
++                var docId = method.OriginalDefinition.GetDocumentationCommentId();
++                TargetDescription? target = definingUnit is null || docId is null
++                    ? null
++                    : new TargetDescription(definingUnit, docId, definingUnit + "::" + docId,
++                        CanonicalTarget.ShapeFor(method.Arity));
+                 if (target is null)
+                     continue;
+                 var token = invocation.Expression switch

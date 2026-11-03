@@ -45,5 +45,13 @@ with independent qualification and an explicit owner disposition.
 ## Frozen oracle versions
 
 - Historical Q1 oracle: `oracle/expected/oracle-expected.json` (preserved byte-for-byte).
-- Active R1 oracle: `oracle/expected/oracle-expected-r1.json`; run it explicitly with the Q2 command in `docs/evidence/adr-ci1-01-ci1a-s2-0-r1/Q2-HANDOFF.md`.
-- R1 identity: `CI1A-S2.0-CORPUS-R1`. This is a test oracle only; no production extraction, publication, or F12 closure is authorized.
+- Historical R1 oracle: `oracle/expected/oracle-expected-r1.json` (preserved byte-for-byte).
+- Active R2 oracle: `oracle/expected/oracle-expected-r2.json`; run it explicitly with the Q3 command in `docs/evidence/adr-ci1-01-ci1a-s2-0-r2/Q3-HANDOFF.md`.
+- R2 identity: `CI1A-S2.0-CORPUS-R2`. This is a test oracle only; no production extraction, publication, or F12 closure is authorized.
+
+R2 corrects the two independent Q2 findings — Q2-F01 (a single canonical
+target-description pathway shared by the main identity and lifecycle views, with
+a new compared `crossView` section) and Q2-F02 (a single defining-provenance
+eligibility gate with compared `e02`/`variants` sections) — without changing R2
+formulas, accepted vectors, or production code. Evidence:
+`../../evidence/adr-ci1-01-ci1a-s2-0-r2/`.

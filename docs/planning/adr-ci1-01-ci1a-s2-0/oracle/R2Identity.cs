@@ -21,22 +21,31 @@ public static class R2Identity
     public const string InvocationCategory = "method-invocation";
 
     /// <summary>Big-endian 32-bit length-prefixed SHA-256 over the domain and parts.</summary>
-    public static string Hash(string domain, IEnumerable<string> parts)
+    public static string Hash(string domain, IEnumerable<string> parts) =>
+        Convert.ToHexStringLower(SHA256.HashData(EncodedTuple(domain, parts)));
+
+    /// <summary>
+    /// Exact preimage bytes of the accepted tuple encoding: the domain followed by
+    /// each part, every value prefixed with its big-endian 32-bit UTF-8 byte length.
+    /// Exposed so cross-view checks can compare encoded bytes rather than only
+    /// twenty-hex-character summaries of them.
+    /// </summary>
+    public static byte[] EncodedTuple(string domain, IEnumerable<string> parts)
     {
-        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        using var stream = new MemoryStream();
         void Append(string value)
         {
             var bytes = Encoding.UTF8.GetBytes(value ?? string.Empty);
             Span<byte> length = stackalloc byte[4];
             BinaryPrimitives.WriteInt32BigEndian(length, bytes.Length);
-            hash.AppendData(length);
-            hash.AppendData(bytes);
+            stream.Write(length);
+            stream.Write(bytes);
         }
 
         Append(domain);
         foreach (var part in parts)
             Append(part);
-        return Convert.ToHexStringLower(hash.GetHashAndReset());
+        return stream.ToArray();
     }
 
     public static string Sha256Hex(byte[] bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));
@@ -116,26 +125,37 @@ public static class R2Identity
 
     // ---- usage4 --------------------------------------------------------------
 
+    /// <summary>
+    /// The complete accepted R2 <c>usage4</c> tuple in canonical field order.
+    /// Both the identity view and the lifecycle projection build their occurrence
+    /// identity from this single ordered part list.
+    /// </summary>
+    public static string[] Usage4Parts(
+        string repository, string plugin, string semanticUnit, string path, string sourceHash,
+        int startLine, int startColumn, int endLine, int endColumn,
+        string targetDocumentId, string asmctx3) =>
+    [
+        repository,
+        plugin,
+        UsageSemantics,
+        semanticUnit,
+        path,
+        sourceHash,
+        startLine.ToString(System.Globalization.CultureInfo.InvariantCulture),
+        startColumn.ToString(System.Globalization.CultureInfo.InvariantCulture),
+        endLine.ToString(System.Globalization.CultureInfo.InvariantCulture),
+        endColumn.ToString(System.Globalization.CultureInfo.InvariantCulture),
+        targetDocumentId,
+        asmctx3,
+        InvocationCategory,
+    ];
+
     public static string OccurrenceId(
         string repository, string plugin, string semanticUnit, string path, string sourceHash,
         int startLine, int startColumn, int endLine, int endColumn,
         string targetDocumentId, string asmctx3) =>
-        Hash("usage4",
-        [
-            repository,
-            plugin,
-            UsageSemantics,
-            semanticUnit,
-            path,
-            sourceHash,
-            startLine.ToString(System.Globalization.CultureInfo.InvariantCulture),
-            startColumn.ToString(System.Globalization.CultureInfo.InvariantCulture),
-            endLine.ToString(System.Globalization.CultureInfo.InvariantCulture),
-            endColumn.ToString(System.Globalization.CultureInfo.InvariantCulture),
-            targetDocumentId,
-            asmctx3,
-            InvocationCategory,
-        ]);
+        Hash("usage4", Usage4Parts(repository, plugin, semanticUnit, path, sourceHash,
+            startLine, startColumn, endLine, endColumn, targetDocumentId, asmctx3));
 
     // ---- options digest ------------------------------------------------------
 
