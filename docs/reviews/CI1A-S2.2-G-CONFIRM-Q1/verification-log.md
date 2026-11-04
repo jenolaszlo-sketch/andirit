@@ -62,7 +62,7 @@ dotnet run --project docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticCorpusOra
 | Expected doc SHA-256 | `274A7AAE9EB6724879D619416E449C52759B44085D7B718DAD3434B15387CBBF` (176 checks + 9 = 185) |
 | Failed checks | none |
 
-Evidence: [`evidence/oracle-run.log`](evidence/oracle-run.log),
+Evidence: [`evidence/oracle-run.txt`](evidence/oracle-run.txt),
 [`evidence/oracle-section-diff.txt`](evidence/oracle-section-diff.txt),
 [`evidence/oracle-r2.json`](evidence/oracle-r2.json).
 
