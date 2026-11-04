@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <!-- Reuse the existing internal test seam; run separately from producer tests. -->
+    <AssemblyName>Andirit.CSharp.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <Using Include="Xunit" />
+    <ProjectReference Include="../../../src/Andirit.CSharp/Andirit.CSharp.csproj" />
+    <Compile Include="../../evidence/adr-ci1-01-ci1a-s2-1-raw/authority/CompilationProvenance.cs" Link="FrozenR2Authority.cs" />
+    <Compile Include="../../planning/adr-ci1-01-ci1a-s2-0/oracle/Corpus.cs" Link="FrozenCorpus.cs" />
+    <Compile Include="../../planning/adr-ci1-01-ci1a-s2-0/oracle/R2Identity.cs" Link="FrozenR2Identity.cs" />
+    <Compile Include="../../planning/adr-ci1-01-ci1a-s2-0/oracle/IdentityOracle.cs" Link="FrozenIdentityOracle.cs" />
+  </ItemGroup>
+</Project>
