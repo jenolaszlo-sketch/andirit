@@ -22,10 +22,10 @@ positive test, adversary, environment, evidence artifact, closure authority**.
 | # | Requirement | Authority | Production surface | Observable behavior | Positive test | Adversary | Env | Evidence artifact | Closure |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | Supported-encoding set + ambiguous BOM-less refusal (Q-F2) | S21A §F; register §4A | `VerifiedCSharpSource` | Refusal, no verified identity | BOM UTF-8/16/32 accepted | BOM-less UTF-16/32 NUL decode → `AmbiguousBomlessEncoding` | native | TRX + log | IR+O |
-| 2 | Eager PE/assembly validation (Q-F3) | S21A §F; register §4A | `VerifiedMetadataReference.Capture` | Throw before identity | Valid assembly captured | Truncated/garbage/netmodule refused | native | TRX + log | IR+O |
+| 2 | Bounded assembly/metadata capture boundary (Q-F3) | S21A §F; register §4A; Q1-F01 qualification | `VerifiedMetadataReference.Capture` | Valid supported metadata is captured; malformed assembly-name, type-name, and method-signature heap handles refuse before identity; no universal PE or metadata validity guarantee | Valid assembly and supported metadata extent | Corrupt assembly-name/type-name/method-signature heap indices, truncation, garbage, and netmodule inputs | native | TRX + exact malformed image details + disposition | IR+O |
 | 3 | Symbol canonicalization hardening (A-01) | S21A §F | `VerifiedCSharpCompilation.Create` | `UnsupportedParseConfiguration` | Ordinary symbols deterministic | `,`/`\|` symbol refused | native | TRX | IR+O |
 | 4 | Scope is not source inventory (A-02) | S21A §F; S2.1 contract §3 | `VerifiedCSharpScope`/`Universe` | Membership from universe | Matching scope/universe accepted | Supply-source mismatch refused | native | test + statement | IR+O |
-| 5 | R2-faithful `compctx1` derivation (dependency-bearing) | S22ID §5.1(1); mapping contract §2 | `CompilationProvenanceDescriptor` | Deterministic mapped digest | Independent vector reproduces | Nondeterminism/omitted dependency refused | native | vectors + oracle log | IR+O (G-MINT) |
+| 5 | R2-faithful `compctx1` derivation under a declared comparison profile | S22ID §5.1(1); mapping contract §2 and its comparison-profile table | `CompilationProvenanceDescriptor` plus the frozen R2 oracle | Equal complete inputs yield equal mapped digests; the frozen corpus digest is required only under its complete fixture profile | Independent same-input vector; separately, fixture-aligned Leaf/Core anchors | Different labels/inventory are not treated as equal inputs; omitted dependency or nondeterminism is refused | native | full profile/inventory + vectors + oracle log | IR+O (G-MINT) |
 | 6 | `compctx2` isolation from identity | S22ID §5.1(3)(7) | minting/validation | `compctx2` absent from `asmctx3`/`usage4` | Frozen vectors unchanged | Inject `compctx2` into identity → impossible/refused | native | negative test | IR+O (G-MINT) |
 | 7 | Canonical target minting under live authority | S22ID §5.1(2); stage2-boundary §3.5 | extraction + `CodeOccurrence.Identity` | `asmctx3` from verified defining `compctx1` | Cross-project positive | Missing/ambiguous/external/unbound refused | native | probes + log | IR+O |
 | 8 | Invocation extraction fidelity | stage2-boundary §3.6–3.7 | `CSharpCodeGraphPlugin*` | Token span, declaration span, source hash, category | ≥ fixture invocations | Wrong span/hash → fail | native | TRX | IR+O |
@@ -60,7 +60,31 @@ One of: `G-CONFIRM PASS`, `G-CONFIRM PASS WITH QUALIFICATIONS`,
 
 ## 6. Current state
 
-Rows are recorded; the producer has completed WP1 (`Q-F2`) and WP2 (`Q-F3`)
-boundary tests (rows 1–3 partial evidence), but the independent matrix
-confirmation and a `G-CONFIRM` verdict are **outstanding**. Dependent tests and
-extraction remain blocked.
+Rows are recorded, but the independent matrix confirmation and a
+`G-CONFIRM` verdict are **outstanding**. The historical Q1 qualification report
+records the Q-F3 deferred malformed type-name and method-signature reads; the
+bounded WP2 remediation and its malformed-name/blob adversaries are tracked as
+separate evidence and do not establish universal PE/metadata validity or erase
+those historical observations. The independent Q2 review remains pending.
+Dependent qualification work gated by G-CONFIRM and extraction remain blocked.
+
+## 7. Row 5 comparison-profile confirmation
+
+Row 5 has two independent expected-value checks. First, algorithm fidelity
+compares the independent R2 reconstruction and mapped derivation over the same
+complete inputs, including unchanged verified reference identities. Second,
+exact frozen-corpus reproduction uses the accepted S2.0 fixture's three
+content-bound `file|runtime/...` framework labels and all other frozen inputs.
+The production capture profile retains the host's actual verified reference
+inventory and normalized paths. In the reviewer environment those live labels
+were under `C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/`;
+the fixture labels omit that host path. Therefore the reviewer-only comparison
+may align just the PE preimage labels to the authenticated fixture identities
+to verify the two frozen Leaf/Core anchors. This test-only adaptation is disclosed,
+limited to expected-value comparison, and must never be copied into production
+reference identities or frozen authority.
+
+The NEW-02 `usage4` tuple correction remains governed by the frozen matrix. Its
+source identity retains the source-bytes-versus-tree-text distinction, and
+`analysisscope1` remains a declared scope identity rather than a source
+inventory. These are independent of the row-5 reference-profile adaptation.

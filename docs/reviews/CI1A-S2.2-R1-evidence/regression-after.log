@@ -1,0 +1,27 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Andirit.Abstractions -> D:\projects\Andirit\src\Andirit.Abstractions\bin\Debug\net10.0\Andirit.Abstractions.dll
+  Andirit -> D:\projects\Andirit\src\Andirit\bin\Debug\net10.0\Andirit.dll
+  Andirit.Testing -> D:\projects\Andirit\src\Andirit.Testing\bin\Debug\net10.0\Andirit.Testing.dll
+  Andirit.CSharp -> D:\projects\Andirit\src\Andirit.CSharp\bin\Debug\net10.0\Andirit.CSharp.dll
+  Andirit.CSharp.Tests -> D:\projects\Andirit\tests\Andirit.CSharp.Tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll
+Test run for D:\projects\Andirit\tests\Andirit.CSharp.Tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:01.02]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.PlatformAndEmittedComplexCSharpStillCapture [FAIL]
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.PlatformAndEmittedComplexCSharpStillCapture [45 ms]
+  Error Message:
+   System.IO.InvalidDataException : UnsupportedMetadataReference
+---- System.BadImageFormatException : Invalid reference metadata structure.
+  Stack Trace:
+     at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 56
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.PlatformAndEmittedComplexCSharpStillCapture() in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 135
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at Andirit.MetadataReferenceValidation.Require(Boolean condition) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 195
+   at Andirit.MetadataReferenceValidation.Signature(MetadataReader reader, BlobReader& blob, MethodAttributes attributes, Int32 typeArity, Int32 methodArity, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 113
+   at Andirit.MetadataReferenceValidation.Validate(MetadataReader reader, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 38
+   at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 51
+Results File: C:\Users\Laszlos\source\repos\Solo\andirit-ci1a-s2.2-r1\regression-after\regression-after.trx
+
+Failed!  - Failed:     1, Passed:    39, Skipped:     0, Total:    40, Duration: 1 s - Andirit.CSharp.Tests.dll (net10.0)

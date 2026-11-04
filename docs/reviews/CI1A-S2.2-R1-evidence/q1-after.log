@@ -1,0 +1,66 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Andirit.Abstractions -> D:\projects\Andirit\src\Andirit.Abstractions\bin\Debug\net10.0\Andirit.Abstractions.dll
+  Andirit -> D:\projects\Andirit\src\Andirit\bin\Debug\net10.0\Andirit.dll
+  Andirit.CSharp -> D:\projects\Andirit\src\Andirit.CSharp\bin\Debug\net10.0\Andirit.CSharp.dll
+  ReviewerTests -> D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll
+Test run for D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:01.35]     IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: "method-signature") [FAIL]
+[xUnit.net 00:00:01.35]     IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: "later-type-name") [FAIL]
+[xUnit.net 00:00:01.36]     IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: "first-type-name") [FAIL]
+  Failed IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: "method-signature") [6 ms]
+  Error Message:
+   System.IO.InvalidDataException : UnsupportedMetadataReference
+---- System.BadImageFormatException : Read out of bounds.
+  Stack Trace:
+     at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 56
+   at IndependentFoundationReview.FoundationQualificationProbes.<>c__DisplayClass13_0.<ObserveMalformedMetadataStillExposesIdentity>b__0(String path) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 247
+   at IndependentFoundationReview.FoundationQualificationProbes.WithFile(Byte[] bytes, Action`1 action) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 481
+   at IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(String damage) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 235
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+----- Inner Stack Trace -----
+   at System.Reflection.Throw.OutOfBounds()
+   at System.Reflection.Internal.MemoryBlock.PeekCompressedInteger(Int32 offset, Int32& numberOfBytesRead)
+   at System.Reflection.Metadata.Ecma335.BlobHeap.GetMemoryBlock(BlobHandle handle)
+   at System.Reflection.Metadata.MetadataReader.GetBlobReader(BlobHandle handle)
+   at Andirit.MetadataReferenceValidation.Validate(MetadataReader reader, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 37
+   at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 51
+  Failed IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: "later-type-name") [4 ms]
+  Error Message:
+   System.IO.InvalidDataException : UnsupportedMetadataReference
+---- System.BadImageFormatException : Read out of bounds.
+  Stack Trace:
+     at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 56
+   at IndependentFoundationReview.FoundationQualificationProbes.<>c__DisplayClass13_0.<ObserveMalformedMetadataStillExposesIdentity>b__0(String path) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 247
+   at IndependentFoundationReview.FoundationQualificationProbes.WithFile(Byte[] bytes, Action`1 action) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 481
+   at IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(String damage) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 235
+   at InvokeStub_FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at System.Reflection.Throw.OutOfBounds()
+   at System.Reflection.Metadata.Ecma335.StringHeap.GetString(StringHandle handle, MetadataStringDecoder utf8Decoder)
+   at Andirit.MetadataReferenceValidation.Name(MetadataReader reader, StringHandle handle) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 52
+   at Andirit.MetadataReferenceValidation.Validate(MetadataReader reader, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 23
+   at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 51
+  Failed IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: "first-type-name") [8 ms]
+  Error Message:
+   System.IO.InvalidDataException : UnsupportedMetadataReference
+---- System.BadImageFormatException : Read out of bounds.
+  Stack Trace:
+     at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 56
+   at IndependentFoundationReview.FoundationQualificationProbes.<>c__DisplayClass13_0.<ObserveMalformedMetadataStillExposesIdentity>b__0(String path) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 247
+   at IndependentFoundationReview.FoundationQualificationProbes.WithFile(Byte[] bytes, Action`1 action) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 481
+   at IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(String damage) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 235
+   at InvokeStub_FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+----- Inner Stack Trace -----
+   at System.Reflection.Throw.OutOfBounds()
+   at System.Reflection.Metadata.Ecma335.StringHeap.GetString(StringHandle handle, MetadataStringDecoder utf8Decoder)
+   at Andirit.MetadataReferenceValidation.Name(MetadataReader reader, StringHandle handle) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 52
+   at Andirit.MetadataReferenceValidation.Validate(MetadataReader reader, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 23
+   at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 51
+Results File: C:\Users\Laszlos\source\repos\Solo\andirit-ci1a-s2.2-r1\q1-after\q1-after.trx
+
+Failed!  - Failed:     3, Passed:    45, Skipped:     0, Total:    48, Duration: 1 s - Andirit.CSharp.Tests.dll (net10.0)

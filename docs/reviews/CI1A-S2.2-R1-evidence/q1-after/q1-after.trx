@@ -1,0 +1,592 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="2234b425-0d77-4e3c-a25b-dd928e91abbe" name="Laszlos@LAPTOP-KBD8D8JG 2026-11-04 13:41:53" runUser="LAPTOP-KBD8D8JG\Laszlos" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-04T13:41:53.8091725+08:00" queuing="2026-11-04T13:41:53.8091729+08:00" start="2026-11-04T13:41:52.6451661+08:00" finish="2026-11-04T13:41:55.1345769+08:00" />
+  <TestSettings name="default" id="634e2496-8ad0-4ea8-90c6-4940e8b6641a">
+    <Deployment runDeploymentRoot="Laszlos_LAPTOP-KBD8D8JG_2026-11-04_13_41_53" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="cd68f008-92ac-4f2e-8da0-7151edee878b" testId="cf95256c-ec4b-406f-7ba7-c35d21be41b6" testName="IndependentFoundationReview.FoundationQualificationProbes.DamagedMetadataStreamOffsetAndTableCountAreRefused(rowCount: False)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0065441" startTime="2026-11-04T13:41:54.5188725+08:00" endTime="2026-11-04T13:41:54.5255221+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cd68f008-92ac-4f2e-8da0-7151edee878b">
+      <Output>
+        <StdOut>{"kind":"stream-offset","patch":648,"hash":"68467aabea8137d1aba3994fffe4ae5e2edb1597676d71b49f1c25d17a74510b"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="554706ff-82c3-41e1-a30e-4b19cb896dec" testId="2b5a1570-f4ce-9f0e-973b-06d261899297" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;short&quot;, bytes: [97], reason: null, text: &quot;a&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0101073" startTime="2026-11-04T13:41:53.7826845+08:00" endTime="2026-11-04T13:41:53.7827263+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="554706ff-82c3-41e1-a30e-4b19cb896dec">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"short","bytes":"61","ContentHash":"sha256:ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb","EncodingName":"utf-8:no-bom","Refusal":null,"decoded":"a"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ed906b72-11fc-4005-8012-65fb92847445" testId="3d95c1e7-e727-17ed-e28a-9993b1af339a" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-0000FE&quot;, bytes: [0, 0, 254], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0037867" startTime="2026-11-04T13:41:53.7798553+08:00" endTime="2026-11-04T13:41:53.7799114+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ed906b72-11fc-4005-8012-65fb92847445">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-0000FE","bytes":"0000FE","ContentHash":"sha256:91147ecbd5b9324a18f381688ca3b992bdc0a7b920f99f5732eb9d5f4245f727","EncodingName":"utf-8:no-bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\u0000\u0000\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f2589195-51b1-429e-afc2-0c043d491752" testId="8319d0b8-0ee6-0a07-6fcb-6b0a89c4dc8e" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf32-bom-only&quot;, bytes: [255, 254, 0, 0], reason: null, text: &quot;&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0016318" startTime="2026-11-04T13:41:53.7312830+08:00" endTime="2026-11-04T13:41:53.7328864+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f2589195-51b1-429e-afc2-0c043d491752">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf32-bom-only","bytes":"FFFE0000","ContentHash":"sha256:0b856f2a1ea6fe59346bec325dfe906bfa23babe05eb10ac9fe7f5b46196ae71","EncodingName":"utf-32:bom","Refusal":null,"decoded":""}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0f3ffd7d-082b-42a8-b966-b346bb2af86e" testId="f6b9a094-fe47-9d16-0df9-c1494904427b" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-EF&quot;, bytes: [239], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001431" startTime="2026-11-04T13:41:53.7832634+08:00" endTime="2026-11-04T13:41:53.7833101+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0f3ffd7d-082b-42a8-b966-b346bb2af86e">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-EF","bytes":"EF","ContentHash":"sha256:4d4d75d742863ab9656f3d5f76dff8589c3922e95a24ea6812157ffe4aaa3b6b","EncodingName":"utf-8:no-bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d2e8036f-7977-43c9-8693-c589c63d50cf" testId="92d45884-627a-2ffe-4e72-46299181ad85" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-32-bomless&quot;, bytes: [99, 0, 0, 0, 108, ···], reason: &quot;AmbiguousBomlessEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.2257477" startTime="2026-11-04T13:41:53.4042214+08:00" endTime="2026-11-04T13:41:53.6359749+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d2e8036f-7977-43c9-8693-c589c63d50cf">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf-32-bomless","bytes":"630000006C0000006100000073000000730000002000000041000000200000007B0000007D000000","ContentHash":"sha256:522177fc5568a4dab95e9e990f849d2f7039640d390faafa103031816b26fd66","EncodingName":"utf-8:no-bom","Refusal":"AmbiguousBomlessEncoding:probe.cs","decoded":"c\u0000\u0000\u0000l\u0000\u0000\u0000a\u0000\u0000\u0000s\u0000\u0000\u0000s\u0000\u0000\u0000 \u0000\u0000\u0000A\u0000\u0000\u0000 \u0000\u0000\u0000{\u0000\u0000\u0000}\u0000\u0000\u0000"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d7602d56-d6a5-4fda-8d36-5b232ecc32c7" testId="16571422-d193-12ea-404d-625b62a570ee" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-16-bom&quot;, bytes: [255, 254, 47, 0, 47, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0002921" startTime="2026-11-04T13:41:53.7825790+08:00" endTime="2026-11-04T13:41:53.7826199+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d7602d56-d6a5-4fda-8d36-5b232ecc32c7">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf-16-bom","bytes":"FFFE2F002F002000630061006600E90020002D4E876520003DD800DE0D000A0063006C006100730073002000410020007B007D000A00","ContentHash":"sha256:986aff8f175f6b2c144e2e805a552d874b5f9acc120470a0057d82747b32145a","EncodingName":"utf-16:bom","Refusal":null,"decoded":"// caf\u00E9 \u4E2D\u6587 \uD83D\uDE00\r\nclass A {}\n"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9d706949-0e19-4d8b-a183-2b9672dc0b1a" testId="10341319-e3d6-c76f-c692-1e5d89278dc2" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingRefusalPrecedenceAndMaterializedHandoff" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0013532" startTime="2026-11-04T13:41:54.5113419+08:00" endTime="2026-11-04T13:41:54.5125655+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9d706949-0e19-4d8b-a183-2b9672dc0b1a" />
+    <UnitTestResult executionId="43864783-023d-426b-a24b-f1f91b35e065" testId="5985becf-6fcf-7e28-bdc9-1bb6217afdc0" testName="IndependentFoundationReview.FoundationQualificationProbes.SeparatorInjection(symbol: &quot;A,B&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0000462" startTime="2026-11-04T13:41:54.4777815+08:00" endTime="2026-11-04T13:41:54.4778057+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="43864783-023d-426b-a24b-f1f91b35e065" />
+    <UnitTestResult executionId="7f20b93b-a413-419f-99e6-313be1c866dd" testId="619124ed-8a65-d136-3ce9-87ed2978a6c7" testName="IndependentFoundationReview.FoundationQualificationProbes.ObserveTextuallyEquivalentLiveInstancesHaveSameIdentity" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0042154" startTime="2026-11-04T13:41:54.9356673+08:00" endTime="2026-11-04T13:41:54.9397725+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7f20b93b-a413-419f-99e6-313be1c866dd">
+      <Output>
+        <StdOut>{"kind":"mapping-counterexamples","sameTarget":"asmctx3:sha256:abbc456fcd1c507eb095c9fa6879f5bf7f474e629f6fd12356527d01ebe5ee46","fabricated":"compctx1:sha256:0000000000000000000000000000000000000000000000000000000000000000","acceptedTarget":"asmctx3:sha256:9558232431295cf558cec711030a577467166c493ac747eecfa71103d0ed1020"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="92cfe04c-23b2-43b6-b1bc-77d8108015e4" testId="003bf82d-c9d9-c280-896d-09ce43faeba2" testName="IndependentFoundationReview.FoundationQualificationProbes.SeparatorInjection(symbol: &quot;A|B&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0003095" startTime="2026-11-04T13:41:54.4763186+08:00" endTime="2026-11-04T13:41:54.4765541+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="92cfe04c-23b2-43b6-b1bc-77d8108015e4" />
+    <UnitTestResult executionId="ef6ceb39-c160-4346-a4c4-18aaa3c1d27b" testId="e6803b3e-d8b3-1aec-5651-ec614a0e2998" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-32BE-bomless&quot;, bytes: [0, 0, 0, 99, 0, ···], reason: &quot;AmbiguousBomlessEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0015907" startTime="2026-11-04T13:41:53.7797277+08:00" endTime="2026-11-04T13:41:53.7797736+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ef6ceb39-c160-4346-a4c4-18aaa3c1d27b">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf-32BE-bomless","bytes":"000000630000006C0000006100000073000000730000002000000041000000200000007B0000007D","ContentHash":"sha256:d2ed9278642466786e120d114c8692656ab01a9e7b6eec4bc6389cdd3c9f4f40","EncodingName":"utf-8:no-bom","Refusal":"AmbiguousBomlessEncoding:probe.cs","decoded":"\u0000\u0000\u0000c\u0000\u0000\u0000l\u0000\u0000\u0000a\u0000\u0000\u0000s\u0000\u0000\u0000s\u0000\u0000\u0000 \u0000\u0000\u0000A\u0000\u0000\u0000 \u0000\u0000\u0000{\u0000\u0000\u0000}"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e1d1f0f6-1bba-4a71-ab46-d308c3274556" testId="4d68f0b9-cc2b-5a6a-9adf-8ecb0cf4eca0" testName="IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: &quot;first-type-name&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0085884" startTime="2026-11-04T13:41:54.4289130+08:00" endTime="2026-11-04T13:41:54.4360658+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e1d1f0f6-1bba-4a71-ab46-d308c3274556">
+      <Output>
+        <ErrorInfo>
+          <Message>System.IO.InvalidDataException : UnsupportedMetadataReference&#xD;
+---- System.BadImageFormatException : Read out of bounds.</Message>
+          <StackTrace>   at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 56&#xD;
+   at IndependentFoundationReview.FoundationQualificationProbes.&lt;&gt;c__DisplayClass13_0.&lt;ObserveMalformedMetadataStillExposesIdentity&gt;b__0(String path) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 247&#xD;
+   at IndependentFoundationReview.FoundationQualificationProbes.WithFile(Byte[] bytes, Action`1 action) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 481&#xD;
+   at IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(String damage) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 235&#xD;
+   at InvokeStub_FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+----- Inner Stack Trace -----&#xD;
+   at System.Reflection.Throw.OutOfBounds()&#xD;
+   at System.Reflection.Metadata.Ecma335.StringHeap.GetString(StringHandle handle, MetadataStringDecoder utf8Decoder)&#xD;
+   at Andirit.MetadataReferenceValidation.Name(MetadataReader reader, StringHandle handle) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 52&#xD;
+   at Andirit.MetadataReferenceValidation.Validate(MetadataReader reader, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 23&#xD;
+   at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 51</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1403adcc-df51-4c66-9cf5-a598cf1ddb9c" testId="8da36bdb-73cc-6b28-a747-3f850e855e22" testName="IndependentFoundationReview.FoundationQualificationProbes.ObserveFrozenCorpusReferenceProfileDiffersFromLiveCapture" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.4098694" startTime="2026-11-04T13:41:54.5257066+08:00" endTime="2026-11-04T13:41:54.9354840+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1403adcc-df51-4c66-9cf5-a598cf1ddb9c">
+      <Output>
+        <StdOut>{"kind":"reference-profile-counterexample","unit":"Leaf/Leaf.csproj","frozen":"compctx1:sha256:404c5e48c3106b47786f14cad594139477c651fd78d0e050f8fd5bcab18fcb5f","liveMapped":"compctx1:sha256:b816dcb5512588bc3b5ad01692c20241b31442ab420c8a4b5a6d06d032b9c59b","aligned":"compctx1:sha256:404c5e48c3106b47786f14cad594139477c651fd78d0e050f8fd5bcab18fcb5f","liveReferences":["file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/System.Runtime.dll|76be53624f64b23d0249dfa0bbe85390086de7c44bfd490642ea86c6faaf44af","file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/System.Private.CoreLib.dll|1125acc8106c43fc8bad2d203c4c4485df6182d292846c2fff415c1040c54678","file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/Microsoft.CSharp.dll|2000912f2fc52e0c64ed893d79f4e7b143502540fb7170b5ae5fcea7099ba431"],"frozenReferences":["file|runtime/System.Runtime.dll|76be53624f64b23d0249dfa0bbe85390086de7c44bfd490642ea86c6faaf44af","file|runtime/System.Private.CoreLib.dll|1125acc8106c43fc8bad2d203c4c4485df6182d292846c2fff415c1040c54678","file|runtime/Microsoft.CSharp.dll|2000912f2fc52e0c64ed893d79f4e7b143502540fb7170b5ae5fcea7099ba431"]}&#xD;
+{"kind":"reference-profile-counterexample","unit":"Core/Core.csproj","frozen":"compctx1:sha256:942a8e588a8db15afafb30d0292e0b867c767c5f72392b6f458783d961a71db3","liveMapped":"compctx1:sha256:df8d2932670fc6a15cec10930b0bf573cfce841080e55f9544433983cbbe8a77","aligned":"compctx1:sha256:942a8e588a8db15afafb30d0292e0b867c767c5f72392b6f458783d961a71db3","liveReferences":["file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/System.Runtime.dll|76be53624f64b23d0249dfa0bbe85390086de7c44bfd490642ea86c6faaf44af","file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/System.Private.CoreLib.dll|1125acc8106c43fc8bad2d203c4c4485df6182d292846c2fff415c1040c54678","file|C:/Program Files/dotnet/shared/Microsoft.NETCore.App/10.0.12/Microsoft.CSharp.dll|2000912f2fc52e0c64ed893d79f4e7b143502540fb7170b5ae5fcea7099ba431"],"frozenReferences":["file|runtime/System.Runtime.dll|76be53624f64b23d0249dfa0bbe85390086de7c44bfd490642ea86c6faaf44af","file|runtime/System.Private.CoreLib.dll|1125acc8106c43fc8bad2d203c4c4485df6182d292846c2fff415c1040c54678","file|runtime/Microsoft.CSharp.dll|2000912f2fc52e0c64ed893d79f4e7b143502540fb7170b5ae5fcea7099ba431"]}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="74aeed5e-ec49-4977-85bf-685529ac81b5" testId="fdcfa8d2-5901-84af-b547-282244654d58" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-32BE-bom&quot;, bytes: [0, 0, 254, 255, 0, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0002057" startTime="2026-11-04T13:41:53.7790001+08:00" endTime="2026-11-04T13:41:53.7791227+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="74aeed5e-ec49-4977-85bf-685529ac81b5">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf-32BE-bom","bytes":"0000FEFF0000002F0000002F00000020000000630000006100000066000000E90000002000004E2D00006587000000200001F6000000000D0000000A000000630000006C0000006100000073000000730000002000000041000000200000007B0000007D0000000A","ContentHash":"sha256:3bbef52ee7804fade0b264587fd64f129f0ed8ed4433f0752ad04697e5e85f90","EncodingName":"utf-32BE:bom","Refusal":null,"decoded":"// caf\u00E9 \u4E2D\u6587 \uD83D\uDE00\r\nclass A {}\n"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="58f2541d-5256-4f03-9a38-b05ce89e5cd6" testId="7c5677c2-791d-175e-420f-b5788e7e750d" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-FFFE00&quot;, bytes: [255, 254, 0], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0002043" startTime="2026-11-04T13:41:53.7310107+08:00" endTime="2026-11-04T13:41:53.7312191+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="58f2541d-5256-4f03-9a38-b05ce89e5cd6">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-FFFE00","bytes":"FFFE00","ContentHash":"sha256:ba778c0261008c8f71ae4061ad0162ffcbe63b52c91f89f236738131d1217ec7","EncodingName":"utf-16:bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="fa4dec76-c90c-480e-ae16-31cb210276b5" testId="7ac8561b-8c52-d2f9-15dd-ef5169777ef1" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-EFBB&quot;, bytes: [239, 187], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001406" startTime="2026-11-04T13:41:53.7794271+08:00" endTime="2026-11-04T13:41:53.7794937+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fa4dec76-c90c-480e-ae16-31cb210276b5">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-EFBB","bytes":"EFBB","ContentHash":"sha256:f257f0501a5e137710e26f1c35ddd32ce2b5752f20274a648cb6d0347849a5a9","EncodingName":"utf-8:no-bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f015dc62-2b9f-4a94-8d9f-3a1442e87b67" testId="881a835c-e1ad-7830-cd21-6e386fa08f84" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-80&quot;, bytes: [128], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001183" startTime="2026-11-04T13:41:53.7823225+08:00" endTime="2026-11-04T13:41:53.7823876+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f015dc62-2b9f-4a94-8d9f-3a1442e87b67">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-80","bytes":"80","ContentHash":"sha256:76be8b528d0075f7aae98d6fa57a6d3c83ae480a8469e668d7b0af968995ac71","EncodingName":"utf-8:no-bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9ab56867-c302-4971-8f19-433cfc2470b9" testId="8139d755-dcbf-324f-1fe9-13db671369ed" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-32-bom&quot;, bytes: [255, 254, 0, 0, 47, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0003198" startTime="2026-11-04T13:41:53.7459003+08:00" endTime="2026-11-04T13:41:53.7460848+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9ab56867-c302-4971-8f19-433cfc2470b9">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf-32-bom","bytes":"FFFE00002F0000002F00000020000000630000006100000066000000E9000000200000002D4E0000876500002000000000F601000D0000000A000000630000006C0000006100000073000000730000002000000041000000200000007B0000007D0000000A000000","ContentHash":"sha256:346b666fb182a276eb6271ef8a6a105eaa58c8e625fca86d6c43cca08c0f3c99","EncodingName":"utf-32:bom","Refusal":null,"decoded":"// caf\u00E9 \u4E2D\u6587 \uD83D\uDE00\r\nclass A {}\n"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="dd3bbb6c-b24e-49a7-9da5-0b4f541cf56b" testId="45a204ee-0196-a7d7-995b-9bb5404d0a03" testName="IndependentFoundationReview.FoundationQualificationProbes.MetadataControlsAndTruncationSurvey" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.6338678" startTime="2026-11-04T13:41:53.7852101+08:00" endTime="2026-11-04T13:41:54.3996113+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dd3bbb6c-b24e-49a7-9da5-0b4f541cf56b">
+      <Output>
+        <StdOut>{"kind":"truncation","length":1,"fullLength":2048,"metadataEnd":1400,"outcome":"InvalidDataException","message":"UnsupportedMetadataReference","hash":"08f271887ce94707da822d5263bae19d5519cb3614e0daedc4c7ce5dab7473f1"}&#xD;
+{"kind":"truncation","length":64,"fullLength":2048,"metadataEnd":1400,"outcome":"InvalidDataException","message":"UnsupportedMetadataReference","hash":"c46a3fc444808f3b86a7e757e5202d16f8ea9bf1c6aff2cabc593e7d0f2c9ad2"}&#xD;
+{"kind":"truncation","length":682,"fullLength":2048,"metadataEnd":1400,"outcome":"InvalidDataException","message":"UnsupportedMetadataReference","hash":"92cf54c91f5093864cf5a6fe6eb6eed31be7bab9a8c9fe098c7322d15a24cc5b"}&#xD;
+{"kind":"truncation","length":616,"fullLength":2048,"metadataEnd":1400,"outcome":"InvalidDataException","message":"UnsupportedMetadataReference","hash":"bbdfeb2b37c1c07119b4cde9c537d750c893c5f39e7c1786c76efb65a10bc4e0"}&#xD;
+{"kind":"truncation","length":636,"fullLength":2048,"metadataEnd":1400,"outcome":"InvalidDataException","message":"UnsupportedMetadataReference","hash":"cbedfa238a17ed83c10b3bc7353f30f920d8c3a4e70b493fba6b5599dfe8e28a"}&#xD;
+{"kind":"truncation","length":1399,"fullLength":2048,"metadataEnd":1400,"outcome":"InvalidDataException","message":"UnsupportedMetadataReference","hash":"826fcb5bbfc9ce30cef75ea2191950f0ce3a0541fe3355d11242059c1a877cd4"}&#xD;
+{"kind":"truncation","length":1400,"fullLength":2048,"metadataEnd":1400,"outcome":"captured","message":null,"hash":"16ffd2fd54d33e07ed48e0c9edf6a20769c4ec90dc138f18ccbe75cee1e0461e"}&#xD;
+{"kind":"truncation","length":2047,"fullLength":2048,"metadataEnd":1400,"outcome":"captured","message":null,"hash":"cc56ed6d467c089a4443497c4e9dbf2cbb46c638a05626271659461b2aff243e"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="eb5661dc-0f4c-45c2-863e-d9d9de3d2f57" testId="0c228d50-e680-488a-c401-4c9db5251b6d" testName="IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: &quot;later-type-name&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0048457" startTime="2026-11-04T13:41:54.4281169+08:00" endTime="2026-11-04T13:41:54.4281905+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eb5661dc-0f4c-45c2-863e-d9d9de3d2f57">
+      <Output>
+        <ErrorInfo>
+          <Message>System.IO.InvalidDataException : UnsupportedMetadataReference&#xD;
+---- System.BadImageFormatException : Read out of bounds.</Message>
+          <StackTrace>   at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 56&#xD;
+   at IndependentFoundationReview.FoundationQualificationProbes.&lt;&gt;c__DisplayClass13_0.&lt;ObserveMalformedMetadataStillExposesIdentity&gt;b__0(String path) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 247&#xD;
+   at IndependentFoundationReview.FoundationQualificationProbes.WithFile(Byte[] bytes, Action`1 action) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 481&#xD;
+   at IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(String damage) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 235&#xD;
+   at InvokeStub_FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+----- Inner Stack Trace -----&#xD;
+   at System.Reflection.Throw.OutOfBounds()&#xD;
+   at System.Reflection.Metadata.Ecma335.StringHeap.GetString(StringHandle handle, MetadataStringDecoder utf8Decoder)&#xD;
+   at Andirit.MetadataReferenceValidation.Name(MetadataReader reader, StringHandle handle) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 52&#xD;
+   at Andirit.MetadataReferenceValidation.Validate(MetadataReader reader, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 23&#xD;
+   at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 51</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d1b16963-10c1-4a58-8ee6-0a15242761cc" testId="1da192ed-1709-fd0a-4dbc-5f77becca071" testName="IndependentFoundationReview.FoundationQualificationProbes.SeparatorInjection(symbol: &quot;|&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0014809" startTime="2026-11-04T13:41:54.4747476+08:00" endTime="2026-11-04T13:41:54.4762159+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d1b16963-10c1-4a58-8ee6-0a15242761cc" />
+    <UnitTestResult executionId="32538a5a-476f-4832-81ea-fa97ac6f2646" testId="fa91d057-1bc7-bbeb-a0a7-1783610df41f" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-FF&quot;, bytes: [255], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001189" startTime="2026-11-04T13:41:53.7795889+08:00" endTime="2026-11-04T13:41:53.7796437+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="32538a5a-476f-4832-81ea-fa97ac6f2646">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-FF","bytes":"FF","ContentHash":"sha256:a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89","EncodingName":"utf-8:no-bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="670bef16-dd4d-4cd4-b2d9-d94994150db3" testId="620d4a5d-9ef4-a0c8-e807-b55e40b4b6eb" testName="IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: &quot;method-signature&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0062589" startTime="2026-11-04T13:41:54.3998302+08:00" endTime="2026-11-04T13:41:54.4223721+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="670bef16-dd4d-4cd4-b2d9-d94994150db3">
+      <Output>
+        <ErrorInfo>
+          <Message>System.IO.InvalidDataException : UnsupportedMetadataReference&#xD;
+---- System.BadImageFormatException : Read out of bounds.</Message>
+          <StackTrace>   at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 56&#xD;
+   at IndependentFoundationReview.FoundationQualificationProbes.&lt;&gt;c__DisplayClass13_0.&lt;ObserveMalformedMetadataStillExposesIdentity&gt;b__0(String path) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 247&#xD;
+   at IndependentFoundationReview.FoundationQualificationProbes.WithFile(Byte[] bytes, Action`1 action) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 481&#xD;
+   at IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(String damage) in D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs:line 235&#xD;
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)&#xD;
+----- Inner Stack Trace -----&#xD;
+   at System.Reflection.Throw.OutOfBounds()&#xD;
+   at System.Reflection.Internal.MemoryBlock.PeekCompressedInteger(Int32 offset, Int32&amp; numberOfBytesRead)&#xD;
+   at System.Reflection.Metadata.Ecma335.BlobHeap.GetMemoryBlock(BlobHandle handle)&#xD;
+   at System.Reflection.Metadata.MetadataReader.GetBlobReader(BlobHandle handle)&#xD;
+   at Andirit.MetadataReferenceValidation.Validate(MetadataReader reader, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs:line 37&#xD;
+   at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken) in D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs:line 51</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="188ea7fe-362b-4644-81fa-028843941f73" testId="ef06d191-6e29-f37b-1837-78064ca01d02" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf8&quot;, bytes: [47, 47, 32, 99, 97, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0005098" startTime="2026-11-04T13:41:53.7802094+08:00" endTime="2026-11-04T13:41:53.7802489+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="188ea7fe-362b-4644-81fa-028843941f73">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf8","bytes":"2F2F20636166C3A920E4B8ADE6968720F09F98800D0A636C6173732041207B7D0A","ContentHash":"sha256:49d3b1fcd2c4875dd79b6ce11973e0da8aad592ba5d0ffd9d33cfe47b223206e","EncodingName":"utf-8:no-bom","Refusal":null,"decoded":"// caf\u00E9 \u4E2D\u6587 \uD83D\uDE00\r\nclass A {}\n"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="77f34bb8-124f-45bc-8864-fc9cbcd8cbaf" testId="9a058867-9928-e314-83ad-56785ba45f15" testName="IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: &quot;assembly-name&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0384843" startTime="2026-11-04T13:41:54.4369898+08:00" endTime="2026-11-04T13:41:54.4745820+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="77f34bb8-124f-45bc-8864-fc9cbcd8cbaf">
+      <Output>
+        <StdOut>{"kind":"malformed-assembly-refused","damage":"assembly-name","offset":996,"hash":"e92744d3b2d805521651458cf54613e1d02d4113368c8e049c5e382c97670e74"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f2f5304a-8640-46a4-a20a-9268f7d46fff" testId="c5a125b1-9b70-30bc-687b-7adda60e9bfc" testName="IndependentFoundationReview.FoundationQualificationProbes.MalformedMetadataRootIsRefused" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0342191" startTime="2026-11-04T13:41:54.4778679+08:00" endTime="2026-11-04T13:41:54.5111631+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f2f5304a-8640-46a4-a20a-9268f7d46fff">
+      <Output>
+        <StdOut>{"kind":"damaged-root","offset":826,"hash":"ec39e80d6bdabd016665d60b0771bc104b733333f6d5a74f187318c8c4555a6e"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="33c19738-2bd8-40eb-bc0d-643db8931813" testId="a741b4b5-6824-d33d-ca7e-5c32f7774633" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-8-bom&quot;, bytes: [239, 187, 191, 47, 47, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0002200" startTime="2026-11-04T13:41:53.7831356+08:00" endTime="2026-11-04T13:41:53.7831989+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="33c19738-2bd8-40eb-bc0d-643db8931813">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf-8-bom","bytes":"EFBBBF2F2F20636166C3A920E4B8ADE6968720F09F98800D0A636C6173732041207B7D0A","ContentHash":"sha256:534c787016a2a5bbef8b6be3d10382554266510b558fc2fb7f00e51aae560cc3","EncodingName":"utf-8:bom","Refusal":null,"decoded":"// caf\u00E9 \u4E2D\u6587 \uD83D\uDE00\r\nclass A {}\n"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="af22e457-f1cb-49b9-a3b5-e491714e2eec" testId="65e35704-a643-f31f-3c5d-87272296b09e" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-16BE-bomless&quot;, bytes: [0, 99, 0, 108, 0, ···], reason: &quot;AmbiguousBomlessEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001548" startTime="2026-11-04T13:41:53.7801057+08:00" endTime="2026-11-04T13:41:53.7801473+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="af22e457-f1cb-49b9-a3b5-e491714e2eec">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf-16BE-bomless","bytes":"0063006C006100730073002000410020007B007D","ContentHash":"sha256:f76a5e8bbb48f4390443402427bab8af4ae78405c808a008d6934cfcf2aaba41","EncodingName":"utf-8:no-bom","Refusal":"AmbiguousBomlessEncoding:probe.cs","decoded":"\u0000c\u0000l\u0000a\u0000s\u0000s\u0000 \u0000A\u0000 \u0000{\u0000}"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="15ed7626-f33d-425e-8bd1-bfa667e95cf5" testId="539d9d0d-00a8-d4a8-a5ac-245ec40304c1" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf16-bom-only&quot;, bytes: [255, 254], reason: null, text: &quot;&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001648" startTime="2026-11-04T13:41:53.7841574+08:00" endTime="2026-11-04T13:41:53.7842243+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="15ed7626-f33d-425e-8bd1-bfa667e95cf5">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf16-bom-only","bytes":"FFFE","ContentHash":"sha256:b3d510ef04275ca8e698e5b3cbb0ece3949ef9252f0cdc839e9ee347409a2209","EncodingName":"utf-16:bom","Refusal":null,"decoded":""}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="eee29fa1-98b2-406b-9092-9957f4f4ef85" testId="3488a69f-13d0-8251-2b3b-d109fa76ad14" testName="IndependentFoundationReview.FoundationQualificationProbes.SeparatorInjection(symbol: &quot;,&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0000765" startTime="2026-11-04T13:41:54.4766276+08:00" endTime="2026-11-04T13:41:54.4766543+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eee29fa1-98b2-406b-9092-9957f4f4ef85" />
+    <UnitTestResult executionId="39f02140-6866-4ee4-a6de-fb26b6e2b75d" testId="892eb80c-abbe-0d30-be9b-142aaaf18019" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-0000FEFF00110000&quot;, bytes: [0, 0, 254, 255, 0, ···], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0002604" startTime="2026-11-04T13:41:53.7456753+08:00" endTime="2026-11-04T13:41:53.7457851+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="39f02140-6866-4ee4-a6de-fb26b6e2b75d">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-0000FEFF00110000","bytes":"0000FEFF00110000","ContentHash":"sha256:376880de6b022fcd58ab0a55f566bb8947460a0c5b8027f7f5f0ec9d1374a9f4","EncodingName":"utf-32BE:bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e2842feb-3cf4-46c1-8683-b3d083fdd461" testId="6cd4a75a-434f-d428-2e04-fce5071942cb" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf8-bom-nul&quot;, bytes: [239, 187, 191, 0], reason: null, text: &quot;\0&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0002144" startTime="2026-11-04T13:41:53.7830086+08:00" endTime="2026-11-04T13:41:53.7830622+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e2842feb-3cf4-46c1-8683-b3d083fdd461">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf8-bom-nul","bytes":"EFBBBF00","ContentHash":"sha256:d90004879d3206361b4d16d8dcc8005882aecd94cd65670c07c466f64ecc055b","EncodingName":"utf-8:bom","Refusal":null,"decoded":"\u0000"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ce05ce6f-cc4c-4013-b951-d4420483bda0" testId="682eb251-726a-f386-9c6e-7418cc451f57" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;indistinguishable-utf16&quot;, bytes: [65, 65], reason: null, text: &quot;AA&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0003841" startTime="2026-11-04T13:41:53.7827854+08:00" endTime="2026-11-04T13:41:53.7828261+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ce05ce6f-cc4c-4013-b951-d4420483bda0">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"indistinguishable-utf16","bytes":"4141","ContentHash":"sha256:58bb119c35513a451d24dc20ef0e9031ec85b35bfc919d263e7e5d9868909cb5","EncodingName":"utf-8:no-bom","Refusal":null,"decoded":"AA"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="50abb781-40d4-4c51-bcad-c3f72d4d7f19" testId="129c0ee7-5c8a-c9a9-2e66-cb350ba5fcb8" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-FEFFD800&quot;, bytes: [254, 255, 216, 0], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001133" startTime="2026-11-04T13:41:53.7824789+08:00" endTime="2026-11-04T13:41:53.7825179+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="50abb781-40d4-4c51-bcad-c3f72d4d7f19">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-FEFFD800","bytes":"FEFFD800","ContentHash":"sha256:67b75018800f7aee0d359e17e5d4eb3b80bf70afae0d3ea6d4dcd53bb5480adb","EncodingName":"utf-16BE:bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4615c6c6-68ce-41a5-9f98-1596990ddada" testId="327c0a46-4366-a0bb-5f17-3783ea0e267a" testName="IndependentFoundationReview.FoundationQualificationProbes.DamagedMetadataStreamOffsetAndTableCountAreRefused(rowCount: True)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0060809" startTime="2026-11-04T13:41:54.5126512+08:00" endTime="2026-11-04T13:41:54.5187689+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4615c6c6-68ce-41a5-9f98-1596990ddada">
+      <Output>
+        <StdOut>{"kind":"table-count","patch":756,"hash":"bceb2150ec0eeb2b6eac95c1fe4f7cca8fecd40b606045a588e640152a97a322"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bcc19134-4e8b-43c1-b417-baeb765b2fdb" testId="3aae5a59-13ee-44c6-5d17-4b9e936f0d8b" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-FFFE000041&quot;, bytes: [255, 254, 0, 0, 65], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001554" startTime="2026-11-04T13:41:53.7799862+08:00" endTime="2026-11-04T13:41:53.7800403+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bcc19134-4e8b-43c1-b417-baeb765b2fdb">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-FFFE000041","bytes":"FFFE000041","ContentHash":"sha256:68d5dc3a2a1ac0d20f1151f2fc28a4c87143554405ebb64ea9feaca8c39c107f","EncodingName":"utf-32:bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f1b35f78-cf4a-47b9-9bc2-25771053f232" testId="a1bad2cf-33ba-c226-dff3-00a973f07f50" testName="IndependentFoundationReview.FoundationQualificationProbes.New02MatrixTupleAndFrozenUsageAnchors" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0031309" startTime="2026-11-04T13:41:55.0577670+08:00" endTime="2026-11-04T13:41:55.0608575+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f1b35f78-cf4a-47b9-9bc2-25771053f232">
+      <Output>
+        <StdOut>{"kind":"new02-anchor","parts":["experiment:andirit-31c33a9","experiment.csharp.occurrences","usage4-b2c-exp-r2-20261101","caller-unit","Caller.cs","sha256:2f7803daa5910bf2f5fb5927b2e9f999ebd1b7074340096f620df37278df484a","1","72","1","77","M:N.C.M","asmctx3:sha256:632e7953365d1dbadbb55414b7cbcb991c9bc2653ec6cafb6f6d9d95a9c2032d","method-invocation"],"expected":"bd0487b749795a3e6b61028c7c9cf2d663530cae901ac6d9f35bc311536dc3af"}&#xD;
+{"kind":"new02-anchor","parts":["experiment:andirit-31c33a9","experiment.csharp.occurrences","usage4-b2c-exp-r2-20261101","caller-unit","Caller.cs","sha256:2f7803daa5910bf2f5fb5927b2e9f999ebd1b7074340096f620df37278df484a","1","72","1","77","M:N.C.M","asmctx3:sha256:fb3e0561272eb342a549036ecf0095c2ec2a6d5d7bc159fc943dee11fe669c26","method-invocation"],"expected":"b874bdc5afa194e0e237d0b1d7d36b3fa3dd767799e0dc62f5f1399f00b90bca"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2469618f-173c-4290-8f2a-02d3f6fdaa6b" testId="3e974258-aaea-8319-e708-ba1525d44732" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-16-bomless&quot;, bytes: [99, 0, 108, 0, 97, ···], reason: &quot;AmbiguousBomlessEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001856" startTime="2026-11-04T13:41:53.7803046+08:00" endTime="2026-11-04T13:41:53.7803496+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2469618f-173c-4290-8f2a-02d3f6fdaa6b">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf-16-bomless","bytes":"63006C006100730073002000410020007B007D00","ContentHash":"sha256:9f9f9eae74e534b3076ac3f177cbdb4fbb1edac3fab6f61a630a57a6b3df7745","EncodingName":"utf-8:no-bom","Refusal":"AmbiguousBomlessEncoding:probe.cs","decoded":"c\u0000l\u0000a\u0000s\u0000s\u0000 \u0000A\u0000 \u0000{\u0000}\u0000"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="3f563d2b-a030-4d8f-bcb4-0dcbc45efdfd" testId="76e1bfd9-3bf0-f8f9-1691-19ab5f2a1ce3" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;nul&quot;, bytes: [0], reason: &quot;AmbiguousBomlessEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001499" startTime="2026-11-04T13:41:53.7309243+08:00" endTime="2026-11-04T13:41:53.7309639+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3f563d2b-a030-4d8f-bcb4-0dcbc45efdfd">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"nul","bytes":"00","ContentHash":"sha256:6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d","EncodingName":"utf-8:no-bom","Refusal":"AmbiguousBomlessEncoding:probe.cs","decoded":"\u0000"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="db3727a9-ebd0-436d-8a39-f33ec3a89bb1" testId="adb1f343-8d65-e6ee-5ad9-e6be907985ae" testName="IndependentFoundationReview.FoundationQualificationProbes.MetadataCancellationAndIoStaySeparateFromFormatRefusal" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0008275" startTime="2026-11-04T13:41:55.0569416+08:00" endTime="2026-11-04T13:41:55.0576725+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="db3727a9-ebd0-436d-8a39-f33ec3a89bb1" />
+    <UnitTestResult executionId="07d45c2a-4272-44cf-bdd4-f986531056fb" testId="f2f38fdb-c25d-3be8-7c02-1b9a8a78d946" testName="IndependentFoundationReview.FoundationQualificationProbes.MappingReconstructsFrozenAuthorityAndSeparatesTransitiveProvenance" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1142093" startTime="2026-11-04T13:41:54.9433618+08:00" endTime="2026-11-04T13:41:55.0567969+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="07d45c2a-4272-44cf-bdd4-f986531056fb">
+      <Output>
+        <StdOut>{"kind":"mapping","leaf":"compctx1:sha256:a83804ccc02257f74a34ca9289621fb2c375cb8a0b796c8ca7212a372967afd9","lib":"compctx1:sha256:c5a09996c6db673de7b8418d9ccf5604de721a5de4b7d6c8df15549a11877a62","app":"compctx1:sha256:c2b4fd8ef0e6691cc70e057d115232f893e79f27ea138b461cd826bf3f9fd4a7","leaf2":"compctx1:sha256:5bbfd8eed0e1a3b973b4267e3a33f31658898e8545ae6b6441fd10923fdbe282","lib2":"compctx1:sha256:c5a09996c6db673de7b8418d9ccf5604de721a5de4b7d6c8df15549a11877a62","app2":"compctx1:sha256:c2b4fd8ef0e6691cc70e057d115232f893e79f27ea138b461cd826bf3f9fd4a7","provenance":["compctx2:sha256:d415be0a6d5c2c36a5d9593e9ada81771378049a977ed72e7e394ef2e4870394","compctx2:sha256:562794af7949665d9397cb6cc8e312401dcfc8347f89d337423f864ed68b9160","compctx2:sha256:620971a4307204faaf4c85f56c0c8ecaa8a96ed86e7c0e19821f79d77a45e3b8","compctx2:sha256:05a7911da0b2aff7bfab5917aaf5f482a3f7d77cee0d403a9a9eb9931f792ad4","compctx2:sha256:e4c9b2eea35317a31cedab2096fe3cb8396b8627b5d9ba6f78787983f32633d6","compctx2:sha256:eff45fa758f2d8e2e738ed0a8b82e26b16a450217e13f0b51dff82158eeaba11"],"libTarget":"asmctx3:sha256:e8d2820b7ae6c825225bc6b96b03933c40db47116c4303a8e7a76a454d70571f","libTarget2":"asmctx3:sha256:e8d2820b7ae6c825225bc6b96b03933c40db47116c4303a8e7a76a454d70571f","scope":"analysisscope1:sha256:5b22badad79f2cdfa346e6082c1cd02b3a6fac10b58acc6574ffdd790a982e0a","universe":"compilation-universe1:sha256:611c8da5ebba4f4a6363dcbb21eeb95547bc696300951e34ce76dc2020626669"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b5d0e4b9-05d5-4332-b4c0-2053da38d899" testId="0dfdc8f3-0cce-a7bf-4d05-1c2d21be6f49" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-FE&quot;, bytes: [254], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0001936" startTime="2026-11-04T13:41:53.7828815+08:00" endTime="2026-11-04T13:41:53.7829344+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b5d0e4b9-05d5-4332-b4c0-2053da38d899">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-FE","bytes":"FE","ContentHash":"sha256:aa687b58b0e73e2e383f8c500d75b591e188efe0168b3ffbcd3771caaa6dd4c7","EncodingName":"utf-8:no-bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="46d2383f-839f-481b-95e9-3ef2a91b8426" testId="c3a97126-ac70-9301-c96f-9b0da996ee89" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;empty&quot;, bytes: [], reason: null, text: &quot;&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0922938" startTime="2026-11-04T13:41:53.6442592+08:00" endTime="2026-11-04T13:41:53.7285728+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="46d2383f-839f-481b-95e9-3ef2a91b8426">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"empty","bytes":"","ContentHash":"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","EncodingName":"utf-8:no-bom","Refusal":null,"decoded":""}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="880716f7-c414-4f1d-a206-2c21b87fb132" testId="878029b3-bec5-c5f8-d637-70e59795d964" testName="IndependentFoundationReview.FoundationQualificationProbes.SeparatorInjection(symbol: &quot;A,B|C&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0000483" startTime="2026-11-04T13:41:54.4776716+08:00" endTime="2026-11-04T13:41:54.4777107+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="880716f7-c414-4f1d-a206-2c21b87fb132" />
+    <UnitTestResult executionId="6b6a7b5d-97d7-4577-bc7f-da08fddab63f" testId="1295dd70-0584-e17b-0084-76600f9b9732" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-C0AF&quot;, bytes: [192, 175], reason: &quot;InvalidSourceEncoding&quot;, text: null)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0022074" startTime="2026-11-04T13:41:53.7292506+08:00" endTime="2026-11-04T13:41:53.7308101+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6b6a7b5d-97d7-4577-bc7f-da08fddab63f">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"malformed-C0AF","bytes":"C0AF","ContentHash":"sha256:caf573f0daa6960ecb26f8eddbc4e2059277ad5afc6f72ffd59a0ecead602a22","EncodingName":"utf-8:no-bom","Refusal":"InvalidSourceEncoding:probe.cs","decoded":"\uFFFD\uFFFD"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bc2b72ec-c081-4165-aac6-f2667d635c23" testId="4032db31-eada-da5f-feb3-f11aec7906a7" testName="IndependentFoundationReview.FoundationQualificationProbes.SymbolsOrderOrdinallyAndKeepUnicodeDistinct" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0025774" startTime="2026-11-04T13:41:54.9399187+08:00" endTime="2026-11-04T13:41:54.9424276+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bc2b72ec-c081-4165-aac6-f2667d635c23">
+      <Output>
+        <StdOut>{"kind":"symbols","canonical":"A.cs|sha256:107310d1668e0941284e7595573d77788d10959a91d6eb1a53c03b4faba0bc97|CSharp14|FEATURE,TRACE"}</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="156a07d2-329c-4cf4-83d1-de7f6979d46d" testId="135d1c51-dd1a-5643-3db5-eb9d1ef03086" testName="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-16BE-bom&quot;, bytes: [254, 255, 0, 47, 0, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0124505" startTime="2026-11-04T13:41:53.7329644+08:00" endTime="2026-11-04T13:41:53.7454801+08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="156a07d2-329c-4cf4-83d1-de7f6979d46d">
+      <Output>
+        <StdOut>{"kind":"encoding","name":"utf-16BE-bom","bytes":"FEFF002F002F002000630061006600E900204E2D65870020D83DDE00000D000A0063006C006100730073002000410020007B007D000A","ContentHash":"sha256:056020815e1138f46b4985770ed27b0d89bcfd5b79fabe372f18286d62f6e0c9","EncodingName":"utf-16BE:bom","Refusal":null,"decoded":"// caf\u00E9 \u4E2D\u6587 \uD83D\uDE00\r\nclass A {}\n"}</StdOut>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-0000FE&quot;, bytes: [0, 0, 254], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="3d95c1e7-e727-17ed-e28a-9993b1af339a">
+      <Execution id="ed906b72-11fc-4005-8012-65fb92847445" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.MetadataControlsAndTruncationSurvey" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="45a204ee-0196-a7d7-995b-9bb5404d0a03">
+      <Execution id="dd3bbb6c-b24e-49a7-9da5-0b4f541cf56b" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="MetadataControlsAndTruncationSurvey" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf8&quot;, bytes: [47, 47, 32, 99, 97, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="ef06d191-6e29-f37b-1837-78064ca01d02">
+      <Execution id="188ea7fe-362b-4644-81fa-028843941f73" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf8-bom-nul&quot;, bytes: [239, 187, 191, 0], reason: null, text: &quot;\0&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="6cd4a75a-434f-d428-2e04-fce5071942cb">
+      <Execution id="e2842feb-3cf4-46c1-8683-b3d083fdd461" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-FE&quot;, bytes: [254], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="0dfdc8f3-0cce-a7bf-4d05-1c2d21be6f49">
+      <Execution id="b5d0e4b9-05d5-4332-b4c0-2053da38d899" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-0000FEFF00110000&quot;, bytes: [0, 0, 254, 255, 0, ···], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="892eb80c-abbe-0d30-be9b-142aaaf18019">
+      <Execution id="39f02140-6866-4ee4-a6de-fb26b6e2b75d" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.SeparatorInjection(symbol: &quot;A,B|C&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="878029b3-bec5-c5f8-d637-70e59795d964">
+      <Execution id="880716f7-c414-4f1d-a206-2c21b87fb132" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="SeparatorInjection" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-FFFE00&quot;, bytes: [255, 254, 0], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="7c5677c2-791d-175e-420f-b5788e7e750d">
+      <Execution id="58f2541d-5256-4f03-9a38-b05ce89e5cd6" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;empty&quot;, bytes: [], reason: null, text: &quot;&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="c3a97126-ac70-9301-c96f-9b0da996ee89">
+      <Execution id="46d2383f-839f-481b-95e9-3ef2a91b8426" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.DamagedMetadataStreamOffsetAndTableCountAreRefused(rowCount: True)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="327c0a46-4366-a0bb-5f17-3783ea0e267a">
+      <Execution id="4615c6c6-68ce-41a5-9f98-1596990ddada" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="DamagedMetadataStreamOffsetAndTableCountAreRefused" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-FFFE000041&quot;, bytes: [255, 254, 0, 0, 65], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="3aae5a59-13ee-44c6-5d17-4b9e936f0d8b">
+      <Execution id="bcc19134-4e8b-43c1-b417-baeb765b2fdb" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-16BE-bom&quot;, bytes: [254, 255, 0, 47, 0, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="135d1c51-dd1a-5643-3db5-eb9d1ef03086">
+      <Execution id="156a07d2-329c-4cf4-83d1-de7f6979d46d" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: &quot;later-type-name&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="0c228d50-e680-488a-c401-4c9db5251b6d">
+      <Execution id="eb5661dc-0f4c-45c2-863e-d9d9de3d2f57" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="ObserveMalformedMetadataStillExposesIdentity" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-16-bomless&quot;, bytes: [99, 0, 108, 0, 97, ···], reason: &quot;AmbiguousBomlessEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="3e974258-aaea-8319-e708-ba1525d44732">
+      <Execution id="2469618f-173c-4290-8f2a-02d3f6fdaa6b" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-EFBB&quot;, bytes: [239, 187], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="7ac8561b-8c52-d2f9-15dd-ef5169777ef1">
+      <Execution id="fa4dec76-c90c-480e-ae16-31cb210276b5" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-32BE-bom&quot;, bytes: [0, 0, 254, 255, 0, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="fdcfa8d2-5901-84af-b547-282244654d58">
+      <Execution id="74aeed5e-ec49-4977-85bf-685529ac81b5" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;nul&quot;, bytes: [0], reason: &quot;AmbiguousBomlessEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="76e1bfd9-3bf0-f8f9-1691-19ab5f2a1ce3">
+      <Execution id="3f563d2b-a030-4d8f-bcb4-0dcbc45efdfd" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: &quot;first-type-name&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="4d68f0b9-cc2b-5a6a-9adf-8ecb0cf4eca0">
+      <Execution id="e1d1f0f6-1bba-4a71-ab46-d308c3274556" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="ObserveMalformedMetadataStillExposesIdentity" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;short&quot;, bytes: [97], reason: null, text: &quot;a&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="2b5a1570-f4ce-9f0e-973b-06d261899297">
+      <Execution id="554706ff-82c3-41e1-a30e-4b19cb896dec" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.SeparatorInjection(symbol: &quot;|&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="1da192ed-1709-fd0a-4dbc-5f77becca071">
+      <Execution id="d1b16963-10c1-4a58-8ee6-0a15242761cc" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="SeparatorInjection" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-8-bom&quot;, bytes: [239, 187, 191, 47, 47, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="a741b4b5-6824-d33d-ca7e-5c32f7774633">
+      <Execution id="33c19738-2bd8-40eb-bc0d-643db8931813" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.MetadataCancellationAndIoStaySeparateFromFormatRefusal" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="adb1f343-8d65-e6ee-5ad9-e6be907985ae">
+      <Execution id="db3727a9-ebd0-436d-8a39-f33ec3a89bb1" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="MetadataCancellationAndIoStaySeparateFromFormatRefusal" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.SeparatorInjection(symbol: &quot;A|B&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="003bf82d-c9d9-c280-896d-09ce43faeba2">
+      <Execution id="92cfe04c-23b2-43b6-b1bc-77d8108015e4" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="SeparatorInjection" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.SymbolsOrderOrdinallyAndKeepUnicodeDistinct" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="4032db31-eada-da5f-feb3-f11aec7906a7">
+      <Execution id="bc2b72ec-c081-4165-aac6-f2667d635c23" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="SymbolsOrderOrdinallyAndKeepUnicodeDistinct" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-EF&quot;, bytes: [239], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="f6b9a094-fe47-9d16-0df9-c1494904427b">
+      <Execution id="0f3ffd7d-082b-42a8-b966-b346bb2af86e" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.ObserveTextuallyEquivalentLiveInstancesHaveSameIdentity" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="619124ed-8a65-d136-3ce9-87ed2978a6c7">
+      <Execution id="7f20b93b-a413-419f-99e6-313be1c866dd" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="ObserveTextuallyEquivalentLiveInstancesHaveSameIdentity" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.SeparatorInjection(symbol: &quot;A,B&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="5985becf-6fcf-7e28-bdc9-1bb6217afdc0">
+      <Execution id="43864783-023d-426b-a24b-f1f91b35e065" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="SeparatorInjection" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;indistinguishable-utf16&quot;, bytes: [65, 65], reason: null, text: &quot;AA&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="682eb251-726a-f386-9c6e-7418cc451f57">
+      <Execution id="ce05ce6f-cc4c-4013-b951-d4420483bda0" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.MappingReconstructsFrozenAuthorityAndSeparatesTransitiveProvenance" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="f2f38fdb-c25d-3be8-7c02-1b9a8a78d946">
+      <Execution id="07d45c2a-4272-44cf-bdd4-f986531056fb" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="MappingReconstructsFrozenAuthorityAndSeparatesTransitiveProvenance" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.DamagedMetadataStreamOffsetAndTableCountAreRefused(rowCount: False)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="cf95256c-ec4b-406f-7ba7-c35d21be41b6">
+      <Execution id="cd68f008-92ac-4f2e-8da0-7151edee878b" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="DamagedMetadataStreamOffsetAndTableCountAreRefused" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.ObserveFrozenCorpusReferenceProfileDiffersFromLiveCapture" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="8da36bdb-73cc-6b28-a747-3f850e855e22">
+      <Execution id="1403adcc-df51-4c66-9cf5-a598cf1ddb9c" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="ObserveFrozenCorpusReferenceProfileDiffersFromLiveCapture" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: &quot;assembly-name&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="9a058867-9928-e314-83ad-56785ba45f15">
+      <Execution id="77f34bb8-124f-45bc-8864-fc9cbcd8cbaf" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="ObserveMalformedMetadataStillExposesIdentity" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf32-bom-only&quot;, bytes: [255, 254, 0, 0], reason: null, text: &quot;&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="8319d0b8-0ee6-0a07-6fcb-6b0a89c4dc8e">
+      <Execution id="f2589195-51b1-429e-afc2-0c043d491752" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingRefusalPrecedenceAndMaterializedHandoff" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="10341319-e3d6-c76f-c692-1e5d89278dc2">
+      <Execution id="9d706949-0e19-4d8b-a183-2b9672dc0b1a" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingRefusalPrecedenceAndMaterializedHandoff" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.MalformedMetadataRootIsRefused" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="c5a125b1-9b70-30bc-687b-7adda60e9bfc">
+      <Execution id="f2f5304a-8640-46a4-a20a-9268f7d46fff" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="MalformedMetadataRootIsRefused" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-C0AF&quot;, bytes: [192, 175], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="1295dd70-0584-e17b-0084-76600f9b9732">
+      <Execution id="6b6a7b5d-97d7-4577-bc7f-da08fddab63f" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-32-bomless&quot;, bytes: [99, 0, 0, 0, 108, ···], reason: &quot;AmbiguousBomlessEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="92d45884-627a-2ffe-4e72-46299181ad85">
+      <Execution id="d2e8036f-7977-43c9-8693-c589c63d50cf" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-FF&quot;, bytes: [255], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="fa91d057-1bc7-bbeb-a0a7-1783610df41f">
+      <Execution id="32538a5a-476f-4832-81ea-fa97ac6f2646" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.SeparatorInjection(symbol: &quot;,&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="3488a69f-13d0-8251-2b3b-d109fa76ad14">
+      <Execution id="eee29fa1-98b2-406b-9092-9957f4f4ef85" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="SeparatorInjection" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-16-bom&quot;, bytes: [255, 254, 47, 0, 47, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="16571422-d193-12ea-404d-625b62a570ee">
+      <Execution id="d7602d56-d6a5-4fda-8d36-5b232ecc32c7" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf16-bom-only&quot;, bytes: [255, 254], reason: null, text: &quot;&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="539d9d0d-00a8-d4a8-a5ac-245ec40304c1">
+      <Execution id="15ed7626-f33d-425e-8bd1-bfa667e95cf5" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-32-bom&quot;, bytes: [255, 254, 0, 0, 47, ···], reason: null, text: &quot;// café 中文 \ud83d\ude00\r\nclass A {}\n&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="8139d755-dcbf-324f-1fe9-13db671369ed">
+      <Execution id="9ab56867-c302-4971-8f19-433cfc2470b9" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-16BE-bomless&quot;, bytes: [0, 99, 0, 108, 0, ···], reason: &quot;AmbiguousBomlessEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="65e35704-a643-f31f-3c5d-87272296b09e">
+      <Execution id="af22e457-f1cb-49b9-a3b5-e491714e2eec" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-80&quot;, bytes: [128], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="881a835c-e1ad-7830-cd21-6e386fa08f84">
+      <Execution id="f015dc62-2b9f-4a94-8d9f-3a1442e87b67" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;utf-32BE-bomless&quot;, bytes: [0, 0, 0, 99, 0, ···], reason: &quot;AmbiguousBomlessEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="e6803b3e-d8b3-1aec-5651-ec614a0e2998">
+      <Execution id="ef6ceb39-c160-4346-a4c4-18aaa3c1d27b" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: &quot;method-signature&quot;)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="620d4a5d-9ef4-a0c8-e807-b55e40b4b6eb">
+      <Execution id="670bef16-dd4d-4cd4-b2d9-d94994150db3" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="ObserveMalformedMetadataStillExposesIdentity" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.New02MatrixTupleAndFrozenUsageAnchors" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="a1bad2cf-33ba-c226-dff3-00a973f07f50">
+      <Execution id="f1b35f78-cf4a-47b9-9bc2-25771053f232" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="New02MatrixTupleAndFrozenUsageAnchors" />
+    </UnitTest>
+    <UnitTest name="IndependentFoundationReview.FoundationQualificationProbes.EncodingBoundary(name: &quot;malformed-FEFFD800&quot;, bytes: [254, 255, 216, 0], reason: &quot;InvalidSourceEncoding&quot;, text: null)" storage="d:\projects\andirit\docs\reviews\ci1a-s2.2-q1-tests\bin\debug\net10.0\andirit.csharp.tests.dll" id="129c0ee7-5c8a-c9a9-2e66-cb350ba5fcb8">
+      <Execution id="50abb781-40d4-4c51-bcad-c3f72d4d7f19" />
+      <TestMethod codeBase="D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="IndependentFoundationReview.FoundationQualificationProbes" name="EncodingBoundary" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="cf95256c-ec4b-406f-7ba7-c35d21be41b6" executionId="cd68f008-92ac-4f2e-8da0-7151edee878b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2b5a1570-f4ce-9f0e-973b-06d261899297" executionId="554706ff-82c3-41e1-a30e-4b19cb896dec" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3d95c1e7-e727-17ed-e28a-9993b1af339a" executionId="ed906b72-11fc-4005-8012-65fb92847445" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8319d0b8-0ee6-0a07-6fcb-6b0a89c4dc8e" executionId="f2589195-51b1-429e-afc2-0c043d491752" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f6b9a094-fe47-9d16-0df9-c1494904427b" executionId="0f3ffd7d-082b-42a8-b966-b346bb2af86e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="92d45884-627a-2ffe-4e72-46299181ad85" executionId="d2e8036f-7977-43c9-8693-c589c63d50cf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="16571422-d193-12ea-404d-625b62a570ee" executionId="d7602d56-d6a5-4fda-8d36-5b232ecc32c7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="10341319-e3d6-c76f-c692-1e5d89278dc2" executionId="9d706949-0e19-4d8b-a183-2b9672dc0b1a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5985becf-6fcf-7e28-bdc9-1bb6217afdc0" executionId="43864783-023d-426b-a24b-f1f91b35e065" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="619124ed-8a65-d136-3ce9-87ed2978a6c7" executionId="7f20b93b-a413-419f-99e6-313be1c866dd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="003bf82d-c9d9-c280-896d-09ce43faeba2" executionId="92cfe04c-23b2-43b6-b1bc-77d8108015e4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e6803b3e-d8b3-1aec-5651-ec614a0e2998" executionId="ef6ceb39-c160-4346-a4c4-18aaa3c1d27b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4d68f0b9-cc2b-5a6a-9adf-8ecb0cf4eca0" executionId="e1d1f0f6-1bba-4a71-ab46-d308c3274556" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8da36bdb-73cc-6b28-a747-3f850e855e22" executionId="1403adcc-df51-4c66-9cf5-a598cf1ddb9c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fdcfa8d2-5901-84af-b547-282244654d58" executionId="74aeed5e-ec49-4977-85bf-685529ac81b5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c5677c2-791d-175e-420f-b5788e7e750d" executionId="58f2541d-5256-4f03-9a38-b05ce89e5cd6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7ac8561b-8c52-d2f9-15dd-ef5169777ef1" executionId="fa4dec76-c90c-480e-ae16-31cb210276b5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="881a835c-e1ad-7830-cd21-6e386fa08f84" executionId="f015dc62-2b9f-4a94-8d9f-3a1442e87b67" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8139d755-dcbf-324f-1fe9-13db671369ed" executionId="9ab56867-c302-4971-8f19-433cfc2470b9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="45a204ee-0196-a7d7-995b-9bb5404d0a03" executionId="dd3bbb6c-b24e-49a7-9da5-0b4f541cf56b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0c228d50-e680-488a-c401-4c9db5251b6d" executionId="eb5661dc-0f4c-45c2-863e-d9d9de3d2f57" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1da192ed-1709-fd0a-4dbc-5f77becca071" executionId="d1b16963-10c1-4a58-8ee6-0a15242761cc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fa91d057-1bc7-bbeb-a0a7-1783610df41f" executionId="32538a5a-476f-4832-81ea-fa97ac6f2646" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="620d4a5d-9ef4-a0c8-e807-b55e40b4b6eb" executionId="670bef16-dd4d-4cd4-b2d9-d94994150db3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ef06d191-6e29-f37b-1837-78064ca01d02" executionId="188ea7fe-362b-4644-81fa-028843941f73" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9a058867-9928-e314-83ad-56785ba45f15" executionId="77f34bb8-124f-45bc-8864-fc9cbcd8cbaf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c5a125b1-9b70-30bc-687b-7adda60e9bfc" executionId="f2f5304a-8640-46a4-a20a-9268f7d46fff" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a741b4b5-6824-d33d-ca7e-5c32f7774633" executionId="33c19738-2bd8-40eb-bc0d-643db8931813" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="65e35704-a643-f31f-3c5d-87272296b09e" executionId="af22e457-f1cb-49b9-a3b5-e491714e2eec" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="539d9d0d-00a8-d4a8-a5ac-245ec40304c1" executionId="15ed7626-f33d-425e-8bd1-bfa667e95cf5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3488a69f-13d0-8251-2b3b-d109fa76ad14" executionId="eee29fa1-98b2-406b-9092-9957f4f4ef85" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="892eb80c-abbe-0d30-be9b-142aaaf18019" executionId="39f02140-6866-4ee4-a6de-fb26b6e2b75d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6cd4a75a-434f-d428-2e04-fce5071942cb" executionId="e2842feb-3cf4-46c1-8683-b3d083fdd461" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="682eb251-726a-f386-9c6e-7418cc451f57" executionId="ce05ce6f-cc4c-4013-b951-d4420483bda0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="129c0ee7-5c8a-c9a9-2e66-cb350ba5fcb8" executionId="50abb781-40d4-4c51-bcad-c3f72d4d7f19" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="327c0a46-4366-a0bb-5f17-3783ea0e267a" executionId="4615c6c6-68ce-41a5-9f98-1596990ddada" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3aae5a59-13ee-44c6-5d17-4b9e936f0d8b" executionId="bcc19134-4e8b-43c1-b417-baeb765b2fdb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a1bad2cf-33ba-c226-dff3-00a973f07f50" executionId="f1b35f78-cf4a-47b9-9bc2-25771053f232" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3e974258-aaea-8319-e708-ba1525d44732" executionId="2469618f-173c-4290-8f2a-02d3f6fdaa6b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="76e1bfd9-3bf0-f8f9-1691-19ab5f2a1ce3" executionId="3f563d2b-a030-4d8f-bcb4-0dcbc45efdfd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="adb1f343-8d65-e6ee-5ad9-e6be907985ae" executionId="db3727a9-ebd0-436d-8a39-f33ec3a89bb1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f2f38fdb-c25d-3be8-7c02-1b9a8a78d946" executionId="07d45c2a-4272-44cf-bdd4-f986531056fb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0dfdc8f3-0cce-a7bf-4d05-1c2d21be6f49" executionId="b5d0e4b9-05d5-4332-b4c0-2053da38d899" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c3a97126-ac70-9301-c96f-9b0da996ee89" executionId="46d2383f-839f-481b-95e9-3ef2a91b8426" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="878029b3-bec5-c5f8-d637-70e59795d964" executionId="880716f7-c414-4f1d-a206-2c21b87fb132" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1295dd70-0584-e17b-0084-76600f9b9732" executionId="6b6a7b5d-97d7-4577-bc7f-da08fddab63f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4032db31-eada-da5f-feb3-f11aec7906a7" executionId="bc2b72ec-c081-4165-aac6-f2667d635c23" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="135d1c51-dd1a-5643-3db5-eb9d1ef03086" executionId="156a07d2-329c-4cf4-83d1-de7f6979d46d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="48" executed="48" passed="45" failed="3" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.4+50e68bbb8b (64-bit .NET 10.0.12)&#xD;
+[xUnit.net 00:00:00.21]   Discovering: Andirit.CSharp.Tests&#xD;
+[xUnit.net 00:00:00.28]   Discovered:  Andirit.CSharp.Tests&#xD;
+[xUnit.net 00:00:00.31]   Starting:    Andirit.CSharp.Tests&#xD;
+[xUnit.net 00:00:01.35]       System.IO.InvalidDataException : UnsupportedMetadataReference&#xD;
+[xUnit.net 00:00:01.35]       ---- System.BadImageFormatException : Read out of bounds.&#xD;
+[xUnit.net 00:00:01.35]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs(56,0): at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs(247,0): at IndependentFoundationReview.FoundationQualificationProbes.&lt;&gt;c__DisplayClass13_0.&lt;ObserveMalformedMetadataStillExposesIdentity&gt;b__0(String path)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs(481,0): at IndependentFoundationReview.FoundationQualificationProbes.WithFile(Byte[] bytes, Action`1 action)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs(235,0): at IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(String damage)&#xD;
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)&#xD;
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)&#xD;
+[xUnit.net 00:00:01.35]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:01.35]            at System.Reflection.Throw.OutOfBounds()&#xD;
+[xUnit.net 00:00:01.35]            at System.Reflection.Internal.MemoryBlock.PeekCompressedInteger(Int32 offset, Int32&amp; numberOfBytesRead)&#xD;
+[xUnit.net 00:00:01.35]            at System.Reflection.Metadata.Ecma335.BlobHeap.GetMemoryBlock(BlobHandle handle)&#xD;
+[xUnit.net 00:00:01.35]            at System.Reflection.Metadata.MetadataReader.GetBlobReader(BlobHandle handle)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs(37,0): at Andirit.MetadataReferenceValidation.Validate(MetadataReader reader, CancellationToken cancellationToken)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs(51,0): at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken)&#xD;
+[xUnit.net 00:00:01.35]       System.IO.InvalidDataException : UnsupportedMetadataReference&#xD;
+[xUnit.net 00:00:01.35]       ---- System.BadImageFormatException : Read out of bounds.&#xD;
+[xUnit.net 00:00:01.35]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs(56,0): at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs(247,0): at IndependentFoundationReview.FoundationQualificationProbes.&lt;&gt;c__DisplayClass13_0.&lt;ObserveMalformedMetadataStillExposesIdentity&gt;b__0(String path)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs(481,0): at IndependentFoundationReview.FoundationQualificationProbes.WithFile(Byte[] bytes, Action`1 action)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs(235,0): at IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(String damage)&#xD;
+[xUnit.net 00:00:01.35]            at InvokeStub_FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(Object, Span`1)&#xD;
+[xUnit.net 00:00:01.35]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+[xUnit.net 00:00:01.35]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:01.35]            at System.Reflection.Throw.OutOfBounds()&#xD;
+[xUnit.net 00:00:01.35]            at System.Reflection.Metadata.Ecma335.StringHeap.GetString(StringHandle handle, MetadataStringDecoder utf8Decoder)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs(52,0): at Andirit.MetadataReferenceValidation.Name(MetadataReader reader, StringHandle handle)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs(23,0): at Andirit.MetadataReferenceValidation.Validate(MetadataReader reader, CancellationToken cancellationToken)&#xD;
+[xUnit.net 00:00:01.35]         D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs(51,0): at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken)&#xD;
+[xUnit.net 00:00:01.36]       System.IO.InvalidDataException : UnsupportedMetadataReference&#xD;
+[xUnit.net 00:00:01.36]       ---- System.BadImageFormatException : Read out of bounds.&#xD;
+[xUnit.net 00:00:01.36]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.36]         D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs(56,0): at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken)&#xD;
+[xUnit.net 00:00:01.36]         D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs(247,0): at IndependentFoundationReview.FoundationQualificationProbes.&lt;&gt;c__DisplayClass13_0.&lt;ObserveMalformedMetadataStillExposesIdentity&gt;b__0(String path)&#xD;
+[xUnit.net 00:00:01.36]         D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs(481,0): at IndependentFoundationReview.FoundationQualificationProbes.WithFile(Byte[] bytes, Action`1 action)&#xD;
+[xUnit.net 00:00:01.36]         D:\projects\Andirit\docs\reviews\CI1A-S2.2-Q1-tests\FoundationQualificationProbes.cs(235,0): at IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(String damage)&#xD;
+[xUnit.net 00:00:01.36]            at InvokeStub_FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(Object, Span`1)&#xD;
+[xUnit.net 00:00:01.36]            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+[xUnit.net 00:00:01.36]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:01.36]            at System.Reflection.Throw.OutOfBounds()&#xD;
+[xUnit.net 00:00:01.36]            at System.Reflection.Metadata.Ecma335.StringHeap.GetString(StringHandle handle, MetadataStringDecoder utf8Decoder)&#xD;
+[xUnit.net 00:00:01.36]         D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs(52,0): at Andirit.MetadataReferenceValidation.Name(MetadataReader reader, StringHandle handle)&#xD;
+[xUnit.net 00:00:01.36]         D:\projects\Andirit\src\Andirit.CSharp\MetadataReferenceValidation.cs(23,0): at Andirit.MetadataReferenceValidation.Validate(MetadataReader reader, CancellationToken cancellationToken)&#xD;
+[xUnit.net 00:00:01.36]         D:\projects\Andirit\src\Andirit.CSharp\VerifiedCSharpCompilation.cs(51,0): at Andirit.VerifiedMetadataReference.Capture(String path, CancellationToken cancellationToken)&#xD;
+[xUnit.net 00:00:01.99]   Finished:    Andirit.CSharp.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-04T13:41:54.4253653+08:00">
+        <Text>[xUnit.net 00:00:01.35]     IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: "method-signature") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-04T13:41:54.4285109+08:00">
+        <Text>[xUnit.net 00:00:01.35]     IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: "later-type-name") [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-04T13:41:54.4366439+08:00">
+        <Text>[xUnit.net 00:00:01.36]     IndependentFoundationReview.FoundationQualificationProbes.ObserveMalformedMetadataStillExposesIdentity(damage: "first-type-name") [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

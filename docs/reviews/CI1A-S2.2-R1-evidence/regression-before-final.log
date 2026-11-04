@@ -1,0 +1,560 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Andirit.Abstractions -> D:\projects\Andirit\src\Andirit.Abstractions\bin\Debug\net10.0\Andirit.Abstractions.dll
+  Andirit -> D:\projects\Andirit\src\Andirit\bin\Debug\net10.0\Andirit.dll
+  Andirit.CSharp -> D:\projects\Andirit\src\Andirit.CSharp\bin\Debug\net10.0\Andirit.CSharp.dll
+  Andirit.Testing -> D:\projects\Andirit\src\Andirit.Testing\bin\Debug\net10.0\Andirit.Testing.dll
+  Andirit.CSharp.Tests -> D:\projects\Andirit\tests\Andirit.CSharp.Tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll
+Test run for D:\projects\Andirit\tests\Andirit.CSharp.Tests\bin\Debug\net10.0\Andirit.CSharp.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.26]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "void-array", signature: [0, 0, 29, 1]) [FAIL]
+[xUnit.net 00:00:00.28]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "unbound-var", signature: [0, 0, 19, 0]) [FAIL]
+[xUnit.net 00:00:00.31]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "missing-parameter", signature: [0, 1, 1]) [FAIL]
+[xUnit.net 00:00:00.33]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "huge-count", signature: [0, 223, 255, 255, 255, ···]) [FAIL]
+[xUnit.net 00:00:00.36]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "explicit-this-methoddef", signature: [64, 0, 1]) [FAIL]
+[xUnit.net 00:00:00.38]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "array-rank-zero", signature: [0, 0, 20, 8, 0, ···]) [FAIL]
+[xUnit.net 00:00:00.41]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "void-parameter", signature: [0, 1, 1, 1]) [FAIL]
+[xUnit.net 00:00:00.43]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "array-size-count", signature: [0, 0, 20, 8, 1, ···]) [FAIL]
+[xUnit.net 00:00:00.45]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "generic-count-mismatch", signature: [16, 1, 0, 1]) [FAIL]
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "void-array", signature: [0, 0, 29, 1]) [58 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Standard Output Messages:
+ void-array: signature=00001D01
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "unbound-var", signature: [0, 0, 19, 0]) [25 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ unbound-var: signature=00001300
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "missing-parameter", signature: [0, 1, 1]) [24 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ missing-parameter: signature=000101
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "huge-count", signature: [0, 223, 255, 255, 255, ···]) [23 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ huge-count: signature=00DFFFFFFF01
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "explicit-this-methoddef", signature: [64, 0, 1]) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ explicit-this-methoddef: signature=400001
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "array-rank-zero", signature: [0, 0, 20, 8, 0, ···]) [25 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ array-rank-zero: signature=00001408000000
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "void-parameter", signature: [0, 1, 1, 1]) [24 ms]
+[xUnit.net 00:00:00.48]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "out-of-range-type-handle", signature: [0, 0, 18, 124]) [FAIL]
+[xUnit.net 00:00:00.50]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "unbound-mvar", signature: [0, 0, 30, 0]) [FAIL]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ void-parameter: signature=00010101
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "array-size-count", signature: [0, 0, 20, 8, 1, ···]) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ array-size-count: signature=000014080102010100
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "generic-count-mismatch", signature: [16, 1, 0, 1]) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ generic-count-mismatch: signature=10010001
+
+
+[xUnit.net 00:00:00.52]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "truncated-header", signature: [0]) [FAIL]
+[xUnit.net 00:00:00.55]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "property-header", signature: [8, 0, 1]) [FAIL]
+[xUnit.net 00:00:00.57]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "methoddef-sentinel", signature: [5, 1, 1, 65, 8]) [FAIL]
+[xUnit.net 00:00:00.59]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "trailing", signature: [0, 0, 1, 8]) [FAIL]
+[xUnit.net 00:00:00.61]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "typespec-as-class", signature: [0, 0, 18, 6]) [FAIL]
+[xUnit.net 00:00:00.64]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "field-header", signature: [6, 0, 1]) [FAIL]
+[xUnit.net 00:00:00.66]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "missing-return", signature: [0, 0]) [FAIL]
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "out-of-range-type-handle", signature: [0, 0, 18, 124]) [21 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ out-of-range-type-handle: signature=0000127C
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "unbound-mvar", signature: [0, 0, 30, 0]) [26 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ unbound-mvar: signature=00001E00
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "truncated-header", signature: [0]) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ truncated-header: signature=00
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "property-header", signature: [8, 0, 1]) [23 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ property-header: signature=080001
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "methoddef-sentinel", signature: [5, 1, 1, 65, 8]) [21 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ methoddef-sentinel: signature=0501014108
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "trailing", signature: [0, 0, 1, 8]) [23 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ trailing: signature=00000108
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "typespec-as-class", signature: [0, 0, 18, 6]) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ typespec-as-class: signature=00001206
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "field-header", signature: [6, 0, 1]) [23 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ field-header: signature=060001
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "missing-return", signature: [0, 0]) [23 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ missing-return: signature=0000
+
+
+[xUnit.net 00:00:00.69]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "empty", signature: []) [FAIL]
+[xUnit.net 00:00:00.71]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "genericinst-nonclass", signature: [0, 0, 21, 8, 1, ···]) [FAIL]
+[xUnit.net 00:00:00.73]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "generic-zero", signature: [16, 0, 0, 1]) [FAIL]
+[xUnit.net 00:00:00.76]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "nested-byref", signature: [0, 0, 16, 16, 8]) [FAIL]
+[xUnit.net 00:00:00.78]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "instance-static-mismatch", signature: [32, 0, 1]) [FAIL]
+[xUnit.net 00:00:00.80]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "unmanaged-methoddef", signature: [1, 0, 1]) [FAIL]
+[xUnit.net 00:00:00.82]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "pinned-return", signature: [0, 0, 69, 8]) [FAIL]
+[xUnit.net 00:00:00.85]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "compressed-count-truncated", signature: [0, 128]) [FAIL]
+[xUnit.net 00:00:00.88]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "bad-type", signature: [0, 0, 255]) [FAIL]
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "empty", signature: []) [23 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ empty: signature=
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "genericinst-nonclass", signature: [0, 0, 21, 8, 1, ···]) [23 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ genericinst-nonclass: signature=000015080108
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "generic-zero", signature: [16, 0, 0, 1]) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ generic-zero: signature=10000001
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "nested-byref", signature: [0, 0, 16, 16, 8]) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ nested-byref: signature=0000101008
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "instance-static-mismatch", signature: [32, 0, 1]) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ instance-static-mismatch: signature=200001
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "unmanaged-methoddef", signature: [1, 0, 1]) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ unmanaged-methoddef: signature=010001
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "pinned-return", signature: [0, 0, 69, 8]) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ pinned-return: signature=00004508
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "compressed-count-truncated", signature: [0, 128]) [25 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ compressed-count-truncated: signature=0080
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "bad-type", signature: [0, 0, 255]) [28 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ bad-type: signature=0000FF
+
+
+[xUnit.net 00:00:00.91]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "nil-type-handle", signature: [0, 0, 18, 0]) [FAIL]
+[xUnit.net 00:00:00.94]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "reserved-header", signature: [128, 0, 1]) [FAIL]
+[xUnit.net 00:00:01.66]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(damage: "later-type-name") [FAIL]
+[xUnit.net 00:00:01.68]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(damage: "method-signature") [FAIL]
+[xUnit.net 00:00:01.70]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(damage: "first-type-name") [FAIL]
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "nil-type-handle", signature: [0, 0, 18, 0]) [33 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ nil-type-handle: signature=00001200
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "reserved-header", signature: [128, 0, 1]) [26 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(String name, Byte[] signature) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 100
+   at InvokeStub_S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ reserved-header: signature=800001
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(damage: "later-type-name") [18 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(String damage) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 44
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Standard Output Messages:
+ later-type-name: offset=858, patch=FFFF, sha256=584974319d734cfb6c452095975335898981ee6261d6bf809e44d2e135116097
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(damage: "method-signature") [15 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(String damage) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 44
+   at InvokeStub_S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ method-signature: offset=878, patch=FFFF, sha256=506edf234f78729295ce75c22e619211f3c7c745a9f1786d5f056700d9ccc6c7
+
+
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(damage: "first-type-name") [14 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(String damage) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 44
+   at InvokeStub_S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Standard Output Messages:
+ first-type-name: offset=830, patch=FFFF, sha256=14ede20fe8ae1585df478f8d3f6a0ebbf1c1501a0c501ebde2bf4828dc5799c7
+
+
+[xUnit.net 00:00:01.93]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.ReferencedNamesDereferenceBothStringFields(nameSpace: True) [FAIL]
+[xUnit.net 00:00:01.96]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.ReferencedNamesDereferenceBothStringFields(nameSpace: False) [FAIL]
+[xUnit.net 00:00:01.99]     Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodGenericAndParameterRelationshipsRefuse [FAIL]
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.ReferencedNamesDereferenceBothStringFields(nameSpace: True) [22 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.ReferencedNamesDereferenceBothStringFields(Boolean nameSpace) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 59
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.ReferencedNamesDereferenceBothStringFields(nameSpace: False) [23 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.ReferencedNamesDereferenceBothStringFields(Boolean nameSpace) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 59
+   at InvokeStub_S2_2MetadataRemediationTests.ReferencedNamesDereferenceBothStringFields(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+  Failed Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodGenericAndParameterRelationshipsRefuse [28 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.IO.InvalidDataException)
+  Stack Trace:
+     at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.<>c.<Refuses>b__11_0(String path) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 178
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.WithFile(Byte[] image, Action`1 action) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 191
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Refuses(Byte[] image) in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 175
+   at Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodGenericAndParameterRelationshipsRefuse() in D:\projects\Andirit\tests\Andirit.CSharp.Tests\S2_2MetadataRemediationTests.cs:line 106
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+Results File: C:\Users\Laszlos\source\repos\Solo\andirit-ci1a-s2.2-r1\regression-before\regression-before-final.trx
+
+Failed!  - Failed:    35, Passed:     5, Skipped:     0, Total:    40, Duration: 1 s - Andirit.CSharp.Tests.dll (net10.0)
