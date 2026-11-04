@@ -30,9 +30,33 @@ internal sealed class VerifiedMetadataReference
         }
         var image = ImmutableArray.Create(output.ToArray());
         var digest = Convert.ToHexStringLower(SHA256.HashData(image.AsSpan()));
-        var reference = MetadataReference.CreateFromImage(image, filePath: fullPath);
-        // Force PE validity before exposing proof, rather than waiting for a later bind.
-        using var validation = reference.GetMetadata();
+        PortableExecutableReference reference;
+        try
+        {
+            reference = MetadataReference.CreateFromImage(image, filePath: fullPath);
+            // Force full assembly/PE validity before exposing proof, rather than
+            // waiting for a later bind. GetMetadata() alone does not read the
+            // metadata tables, so a truncated image could otherwise receive an
+            // honest content identity before Roslyn rejects its usability (Q-F3).
+            using var metadata = reference.GetMetadata();
+            if (metadata is not AssemblyMetadata assembly)
+                throw new InvalidDataException("UnsupportedMetadataReference");
+            foreach (var module in assembly.GetModules())
+            {
+                var reader = module.GetMetadataReader();
+                // A netmodule has no assembly manifest and must not back a
+                // captured assembly identity.
+                if (!reader.IsAssembly)
+                    throw new InvalidDataException("UnsupportedMetadataReference");
+                _ = reader.GetAssemblyDefinition();
+                if (reader.TypeDefinitions.Count > 0)
+                    _ = reader.GetTypeDefinition(reader.TypeDefinitions.First());
+            }
+        }
+        catch (Exception exception) when (exception is BadImageFormatException or InvalidOperationException)
+        {
+            throw new InvalidDataException("UnsupportedMetadataReference", exception);
+        }
         cancellationToken.ThrowIfCancellationRequested();
         return new(reference, "file|" + fullPath.Replace('\\', '/') + "|" + digest);
     }
@@ -84,7 +108,12 @@ internal sealed class VerifiedCSharpCompilation
                 !tree.GetText(cancellationToken).ContentEquals(source.Text))
                 throw new InvalidDataException("RoslynTextMismatch:" + tree.FilePath);
             if (tree.Options is not CSharpParseOptions parse || parse.Kind != SourceCodeKind.Regular ||
-                parse.DocumentationMode != DocumentationMode.Diagnose || parse.Features.Any() || tree.FilePath.Contains('|'))
+                parse.DocumentationMode != DocumentationMode.Diagnose || parse.Features.Any() || tree.FilePath.Contains('|') ||
+                // A-01: preprocessor symbols are joined with ',' in the canonical
+                // source item, so a symbol containing ',' or '|' could collide with
+                // the field separators. Valid C# symbols are identifiers and cannot
+                // contain either character.
+                parse.PreprocessorSymbolNames.Any(symbol => symbol.Contains(',') || symbol.Contains('|')))
                 throw new InvalidDataException("UnsupportedParseConfiguration");
             identities.Add(new(tree.FilePath.Replace('\\', '/'), source.ContentHash,
                 parse.LanguageVersion.ToString(), string.Join(",", parse.PreprocessorSymbolNames.Order(StringComparer.Ordinal))));

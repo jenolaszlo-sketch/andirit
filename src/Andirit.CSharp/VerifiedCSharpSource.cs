@@ -68,7 +68,18 @@ internal sealed class VerifiedCSharpSource
         { encoding = new UnicodeEncoding(true, true, true); skip = 2; }
         else if (content.Span.StartsWith(new byte[] { 0xef, 0xbb, 0xbf })) skip = 3;
         string text;
-        try { text = encoding.GetString(content.Span[skip..]); }
+        try
+        {
+            text = encoding.GetString(content.Span[skip..]);
+            // Supported-encoding contract (Q-F2): only recognized-BOM UTF-16/UTF-32
+            // and UTF-8 (with or without BOM) are accepted. A BOM-less decode that
+            // yields NUL characters is the characteristic signature of BOM-less
+            // UTF-16/UTF-32 misread as UTF-8 and is refused. This is a bounded
+            // heuristic, not universal detection of unsupported encodings, and it
+            // also refuses a legitimate BOM-less UTF-8 file containing a literal NUL.
+            if (skip == 0 && text.Contains('\0'))
+                refusal ??= "AmbiguousBomlessEncoding:" + source.Path;
+        }
         catch (DecoderFallbackException)
         {
             refusal ??= "InvalidSourceEncoding:" + source.Path;
