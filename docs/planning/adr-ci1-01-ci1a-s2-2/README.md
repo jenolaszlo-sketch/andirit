@@ -4,9 +4,11 @@
 `ADR-CI1-01-CI1A-S2.2-OWNER-01` (2026-11-04).
 **Stage:** S2.2 (Roslyn semantic occurrence extraction).
 **Status:** entry package `ACCEPTED WITH QUALIFICATIONS`; bounded S2.2
-implementation issued. **Dependent production implementation not yet begun**
-(held behind `G-CONFIRM`/`G-MINT`). **S2.3/S2.4/S2.5/Stage 6/publication: not
-authorized.**
+implementation issued. **WP1–WP3 foundation implemented** (Q-F2 encoding, Q-F3
+metadata validation, A-01 symbol hardening + mapping contract). **Extraction /
+minting / WP4–WP9 not begun** (held behind `G-CONFIRM`/`G-MINT`).
+**S2.3/S2.4/S2.5/Stage 6/publication: not authorized.** Producer evidence:
+[`docs/evidence/adr-ci1-01-ci1a-s2-2-implementation.md`](../../evidence/adr-ci1-01-ci1a-s2-2-implementation.md).
 
 This directory contains the entry-preparation package (the six documents below)
 plus the post-acceptance [execution-readiness handoff](execution-readiness-handoff.md).
@@ -33,6 +35,9 @@ qualified source-bound R2 reference.
 | [`risk-and-qualification-register.md`](risk-and-qualification-register.md) | Risks, retained qualifications and non-production limitations that any authorization must accept |
 | [`owner-handoff.md`](owner-handoff.md) | Entry-preparation decision-ready handoff, final disposition and the exact owner decisions required |
 | [`execution-readiness-handoff.md`](execution-readiness-handoff.md) | Post-acceptance handoff: dispositions, ordered work packages and gates, F16 nine-part rows, blockers and evidence/qualification plan |
+| [`mapping-contract.md`](mapping-contract.md) | WP3 Option A mapping contract: R2-faithful `compctx1` derivation, extraction-time association invariant, durability boundary, adversarials (documentation only) |
+| [`g-confirm-package.md`](g-confirm-package.md) | `G-CONFIRM` review package: F16/NEW-02 nine-part rows and independent-confirmation instructions (not self-certified) |
+| [`g-mint-package.md`](g-mint-package.md) | `G-MINT` review package: mapping-contract invariants, examples, adversaries and falsification probes (not self-certified) |
 
 ## Post-acceptance decision
 
