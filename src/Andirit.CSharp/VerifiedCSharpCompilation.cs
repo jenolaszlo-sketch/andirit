@@ -34,10 +34,9 @@ internal sealed class VerifiedMetadataReference
         try
         {
             reference = MetadataReference.CreateFromImage(image, filePath: fullPath);
-            // Force full assembly/PE validity before exposing proof, rather than
-            // waiting for a later bind. GetMetadata() alone does not read the
-            // metadata tables, so a truncated image could otherwise receive an
-            // honest content identity before Roslyn rejects its usability (Q-F3).
+            // Materialize assembly metadata and validate the bounded Q-F3 name/signature
+            // surface before returning identity. This does not verify all PE sections,
+            // metadata tables, IL bodies or successful semantic binding.
             using var metadata = reference.GetMetadata();
             if (metadata is not AssemblyMetadata assembly)
                 throw new InvalidDataException("UnsupportedMetadataReference");
@@ -49,8 +48,7 @@ internal sealed class VerifiedMetadataReference
                 if (!reader.IsAssembly)
                     throw new InvalidDataException("UnsupportedMetadataReference");
                 _ = reader.GetAssemblyDefinition();
-                if (reader.TypeDefinitions.Count > 0)
-                    _ = reader.GetTypeDefinition(reader.TypeDefinitions.First());
+                MetadataReferenceValidation.Validate(reader, cancellationToken);
             }
         }
         catch (Exception exception) when (exception is BadImageFormatException or InvalidOperationException)
