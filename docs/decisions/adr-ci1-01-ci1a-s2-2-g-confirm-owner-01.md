@@ -4,7 +4,9 @@
 **Project:** Andirit. **Date:** 2026-11-04.
 **Recorded gate:** `G-CONFIRM`.
 **Owner decision:** **`ACCEPTED WITH EXPLICIT QUALIFICATIONS`**.
-**Gate status:** **`G-CONFIRM PASSED`**.
+**Gate:** **`G-CONFIRM PASSED`**.
+**Scope:** Independent semantic authority and expected-value confirmation for all
+14 F16/NEW-02 rows.
 
 **Accepted foundation:** `e0d911055f4cc9bdbf9aa4cc338f5cc007737a22`
 (tree `ba9338d74bf59c584bef340dbda49ed46eb1c5d9`).
