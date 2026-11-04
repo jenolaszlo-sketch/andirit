@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
+using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
@@ -189,5 +190,54 @@ internal sealed class VerifiedCSharpCompilation
         expected.Verified();
         if (expected.DescriptorDigest != Descriptor.DescriptorDigest)
             throw new InvalidDataException("StaleOrForgedCompilationDescriptor");
+    }
+
+    // S2.2 / WP3: R2-faithful `compctx1` derivation (mapping contract §2).
+    //
+    // S2.1 intentionally exposes no legacy twin for dependency-bearing
+    // compilations (`LegacyDescriptor == null`), so the defining compilation's
+    // frozen R2 `compctx1` is derived deterministically here. Every verified
+    // field already held by the `compctx2` descriptor is reused unchanged; the
+    // single substitution is that each verified project-reference item
+    // `compilation-context|<dependency compctx2>` is replaced by the frozen R2
+    // legacy item reconstructed from the verified live dependency. This is a
+    // mapping, not a redefinition, and the strong project-reference claim remains
+    // carried by `compctx2`. Actual verified PE identities are preserved verbatim;
+    // reviewer fixture-label alignment is never applied in production.
+    internal CompilationProvenanceDescriptor MapR2FaithfulCompctx1()
+    {
+        var references = Descriptor.References
+            .Select(MapReferenceForR2)
+            .Order(StringComparer.Ordinal)
+            .ToImmutableArray();
+        var mapped = Descriptor with
+        {
+            ContractVersion = "compctx1",
+            References = references,
+            DescriptorDigest = string.Empty,
+        };
+        return mapped with { DescriptorDigest = mapped.ComputeDigest() };
+    }
+
+    private string MapReferenceForR2(string reference)
+    {
+        const string projectPrefix = "compilation-context|";
+        if (!reference.StartsWith(projectPrefix, StringComparison.Ordinal))
+            return reference;
+        var digest = reference[projectPrefix.Length..];
+        var dependency = Dependencies.SingleOrDefault(d =>
+            string.Equals(d.Descriptor.DescriptorDigest, digest, StringComparison.Ordinal))
+            ?? throw new InvalidDataException("MissingDefiningCompilation");
+        return R2LegacyProjectReference(dependency.Compilation);
+    }
+
+    private static string R2LegacyProjectReference(CSharpCompilation dependency)
+    {
+        var trees = string.Join(",", dependency.SyntaxTrees
+            .OrderBy(tree => tree.FilePath, StringComparer.Ordinal)
+            .Select(tree => tree.FilePath.Replace('\\', '/') + "=" +
+                Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(tree.GetText().ToString())))));
+        return "compilation|" + dependency.AssemblyName + "|" +
+            ProvenanceHash.Metadata(dependency.Assembly.Identity) + "|" + trees;
     }
 }
