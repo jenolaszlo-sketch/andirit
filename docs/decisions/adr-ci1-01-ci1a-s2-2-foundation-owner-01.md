@@ -1,23 +1,30 @@
-# ADR-CI1-01-CI1A-S2.2-FOUNDATION-OWNER-01 — Qualified owner acceptance of the WP1–WP3 foundation (DRAFT)
+# ADR-CI1-01-CI1A-S2.2-FOUNDATION-OWNER-01 — Qualified owner acceptance of the WP1–WP3 foundation
 
 **Commission:** `ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-01`.
-**Project:** Andirit. **Date:** 2026-11-04.
-**Candidate under decision:** `d5a785f898ce7877caef10be53074f2c2ae3a1cd`
+**Recording commission:** `ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-02` (owner-authorized).
+**Project:** Andirit. **Recorded:** 2026-11-04.
+**Technical candidate under decision:** `d5a785f898ce7877caef10be53074f2c2ae3a1cd`
 (tree `5d8aa21d515dcd2d423aa0c7eb8f7e3996eb650c`), canonical `main`.
+**Preparation commit:** `526d2c069d5ba93a016cb94b50b1a831442d7071`
+(tree `d581f25b85e04239ac043a4c688bb39fee356f76`).
 **Independent Q2 verdict under decision:** `SUPPORTED WITH QUALIFICATIONS`.
+**Owner decision:** **`ACCEPTED WITH QUALIFICATIONS`.**
 
-> **Status: DRAFT — PREPARED FOR OWNER DECISION.**
-> **Owner decision: `PENDING`.**
-> **Recommended disposition: `ACCEPTED WITH QUALIFICATIONS`.**
+> **Status: RECORDED — OWNER-AUTHORIZED.**
+> **Owner decision: `ACCEPTED WITH QUALIFICATIONS`.**
 >
-> This record is **not** in force. It records no owner approval yet, authorizes no
-> push/publication, and begins no WP4–WP9, S2.3 or downstream implementation. It
-> becomes an owner decision only when the owner explicitly issues it.
+> The owner authorized recording this acceptance
+> (`ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-02`). This accepts the WP1–WP3 foundation
+> **with qualifications only**. It does **not** accept complete S2.2, does **not**
+> accept `G-CONFIRM`/`G-MINT`, and authorizes **no** WP4–WP9, S2.3 or downstream
+> implementation. The same authorization separately permits committing this
+> decision and a fast-forward push of canonical `main`; it authorizes no other
+> gate.
 
-This is the decision record prepared for `ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-01`.
-It is additive preparation only. It does not itself record owner approval, does
-not amend any accepted decision, and does not close any gate. Supporting
-deliverables are in
+This is the recorded owner decision for `ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-01`,
+formally accepted under `ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-02`. It is additive
+documentation: it does not amend any accepted decision and does not close any
+gate. Supporting deliverables are in
 [`docs/reviews/CI1A-S2.2-FOUNDATION-OWNER-01/`](../reviews/CI1A-S2.2-FOUNDATION-OWNER-01/README.md).
 
 ---
@@ -31,8 +38,10 @@ the exact supported contracts, qualifications and excluded guarantees, the two
 remaining pre-minting gates (`G-CONFIRM`, `G-MINT`) and the authorization gates
 that stay closed.
 
-This commission **prepares** the decision. It does not authorize recording owner
-approval, pushing, publication or downstream implementation.
+The preparation commission prepared the decision; the owner has now **authorized
+recording** the qualified acceptance and a fast-forward push of canonical `main`
+(`ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-02`). Recording the acceptance does not
+authorize `G-CONFIRM`/`G-MINT`, WP4–WP9, S2.3, publication or releases.
 
 ---
 
@@ -105,15 +114,15 @@ or INSUFFICIENT-EVIDENCE finding within that scope:
 | Q1-F04 — instance identity conflated with complete inputs | **CLOSED** | Equal semantic identity never permits replacing the live binding instance. |
 | Q1-F05 — pre-mint versus reopen gate inconsistency | **CLOSED** | Native persistence/reopen is the separately authorized first S2.3 gate; carrier unresolved/unimplemented. |
 
-Closure is a reviewer technical disposition. Owner acceptance remains separate
-and is the subject of this draft.
+Closure is a reviewer technical disposition within the stated bounded scope; the
+owner records it here as accepted **within that scope only**.
 
 ---
 
-## 4. Supported WP1–WP3 contracts (what acceptance would cover)
+## 4. Supported WP1–WP3 contracts (owner-accepted)
 
-If accepted, the owner would accept **only** the following bounded, evidence-backed
-foundation contracts. The complete statement, with exclusions, is in
+The owner **accepts** the following bounded, evidence-backed foundation contracts,
+and nothing broader. The complete statement, with exclusions, is in
 [qualifications and excluded guarantees](../reviews/CI1A-S2.2-FOUNDATION-OWNER-01/qualifications-and-excluded-guarantees.md).
 
 | Area | Supported contract (bounded) |
@@ -127,11 +136,11 @@ foundation contracts. The complete statement, with exclusions, is in
 
 ---
 
-## 5. Qualifications and gate status that acceptance must carry
+## 5. Qualifications and gate status carried by this acceptance
 
-Acceptance under this draft would **not** raise the achieved guarantee to
-complete metadata validity, production mapping/minting, association enforcement
-or durability. The following remain unqualified and carried:
+This acceptance does **not** raise the achieved guarantee to complete metadata
+validity, production mapping/minting, association enforcement or durability. The
+following remain unqualified and carried:
 
 - Bounded Q-F3 surface rather than universal usable metadata; documented excluded
   surfaces (malformed Field signature, invalid TypeRef ResolutionScope, malformed
@@ -156,52 +165,69 @@ Gate status at the candidate:
 
 ---
 
-## 6. Effect if the owner issues this decision
+## 6. Effect of this recorded decision
 
-If (and only if) the owner later records `ACCEPTED WITH QUALIFICATIONS`, the
-decision would:
+As recorded (`ACCEPTED WITH QUALIFICATIONS`), this decision:
 
-- record bounded **technical** closure of Q1-F01–F05 and accept the WP1–WP3
+- records bounded **technical** closure of Q1-F01–F05 and accepts the WP1–WP3
   foundation contracts of §4 **with** the qualifications of §5;
-- leave `G-CONFIRM` and `G-MINT` **open**, `G-DUR` resolved as (a), and
+- leaves `G-CONFIRM` and `G-MINT` **open**, `G-DUR` resolved as (a), and
   `G-ACCEPT` unreached;
-- authorize **no** WP4–WP9 implementation, no target/occurrence minting, no
-  extraction, no S2.3/S2.4/S2.5/Stage 6 work, no public API and no push/publication.
+- authorizes **no** WP4–WP9 implementation, no target/occurrence minting, no
+  extraction, no S2.3/S2.4/S2.5/Stage 6 work, no public API and no
+  publication/release.
 
-The owner separately decides: (1) this foundation acceptance; (2) an independent
-`G-CONFIRM` commission; (3) `G-MINT` implementation + independent review;
-(4) WP4–WP9 authorization; (5) push/publication; (6) S2.3 and later.
+Foundation acceptance (item 1 below) is recorded; the fast-forward push (item 5)
+is separately authorized by `ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-02`. The owner
+separately decides the remaining gates: (2) an independent `G-CONFIRM`
+commission; (3) `G-MINT` implementation + independent review; (4) WP4–WP9
+authorization; (6) S2.3 and later.
 
 ---
 
 ## 7. Recording rules and boundaries
 
-- **Do not mark accepted until explicitly authorized by the owner.** Until then
-  the status is `DRAFT — PENDING`.
-- This commission adds documentation only: this draft decision plus the supporting
-  package under `docs/reviews/CI1A-S2.2-FOUNDATION-OWNER-01/`. No production code,
-  test, frozen manifest, oracle, accepted decision or historical report is
-  modified.
+- The owner **explicitly authorized** recording this acceptance
+  (`ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-02`); the status is now
+  **`ACCEPTED WITH QUALIFICATIONS`**.
+- This record adds documentation only: this decision plus the supporting package
+  under `docs/reviews/CI1A-S2.2-FOUNDATION-OWNER-01/`. No production code, test,
+  frozen manifest, oracle, accepted decision or historical report is modified.
 - Frozen R2/Q3 evidence, historical failed reviews, manifests, oracles and prior
   qualifications remain preserved. Historical observation failures stay classified
   as failures.
-- **No push, publication, merge, branch deletion or force-push** is part of this
-  commission. The push/cleanup plan is prepared but not executed
-  ([git audit](../reviews/CI1A-S2.2-FOUNDATION-OWNER-01/git-branch-audit-and-push-readiness.md)).
-- Stop at the owner decision gate.
+- The separate `ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-02` authorization permits a
+  **fast-forward** push of canonical `main` only. No force-push, branch deletion,
+  history rewrite, remote pruning or publication is authorized. The
+  [git audit](../reviews/CI1A-S2.2-FOUNDATION-OWNER-01/git-branch-audit-and-push-readiness.md)
+  findings stand and branch cleanup remains out of scope.
 
 ---
 
 ## 8. Next eligible decisions
 
-1. **Owner foundation decision** (this record): ACCEPTED WITH QUALIFICATIONS /
-   rejected / amended.
+1. **Owner foundation decision** (this record): **`ACCEPTED WITH QUALIFICATIONS`**
+   — recorded.
 2. **Independent `G-CONFIRM`** commission
    ([draft](../reviews/CI1A-S2.2-FOUNDATION-OWNER-01/g-confirm-commission-draft.md)).
 3. **`G-MINT`** implementation and independent review
    ([readiness and draft](../reviews/CI1A-S2.2-FOUNDATION-OWNER-01/g-mint-readiness-and-commission-draft.md)).
-4. WP4–WP9 authorization, then push/publication, then S2.3 (NEW-01 closed) and
-   later — each a separate owner decision.
+4. WP4–WP9 authorization, then S2.3 (NEW-01 closed) and later — each a separate
+   owner decision.
 
-**Provisional disposition of this draft:** **`ACCEPTED WITH QUALIFICATIONS`**
-(recommended), **`PENDING`** owner decision.
+**Final disposition:** **`ADR-CI1-01-CI1A-S2.2-FOUNDATION-OWNER-01 ACCEPTED WITH
+QUALIFICATIONS`** — the WP1–WP3 foundation is accepted with every documented
+qualification and exclusion; `G-CONFIRM` and `G-MINT` remain **OPEN**; WP4–WP9
+remain **NOT AUTHORIZED**. This is **not** acceptance of complete S2.2.
+
+---
+
+## 9. Recording authorization
+
+- `ANDIRIT-CI1A-S2.2-FOUNDATION-OWNER-02` (owner-authorized) recorded this
+  acceptance and committed only this decision-record update.
+- The same authorization permits a **fast-forward** push of canonical `main` to
+  `origin`. It does **not** cover `G-CONFIRM`/`G-MINT`, WP4–WP9, S2.3 or later,
+  publication/releases, or branch deletion/consolidation.
+- Remaining prerequisite gates and the separate non-blocking EC3 heritage
+  documentation follow-up are tracked outside this decision.
