@@ -85,3 +85,23 @@ rows (package §2 / mapping contract) rather than the stale handoff §D rows 2/5
 and should note the header naming and deferral-scope corrections. No frozen
 evidence or historical report was edited; corrections live in
 [adversarial-findings.md](adversarial-findings.md).
+
+## 7. Final commit, working tree and remote state
+
+- **Content commit:** `391abbe` — "G-CONFIRM-Q1: independent F16/NEW-02 semantic
+  authority confirmation" (11 review-package files).
+- **Package index and evidence normalization:** `1f51db3` — adds the package
+  [`README.md`](README.md), tracks [`evidence/oracle-run.txt`](evidence/oracle-run.txt)
+  in place of the gitignored `oracle-run.log`, and normalizes the two evidence
+  blob encodings. The committed package then matches the on-disk package.
+- **Handoff sync-wording correction:** this document's follow-up commit (head).
+- **Reviewed commit/tree:** `e0d911055f4cc9bdbf9aa4cc338f5cc007737a22` /
+  `ba9338d74bf59c584bef340dbda49ed46eb1c5d9` (unchanged; see the header).
+- **Working tree:** clean. Only gitignored build artifacts and `*.log` files
+  remain untracked.
+- **Remote:** `main` is **3 commits ahead** of `origin/main` (`origin/main` =
+  `e0d9110`); nothing has been pushed. Push is not authorized by this review
+  (see §5). The baseline authentication in
+  [`verification-log.md`](verification-log.md) §1 recorded `(clean, in sync)` at
+  review time, when `HEAD` was `e0d9110` == `origin/main`; that historical line
+  is accurate as of the reviewed commit and is not altered.
