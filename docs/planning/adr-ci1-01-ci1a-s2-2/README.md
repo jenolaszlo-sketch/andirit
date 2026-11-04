@@ -1,10 +1,18 @@
 # CI1A S2.2 — Scope and Entry-Criteria Preparation
 
-**Commission:** `ADR-CI1-01-CI1A-S2.2-ENTRY-01`.
+**Commission:** `ADR-CI1-01-CI1A-S2.2-ENTRY-01`, superseded by
+`ADR-CI1-01-CI1A-S2.2-OWNER-01` (2026-11-04).
 **Stage:** S2.2 (Roslyn semantic occurrence extraction).
-**Status:** `S2.2 ENTRY PREPARATION COMPLETE — READY WITH EXPLICIT QUALIFICATIONS`.
-**S2.2 implementation:** **NOT AUTHORIZED.** This directory prepares a separate owner
-authorization decision; it authors no production code, tests, schemas or fixtures.
+**Status:** entry package `ACCEPTED WITH QUALIFICATIONS`; bounded S2.2
+implementation issued. **Dependent production implementation not yet begun**
+(held behind `G-CONFIRM`/`G-MINT`). **S2.3/S2.4/S2.5/Stage 6/publication: not
+authorized.**
+
+This directory contains the entry-preparation package (the six documents below)
+plus the post-acceptance [execution-readiness handoff](execution-readiness-handoff.md).
+The owner decision is
+[`adr-ci1-01-ci1a-s2-2-entry-acceptance-owner-01.md`](../../decisions/adr-ci1-01-ci1a-s2-2-entry-acceptance-owner-01.md).
+The entry package authors no production code, tests, schemas or fixtures.
 
 This package recovers the actual S2.2 scope from the accepted architecture and
 records the entry contract, the obligation/dependency matrix, a draft
@@ -23,7 +31,16 @@ qualified source-bound R2 reference.
 | [`obligation-dependency-matrix.md`](obligation-dependency-matrix.md) | Per-obligation source, requirement, current evidence, blocking stage, required probe/remediation, dependencies and owner decisions for Q-F2, Q-F3, A-01, A-02, S-01, NEW-01, NEW-04 (plus F16/NEW-02 and standing constraints) |
 | [`implementation-commission-draft.md`](implementation-commission-draft.md) | Draft, not-yet-issued S2.2 implementation commission with bounded work packages and evidence obligations |
 | [`risk-and-qualification-register.md`](risk-and-qualification-register.md) | Risks, retained qualifications and non-production limitations that any authorization must accept |
-| [`owner-handoff.md`](owner-handoff.md) | Decision-ready handoff, final disposition and the exact owner decisions required |
+| [`owner-handoff.md`](owner-handoff.md) | Entry-preparation decision-ready handoff, final disposition and the exact owner decisions required |
+| [`execution-readiness-handoff.md`](execution-readiness-handoff.md) | Post-acceptance handoff: dispositions, ordered work packages and gates, F16 nine-part rows, blockers and evidence/qualification plan |
+
+## Post-acceptance decision
+
+[`adr-ci1-01-ci1a-s2-2-entry-acceptance-owner-01.md`](../../decisions/adr-ci1-01-ci1a-s2-2-entry-acceptance-owner-01.md)
+records S2.2 entry acceptance `ACCEPTED WITH QUALIFICATIONS` and the Q-F2, Q-F3,
+A-01, A-02, Option A durability, F16/NEW-02, NEW-01, NEW-04 and S-01
+dispositions. See the [execution-readiness handoff](execution-readiness-handoff.md)
+for the bounded commission, gates and remaining blockers.
 
 ## Verified baseline (summary)
 
