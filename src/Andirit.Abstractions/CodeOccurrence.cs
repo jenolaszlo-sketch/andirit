@@ -419,7 +419,7 @@ public sealed record CodeOccurrenceCoverage
             throw new ArgumentOutOfRangeException(nameof(invocationFacts));
         if (!Enum.IsDefined(state))
             throw new ArgumentOutOfRangeException(nameof(state));
-        if (verifiedUnitCount > declaredUnitCount && declaredUnitCount != 0)
+        if (verifiedUnitCount > declaredUnitCount)
             throw new ArgumentException(
                 "Verified unit count cannot exceed the declared unit count.",
                 nameof(verifiedUnitCount));
@@ -468,14 +468,28 @@ public sealed record CodeOccurrenceCoverage
     public bool IsComplete => State == CodeRelationshipCoverageState.Produced;
 
     /// <summary>
-    /// Combines partial/complete evidence from several batches or units. The
-    /// worst analysis state wins; counters are summed; the first non-null scope
-    /// and universe identities are retained.
+    /// Combines partial/complete evidence from several disjoint batches or units.
+    /// The worst analysis state wins (only complete + complete is complete).
+    /// Counters are summed; unit counts are summed across the disjoint
+    /// contributions. Records from different verified compilation universes are
+    /// refused. Records from different analysis scopes combine for accounting,
+    /// but the combination is attributed to no single scope and cannot claim a
+    /// complete analysis (the NEW-04/P06 mixed-scope defect). A sole available
+    /// attribution is kept for legacy contributions that carry no identity.
     /// </summary>
     public CodeOccurrenceCoverage Merge(CodeOccurrenceCoverage other)
     {
         ArgumentNullException.ThrowIfNull(other);
+        if (UniverseId is not null && other.UniverseId is not null &&
+            !string.Equals(UniverseId, other.UniverseId, StringComparison.Ordinal))
+            throw new ArgumentException(
+                "Coverage records from different verified compilation universes cannot be merged.",
+                nameof(other));
+        var mixedScope = ScopeId is not null && other.ScopeId is not null &&
+            !string.Equals(ScopeId, other.ScopeId, StringComparison.Ordinal);
         var state = Worse(State, other.State);
+        if (mixedScope && state == CodeRelationshipCoverageState.Produced)
+            state = CodeRelationshipCoverageState.Partial;
         var reasons = new Dictionary<string, int>(UnavailableReasons, StringComparer.Ordinal);
         foreach (var (key, value) in other.UnavailableReasons)
             reasons[key] = reasons.GetValueOrDefault(key) + value;
@@ -483,10 +497,10 @@ public sealed record CodeOccurrenceCoverage
             InvocationFacts + other.InvocationFacts,
             UnsupportedCategories + other.UnsupportedCategories,
             state,
-            ScopeId ?? other.ScopeId,
-            UniverseId ?? other.UniverseId,
-            Math.Max(DeclaredUnitCount, other.DeclaredUnitCount),
-            Math.Max(VerifiedUnitCount, other.VerifiedUnitCount),
+            mixedScope ? null : ScopeId ?? other.ScopeId,
+            mixedScope ? null : UniverseId ?? other.UniverseId,
+            DeclaredUnitCount + other.DeclaredUnitCount,
+            VerifiedUnitCount + other.VerifiedUnitCount,
             External + other.External,
             Ambiguous + other.Ambiguous,
             Unresolved + other.Unresolved,
