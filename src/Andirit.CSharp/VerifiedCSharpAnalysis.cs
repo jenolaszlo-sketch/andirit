@@ -178,6 +178,36 @@ internal sealed class VerifiedCSharpUniverse
         _ => throw new InvalidDataException("UnsupportedDefiningStatus"),
     };
 
+    // S2.2 / WP5: authority-gated `usage4` occurrence construction (mapping contract
+    // §3; Option A §5.1(3); WP4-OWNER §9 W5-1/W5-2/W5-5). This consumes the WP4
+    // `asmctx3` mint and only then builds the occurrence fact, so a structurally
+    // valid `CodeOccurrenceTargetId` alone can never produce a trusted usage. A
+    // non-minted status yields no fact. The caller-supplied component digests remain
+    // the accepted S-01 obligation and are not independently verified here.
+    internal VerifiedUsageMint MintUsage(VerifiedUsageInput input)
+    {
+        ArgumentNullException.ThrowIfNull(input);
+        var mint = MintTarget(input.Target, input.RecordedCompctx2,
+            input.IdentifierDigest, input.DeclarationDigest, input.ShapeDigest, input.Caller);
+        if (!mint.IsMinted)
+            return new(mint.Status, mint.Detail);
+
+        var fact = CodeOccurrenceFact.Create(
+            input.RepositoryId,
+            mint.TargetId!,
+            input.TargetDocumentId,
+            input.SourceUnitId,
+            new CodeOccurrenceContributor(input.PluginId, input.SourceUnitId),
+            CodeOccurrenceCategory.Invocation,
+            input.Span,
+            input.SourceHash,
+            input.ContentHash,
+            input.DeclarationSpan,
+            4,
+            input.PluginVersion);
+        return new(VerifiedTargetMintStatus.Minted, mint.Detail, fact, mint.TargetId);
+    }
+
     private static bool BindsDefining(VerifiedCSharpCompilation entry, IMethodSymbol target, CSharpCompilation? caller)
     {
         // Direct in-compilation defining assembly: the exact live assembly
