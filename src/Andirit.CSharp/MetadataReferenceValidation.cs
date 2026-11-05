@@ -112,14 +112,17 @@ internal static class MetadataReferenceValidation
             {
                 case 0x01: Require(work.Position.HasFlag(Position.Void)); break;
                 case >= 0x02 and <= 0x0e: // primitive types, including string
-                case 0x18: case 0x19: case 0x1c: // native int/uint, object
+                case 0x18:
+                case 0x19:
+                case 0x1c: // native int/uint, object
                 case 0x16: break; // typedref, including runtime pointer forms (ArgIterator)
                 case 0x0f: pending.Push(new(Kind.Type, Position.Void)); break; // unmanaged pointer
                 case 0x10:
                     Require(work.Position.HasFlag(Position.ByRef));
                     pending.Push(new(Kind.Type));
                     break;
-                case 0x11: case 0x12:
+                case 0x11:
+                case 0x12:
                     TypeHandle(reader, blob.ReadTypeHandle(), allowSpecification: false);
                     break;
                 case 0x13: Require(blob.ReadCompressedInteger() < typeArity); break;

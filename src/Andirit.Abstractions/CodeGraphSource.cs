@@ -27,7 +27,8 @@ public sealed class CodeGraphSource
         {
             cancellationToken.ThrowIfCancellationRequested();
             return new ValueTask<Stream>(new MemoryStream(buffer, 0, length, writable: false, publiclyVisible: false));
-        }) { MaterializedBytes = buffer.AsMemory(0, length), MaterializedByteHash = byteHash };
+        })
+        { MaterializedBytes = buffer.AsMemory(0, length), MaterializedByteHash = byteHash };
 
     public string Path { get; }
     public string ContentHash { get; }

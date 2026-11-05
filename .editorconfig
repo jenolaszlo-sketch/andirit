@@ -6,3 +6,8 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = space
 indent_size = 4
+
+# Frozen R2 authority (S2-REM-01, commit fc515ff): this single file keeps its
+# historical UTF-8 BOM bytes; the charset gate remains strict everywhere else.
+[src/Andirit.Abstractions/CodeOccurrence.cs]
+charset = utf-8-bom

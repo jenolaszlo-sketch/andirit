@@ -1,0 +1,61 @@
+﻿diff --git a/.editorconfig b/.editorconfig
+index 1632c8f..378857d 100644
+--- a/.editorconfig
++++ b/.editorconfig
+@@ -6,3 +6,8 @@ insert_final_newline = true
+ trim_trailing_whitespace = true
+ indent_style = space
+ indent_size = 4
++
++# Frozen R2 authority (S2-REM-01, commit fc515ff): this single file keeps its
++# historical UTF-8 BOM bytes; the charset gate remains strict everywhere else.
++[src/Andirit.Abstractions/CodeOccurrence.cs]
++charset = utf-8-bom
+diff --git a/src/Andirit.Abstractions/CodeGraphSource.cs b/src/Andirit.Abstractions/CodeGraphSource.cs
+index da3e63a..4d905c7 100644
+--- a/src/Andirit.Abstractions/CodeGraphSource.cs
++++ b/src/Andirit.Abstractions/CodeGraphSource.cs
+@@ -27,7 +27,8 @@ public sealed class CodeGraphSource
+         {
+             cancellationToken.ThrowIfCancellationRequested();
+             return new ValueTask<Stream>(new MemoryStream(buffer, 0, length, writable: false, publiclyVisible: false));
+-        }) { MaterializedBytes = buffer.AsMemory(0, length), MaterializedByteHash = byteHash };
++        })
++        { MaterializedBytes = buffer.AsMemory(0, length), MaterializedByteHash = byteHash };
+ 
+     public string Path { get; }
+     public string ContentHash { get; }
+diff --git a/src/Andirit.CSharp/MetadataReferenceValidation.cs b/src/Andirit.CSharp/MetadataReferenceValidation.cs
+index 9aecbae..0ef2eaa 100644
+--- a/src/Andirit.CSharp/MetadataReferenceValidation.cs
++++ b/src/Andirit.CSharp/MetadataReferenceValidation.cs
+@@ -112,14 +112,17 @@ internal static class MetadataReferenceValidation
+             {
+                 case 0x01: Require(work.Position.HasFlag(Position.Void)); break;
+                 case >= 0x02 and <= 0x0e: // primitive types, including string
+-                case 0x18: case 0x19: case 0x1c: // native int/uint, object
++                case 0x18:
++                case 0x19:
++                case 0x1c: // native int/uint, object
+                 case 0x16: break; // typedref, including runtime pointer forms (ArgIterator)
+                 case 0x0f: pending.Push(new(Kind.Type, Position.Void)); break; // unmanaged pointer
+                 case 0x10:
+                     Require(work.Position.HasFlag(Position.ByRef));
+                     pending.Push(new(Kind.Type));
+                     break;
+-                case 0x11: case 0x12:
++                case 0x11:
++                case 0x12:
+                     TypeHandle(reader, blob.ReadTypeHandle(), allowSpecification: false);
+                     break;
+                 case 0x13: Require(blob.ReadCompressedInteger() < typeArity); break;
+diff --git a/tests/Andirit.CSharp.Tests/NonAssemblyMetadataFixture.cs b/tests/Andirit.CSharp.Tests/NonAssemblyMetadataFixture.cs
+index 5cf6794..2172871 100644
+--- a/tests/Andirit.CSharp.Tests/NonAssemblyMetadataFixture.cs
++++ b/tests/Andirit.CSharp.Tests/NonAssemblyMetadataFixture.cs
+@@ -1,4 +1,4 @@
+-∩╗┐using System;
++using System;
+ 
+ namespace Andirit.CSharp.Tests;
+ 
