@@ -55,8 +55,17 @@ internal static class VerifiedCSharpOccurrenceExtractor
             foreach (var invocation in tree.GetRoot().DescendantNodes().OfType<InvocationExpressionSyntax>())
             {
                 var info = model.GetSymbolInfo(invocation);
-                var symbol = info.Symbol as IMethodSymbol ?? info.CandidateSymbols.OfType<IMethodSymbol>().FirstOrDefault();
-                if (symbol is null) { unresolved++; continue; }
+                var symbol = info.Symbol as IMethodSymbol;
+                if (symbol is null)
+                {
+                    // WP5-Q1 F1: only a uniquely resolved symbol may establish the
+                    // trusted method target. Multiple equally-applicable candidates
+                    // are an `Ambiguous` refusal; any other unresolved binding stays
+                    // `Unresolved`. Candidate selection never invents a binding.
+                    if (info.CandidateSymbols.Length > 1) ambiguous++;
+                    else unresolved++;
+                    continue;
+                }
                 if (!IsSupportedInvocation(symbol)) { unsupported++; unsupportedCategories++; continue; }
 
                 var resolved = universe.ResolveDefining(symbol, null, sourceUnit.Compilation);
