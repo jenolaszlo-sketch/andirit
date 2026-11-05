@@ -129,6 +129,55 @@ internal sealed class VerifiedCSharpUniverse
             entry, entry.MapR2FaithfulCompctx1());
     }
 
+    // S2.2 / WP4: authority-gated `asmctx3` target minting (Option A §5.1(1); mapping
+    // contract §3; G-MINT owner §7). This is the production minting boundary. It
+    // enforces the binding G3 precondition — a supplied, non-null recorded defining
+    // `compctx2` — before delegating to the accepted WP3 resolver, so that
+    // `ResolveDefining(..., null, ...)` returning Complete can never mint. Every
+    // non-Complete resolution refuses (G2), the defining compilation's identity is
+    // taken from the resolved live entry (G1), and the frozen
+    // `CodeOccurrenceIdentity.ComputeTargetId` constructs the artifact from the
+    // mapped R2-faithful `compctx1` only after those checks pass. The caller-supplied
+    // component digests remain the accepted S-01 obligation and are not independently
+    // verified here. No `usage4`/fact/persistence is produced (WP5/S2.3).
+    internal VerifiedTargetMint MintTarget(
+        IMethodSymbol target,
+        string? recordedCompctx2,
+        string identifierDigest,
+        string declarationDigest,
+        string shapeDigest,
+        CSharpCompilation? caller = null)
+    {
+        ArgumentNullException.ThrowIfNull(target);
+        if (string.IsNullOrWhiteSpace(recordedCompctx2))
+            return new(VerifiedTargetMintStatus.MissingRecordedContext,
+                "a supplied, non-null recorded defining compctx2 is required before minting");
+
+        var resolved = ResolveDefining(target, recordedCompctx2, caller);
+        if (resolved.Status != VerifiedDefiningStatus.Complete)
+            return new(MapMintStatus(resolved.Status), resolved.Detail);
+
+        var compctx1 = resolved.Compctx1!;
+        var targetId = CodeOccurrenceIdentity.ComputeTargetId(
+            compctx1.DescriptorDigest, compctx1.MetadataIdentity, compctx1.ModuleName,
+            identifierDigest, declarationDigest, shapeDigest);
+        return new(VerifiedTargetMintStatus.Minted,
+            "minted from verified defining compilation context '" +
+            resolved.Defining!.Descriptor.ProjectUnitId + "'",
+            targetId, compctx1);
+    }
+
+    private static VerifiedTargetMintStatus MapMintStatus(VerifiedDefiningStatus status) => status switch
+    {
+        VerifiedDefiningStatus.Complete => VerifiedTargetMintStatus.Minted,
+        VerifiedDefiningStatus.Incomplete => VerifiedTargetMintStatus.Incomplete,
+        VerifiedDefiningStatus.Ambiguous => VerifiedTargetMintStatus.Ambiguous,
+        VerifiedDefiningStatus.MissingDefiningCompilation => VerifiedTargetMintStatus.MissingDefiningCompilation,
+        VerifiedDefiningStatus.UnsupportedExternalEvidence => VerifiedTargetMintStatus.UnsupportedExternalEvidence,
+        VerifiedDefiningStatus.StaleContext => VerifiedTargetMintStatus.StaleContext,
+        _ => throw new InvalidDataException("UnsupportedDefiningStatus"),
+    };
+
     private static bool BindsDefining(VerifiedCSharpCompilation entry, IMethodSymbol target, CSharpCompilation? caller)
     {
         // Direct in-compilation defining assembly: the exact live assembly
