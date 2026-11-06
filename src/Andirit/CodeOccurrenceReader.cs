@@ -43,6 +43,8 @@ public sealed record CodeOccurrenceQuery
         MaxResults = maxResults;
     }
 
+    internal ICodeOccurrenceAuthorityVerifier? CurrentAuthority { get; init; }
+
     public CodeRepositoryId RepositoryId { get; }
     public CodeOccurrenceTargetId TargetId { get; }
     public CodeGraphPublication? ExpectedPublication { get; }

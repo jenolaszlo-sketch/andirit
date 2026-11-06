@@ -169,6 +169,13 @@ public sealed record CodeIndexUnitReplacement
         }
     }
 
+    // Facts and their authority are durable only in the additive occurrence unit.
+    // The marker survives segments so unsupported resumption cannot claim authority.
+    [System.Text.Json.Serialization.JsonIgnore]
+    internal CodeOccurrenceAuthority? OccurrenceAuthority { get; init; }
+    [System.Text.Json.Serialization.JsonInclude]
+    internal bool RequiresOccurrenceAuthority { get; init; }
+
     public CodeFactOrigin Origin { get; }
     public IReadOnlyList<CodeGraphNode> Nodes { get; }
     public IReadOnlyList<CodeGraphDeclaration> Declarations { get; }

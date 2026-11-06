@@ -29,7 +29,7 @@ namespace Andirit;
 /// (export/import; no in-place upgrades in preview).
 /// </para>
 /// </remarks>
-public sealed class LatticeCodeGraphStore :
+public sealed partial class LatticeCodeGraphStore :
     ICodeGraphStore,
     ICodeGraphStoreHealthCheck,
     ICodeOccurrenceReader,
@@ -261,6 +261,9 @@ public sealed class LatticeCodeGraphStore :
         {
             ThrowIfDisposed();
             ThrowIfUncertain();
+            var refusal = await CheckOccurrenceAuthorityAsync(query, cancellationToken).ConfigureAwait(false);
+            if (refusal is not null)
+                return refusal;
             return await _inner.FindOccurrencesAsync(query, cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -364,9 +367,10 @@ public sealed class LatticeCodeGraphStore :
             }
 
             NativeGraphMirror? mirror;
+            OccurrenceAuthorityPublication? authority;
             try
             {
-                mirror = TranslateNative(
+                (mirror, authority) = TranslateNative(
                     () => Persist(command, baseline, cancellationToken),
                     "persist mutation");
             }
@@ -394,6 +398,11 @@ public sealed class LatticeCodeGraphStore :
 
             if (command.Kind == "complete" && command.Run is not null)
             {
+                var repositoryId = command.Run.RepositoryId.Value;
+                if (authority is null)
+                    _authorityPublications.Remove(repositoryId);
+                else
+                    _authorityPublications[repositoryId] = authority;
                 var mirrors = new Dictionary<string, NativeGraphMirror>(_mirrors, StringComparer.Ordinal);
                 if (mirror is null)
                     mirrors.Remove(command.Run.RepositoryId.Value);
@@ -513,6 +522,7 @@ public sealed class LatticeCodeGraphStore :
         var pagePairs = ReadPairs(OccurrencePageLabel);
         if (metaPairs.Count == 0)
         {
+            _authorityPublications.Clear();
             if (unitPairs.Count != 0 || pagePairs.Count != 0)
             {
                 throw new CodeOccurrenceSchemaException(
@@ -544,6 +554,7 @@ public sealed class LatticeCodeGraphStore :
         foreach (var pair in unitPairs)
         {
             var unit = DeserializeOccurrence<PersistedOccurrenceUnit>(pair.Payload);
+            unit = unit with { DurableKey = pair.Key };
             if (!metas.ContainsKey(unit.RepositoryId))
             {
                 throw new CodeOccurrenceSchemaException(
@@ -626,9 +637,14 @@ public sealed class LatticeCodeGraphStore :
                 meta.AnalysisIncluded || repositoryCoverage?.AnalysisPerformed == true,
                 repositoryCoverage);
         }
+        // The additive carrier remains opaque during reconstruction. Malformed
+        // carrier data is interpreted/refused at query time, not thrown here.
+        _authorityPublications = metas.Values.ToDictionary(meta => meta.RepositoryId,
+            meta => new OccurrenceAuthorityPublication(meta,
+                unitsByRepository.GetValueOrDefault(meta.RepositoryId) ?? []), StringComparer.Ordinal);
     }
 
-    private void PersistOccurrences(
+    private OccurrenceAuthorityPublication? PersistOccurrences(
         LatticeTransaction txn,
         CodeIndexRunManifest run,
         CodeRepositoryIndexState state)
@@ -662,7 +678,10 @@ public sealed class LatticeCodeGraphStore :
                     replacement.Origin.IndexUnitId.Value,
                     true,
                     replacement.Occurrences,
-                    coverage);
+                    coverage,
+                    replacement.OccurrenceAuthority is { } recorded
+                        ? JsonSerializer.SerializeToElement(recorded, SerializerOptions) : null,
+                    replacement.RequiresOccurrenceAuthority || replacement.OccurrenceAuthority is not null);
             }
             else
             {
@@ -670,6 +689,13 @@ public sealed class LatticeCodeGraphStore :
             }
         }
 
+        foreach (var key in units.Keys.ToArray())
+        {
+            var unit = units[key] with { DurableKey = key };
+            units[key] = unit;
+            if (unit.RequiresAuthority || unit.Authority is not null)
+                units[key] = unit with { AuthorityPublicationIndexRunId = state.IndexRunId.Value };
+        }
         var analysisIncluded = units.Values.Any(unit =>
             unit.AnalysisIncluded || unit.Facts.Count > 0 || unit.Coverage?.AnalysisPerformed == true);
         var repositoryCoverage = AggregateCoverage(units.Values);
@@ -699,7 +725,7 @@ public sealed class LatticeCodeGraphStore :
             {
                 DeleteMany(txn, OccurrenceMetaLabel, [repositoryId]);
             }
-            return;
+            return null;
         }
 
         var pages = units.Values
@@ -744,8 +770,10 @@ public sealed class LatticeCodeGraphStore :
             repositoryCoverage?.State ?? CodeRelationshipCoverageState.NotProduced,
             repositoryCoverage?.ScopeId,
             repositoryCoverage?.UniverseId,
-            repositoryCoverage?.IsComplete == true);
+            repositoryCoverage?.IsComplete == true,
+            units.Values.Any(unit => unit.RequiresAuthority || unit.Authority is not null));
         Upsert(txn, OccurrenceMetaLabel, repositoryId, Serialize(meta));
+        return new OccurrenceAuthorityPublication(meta, units.Values.ToArray());
     }
 
     private static bool TryGetCoverage(
@@ -841,9 +869,11 @@ public sealed class LatticeCodeGraphStore :
             new CodePluginId(unit.PluginId),
             new CodeIndexUnitId(unit.IndexUnitId));
 
-    private NativeGraphMirror? Persist(PersistedCommand command, string? baseline, CancellationToken cancellationToken)
+    private (NativeGraphMirror? Mirror, OccurrenceAuthorityPublication? Authority) Persist(
+        PersistedCommand command, string? baseline, CancellationToken cancellationToken)
     {
         NativeGraphMirror? mirror = null;
+        OccurrenceAuthorityPublication? authority = null;
         cancellationToken.ThrowIfCancellationRequested();
         using var txn = _database.BeginWriteTransaction();
         try
@@ -870,7 +900,7 @@ public sealed class LatticeCodeGraphStore :
                     Upsert(txn, RunLabel, RunKey(command.Run!), Serialize(command.Run));
                     Upsert(txn, IndexStateLabel, command.State!.RepositoryId.Value, Serialize(command.State));
                     DeleteMany(txn, BaselineLabel, [RunKey(command.Run!)]);
-                    PersistOccurrences(txn, command.Run!, command.State!);
+                    authority = PersistOccurrences(txn, command.Run!, command.State!);
                     if (_nativeTraversal)
                     {
                         var completed = command.Run!;
@@ -926,7 +956,7 @@ public sealed class LatticeCodeGraphStore :
                 }
                 throw;
             }
-            return mirror;
+            return (mirror, authority);
         }
         catch (CodeGraphCommitOutcomeUnknownException)
         {
@@ -1192,7 +1222,14 @@ internal sealed record PersistedOccurrenceUnit(
     string IndexUnitId,
     bool AnalysisIncluded,
     IReadOnlyList<CodeOccurrenceFact> Facts,
-    CodeOccurrenceCoverage? Coverage = null);
+    CodeOccurrenceCoverage? Coverage = null,
+    JsonElement? Authority = null,
+    bool RequiresAuthority = false,
+    string? AuthorityPublicationIndexRunId = null)
+{
+    [System.Text.Json.Serialization.JsonIgnore]
+    internal string? DurableKey { get; init; }
+}
 
 /// <summary>Internal durable record: the accepted occurrence schema/publication manifest.</summary>
 internal sealed record PersistedOccurrenceMeta(
@@ -1210,7 +1247,8 @@ internal sealed record PersistedOccurrenceMeta(
     CodeRelationshipCoverageState CoverageState = CodeRelationshipCoverageState.NotProduced,
     string? ScopeId = null,
     string? UniverseId = null,
-    bool CompleteCoverage = false);
+    bool CompleteCoverage = false,
+    bool RequiresAuthority = false);
 
 /// <summary>Internal durable record: one target-index page.</summary>
 internal sealed record PersistedOccurrencePage(

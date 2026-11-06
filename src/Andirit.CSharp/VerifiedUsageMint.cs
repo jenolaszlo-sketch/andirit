@@ -35,7 +35,8 @@ internal sealed record VerifiedUsageMint(
     VerifiedTargetMintStatus Status,
     string Detail,
     CodeOccurrenceFact? Fact = null,
-    CodeOccurrenceTargetId? TargetId = null)
+    CodeOccurrenceTargetId? TargetId = null,
+    CodeOccurrenceDefiningAuthority? Authority = null)
 {
     /// <summary>True only when a trusted, verified `usage4` fact was produced.</summary>
     internal bool IsMinted => Status == VerifiedTargetMintStatus.Minted && Fact is not null;
@@ -48,4 +49,19 @@ internal sealed record VerifiedUsageMint(
 /// </summary>
 internal sealed record VerifiedOccurrenceExtraction(
     ImmutableArray<CodeOccurrenceFact> Facts,
-    CodeOccurrenceCoverage Coverage);
+    CodeOccurrenceCoverage Coverage,
+    CodeOccurrenceAuthority? Authority = null)
+{
+    // Controlled preparation for the native carrier. Plugin/sink integration is WP-S23-3.
+    internal CodeIndexUnitReplacement PrepareNativeUnit(CodeFactOrigin origin)
+    {
+        if (Authority is null || origin.RepositoryId.Value != Authority.RepositoryId ||
+            origin.PluginId.Value != Authority.PluginId)
+            throw new InvalidDataException("MissingVerifiedOccurrenceAuthority");
+        return new(origin, occurrences: Facts, occurrenceAnalysisIncluded: true, occurrenceCoverage: Coverage)
+        {
+            RequiresOccurrenceAuthority = true,
+            OccurrenceAuthority = Authority with { IndexUnitId = origin.IndexUnitId.Value }
+        };
+    }
+}

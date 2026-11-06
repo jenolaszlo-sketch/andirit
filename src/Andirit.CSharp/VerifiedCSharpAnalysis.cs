@@ -205,7 +205,11 @@ internal sealed class VerifiedCSharpUniverse
             input.DeclarationSpan,
             4,
             input.PluginVersion);
-        return new(VerifiedTargetMintStatus.Minted, mint.Detail, fact, mint.TargetId);
+        var defining = ResolveDefining(input.Target, input.RecordedCompctx2, input.Caller).Defining!;
+        var authority = new CodeOccurrenceDefiningAuthority(
+            fact.Id.Value, fact.PayloadHash, fact.TargetId.Value, defining.Descriptor.ProjectUnitId,
+            defining.Descriptor.DescriptorDigest, input.IdentifierDigest, input.DeclarationDigest, input.ShapeDigest);
+        return new(VerifiedTargetMintStatus.Minted, mint.Detail, fact, mint.TargetId, authority);
     }
 
     private static bool BindsDefining(VerifiedCSharpCompilation entry, IMethodSymbol target, CSharpCompilation? caller)

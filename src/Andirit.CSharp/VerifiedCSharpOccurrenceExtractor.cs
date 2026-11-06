@@ -42,6 +42,7 @@ internal static class VerifiedCSharpOccurrenceExtractor
         ArgumentNullException.ThrowIfNull(request);
         var sourceUnit = request.SourceUnit;
         var facts = ImmutableArray.CreateBuilder<CodeOccurrenceFact>();
+        var authorities = ImmutableArray.CreateBuilder<CodeOccurrenceDefiningAuthority>();
         int unsupportedCategories = 0, external = 0, ambiguous = 0, unresolved = 0,
             unsupported = 0, conditionalInactive = 0;
 
@@ -96,7 +97,11 @@ internal static class VerifiedCSharpOccurrenceExtractor
                     DeclarationSpan(symbol),
                     request.PluginVersion));
 
-                if (mint.IsMinted) facts.Add(mint.Fact!);
+                if (mint.IsMinted)
+                {
+                    facts.Add(mint.Fact!);
+                    authorities.Add(mint.Authority!);
+                }
                 else unresolved++;
             }
 
@@ -112,7 +117,17 @@ internal static class VerifiedCSharpOccurrenceExtractor
             universe.Scope.Identity, universe.Identity,
             universe.Scope.Units.Length, universe.Entries.Length,
             external, ambiguous, unresolved, unsupported, conditionalInactive);
-        return new(facts.ToImmutable(), coverage);
+        // A substituted source instance or mismatched repository never obtains a
+        // native authority envelope, even if the legacy extraction yielded facts.
+        var canRecord = complete && universe.Scope.RepositoryId == request.RepositoryId.Value &&
+            universe.Entries.Any(e => ReferenceEquals(e, sourceUnit));
+        var authority = canRecord ? new CodeOccurrenceAuthority(
+            1, request.RepositoryId.Value, request.PluginId.Value, sourceUnit.Descriptor.ProjectUnitId,
+            sourceUnit.Descriptor.ProjectUnitId, universe.Scope.Identity, universe.Identity, coverage,
+            universe.Entries.Select(e => new CodeOccurrenceCompilationAuthority(
+                e.Descriptor.ProjectUnitId, e.Descriptor.DescriptorDigest)).ToArray(),
+            authorities.ToImmutable()) : null;
+        return new(facts.ToImmutable(), coverage, authority);
     }
 
     private static bool IsSupportedInvocation(IMethodSymbol symbol) =>
