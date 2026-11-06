@@ -1,0 +1,59 @@
+﻿# NEW-01 reproduction tests BEFORE fix (clean, same test revision)
+# recorded at HEAD 311e97ffa716ff725f70dcb57ca71dca891903f6
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Andirit.Abstractions -> D:\projects\Andirit\src\Andirit.Abstractions\bin\Release\net10.0\Andirit.Abstractions.dll
+  Andirit -> D:\projects\Andirit\src\Andirit\bin\Release\net10.0\Andirit.dll
+  Andirit.Testing -> D:\projects\Andirit\src\Andirit.Testing\bin\Release\net10.0\Andirit.Testing.dll
+  Andirit.LatticeDb -> D:\projects\Andirit\src\Andirit.LatticeDb\bin\Release\net10.0\Andirit.LatticeDb.dll
+  Andirit.LatticeDb.Tests -> D:\projects\Andirit\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll
+Test run for D:\projects\Andirit\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.57]     Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_AfterPreCommitFailure_MatchesDurableOccurrenceProjection [FAIL]
+[xUnit.net 00:00:00.63]     Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_AfterInMemoryApplyFailure_PreservesCommittedOccurrenceProjection [FAIL]
+[xUnit.net 00:00:00.69]     Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_PreservesPartialCoverage [FAIL]
+[xUnit.net 00:00:00.76]     Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_ConflictRefusalStillEffective [FAIL]
+[xUnit.net 00:00:00.89]     Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_PreservesCompleteEmptyEvidence [FAIL]
+  Failed Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_AfterPreCommitFailure_MatchesDurableOccurrenceProjection [280 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: Available
+Actual:   AnalysisUnavailable
+  Stack Trace:
+     at Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_AfterPreCommitFailure_MatchesDurableOccurrenceProjection() in D:\projects\Andirit\tests\Andirit.LatticeDb.Tests\New01RecoveryProjectionTests.cs:line 77
+--- End of stack trace from previous location ---
+  Failed Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_AfterInMemoryApplyFailure_PreservesCommittedOccurrenceProjection [55 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: Available
+Actual:   AnalysisUnavailable
+  Stack Trace:
+     at Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_AfterInMemoryApplyFailure_PreservesCommittedOccurrenceProjection() in D:\projects\Andirit\tests\Andirit.LatticeDb.Tests\New01RecoveryProjectionTests.cs:line 141
+--- End of stack trace from previous location ---
+  Failed Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_PreservesPartialCoverage [56 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: IncompleteAnalysis
+Actual:   AnalysisUnavailable
+  Stack Trace:
+     at Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_PreservesPartialCoverage() in D:\projects\Andirit\tests\Andirit.LatticeDb.Tests\New01RecoveryProjectionTests.cs:line 248
+--- End of stack trace from previous location ---
+  Failed Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_ConflictRefusalStillEffective [36 ms]
+  Error Message:
+   Assert.Throws() Failure: No exception was thrown
+Expected: typeof(Andirit.CodeGraphBatchRejectedException)
+  Stack Trace:
+     at Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_ConflictRefusalStillEffective() in D:\projects\Andirit\tests\Andirit.LatticeDb.Tests\New01RecoveryProjectionTests.cs:line 307
+--- End of stack trace from previous location ---
+  Failed Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_PreservesCompleteEmptyEvidence [65 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: Available
+Actual:   AnalysisUnavailable
+  Stack Trace:
+     at Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_PreservesCompleteEmptyEvidence() in D:\projects\Andirit\tests\Andirit.LatticeDb.Tests\New01RecoveryProjectionTests.cs:line 195
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:     5, Passed:     2, Skipped:     0, Total:     7, Duration: 609 ms - Andirit.LatticeDb.Tests.dll (net10.0)
+EXIT=1
+
