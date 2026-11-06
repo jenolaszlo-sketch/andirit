@@ -1,0 +1,9 @@
+# Preserve raw evidence bytes and Windows line endings.
+* -text whitespace=cr-at-eol
+# Raw tool/test outputs retain their original whitespace.
+*.log -whitespace
+*.trx -whitespace
+*.bin binary
+
+# Raw Git patch output preserves context-line whitespace.
+production-diff.txt -whitespace

@@ -1,0 +1,668 @@
+{
+  "processId": 41624,
+  "action": "query",
+  "variant": "a",
+  "Availability": 0,
+  "RefusalReason": null,
+  "Publication": {
+    "RepositoryId": {
+      "Value": "fixture:s23-durability"
+    },
+    "IndexRunId": {
+      "Value": "run:a"
+    },
+    "SnapshotIdentity": null,
+    "IsConsistentSnapshot": false,
+    "IndexIdentity": {
+      "Value": "320074cd9cccc7aded34fb78f4252d7b37e3ca0567a463b98ecf9a2f527e5a9a"
+    }
+  },
+  "TotalMatches": 2,
+  "Examined": 2,
+  "IsComplete": true,
+  "expectedTarget": "asmctx3:sha256:9086e2a29560c4405d80cc2d80034fd5ba12b070b7017892443bee7fce4d4ef0",
+  "currentDefiningCompctx2": "compctx2:sha256:85ed88f23304d1b4750d059c463207bb16f87449827dde70c4cca32b9bfb0e64",
+  "universe": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+  "sources": [
+    {
+      "unit": "Leaf/Leaf.csproj",
+      "context": "compctx2:sha256:1e78b44572d6adaa55196d44065a433edc0dd4ede6de1a2ff33e5dce8a86aafd",
+      "options": "d7988ac31a13c6a2ad3f69d17363504b15fdce965fabc045b8a8558c2806a03c",
+      "sources": [
+        {
+          "Path": "Leaf/Leaf.cs",
+          "ContentHash": "sha256:0f5ff6bbb6ac6b0fcb6e2646726d54f4ed5974da4cc1467c260875c94e8669cd",
+          "text": "namespace L; public static class Leaf { public static int V() =\u003E 1; }"
+        }
+      ]
+    },
+    {
+      "unit": "Mid/Mid.csproj",
+      "context": "compctx2:sha256:7bc1642042a48ccd3ac53a6a96aea3e8b4f1ddd45cde5a7383573b6013cfdf10",
+      "options": "d7988ac31a13c6a2ad3f69d17363504b15fdce965fabc045b8a8558c2806a03c",
+      "sources": [
+        {
+          "Path": "Mid/Mid.cs",
+          "ContentHash": "sha256:5b0f6ddaa340a2e3ffd5a55b6285a6d064dce9ea3c99a42ba464bb4426e4ac6f",
+          "text": "namespace M; public static class Mid { public static int V() =\u003E L.Leaf.V(); }"
+        }
+      ]
+    },
+    {
+      "unit": "Lib/Lib.csproj",
+      "context": "compctx2:sha256:85ed88f23304d1b4750d059c463207bb16f87449827dde70c4cca32b9bfb0e64",
+      "options": "d7988ac31a13c6a2ad3f69d17363504b15fdce965fabc045b8a8558c2806a03c",
+      "sources": [
+        {
+          "Path": "Lib/Lib.cs",
+          "ContentHash": "sha256:92d3ae5f81f0e228099771a650b2ede2f37d855bf8a0da9587e1a09f5847d0d8",
+          "text": "namespace B; public static class Lib { public static int V() =\u003E M.Mid.V(); }"
+        }
+      ]
+    },
+    {
+      "unit": "App/App.csproj",
+      "context": "compctx2:sha256:67245dd5e69fc4fc3c2bec640827c8cc4956258c90eb8cf83c60eca3b42ee0e7",
+      "options": "d7988ac31a13c6a2ad3f69d17363504b15fdce965fabc045b8a8558c2806a03c",
+      "sources": [
+        {
+          "Path": "App/App.cs",
+          "ContentHash": "sha256:7be014035c6195c96617e401d3732b1e454f4f73706a5cf3fda85ea42358f5ce",
+          "text": "namespace A; public static class App { public static int Run() =\u003E B.Lib.V() \u002B M.Mid.V(); }"
+        }
+      ]
+    },
+    {
+      "unit": "App2/App2.csproj",
+      "context": "compctx2:sha256:b2bf2363f9a9768a4738f86684dbc8927ff063a009e0f183525e7960769c17d2",
+      "options": "d7988ac31a13c6a2ad3f69d17363504b15fdce965fabc045b8a8558c2806a03c",
+      "sources": [
+        {
+          "Path": "App2/App2.cs",
+          "ContentHash": "sha256:2615b6e11ac36318e005c3604ed54af6db6f752dc012f4b500ab36d8ea6383e1",
+          "text": "namespace A2; public static class App2 { public static int Run() =\u003E B.Lib.V(); }"
+        }
+      ]
+    },
+    {
+      "unit": "Empty/Empty.csproj",
+      "context": "compctx2:sha256:7a113106c25228c37db2dc6852cd30d1bb49c5125b00243724f03d6714abb78a",
+      "options": "d7988ac31a13c6a2ad3f69d17363504b15fdce965fabc045b8a8558c2806a03c",
+      "sources": [
+        {
+          "Path": "Empty/Empty.cs",
+          "ContentHash": "sha256:8b2ada2bcc9e14bef30d6457297ad5680c6b0c7d734e665d4e4adf6bf6425c61",
+          "text": "namespace E; public class Empty { }"
+        }
+      ]
+    }
+  ],
+  "nativeRecords": {
+    "AndiritOccurrenceMeta|fixture:s23-durability": {
+      "SchemaVersion": 1,
+      "Namespace": "andirit-occurrence-facts/1",
+      "RepositoryId": "fixture:s23-durability",
+      "PublicationIndexRunId": "run:a",
+      "IndexIdentity": "320074cd9cccc7aded34fb78f4252d7b37e3ca0567a463b98ecf9a2f527e5a9a",
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "FactCount": 3,
+      "UnitCount": 3,
+      "PageCount": 2,
+      "AnalysisIncluded": true,
+      "CoverageState": 0,
+      "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+      "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+      "CompleteCoverage": true,
+      "RequiresAuthority": true
+    },
+    "AndiritOccurrencePage|fixture:s23-durability\nasmctx3:sha256:250a3e1c6705094d4fb24a991edfb4814d7decf6e73e47c859996248af6b56cb": {
+      "RepositoryId": "fixture:s23-durability",
+      "TargetId": "asmctx3:sha256:250a3e1c6705094d4fb24a991edfb4814d7decf6e73e47c859996248af6b56cb",
+      "PublicationIndexRunId": "run:a",
+      "OccurrenceIds": [
+        "62ec0a7757f366ca515c43b6eea518f0cba9141f901f22971905263d2a6ee404"
+      ]
+    },
+    "AndiritOccurrencePage|fixture:s23-durability\nasmctx3:sha256:9086e2a29560c4405d80cc2d80034fd5ba12b070b7017892443bee7fce4d4ef0": {
+      "RepositoryId": "fixture:s23-durability",
+      "TargetId": "asmctx3:sha256:9086e2a29560c4405d80cc2d80034fd5ba12b070b7017892443bee7fce4d4ef0",
+      "PublicationIndexRunId": "run:a",
+      "OccurrenceIds": [
+        "a6dda67a8e8f28b0698244c5126a45ad1e60ee18baa29b698e049f53651e34e9",
+        "44bd3b3bfb96bdc54cb60f612c0174030eceb65c34540160dcdd556378daa9a8"
+      ]
+    },
+    "AndiritOccurrenceUnit|fixture:s23-durability\nfixture.s23\nApp/App.csproj": {
+      "RepositoryId": "fixture:s23-durability",
+      "PluginId": "fixture.s23",
+      "IndexUnitId": "App/App.csproj",
+      "AnalysisIncluded": true,
+      "Facts": [
+        {
+          "Id": {
+            "Value": "a6dda67a8e8f28b0698244c5126a45ad1e60ee18baa29b698e049f53651e34e9"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:9086e2a29560c4405d80cc2d80034fd5ba12b070b7017892443bee7fce4d4ef0"
+          },
+          "TargetDocumentId": "M:B.Lib.V",
+          "RepositoryId": {
+            "Value": "fixture:s23-durability"
+          },
+          "Category": 0,
+          "SourceUnitId": "App/App.csproj",
+          "Contributor": {
+            "PluginId": {
+              "Value": "fixture.s23"
+            },
+            "IndexUnitId": "App/App.csproj"
+          },
+          "Span": {
+            "Path": "App/App.cs",
+            "StartLine": 1,
+            "StartColumn": 73,
+            "EndLine": 1,
+            "EndColumn": 74
+          },
+          "DeclarationSpan": {
+            "Path": "Lib/Lib.cs",
+            "StartLine": 1,
+            "StartColumn": 40,
+            "EndLine": 1,
+            "EndColumn": 75
+          },
+          "SourceHash": "sha256:7be014035c6195c96617e401d3732b1e454f4f73706a5cf3fda85ea42358f5ce",
+          "ContentHash": "sha256:7be014035c6195c96617e401d3732b1e454f4f73706a5cf3fda85ea42358f5ce",
+          "PluginVersion": "1.0.0",
+          "SemanticsVersion": 4,
+          "PayloadHash": "59be32b94690921c592baf93a457eab5200b7508451ca4fa5d69f7a054ad02ec"
+        },
+        {
+          "Id": {
+            "Value": "62ec0a7757f366ca515c43b6eea518f0cba9141f901f22971905263d2a6ee404"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:250a3e1c6705094d4fb24a991edfb4814d7decf6e73e47c859996248af6b56cb"
+          },
+          "TargetDocumentId": "M:M.Mid.V",
+          "RepositoryId": {
+            "Value": "fixture:s23-durability"
+          },
+          "Category": 0,
+          "SourceUnitId": "App/App.csproj",
+          "Contributor": {
+            "PluginId": {
+              "Value": "fixture.s23"
+            },
+            "IndexUnitId": "App/App.csproj"
+          },
+          "Span": {
+            "Path": "App/App.cs",
+            "StartLine": 1,
+            "StartColumn": 85,
+            "EndLine": 1,
+            "EndColumn": 86
+          },
+          "DeclarationSpan": {
+            "Path": "Mid/Mid.cs",
+            "StartLine": 1,
+            "StartColumn": 40,
+            "EndLine": 1,
+            "EndColumn": 76
+          },
+          "SourceHash": "sha256:7be014035c6195c96617e401d3732b1e454f4f73706a5cf3fda85ea42358f5ce",
+          "ContentHash": "sha256:7be014035c6195c96617e401d3732b1e454f4f73706a5cf3fda85ea42358f5ce",
+          "PluginVersion": "1.0.0",
+          "SemanticsVersion": 4,
+          "PayloadHash": "1fb2bd36929bba64dbe350f3fe13e15c96ad4ab19e4be58759616d67cb4a0d09"
+        }
+      ],
+      "Coverage": {
+        "InvocationFacts": 2,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+        "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+        "DeclaredUnitCount": 6,
+        "VerifiedUnitCount": 6,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 2,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Authority": {
+        "Version": 1,
+        "RepositoryId": "fixture:s23-durability",
+        "PluginId": "fixture.s23",
+        "IndexUnitId": "App/App.csproj",
+        "SourceUnitId": "App/App.csproj",
+        "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+        "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+        "Coverage": {
+          "InvocationFacts": 2,
+          "UnsupportedCategories": 0,
+          "State": 0,
+          "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+          "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+          "DeclaredUnitCount": 6,
+          "VerifiedUnitCount": 6,
+          "External": 0,
+          "Ambiguous": 0,
+          "Unresolved": 0,
+          "Unsupported": 0,
+          "ConditionalInactive": 0,
+          "UnavailableReasons": {},
+          "TotalFacts": 2,
+          "AnalysisPerformed": true,
+          "IsComplete": true
+        },
+        "Members": [
+          {
+            "ProjectUnitId": "App/App.csproj",
+            "Compctx2": "compctx2:sha256:67245dd5e69fc4fc3c2bec640827c8cc4956258c90eb8cf83c60eca3b42ee0e7"
+          },
+          {
+            "ProjectUnitId": "App2/App2.csproj",
+            "Compctx2": "compctx2:sha256:b2bf2363f9a9768a4738f86684dbc8927ff063a009e0f183525e7960769c17d2"
+          },
+          {
+            "ProjectUnitId": "Empty/Empty.csproj",
+            "Compctx2": "compctx2:sha256:7a113106c25228c37db2dc6852cd30d1bb49c5125b00243724f03d6714abb78a"
+          },
+          {
+            "ProjectUnitId": "Leaf/Leaf.csproj",
+            "Compctx2": "compctx2:sha256:1e78b44572d6adaa55196d44065a433edc0dd4ede6de1a2ff33e5dce8a86aafd"
+          },
+          {
+            "ProjectUnitId": "Lib/Lib.csproj",
+            "Compctx2": "compctx2:sha256:85ed88f23304d1b4750d059c463207bb16f87449827dde70c4cca32b9bfb0e64"
+          },
+          {
+            "ProjectUnitId": "Mid/Mid.csproj",
+            "Compctx2": "compctx2:sha256:7bc1642042a48ccd3ac53a6a96aea3e8b4f1ddd45cde5a7383573b6013cfdf10"
+          }
+        ],
+        "Facts": [
+          {
+            "OccurrenceId": "a6dda67a8e8f28b0698244c5126a45ad1e60ee18baa29b698e049f53651e34e9",
+            "PayloadHash": "59be32b94690921c592baf93a457eab5200b7508451ca4fa5d69f7a054ad02ec",
+            "TargetId": "asmctx3:sha256:9086e2a29560c4405d80cc2d80034fd5ba12b070b7017892443bee7fce4d4ef0",
+            "DefiningProjectUnitId": "Lib/Lib.csproj",
+            "Compctx2": "compctx2:sha256:85ed88f23304d1b4750d059c463207bb16f87449827dde70c4cca32b9bfb0e64",
+            "IdentifierDigest": "id:V",
+            "DeclarationDigest": "decl:Lib.V",
+            "ShapeDigest": "method|0"
+          },
+          {
+            "OccurrenceId": "62ec0a7757f366ca515c43b6eea518f0cba9141f901f22971905263d2a6ee404",
+            "PayloadHash": "1fb2bd36929bba64dbe350f3fe13e15c96ad4ab19e4be58759616d67cb4a0d09",
+            "TargetId": "asmctx3:sha256:250a3e1c6705094d4fb24a991edfb4814d7decf6e73e47c859996248af6b56cb",
+            "DefiningProjectUnitId": "Mid/Mid.csproj",
+            "Compctx2": "compctx2:sha256:7bc1642042a48ccd3ac53a6a96aea3e8b4f1ddd45cde5a7383573b6013cfdf10",
+            "IdentifierDigest": "id:V",
+            "DeclarationDigest": "decl:Mid.V",
+            "ShapeDigest": "method|0"
+          }
+        ]
+      },
+      "RequiresAuthority": true,
+      "AuthorityPublicationIndexRunId": "run:a"
+    },
+    "AndiritOccurrenceUnit|fixture:s23-durability\nfixture.s23\nApp2/App2.csproj": {
+      "RepositoryId": "fixture:s23-durability",
+      "PluginId": "fixture.s23",
+      "IndexUnitId": "App2/App2.csproj",
+      "AnalysisIncluded": true,
+      "Facts": [
+        {
+          "Id": {
+            "Value": "44bd3b3bfb96bdc54cb60f612c0174030eceb65c34540160dcdd556378daa9a8"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:9086e2a29560c4405d80cc2d80034fd5ba12b070b7017892443bee7fce4d4ef0"
+          },
+          "TargetDocumentId": "M:B.Lib.V",
+          "RepositoryId": {
+            "Value": "fixture:s23-durability"
+          },
+          "Category": 0,
+          "SourceUnitId": "App2/App2.csproj",
+          "Contributor": {
+            "PluginId": {
+              "Value": "fixture.s23"
+            },
+            "IndexUnitId": "App2/App2.csproj"
+          },
+          "Span": {
+            "Path": "App2/App2.cs",
+            "StartLine": 1,
+            "StartColumn": 75,
+            "EndLine": 1,
+            "EndColumn": 76
+          },
+          "DeclarationSpan": {
+            "Path": "Lib/Lib.cs",
+            "StartLine": 1,
+            "StartColumn": 40,
+            "EndLine": 1,
+            "EndColumn": 75
+          },
+          "SourceHash": "sha256:2615b6e11ac36318e005c3604ed54af6db6f752dc012f4b500ab36d8ea6383e1",
+          "ContentHash": "sha256:2615b6e11ac36318e005c3604ed54af6db6f752dc012f4b500ab36d8ea6383e1",
+          "PluginVersion": "1.0.0",
+          "SemanticsVersion": 4,
+          "PayloadHash": "b6ad3ac4ccbe4a4a1ff8dfa914720631b0edeb4fe21a4e8ee6f737efa126ee4a"
+        }
+      ],
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+        "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+        "DeclaredUnitCount": 6,
+        "VerifiedUnitCount": 6,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Authority": {
+        "Version": 1,
+        "RepositoryId": "fixture:s23-durability",
+        "PluginId": "fixture.s23",
+        "IndexUnitId": "App2/App2.csproj",
+        "SourceUnitId": "App2/App2.csproj",
+        "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+        "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+        "Coverage": {
+          "InvocationFacts": 1,
+          "UnsupportedCategories": 0,
+          "State": 0,
+          "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+          "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+          "DeclaredUnitCount": 6,
+          "VerifiedUnitCount": 6,
+          "External": 0,
+          "Ambiguous": 0,
+          "Unresolved": 0,
+          "Unsupported": 0,
+          "ConditionalInactive": 0,
+          "UnavailableReasons": {},
+          "TotalFacts": 1,
+          "AnalysisPerformed": true,
+          "IsComplete": true
+        },
+        "Members": [
+          {
+            "ProjectUnitId": "App/App.csproj",
+            "Compctx2": "compctx2:sha256:67245dd5e69fc4fc3c2bec640827c8cc4956258c90eb8cf83c60eca3b42ee0e7"
+          },
+          {
+            "ProjectUnitId": "App2/App2.csproj",
+            "Compctx2": "compctx2:sha256:b2bf2363f9a9768a4738f86684dbc8927ff063a009e0f183525e7960769c17d2"
+          },
+          {
+            "ProjectUnitId": "Empty/Empty.csproj",
+            "Compctx2": "compctx2:sha256:7a113106c25228c37db2dc6852cd30d1bb49c5125b00243724f03d6714abb78a"
+          },
+          {
+            "ProjectUnitId": "Leaf/Leaf.csproj",
+            "Compctx2": "compctx2:sha256:1e78b44572d6adaa55196d44065a433edc0dd4ede6de1a2ff33e5dce8a86aafd"
+          },
+          {
+            "ProjectUnitId": "Lib/Lib.csproj",
+            "Compctx2": "compctx2:sha256:85ed88f23304d1b4750d059c463207bb16f87449827dde70c4cca32b9bfb0e64"
+          },
+          {
+            "ProjectUnitId": "Mid/Mid.csproj",
+            "Compctx2": "compctx2:sha256:7bc1642042a48ccd3ac53a6a96aea3e8b4f1ddd45cde5a7383573b6013cfdf10"
+          }
+        ],
+        "Facts": [
+          {
+            "OccurrenceId": "44bd3b3bfb96bdc54cb60f612c0174030eceb65c34540160dcdd556378daa9a8",
+            "PayloadHash": "b6ad3ac4ccbe4a4a1ff8dfa914720631b0edeb4fe21a4e8ee6f737efa126ee4a",
+            "TargetId": "asmctx3:sha256:9086e2a29560c4405d80cc2d80034fd5ba12b070b7017892443bee7fce4d4ef0",
+            "DefiningProjectUnitId": "Lib/Lib.csproj",
+            "Compctx2": "compctx2:sha256:85ed88f23304d1b4750d059c463207bb16f87449827dde70c4cca32b9bfb0e64",
+            "IdentifierDigest": "id:V",
+            "DeclarationDigest": "decl:Lib.V",
+            "ShapeDigest": "method|0"
+          }
+        ]
+      },
+      "RequiresAuthority": true,
+      "AuthorityPublicationIndexRunId": "run:a"
+    },
+    "AndiritOccurrenceUnit|fixture:s23-durability\nfixture.s23\nEmpty/Empty.csproj": {
+      "RepositoryId": "fixture:s23-durability",
+      "PluginId": "fixture.s23",
+      "IndexUnitId": "Empty/Empty.csproj",
+      "AnalysisIncluded": true,
+      "Facts": [],
+      "Coverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+        "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+        "DeclaredUnitCount": 6,
+        "VerifiedUnitCount": 6,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Authority": {
+        "Version": 1,
+        "RepositoryId": "fixture:s23-durability",
+        "PluginId": "fixture.s23",
+        "IndexUnitId": "Empty/Empty.csproj",
+        "SourceUnitId": "Empty/Empty.csproj",
+        "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+        "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+        "Coverage": {
+          "InvocationFacts": 0,
+          "UnsupportedCategories": 0,
+          "State": 0,
+          "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+          "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+          "DeclaredUnitCount": 6,
+          "VerifiedUnitCount": 6,
+          "External": 0,
+          "Ambiguous": 0,
+          "Unresolved": 0,
+          "Unsupported": 0,
+          "ConditionalInactive": 0,
+          "UnavailableReasons": {},
+          "TotalFacts": 0,
+          "AnalysisPerformed": true,
+          "IsComplete": true
+        },
+        "Members": [
+          {
+            "ProjectUnitId": "App/App.csproj",
+            "Compctx2": "compctx2:sha256:67245dd5e69fc4fc3c2bec640827c8cc4956258c90eb8cf83c60eca3b42ee0e7"
+          },
+          {
+            "ProjectUnitId": "App2/App2.csproj",
+            "Compctx2": "compctx2:sha256:b2bf2363f9a9768a4738f86684dbc8927ff063a009e0f183525e7960769c17d2"
+          },
+          {
+            "ProjectUnitId": "Empty/Empty.csproj",
+            "Compctx2": "compctx2:sha256:7a113106c25228c37db2dc6852cd30d1bb49c5125b00243724f03d6714abb78a"
+          },
+          {
+            "ProjectUnitId": "Leaf/Leaf.csproj",
+            "Compctx2": "compctx2:sha256:1e78b44572d6adaa55196d44065a433edc0dd4ede6de1a2ff33e5dce8a86aafd"
+          },
+          {
+            "ProjectUnitId": "Lib/Lib.csproj",
+            "Compctx2": "compctx2:sha256:85ed88f23304d1b4750d059c463207bb16f87449827dde70c4cca32b9bfb0e64"
+          },
+          {
+            "ProjectUnitId": "Mid/Mid.csproj",
+            "Compctx2": "compctx2:sha256:7bc1642042a48ccd3ac53a6a96aea3e8b4f1ddd45cde5a7383573b6013cfdf10"
+          }
+        ],
+        "Facts": []
+      },
+      "RequiresAuthority": true,
+      "AuthorityPublicationIndexRunId": "run:a"
+    },
+    "HetuIndexState|fixture:s23-durability": {
+      "RepositoryId": {
+        "Value": "fixture:s23-durability"
+      },
+      "IndexRunId": {
+        "Value": "run:a"
+      },
+      "Sources": [],
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "320074cd9cccc7aded34fb78f4252d7b37e3ca0567a463b98ecf9a2f527e5a9a"
+      }
+    },
+    "HetuUnit|fixture:s23-durability\nfixture.s23\nApp/App.csproj": {
+      "RequiresOccurrenceAuthority": true,
+      "Origin": {
+        "RepositoryId": {
+          "Value": "fixture:s23-durability"
+        },
+        "PluginId": {
+          "Value": "fixture.s23"
+        },
+        "PluginVersion": "1.0.0",
+        "IndexRunId": {
+          "Value": "run:a"
+        },
+        "IndexUnitId": {
+          "Value": "App/App.csproj"
+        },
+        "SourcePath": null,
+        "SourceHash": null
+      },
+      "Nodes": [],
+      "Declarations": [],
+      "Edges": [],
+      "OccurrenceCoverage": {
+        "InvocationFacts": 2,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+        "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+        "DeclaredUnitCount": 6,
+        "VerifiedUnitCount": 6,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 2,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      }
+    },
+    "HetuUnit|fixture:s23-durability\nfixture.s23\nApp2/App2.csproj": {
+      "RequiresOccurrenceAuthority": true,
+      "Origin": {
+        "RepositoryId": {
+          "Value": "fixture:s23-durability"
+        },
+        "PluginId": {
+          "Value": "fixture.s23"
+        },
+        "PluginVersion": "1.0.0",
+        "IndexRunId": {
+          "Value": "run:a"
+        },
+        "IndexUnitId": {
+          "Value": "App2/App2.csproj"
+        },
+        "SourcePath": null,
+        "SourceHash": null
+      },
+      "Nodes": [],
+      "Declarations": [],
+      "Edges": [],
+      "OccurrenceCoverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+        "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+        "DeclaredUnitCount": 6,
+        "VerifiedUnitCount": 6,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      }
+    },
+    "HetuUnit|fixture:s23-durability\nfixture.s23\nEmpty/Empty.csproj": {
+      "RequiresOccurrenceAuthority": true,
+      "Origin": {
+        "RepositoryId": {
+          "Value": "fixture:s23-durability"
+        },
+        "PluginId": {
+          "Value": "fixture.s23"
+        },
+        "PluginVersion": "1.0.0",
+        "IndexRunId": {
+          "Value": "run:a"
+        },
+        "IndexUnitId": {
+          "Value": "Empty/Empty.csproj"
+        },
+        "SourcePath": null,
+        "SourceHash": null
+      },
+      "Nodes": [],
+      "Declarations": [],
+      "Edges": [],
+      "OccurrenceCoverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:ae8e17678f80d846b8f6bed7c45d9823ab7dce8f33857a1cbb8264702a0a2c93",
+        "UniverseId": "compilation-universe1:sha256:b317983b6a0bb66874f47b62b8dd85fb346a776416321d3ddd7148d3206cf726",
+        "DeclaredUnitCount": 6,
+        "VerifiedUnitCount": 6,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      }
+    }
+  }
+}

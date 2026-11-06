@@ -1,0 +1,251 @@
+[
+  {
+    "name": "environment",
+    "command": [
+      "dotnet",
+      "--info"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "process-probe-build",
+    "command": [
+      "dotnet",
+      "build",
+      "docs/reviews/CI1A-S2.3-WP-S23-2-tests/NativeAuthorityProcessProbe.csproj",
+      "-c",
+      "Release",
+      "--no-restore"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "process-publish-a",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "a",
+      "Available",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s23-native-16z3mlsq\\publication.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-IMPL-01-evidence\\process-publish-a.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "process-fresh-a",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "a",
+      "Available",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s23-native-16z3mlsq\\publication.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-IMPL-01-evidence\\process-fresh-a.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "process-stale-source",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "source",
+      "StalePublication",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s23-native-16z3mlsq\\publication.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-IMPL-01-evidence\\process-stale-source.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "process-stale-options",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "options",
+      "StalePublication",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s23-native-16z3mlsq\\publication.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-IMPL-01-evidence\\process-stale-options.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "process-publish-b",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "source",
+      "Available",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s23-native-16z3mlsq\\publication.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-IMPL-01-evidence\\process-publish-b.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "process-fresh-b",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "source",
+      "Available",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s23-native-16z3mlsq\\publication.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-IMPL-01-evidence\\process-fresh-b.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "process-old-a-after-b",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "a",
+      "StalePublication",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s23-native-16z3mlsq\\publication.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-IMPL-01-evidence\\process-old-a-after-b.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "wp-s23-2-tests",
+    "command": [
+      "dotnet",
+      "test",
+      "tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj",
+      "-c",
+      "Release",
+      "--no-restore",
+      "--filter",
+      "FullyQualifiedName~S23NativeAuthorityTests",
+      "--logger",
+      "console;verbosity=normal",
+      "--logger",
+      "trx;LogFileName=wp-s23-2.trx",
+      "--results-directory",
+      "docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-IMPL-01-evidence\\trx"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "native-suite",
+    "command": [
+      "dotnet",
+      "test",
+      "tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj",
+      "-c",
+      "Release",
+      "--no-restore"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "new01-independent-probes",
+    "command": [
+      "dotnet",
+      "test",
+      "docs/reviews/CI1A-S2.3-NEW-01-Q1-tests/ReviewerTests.csproj",
+      "-c",
+      "Release",
+      "--no-restore"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "wp7-stale-context",
+    "command": [
+      "dotnet",
+      "test",
+      "tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj",
+      "-c",
+      "Release",
+      "--no-build",
+      "--filter",
+      "FullyQualifiedName~S2_2Wp7IdentityStabilityTests"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "wp8-corpus",
+    "command": [
+      "dotnet",
+      "test",
+      "tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj",
+      "-c",
+      "Release",
+      "--no-build",
+      "--filter",
+      "FullyQualifiedName~S2_2Wp8CorpusIntegrationTests"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "solution-suite",
+    "command": [
+      "dotnet",
+      "test",
+      "Andirit.slnx",
+      "-c",
+      "Release",
+      "--no-restore"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "oracle-r2",
+    "command": [
+      "dotnet",
+      "run",
+      "--project",
+      "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticCorpusOracle.csproj",
+      "-c",
+      "Release",
+      "--no-restore",
+      "--",
+      "--corpus",
+      "docs/planning/adr-ci1-01-ci1a-s2-0/corpus",
+      "--expected",
+      "docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected-r2.json",
+      "--output",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-IMPL-01-evidence\\oracle-r2.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "format-verify",
+    "command": [
+      "dotnet",
+      "format",
+      "Andirit.slnx",
+      "--verify-no-changes",
+      "--no-restore"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "process-format-verify",
+    "command": [
+      "dotnet",
+      "format",
+      "docs/reviews/CI1A-S2.3-WP-S23-2-tests/NativeAuthorityProcessProbe.csproj",
+      "--verify-no-changes",
+      "--no-restore"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "build-release",
+    "command": [
+      "dotnet",
+      "build",
+      "Andirit.slnx",
+      "-c",
+      "Release",
+      "--no-restore"
+    ],
+    "exit": 0
+  }
+]
