@@ -1,0 +1,54 @@
+{
+  "environment": {
+    "os": "Windows x64 10.0.26200",
+    "sdk": "10.0.401",
+    "runtime": "10.0.12"
+  },
+  "starting_head": "2a1bfb7913d2a1274eacc8bb45931a8bc5cc29c1",
+  "disposition": "BLOCKED — OWNER DECISION REQUIRED",
+  "gates": [
+    {
+      "name": "new-publication-tests",
+      "command": "dotnet test tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj -c Release --filter FullyQualifiedName~S23PublicationIntegrationTests",
+      "result": "6 passed, 0 failed, 0 skipped",
+      "log": "new-tests.log"
+    },
+    {
+      "name": "full-solution-tests",
+      "command": "dotnet test Andirit.slnx -c Release --no-restore",
+      "result": "840 passed, 0 failed, 0 skipped (LatticeDb 50, TreeSitter 157, core 345, CSharp 288); baseline 834 + 6 new",
+      "log": "solution-tests.log"
+    },
+    {
+      "name": "new01-regression",
+      "command": "dotnet test docs/reviews/CI1A-S2.3-NEW-01-Q1-tests/ReviewerTests.csproj -c Release --no-restore",
+      "result": "17 passed, 0 failed, 0 skipped",
+      "log": "new01-tests.log"
+    },
+    {
+      "name": "frozen-r2-oracle",
+      "command": "dotnet run --project docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticCorpusOracle.csproj -c Release --no-restore -- --corpus docs/planning/adr-ci1-01-ci1a-s2-0/corpus --expected docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected-r2.json --output docs/reviews/ANDIRIT-CI1A-S2.3-WP-S23-3A-IMPL-01-evidence/oracle-r2.json",
+      "result": "185/185 checks, 0 failed; 146851 bytes; SHA-256 97F6C5E5A4CC77E089481C7643732B7A07A31D483C2643BD7A95FDAD7CED39C9 (unchanged)",
+      "log": "oracle-r2.json"
+    },
+    {
+      "name": "format",
+      "command": "dotnet format Andirit.slnx --verify-no-changes --no-restore",
+      "result": "exit 0",
+      "log": "format.log"
+    },
+    {
+      "name": "release-build",
+      "command": "dotnet build Andirit.slnx -c Release --no-restore",
+      "result": "0 warnings, 0 errors",
+      "log": "release-build.log"
+    }
+  ],
+  "blocker": {
+    "id": "B-WP-S23-3A-01",
+    "summary": "Durable reopen of a multi-unit (cross-project) publication fails with graph.edge.endpoint-missing because ReplayAsync restores units in key order and validates each step.",
+    "pre_existing": true,
+    "isolation": "Reproduced with a graph-only cross-project publication that has no occurrence rows; single-unit publication reopens successfully.",
+    "evidence": "blocker-reproduction.txt"
+  }
+}

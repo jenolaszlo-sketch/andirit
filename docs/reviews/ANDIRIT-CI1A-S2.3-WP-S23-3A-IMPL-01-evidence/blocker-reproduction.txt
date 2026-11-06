@@ -1,0 +1,46 @@
+WP-S23-3A pre-existing durable-reopen blocker (reproduced, environment Windows x64 / SDK 10.0.401)
+
+Fixture (real C# plugin, real LatticeDB file):
+  Lib/Lib.csproj   <Project Sdk="Microsoft.NET.Sdk" />
+  Lib/Value.cs     namespace Lib; public static class Value { public static int Get() => 1; }
+  App/App.csproj   <Project Sdk="Microsoft.NET.Sdk"><ItemGroup>
+                     <ProjectReference Include="../Lib/Lib.csproj" /></ItemGroup></Project>
+  App/Application.cs  namespace App; public static class Application
+                        { public static int Run() => Lib.Value.Get(); }
+
+Sequence (producer-owned pipeline, no occurrence dependency in the graph itself):
+  1. CSharpCodeGraphPlugin session -> CodeGraphIngestionSink -> StageIndexUnitAsync
+  2. CompleteIndexRunAsync -> publication succeeds (graph + occurrence authority)
+  3. Close store; reopen from the same durable file:
+        new LatticeCodeGraphStore(path)
+
+Observed (raw):
+  Andirit.CodeGraphBatchRejectedException: The restored graph is invalid.
+  graph.edge.endpoint-missing=An edge endpoint does not exist in the materialized graph.;
+  graph.edge.endpoint-missing=An edge endpoint does not exist in the materialized graph.;
+  graph.edge.endpoint-missing=An edge endpoint does not exist in the materialized graph.;
+  graph.edge.endpoint-missing=An edge endpoint does not exist in the materialized graph.
+
+Isolation (proves it is not caused by occurrence publication):
+  Repeating step 1-3 with a graph-only cross-project publication (no
+  AndiritOccurrenceUnit rows at all) fails identically with graph.edge.endpoint-missing.
+  A single-unit publication with no cross-unit edges reopens successfully.
+
+Cause:
+  DurableCommandLog.ReplayAsync restores the stored "replace" units one at a time in
+  ReadTable key order (InMemoryCodeGraphStore.RestorePublishedIndexUnitAsync validates
+  each step against the units restored so far). When a unit that references a node in
+  another unit (for example the C# plugin's cross-project DependsOn / Calls edges) is
+  restored before the referenced unit, its edge endpoints are missing and validation
+  rejects the reopen. Publication itself stages units in dependency order, so the defect
+  is only observable on durable reconstruction.
+
+Source locations:
+  src/Andirit/DurableCommandLog.cs:131-135 (per-unit restore loop)
+  src/Andirit/InMemoryCodeGraphStore.cs:387-406 (per-step ValidateMaterializedGraph)
+  src/Andirit/InMemoryCodeGraphStore.cs:1339-1355 (graph.edge.endpoint-missing)
+
+Accepted-context note:
+  docs/design/ec6a-cross-file-resolution-architecture.md:162-175 states endpoint
+  integrity is validated at staging time and "cross-unit edges already work when
+  ordering is guaranteed". Replay does not preserve that ordering.
