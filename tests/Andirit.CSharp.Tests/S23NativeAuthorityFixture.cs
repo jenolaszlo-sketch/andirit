@@ -132,11 +132,42 @@ internal sealed record S23NativeAuthorityFixture(
         var key = Repo.Value + "\n" + Plugin.Value + "\n" + unit;
         var row = Rows(path, "AndiritOccurrenceUnit")["AndiritOccurrenceUnit|" + key];
         mutation(row);
+        WriteRow(path, "AndiritOccurrenceUnit", key, row);
+    }
+
+    // WP-S23-2-R1 durability helpers. These mutate real persisted rows so a
+    // regression can remove an accepted graph owner (or its occurrence
+    // association) and observe the fresh-process reopen behavior.
+    internal static void RemoveGraphUnit(string path, string unit) =>
+        RemoveRow(path, "HetuUnit", Repo.Value + "\n" + Plugin.Value + "\n" + unit);
+
+    internal static void RemoveOccurrenceUnit(string path, string unit) =>
+        RemoveRow(path, "AndiritOccurrenceUnit", Repo.Value + "\n" + Plugin.Value + "\n" + unit);
+
+    internal static void MutateMetaRow(string path, Action<JsonObject> mutation)
+    {
+        var entry = Rows(path, "AndiritOccurrenceMeta").Single();
+        var row = entry.Value;
+        mutation(row);
+        WriteRow(path, "AndiritOccurrenceMeta", entry.Key["AndiritOccurrenceMeta|".Length..], row);
+    }
+
+    internal static void RemoveRow(string path, string label, string key)
+    {
         using var db = LatticeDatabase.Open(path, new LatticeDatabaseOptions { Create = true });
         using var txn = db.BeginWriteTransaction();
-        using (var q = db.Prepare("MATCH (s:AndiritOccurrenceUnit) WHERE s.key = $k DELETE s"))
+        using (var q = db.Prepare($"MATCH (s:{label}) WHERE s.key = $k DELETE s"))
         { q.Bind("k", LatticeValue.From(key)); using var result = q.Execute(txn); result.ReadAll(); }
-        using (var q = db.Prepare("CREATE (:AndiritOccurrenceUnit {key: $k, payload: $p})"))
+        txn.Commit();
+    }
+
+    internal static void WriteRow(string path, string label, string key, JsonObject row)
+    {
+        using var db = LatticeDatabase.Open(path, new LatticeDatabaseOptions { Create = true });
+        using var txn = db.BeginWriteTransaction();
+        using (var q = db.Prepare($"MATCH (s:{label}) WHERE s.key = $k DELETE s"))
+        { q.Bind("k", LatticeValue.From(key)); using var result = q.Execute(txn); result.ReadAll(); }
+        using (var q = db.Prepare($"CREATE (:{label} {{key: $k, payload: $p}})"))
         {
             q.Bind("k", LatticeValue.From(key));
             q.Bind("p", LatticeValue.From(Convert.ToBase64String(Encoding.UTF8.GetBytes(row.ToJsonString()))));
@@ -144,5 +175,6 @@ internal sealed record S23NativeAuthorityFixture(
         }
         txn.Commit();
     }
+
     internal static string Snapshot(string path) => JsonSerializer.Serialize(Rows(path));
 }

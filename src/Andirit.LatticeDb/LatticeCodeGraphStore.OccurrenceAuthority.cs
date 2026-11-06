@@ -30,6 +30,38 @@ public sealed partial class LatticeCodeGraphStore
         if (stored.Meta.UnitCount != stored.Units.Count ||
             stored.Meta.FactCount != stored.Units.Sum(u => u.Facts.Count))
             return Refuse(CodeOccurrenceAvailability.CorruptedIndex, "Authority publication accounting differs from native units.");
+        // Cross-projection integrity (WP-S23-2-R1 / F-01): the occurrence
+        // authority projection must correspond to the actual accepted published
+        // graph owner set in both directions. A retired or directly removed graph
+        // unit must not leave an orphaned authority-bearing occurrence unit that
+        // would still be served as a complete current result, and a published
+        // graph unit that requires authority must carry its occurrence
+        // association. This is a durable correspondence check, not a query-only
+        // filter; the projection is reconstructed independently at open.
+        var graphUnits = await _inner.GetPublishedUnitsAsync(query.RepositoryId, cancellationToken)
+            .ConfigureAwait(false);
+        var graphOwners = new Dictionary<string, bool>(StringComparer.Ordinal);
+        foreach (var graphUnit in graphUnits)
+        {
+            if (!string.Equals(graphUnit.Origin.RepositoryId.Value, query.RepositoryId.Value, StringComparison.Ordinal))
+                continue;
+            graphOwners[graphUnit.Origin.PluginId.Value + "\n" + graphUnit.Origin.IndexUnitId.Value] =
+                graphUnit.RequiresOccurrenceAuthority;
+        }
+        var occurrenceOwners = new HashSet<string>(
+            stored.Units.Select(unit => unit.PluginId + "\n" + unit.IndexUnitId), StringComparer.Ordinal);
+        foreach (var owner in occurrenceOwners)
+        {
+            if (!graphOwners.ContainsKey(owner))
+                return Refuse(CodeOccurrenceAvailability.CorruptedIndex,
+                    "An authority-bearing occurrence unit is orphaned from the published graph units.");
+        }
+        foreach (var (owner, requiresAuthority) in graphOwners)
+        {
+            if (requiresAuthority && !occurrenceOwners.Contains(owner))
+                return Refuse(CodeOccurrenceAvailability.CorruptedIndex,
+                    "A published graph unit requiring occurrence authority has no occurrence association.");
+        }
         if (query.CurrentAuthority is null)
             return Refuse(CodeOccurrenceAvailability.AnalysisUnavailable, "Current verified compilation authority is required.");
         foreach (var unit in stored.Units.OrderBy(u => u.PluginId, StringComparer.Ordinal)
