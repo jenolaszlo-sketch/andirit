@@ -1,0 +1,530 @@
+diff --git a/src/Andirit.CSharp/VerifiedCSharpAnalysis.cs b/src/Andirit.CSharp/VerifiedCSharpAnalysis.cs
+index c26571c..cc20c83 100644
+--- a/src/Andirit.CSharp/VerifiedCSharpAnalysis.cs
++++ b/src/Andirit.CSharp/VerifiedCSharpAnalysis.cs
+@@ -205,7 +205,11 @@ internal sealed class VerifiedCSharpUniverse
+             input.DeclarationSpan,
+             4,
+             input.PluginVersion);
+-        return new(VerifiedTargetMintStatus.Minted, mint.Detail, fact, mint.TargetId);
++        var defining = ResolveDefining(input.Target, input.RecordedCompctx2, input.Caller).Defining!;
++        var authority = new CodeOccurrenceDefiningAuthority(
++            fact.Id.Value, fact.PayloadHash, fact.TargetId.Value, defining.Descriptor.ProjectUnitId,
++            defining.Descriptor.DescriptorDigest, input.IdentifierDigest, input.DeclarationDigest, input.ShapeDigest);
++        return new(VerifiedTargetMintStatus.Minted, mint.Detail, fact, mint.TargetId, authority);
+     }
+ 
+     private static bool BindsDefining(VerifiedCSharpCompilation entry, IMethodSymbol target, CSharpCompilation? caller)
+diff --git a/src/Andirit.CSharp/VerifiedCSharpOccurrenceAuthority.cs b/src/Andirit.CSharp/VerifiedCSharpOccurrenceAuthority.cs
+new file mode 100644
+index 0000000..d6e6355
+--- /dev/null
++++ b/src/Andirit.CSharp/VerifiedCSharpOccurrenceAuthority.cs
+@@ -0,0 +1,87 @@
++using System.Text.Json;
++using Microsoft.CodeAnalysis.CSharp;
++
++namespace Andirit;
++
++/// <summary>
++/// Query-scoped current authority derived only from independently verified live
++/// compilations. Persisted strings cannot construct this gate. S-01 component
++/// digests remain caller-supplied, with no stronger canonicalization claim.
++/// </summary>
++internal sealed class VerifiedCSharpOccurrenceAuthority : ICodeOccurrenceAuthorityVerifier
++{
++    private readonly VerifiedCSharpUniverse _universe;
++
++    private VerifiedCSharpOccurrenceAuthority(VerifiedCSharpUniverse universe) => _universe = universe;
++
++    internal static CodeOccurrenceQuery Bind(
++        CodeOccurrenceQuery query, VerifiedCSharpUniverse universe, CSharpCompilation currentCaller)
++    {
++        // Requires exact live membership, not a descriptor-equal substitute.
++        universe.RequireCompilation(currentCaller);
++        return query with { CurrentAuthority = new VerifiedCSharpOccurrenceAuthority(universe) };
++    }
++
++    public CodeOccurrenceAuthorityRefusal? Validate(
++        CodeOccurrenceAuthority authority, string repositoryId, string pluginId, string indexUnitId,
++        IReadOnlyList<CodeOccurrenceFact> facts, CodeOccurrenceCoverage? coverage)
++    {
++        static CodeOccurrenceAuthorityRefusal Corrupt(string why) => new(CodeOccurrenceAvailability.CorruptedIndex, why);
++        static CodeOccurrenceAuthorityRefusal Stale(string why) => new(CodeOccurrenceAvailability.StalePublication, why);
++        if (authority.RepositoryId != repositoryId || authority.PluginId != pluginId ||
++            authority.IndexUnitId != indexUnitId || authority.Coverage is null ||
++            authority.Members is null || authority.Facts is null || string.IsNullOrWhiteSpace(authority.SourceUnitId))
++            return Corrupt("Occurrence authority ownership or required fields are inconsistent.");
++        if (coverage is null || JsonSerializer.Serialize(authority.Coverage) != JsonSerializer.Serialize(coverage) ||
++            authority.ScopeId != coverage.ScopeId || authority.UniverseId != coverage.UniverseId)
++            return Corrupt("Occurrence authority is not bound to the stored coverage.");
++        if (authority.Members.Any(m => m is null || !CanonicalContext(m.Compctx2)))
++            return Corrupt("Malformed recorded compilation-universe membership.");
++        if (authority.Members.Select(m => m.ProjectUnitId).Distinct(StringComparer.Ordinal).Count() != authority.Members.Count)
++            return Corrupt("Duplicate recorded compilation-universe membership.");
++        if (!_universe.IsComplete || _universe.Scope.RepositoryId != repositoryId ||
++            authority.ScopeId != _universe.Scope.Identity || authority.UniverseId != _universe.Identity)
++            return Stale("The recorded analysis scope/universe is not the current verified universe.");
++        var members = _universe.Entries.Select(e => new CodeOccurrenceCompilationAuthority(
++            e.Descriptor.ProjectUnitId, e.Descriptor.DescriptorDigest)).ToArray();
++        if (!authority.Members.SequenceEqual(members) || !members.Any(m => m.ProjectUnitId == authority.SourceUnitId))
++            return Stale("Recorded members do not equal the current verified compilation membership.");
++        if (!coverage.AnalysisPerformed || coverage.InvocationFacts != facts.Count ||
++            coverage.DeclaredUnitCount != _universe.Scope.Units.Length || coverage.VerifiedUnitCount != members.Length)
++            return Corrupt("Coverage accounting does not match the verified scope and stored facts.");
++        if (authority.Facts.Count != facts.Count || authority.Facts.Any(f => f is null) ||
++            authority.Facts.Select(f => f.OccurrenceId).Distinct(StringComparer.Ordinal).Count() != facts.Count)
++            return Corrupt("Missing, duplicate or orphan per-occurrence defining authority.");
++        var byId = authority.Facts.ToDictionary(f => f.OccurrenceId, StringComparer.Ordinal);
++        foreach (var fact in facts)
++        {
++            if (!byId.TryGetValue(fact.Id.Value, out var recorded) ||
++                fact.RepositoryId.Value != repositoryId || fact.Contributor.PluginId.Value != pluginId ||
++                fact.SourceUnitId != authority.SourceUnitId || recorded.TargetId != fact.TargetId.Value ||
++                recorded.PayloadHash != fact.PayloadHash ||
++                CodeOccurrenceIdentity.ComputePayloadHash(fact) != recorded.PayloadHash)
++                return Corrupt("The defining authority is not bound to the stored occurrence evidence.");
++            if (string.IsNullOrWhiteSpace(recorded.Compctx2))
++                return new(CodeOccurrenceAvailability.AnalysisUnavailable, "Missing recorded defining compctx2.");
++            if (!CanonicalContext(recorded.Compctx2) || string.IsNullOrWhiteSpace(recorded.IdentifierDigest) ||
++                string.IsNullOrWhiteSpace(recorded.DeclarationDigest) || string.IsNullOrWhiteSpace(recorded.ShapeDigest))
++                return Corrupt("Malformed recorded defining authority.");
++            var defining = _universe.Entries.SingleOrDefault(e => e.Descriptor.ProjectUnitId == recorded.DefiningProjectUnitId);
++            if (defining is null || defining.Descriptor.DescriptorDigest != recorded.Compctx2)
++                return Stale("Recorded defining compctx2 is not the current verified defining context.");
++            var mapped = defining.MapR2FaithfulCompctx1();
++            var target = CodeOccurrenceIdentity.ComputeTargetId(mapped.DescriptorDigest, mapped.MetadataIdentity,
++                mapped.ModuleName, recorded.IdentifierDigest, recorded.DeclarationDigest, recorded.ShapeDigest);
++            if (target != fact.TargetId)
++                return Corrupt("The stored target is not bound to the recorded defining compilation.");
++            var source = _universe.Entries.Single(e => e.Descriptor.ProjectUnitId == authority.SourceUnitId);
++            if (!source.Sources.Any(s => s.Path == fact.Span.Path && s.ContentHash == fact.SourceHash))
++                return Corrupt("The occurrence source is not in the verified source unit.");
++        }
++        return null;
++    }
++
++    private static bool CanonicalContext(string? value) => value is not null &&
++        value.StartsWith("compctx2:sha256:", StringComparison.Ordinal) && value.Length == 80 &&
++        value.AsSpan(16).ToString().All(char.IsAsciiHexDigitLower);
++}
+diff --git a/src/Andirit.CSharp/VerifiedCSharpOccurrenceExtractor.cs b/src/Andirit.CSharp/VerifiedCSharpOccurrenceExtractor.cs
+index 57fb802..0401018 100644
+--- a/src/Andirit.CSharp/VerifiedCSharpOccurrenceExtractor.cs
++++ b/src/Andirit.CSharp/VerifiedCSharpOccurrenceExtractor.cs
+@@ -42,6 +42,7 @@ internal static class VerifiedCSharpOccurrenceExtractor
+         ArgumentNullException.ThrowIfNull(request);
+         var sourceUnit = request.SourceUnit;
+         var facts = ImmutableArray.CreateBuilder<CodeOccurrenceFact>();
++        var authorities = ImmutableArray.CreateBuilder<CodeOccurrenceDefiningAuthority>();
+         int unsupportedCategories = 0, external = 0, ambiguous = 0, unresolved = 0,
+             unsupported = 0, conditionalInactive = 0;
+ 
+@@ -96,7 +97,11 @@ internal static class VerifiedCSharpOccurrenceExtractor
+                     DeclarationSpan(symbol),
+                     request.PluginVersion));
+ 
+-                if (mint.IsMinted) facts.Add(mint.Fact!);
++                if (mint.IsMinted)
++                {
++                    facts.Add(mint.Fact!);
++                    authorities.Add(mint.Authority!);
++                }
+                 else unresolved++;
+             }
+ 
+@@ -112,7 +117,17 @@ internal static class VerifiedCSharpOccurrenceExtractor
+             universe.Scope.Identity, universe.Identity,
+             universe.Scope.Units.Length, universe.Entries.Length,
+             external, ambiguous, unresolved, unsupported, conditionalInactive);
+-        return new(facts.ToImmutable(), coverage);
++        // A substituted source instance or mismatched repository never obtains a
++        // native authority envelope, even if the legacy extraction yielded facts.
++        var canRecord = complete && universe.Scope.RepositoryId == request.RepositoryId.Value &&
++            universe.Entries.Any(e => ReferenceEquals(e, sourceUnit));
++        var authority = canRecord ? new CodeOccurrenceAuthority(
++            1, request.RepositoryId.Value, request.PluginId.Value, sourceUnit.Descriptor.ProjectUnitId,
++            sourceUnit.Descriptor.ProjectUnitId, universe.Scope.Identity, universe.Identity, coverage,
++            universe.Entries.Select(e => new CodeOccurrenceCompilationAuthority(
++                e.Descriptor.ProjectUnitId, e.Descriptor.DescriptorDigest)).ToArray(),
++            authorities.ToImmutable()) : null;
++        return new(facts.ToImmutable(), coverage, authority);
+     }
+ 
+     private static bool IsSupportedInvocation(IMethodSymbol symbol) =>
+diff --git a/src/Andirit.CSharp/VerifiedUsageMint.cs b/src/Andirit.CSharp/VerifiedUsageMint.cs
+index 644cdf8..1c5e7fe 100644
+--- a/src/Andirit.CSharp/VerifiedUsageMint.cs
++++ b/src/Andirit.CSharp/VerifiedUsageMint.cs
+@@ -35,7 +35,8 @@ internal sealed record VerifiedUsageMint(
+     VerifiedTargetMintStatus Status,
+     string Detail,
+     CodeOccurrenceFact? Fact = null,
+-    CodeOccurrenceTargetId? TargetId = null)
++    CodeOccurrenceTargetId? TargetId = null,
++    CodeOccurrenceDefiningAuthority? Authority = null)
+ {
+     /// <summary>True only when a trusted, verified `usage4` fact was produced.</summary>
+     internal bool IsMinted => Status == VerifiedTargetMintStatus.Minted && Fact is not null;
+@@ -48,4 +49,19 @@ internal sealed record VerifiedUsageMint(
+ /// </summary>
+ internal sealed record VerifiedOccurrenceExtraction(
+     ImmutableArray<CodeOccurrenceFact> Facts,
+-    CodeOccurrenceCoverage Coverage);
++    CodeOccurrenceCoverage Coverage,
++    CodeOccurrenceAuthority? Authority = null)
++{
++    // Controlled preparation for the native carrier. Plugin/sink integration is WP-S23-3.
++    internal CodeIndexUnitReplacement PrepareNativeUnit(CodeFactOrigin origin)
++    {
++        if (Authority is null || origin.RepositoryId.Value != Authority.RepositoryId ||
++            origin.PluginId.Value != Authority.PluginId)
++            throw new InvalidDataException("MissingVerifiedOccurrenceAuthority");
++        return new(origin, occurrences: Facts, occurrenceAnalysisIncluded: true, occurrenceCoverage: Coverage)
++        {
++            RequiresOccurrenceAuthority = true,
++            OccurrenceAuthority = Authority with { IndexUnitId = origin.IndexUnitId.Value }
++        };
++    }
++}
+diff --git a/src/Andirit.LatticeDb/AssemblyInfo.cs b/src/Andirit.LatticeDb/AssemblyInfo.cs
+index 6b1d96d..a08d781 100644
+--- a/src/Andirit.LatticeDb/AssemblyInfo.cs
++++ b/src/Andirit.LatticeDb/AssemblyInfo.cs
+@@ -1,3 +1,5 @@
+ using System.Runtime.CompilerServices;
+ 
+ [assembly: InternalsVisibleTo("Andirit.LatticeDb.Tests")]
++
++[assembly: InternalsVisibleTo("Andirit.CSharp.Tests")]
+diff --git a/src/Andirit.LatticeDb/LatticeCodeGraphStore.OccurrenceAuthority.cs b/src/Andirit.LatticeDb/LatticeCodeGraphStore.OccurrenceAuthority.cs
+new file mode 100644
+index 0000000..8169c5e
+--- /dev/null
++++ b/src/Andirit.LatticeDb/LatticeCodeGraphStore.OccurrenceAuthority.cs
+@@ -0,0 +1,69 @@
++using System.Text.Json;
++using static Andirit.DurableCommandLog;
++
++namespace Andirit;
++
++public sealed partial class LatticeCodeGraphStore
++{
++    // Derived from the same committed occurrence rows as the reader projection.
++    // Updated only after a known successful commit, or together with recovery.
++    private sealed record OccurrenceAuthorityPublication(
++        PersistedOccurrenceMeta Meta, IReadOnlyList<PersistedOccurrenceUnit> Units);
++
++    private Dictionary<string, OccurrenceAuthorityPublication> _authorityPublications = new(StringComparer.Ordinal);
++
++    private async ValueTask<CodeOccurrenceQueryResult?> CheckOccurrenceAuthorityAsync(
++        CodeOccurrenceQuery query, CancellationToken cancellationToken)
++    {
++        if (!_authorityPublications.TryGetValue(query.RepositoryId.Value, out var stored))
++            return null; // Legitimate graph-only publication: existing availability mapping.
++        if (!stored.Meta.RequiresAuthority && query.CurrentAuthority is null &&
++            !stored.Units.Any(u => u.RequiresAuthority || u.Authority is not null))
++            return null; // Existing synthetic/raw contract; never promoted by the verified gate.
++        var publication = await _inner.GetLatestPublicationAsync(query.RepositoryId, cancellationToken).ConfigureAwait(false);
++        CodeOccurrenceQueryResult Refuse(CodeOccurrenceAvailability status, string reason) =>
++            new(status, publication, [], 0, 0, reason);
++        if (publication is null || query.ExpectedPublication is { } expected && expected != publication ||
++            stored.Meta.PublicationIndexRunId != publication.IndexRunId.Value ||
++            stored.Meta.IndexIdentity != publication.IndexIdentity.Value)
++            return Refuse(CodeOccurrenceAvailability.StalePublication, "The authority is not bound to the accepted publication.");
++        if (stored.Meta.UnitCount != stored.Units.Count ||
++            stored.Meta.FactCount != stored.Units.Sum(u => u.Facts.Count))
++            return Refuse(CodeOccurrenceAvailability.CorruptedIndex, "Authority publication accounting differs from native units.");
++        if (query.CurrentAuthority is null)
++            return Refuse(CodeOccurrenceAvailability.AnalysisUnavailable, "Current verified compilation authority is required.");
++        foreach (var unit in stored.Units.OrderBy(u => u.PluginId, StringComparer.Ordinal)
++                     .ThenBy(u => u.IndexUnitId, StringComparer.Ordinal))
++        {
++            cancellationToken.ThrowIfCancellationRequested();
++            if (unit.DurableKey != unit.RepositoryId + "\n" + unit.PluginId + "\n" + unit.IndexUnitId)
++                return Refuse(CodeOccurrenceAvailability.CorruptedIndex, "Authority ownership differs from the native unit key.");
++            if (unit.Authority is not { ValueKind: JsonValueKind.Object } raw)
++                return Refuse(unit.Authority is null || unit.Authority.Value.ValueKind == JsonValueKind.Null
++                    ? CodeOccurrenceAvailability.AnalysisUnavailable : CodeOccurrenceAvailability.CorruptedIndex,
++                    "Missing or malformed recorded occurrence authority; re-ingestion required.");
++            if (!raw.TryGetProperty("Version", out var version) || version.ValueKind != JsonValueKind.Number || !version.TryGetInt32(out var number))
++                return Refuse(CodeOccurrenceAvailability.CorruptedIndex, "Missing or malformed authority version.");
++            if (number != 1)
++                return Refuse(CodeOccurrenceAvailability.UnsupportedSchema, "Unsupported occurrence authority version.");
++            if (unit.RepositoryId != query.RepositoryId.Value ||
++                unit.AuthorityPublicationIndexRunId != stored.Meta.PublicationIndexRunId)
++                return Refuse(CodeOccurrenceAvailability.StalePublication, "Occurrence authority unit/publication association differs.");
++            try
++            {
++                var authority = raw.Deserialize<CodeOccurrenceAuthority>(SerializerOptions);
++                if (authority is null)
++                    return Refuse(CodeOccurrenceAvailability.CorruptedIndex, "Invalid occurrence authority.");
++                var refused = query.CurrentAuthority.Validate(authority, unit.RepositoryId, unit.PluginId,
++                    unit.IndexUnitId, unit.Facts, unit.Coverage);
++                if (refused is not null)
++                    return Refuse(refused.Availability, refused.Reason);
++            }
++            catch (Exception exception) when (exception is JsonException or ArgumentException or InvalidOperationException)
++            {
++                return Refuse(CodeOccurrenceAvailability.CorruptedIndex, "Malformed occurrence authority: " + exception.Message);
++            }
++        }
++        return null;
++    }
++}
+diff --git a/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs b/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
+index 55cb9a7..98bc672 100644
+--- a/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
++++ b/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
+@@ -29,7 +29,7 @@ namespace Andirit;
+ /// (export/import; no in-place upgrades in preview).
+ /// </para>
+ /// </remarks>
+-public sealed class LatticeCodeGraphStore :
++public sealed partial class LatticeCodeGraphStore :
+     ICodeGraphStore,
+     ICodeGraphStoreHealthCheck,
+     ICodeOccurrenceReader,
+@@ -261,6 +261,9 @@ public sealed class LatticeCodeGraphStore :
+         {
+             ThrowIfDisposed();
+             ThrowIfUncertain();
++            var refusal = await CheckOccurrenceAuthorityAsync(query, cancellationToken).ConfigureAwait(false);
++            if (refusal is not null)
++                return refusal;
+             return await _inner.FindOccurrencesAsync(query, cancellationToken)
+                 .ConfigureAwait(false);
+         }
+@@ -364,9 +367,10 @@ public sealed class LatticeCodeGraphStore :
+             }
+ 
+             NativeGraphMirror? mirror;
++            OccurrenceAuthorityPublication? authority;
+             try
+             {
+-                mirror = TranslateNative(
++                (mirror, authority) = TranslateNative(
+                     () => Persist(command, baseline, cancellationToken),
+                     "persist mutation");
+             }
+@@ -394,6 +398,11 @@ public sealed class LatticeCodeGraphStore :
+ 
+             if (command.Kind == "complete" && command.Run is not null)
+             {
++                var repositoryId = command.Run.RepositoryId.Value;
++                if (authority is null)
++                    _authorityPublications.Remove(repositoryId);
++                else
++                    _authorityPublications[repositoryId] = authority;
+                 var mirrors = new Dictionary<string, NativeGraphMirror>(_mirrors, StringComparer.Ordinal);
+                 if (mirror is null)
+                     mirrors.Remove(command.Run.RepositoryId.Value);
+@@ -513,6 +522,7 @@ public sealed class LatticeCodeGraphStore :
+         var pagePairs = ReadPairs(OccurrencePageLabel);
+         if (metaPairs.Count == 0)
+         {
++            _authorityPublications.Clear();
+             if (unitPairs.Count != 0 || pagePairs.Count != 0)
+             {
+                 throw new CodeOccurrenceSchemaException(
+@@ -544,6 +554,7 @@ public sealed class LatticeCodeGraphStore :
+         foreach (var pair in unitPairs)
+         {
+             var unit = DeserializeOccurrence<PersistedOccurrenceUnit>(pair.Payload);
++            unit = unit with { DurableKey = pair.Key };
+             if (!metas.ContainsKey(unit.RepositoryId))
+             {
+                 throw new CodeOccurrenceSchemaException(
+@@ -626,9 +637,14 @@ public sealed class LatticeCodeGraphStore :
+                 meta.AnalysisIncluded || repositoryCoverage?.AnalysisPerformed == true,
+                 repositoryCoverage);
+         }
++        // The additive carrier remains opaque during reconstruction. Malformed
++        // carrier data is interpreted/refused at query time, not thrown here.
++        _authorityPublications = metas.Values.ToDictionary(meta => meta.RepositoryId,
++            meta => new OccurrenceAuthorityPublication(meta,
++                unitsByRepository.GetValueOrDefault(meta.RepositoryId) ?? []), StringComparer.Ordinal);
+     }
+ 
+-    private void PersistOccurrences(
++    private OccurrenceAuthorityPublication? PersistOccurrences(
+         LatticeTransaction txn,
+         CodeIndexRunManifest run,
+         CodeRepositoryIndexState state)
+@@ -662,7 +678,10 @@ public sealed class LatticeCodeGraphStore :
+                     replacement.Origin.IndexUnitId.Value,
+                     true,
+                     replacement.Occurrences,
+-                    coverage);
++                    coverage,
++                    replacement.OccurrenceAuthority is { } recorded
++                        ? JsonSerializer.SerializeToElement(recorded, SerializerOptions) : null,
++                    replacement.RequiresOccurrenceAuthority || replacement.OccurrenceAuthority is not null);
+             }
+             else
+             {
+@@ -670,6 +689,13 @@ public sealed class LatticeCodeGraphStore :
+             }
+         }
+ 
++        foreach (var key in units.Keys.ToArray())
++        {
++            var unit = units[key] with { DurableKey = key };
++            units[key] = unit;
++            if (unit.RequiresAuthority || unit.Authority is not null)
++                units[key] = unit with { AuthorityPublicationIndexRunId = state.IndexRunId.Value };
++        }
+         var analysisIncluded = units.Values.Any(unit =>
+             unit.AnalysisIncluded || unit.Facts.Count > 0 || unit.Coverage?.AnalysisPerformed == true);
+         var repositoryCoverage = AggregateCoverage(units.Values);
+@@ -699,7 +725,7 @@ public sealed class LatticeCodeGraphStore :
+             {
+                 DeleteMany(txn, OccurrenceMetaLabel, [repositoryId]);
+             }
+-            return;
++            return null;
+         }
+ 
+         var pages = units.Values
+@@ -744,8 +770,10 @@ public sealed class LatticeCodeGraphStore :
+             repositoryCoverage?.State ?? CodeRelationshipCoverageState.NotProduced,
+             repositoryCoverage?.ScopeId,
+             repositoryCoverage?.UniverseId,
+-            repositoryCoverage?.IsComplete == true);
++            repositoryCoverage?.IsComplete == true,
++            units.Values.Any(unit => unit.RequiresAuthority || unit.Authority is not null));
+         Upsert(txn, OccurrenceMetaLabel, repositoryId, Serialize(meta));
++        return new OccurrenceAuthorityPublication(meta, units.Values.ToArray());
+     }
+ 
+     private static bool TryGetCoverage(
+@@ -841,9 +869,11 @@ public sealed class LatticeCodeGraphStore :
+             new CodePluginId(unit.PluginId),
+             new CodeIndexUnitId(unit.IndexUnitId));
+ 
+-    private NativeGraphMirror? Persist(PersistedCommand command, string? baseline, CancellationToken cancellationToken)
++    private (NativeGraphMirror? Mirror, OccurrenceAuthorityPublication? Authority) Persist(
++        PersistedCommand command, string? baseline, CancellationToken cancellationToken)
+     {
+         NativeGraphMirror? mirror = null;
++        OccurrenceAuthorityPublication? authority = null;
+         cancellationToken.ThrowIfCancellationRequested();
+         using var txn = _database.BeginWriteTransaction();
+         try
+@@ -870,7 +900,7 @@ public sealed class LatticeCodeGraphStore :
+                     Upsert(txn, RunLabel, RunKey(command.Run!), Serialize(command.Run));
+                     Upsert(txn, IndexStateLabel, command.State!.RepositoryId.Value, Serialize(command.State));
+                     DeleteMany(txn, BaselineLabel, [RunKey(command.Run!)]);
+-                    PersistOccurrences(txn, command.Run!, command.State!);
++                    authority = PersistOccurrences(txn, command.Run!, command.State!);
+                     if (_nativeTraversal)
+                     {
+                         var completed = command.Run!;
+@@ -926,7 +956,7 @@ public sealed class LatticeCodeGraphStore :
+                 }
+                 throw;
+             }
+-            return mirror;
++            return (mirror, authority);
+         }
+         catch (CodeGraphCommitOutcomeUnknownException)
+         {
+@@ -1192,7 +1222,14 @@ internal sealed record PersistedOccurrenceUnit(
+     string IndexUnitId,
+     bool AnalysisIncluded,
+     IReadOnlyList<CodeOccurrenceFact> Facts,
+-    CodeOccurrenceCoverage? Coverage = null);
++    CodeOccurrenceCoverage? Coverage = null,
++    JsonElement? Authority = null,
++    bool RequiresAuthority = false,
++    string? AuthorityPublicationIndexRunId = null)
++{
++    [System.Text.Json.Serialization.JsonIgnore]
++    internal string? DurableKey { get; init; }
++}
+ 
+ /// <summary>Internal durable record: the accepted occurrence schema/publication manifest.</summary>
+ internal sealed record PersistedOccurrenceMeta(
+@@ -1210,7 +1247,8 @@ internal sealed record PersistedOccurrenceMeta(
+     CodeRelationshipCoverageState CoverageState = CodeRelationshipCoverageState.NotProduced,
+     string? ScopeId = null,
+     string? UniverseId = null,
+-    bool CompleteCoverage = false);
++    bool CompleteCoverage = false,
++    bool RequiresAuthority = false);
+ 
+ /// <summary>Internal durable record: one target-index page.</summary>
+ internal sealed record PersistedOccurrencePage(
+diff --git a/src/Andirit/AssemblyInfo.cs b/src/Andirit/AssemblyInfo.cs
+index 1447153..156845b 100644
+--- a/src/Andirit/AssemblyInfo.cs
++++ b/src/Andirit/AssemblyInfo.cs
+@@ -1,3 +1,6 @@
+ using System.Runtime.CompilerServices;
+ 
+ [assembly: InternalsVisibleTo("Andirit.LatticeDb")]
++
++[assembly: InternalsVisibleTo("Andirit.CSharp")]
++[assembly: InternalsVisibleTo("Andirit.CSharp.Tests")]
+diff --git a/src/Andirit/CodeGraphStoreModels.cs b/src/Andirit/CodeGraphStoreModels.cs
+index d07a1a4..f4fe5e3 100644
+--- a/src/Andirit/CodeGraphStoreModels.cs
++++ b/src/Andirit/CodeGraphStoreModels.cs
+@@ -169,6 +169,13 @@ public sealed record CodeIndexUnitReplacement
+         }
+     }
+ 
++    // Facts and their authority are durable only in the additive occurrence unit.
++    // The marker survives segments so unsupported resumption cannot claim authority.
++    [System.Text.Json.Serialization.JsonIgnore]
++    internal CodeOccurrenceAuthority? OccurrenceAuthority { get; init; }
++    [System.Text.Json.Serialization.JsonInclude]
++    internal bool RequiresOccurrenceAuthority { get; init; }
++
+     public CodeFactOrigin Origin { get; }
+     public IReadOnlyList<CodeGraphNode> Nodes { get; }
+     public IReadOnlyList<CodeGraphDeclaration> Declarations { get; }
+diff --git a/src/Andirit/CodeOccurrenceAuthority.cs b/src/Andirit/CodeOccurrenceAuthority.cs
+new file mode 100644
+index 0000000..b15564d
+--- /dev/null
++++ b/src/Andirit/CodeOccurrenceAuthority.cs
+@@ -0,0 +1,25 @@
++namespace Andirit;
++
++// Internal, versioned validity evidence. These records do not define semantic
++// identity and do not by themselves establish current authority.
++internal sealed record CodeOccurrenceCompilationAuthority(string ProjectUnitId, string Compctx2);
++
++internal sealed record CodeOccurrenceDefiningAuthority(
++    string OccurrenceId, string PayloadHash, string TargetId, string DefiningProjectUnitId,
++    string Compctx2, string IdentifierDigest, string DeclarationDigest, string ShapeDigest);
++
++internal sealed record CodeOccurrenceAuthority(
++    int Version, string RepositoryId, string PluginId, string IndexUnitId, string SourceUnitId,
++    string ScopeId, string UniverseId, CodeOccurrenceCoverage Coverage,
++    IReadOnlyList<CodeOccurrenceCompilationAuthority> Members,
++    IReadOnlyList<CodeOccurrenceDefiningAuthority> Facts);
++
++internal sealed record CodeOccurrenceAuthorityRefusal(CodeOccurrenceAvailability Availability, string Reason);
++
++// Implemented by the C# verified-compilation boundary, never by persisted data.
++internal interface ICodeOccurrenceAuthorityVerifier
++{
++    CodeOccurrenceAuthorityRefusal? Validate(
++        CodeOccurrenceAuthority authority, string repositoryId, string pluginId, string indexUnitId,
++        IReadOnlyList<CodeOccurrenceFact> facts, CodeOccurrenceCoverage? coverage);
++}
+diff --git a/src/Andirit/CodeOccurrenceReader.cs b/src/Andirit/CodeOccurrenceReader.cs
+index c253c59..62f1bd9 100644
+--- a/src/Andirit/CodeOccurrenceReader.cs
++++ b/src/Andirit/CodeOccurrenceReader.cs
+@@ -43,6 +43,8 @@ public sealed record CodeOccurrenceQuery
+         MaxResults = maxResults;
+     }
+ 
++    internal ICodeOccurrenceAuthorityVerifier? CurrentAuthority { get; init; }
++
+     public CodeRepositoryId RepositoryId { get; }
+     public CodeOccurrenceTargetId TargetId { get; }
+     public CodeGraphPublication? ExpectedPublication { get; }

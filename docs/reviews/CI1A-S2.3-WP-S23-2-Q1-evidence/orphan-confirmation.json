@@ -1,0 +1,76 @@
+{
+  "distinct_process_ids": true,
+  "only_graph_owner_removed": [
+    "HetuUnit|review:q1-native-authority\nreview.q1.csharp\nClient.csproj"
+  ],
+  "mutation_and_fresh_reader_exact_rows_equal": true,
+  "expected": "Explicit refusal, no occurrence hits, no successful completeness",
+  "actual": {
+    "Availability": 0,
+    "Publication": {
+      "RepositoryId": {
+        "Value": "review:q1-native-authority"
+      },
+      "IndexRunId": {
+        "Value": "review:confirm-a"
+      },
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+      }
+    },
+    "Occurrences": [
+      {
+        "Id": {
+          "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Client.cs",
+          "StartLine": 1,
+          "StartColumn": 78,
+          "EndLine": 1,
+          "EndColumn": 83
+        },
+        "SourceUnitId": "Client.csproj",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "review.q1.csharp"
+            },
+            "IndexUnitId": "Client.csproj"
+          }
+        ],
+        "SemanticsVersion": 4
+      }
+    ],
+    "TotalMatches": 1,
+    "Examined": 1,
+    "RefusalReason": null,
+    "Coverage": {
+      "InvocationFacts": 1,
+      "UnsupportedCategories": 0,
+      "State": 0,
+      "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+      "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+      "DeclaredUnitCount": 10,
+      "VerifiedUnitCount": 10,
+      "External": 0,
+      "Ambiguous": 0,
+      "Unresolved": 0,
+      "Unsupported": 0,
+      "ConditionalInactive": 0,
+      "UnavailableReasons": {},
+      "TotalFacts": 1,
+      "AnalysisPerformed": true,
+      "IsComplete": true
+    },
+    "Truncated": false,
+    "IsComplete": true
+  },
+  "defect_reproduced": true
+}

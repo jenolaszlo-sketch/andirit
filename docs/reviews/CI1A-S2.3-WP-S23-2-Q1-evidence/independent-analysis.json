@@ -1,0 +1,120 @@
+{
+  "invocations": 56,
+  "unique_process_ids": 56,
+  "raw_expectations_met": 53,
+  "unmet_expectations": [
+    "P36-graph-orphan",
+    "P38-page-missing-id",
+    "P40-meta-complete"
+  ],
+  "transitive_source_changes": [
+    "Seed.cs"
+  ],
+  "option_variant_source_changes": [],
+  "option_changes": [
+    "Seed.csproj"
+  ],
+  "graph_orphan_changed_native_keys": [
+    "HetuUnit|review:q1-native-authority\nreview.q1.csharp\nClient.csproj"
+  ],
+  "graph_orphan_before_graph_units": [
+    {
+      "unit": "Client.csproj",
+      "run": "review:mutation-a",
+      "nodeNames": [
+        "mutation-a"
+      ],
+      "marker": true
+    },
+    {
+      "unit": "Empty.csproj",
+      "run": "review:mutation-a",
+      "nodeNames": [
+        "mutation-a"
+      ],
+      "marker": true
+    }
+  ],
+  "graph_orphan_after_graph_units": [
+    {
+      "unit": "Empty.csproj",
+      "run": "review:mutation-a",
+      "nodeNames": [
+        "mutation-a"
+      ],
+      "marker": true
+    }
+  ],
+  "graph_orphan_actual": {
+    "Availability": 0,
+    "Publication": {
+      "RepositoryId": {
+        "Value": "review:q1-native-authority"
+      },
+      "IndexRunId": {
+        "Value": "review:mutation-a"
+      },
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+      }
+    },
+    "Occurrences": [
+      {
+        "Id": {
+          "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Client.cs",
+          "StartLine": 1,
+          "StartColumn": 78,
+          "EndLine": 1,
+          "EndColumn": 83
+        },
+        "SourceUnitId": "Client.csproj",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "review.q1.csharp"
+            },
+            "IndexUnitId": "Client.csproj"
+          }
+        ],
+        "SemanticsVersion": 4
+      }
+    ],
+    "TotalMatches": 1,
+    "Examined": 1,
+    "RefusalReason": null,
+    "Coverage": {
+      "InvocationFacts": 1,
+      "UnsupportedCategories": 0,
+      "State": 0,
+      "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+      "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+      "DeclaredUnitCount": 10,
+      "VerifiedUnitCount": 10,
+      "External": 0,
+      "Ambiguous": 0,
+      "Unresolved": 0,
+      "Unsupported": 0,
+      "ConditionalInactive": 0,
+      "UnavailableReasons": {},
+      "TotalFacts": 1,
+      "AnalysisPerformed": true,
+      "IsComplete": true
+    },
+    "Truncated": false,
+    "IsComplete": true
+  },
+  "stable_target": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5",
+  "a_defining_compctx2": "compctx2:sha256:1d77ffb8fdefe881332c4f9803efd9326618e601b8695b15b7013eacbe1a8406",
+  "source_b_defining_compctx2": "compctx2:sha256:f5ad6108d0abc025eee5ea1daa34cfdc9b1dd88add3e609393616056fe408c6a",
+  "options_defining_compctx2": "compctx2:sha256:38b3cb1af7d0daf9bab4e251d4f9862e2f49237e795257337ebd1014aa0e54df",
+  "notes": "Raw failed expectations P38/P40 are exploratory stronger-refusal hypotheses, not demonstrated false availability; P36 is a graph/occurrence correspondence failure."
+}

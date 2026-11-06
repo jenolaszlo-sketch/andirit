@@ -1,0 +1,117 @@
+[
+  {
+    "name": "reviewer-build",
+    "command": [
+      "dotnet",
+      "build",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\ReviewerProbe.csproj",
+      "-c",
+      "Release"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "P01-publish-a",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-evidence\\P01-publish-a.json",
+      "a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "P02-fresh-a",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-evidence\\P02-fresh-a.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "P03-no-current",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "raw",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-evidence\\P03-no-current.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "P04-substitute-live-caller",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "substitute",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-evidence\\P04-substitute-live-caller.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "P05-transitive-only",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\transitive",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-evidence\\P05-transitive-only.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "P06-options-only",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\options",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-evidence\\P06-options-only.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "P07-direct-change",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\direct",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-evidence\\P07-direct-change.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "P08-before-commit-failure",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "fault",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\transitive",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-3ih5rp2t\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-evidence\\P08-before-commit-failure.json",
+      "failed-b"
+    ],
+    "exit": 3762504530
+  }
+]

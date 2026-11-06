@@ -1,0 +1,530 @@
+{
+  "processId": 11728,
+  "action": "mutate",
+  "detail": "meta-complete",
+  "corpus": "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q1-review-6zh6wjbr\\a",
+  "notes": [],
+  "rejected": false,
+  "openError": null,
+  "target": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5",
+  "definingCompctx2": "compctx2:sha256:1d77ffb8fdefe881332c4f9803efd9326618e601b8695b15b7013eacbe1a8406",
+  "universe": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+  "result": {
+    "Availability": 5,
+    "Publication": {
+      "RepositoryId": {
+        "Value": "review:q1-native-authority"
+      },
+      "IndexRunId": {
+        "Value": "review:partial"
+      },
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+      }
+    },
+    "Occurrences": [
+      {
+        "Id": {
+          "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Client.cs",
+          "StartLine": 1,
+          "StartColumn": 78,
+          "EndLine": 1,
+          "EndColumn": 83
+        },
+        "SourceUnitId": "Client.csproj",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "review.q1.csharp"
+            },
+            "IndexUnitId": "Client.csproj"
+          }
+        ],
+        "SemanticsVersion": 4
+      }
+    ],
+    "TotalMatches": 1,
+    "Examined": 1,
+    "RefusalReason": "The declared analysis scope is not proven complete; a zero-result answer is not a complete negative.",
+    "Coverage": {
+      "InvocationFacts": 1,
+      "UnsupportedCategories": 0,
+      "State": 1,
+      "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+      "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+      "DeclaredUnitCount": 10,
+      "VerifiedUnitCount": 10,
+      "External": 0,
+      "Ambiguous": 0,
+      "Unresolved": 0,
+      "Unsupported": 0,
+      "ConditionalInactive": 0,
+      "UnavailableReasons": {},
+      "TotalFacts": 1,
+      "AnalysisPerformed": true,
+      "IsComplete": false
+    },
+    "Truncated": false,
+    "IsComplete": false
+  },
+  "graphUnits": [
+    {
+      "unit": "Client.csproj",
+      "run": "review:partial",
+      "nodeNames": [
+        "partial"
+      ],
+      "marker": true
+    },
+    {
+      "unit": "Empty.csproj",
+      "run": "review:partial",
+      "nodeNames": [
+        "partial"
+      ],
+      "marker": true
+    }
+  ],
+  "inputs": [
+    {
+      "unit": "Seed.csproj",
+      "compctx2": "compctx2:sha256:75fe940cf725a69fb839a7285a586d2bd63fd42e6776faec04a3913b3947fe89",
+      "options": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+      "sources": [
+        {
+          "Path": "Seed.cs",
+          "ContentHash": "sha256:889103843c84807aaf877d84f093d72a07567a09ec69245150f9c43756251462",
+          "text": "namespace Review; public static class Seed { public static int Read() =\u003E 11; }"
+        }
+      ]
+    },
+    {
+      "unit": "Bridge.csproj",
+      "compctx2": "compctx2:sha256:3a886ebff54d3a438cfec90d9fa9b6861d940dd67e78e8e282a0424010b82931",
+      "options": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+      "sources": [
+        {
+          "Path": "Bridge.cs",
+          "ContentHash": "sha256:eb02b1a4dc89297d3a460998af692d6a33713baccccacd05fdbb9c869dd5c810",
+          "text": "namespace Review; public static class Bridge { public static int Read() =\u003E Seed.Read(); }"
+        }
+      ]
+    },
+    {
+      "unit": "Api.csproj",
+      "compctx2": "compctx2:sha256:1d77ffb8fdefe881332c4f9803efd9326618e601b8695b15b7013eacbe1a8406",
+      "options": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+      "sources": [
+        {
+          "Path": "Api.cs",
+          "ContentHash": "sha256:8468705d90dcb357ed2837ac22fd843361d79c0eb018356a6526c6cdc8b9ad53",
+          "text": "namespace Review; public static class Api { public static int Fetch() =\u003E Bridge.Read(); }"
+        }
+      ]
+    },
+    {
+      "unit": "Client.csproj",
+      "compctx2": "compctx2:sha256:8db14171a8f83f1aa69ae9da6a0decdb41fef0e1b922a9401359feec7428e64e",
+      "options": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+      "sources": [
+        {
+          "Path": "Client.cs",
+          "ContentHash": "sha256:b1ae72319145f2e93bb39b010b167d0d769666381b898654e311e49ad308df21",
+          "text": "namespace Review; public static class Client { public static int Go() =\u003E Api.Fetch(); }"
+        }
+      ]
+    },
+    {
+      "unit": "Empty.csproj",
+      "compctx2": "compctx2:sha256:966a550b460e3b6ff9cfde96780f3f6b9458c8f617e221415eaf7d8bdd90cb20",
+      "options": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+      "sources": [
+        {
+          "Path": "Empty.cs",
+          "ContentHash": "sha256:6c3fd6bd6086c3f6627cf3f6564a24865bf0df0876df784ae10db1da0ecf855d",
+          "text": "namespace Review; public class Empty { }"
+        }
+      ]
+    }
+  ],
+  "nativeRecords": {
+    "AndiritOccurrenceMeta|review:q1-native-authority": {
+      "SchemaVersion": 1,
+      "Namespace": "andirit-occurrence-facts/1",
+      "RepositoryId": "review:q1-native-authority",
+      "PublicationIndexRunId": "review:partial",
+      "IndexIdentity": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917",
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "FactCount": 1,
+      "UnitCount": 2,
+      "PageCount": 1,
+      "AnalysisIncluded": true,
+      "CoverageState": 1,
+      "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+      "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+      "CompleteCoverage": true,
+      "RequiresAuthority": true
+    },
+    "AndiritOccurrencePage|review:q1-native-authority\nasmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5": {
+      "RepositoryId": "review:q1-native-authority",
+      "TargetId": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5",
+      "PublicationIndexRunId": "review:partial",
+      "OccurrenceIds": [
+        "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+      ]
+    },
+    "AndiritOccurrenceUnit|review:q1-native-authority\nreview.q1.csharp\nClient.csproj": {
+      "RepositoryId": "review:q1-native-authority",
+      "PluginId": "review.q1.csharp",
+      "IndexUnitId": "Client.csproj",
+      "AnalysisIncluded": true,
+      "Facts": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "TargetDocumentId": "M:Review.Api.Fetch",
+          "RepositoryId": {
+            "Value": "review:q1-native-authority"
+          },
+          "Category": 0,
+          "SourceUnitId": "Client.csproj",
+          "Contributor": {
+            "PluginId": {
+              "Value": "review.q1.csharp"
+            },
+            "IndexUnitId": "Client.csproj"
+          },
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "DeclarationSpan": {
+            "Path": "Api.cs",
+            "StartLine": 1,
+            "StartColumn": 45,
+            "EndLine": 1,
+            "EndColumn": 88
+          },
+          "SourceHash": "sha256:b1ae72319145f2e93bb39b010b167d0d769666381b898654e311e49ad308df21",
+          "ContentHash": "sha256:b1ae72319145f2e93bb39b010b167d0d769666381b898654e311e49ad308df21",
+          "PluginVersion": "1.0",
+          "SemanticsVersion": 4,
+          "PayloadHash": "2a0e7477d46b908edb9d502fec867ee1d699d304ed4e83d7d6e2562d22f4f0c1"
+        }
+      ],
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 1,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 5,
+        "VerifiedUnitCount": 5,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": false
+      },
+      "Authority": {
+        "Version": 1,
+        "RepositoryId": "review:q1-native-authority",
+        "PluginId": "review.q1.csharp",
+        "IndexUnitId": "Client.csproj",
+        "SourceUnitId": "Client.csproj",
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "Coverage": {
+          "InvocationFacts": 1,
+          "UnsupportedCategories": 0,
+          "State": 1,
+          "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+          "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+          "DeclaredUnitCount": 5,
+          "VerifiedUnitCount": 5,
+          "External": 0,
+          "Ambiguous": 0,
+          "Unresolved": 0,
+          "Unsupported": 0,
+          "ConditionalInactive": 0,
+          "UnavailableReasons": {},
+          "TotalFacts": 1,
+          "AnalysisPerformed": true,
+          "IsComplete": false
+        },
+        "Members": [
+          {
+            "ProjectUnitId": "Api.csproj",
+            "Compctx2": "compctx2:sha256:1d77ffb8fdefe881332c4f9803efd9326618e601b8695b15b7013eacbe1a8406"
+          },
+          {
+            "ProjectUnitId": "Bridge.csproj",
+            "Compctx2": "compctx2:sha256:3a886ebff54d3a438cfec90d9fa9b6861d940dd67e78e8e282a0424010b82931"
+          },
+          {
+            "ProjectUnitId": "Client.csproj",
+            "Compctx2": "compctx2:sha256:8db14171a8f83f1aa69ae9da6a0decdb41fef0e1b922a9401359feec7428e64e"
+          },
+          {
+            "ProjectUnitId": "Empty.csproj",
+            "Compctx2": "compctx2:sha256:966a550b460e3b6ff9cfde96780f3f6b9458c8f617e221415eaf7d8bdd90cb20"
+          },
+          {
+            "ProjectUnitId": "Seed.csproj",
+            "Compctx2": "compctx2:sha256:75fe940cf725a69fb839a7285a586d2bd63fd42e6776faec04a3913b3947fe89"
+          }
+        ],
+        "Facts": [
+          {
+            "OccurrenceId": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507",
+            "PayloadHash": "2a0e7477d46b908edb9d502fec867ee1d699d304ed4e83d7d6e2562d22f4f0c1",
+            "TargetId": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5",
+            "DefiningProjectUnitId": "Api.csproj",
+            "Compctx2": "compctx2:sha256:1d77ffb8fdefe881332c4f9803efd9326618e601b8695b15b7013eacbe1a8406",
+            "IdentifierDigest": "review-id:Fetch",
+            "DeclarationDigest": "review-decl:Api.Fetch",
+            "ShapeDigest": "method|0"
+          }
+        ]
+      },
+      "RequiresAuthority": true,
+      "AuthorityPublicationIndexRunId": "review:partial"
+    },
+    "AndiritOccurrenceUnit|review:q1-native-authority\nreview.q1.csharp\nEmpty.csproj": {
+      "RepositoryId": "review:q1-native-authority",
+      "PluginId": "review.q1.csharp",
+      "IndexUnitId": "Empty.csproj",
+      "AnalysisIncluded": true,
+      "Facts": [],
+      "Coverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 1,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 5,
+        "VerifiedUnitCount": 5,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": false
+      },
+      "Authority": {
+        "Version": 1,
+        "RepositoryId": "review:q1-native-authority",
+        "PluginId": "review.q1.csharp",
+        "IndexUnitId": "Empty.csproj",
+        "SourceUnitId": "Empty.csproj",
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "Coverage": {
+          "InvocationFacts": 0,
+          "UnsupportedCategories": 0,
+          "State": 1,
+          "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+          "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+          "DeclaredUnitCount": 5,
+          "VerifiedUnitCount": 5,
+          "External": 0,
+          "Ambiguous": 0,
+          "Unresolved": 0,
+          "Unsupported": 0,
+          "ConditionalInactive": 0,
+          "UnavailableReasons": {},
+          "TotalFacts": 0,
+          "AnalysisPerformed": true,
+          "IsComplete": false
+        },
+        "Members": [
+          {
+            "ProjectUnitId": "Api.csproj",
+            "Compctx2": "compctx2:sha256:1d77ffb8fdefe881332c4f9803efd9326618e601b8695b15b7013eacbe1a8406"
+          },
+          {
+            "ProjectUnitId": "Bridge.csproj",
+            "Compctx2": "compctx2:sha256:3a886ebff54d3a438cfec90d9fa9b6861d940dd67e78e8e282a0424010b82931"
+          },
+          {
+            "ProjectUnitId": "Client.csproj",
+            "Compctx2": "compctx2:sha256:8db14171a8f83f1aa69ae9da6a0decdb41fef0e1b922a9401359feec7428e64e"
+          },
+          {
+            "ProjectUnitId": "Empty.csproj",
+            "Compctx2": "compctx2:sha256:966a550b460e3b6ff9cfde96780f3f6b9458c8f617e221415eaf7d8bdd90cb20"
+          },
+          {
+            "ProjectUnitId": "Seed.csproj",
+            "Compctx2": "compctx2:sha256:75fe940cf725a69fb839a7285a586d2bd63fd42e6776faec04a3913b3947fe89"
+          }
+        ],
+        "Facts": []
+      },
+      "RequiresAuthority": true,
+      "AuthorityPublicationIndexRunId": "review:partial"
+    },
+    "HetuIndexState|review:q1-native-authority": {
+      "RepositoryId": {
+        "Value": "review:q1-native-authority"
+      },
+      "IndexRunId": {
+        "Value": "review:partial"
+      },
+      "Sources": [],
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+      }
+    },
+    "HetuRun|review:q1-native-authority\nreview:partial": {
+      "RepositoryId": {
+        "Value": "review:q1-native-authority"
+      },
+      "Id": {
+        "Value": "review:partial"
+      },
+      "StartedAt": "2026-11-06T00:00:00\u002B00:00",
+      "Status": 1,
+      "CompletedAt": "2026-11-06T00:00:01\u002B00:00",
+      "Plugins": [
+        {
+          "Value": "review.q1.csharp"
+        }
+      ]
+    },
+    "HetuUnit|review:q1-native-authority\nreview.q1.csharp\nClient.csproj": {
+      "RequiresOccurrenceAuthority": true,
+      "Origin": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "PluginId": {
+          "Value": "review.q1.csharp"
+        },
+        "PluginVersion": "1.0",
+        "IndexRunId": {
+          "Value": "review:partial"
+        },
+        "IndexUnitId": {
+          "Value": "Client.csproj"
+        },
+        "SourcePath": null,
+        "SourceHash": null
+      },
+      "Nodes": [
+        {
+          "Id": {
+            "Value": "review-node:Client.csproj"
+          },
+          "Kind": {
+            "Value": "review.project"
+          },
+          "Name": "partial",
+          "QualifiedName": null,
+          "SymbolId": null,
+          "Properties": {}
+        }
+      ],
+      "Declarations": [],
+      "Edges": [],
+      "OccurrenceCoverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 1,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 5,
+        "VerifiedUnitCount": 5,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": false
+      }
+    },
+    "HetuUnit|review:q1-native-authority\nreview.q1.csharp\nEmpty.csproj": {
+      "RequiresOccurrenceAuthority": true,
+      "Origin": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "PluginId": {
+          "Value": "review.q1.csharp"
+        },
+        "PluginVersion": "1.0",
+        "IndexRunId": {
+          "Value": "review:partial"
+        },
+        "IndexUnitId": {
+          "Value": "Empty.csproj"
+        },
+        "SourcePath": null,
+        "SourceHash": null
+      },
+      "Nodes": [
+        {
+          "Id": {
+            "Value": "review-node:Empty.csproj"
+          },
+          "Kind": {
+            "Value": "review.project"
+          },
+          "Name": "partial",
+          "QualifiedName": null,
+          "SymbolId": null,
+          "Properties": {}
+        }
+      ],
+      "Declarations": [],
+      "Edges": [],
+      "OccurrenceCoverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 1,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 5,
+        "VerifiedUnitCount": 5,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": false
+      }
+    }
+  }
+}
