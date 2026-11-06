@@ -4,7 +4,7 @@ namespace Andirit;
 /// Validates streamed plugin batches and commits each completed index unit as
 /// one atomic store replacement.
 /// </summary>
-public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
+public sealed class CodeGraphIngestionSink : ICodeGraphSink, ICodeOccurrenceAuthoritySink, IAsyncDisposable
 {
     private readonly ICodeGraphIndexStore _store;
     private readonly CodeGraphBatchValidator _validator;
@@ -12,6 +12,10 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
     private readonly SemaphoreSlim _gate = new(1, 1);
     private readonly Dictionary<OwnerKey, Accumulator> _pending = [];
     private readonly HashSet<OwnerKey> _rejected = [];
+    // WP-S23-3A: the internal authority envelope awaiting the completing batch for
+    // each owner. Keyed by the same origin as the batch stream so it can never be
+    // associated with an unrelated unit.
+    private readonly Dictionary<OwnerKey, CodeOccurrenceAuthority> _occurrenceAuthority = [];
     private bool _disposed;
 
     public CodeGraphIngestionSink(
@@ -94,7 +98,8 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
                 return;
 
             _pending.Remove(key);
-            var replacement = pending.ToReplacement();
+            _occurrenceAuthority.Remove(key, out var authority);
+            var replacement = pending.ToReplacement(authority);
             try
             {
                 await _store.StageIndexUnitAsync(replacement, cancellationToken)
@@ -114,6 +119,52 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
         }
     }
 
+    // WP-S23-3A internal handoff. Associates the accepted authority envelope with
+    // the owner identified by the same origin used for that unit's batch stream. It
+    // is applied only when the completing batch is received, so authority can never
+    // be published without its facts and coverage, and never for an unrelated unit.
+    async ValueTask ICodeOccurrenceAuthoritySink.SetOccurrenceAuthorityAsync(
+        CodeFactOrigin origin,
+        CodeOccurrenceAuthority authority,
+        CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(origin);
+        ArgumentNullException.ThrowIfNull(authority);
+        ObjectDisposedException.ThrowIf(_disposed, this);
+        await _gate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            ObjectDisposedException.ThrowIf(_disposed, this);
+            var key = OwnerKey.From(origin);
+            if (_rejected.Contains(key))
+            {
+                throw Reject(
+                    origin,
+                    [Error(
+                        CodeGraphValidationErrorKind.IncompleteIndexUnit,
+                        "ingestion.index-unit.rejected",
+                        "The index unit was already rejected and must be restarted.")]);
+            }
+
+            if (authority.RepositoryId != origin.RepositoryId.Value ||
+                authority.PluginId != origin.PluginId.Value)
+            {
+                throw Reject(
+                    origin,
+                    [Error(
+                        CodeGraphValidationErrorKind.OwnershipMismatch,
+                        "ingestion.occurrence-authority.ownership-mismatch",
+                        "Occurrence authority does not belong to the batch origin.")]);
+            }
+
+            _occurrenceAuthority[key] = authority;
+        }
+        finally
+        {
+            _gate.Release();
+        }
+    }
+
     /// <summary>
     /// Verifies that every started index unit completed successfully before an
     /// indexing run is committed.
@@ -125,11 +176,12 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
         try
         {
             ObjectDisposedException.ThrowIf(_disposed, this);
-            if (_pending.Count == 0 && _rejected.Count == 0)
+            if (_pending.Count == 0 && _rejected.Count == 0 && _occurrenceAuthority.Count == 0)
                 return;
 
             var errors = _pending.Keys
                 .Concat(_rejected)
+                .Concat(_occurrenceAuthority.Keys)
                 .Distinct()
                 .OrderBy(key => key.PluginId, StringComparer.Ordinal)
                 .ThenBy(key => key.IndexUnitId, StringComparer.Ordinal)
@@ -163,6 +215,7 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
             _disposed = true;
             _pending.Clear();
             _rejected.Clear();
+            _occurrenceAuthority.Clear();
         }
         finally
         {
@@ -179,6 +232,7 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
         _pending.TryGetValue(key, out var pending);
         _pending.Remove(key);
         _rejected.Add(key);
+        _occurrenceAuthority.Remove(key);
         Report(pending?.ToDiagnostics(
             errors.Count,
             errors.Select(error => error.Code)
@@ -219,6 +273,7 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
     {
         _pending.Remove(key);
         _rejected.Add(key);
+        _occurrenceAuthority.Remove(key);
     }
 
     private static CodeGraphValidationError Error(
@@ -256,7 +311,7 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
             }
         }
 
-        public CodeIndexUnitReplacement ToReplacement() =>
+        public CodeIndexUnitReplacement ToReplacement(CodeOccurrenceAuthority? authority) =>
             new(
                 Origin,
                 _nodes,
@@ -265,7 +320,13 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
                 _occurrences,
                 occurrenceAnalysisIncluded: _occurrences.Count > 0 ||
                     _coverage?.AnalysisPerformed == true,
-                occurrenceCoverage: _coverage);
+                occurrenceCoverage: _coverage)
+            {
+                // WP-S23-3A: authority and marker are published only together with
+                // the facts/coverage they describe, and only for this owner.
+                OccurrenceAuthority = authority,
+                RequiresOccurrenceAuthority = authority is not null,
+            };
 
         public CodeGraphIngestionDiagnostics ToDiagnostics(
             int rejectedFacts = 0,

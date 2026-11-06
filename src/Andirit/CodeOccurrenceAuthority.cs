@@ -23,3 +23,18 @@ internal interface ICodeOccurrenceAuthorityVerifier
         CodeOccurrenceAuthority authority, string repositoryId, string pluginId, string indexUnitId,
         IReadOnlyList<CodeOccurrenceFact> facts, CodeOccurrenceCoverage? coverage);
 }
+
+// WP-S23-3A internal handoff. Andirit.Abstractions cannot depend on Andirit, so
+// the accepted authority envelope cannot travel on the public CodeGraphBatch.
+// A publication sink implements this internal capability to associate the
+// verified envelope with the owning staged unit, keyed by the same
+// (repository, plugin, index-unit) origin as the batch stream. Sinks that do not
+// implement it receive graph-only output: occurrence facts are never published
+// without the authority association required to serve them.
+internal interface ICodeOccurrenceAuthoritySink
+{
+    ValueTask SetOccurrenceAuthorityAsync(
+        CodeFactOrigin origin,
+        CodeOccurrenceAuthority authority,
+        CancellationToken cancellationToken = default);
+}

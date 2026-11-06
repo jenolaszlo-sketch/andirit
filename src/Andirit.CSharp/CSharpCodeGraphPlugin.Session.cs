@@ -57,6 +57,23 @@ public sealed partial class CSharpCodeGraphPlugin
                     builder.AddDeclarations(source.Path, root, model, cancellationToken);
                 }
                 builder.AddRelationships(cancellationToken);
+                // WP-S23-3A: publish this project's real occurrence contribution
+                // before the completing graph batch, so one replacement stages the
+                // graph, facts, coverage and authority together.
+                if (prepared.Verified is not null)
+                {
+                    await PublishOccurrencesAsync(
+                        sink,
+                        context.RepositoryId,
+                        plugin.Id,
+                        plugin.Version,
+                        context.IndexRunId,
+                        CSharpProjectDiscovery.IndexUnitId(project.Path),
+                        analysis.Universe,
+                        prepared.Verified,
+                        cancellationToken).ConfigureAwait(false);
+                }
+
                 await builder.WriteAsync(sink, cancellationToken).ConfigureAwait(false);
                 contributingSources.UnionWith(builder.ContributingSourcePaths);
                 allDiagnostics.AddRange(compilation.GetDiagnostics(cancellationToken));
@@ -341,5 +358,67 @@ public sealed partial class CSharpCodeGraphPlugin
         foreach (var project in projects.OrderBy(project => project.Path, StringComparer.Ordinal))
             Visit(project);
         return ordered;
+    }
+
+    // WP-S23-3A real-fact occurrence publication. The S2.2 verified extractor
+    // already produces authority-gated `usage4` facts and the accepted authority
+    // envelope; this wires that output into the existing batch/sink publication
+    // path together with the internal authority handoff, without changing the
+    // public graph-batch contract, the persisted schema, or the Option A identity
+    // separation.
+    //
+    // The identifier/declaration/shape component digests remain caller-supplied
+    // under the accepted S-01 qualification: the forms below are this plugin's
+    // deterministic caller convention, not an independent canonicalization claim.
+    private static string OccurrenceIdentifierDigest(IMethodSymbol method) =>
+        CodeOccurrenceIdentity.ComputeIdentifierDigest([method.Name]);
+
+    private static string OccurrenceDeclarationDigest(IMethodSymbol method) =>
+        CodeOccurrenceIdentity.ComputeDeclarationDigest([CanonicalSymbolKey(Normalize(method))]);
+
+    private static string OccurrenceShapeDigest(IMethodSymbol method)
+    {
+        var normalized = (IMethodSymbol)Normalize(method);
+        return CodeOccurrenceIdentity.ComputeShapeDigest("method|" + normalized.Arity + "|" +
+            string.Join(",", normalized.Parameters.Select(parameter => TypeIdentity(parameter.Type))));
+    }
+
+    private static string OccurrenceTargetDocumentId(IMethodSymbol method) =>
+        method.GetDocumentationCommentId() ?? QualifiedName(method);
+
+    // Publishes this source unit's real occurrence contribution, if any, through
+    // the accepted sink. It writes an occurrence batch and registers the matching
+    // authority envelope for the same origin; the completing graph batch then
+    // stages one replacement carrying both. A sink that cannot carry authority
+    // receives graph-only output, so occurrence facts are never published without
+    // the association required to serve them.
+    private static async ValueTask PublishOccurrencesAsync(
+        ICodeGraphSink sink,
+        CodeRepositoryId repositoryId,
+        CodePluginId pluginId,
+        string pluginVersion,
+        CodeIndexRunId runId,
+        string unitId,
+        VerifiedCSharpUniverse universe,
+        VerifiedCSharpCompilation source,
+        CancellationToken cancellationToken)
+    {
+        if (sink is not ICodeOccurrenceAuthoritySink authoritySink)
+            return;
+
+        var extraction = VerifiedCSharpOccurrenceExtractor.Extract(universe,
+            new VerifiedOccurrenceExtractionRequest(repositoryId, pluginId, source,
+                OccurrenceIdentifierDigest, OccurrenceDeclarationDigest, OccurrenceShapeDigest,
+                OccurrenceTargetDocumentId, pluginVersion));
+        if (extraction.Authority is null)
+            return;
+
+        var origin = new CodeFactOrigin(repositoryId, pluginId, pluginVersion, runId,
+            new CodeIndexUnitId(unitId));
+        await authoritySink.SetOccurrenceAuthorityAsync(origin, extraction.Authority, cancellationToken)
+            .ConfigureAwait(false);
+        await sink.WriteBatchAsync(new CodeGraphBatch(origin,
+                occurrences: extraction.Facts, occurrenceCoverage: extraction.Coverage),
+            cancellationToken).ConfigureAwait(false);
     }
 }

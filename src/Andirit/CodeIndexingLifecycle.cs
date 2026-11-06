@@ -1175,7 +1175,7 @@ public sealed class CodeIndexingService
         CodeRepositoryId repositoryId,
         CodeIndexRunId runId,
         CodePluginId pluginId,
-        string pluginVersion) : ICodeGraphSink
+        string pluginVersion) : ICodeGraphSink, ICodeOccurrenceAuthoritySink
     {
         public CodeGraphBatchLimits Limits => inner.Limits;
 
@@ -1184,13 +1184,33 @@ public sealed class CodeIndexingService
             CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(batch);
-            if (batch.Origin.RepositoryId != repositoryId ||
-                batch.Origin.IndexRunId != runId ||
-                batch.Origin.PluginId != pluginId ||
-                !string.Equals(batch.Origin.PluginVersion, pluginVersion, StringComparison.Ordinal))
+            ValidateScope(batch.Origin, "Batch");
+            return inner.WriteBatchAsync(batch, cancellationToken);
+        }
+
+        public ValueTask SetOccurrenceAuthorityAsync(
+            CodeFactOrigin origin,
+            CodeOccurrenceAuthority authority,
+            CancellationToken cancellationToken = default)
+        {
+            ArgumentNullException.ThrowIfNull(origin);
+            ArgumentNullException.ThrowIfNull(authority);
+            ValidateScope(origin, "Occurrence authority");
+            return inner is ICodeOccurrenceAuthoritySink authoritySink
+                ? authoritySink.SetOccurrenceAuthorityAsync(origin, authority, cancellationToken)
+                : throw new InvalidOperationException(
+                    "The underlying publication sink cannot carry occurrence authority.");
+        }
+
+        private void ValidateScope(CodeFactOrigin origin, string what)
+        {
+            if (origin.RepositoryId != repositoryId ||
+                origin.IndexRunId != runId ||
+                origin.PluginId != pluginId ||
+                !string.Equals(origin.PluginVersion, pluginVersion, StringComparison.Ordinal))
             {
                 throw new CodeGraphBatchRejectedException(
-                    "A plugin emitted a batch outside its assigned lifecycle scope.",
+                    "A plugin emitted " + what.ToLowerInvariant() + " outside its assigned lifecycle scope.",
                     [
                         new CodeGraphValidationError(
                             CodeGraphValidationErrorKind.OwnershipMismatch,
@@ -1198,8 +1218,6 @@ public sealed class CodeIndexingService
                             "Batch repository, run, plugin, and version must match the executing plugin.")
                     ]);
             }
-
-            return inner.WriteBatchAsync(batch, cancellationToken);
         }
     }
 }
