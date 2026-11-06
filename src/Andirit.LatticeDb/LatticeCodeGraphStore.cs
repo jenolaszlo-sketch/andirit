@@ -359,8 +359,7 @@ public sealed class LatticeCodeGraphStore :
             }
             catch
             {
-                _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
-                RestoreBaselines(_inner);
+                await RebuildInnerFromDurableStateAsync().ConfigureAwait(false);
                 throw;
             }
 
@@ -382,8 +381,7 @@ public sealed class LatticeCodeGraphStore :
             {
                 // Known failure before commit: restore the projection from the
                 // unchanged command log.
-                _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
-                RestoreBaselines(_inner);
+                await RebuildInnerFromDurableStateAsync().ConfigureAwait(false);
                 throw;
             }
 
@@ -434,6 +432,27 @@ public sealed class LatticeCodeGraphStore :
             var separator = key.IndexOf('\n');
             store.RestoreBaseline(key[..separator], key[(separator + 1)..], baseline);
         }
+    }
+
+    /// <summary>
+    /// Rebuilds the in-memory projection from durable authority after a
+    /// definitively resolved known-failure recovery.
+    /// </summary>
+    /// <remarks>
+    /// NEW-01: replaying the graph command log alone leaves the occurrence
+    /// projection (facts, coverage, availability and publication binding) empty,
+    /// so the recovered instance disagreed with the durable occurrence tables.
+    /// This performs the same sequence as initial open — command-log replay, then
+    /// baseline and occurrence restoration from the authoritative native rows —
+    /// so recovered in-memory state corresponds to the accepted durable
+    /// publication. It reads only; it never mutates durable authority. The
+    /// unknown-outcome/quarantine path is unaffected (it does not replay).
+    /// </remarks>
+    private async ValueTask RebuildInnerFromDurableStateAsync()
+    {
+        _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
+        RestoreBaselines(_inner);
+        RestoreOccurrences(CancellationToken.None);
     }
 
     private void RestoreMirrors(string[] repositoryIds)
