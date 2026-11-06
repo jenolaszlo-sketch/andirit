@@ -1,0 +1,39 @@
+ANDIRIT-CI1A-S2.3-NEW-01-Q1 — evidence verification summary
+============================================================
+
+Environment: Windows x64, .NET SDK 10.0.401, runtime 10.0.12.
+Reviewed commit: c75c41f (implementation), entry owner 311e97f, report 9a9c502,
+evidence cecb9a8. Starting HEAD cecb9a88 (tree 0d2ded15935a71ee7c45975a5d0bdfa89e1ae525).
+
+Reviewer probes (committed): docs/reviews/CI1A-S2.3-NEW-01-Q1-tests/
+  dotnet test docs/reviews/CI1A-S2.3-NEW-01-Q1-tests/ReviewerTests.csproj -c Release
+  Result: 17 / 0 / 0  (new01-q1-probes.log)
+
+Historical pre-fix reproduction (commit 311e97f extracted outside the repository;
+no worktree):
+  dotnet test <tmp>/tests/PreFixProbes/PreFixProbes.csproj -c Release
+  Result: 2 defect probes FAIL (recovered AnalysisUnavailable vs durable Available;
+  conflict accepted instead of refused), 1 unknown-outcome control PASSES
+  (prefix-311e97f-probes.log). The defect class is independently reproduced.
+
+Regression on the reviewed tree:
+  dotnet test Andirit.slnx -c Release        => 796 / 0 / 0 (50+157+345+244)
+  dotnet test tests/Andirit.LatticeDb.Tests  =>  50 / 0 / 0
+  dotnet build Andirit.slnx -c Release       =>  0 warnings, 0 errors
+  dotnet format Andirit.slnx --verify-no-changes => exit 0
+  dotnet format .../ReviewerTests.csproj --verify-no-changes => exit 0
+
+Frozen R2 oracle:
+  dotnet run --project docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticCorpusOracle.csproj
+    -- --corpus .../corpus --expected .../oracle/oracle-expected-r2.json --output oracle-r2.json
+  Result: 185/185 checks passed, 0 failed
+  Output SHA-256 : 97F6C5E5A4CC77E089481C7643732B7A07A31D483C2643BD7A95FDAD7CED39C9
+  Expected SHA-256: 274A7AAE9EB6724879D619416E449C52759B44085D7B718DAD3434B15387CBBF
+
+Disposition: SUPPORTED WITH QUALIFICATIONS (no blocking defect; two documented
+boundaries: the D3 staged-occurrence durable boundary and the reconstruction-failure
+reachability boundary). Owner acceptance is NOT granted. Nothing was pushed.
+
+Independent durable decoding: the probes read native rows with their own
+LatticeDbSharp JSON readers and recompute fact identity/coverage expectations from
+their own fact objects; expected values are never taken from producer output.

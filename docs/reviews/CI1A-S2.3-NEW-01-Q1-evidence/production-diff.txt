@@ -1,0 +1,56 @@
+﻿c75c41f fix(andirit): restore occurrence projection on NEW-01 recovery paths (ANDIRIT-CI1A-S2.3-WP-S23-1-IMPL-01)
+ src/Andirit.LatticeDb/LatticeCodeGraphStore.cs     |  27 +-
+ .../New01RecoveryProjectionTests.cs                | 509 +++++++++++++++++++++
+ 2 files changed, 532 insertions(+), 4 deletions(-)
+diff --git a/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs b/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
+index 2c47eeb..55cb9a7 100644
+--- a/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
++++ b/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
+@@ -359,8 +359,7 @@ public sealed class LatticeCodeGraphStore :
+             }
+             catch
+             {
+-                _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
+-                RestoreBaselines(_inner);
++                await RebuildInnerFromDurableStateAsync().ConfigureAwait(false);
+                 throw;
+             }
+ 
+@@ -382,8 +381,7 @@ public sealed class LatticeCodeGraphStore :
+             {
+                 // Known failure before commit: restore the projection from the
+                 // unchanged command log.
+-                _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
+-                RestoreBaselines(_inner);
++                await RebuildInnerFromDurableStateAsync().ConfigureAwait(false);
+                 throw;
+             }
+ 
+@@ -436,6 +434,27 @@ public sealed class LatticeCodeGraphStore :
+         }
+     }
+ 
++    /// <summary>
++    /// Rebuilds the in-memory projection from durable authority after a
++    /// definitively resolved known-failure recovery.
++    /// </summary>
++    /// <remarks>
++    /// NEW-01: replaying the graph command log alone leaves the occurrence
++    /// projection (facts, coverage, availability and publication binding) empty,
++    /// so the recovered instance disagreed with the durable occurrence tables.
++    /// This performs the same sequence as initial open ΓÇö command-log replay, then
++    /// baseline and occurrence restoration from the authoritative native rows ΓÇö
++    /// so recovered in-memory state corresponds to the accepted durable
++    /// publication. It reads only; it never mutates durable authority. The
++    /// unknown-outcome/quarantine path is unaffected (it does not replay).
++    /// </remarks>
++    private async ValueTask RebuildInnerFromDurableStateAsync()
++    {
++        _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
++        RestoreBaselines(_inner);
++        RestoreOccurrences(CancellationToken.None);
++    }
++
+     private void RestoreMirrors(string[] repositoryIds)
+     {
+         var mirrors = new Dictionary<string, NativeGraphMirror>(StringComparer.Ordinal);

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- ANDIRIT-CI1A-S2.3-NEW-01-Q1 independent reviewer probes.
+       AssemblyName reuses the accepted InternalsVisibleTo friend so the probes
+       can construct the internal fault-injecting constructor and reference
+       internal recovery surfaces without modifying any AssemblyInfo. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>Andirit.LatticeDb.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="LatticeDbSharp" Version="0.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <Using Include="Xunit" />
+    <ProjectReference Include="../../../src/Andirit.LatticeDb/Andirit.LatticeDb.csproj" />
+  </ItemGroup>
+</Project>
