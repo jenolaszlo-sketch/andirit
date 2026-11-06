@@ -1,0 +1,741 @@
+[
+  {
+    "name": "q2-q1-reviewer-build",
+    "command": [
+      "dotnet",
+      "build",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\ReviewerProbe.csproj",
+      "-c",
+      "Release"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P01-publish-a",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P01-publish-a.json",
+      "a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P02-fresh-a",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P02-fresh-a.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P03-no-current",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "raw",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P03-no-current.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P04-substitute-live-caller",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "substitute",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P04-substitute-live-caller.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P05-transitive-only",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\transitive",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P05-transitive-only.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P06-options-only",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\options",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P06-options-only.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P07-direct-change",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\direct",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P07-direct-change.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P08-before-commit-failure",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "fault",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\transitive",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P08-before-commit-failure.json",
+      "failed-b"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P09-a-after-failure",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P09-a-after-failure.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P10-aborted-b",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "abort",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\transitive",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P10-aborted-b.json",
+      "aborted-b"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P11-a-after-abort",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P11-a-after-abort.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P12-publish-b",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\transitive",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P12-publish-b.json",
+      "b"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P13-fresh-b",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\transitive",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P13-fresh-b.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P14-old-a-after-b",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P14-old-a-after-b.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P15-unknown-outcome",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "unknown",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\options",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P15-unknown-outcome.json",
+      "unknown-options"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P16-options-fresh",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\options",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\sequence.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P16-options-fresh.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P17-retire-setup",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\retired.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P17-retire-setup.json",
+      "retire-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P18-retire-client",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "retire",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\retired.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P18-retire-client.json",
+      "retired"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P19-retired-fresh",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\retired.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P19-retired-fresh.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P20-graph-only",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "graph-only",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\graph-only.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P20-graph-only.json",
+      "graph-only"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P21-empty",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "empty",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\empty.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P21-empty.json",
+      "empty"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P22-empty-missing-current",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "raw",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\empty.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P22-empty-missing-current.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P23-empty-stale",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\transitive",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\empty.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P23-empty-stale.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P24-stage-process",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "stage",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\resume.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P24-stage-process.json",
+      "stage"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P25-resume-process",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "resume",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\resume.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P25-resume-process.json",
+      "stage"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P26-resume-raw",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "raw",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\resume.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P26-resume-raw.json",
+      ""
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C27-control-missing",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\missing.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C27-control-missing.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P27-missing",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\missing.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P27-missing.json",
+      "missing"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C28-control-null",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\null.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C28-control-null.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P28-null",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\null.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P28-null.json",
+      "null"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C29-control-malformed",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\malformed.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C29-control-malformed.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P29-malformed",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\malformed.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P29-malformed.json",
+      "malformed"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C30-control-unsupported",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\unsupported.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C30-control-unsupported.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P30-unsupported",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\unsupported.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P30-unsupported.json",
+      "unsupported"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C31-control-forged-context",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\forged-context.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C31-control-forged-context.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P31-forged-context",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\forged-context.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P31-forged-context.json",
+      "forged-context"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C32-control-null-receipts",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\null-receipts.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C32-control-null-receipts.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P32-null-receipts",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\null-receipts.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P32-null-receipts.json",
+      "null-receipts"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C33-control-wrong-owner",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\wrong-owner.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C33-control-wrong-owner.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P33-wrong-owner",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\wrong-owner.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P33-wrong-owner.json",
+      "wrong-owner"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C34-control-wrong-payload",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\wrong-payload.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C34-control-wrong-payload.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P34-wrong-payload",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\wrong-payload.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P34-wrong-payload.json",
+      "wrong-payload"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C35-control-wrong-publication",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\wrong-publication.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C35-control-wrong-publication.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P35-wrong-publication",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\wrong-publication.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P35-wrong-publication.json",
+      "wrong-publication"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C36-control-graph-orphan",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\graph-orphan.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C36-control-graph-orphan.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P36-graph-orphan",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\graph-orphan.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P36-graph-orphan.json",
+      "graph-orphan"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C37-control-meta-snapshot",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\meta-snapshot.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C37-control-meta-snapshot.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P37-meta-snapshot",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\meta-snapshot.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P37-meta-snapshot.json",
+      "meta-snapshot"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-C38-control-page-missing-id",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\page-missing-id.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-C38-control-page-missing-id.json",
+      "mutation-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P38-page-missing-id",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\page-missing-id.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P38-page-missing-id.json",
+      "page-missing-id"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P39-partial-control",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "partial",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\partial.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P39-partial-control.json",
+      "partial"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P40-meta-complete",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\partial.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P40-meta-complete.json",
+      "meta-complete"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P41-retained-setup",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\retained-resume.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P41-retained-setup.json",
+      "retained-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P42-retained-stage",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "stage-retain",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\retained-resume.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P42-retained-stage.json",
+      "retained-resume"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P43-retained-resume",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "resume",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\retained-resume.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P43-retained-resume.json",
+      "retained-resume"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "rq-P44-retained-fresh",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\a",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-q2-matrix-oaln697z\\retained-resume.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q2-evidence\\rq-P44-retained-fresh.json",
+      ""
+    ],
+    "exit": 0
+  }
+]

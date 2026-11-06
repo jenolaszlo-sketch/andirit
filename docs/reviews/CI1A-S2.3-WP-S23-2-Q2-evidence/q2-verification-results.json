@@ -1,0 +1,81 @@
+{
+  "environment": {
+    "os": "Windows x64 10.0.26200",
+    "sdk": "10.0.401",
+    "runtime": "10.0.12"
+  },
+  "reviewed_source": {
+    "production_commit": "1bce70ee2f52ed5100a2e68bc004462f9824d2f2",
+    "production_tree": "a6a908ab69740e4ee114e845cdde9374975dc15a",
+    "handoff_commit": "0bc509164363013899fa5ddbf825dd7086c9c5df",
+    "q1_reviewed_tree": "53966a01b69c876bfff29a60c576c595bdb9e84b"
+  },
+  "gates": [
+    {
+      "name": "q2-independent-probe-matrix",
+      "command": "python docs/reviews/CI1A-S2.3-WP-S23-2-Q2-tests/run-q2.py",
+      "result": "19/19 predicates met (orphan, reverse association, accounting, retirement, complete-empty, preserved publication, durable reopen, negative controls)",
+      "evidence": "q2-summary.json"
+    },
+    {
+      "name": "q1-56-matrix-reexecution-q2-owned",
+      "command": "python docs/reviews/CI1A-S2.3-WP-S23-2-Q2-tests/run-q1-matrix-q2.py",
+      "result": "56 invocations, 54 predicates met, 0 strict failures; F-01 probe P36 now passes; unmet P38/P40 are the previously recorded O-01/O-02 exploratory hypotheses",
+      "evidence": "q2-q1-summary.json"
+    },
+    {
+      "name": "conflict-refusal-control",
+      "command": "python docs/reviews/CI1A-S2.3-WP-S23-2-Q2-tests/run-q2-conflict.py",
+      "result": "6/6 checks pass (mixed-universe rejection, stable target, stale mixed query, fresh A available, rows conserved)",
+      "evidence": "q2-conflict-checks.json"
+    },
+    {
+      "name": "new01-independent-probes",
+      "command": "dotnet test docs/reviews/CI1A-S2.3-NEW-01-Q1-tests/ReviewerTests.csproj -c Release --no-restore",
+      "result": "17 passed, 0 failed, 0 skipped",
+      "evidence": "q2-new01-tests.log"
+    },
+    {
+      "name": "full-solution-tests",
+      "command": "dotnet test Andirit.slnx -c Release --no-restore",
+      "result": "834 passed, 0 failed, 0 skipped (LatticeDb 50, TreeSitter 157, core 345, CSharp 282)",
+      "evidence": "q2-solution-tests.log"
+    },
+    {
+      "name": "frozen-r2-oracle",
+      "command": "dotnet run --project docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticCorpusOracle.csproj -c Release --no-restore -- --corpus docs/planning/adr-ci1-01-ci1a-s2-0/corpus --expected docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected-r2.json --output docs/reviews/CI1A-S2.3-WP-S23-2-Q2-evidence/oracle-r2.json",
+      "result": "185/185 checks, 0 failed; 146851 bytes; SHA-256 97F6C5E5A4CC77E089481C7643732B7A07A31D483C2643BD7A95FDAD7CED39C9 (unchanged)",
+      "evidence": "oracle-r2.json"
+    },
+    {
+      "name": "format-verify",
+      "command": "dotnet format Andirit.slnx --verify-no-changes --no-restore",
+      "result": "exit 0",
+      "evidence": "q2-format-verify.log"
+    },
+    {
+      "name": "release-build",
+      "command": "dotnet build Andirit.slnx -c Release --no-restore",
+      "result": "exit 0, 0 warnings, 0 errors",
+      "evidence": "q2-build-release.log"
+    },
+    {
+      "name": "debug-build",
+      "command": "dotnet build Andirit.slnx -c Debug",
+      "result": "exit 0, 0 warnings, 0 errors",
+      "evidence": "q2-build-debug.log"
+    }
+  ],
+  "adversarial_observation": {
+    "id": "O-Q2-01",
+    "scenario": "Existing graph owner present but its additive RequireOccurrenceAuthority marker is externally cleared, leaving an authority-bearing occurrence unit.",
+    "observed": "Available / 2 hits / complete",
+    "classification": "non-blocking additive-marker correspondence completeness observation",
+    "impact": "No stale, orphaned or retired occurrence is served: the occurrence unit authority is still independently validated against the live verified compilation. Requires corrupting an existing graph record's additive marker, distinct from graph-owner removal (F-01).",
+    "evidence": "q2-adversarial.json"
+  },
+  "skipped_or_unsupported": [
+    "No abrupt-kill/power-loss, cross-platform, arbitrary-concurrency, or multiple-writer guarantee is claimed.",
+    "P38 (damaged page ID list) and P40 (aggregate complete flag) remain the previously recorded non-blocking exploratory hypotheses O-01/O-02; they were not rewritten."
+  ]
+}
