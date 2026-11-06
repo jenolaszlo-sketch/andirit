@@ -1,0 +1,53 @@
+[
+  {
+    "name": "r1-reviewer-build",
+    "command": [
+      "dotnet",
+      "build",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\ReviewerProbe.csproj",
+      "-c",
+      "Release",
+      "--no-restore"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "r1-orphan-publish",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "publish",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-r1-orphan-gczy8ju3\\corpus",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-r1-orphan-gczy8ju3\\orphan.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-R1-evidence\\r1-orphan-publish.json",
+      "r1-confirm-a"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "r1-orphan-remove-owner",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "mutate",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-r1-orphan-gczy8ju3\\corpus",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-r1-orphan-gczy8ju3\\orphan.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-R1-evidence\\r1-orphan-remove-owner.json",
+      "graph-orphan"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "r1-orphan-fresh-reader",
+    "command": [
+      "dotnet",
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-WP-S23-2-Q1-tests\\bin\\Release\\net10.0\\Andirit.CSharp.Tests.dll",
+      "query",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-r1-orphan-gczy8ju3\\corpus",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-r1-orphan-gczy8ju3\\orphan.ltdb",
+      "D:\\projects\\Andirit\\docs\\reviews\\ANDIRIT-CI1A-S2.3-WP-S23-2-R1-evidence\\r1-orphan-fresh-reader.json",
+      ""
+    ],
+    "exit": 0
+  }
+]

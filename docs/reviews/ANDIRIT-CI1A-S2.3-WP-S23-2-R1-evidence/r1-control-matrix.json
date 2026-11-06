@@ -1,0 +1,1803 @@
+[
+  {
+    "probe": "r1-control-publish-a",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-fresh-a",
+    "action": "query",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-transitive-stale",
+    "action": "query",
+    "expected": "StalePublication",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 3,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "The recorded analysis scope/universe is not the current verified universe.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-no-current",
+    "action": "raw",
+    "expected": "AnalysisUnavailable",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 1,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Current verified compilation authority is required.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-retire-setup",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:retire-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-retire-client",
+    "action": "retire",
+    "expected": "Available",
+    "expected_hits": 0,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:retired"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 5,
+        "VerifiedUnitCount": 5,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-retired-fresh",
+    "action": "query",
+    "expected": "Available",
+    "expected_hits": 0,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:retired"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 5,
+        "VerifiedUnitCount": 5,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-graph-only",
+    "action": "graph-only",
+    "expected": "AnalysisUnavailable",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 1,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:graph-only"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Occurrence analysis is unavailable for this publication; reindex required.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-empty",
+    "action": "empty",
+    "expected": "Available",
+    "expected_hits": 0,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:empty"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 5,
+        "VerifiedUnitCount": 5,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-empty-missing-current",
+    "action": "raw",
+    "expected": "AnalysisUnavailable",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 1,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:empty"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Current verified compilation authority is required.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-empty-stale",
+    "action": "query",
+    "expected": "StalePublication",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 3,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:empty"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "The recorded analysis scope/universe is not the current verified universe.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-stage",
+    "action": "stage",
+    "expected": "AnalysisUnavailable",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 1,
+      "Publication": null,
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "The repository has no successful publication.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-resume",
+    "action": "resume",
+    "expected": "AnalysisUnavailable",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 1,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:stage"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Missing or malformed recorded occurrence authority; re-ingestion required.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-retained-setup",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:retained-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-retained-stage",
+    "action": "stage-retain",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:retained-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-retained-resume",
+    "action": "resume",
+    "expected": "AnalysisUnavailable",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 1,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:retained-resume"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Missing or malformed recorded occurrence authority; re-ingestion required.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-retained-fresh",
+    "action": "query",
+    "expected": "AnalysisUnavailable",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 1,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:retained-resume"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Missing or malformed recorded occurrence authority; re-ingestion required.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-missing-publish",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-missing-mutate",
+    "action": "mutate",
+    "expected": "AnalysisUnavailable",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 1,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Missing or malformed recorded occurrence authority; re-ingestion required.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-malformed-publish",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-malformed-mutate",
+    "action": "mutate",
+    "expected": "CorruptedIndex",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 4,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Missing or malformed recorded occurrence authority; re-ingestion required.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-unsupported-publish",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-unsupported-mutate",
+    "action": "mutate",
+    "expected": "UnsupportedSchema",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 2,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Unsupported occurrence authority version.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-forged-context-publish",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-forged-context-mutate",
+    "action": "mutate",
+    "expected": "StalePublication",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 3,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Recorded defining compctx2 is not the current verified defining context.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-wrong-owner-publish",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-wrong-owner-mutate",
+    "action": "mutate",
+    "expected": "CorruptedIndex",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 4,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Occurrence authority ownership or required fields are inconsistent.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-wrong-payload-publish",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-wrong-payload-mutate",
+    "action": "mutate",
+    "expected": "CorruptedIndex",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 4,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "The defining authority is not bound to the stored occurrence evidence.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-wrong-publication-publish",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-wrong-publication-mutate",
+    "action": "mutate",
+    "expected": "StalePublication",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 3,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "Occurrence authority unit/publication association differs.",
+      "Coverage": null,
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-meta-snapshot-publish",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-meta-snapshot-mutate",
+    "action": "mutate",
+    "expected": "StalePublication",
+    "expected_hits": 0,
+    "expected_complete": false,
+    "actual": {
+      "Availability": 3,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [],
+      "TotalMatches": 0,
+      "Examined": 0,
+      "RefusalReason": "The occurrence index is bound to a different publication; reindex required.",
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": false
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-page-missing-id-publish",
+    "action": "publish",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  },
+  {
+    "probe": "r1-control-page-missing-id-mutate",
+    "action": "mutate",
+    "expected": "Available",
+    "expected_hits": 1,
+    "expected_complete": true,
+    "actual": {
+      "Availability": 0,
+      "Publication": {
+        "RepositoryId": {
+          "Value": "review:q1-native-authority"
+        },
+        "IndexRunId": {
+          "Value": "review:mutation-a"
+        },
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "IndexIdentity": {
+          "Value": "1d9ad9a73e7793c930218f1ba71f594235b9388a87f24f3079b1219448657917"
+        }
+      },
+      "Occurrences": [
+        {
+          "Id": {
+            "Value": "d5c21158a8db5515518573f38de1f65e61fc9aa8d05a17a42a26913152f3a507"
+          },
+          "TargetId": {
+            "Value": "asmctx3:sha256:694070afd3d577b746033576ff70d7775e04d8a92271b98b6bd3c0793ba81fd5"
+          },
+          "Category": 0,
+          "Span": {
+            "Path": "Client.cs",
+            "StartLine": 1,
+            "StartColumn": 78,
+            "EndLine": 1,
+            "EndColumn": 83
+          },
+          "SourceUnitId": "Client.csproj",
+          "Contributors": [
+            {
+              "PluginId": {
+                "Value": "review.q1.csharp"
+              },
+              "IndexUnitId": "Client.csproj"
+            }
+          ],
+          "SemanticsVersion": 4
+        }
+      ],
+      "TotalMatches": 1,
+      "Examined": 1,
+      "RefusalReason": null,
+      "Coverage": {
+        "InvocationFacts": 1,
+        "UnsupportedCategories": 0,
+        "State": 0,
+        "ScopeId": "analysisscope1:sha256:7f4227ff9708077d719021c83ed2a2e74d5953ce51ce4f1f3352706f29edb343",
+        "UniverseId": "compilation-universe1:sha256:18813d42cc9e6d806d84b41906d381a0eaa4a1174c847c25e9349adc75d1c3fe",
+        "DeclaredUnitCount": 10,
+        "VerifiedUnitCount": 10,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 1,
+        "AnalysisPerformed": true,
+        "IsComplete": true
+      },
+      "Truncated": false,
+      "IsComplete": true
+    },
+    "pass": true
+  }
+]

@@ -1,0 +1,88 @@
+{
+  "environment": {
+    "os": "Windows x64 10.0.26200",
+    "sdk": "10.0.401",
+    "runtime": "10.0.12",
+    "roslyn": "5.9.0.0"
+  },
+  "gates": [
+    {
+      "name": "ownership-regression-tests",
+      "command": "dotnet test tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj -c Release --no-build --filter FullyQualifiedName~S23OccurrenceOwnershipRegressionTests",
+      "result": "6 passed, 0 failed, 0 skipped",
+      "exit": 0,
+      "log": "r1-ownership-tests.log"
+    },
+    {
+      "name": "wp-s23-2-existing-tests",
+      "command": "dotnet test tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj -c Release --no-build --filter FullyQualifiedName~S23NativeAuthorityTests",
+      "result": "32 passed, 0 failed, 0 skipped",
+      "exit": 0,
+      "log": "r1-wp-s23-2-tests.log"
+    },
+    {
+      "name": "new01-independent-probes",
+      "command": "dotnet test docs/reviews/CI1A-S2.3-NEW-01-Q1-tests/ReviewerTests.csproj -c Release --no-restore",
+      "result": "17 passed, 0 failed, 0 skipped",
+      "exit": 0,
+      "log": "r1-new01-tests.log"
+    },
+    {
+      "name": "full-solution-tests",
+      "command": "dotnet test Andirit.slnx -c Release --no-restore",
+      "result": "834 passed, 0 failed, 0 skipped (LatticeDb 50, TreeSitter 157, core 345, CSharp 282)",
+      "baseline_before_remediation": "828 passed (LatticeDb 50, TreeSitter 157, core 345, CSharp 276)",
+      "delta": "+6 new R1 regression tests",
+      "exit": 0,
+      "log": "r1-solution-tests.log"
+    },
+    {
+      "name": "frozen-r2-oracle",
+      "command": "dotnet run --project docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticCorpusOracle.csproj -c Release --no-restore -- --corpus docs/planning/adr-ci1-01-ci1a-s2-0/corpus --expected docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected-r2.json --output docs/reviews/ANDIRIT-CI1A-S2.3-WP-S23-2-R1-evidence/oracle-r2.json",
+      "result": "185/185 checks passed, 0 failed",
+      "output_bytes": 146851,
+      "output_sha256": "97F6C5E5A4CC77E089481C7643732B7A07A31D483C2643BD7A95FDAD7CED39C9",
+      "exit": 0,
+      "log": "oracle-r2.json"
+    },
+    {
+      "name": "format-verify",
+      "command": "dotnet format Andirit.slnx --verify-no-changes --no-restore",
+      "result": "exit 0, no changes",
+      "exit": 0,
+      "log": "r1-format-verify.log"
+    },
+    {
+      "name": "release-build",
+      "command": "dotnet build Andirit.slnx -c Release --no-restore",
+      "result": "0 warnings, 0 errors",
+      "exit": 0,
+      "log": "r1-build-release.log"
+    },
+    {
+      "name": "debug-build",
+      "command": "dotnet build Andirit.slnx -c Debug",
+      "result": "0 warnings, 0 errors",
+      "exit": 0,
+      "log": "r1-build-debug.log"
+    },
+    {
+      "name": "r1-fresh-process-orphan-reproduction",
+      "command": "python docs/reviews/CI1A-S2.3-WP-S23-2-R1-tests/run-r1-orphan.py",
+      "result": "publish Available/1/complete; remove graph owner; fresh reader CorruptedIndex/0/not complete; 3 distinct PIDs; only the graph-owner row changed",
+      "exit": 0,
+      "log": "r1-orphan-summary.json"
+    },
+    {
+      "name": "r1-preserved-behavior-controls",
+      "command": "python docs/reviews/CI1A-S2.3-WP-S23-2-R1-tests/run-r1-controls.py",
+      "result": "35/35 representative independent-probe expectations met",
+      "exit": 0,
+      "log": "r1-control-summary.json"
+    }
+  ],
+  "skipped_or_unsupported": [
+    "No abrupt-kill/power-loss or cross-platform persistence guarantee is claimed.",
+    "The full 56-invocation Q1 probe matrix was not re-run here to avoid rewriting Q1-owned evidence; 35 representative preserved-behavior probes plus the 6 new tests cover the affected semantics."
+  ]
+}
