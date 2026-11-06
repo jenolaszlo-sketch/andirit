@@ -128,11 +128,19 @@ internal static class DurableCommandLog
                     : new CodeIndexRunManifest(run.RepositoryId, run.Id, run.StartedAt, plugins: run.Plugins),
                 cancellationToken);
         }
+        // Published units are restored as one complete reconstruction: the
+        // materialized graph is validated only after every persisted unit is
+        // present, so cross-unit edges cannot depend on the persisted unit
+        // enumeration order.
+        var replacements = new List<CodeIndexUnitReplacement>();
         foreach (var command in commands.Where(command => command.Kind == "replace"))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            await store.RestorePublishedIndexUnitAsync(command.Replacement!, cancellationToken);
+            replacements.Add(command.Replacement!);
         }
+
+        if (replacements.Count > 0)
+            await store.RestorePublishedUnitsAsync(replacements, cancellationToken);
         foreach (var command in commands.Where(command => command.Kind is "stage-replace" or "stage-delete"))
             await ApplyCommandAsync(store, command, cancellationToken);
         foreach (var command in commands.Where(command => command.Kind is "run" or "complete" &&

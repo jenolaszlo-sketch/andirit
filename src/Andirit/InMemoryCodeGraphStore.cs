@@ -384,23 +384,73 @@ public sealed class InMemoryCodeGraphStore :
         }
     }
 
-    internal ValueTask RestorePublishedIndexUnitAsync(
-        CodeIndexUnitReplacement replacement,
+    /// <summary>
+    /// Restores a durable publication's complete set of persisted units as one
+    /// reconstruction. Unit-level structure is validated per unit in isolation;
+    /// the materialized graph is validated only once every persisted unit is
+    /// present, so cross-unit endpoints can never depend on the persisted
+    /// enumeration order. Nothing is committed unless the complete
+    /// reconstruction validates, and a failure leaves the store untouched.
+    /// </summary>
+    internal ValueTask RestorePublishedUnitsAsync(
+        IReadOnlyList<CodeIndexUnitReplacement> replacements,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(replacement);
+        ArgumentNullException.ThrowIfNull(replacements);
         cancellationToken.ThrowIfCancellationRequested();
         lock (_gate)
         {
-            var prospective = new Dictionary<OwnerKey, CodeIndexUnitReplacement>(_units)
+            // Unit-level structural validation, performed per unit without any
+            // other unit present. These checks do not require a complete graph.
+            var errors = new List<CodeGraphValidationError>();
+            foreach (var replacement in replacements)
             {
-                [OwnerKey.From(replacement.Origin)] = replacement
-            };
-            var errors = ValidateMaterializedGraph(replacement.Origin.RepositoryId, prospective);
+                AddDuplicateErrors(
+                    replacement.Nodes.Select(node => node.Id.Value),
+                    "node",
+                    errors);
+                AddDuplicateErrors(
+                    replacement.Declarations.Select(declaration => declaration.Id.Value),
+                    "declaration",
+                    errors);
+                AddDuplicateErrors(
+                    replacement.Edges.Select(edge => edge.Id.Value),
+                    "edge",
+                    errors);
+            }
+
+            // Reconstruct the complete unit set in command order (a later row
+            // for one owner wins, matching prior per-unit replay semantics);
+            // the enumeration order itself carries no validation meaning.
+            var prospective = new Dictionary<OwnerKey, CodeIndexUnitReplacement>(_units);
+            foreach (var replacement in replacements)
+                prospective[OwnerKey.From(replacement.Origin)] = replacement;
+
+            // Complete-graph validation per affected repository, with every
+            // persisted unit of that repository present. Cross-unit endpoint
+            // and graph consistency are checked here, once, after all units
+            // have been restored.
+            foreach (var repositoryId in replacements
+                         .Select(replacement => replacement.Origin.RepositoryId)
+                         .Distinct())
+            {
+                errors.AddRange(ValidateMaterializedGraph(repositoryId, prospective));
+            }
+
             if (errors.Count > 0)
-                throw new CodeGraphBatchRejectedException("The restored graph is invalid.", errors);
+            {
+                throw new CodeGraphBatchRejectedException(
+                    "The restored graph is invalid.",
+                    errors.Take(100).ToArray());
+            }
+
             _units = prospective;
-            _materialized.Remove(replacement.Origin.RepositoryId.Value);
+            foreach (var repositoryId in replacements
+                         .Select(replacement => replacement.Origin.RepositoryId)
+                         .Distinct())
+            {
+                _materialized.Remove(repositoryId.Value);
+            }
         }
         return ValueTask.CompletedTask;
     }

@@ -1,0 +1,57 @@
+B-WP-S23-3A-01 pre-fix reproduction record (observed during ANDIRIT-CI1A-S2.3-WP-S23-3A-R1, 2026-11-07)
+
+Starting state: HEAD f8b2b08bbd2db0a551412816705a7971973658bd, tree 0cc5ad3a9c045e4250d35a9d666b17f52e2b5879,
+branch main, clean tracked/index state, one canonical worktree (D:/projects/Andirit), SDK 10.0.401.
+
+The committed producer evidence (ANDIRIT-CI1A-S2.3-WP-S23-3A-IMPL-01-evidence/blocker-reproduction.txt)
+documents the original defect. The R1 commission independently reproduced both required controls
+BEFORE changing production code, using the regression tests that now live in
+tests/Andirit.CSharp.Tests/S23DurableGraphReopenTests.cs and tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs.
+
+A. Graph-only control (no occurrence rows anywhere in the publication)
+   Test (pre-fix name and state): S23DurableGraphReopenTests.GraphOnlyCrossUnitEdges_SurviveDurableReopen_WhenReferencingUnitPersistsFirst
+   Fixture: two graph-only units staged through the accepted public chain into a real LatticeDB file;
+   unit "app" (node:AppType + DependsOn edge -> node:LibType), unit "lib" (node:LibType). Staging follows
+   dependency order, so publication and CompleteIndexRunAsync succeed; the HetuUnit key order persists
+   "app" before "lib" (asserted from the durable rows via AssertDurableControls).
+   Observed pre-fix result: FAILED on durable reopen.
+     CodeGraphBatchRejectedException: The restored graph is invalid.
+     graph.edge.endpoint-missing=An edge endpoint does not exist in the materialized graph.
+   The publication contains zero occurrence facts (asserted: no AndiritOccurrenceMeta rows,
+   every published unit has empty Occurrences), proving the defect is independent of occurrence publication.
+
+B. Real occurrence case (real C# plugin, real cross-project facts)
+   Test (pre-fix state): S23PublicationIntegrationTests.CrossProjectPublication_DurableReopen_IsBlockedByPreExistingGraphOrderingDefect
+   (producer's pinned blocker test, committed at e2b833a) PASSED pre-fix, i.e. the defect still reproduced:
+   durable reopen of the Lib<-App cross-project publication threw CodeGraphBatchRejectedException with
+   graph.edge.endpoint-missing (4 errors, per the producer reproduction). The C# plugin persists unit ids
+   "csharp:project:<sha256(project path)>"; App/App.csproj hashes to 94c63064..., Lib/Lib.csproj to b89b9ece...,
+   so the referencing (App) unit persists first and replay validates its cross-unit edges while the Lib unit
+   is still unrestored.
+
+C. Replay-level order dependence
+   Test (pre-fix state): S23DurableGraphReopenTests.Replay_IsIndependentOfPersistedUnitEnumerationOrder
+   Observed pre-fix result: FAILED with the forward (referencing-unit-first) replace order:
+     CodeGraphBatchRejectedException: The restored graph is invalid.
+       at Andirit.InMemoryCodeGraphStore.RestorePublishedIndexUnitAsync(...)
+       at Andirit.DurableCommandLog.ReplayAsync(...) in src/Andirit/DurableCommandLog.cs:line 134
+   Reversing the two replace commands succeeded, demonstrating that the outcome depended on persisted
+   enumeration order.
+
+D. Single-unit control (unchanged pre and post fix)
+   S23DurableGraphReopenTests.SingleUnitGraphOnlyPublication_SurvivesDurableReopen and the producer's
+   S23PublicationIntegrationTests.SingleUnitRealFact_SurvivesDurableReopen both PASSED pre-fix:
+   single-unit durable reopen was never affected.
+
+Established replay ordering / validation call sites / state-publication boundaries (pre-fix):
+  - LatticeCodeGraphStore constructor (src/Andirit.LatticeDb/LatticeCodeGraphStore.cs:108-114) reads
+    HetuUnit rows via ReadTable (ordinal key order) and folds them with DurableCommandLog.Reconstruct.
+  - DurableCommandLog.ReplayAsync restored each "replace" command one at a time (per-unit loop,
+    src/Andirit/DurableCommandLog.cs:131-135 pre-fix).
+  - InMemoryCodeGraphStore.RestorePublishedIndexUnitAsync (src/Andirit/InMemoryCodeGraphStore.cs:387-406
+    pre-fix) ran the FULL ValidateMaterializedGraph - including the endpoint checks in Materialize
+    (graph.edge.endpoint-missing, graph.declaration.symbol-missing) and cross-unit conflict checks -
+    against only the units restored so far, and committed each unit incrementally.
+  - Occurrence state was not part of this ordering: it is restored after replay from the authoritative
+    native occurrence tables (RestoreOccurrences -> RestorePublishedOccurrencesAsync), and staged
+    commands/terminal history are applied after all replaces.

@@ -13,11 +13,12 @@ namespace Andirit.CSharp.Tests;
 // from the accepted frozen identity helpers and the live verified compilation,
 // not from the implementation under test.
 //
-// Durable reopen of a multi-unit (cross-project) publication is blocked by a
-// pre-existing, order-dependent graph reconstruction defect outside this
-// package; that is recorded in the WP-S23-3A implementation report, and the
-// durable reopen test below uses a single-unit publication with no cross-unit
-// edges.
+// WP-S23-3A R1 (B-WP-S23-3A-01): durable graph reconstruction restores the
+// complete multi-unit publication before validation, so cross-project
+// publications survive durable reopen. The previous pinned blocker test
+// (CrossProjectPublication_DurableReopen_IsBlockedByPreExistingGraphOrderingDefect)
+// is superseded by the authorized remediation and replaced by the positive
+// fresh-process reopen tests below.
 public sealed class S23PublicationIntegrationTests : IDisposable
 {
     private readonly string _path = Path.Combine(
@@ -47,6 +48,22 @@ public sealed class S23PublicationIntegrationTests : IDisposable
             [Names.AppProject] =
                 "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><ProjectReference Include=\"../Lib/Lib.csproj\" /></ItemGroup></Project>",
             [Names.AppSource] =
+                "namespace App; public static class Application { public static int Run() => Lib.Value.Get(); }",
+        };
+
+    // The same logical cross-project publication with the defining project's
+    // unit persisting before the referencing project's unit in HetuUnit key
+    // order (the OLib unit hash sorts before every MApp unit hash),
+    // complementing the default fixture where the referencing unit persists
+    // first.
+    private static IReadOnlyDictionary<string, string> CrossProjectFixtureDefiningUnitFirst() =>
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["OLib/OLib.csproj"] = "<Project Sdk=\"Microsoft.NET.Sdk\" />",
+            ["OLib/Value.cs"] = "namespace Lib; public static class Value { public static int Get() => 1; }",
+            ["MApp/MApp.csproj"] =
+                "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><ProjectReference Include=\"../OLib/OLib.csproj\" /></ItemGroup></Project>",
+            ["MApp/Application.cs"] =
                 "namespace App; public static class Application { public static int Run() => Lib.Value.Get(); }",
         };
 
@@ -90,12 +107,16 @@ public sealed class S23PublicationIntegrationTests : IDisposable
     }
 
     private static async Task<(VerifiedCSharpAnalysis Analysis, VerifiedCSharpCompilation App, VerifiedCSharpCompilation Lib)>
-        LiveCrossProjectAsync(CodeGraphPluginContext context)
+        LiveCrossProjectAsync(CodeGraphPluginContext context) =>
+        await LiveCrossProjectAsync(context, Names.AppProject, Names.LibProject);
+
+    private static async Task<(VerifiedCSharpAnalysis Analysis, VerifiedCSharpCompilation App, VerifiedCSharpCompilation Lib)>
+        LiveCrossProjectAsync(CodeGraphPluginContext context, string appProject, string libProject)
     {
         var analysis = await CSharpCodeGraphPlugin.PrepareAnalysisAsync(context);
         return (analysis,
-            analysis.Projects.Single(p => p.Project.Path == Names.AppProject).Verified!,
-            analysis.Projects.Single(p => p.Project.Path == Names.LibProject).Verified!);
+            analysis.Projects.Single(p => p.Project.Path == appProject).Verified!,
+            analysis.Projects.Single(p => p.Project.Path == libProject).Verified!);
     }
 
     // Recomputes the target exactly as the accepted identity contract defines it,
@@ -226,18 +247,171 @@ public sealed class S23PublicationIntegrationTests : IDisposable
         Assert.Empty(F.Rows(_path, "AndiritOccurrenceUnit"));
     }
 
-    // Documents, reproducibly, the pre-existing blocker: durable reopen of a
-    // multi-unit publication with cross-unit graph edges is order-dependent and
-    // fails independently of occurrence publication. Recorded in the WP-S23-3A
-    // report; fixing it is outside the authorized occurrence-publication scope.
+    // WP-S23-3A R1: the previously pinned blocker (durable reopen of a
+    // multi-unit cross-project publication failed with
+    // graph.edge.endpoint-missing) is remediated by reconstructing the
+    // complete publication before validation. This test doubles as the
+    // fresh-process evidence harness: with S23_REOPEN_FRESH_PROCESS=publish it
+    // only publishes to the harness path, and with =verify it only reopens and
+    // verifies the file the separate publishing process left behind. Without
+    // the variable it runs the full in-process durable round trip.
+    private static string? FreshProcessPhase =>
+        Environment.GetEnvironmentVariable("S23_REOPEN_FRESH_PROCESS");
+
+    private static string FreshProcessHarnessPath() =>
+        Environment.GetEnvironmentVariable("S23_REOPEN_FRESH_PROCESS_PATH") ??
+        throw new InvalidOperationException(
+            "S23_REOPEN_FRESH_PROCESS_PATH must name the durable file for the fresh-process harness.");
+
     [Fact]
-    public async Task CrossProjectPublication_DurableReopen_IsBlockedByPreExistingGraphOrderingDefect()
+    public async Task CrossProjectRealFact_SurvivesDurableReopen_WithCorrectUnitsAndCoverage()
+    {
+        var phase = FreshProcessPhase;
+        var path = phase is null ? _path : FreshProcessHarnessPath();
+        if (phase is not null)
+        {
+            // Harness evidence: each phase runs in its own OS process; the
+            // verify process only reads the durable file the publish process
+            // wrote and never publishes itself.
+            Console.WriteLine(
+                $"s23-fresh-process phase={phase} pid={Environment.ProcessId} path={path}");
+        }
+
+        if (phase == "verify")
+        {
+            await VerifyCrossProjectReopenAsync(path);
+            return;
+        }
+
+        var context = Context(Repo, "run:a", CrossProjectFixture());
+        (await PublishAsync(path, "run:a", context)).Dispose();
+        if (phase == "publish")
+            return;
+
+        await VerifyCrossProjectReopenAsync(path);
+    }
+
+    private static async Task VerifyCrossProjectReopenAsync(string path)
     {
         var context = Context(Repo, "run:a", CrossProjectFixture());
+        var (analysis, app, lib) = await LiveCrossProjectAsync(context);
+        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
+
+        using (var reopened = Open(path))
+        {
+            var units = await reopened.GetPublishedUnitsAsync(Repo);
+            Assert.Equal(2, units.Count);
+
+            // The cross-project graph edge from the App unit must resolve to
+            // the Lib unit's project node after reconstruction.
+            var appNodes = await reopened.FindNodesByQualifiedNameAsync(Repo, Names.AppProject);
+            var appProject = Assert.Single(appNodes, node => node.Kind == CodeNodeKinds.Project);
+            var traversal = await reopened.TraverseAsync(
+                Repo,
+                new(appProject.Id, CodeGraphDirection.Outgoing, maxDepth: 1));
+            Assert.Contains(
+                traversal.Nodes,
+                node => node.Kind == CodeNodeKinds.Project && node.QualifiedName == Names.LibProject);
+
+            var query = VerifiedCSharpOccurrenceAuthority.Bind(
+                new(Repo, target), analysis.Universe, app.Compilation);
+            var result = await reopened.FindOccurrencesAsync(query);
+            Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
+            Assert.Single(result.Occurrences);
+            Assert.True(result.IsComplete);
+            Assert.Equal(target, result.Occurrences[0].TargetId);
+            Assert.Equal(app.Descriptor.ProjectUnitId, result.Occurrences[0].SourceUnitId);
+        }
+
+        var unit = PublishedUnit(path, app.Descriptor.ProjectUnitId);
+        Assert.True(unit["RequiresAuthority"]!.GetValue<bool>());
+        Assert.Equal(
+            lib.Descriptor.ProjectUnitId,
+            unit["Authority"]!["Facts"]![0]!["DefiningProjectUnitId"]!.GetValue<string>());
+    }
+
+    // The defining project's unit persists before the referencing project's
+    // unit in HetuUnit key order; the reopened outcome must be identical to
+    // the default fixture's (referencing unit first). Unit ids follow the
+    // plugin's public project identity convention, so the expected persisted
+    // order is computed here, not assumed.
+    [Fact]
+    public async Task CrossProjectRealFact_DefiningUnitPersistedFirst_ReopensWithIdenticalOutcome()
+    {
+        var definingPath = "OLib/OLib.csproj";
+        var referencingPath = "MApp/MApp.csproj";
+        var definingUnitId = CSharpProjectDiscovery.IndexUnitId(definingPath);
+        var referencingUnitId = CSharpProjectDiscovery.IndexUnitId(referencingPath);
+        Assert.True(string.CompareOrdinal(definingUnitId, referencingUnitId) < 0,
+            "Fixture must persist the defining unit before the referencing unit.");
+
+        var context = Context(Repo, "run:defining-first", CrossProjectFixtureDefiningUnitFirst());
+        (await PublishAsync(_path, "run:defining-first", context)).Dispose();
+
+        var persistedOrder = F.Rows(_path, "HetuUnit").Keys
+            .Where(key => key.StartsWith("HetuUnit|", StringComparison.Ordinal))
+            .Select(key => key["HetuUnit|".Length..].Split('\n')[2])
+            .ToArray();
+        Assert.Equal([definingUnitId, referencingUnitId], persistedOrder);
+
+        var (analysis, app, lib) = await LiveCrossProjectAsync(context, referencingPath, definingPath);
+        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
+
+        using (var reopened = Open(_path))
+        {
+            Assert.Equal(2, (await reopened.GetPublishedUnitsAsync(Repo)).Count);
+            var query = VerifiedCSharpOccurrenceAuthority.Bind(
+                new(Repo, target), analysis.Universe, app.Compilation);
+            var result = await reopened.FindOccurrencesAsync(query);
+            Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
+            Assert.Single(result.Occurrences);
+            Assert.True(result.IsComplete);
+            Assert.Equal(app.Descriptor.ProjectUnitId, result.Occurrences[0].SourceUnitId);
+        }
+
+        var unit = PublishedUnit(_path, app.Descriptor.ProjectUnitId);
+        Assert.Equal(
+            lib.Descriptor.ProjectUnitId,
+            unit["Authority"]!["Facts"]![0]!["DefiningProjectUnitId"]!.GetValue<string>());
+    }
+
+    // Stale refusal must survive reopen: a transitive-only defining-context
+    // change refuses the reopened publication despite stable target identity.
+    [Fact]
+    public async Task ReopenedStore_RefusesStaleRealFact_AfterTransitiveDependencyChange()
+    {
+        var a = Context(Repo, "run:a", CrossProjectFixture());
+        var (_, appA, libA) = await LiveCrossProjectAsync(a);
+        var target = ExpectedTarget(libA, Method(libA, "Lib.Value", "Get"));
+        (await PublishAsync(_path, "run:a", a)).Dispose();
+
+        using var reopened = Open(_path);
+        var b = Context(Repo, "run:b", CrossProjectFixture("public static int Get() => 2;"));
+        var (analysisB, appB, _) = await LiveCrossProjectAsync(b);
+        var query = VerifiedCSharpOccurrenceAuthority.Bind(
+            new(Repo, target), analysisB.Universe, appB.Compilation);
+        var result = await reopened.FindOccurrencesAsync(query);
+        Assert.Equal(CodeOccurrenceAvailability.StalePublication, result.Availability);
+        Assert.Empty(result.Occurrences);
+        Assert.Equal(0, result.Examined);
+        Assert.False(result.IsComplete);
+    }
+
+    // Missing current authority must refuse identically on a reopened store,
+    // never as a successful empty result.
+    [Fact]
+    public async Task ReopenedStore_MissingAuthority_IsUnavailable_NotEmptySuccess()
+    {
+        var context = Context(Repo, "run:a", CrossProjectFixture());
+        var (_, app, lib) = await LiveCrossProjectAsync(context);
+        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
         (await PublishAsync(_path, "run:a", context)).Dispose();
-        var exception = Assert.Throws<CodeGraphBatchRejectedException>(
-            () => new LatticeCodeGraphStore(_path));
-        Assert.Contains(exception.Errors, error => error.Code == "graph.edge.endpoint-missing");
+
+        using var reopened = Open(_path);
+        var result = await reopened.FindOccurrencesAsync(new CodeOccurrenceQuery(Repo, target));
+        Assert.Equal(CodeOccurrenceAvailability.AnalysisUnavailable, result.Availability);
+        Assert.Empty(result.Occurrences);
+        Assert.False(result.IsComplete);
     }
 
     [Fact]
