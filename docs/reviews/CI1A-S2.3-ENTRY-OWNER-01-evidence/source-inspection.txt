@@ -1,0 +1,40 @@
+﻿# S2.3 entry source inspection (verified at HEAD 9b420e8960df5bfa0940444309d6829a1acfac7a)
+
+## NEW-01: recovery paths omit RestoreOccurrences (LatticeCodeGraphStore.MutateAsync)
+114: _inner = ReplayAsync(_commands, cancellationToken).GetAwaiter().GetResult();
+122: RestoreBaselines(_inner);
+123: RestoreOccurrences(cancellationToken);
+362: _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
+363: RestoreBaselines(_inner);
+385: _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
+386: RestoreBaselines(_inner);
+430: private void RestoreBaselines(InMemoryCodeGraphStore store)
+490: private void RestoreOccurrences(CancellationToken cancellationToken)
+
+## NEW-01: ReplayAsync restore path (DurableCommandLog)
+111: internal static async Task<InMemoryCodeGraphStore> ReplayAsync(
+134: await store.RestorePublishedIndexUnitAsync(command.Replacement!, cancellationToken);
+143: await store.RestoreCompletedRunAsync(command.Run!, command.State!, cancellationToken);
+
+## NEW-01: RestorePublishedIndexUnitAsync updates graph only (InMemoryCodeGraphStore)
+20: private Dictionary<OwnerKey, IReadOnlyList<CodeOccurrenceFact>> _occurrences = [];
+21: private Dictionary<OwnerKey, CodeOccurrenceCoverage> _occurrenceCoverage = [];
+225: _units = prospective;
+226: _occurrences = occurrenceProspective;
+227: _occurrenceCoverage = ApplyStagedOccurrenceCoverage(key);
+387: internal ValueTask RestorePublishedIndexUnitAsync(
+402: _units = prospective;
+797: _occurrences[owner] = facts.ToArray();
+798: _occurrenceCoverage[owner] = effective;
+802: _occurrences.Remove(owner);
+803: _occurrenceCoverage.Remove(owner);
+844: new Dictionary<OwnerKey, IReadOnlyList<CodeOccurrenceFact>>(_occurrences);
+
+## Carrier gap: recorded defining compctx2 appears only as a mint-time input
+VerifiedUsageMint.cs:16: string? RecordedCompctx2,
+VerifiedCSharpOccurrenceExtractor.cs:87: resolved.Defining!.Descriptor.DescriptorDigest,
+
+## Carrier gap: occurrence fact/coverage/batch have no defining-context field
+326: public CodeOccurrenceTargetId TargetId { get; }
+451: public string? ScopeId { get; }
+452: public string? UniverseId { get; }
