@@ -1,0 +1,82 @@
+﻿[
+    {
+        "Phase":  "P01-plugin-publish.json",
+        "Verb":  "plugin-publish",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  39752,
+        "Database":  "plugin.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: verified universe is complete"
+    },
+    {
+        "Phase":  "P02-plugin-fresh-verify.json",
+        "Verb":  "plugin-verify",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  28020,
+        "Database":  "plugin.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: reopened publication serves the exact real cross-project target | PASS: missing current authority refuses as unavailable | PASS: stale publication handle refuses with no hits"
+    },
+    {
+        "Phase":  "P03-plugin-negative.json",
+        "Verb":  "plugin-negative",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  12744,
+        "Database":  "negative.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: authority-bearing publication without current authority is unavailable, not empty"
+    },
+    {
+        "Phase":  "P04-authority-reopen.json",
+        "Verb":  "authority-reopen",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  22196,
+        "Database":  "authority.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: target identity is stable across the transitive-only change | PASS: defining compctx2 differs across the transitive-only change | PASS: reopened current authority serves both real cross-project contributors | PASS: reopened stale defining context refuses with no hits | PASS: missing current authority refuses as unavailable"
+    },
+    {
+        "Phase":  "P05-lifecycle.json",
+        "Verb":  "lifecycle",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  12672,
+        "Database":  "lifecycle.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: initial real-fact publication serves the cross-project contributor | PASS: durable reopen reconstructs the same real-fact projection | PASS: same-unit replacement (real source edit) retires obsolete App facts to a complete-empty answer | PASS: deleting the last analyzed unit invalidates coverage to unavailable | PASS: final durable reopen remains unavailable"
+    },
+    {
+        "Phase":  "P06-sq03-schedule.json",
+        "Verb":  "sq03-schedule",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  20592,
+        "Database":  "sq03-schedule.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: every scheduled observation is a complete old-or-new publication (no partial blend)"
+    },
+    {
+        "Phase":  "P07-sq03-concurrent.json",
+        "Verb":  "sq03-concurrent",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  33776,
+        "Database":  "sq03-concurrent.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: concurrent readers never observe a partial blend"
+    },
+    {
+        "Phase":  "P08-environment.json",
+        "Verb":  "environment",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  18400,
+        "Database":  "environment.ltdb",
+        "Detail":  "f0d960af6ec1ffec145a6416d74ef06384b1bafd",
+        "Notes":  ""
+    }
+]

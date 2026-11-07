@@ -1,0 +1,71 @@
+{
+  "action": "lifecycle",
+  "detail": "",
+  "processId": 12672,
+  "database": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.3-S23-LIFE-Q1-tests\\..\\CI1A-S2.3-S23-LIFE-Q1-evidence\\probe-databases\\lifecycle.ltdb",
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "ok": true,
+  "afterPublish": {
+    "availability": "Available",
+    "occurrences": 1,
+    "isComplete": true,
+    "publicationRun": "run:a"
+  },
+  "rowsAfterPublish": {
+    "AndiritOccurrenceUnit": 2,
+    "AndiritOccurrenceMeta": 1,
+    "AndiritOccurrencePage": 2,
+    "HetuUnit": 2,
+    "HetuStage": 0,
+    "HetuRun": 1
+  },
+  "afterReopen": {
+    "availability": "Available",
+    "occurrences": 1,
+    "isComplete": true,
+    "publicationRun": "run:a"
+  },
+  "afterReplacement": {
+    "availability": "Available",
+    "occurrences": 0,
+    "isComplete": true,
+    "publicationRun": "run:retired"
+  },
+  "rowsAfterReplacement": {
+    "AndiritOccurrenceUnit": 2,
+    "AndiritOccurrenceMeta": 1,
+    "AndiritOccurrencePage": 0,
+    "HetuUnit": 2,
+    "HetuStage": 0,
+    "HetuRun": 2
+  },
+  "afterDeletion": {
+    "availability": "AnalysisUnavailable",
+    "occurrences": 0,
+    "isComplete": false,
+    "publicationRun": "run:delete"
+  },
+  "rowsAfterDeletion": {
+    "AndiritOccurrenceUnit": 0,
+    "AndiritOccurrenceMeta": 0,
+    "AndiritOccurrencePage": 0,
+    "HetuUnit": 0,
+    "HetuStage": 0,
+    "HetuRun": 3
+  },
+  "afterFinalReopen": {
+    "availability": "AnalysisUnavailable",
+    "occurrences": 0,
+    "isComplete": false,
+    "publicationRun": "run:delete"
+  },
+  "notes": [
+    "PASS: initial real-fact publication serves the cross-project contributor",
+    "PASS: durable reopen reconstructs the same real-fact projection",
+    "PASS: same-unit replacement (real source edit) retires obsolete App facts to a complete-empty answer",
+    "PASS: deleting the last analyzed unit invalidates coverage to unavailable",
+    "PASS: final durable reopen remains unavailable"
+  ]
+}

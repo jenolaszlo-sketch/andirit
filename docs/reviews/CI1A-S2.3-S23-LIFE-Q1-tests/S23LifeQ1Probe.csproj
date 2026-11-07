@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <!-- Matches the InternalsVisibleTo identity of Andirit.CSharp / Andirit.LatticeDb
+         so the probe can drive the accepted verified-compilation surface directly. -->
+    <AssemblyName>Andirit.CSharp.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="LatticeDbSharp" Version="0.2.0" />
+    <ProjectReference Include="../../../src/Andirit/Andirit.csproj" />
+    <ProjectReference Include="../../../src/Andirit.Abstractions/Andirit.Abstractions.csproj" />
+    <ProjectReference Include="../../../src/Andirit.CSharp/Andirit.CSharp.csproj" />
+    <ProjectReference Include="../../../src/Andirit.LatticeDb/Andirit.LatticeDb.csproj" />
+    <Compile Include="../../evidence/adr-ci1-01-ci1a-s2-1-raw/authority/CompilationProvenance.cs" Link="FrozenR2Authority.cs" />
+    <!-- Reuses the accepted controlled native qualification fixture so the probe
+         drives the same real verified compilations and occurrence facts as the
+         accepted WP-S23-2/3A suites. -->
+    <Compile Include="../../../tests/Andirit.CSharp.Tests/S23NativeAuthorityFixture.cs" Link="S23NativeAuthorityFixture.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,35 @@
+﻿S23-LIFE-Q1 bounded test/fixture/probe additions (no production file changed)
+reviewed source HEAD f0d960af6ec1ffec145a6416d74ef06384b1bafd tree a72f05c69ba722b3600b3d40c59c7adc11c6561b
+
+New files:
+tests/Andirit.CSharp.Tests/S23LifecycleQualificationTests.cs
+  bytes=35692 sha256=C36BF20FCF263908E87A15785BE75C0068827839BC7EF61F7EA6C1D8B75EDCDD
+docs/reviews/CI1A-S2.3-S23-LIFE-Q1-tests/Program.cs
+  bytes=25402 sha256=48363031F02DDD5D5EAB1898E6048CD04FB1560BA1D04B087FC095F8BD103F82
+docs/reviews/CI1A-S2.3-S23-LIFE-Q1-tests/S23LifeQ1Probe.csproj
+  bytes=1401 sha256=CBA37E0CCC53ECDF95382C7D23B3F941E675C47B451C0BEE8AFE914BB366D40D
+docs/reviews/CI1A-S2.3-S23-LIFE-Q1-tests/run-probes.ps1
+  bytes=3214 sha256=9A765A6162942783CB9ED34BE4217DF79619451093349D0C4EE31DF5D633B3A0
+docs/reviews/CI1A-S2.3-S23-LIFE-Q1-tests/seal-evidence.ps1
+  bytes=1362 sha256=F6349BE1B12CE0E2C60D0368A5C9A688E6CBC016B14061192F1CA17606B3DBD1
+
+Qualification test methods (L1-L20 map):
+  L01_InitialPublication_PersistsRealFactUnitPageMetaInOneTransaction
+  L02_SameUnitReplacement_AfterRealSourceEdit_RetiresObsoleteAndShowsNew
+  L03_ScopedUnitDeletion_RemovesRealFactsAndPreservesRemaining
+  L04_IdenticalRealFactIdentity_TwoStorageUnits_UnionToOneFactTwoContributors
+  L04b_DistinctSemanticUnits_RemainDistinctFactsForOneTarget
+  L05_ContributorConflict_RealIdentity_IsRefusedAtStagingWithPriorIntact
+  L06_CompleteEmpty_RealFacts_PersistsAndReopensAsCompleteZero
+  L07_NativeReopen_RealFacts_OrderedResultsAreIdentical
+  L08_StalePublication_RealFact_AfterTransitiveOnlyChange_RefusesAcrossReopen
+  L09_BeforeCommitFailure_RealFacts_PreservesPriorPublication
+  L10_RecoveryProjection_RealFacts_MatchesDurableReopen
+  L12_Sq03_DeterministicSchedule_NeverExposesAPartialBlend
+  L12b_Sq03_ConcurrentReaders_SeeOnlyCompleteOldOrNewPublications
+  L13_CoverageClassification_RealFacts_DistinguishesProducedPartialUnavailable
+  L14_DeletionInvalidatesCoverage_RealFacts_AnalysisUnavailable
+  L16_D3GraphNoninterference_RealFacts_AcrossOccurrenceLifecycle
+  L18_CrossProjectTargetIdentity_IsPersistedAndReopened
+  L20_UnknownOutcome_RealFacts_QuarantinesAndReopenReconciles
+Existing files modified: NONE

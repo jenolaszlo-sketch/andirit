@@ -1,0 +1,62 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.3-WP-S23-4-S23-LIFE-Q1",
+  "reviewedSourceHead": "f0d960af6ec1ffec145a6416d74ef06384b1bafd",
+  "reviewedSourceTree": "a72f05c69ba722b3600b3d40c59c7adc11c6561b",
+  "commands": [
+    {
+      "step": "preflight-provenance",
+      "command": "git rev-parse HEAD; git rev-parse HEAD^{tree}; git status --porcelain --untracked-files=all; git branch --show-current; git worktree list; git stash list"
+    },
+    {
+      "step": "baseline-tests (pre-change floor)",
+      "command": "dotnet test Andirit.slnx -c Release --no-build",
+      "observed": "865 passed / 0 failed / 0 skipped (50 LatticeDb + 157 TreeSitter + 345 Andirit + 313 CSharp)"
+    },
+    {
+      "step": "release-build",
+      "command": "dotnet build Andirit.slnx -c Release",
+      "log": "release-build.log"
+    },
+    {
+      "step": "format-verify",
+      "command": "dotnet format Andirit.slnx --verify-no-changes",
+      "log": "format.log",
+      "observed": "exit 0"
+    },
+    {
+      "step": "full-solution-tests (post-change)",
+      "command": "dotnet test Andirit.slnx -c Release --no-build",
+      "log": "full-solution-tests.log",
+      "observed": "883 passed / 0 failed / 0 skipped (50 + 157 + 345 + 331)"
+    },
+    {
+      "step": "focused-s23-new01-occurrence-wp8-regression",
+      "command": "dotnet test tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj -c Release --no-build --filter \"FullyQualifiedName~S23|FullyQualifiedName~New01|FullyQualifiedName~Occurrence|FullyQualifiedName~S2_2Wp\" ; dotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj -c Release --no-build --filter <same>",
+      "log": "s23-new01-regression.log",
+      "observed": "166 + 23 passed / 0 failed"
+    },
+    {
+      "step": "frozen-r2-oracle",
+      "command": "dotnet run --project docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticCorpusOracle.csproj -c Release -- --corpus docs/planning/adr-ci1-01-ci1a-s2-0/corpus --expected docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected-r2.json --output docs/reviews/CI1A-S2.3-S23-LIFE-Q1-evidence/oracle-r2.json",
+      "log": "oracle.log",
+      "observed": "185/185 checks passed, 0 failed; output 146851 bytes; SHA-256 97F6C5E5A4CC77E089481C7643732B7A07A31D483C2643BD7A95FDAD7CED39C9"
+    },
+    {
+      "step": "native-lifecycle-probes",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File docs/reviews/CI1A-S2.3-S23-LIFE-Q1-tests/run-probes.ps1 -Head f0d960af6ec1ffec145a6416d74ef06384b1bafd",
+      "matrix": "probe-matrix.txt",
+      "observed": "8 phases, 0 failed"
+    },
+    {
+      "step": "seal-evidence",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File docs/reviews/CI1A-S2.3-S23-LIFE-Q1-tests/seal-evidence.ps1 -Head f0d960af6ec1ffec145a6416d74ef06384b1bafd -Tree a72f05c69ba722b3600b3d40c59c7adc11c6561b",
+      "manifest": "manifest.json"
+    },
+    {
+      "step": "production-change-check",
+      "command": "git diff f0d960a -- src/",
+      "log": "production-diff.txt",
+      "observed": "0 lines: no production change"
+    }
+  ]
+}
