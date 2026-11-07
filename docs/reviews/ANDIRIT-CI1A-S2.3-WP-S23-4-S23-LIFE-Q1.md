@@ -270,10 +270,12 @@ defect was discovered that would require stopping this qualification path.
 | --- | --- | --- |
 | Reviewed source (production unchanged) | `f0d960af6ec1ffec145a6416d74ef06384b1bafd` | `a72f05c69ba722b3600b3d40c59c7adc11c6561b` |
 | Qualification tests (bounded test change) | `0dca67bf54b5499fce4e70217730ed388e3cbd4a` | `690a6ae59709649325605f734555802a962f0ce4` |
-| Evidence + probe harness + this report | *(this gate's commit; see `git log`/handoff)* | — |
+| Evidence + probe harness + this report | `e4b64ebd6892a6ff6892f84840e907303f0de01e` | `8d8f134aa7c3f423be78003a4f0ab13f1dc2bc4e` |
 
 Reviewed HEAD equals the expected WP-S23-4 entry HEAD. The test change and the report/evidence are
-committed separately per repository discipline.
+committed separately per repository discipline. The final row is the commit that introduced this
+report; any immediately following additive commit only records these exact hashes and changes no
+report content, evidence, test, or production byte.
 
 ---
 
