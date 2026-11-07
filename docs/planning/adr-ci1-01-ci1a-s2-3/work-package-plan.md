@@ -101,7 +101,9 @@ dependency, or gate above. Package definitions remain the controlling record.
 | WP-S23-3 / WP-S23-3A (real-fact publication integration; first bounded package) | **accepted with qualifications by owner (`adr-ci1-01-ci1a-s2-3-wp-s23-3a-owner-01.md`)**, covering `e2b833a`, the R1 remediation `e0cef1c`, and the R2 remediation `a4d8501`, after S23-PUB-Q1 and S23-PUB-Q2 |
 | WP-S23-3B | not defined by this plan; no such package exists in the committed plan. Further WP-S23-3 packages, if any, require their own commission |
 | WP-S23-4 (native lifecycle qualification with real facts) | **accepted with qualifications by owner (`adr-ci1-01-ci1a-s2-3-wp-s23-4-owner-01.md`)** — tests/evidence package `0dca67b` and S23-LIFE-Q1 report/evidence `e4b64eb` (additive `b32cb32`, `5f1ae63`) at reviewed source `f0d960a`; S23-LIFE-Q1 recorded `SUPPORTED WITH QUALIFICATIONS`; no production change. Entry decision: `adr-ci1-01-ci1a-s2-3-wp-s23-4-entry-owner-01.md` |
-| WP-S23-5 (S2.3 owner acceptance) | not authorized; entry prerequisites now satisfied (WP-S23-1…4 accepted), but WP-S23-4 acceptance authorizes no successor. Requires its own commission, a separate final integration qualification with **combined independent reviews**, and the owner decision (`S2.3-ACCEPT-OWNER`) |
+| WP-S23-5 (S2.3 owner acceptance) | **closed — `S2.3 ACCEPTED WITH QUALIFICATIONS` by owner (`adr-ci1-01-ci1a-s2-3-accept-owner-01.md`)**. Entry assessment `9a8d523`; final integration qualification tests `e2ae83f` and report/evidence `e1ccaf6` (`S23-WP-S23-5-QUAL-01`, `SUPPORTED WITH QUALIFICATIONS`); no production change. All qualifications and the S2.5/Stage-2 obligations remain binding; no successor is authorized |
+
+**S2.3 stage disposition (additive).** `S2.3 ACCEPTED WITH QUALIFICATIONS` at entry HEAD `e1ccaf6` (`adr-ci1-01-ci1a-s2-3-accept-owner-01.md`). S2.4, S2.5, Stage 6, and public Find Usages remain unauthorized; each requires its own commission. The open S2.5/Stage-2 obligations (SQ-04, SQ-05, SQ-06 remainder, S-01, D4.5, full S-02) are recorded there and are not discharged by this acceptance.
 
 ## Excluded from all packages
 
