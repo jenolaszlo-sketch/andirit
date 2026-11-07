@@ -1,0 +1,82 @@
+﻿[
+    {
+        "Phase":  "P01-i01-publish.json",
+        "Verb":  "publish",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  26988,
+        "Database":  "i01.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: verified universe is complete"
+    },
+    {
+        "Phase":  "P02-i01-verify-fresh.json",
+        "Verb":  "verify",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  23532,
+        "Database":  "i01.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: reopened overload target Ping() serves 30 complete real occurrences | PASS: reopened overload target Ping(int) serves 20 complete real occurrences"
+    },
+    {
+        "Phase":  "P03-i02-recovery-fault.json",
+        "Verb":  "recovery-fault",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  41012,
+        "Database":  "i02.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: managed before-commit fault raised | PASS: recovered in-process projection keeps the prior authority publication | PASS: graph-owner correspondence survives the recovery rebuild"
+    },
+    {
+        "Phase":  "P04-i02-recovery-verify-fresh.json",
+        "Verb":  "recovery-verify",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  33676,
+        "Database":  "i02.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: fresh reopen after the fault reconstructs the prior authority publication"
+    },
+    {
+        "Phase":  "P05-i04-namespace-corrupt.json",
+        "Verb":  "namespace-corrupt",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  27176,
+        "Database":  "i04.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: namespace tamper applied with the schema version left valid"
+    },
+    {
+        "Phase":  "P06-i04-namespace-open.json",
+        "Verb":  "namespace-open",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  30424,
+        "Database":  "i04.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: isolated namespace mismatch (valid version) refused with CodeOccurrenceSchemaException"
+    },
+    {
+        "Phase":  "P07-i03-i07-lifecycle.json",
+        "Verb":  "lifecycle",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  36312,
+        "Database":  "i07.ltdb",
+        "Detail":  "",
+        "Notes":  "PASS: reopened publication serves the current real fact | PASS: superseded publication refuses as stale with no hits | PASS: retiring the referencing unit leaves a complete-empty answer, not stale/available leftovers"
+    },
+    {
+        "Phase":  "P08-environment.json",
+        "Verb":  "environment",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  19016,
+        "Database":  "env.ltdb",
+        "Detail":  "9a8d5236b45d8e7d674126d5e94abaec26b0c80e",
+        "Notes":  ""
+    }
+]

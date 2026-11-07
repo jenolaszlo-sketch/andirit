@@ -1,0 +1,69 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.3-WP-S23-5-QUAL-01",
+  "reviewedSourceHead": "9a8d5236b45d8e7d674126d5e94abaec26b0c80e",
+  "reviewedSourceTree": "87b0d907be4bd4313de2b781ea59065d525e89e6",
+  "commands": [
+    {
+      "step": "preflight",
+      "command": "git rev-parse HEAD; git rev-parse HEAD^{tree}; git branch --show-current; git worktree list; git stash list; git status --porcelain --untracked-files=all"
+    },
+    {
+      "step": "baseline-floor (before this commission's tests)",
+      "command": "dotnet test Andirit.slnx -c Release --no-build",
+      "observed": "883 passed / 0 failed (WP-S23-4 acceptance state)"
+    },
+    {
+      "step": "new-qualification-tests",
+      "command": "dotnet test tests/Andirit.CSharp.Tests --filter S23Wp5IntegrationTests ; dotnet test tests/Andirit.LatticeDb.Tests --filter S23Wp5NamespaceRefusalTests",
+      "log": "new-qualification-tests.log",
+      "observed": "4 + 1 passed / 0 failed"
+    },
+    {
+      "step": "release-build",
+      "command": "dotnet build Andirit.slnx -c Release",
+      "log": "release-build.log",
+      "observed": "0 warnings / 0 errors"
+    },
+    {
+      "step": "full-solution-tests",
+      "command": "dotnet test Andirit.slnx -c Release --no-build",
+      "log": "full-solution-tests.log",
+      "observed": "888 passed / 0 failed (51 LatticeDb + 157 TreeSitter + 345 Andirit + 335 CSharp)"
+    },
+    {
+      "step": "focused-s23-regression",
+      "command": "dotnet test <project> -c Release --no-build --filter \"FullyQualifiedName~S23|FullyQualifiedName~New01|FullyQualifiedName~Occurrence|FullyQualifiedName~S2_2Wp\"",
+      "log": "focused-s23-regression.log",
+      "observed": "170 + 24 passed / 0 failed"
+    },
+    {
+      "step": "frozen-r2-oracle",
+      "command": "dotnet run --project docs/planning/adr-ci1-01-ci1a-s2-0/oracle/SemanticCorpusOracle.csproj -c Release -- --corpus docs/planning/adr-ci1-01-ci1a-s2-0/corpus --expected docs/planning/adr-ci1-01-ci1a-s2-0/oracle/expected/oracle-expected-r2.json --output docs/reviews/CI1A-S2.3-WP-S23-5-QUAL-01-evidence/oracle-r2.json",
+      "log": "oracle.log",
+      "observed": "185/185; 146851 bytes; SHA-256 97F6C5E5A4CC77E089481C7643732B7A07A31D483C2643BD7A95FDAD7CED39C9"
+    },
+    {
+      "step": "format-verify",
+      "command": "dotnet format Andirit.slnx --verify-no-changes",
+      "log": "format.log",
+      "observed": "exit 0"
+    },
+    {
+      "step": "integrated-probes",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File docs/reviews/CI1A-S2.3-WP-S23-5-QUAL-01-tests/run-probes.ps1 -Head 9a8d5236b45d8e7d674126d5e94abaec26b0c80e",
+      "matrix": "probe-matrix.txt",
+      "observed": "8 phases, 0 failed"
+    },
+    {
+      "step": "seal-evidence",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File docs/reviews/CI1A-S2.3-WP-S23-5-QUAL-01-tests/seal-evidence.ps1 -Head 9a8d5236b45d8e7d674126d5e94abaec26b0c80e -Tree 87b0d907be4bd4313de2b781ea59065d525e89e6",
+      "manifest": "manifest.json"
+    },
+    {
+      "step": "production-change-check",
+      "command": "git diff 9a8d523 -- src/",
+      "log": "production-diff.txt",
+      "observed": "0 lines"
+    }
+  ]
+}
