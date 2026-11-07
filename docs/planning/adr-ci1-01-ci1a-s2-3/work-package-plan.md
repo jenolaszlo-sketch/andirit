@@ -100,8 +100,8 @@ dependency, or gate above. Package definitions remain the controlling record.
 | WP-S23-2 (S23-DUR durability gate) | accepted with qualifications by owner (`adr-ci1-01-ci1a-s2-3-wp-s23-2-owner-01.md`) |
 | WP-S23-3 / WP-S23-3A (real-fact publication integration; first bounded package) | **accepted with qualifications by owner (`adr-ci1-01-ci1a-s2-3-wp-s23-3a-owner-01.md`)**, covering `e2b833a`, the R1 remediation `e0cef1c`, and the R2 remediation `a4d8501`, after S23-PUB-Q1 and S23-PUB-Q2 |
 | WP-S23-3B | not defined by this plan; no such package exists in the committed plan. Further WP-S23-3 packages, if any, require their own commission |
-| WP-S23-4 (native lifecycle qualification with real facts) | **next recommended bounded package; NOT authorized** — requires a separate commission and the `S23-LIFE-Q1` independent gate |
-| WP-S23-5 (S2.3 owner acceptance) | not authorized; gated on WP-S23-4 |
+| WP-S23-4 (native lifecycle qualification with real facts) | **entry authorized with qualifications by owner (`adr-ci1-01-ci1a-s2-3-wp-s23-4-entry-owner-01.md`)** — bounded to tests and evidence only; execution requires the `S23-LIFE-Q1` independent gate followed by a separate `S23-LIFE-OWNER` decision. No production change authorized |
+| WP-S23-5 (S2.3 owner acceptance) | not authorized; gated on a passed WP-S23-4 (`S23-LIFE-Q1` + `S23-LIFE-OWNER`) |
 
 ## Excluded from all packages
 
