@@ -1,0 +1,26 @@
+Evidence integrity manifest — ANDIRIT-CI1A-S2.3-WP-S23-3A-S23-PUB-Q2
+Reviewed HEAD a8e7b906cdfb23821245fe2900cd1c44e3bf1105 (tree 29fa9f1c9a3501d8ad74ac19376a701a83a24130)
+
+Self-excluding manifest. Harness probes were produced by the committed
+S23-PUB-Q1 probe project rerun via run-q2-probes.ps1 (Q2-prefixed outputs, fresh
+databases, one OS process per phase). Adversarial probes were produced by the
+reviewer-owned Q2AdversarialProbe project in docs/reviews/CI1A-S2.3-S23-PUB-Q2-tests.
+Binary probe databases under probe-databases/ are working artifacts, excluded from
+the commit and reproducible via the runner scripts. The Q1/R2 evidence was not modified.
+
+Files:
+  reviewed-head.txt               exact reviewed HEAD/tree
+  session-and-model.txt           model, session-separation disclosure
+  verification-results.json       disposition, source audit, gates, probes, findings (machine-readable)
+  diff-audit-a4d8501-src.txt      independent R2 production diff (from git)
+  Q2-probe-matrix.json/.txt       24-phase harness matrix (phase, verb, exit, ok, pid, durable-file hash)
+  Q2-P*.json/.log                 per-phase harness evidence (P01-P18; includes the F-Q1-01 scenarios)
+  Q2-ADV-replay-adversarial.json  replay-level adversarial cases (9 checks; see notes)
+  Q2-ADV-durable-*.json/.log      durable-level adversarial cases (interleaved stage order, corruption, staged retirement)
+  q2-focused-tests.log            focused S23 suites 69/0/0
+  q2-new01-tests.log              NEW-01 reviewer suite 17/0/0
+  q2-solution-tests.log           full solution 865/0/0
+  q2-oracle.log                   frozen R2 oracle 185/185, 146851 bytes, SHA-256 recomputed
+  oracle-r2-q2.json               reviewer-executed oracle output (digest matches 97F6C5E5…39C9)
+  q2-release-build.log            Release build 0 warnings / 0 errors
+  q2-format.log                   dotnet format --verify-no-changes exit 0
