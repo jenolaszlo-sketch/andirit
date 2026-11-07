@@ -141,8 +141,35 @@ internal static class DurableCommandLog
 
         if (replacements.Count > 0)
             await store.RestorePublishedUnitsAsync(replacements, cancellationToken);
+
+        // Staged commands are reconstructed per run: staged state is scoped to
+        // a single run (the stage key is repository, run, plugin, unit), so
+        // each run's staged unit set is applied and validated as one boundary.
+        // Rows of different runs, repositories or publication generations are
+        // never merged; within one run the durable command order is preserved.
+        var stagedGroups = new Dictionary<(string RepositoryId, string RunId), List<PersistedCommand>>();
         foreach (var command in commands.Where(command => command.Kind is "stage-replace" or "stage-delete"))
-            await ApplyCommandAsync(store, command, cancellationToken);
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var repositoryId = command.Replacement?.Origin.RepositoryId ?? command.RepositoryId!;
+            var runId = command.Replacement?.Origin.IndexRunId ?? command.RunId!;
+            var key = (repositoryId.Value, runId.Value);
+            if (!stagedGroups.TryGetValue(key, out var group))
+            {
+                group = [];
+                stagedGroups[key] = group;
+            }
+            group.Add(command);
+        }
+
+        foreach (var ((repositoryId, runId), group) in stagedGroups)
+        {
+            await store.RestoreStagedRunAsync(
+                new CodeRepositoryId(repositoryId),
+                new CodeIndexRunId(runId),
+                group,
+                cancellationToken);
+        }
         foreach (var command in commands.Where(command => command.Kind is "run" or "complete" &&
                      command.Run!.Status != CodeIndexRunStatus.Running))
         {

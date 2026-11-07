@@ -455,6 +455,129 @@ public sealed class InMemoryCodeGraphStore :
         return ValueTask.CompletedTask;
     }
 
+    /// <summary>
+    /// Restores one run's complete set of persisted staged commands as one
+    /// reconstruction. Ownership and intrinsic unit structure are validated per
+    /// command; graph and occurrence invariants are validated once against the
+    /// complete applicable staged set (published units + this run's staged
+    /// replacements minus staged deletions), so cross-unit endpoints can never
+    /// depend on the persisted stage-key enumeration order. Staged bookkeeping
+    /// is committed only after validation succeeds; the staged state remains
+    /// scoped to this run and is never merged with another run's.
+    /// </summary>
+    internal ValueTask RestoreStagedRunAsync(
+        CodeRepositoryId repositoryId,
+        CodeIndexRunId indexRunId,
+        IReadOnlyList<DurableCommandLog.PersistedCommand> commands,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(repositoryId);
+        ArgumentNullException.ThrowIfNull(indexRunId);
+        ArgumentNullException.ThrowIfNull(commands);
+        cancellationToken.ThrowIfCancellationRequested();
+        lock (_gate)
+        {
+            var runKey = new RunKey(repositoryId.Value, indexRunId.Value);
+
+            // Per-command ownership checks and intrinsic unit structure, in
+            // durable command order. A later command for one stage identity
+            // wins, matching the live staging bookkeeping; the durable stage
+            // table stores one row per stage identity, so this only defends a
+            // hand-crafted or future log that repeats one.
+            var errors = new List<CodeGraphValidationError>();
+            var stagedReplacements = new Dictionary<OwnerKey, CodeIndexUnitReplacement>();
+            var stagedDeletions = new HashSet<OwnerKey>();
+            foreach (var command in commands)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                if (command.Kind == "stage-replace")
+                {
+                    var replacement = command.Replacement!;
+                    EnsureKnownOwnership(replacement.Origin);
+                    AddDuplicateErrors(
+                        replacement.Nodes.Select(node => node.Id.Value),
+                        "node",
+                        errors);
+                    AddDuplicateErrors(
+                        replacement.Declarations.Select(declaration => declaration.Id.Value),
+                        "declaration",
+                        errors);
+                    AddDuplicateErrors(
+                        replacement.Edges.Select(edge => edge.Id.Value),
+                        "edge",
+                        errors);
+                    stagedDeletions.Remove(OwnerKey.From(replacement.Origin));
+                    stagedReplacements[OwnerKey.From(replacement.Origin)] = replacement;
+                }
+                else if (command.Kind == "stage-delete")
+                {
+                    EnsureRunningRun(runKey, command.PluginId!);
+                    var owner = new OwnerKey(
+                        repositoryId.Value,
+                        command.PluginId!.Value,
+                        command.UnitId!.Value);
+                    stagedReplacements.Remove(owner);
+                    stagedDeletions.Add(owner);
+                }
+                else
+                {
+                    throw new InvalidDataException(
+                        $"Unknown staged command '{command.Kind}' in the restore of one run.");
+                }
+            }
+
+            // Reconstruct the complete applicable staged set: published units,
+            // minus this run's staged deletions, plus this run's staged
+            // replacements. Staged state of other runs is not part of this
+            // boundary and is never merged.
+            var prospective = new Dictionary<OwnerKey, CodeIndexUnitReplacement>(_units);
+            foreach (var owner in stagedDeletions)
+                prospective.Remove(owner);
+            foreach (var (owner, replacement) in stagedReplacements)
+                prospective[owner] = replacement;
+
+            errors.AddRange(ValidateMaterializedGraph(repositoryId, prospective));
+
+            // Occurrence invariants over the same staged boundary, mirroring
+            // the per-command live staging validation.
+            var occurrenceProspective =
+                new Dictionary<OwnerKey, IReadOnlyList<CodeOccurrenceFact>>(_occurrences);
+            foreach (var owner in stagedDeletions)
+                occurrenceProspective.Remove(owner);
+            foreach (var (owner, replacement) in stagedReplacements)
+            {
+                if (TryGetCoverage(replacement, out _))
+                    occurrenceProspective[owner] = replacement.Occurrences;
+                else
+                    occurrenceProspective.Remove(owner);
+            }
+            errors.AddRange(ValidateOccurrences(repositoryId, occurrenceProspective));
+
+            if (errors.Count > 0)
+            {
+                throw new CodeGraphBatchRejectedException(
+                    "The restored staged graph is invalid.",
+                    errors.Take(100).ToArray());
+            }
+
+            // Commit the staged bookkeeping only after the complete staged set
+            // validates, reproducing the exact end state of live per-command
+            // staging.
+            var staged = GetOrCreateStagedRun(runKey);
+            foreach (var owner in stagedDeletions)
+            {
+                staged.Replacements.Remove(owner);
+                staged.Deletions.Add(owner);
+            }
+            foreach (var (owner, replacement) in stagedReplacements)
+            {
+                staged.Deletions.Remove(owner);
+                staged.Replacements[owner] = replacement;
+            }
+        }
+        return ValueTask.CompletedTask;
+    }
+
     public ValueTask StageIndexUnitDeletionAsync(
         CodeRepositoryId repositoryId,
         CodeIndexRunId indexRunId,

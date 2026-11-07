@@ -1,0 +1,26 @@
+Evidence integrity manifest — ANDIRIT-CI1A-S2.3-WP-S23-3A-R2
+Starting HEAD b76dc4c825ac73da832265338d56a223ffbc5b6f (tree 6116523b445a52043efcda010dd2a95ed6ea06c3)
+
+Self-excluding manifest. All probe artifacts were produced by the committed
+reviewer-owned S23-PUB-Q1 harness (docs/reviews/CI1A-S2.3-S23-PUB-Q1-tests), rerun via
+docs/reviews/CI1A-S2.3-S23-PUB-Q1-tests/run-r2-probes.ps1 into fresh R2 databases with
+R2-prefixed output names. The original Q1 evidence was not modified. Binary probe
+databases under probe-databases/ are working artifacts, excluded from the commit and
+reproducible via the script.
+
+Files:
+  starting-head.txt              exact starting HEAD/tree
+  verification-results.json      disposition, gates, findings, grouping justification (machine-readable)
+  production-diff.txt            exact production diff (git diff, two files)
+  test-additions-diff.txt        pointer to the new test suite (committed with the implementation)
+  R2PRE-probe-matrix.json/.txt   baseline (pre-fix) reproduction: P11/P13 fail, P17/P18 pass
+  R2PRE-*.json/.log              per-phase baseline evidence (durable snapshot hashes in the matrix)
+  R2POST-probe-matrix.json/.txt  post-fix full matrix: 24/24 phases pass
+  R2POST-*.json/.log             per-phase post-fix evidence (process ids, durable snapshot hashes)
+  r2-focused-tests.log           focused S23 suites 69/0/0 (14 new + 55 existing)
+  r2-new01-tests.log             NEW-01 reviewer suite 17/0/0
+  r2-solution-tests.log          full solution 865/0/0
+  r2-oracle.log                  frozen R2 oracle 185/185, 146851 bytes, SHA-256 recomputed
+  oracle-r2-r2.json              reviewer-executed oracle output (digest matches 97F6C5E5…39C9)
+  r2-release-build.log           Release build 0 warnings / 0 errors
+  r2-format.log                  dotnet format --verify-no-changes exit 0

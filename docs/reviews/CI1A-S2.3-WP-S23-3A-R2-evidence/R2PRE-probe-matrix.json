@@ -1,0 +1,62 @@
+﻿[
+    {
+        "Phase":  "R2PRE-P10-segment-stage.json",
+        "Verb":  "segment-stage",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  41900,
+        "DbHash":  "BF1774896286995A",
+        "Detail":  "referencing-first",
+        "Notes":  "naming=referencing-first definingUnitFirst=False stageKeyOrder=[csharp:project, csharp:project] | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segmentsStaged=true runNotCompleted=true"
+    },
+    {
+        "Phase":  "R2PRE-P11-segment-resume-failclosed.json",
+        "Verb":  "segment-resume-complete",
+        "Exit":  1,
+        "Ok":  false,
+        "Pid":  37004,
+        "DbHash":  "0ADE4D7A88072150",
+        "Detail":  "referencing-first",
+        "Notes":  "EXCEPTION Andirit.CodeGraphBatchRejectedException: The index-unit replacement would violate graph invariants. |   rejection graph.edge.endpoint-missing | csharp:3807052c806e1eda200f10753ac1bf5704db17118189718924e30a389616bc6a | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:48d5fe526cf262fb44da99fdb46ea8c09f25b7d298440dccb7c30bd5742ef02c | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:8a216b1e2b6c45ec458ca657769a66da39e020eaf293aeee14e2712bcf9ce68b | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:e31bd290c8e9ccea370f99200839871583fd39414eb7c7c1107a8d925332ed82 | An edge endpoint does not exist in the materialized graph."
+    },
+    {
+        "Phase":  "R2PRE-P12-segment-stage-restage.json",
+        "Verb":  "segment-stage",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  25908,
+        "DbHash":  "FD83C18E90900068",
+        "Detail":  "referencing-first",
+        "Notes":  "naming=referencing-first definingUnitFirst=False stageKeyOrder=[csharp:project, csharp:project] | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segmentsStaged=true runNotCompleted=true"
+    },
+    {
+        "Phase":  "R2PRE-P13-segment-resume-restaged.json",
+        "Verb":  "segment-resume-restage",
+        "Exit":  1,
+        "Ok":  false,
+        "Pid":  42020,
+        "DbHash":  "F554E6B90D04C72D",
+        "Detail":  "referencing-first",
+        "Notes":  "EXCEPTION Andirit.CodeGraphBatchRejectedException: The index-unit replacement would violate graph invariants. |   rejection graph.edge.endpoint-missing | csharp:3807052c806e1eda200f10753ac1bf5704db17118189718924e30a389616bc6a | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:48d5fe526cf262fb44da99fdb46ea8c09f25b7d298440dccb7c30bd5742ef02c | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:8a216b1e2b6c45ec458ca657769a66da39e020eaf293aeee14e2712bcf9ce68b | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:e31bd290c8e9ccea370f99200839871583fd39414eb7c7c1107a8d925332ed82 | An edge endpoint does not exist in the materialized graph."
+    },
+    {
+        "Phase":  "R2PRE-P17-segment-stage-defining-first.json",
+        "Verb":  "segment-stage",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  15400,
+        "DbHash":  "02F0A6CDB4CBD34F",
+        "Detail":  "defining-first",
+        "Notes":  "naming=defining-first definingUnitFirst=True stageKeyOrder=[csharp:project, csharp:project] | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segmentsStaged=true runNotCompleted=true"
+    },
+    {
+        "Phase":  "R2PRE-P18-segment-resume-defining-first.json",
+        "Verb":  "segment-resume-complete",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  26948,
+        "DbHash":  "757954FC68D5A4E7",
+        "Detail":  "defining-first",
+        "Notes":  "publishedUnitsAfterResumeComplete=2 markers=True,True | failClosed=true availability=AnalysisUnavailable hits=0 examined=0 isComplete=False reason=Missing or malformed recorded occurrence authority; re-ingestion required."
+    }
+]
