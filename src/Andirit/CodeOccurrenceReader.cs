@@ -26,14 +26,59 @@ public enum CodeOccurrenceAvailability
     IncompleteAnalysis = 5
 }
 
+/// <summary>
+/// Continuation state of one occurrence query result. Kept separate from
+/// <see cref="CodeOccurrenceAvailability"/> so publication staleness, incomplete
+/// analysis and invalid continuation are never conflated.
+/// </summary>
+public enum CodeOccurrenceContinuationState
+{
+    /// <summary>No continuation was requested and none is offered (refusals/unavailable).</summary>
+    NotRequested = 0,
+
+    /// <summary>More occurrences exist within the same publication; a next token is present.</summary>
+    More = 1,
+
+    /// <summary>The result set is exhausted for this query (final page or complete result).</summary>
+    Complete = 2,
+
+    /// <summary>The supplied continuation token was rejected (malformed or bound to a superseded publication).</summary>
+    Invalid = 3
+}
+
+/// <summary>
+/// One contributing storage unit's coverage in the query/publication scope. This
+/// is scope-level provenance, not a property of the currently returned page.
+/// </summary>
+public sealed record CodeOccurrenceUnitCoverage(
+    CodePluginId PluginId,
+    string IndexUnitId,
+    CodeRelationshipCoverageState State,
+    bool AnalysisPerformed,
+    int InvocationFacts,
+    int UnsupportedCategories,
+    int External,
+    int Ambiguous,
+    int Unresolved,
+    int Unsupported,
+    int ConditionalInactive,
+    string? ScopeId,
+    string? UniverseId);
+
 /// <summary>A bounded, target-scoped occurrence request. Not a public Find Usages API.</summary>
 public sealed record CodeOccurrenceQuery
 {
+    /// <summary>Default page size for occurrence reads.</summary>
+    public const int DefaultPageSize = 100;
+
+    /// <summary>Hard upper bound on returned occurrences per request.</summary>
+    public const int AbsoluteMaxPageSize = 1000;
+
     public CodeOccurrenceQuery(
         CodeRepositoryId repositoryId,
         CodeOccurrenceTargetId targetId,
         CodeGraphPublication? expectedPublication = null,
-        int maxResults = 100)
+        int maxResults = DefaultPageSize)
     {
         RepositoryId = repositoryId ?? throw new ArgumentNullException(nameof(repositoryId));
         TargetId = targetId ?? throw new ArgumentNullException(nameof(targetId));
@@ -49,6 +94,14 @@ public sealed record CodeOccurrenceQuery
     public CodeOccurrenceTargetId TargetId { get; }
     public CodeGraphPublication? ExpectedPublication { get; }
     public int MaxResults { get; }
+
+    /// <summary>
+    /// Opaque, versioned, stateless continuation token obtained from a prior
+    /// result's <see cref="CodeOccurrenceQueryResult.NextContinuationToken"/>. Null
+    /// requests the first page. Tokens are never persisted and are bound to the
+    /// repository, exact target, mode, publication identity and page size.
+    /// </summary>
+    public string? ContinuationToken { get; init; }
 }
 
 /// <summary>One deterministically ordered occurrence result.</summary>
@@ -72,17 +125,30 @@ public sealed record CodeOccurrenceQueryResult(
     int TotalMatches,
     int Examined,
     string? RefusalReason = null,
-    CodeOccurrenceCoverage? Coverage = null)
+    CodeOccurrenceCoverage? Coverage = null,
+    string? NextContinuationToken = null,
+    CodeOccurrenceContinuationState Continuation = CodeOccurrenceContinuationState.NotRequested,
+    IReadOnlyList<CodeOccurrenceUnitCoverage>? CoverageBreakdown = null)
 {
+    /// <summary>
+    /// Scope-level per-unit coverage provenance for the query/publication scope
+    /// (never just the current page). Empty when the provider has no breakdown.
+    /// </summary>
+    public IReadOnlyList<CodeOccurrenceUnitCoverage> UnitCoverage => CoverageBreakdown ?? [];
+
     public bool Truncated => TotalMatches > Occurrences.Count;
 
     /// <summary>
     /// True only when the publication is current, the target belongs to a
-    /// completely analyzed declared scope, and the result is a valid
-    /// complete-empty answer.
+    /// completely analyzed declared scope, and this result is the final page of
+    /// that scope (or a complete single-page/complete-empty answer). An
+    /// intermediate (<see cref="CodeOccurrenceContinuationState.More"/>) or
+    /// rejected (<see cref="CodeOccurrenceContinuationState.Invalid"/>) result is
+    /// never complete.
     /// </summary>
     public bool IsComplete => Availability == CodeOccurrenceAvailability.Available &&
-        Coverage?.IsComplete == true;
+        Coverage?.IsComplete == true &&
+        Continuation is CodeOccurrenceContinuationState.Complete or CodeOccurrenceContinuationState.NotRequested;
 }
 
 /// <summary>

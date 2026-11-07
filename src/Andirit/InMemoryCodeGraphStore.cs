@@ -890,47 +890,148 @@ public sealed class InMemoryCodeGraphStore :
             var refusalReason = coverage.IsComplete
                 ? null
                 : "The declared analysis scope is not proven complete; a zero-result answer is not a complete negative.";
+            var breakdown = CoverageBreakdown(query.RepositoryId.Value);
 
-            var indexKey = query.RepositoryId.Value + "\n" + query.TargetId.Value;
-            if (!_occurrenceIndex.TryGetValue(indexKey, out var entries))
+            var isContinuation = query.ContinuationToken is not null;
+            var cursor = default(CodeOccurrenceContinuation.Envelope);
+            if (isContinuation)
             {
-                return new(new CodeOccurrenceQueryResult(
-                    availability,
-                    publication,
-                    [],
-                    0,
-                    0,
-                    refusalReason,
-                    coverage));
+                if (!CodeOccurrenceContinuation.TryDecode(query.ContinuationToken, out cursor))
+                {
+                    return new(new CodeOccurrenceQueryResult(
+                        availability, publication, [], 0, 0,
+                        "The continuation token is malformed, altered or unsupported.",
+                        coverage, null, CodeOccurrenceContinuationState.Invalid, breakdown));
+                }
+
+                if (cursor.Mode != CodeOccurrenceContinuation.TargetMode ||
+                    !string.Equals(cursor.RepositoryId, query.RepositoryId.Value, StringComparison.Ordinal) ||
+                    !string.Equals(cursor.TargetId, query.TargetId.Value, StringComparison.Ordinal) ||
+                    cursor.Direction != CodeOccurrenceContinuation.Ascending ||
+                    cursor.Size < 1 || cursor.Size > CodeOccurrenceQuery.AbsoluteMaxPageSize)
+                {
+                    return new(new CodeOccurrenceQueryResult(
+                        availability, publication, [], 0, 0,
+                        "The continuation token is not bound to this repository, exact target, mode or page size.",
+                        coverage, null, CodeOccurrenceContinuationState.Invalid, breakdown));
+                }
+
+                if (!string.Equals(cursor.PublicationRun, publication.IndexRunId.Value, StringComparison.Ordinal) ||
+                    !string.Equals(cursor.PublicationIdentity, publication.IndexIdentity.Value, StringComparison.Ordinal))
+                {
+                    return new(new CodeOccurrenceQueryResult(
+                        CodeOccurrenceAvailability.StalePublication, publication, [], 0, 0,
+                        "The continuation token is bound to a superseded publication; restart the query.",
+                        coverage, null, CodeOccurrenceContinuationState.Invalid, breakdown));
+                }
             }
 
-            var hits = entries
-                .OrderBy(entry => entry.Span.Path, StringComparer.Ordinal)
-                .ThenBy(entry => entry.Span.StartLine)
-                .ThenBy(entry => entry.Span.StartColumn)
-                .ThenBy(entry => entry.Span.EndLine)
-                .ThenBy(entry => entry.Span.EndColumn)
-                .ThenBy(entry => entry.Id.Value, StringComparer.Ordinal)
-                .Take(query.MaxResults)
-                .Select(entry => new CodeOccurrenceHit(
-                    entry.Id,
-                    entry.TargetId,
-                    entry.Category,
-                    entry.Span,
-                    entry.SourceUnitId,
-                    entry.Contributors,
-                    entry.SemanticsVersion))
-                .ToArray();
+            var indexKey = query.RepositoryId.Value + "\n" + query.TargetId.Value;
+            if (!_occurrenceIndex.TryGetValue(indexKey, out var entries) || entries.Count == 0)
+            {
+                return new(new CodeOccurrenceQueryResult(
+                    availability, publication, [], 0, 0, refusalReason, coverage,
+                    null, CodeOccurrenceContinuationState.Complete, breakdown));
+            }
+
+            var ordered = entries.ToArray();
+            Array.Sort(ordered, CompareTargetEntries);
+            var pageSize = isContinuation
+                ? cursor.Size
+                : Math.Min(query.MaxResults, CodeOccurrenceQuery.AbsoluteMaxPageSize);
+            var page = new List<CodeOccurrenceHit>(Math.Min(pageSize, ordered.Length));
+            OccurrenceTargetEntry? last = null;
+            foreach (var entry in ordered)
+            {
+                if (isContinuation && CompareToCursor(entry, cursor) <= 0)
+                    continue;
+                if (page.Count == pageSize)
+                    break;
+                page.Add(new CodeOccurrenceHit(
+                    entry.Id, entry.TargetId, entry.Category, entry.Span,
+                    entry.SourceUnitId, entry.Contributors, entry.SemanticsVersion));
+                last = entry;
+            }
+
+            var hasMore = last is not null && CompareTargetEntries(last, ordered[^1]) < 0;
+            var nextToken = hasMore
+                ? CodeOccurrenceContinuation.Encode(EnvelopeFrom(last!, query, publication, pageSize))
+                : null;
             return new(new CodeOccurrenceQueryResult(
-                availability,
-                publication,
-                hits,
-                entries.Count,
-                entries.Count,
-                refusalReason,
-                coverage));
+                availability, publication, page, ordered.Length, ordered.Length,
+                refusalReason, coverage, nextToken,
+                hasMore ? CodeOccurrenceContinuationState.More : CodeOccurrenceContinuationState.Complete,
+                breakdown));
         }
     }
+
+    // Deterministic total order (S2.4 D3): path, start line/column, end line/column, id.
+    private static readonly Comparison<OccurrenceTargetEntry> CompareTargetEntries = (a, b) =>
+    {
+        var compare = string.CompareOrdinal(a.Span.Path, b.Span.Path);
+        if (compare != 0) return compare;
+        compare = a.Span.StartLine.CompareTo(b.Span.StartLine);
+        if (compare != 0) return compare;
+        compare = a.Span.StartColumn.CompareTo(b.Span.StartColumn);
+        if (compare != 0) return compare;
+        compare = a.Span.EndLine.CompareTo(b.Span.EndLine);
+        if (compare != 0) return compare;
+        compare = a.Span.EndColumn.CompareTo(b.Span.EndColumn);
+        return compare != 0 ? compare : string.CompareOrdinal(a.Id.Value, b.Id.Value);
+    };
+
+    private static int CompareToCursor(OccurrenceTargetEntry entry, in CodeOccurrenceContinuation.Envelope cursor)
+    {
+        var compare = string.CompareOrdinal(entry.Span.Path, cursor.AfterPath);
+        if (compare != 0) return compare;
+        compare = entry.Span.StartLine.CompareTo(cursor.AfterStartLine);
+        if (compare != 0) return compare;
+        compare = entry.Span.StartColumn.CompareTo(cursor.AfterStartColumn);
+        if (compare != 0) return compare;
+        compare = entry.Span.EndLine.CompareTo(cursor.AfterEndLine);
+        if (compare != 0) return compare;
+        compare = entry.Span.EndColumn.CompareTo(cursor.AfterEndColumn);
+        return compare != 0 ? compare : string.CompareOrdinal(entry.Id.Value, cursor.AfterId);
+    }
+
+    private static CodeOccurrenceContinuation.Envelope EnvelopeFrom(
+        OccurrenceTargetEntry entry, CodeOccurrenceQuery query, CodeGraphPublication publication, int size) =>
+        new(
+            query.RepositoryId.Value,
+            CodeOccurrenceContinuation.TargetMode,
+            query.TargetId.Value,
+            publication.IndexRunId.Value,
+            publication.IndexIdentity.Value,
+            CodeOccurrenceContinuation.Ascending,
+            entry.Span.Path,
+            entry.Span.StartLine,
+            entry.Span.StartColumn,
+            entry.Span.EndLine,
+            entry.Span.EndColumn,
+            entry.Id.Value,
+            size);
+
+    // Scope-level per-unit coverage provenance (S2.4 D6), ordered deterministically.
+    private IReadOnlyList<CodeOccurrenceUnitCoverage> CoverageBreakdown(string repositoryId) =>
+        _occurrenceCoverage
+            .Where(pair => string.Equals(pair.Key.RepositoryId, repositoryId, StringComparison.Ordinal))
+            .OrderBy(pair => pair.Key.PluginId, StringComparer.Ordinal)
+            .ThenBy(pair => pair.Key.IndexUnitId, StringComparer.Ordinal)
+            .Select(pair => new CodeOccurrenceUnitCoverage(
+                new CodePluginId(pair.Key.PluginId),
+                pair.Key.IndexUnitId,
+                pair.Value.State,
+                pair.Value.AnalysisPerformed,
+                pair.Value.InvocationFacts,
+                pair.Value.UnsupportedCategories,
+                pair.Value.External,
+                pair.Value.Ambiguous,
+                pair.Value.Unresolved,
+                pair.Value.Unsupported,
+                pair.Value.ConditionalInactive,
+                pair.Value.ScopeId,
+                pair.Value.UniverseId))
+            .ToArray();
 
     /// <summary>
     /// Restores one published unit's occurrence contribution from durable
