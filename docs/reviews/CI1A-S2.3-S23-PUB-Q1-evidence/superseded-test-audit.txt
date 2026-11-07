@@ -1,0 +1,44 @@
+﻿Superseded test audit (S23-PUB-Q1, reviewed HEAD 072f52bb3a39dbb5cb4dd7c26e13e7022a0160e6)
+
+1. Which original test was superseded?
+   S23PublicationIntegrationTests.CrossProjectPublication_DurableReopen_IsBlockedByPreExistingGraphOrderingDefect
+   (introduced at e2b833a, committed with the producer evidence at f8b2b08; removed at e0cef1c).
+   Original body (verified from f8b2b08:tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs):
+     publishes the real cross-project Lib<-App fixture, disposes the store, then asserts
+     Assert.Throws<CodeGraphBatchRejectedException>(() => new LatticeCodeGraphStore(_path))
+     with Assert.Contains(errors, code == "graph.edge.endpoint-missing").
+
+2. Why its previous expected failure is no longer valid?
+   The test pinned the EXISTENCE of the pre-existing order-dependent reconstruction defect
+   (B-WP-S23-3A-01): a valid multi-unit publication was refused on reopen because replay
+   validated each unit against the partially restored set. The R1 remediation (e0cef1c,
+   authorized to fix exactly this defect) restores all persisted units before validation, so a
+   valid cross-project publication reopens successfully. The assertion "reopen throws" is
+   therefore no longer a correct oracle for this fixture; keeping it would have contradicted
+   the authorized remediation.
+
+3. Which replacement tests establish the correct behavior?
+   - CrossProjectRealFact_SurvivesDurableReopen_WithCorrectUnitsAndCoverage (same fixture,
+     inverted to positive, strictly stronger: 2 units, cross-project graph edge resolves to the
+     Lib project node, Available/1 hit/IsComplete, correct target, source unit, and durable
+     defining-unit receipt; doubles as the two-phase fresh-process harness).
+   - CrossProjectRealFact_DefiningUnitPersistedFirst_ReopensWithIdenticalOutcome (reversed
+     persisted order).
+   - ReopenedStore_RefusesStaleRealFact_AfterTransitiveDependencyChange;
+     ReopenedStore_MissingAuthority_IsUnavailable_NotEmptySuccess (post-reopen refusals).
+   - New suite S23DurableGraphReopenTests (8 tests): graph-only cross-unit reopen in both
+     persisted orders, single-unit control, replay permutation invariance, genuinely missing
+     endpoint refused, inconsistent persisted unit refused, malformed persisted row refused,
+     failed replay exposes nothing.
+
+4. Was any independent negative coverage lost?
+   No. The superseded test's only negative value was pinning the defect's existence - it
+   refused a VALID publication, which is not a corruption-refusal oracle. Genuine reopen
+   corruption-refusal coverage (missing endpoint, inconsistent edge, malformed row, failed
+   replay leaving durable state untouched) is established by the new suite and independently
+   re-established by reviewer probes P07-P09 (fresh-process refusals with byte-identical
+   durable snapshots). Orphaned-owner (F-01) refusal remains covered by
+   S23OccurrenceOwnershipRegressionTests (passing) and by the accepted WP-S23-2 Q1/Q2 probe
+   heritage; occurrence-gate corruption refusal is covered by S23NativeAuthorityTests
+   (passing). Reviewer finding F-Q1-01 (staged-run replay order dependence) shows a genuine
+   reopen refusal that is itself a defect, not a lost oracle; see the review report.

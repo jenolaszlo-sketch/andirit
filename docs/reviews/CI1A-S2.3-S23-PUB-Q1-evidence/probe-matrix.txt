@@ -1,0 +1,30 @@
+﻿
+Phase                                  Verb                    Exit    Ok   Pid
+-----                                  ----                    ----    --   ---
+P01-publish.json                       publish                    0  True 42576
+P02-verify-fresh.json                  verify                     0  True 36024
+P03-graphonly-ref-first-publish.json   graphonly-publish          0  True 22012
+P04-graphonly-ref-first-verify.json    graphonly-verify           0  True 20040
+P05-graphonly-refd-first-publish.json  graphonly-publish          0  True  8964
+P06-graphonly-refd-first-verify.json   graphonly-verify           0  True  9828
+P07-publish-missing-endpoint.json      publish                    0  True 18800
+P08-corrupt-missing-endpoint.json      corrupt                    0  True 31748
+P09-refuse-missing-endpoint.json       corrupt-verify             0  True 18360
+P07-publish-inconsistent-edge.json     publish                    0  True 41504
+P08-corrupt-inconsistent-edge.json     corrupt                    0  True  7176
+P09-refuse-inconsistent-edge.json      corrupt-verify             0  True  9312
+P07-publish-malformed-row.json         publish                    0  True 38360
+P08-corrupt-malformed-row.json         corrupt                    0  True 35300
+P09-refuse-malformed-row.json          corrupt-verify             0  True  8968
+P10-segment-stage.json                 segment-stage              0  True 34108
+P11-segment-resume-failclosed.json     segment-resume-complete    1 False 11536
+P12-segment-stage-restage.json         segment-stage              0  True 41320
+P13-segment-resume-restaged.json       segment-resume-restage     1 False  6532
+P17-segment-stage-defining-first.json  segment-stage              0  True 40520
+P18-segment-resume-defining-first.json segment-resume-complete    0  True  1548
+P14-negative-authority.json            negative-authority         0  True 32736
+P15-stale-after-reopen.json            stale-after-reopen         0  True  3456
+P16-replay-probe.json                  replay-probe               0  True 31600
+
+
+

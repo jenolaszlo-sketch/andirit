@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>Andirit.CSharp.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../../src/Andirit.CSharp/Andirit.CSharp.csproj" />
+    <ProjectReference Include="../../../src/Andirit.LatticeDb/Andirit.LatticeDb.csproj" />
+    <Compile Include="../../evidence/adr-ci1-01-ci1a-s2-1-raw/authority/CompilationProvenance.cs" Link="FrozenR2Authority.cs" />
+  </ItemGroup>
+</Project>

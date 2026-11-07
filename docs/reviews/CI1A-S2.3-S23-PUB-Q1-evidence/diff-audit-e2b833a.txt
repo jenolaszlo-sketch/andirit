@@ -1,0 +1,334 @@
+﻿commit e2b833a35e74d7fa8b1bf9eabe506af0357902b3
+Author: jenol <jenolaszlo-sketch@users.noreply.github.com>
+Date:   Sat Nov 7 01:58:54 2026 +0800
+
+    feat(andirit): wire real-fact occurrence publication with internal authority handoff (ANDIRIT-CI1A-S2.3-WP-S23-3A-IMPL-01)
+
+diff --git a/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs b/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
+index ad7bb4c..b97cd00 100644
+--- a/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
++++ b/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
+@@ -57,6 +57,23 @@ public sealed partial class CSharpCodeGraphPlugin
+                     builder.AddDeclarations(source.Path, root, model, cancellationToken);
+                 }
+                 builder.AddRelationships(cancellationToken);
++                // WP-S23-3A: publish this project's real occurrence contribution
++                // before the completing graph batch, so one replacement stages the
++                // graph, facts, coverage and authority together.
++                if (prepared.Verified is not null)
++                {
++                    await PublishOccurrencesAsync(
++                        sink,
++                        context.RepositoryId,
++                        plugin.Id,
++                        plugin.Version,
++                        context.IndexRunId,
++                        CSharpProjectDiscovery.IndexUnitId(project.Path),
++                        analysis.Universe,
++                        prepared.Verified,
++                        cancellationToken).ConfigureAwait(false);
++                }
++
+                 await builder.WriteAsync(sink, cancellationToken).ConfigureAwait(false);
+                 contributingSources.UnionWith(builder.ContributingSourcePaths);
+                 allDiagnostics.AddRange(compilation.GetDiagnostics(cancellationToken));
+@@ -342,4 +359,66 @@ public sealed partial class CSharpCodeGraphPlugin
+             Visit(project);
+         return ordered;
+     }
++
++    // WP-S23-3A real-fact occurrence publication. The S2.2 verified extractor
++    // already produces authority-gated `usage4` facts and the accepted authority
++    // envelope; this wires that output into the existing batch/sink publication
++    // path together with the internal authority handoff, without changing the
++    // public graph-batch contract, the persisted schema, or the Option A identity
++    // separation.
++    //
++    // The identifier/declaration/shape component digests remain caller-supplied
++    // under the accepted S-01 qualification: the forms below are this plugin's
++    // deterministic caller convention, not an independent canonicalization claim.
++    private static string OccurrenceIdentifierDigest(IMethodSymbol method) =>
++        CodeOccurrenceIdentity.ComputeIdentifierDigest([method.Name]);
++
++    private static string OccurrenceDeclarationDigest(IMethodSymbol method) =>
++        CodeOccurrenceIdentity.ComputeDeclarationDigest([CanonicalSymbolKey(Normalize(method))]);
++
++    private static string OccurrenceShapeDigest(IMethodSymbol method)
++    {
++        var normalized = (IMethodSymbol)Normalize(method);
++        return CodeOccurrenceIdentity.ComputeShapeDigest("method|" + normalized.Arity + "|" +
++            string.Join(",", normalized.Parameters.Select(parameter => TypeIdentity(parameter.Type))));
++    }
++
++    private static string OccurrenceTargetDocumentId(IMethodSymbol method) =>
++        method.GetDocumentationCommentId() ?? QualifiedName(method);
++
++    // Publishes this source unit's real occurrence contribution, if any, through
++    // the accepted sink. It writes an occurrence batch and registers the matching
++    // authority envelope for the same origin; the completing graph batch then
++    // stages one replacement carrying both. A sink that cannot carry authority
++    // receives graph-only output, so occurrence facts are never published without
++    // the association required to serve them.
++    private static async ValueTask PublishOccurrencesAsync(
++        ICodeGraphSink sink,
++        CodeRepositoryId repositoryId,
++        CodePluginId pluginId,
++        string pluginVersion,
++        CodeIndexRunId runId,
++        string unitId,
++        VerifiedCSharpUniverse universe,
++        VerifiedCSharpCompilation source,
++        CancellationToken cancellationToken)
++    {
++        if (sink is not ICodeOccurrenceAuthoritySink authoritySink)
++            return;
++
++        var extraction = VerifiedCSharpOccurrenceExtractor.Extract(universe,
++            new VerifiedOccurrenceExtractionRequest(repositoryId, pluginId, source,
++                OccurrenceIdentifierDigest, OccurrenceDeclarationDigest, OccurrenceShapeDigest,
++                OccurrenceTargetDocumentId, pluginVersion));
++        if (extraction.Authority is null)
++            return;
++
++        var origin = new CodeFactOrigin(repositoryId, pluginId, pluginVersion, runId,
++            new CodeIndexUnitId(unitId));
++        await authoritySink.SetOccurrenceAuthorityAsync(origin, extraction.Authority, cancellationToken)
++            .ConfigureAwait(false);
++        await sink.WriteBatchAsync(new CodeGraphBatch(origin,
++                occurrences: extraction.Facts, occurrenceCoverage: extraction.Coverage),
++            cancellationToken).ConfigureAwait(false);
++    }
+ }
+diff --git a/src/Andirit/CodeGraphIngestionSink.cs b/src/Andirit/CodeGraphIngestionSink.cs
+index 5cf25d3..b6e2002 100644
+--- a/src/Andirit/CodeGraphIngestionSink.cs
++++ b/src/Andirit/CodeGraphIngestionSink.cs
+@@ -4,7 +4,7 @@ namespace Andirit;
+ /// Validates streamed plugin batches and commits each completed index unit as
+ /// one atomic store replacement.
+ /// </summary>
+-public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
++public sealed class CodeGraphIngestionSink : ICodeGraphSink, ICodeOccurrenceAuthoritySink, IAsyncDisposable
+ {
+     private readonly ICodeGraphIndexStore _store;
+     private readonly CodeGraphBatchValidator _validator;
+@@ -12,6 +12,10 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
+     private readonly SemaphoreSlim _gate = new(1, 1);
+     private readonly Dictionary<OwnerKey, Accumulator> _pending = [];
+     private readonly HashSet<OwnerKey> _rejected = [];
++    // WP-S23-3A: the internal authority envelope awaiting the completing batch for
++    // each owner. Keyed by the same origin as the batch stream so it can never be
++    // associated with an unrelated unit.
++    private readonly Dictionary<OwnerKey, CodeOccurrenceAuthority> _occurrenceAuthority = [];
+     private bool _disposed;
+ 
+     public CodeGraphIngestionSink(
+@@ -94,7 +98,8 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
+                 return;
+ 
+             _pending.Remove(key);
+-            var replacement = pending.ToReplacement();
++            _occurrenceAuthority.Remove(key, out var authority);
++            var replacement = pending.ToReplacement(authority);
+             try
+             {
+                 await _store.StageIndexUnitAsync(replacement, cancellationToken)
+@@ -114,6 +119,52 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
+         }
+     }
+ 
++    // WP-S23-3A internal handoff. Associates the accepted authority envelope with
++    // the owner identified by the same origin used for that unit's batch stream. It
++    // is applied only when the completing batch is received, so authority can never
++    // be published without its facts and coverage, and never for an unrelated unit.
++    async ValueTask ICodeOccurrenceAuthoritySink.SetOccurrenceAuthorityAsync(
++        CodeFactOrigin origin,
++        CodeOccurrenceAuthority authority,
++        CancellationToken cancellationToken)
++    {
++        ArgumentNullException.ThrowIfNull(origin);
++        ArgumentNullException.ThrowIfNull(authority);
++        ObjectDisposedException.ThrowIf(_disposed, this);
++        await _gate.WaitAsync(cancellationToken).ConfigureAwait(false);
++        try
++        {
++            ObjectDisposedException.ThrowIf(_disposed, this);
++            var key = OwnerKey.From(origin);
++            if (_rejected.Contains(key))
++            {
++                throw Reject(
++                    origin,
++                    [Error(
++                        CodeGraphValidationErrorKind.IncompleteIndexUnit,
++                        "ingestion.index-unit.rejected",
++                        "The index unit was already rejected and must be restarted.")]);
++            }
++
++            if (authority.RepositoryId != origin.RepositoryId.Value ||
++                authority.PluginId != origin.PluginId.Value)
++            {
++                throw Reject(
++                    origin,
++                    [Error(
++                        CodeGraphValidationErrorKind.OwnershipMismatch,
++                        "ingestion.occurrence-authority.ownership-mismatch",
++                        "Occurrence authority does not belong to the batch origin.")]);
++            }
++
++            _occurrenceAuthority[key] = authority;
++        }
++        finally
++        {
++            _gate.Release();
++        }
++    }
++
+     /// <summary>
+     /// Verifies that every started index unit completed successfully before an
+     /// indexing run is committed.
+@@ -125,11 +176,12 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
+         try
+         {
+             ObjectDisposedException.ThrowIf(_disposed, this);
+-            if (_pending.Count == 0 && _rejected.Count == 0)
++            if (_pending.Count == 0 && _rejected.Count == 0 && _occurrenceAuthority.Count == 0)
+                 return;
+ 
+             var errors = _pending.Keys
+                 .Concat(_rejected)
++                .Concat(_occurrenceAuthority.Keys)
+                 .Distinct()
+                 .OrderBy(key => key.PluginId, StringComparer.Ordinal)
+                 .ThenBy(key => key.IndexUnitId, StringComparer.Ordinal)
+@@ -163,6 +215,7 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
+             _disposed = true;
+             _pending.Clear();
+             _rejected.Clear();
++            _occurrenceAuthority.Clear();
+         }
+         finally
+         {
+@@ -179,6 +232,7 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
+         _pending.TryGetValue(key, out var pending);
+         _pending.Remove(key);
+         _rejected.Add(key);
++        _occurrenceAuthority.Remove(key);
+         Report(pending?.ToDiagnostics(
+             errors.Count,
+             errors.Select(error => error.Code)
+@@ -219,6 +273,7 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
+     {
+         _pending.Remove(key);
+         _rejected.Add(key);
++        _occurrenceAuthority.Remove(key);
+     }
+ 
+     private static CodeGraphValidationError Error(
+@@ -256,7 +311,7 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
+             }
+         }
+ 
+-        public CodeIndexUnitReplacement ToReplacement() =>
++        public CodeIndexUnitReplacement ToReplacement(CodeOccurrenceAuthority? authority) =>
+             new(
+                 Origin,
+                 _nodes,
+@@ -265,7 +320,13 @@ public sealed class CodeGraphIngestionSink : ICodeGraphSink, IAsyncDisposable
+                 _occurrences,
+                 occurrenceAnalysisIncluded: _occurrences.Count > 0 ||
+                     _coverage?.AnalysisPerformed == true,
+-                occurrenceCoverage: _coverage);
++                occurrenceCoverage: _coverage)
++            {
++                // WP-S23-3A: authority and marker are published only together with
++                // the facts/coverage they describe, and only for this owner.
++                OccurrenceAuthority = authority,
++                RequiresOccurrenceAuthority = authority is not null,
++            };
+ 
+         public CodeGraphIngestionDiagnostics ToDiagnostics(
+             int rejectedFacts = 0,
+diff --git a/src/Andirit/CodeIndexingLifecycle.cs b/src/Andirit/CodeIndexingLifecycle.cs
+index f0ef052..329b90e 100644
+--- a/src/Andirit/CodeIndexingLifecycle.cs
++++ b/src/Andirit/CodeIndexingLifecycle.cs
+@@ -1175,7 +1175,7 @@ public sealed class CodeIndexingService
+         CodeRepositoryId repositoryId,
+         CodeIndexRunId runId,
+         CodePluginId pluginId,
+-        string pluginVersion) : ICodeGraphSink
++        string pluginVersion) : ICodeGraphSink, ICodeOccurrenceAuthoritySink
+     {
+         public CodeGraphBatchLimits Limits => inner.Limits;
+ 
+@@ -1184,13 +1184,33 @@ public sealed class CodeIndexingService
+             CancellationToken cancellationToken = default)
+         {
+             ArgumentNullException.ThrowIfNull(batch);
+-            if (batch.Origin.RepositoryId != repositoryId ||
+-                batch.Origin.IndexRunId != runId ||
+-                batch.Origin.PluginId != pluginId ||
+-                !string.Equals(batch.Origin.PluginVersion, pluginVersion, StringComparison.Ordinal))
++            ValidateScope(batch.Origin, "Batch");
++            return inner.WriteBatchAsync(batch, cancellationToken);
++        }
++
++        public ValueTask SetOccurrenceAuthorityAsync(
++            CodeFactOrigin origin,
++            CodeOccurrenceAuthority authority,
++            CancellationToken cancellationToken = default)
++        {
++            ArgumentNullException.ThrowIfNull(origin);
++            ArgumentNullException.ThrowIfNull(authority);
++            ValidateScope(origin, "Occurrence authority");
++            return inner is ICodeOccurrenceAuthoritySink authoritySink
++                ? authoritySink.SetOccurrenceAuthorityAsync(origin, authority, cancellationToken)
++                : throw new InvalidOperationException(
++                    "The underlying publication sink cannot carry occurrence authority.");
++        }
++
++        private void ValidateScope(CodeFactOrigin origin, string what)
++        {
++            if (origin.RepositoryId != repositoryId ||
++                origin.IndexRunId != runId ||
++                origin.PluginId != pluginId ||
++                !string.Equals(origin.PluginVersion, pluginVersion, StringComparison.Ordinal))
+             {
+                 throw new CodeGraphBatchRejectedException(
+-                    "A plugin emitted a batch outside its assigned lifecycle scope.",
++                    "A plugin emitted " + what.ToLowerInvariant() + " outside its assigned lifecycle scope.",
+                     [
+                         new CodeGraphValidationError(
+                             CodeGraphValidationErrorKind.OwnershipMismatch,
+@@ -1198,8 +1218,6 @@ public sealed class CodeIndexingService
+                             "Batch repository, run, plugin, and version must match the executing plugin.")
+                     ]);
+             }
+-
+-            return inner.WriteBatchAsync(batch, cancellationToken);
+         }
+     }
+ }
+diff --git a/src/Andirit/CodeOccurrenceAuthority.cs b/src/Andirit/CodeOccurrenceAuthority.cs
+index b15564d..0c155f3 100644
+--- a/src/Andirit/CodeOccurrenceAuthority.cs
++++ b/src/Andirit/CodeOccurrenceAuthority.cs
+@@ -23,3 +23,18 @@ internal interface ICodeOccurrenceAuthorityVerifier
+         CodeOccurrenceAuthority authority, string repositoryId, string pluginId, string indexUnitId,
+         IReadOnlyList<CodeOccurrenceFact> facts, CodeOccurrenceCoverage? coverage);
+ }
++
++// WP-S23-3A internal handoff. Andirit.Abstractions cannot depend on Andirit, so
++// the accepted authority envelope cannot travel on the public CodeGraphBatch.
++// A publication sink implements this internal capability to associate the
++// verified envelope with the owning staged unit, keyed by the same
++// (repository, plugin, index-unit) origin as the batch stream. Sinks that do not
++// implement it receive graph-only output: occurrence facts are never published
++// without the authority association required to serve them.
++internal interface ICodeOccurrenceAuthoritySink
++{
++    ValueTask SetOccurrenceAuthorityAsync(
++        CodeFactOrigin origin,
++        CodeOccurrenceAuthority authority,
++        CancellationToken cancellationToken = default);
++}

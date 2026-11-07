@@ -1,0 +1,41 @@
+Evidence integrity manifest — ANDIRIT-CI1A-S2.3-WP-S23-3A-S23-PUB-Q1
+Reviewed HEAD 072f52bb3a39dbb5cb4dd7c26e13e7022a0160e6 (tree 3c2f2e1f1504b2e7e9300ba59eb738dae5dc0edb)
+
+This manifest is self-excluding: it lists every other file in this directory with its
+role and provenance. All probe JSON/log files were produced by the reviewer-owned
+harness in docs/reviews/CI1A-S2.3-S23-PUB-Q1-tests (one OS process per phase); gate
+logs were produced by direct dotnet invocations recorded verbatim at the top of each
+log. Binary probe databases under probe-databases/ are working artifacts and are
+excluded from the committed evidence (reproducible via run-probes.ps1).
+
+Files:
+  verification-results.json        Q1 disposition, gates, findings (machine-readable)
+  reviewed-head.txt                exact reviewed HEAD and tree
+  environment-q1.txt               reviewer environment
+  probe-matrix.txt / .json         24-phase probe matrix (phase, verb, exit, ok, pid, notes)
+  probe-databases/                 reviewer working databases (uncommitted; reproducible)
+  P01-publish.json/.log            §6 positive control, publish phase (real plugin/sink chain)
+  P02-verify-fresh.json/.log       §6 positive control, fresh-process verify (pid differs from P01)
+  P03/P04                          §6 graph-only control, referencing-unit-first order (publish/verify)
+  P05/P06                          §6 graph-only control, referenced-unit-first order (publish/verify)
+  P07-publish-*.json/.log          §6 corruption control baselines (3 fresh publications)
+  P08-corrupt-*.json/.log          §6 corruption mutations (missing endpoint / inconsistent edge / malformed row)
+  P09-refuse-*.json/.log           §6 fresh-process refusals + durable-snapshot-unchanged proof
+  P10-segment-stage.json/.log      §7 staged segments carry marker, no occurrences, no authority (referencing-first)
+  P11-segment-resume-*.json/.log   §7 FINDING F-Q1-01: resumption refused at open (referencing-first order)
+  P12/P13                          §7 re-stage branch: unreachable in referencing-first order (F-Q1-01)
+  P17-segment-stage-defining-first.json/.log   §7 counterfactual: defining-first order stages identically
+  P18-segment-resume-defining-first.json/.log  §7 counterfactual: resumption completes; authority fail-closed (AnalysisUnavailable)
+  P14-negative-authority.json/.log §4 wrong-plugin/mismatched envelope refused; unconsumed authority refuses completion; missing current authority AnalysisUnavailable; tampered ownership CorruptedIndex
+  P15-stale-after-reopen.json/.log §4 direct defining change refuses StalePublication after reopen; unchanged-input control stays Available/complete
+  P16-replay-probe.json/.log       §5 replay permutations identical; mixed-repository invalid refused; repeated replacement last-wins; unit-level duplicate refused
+  q1-focused-tests.log             focused S23 suites 55/0/0
+  q1-new01-tests.log               NEW-01 reviewer suite 17/0/0
+  q1-solution-tests.log            full solution 851/0/0
+  q1-oracle.log                    frozen R2 oracle 185/185, 146851 bytes, SHA-256 recomputed
+  oracle-r2-q1.json                reviewer-produced oracle output (hash matches 97F6C5E5…39C9)
+  q1-release-build.log             Release build 0 warnings / 0 errors
+  q1-format.log                    dotnet format --verify-no-changes exit 0
+  superseded-test-audit.txt        §8 superseded-test analysis
+  diff-audit-e0cef1c.txt           independent R1 production diff (from git)
+  diff-audit-e2b833a.txt           independent publication-implementation production diff (from git)

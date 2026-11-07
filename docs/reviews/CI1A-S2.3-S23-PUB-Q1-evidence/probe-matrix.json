@@ -1,0 +1,242 @@
+﻿[
+    {
+        "Phase":  "P01-publish.json",
+        "Verb":  "publish",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  42576,
+        "Database":  "positive.ltdb",
+        "Detail":  "",
+        "Notes":  "plugin=penghou.hetu.csharp version=0.2.0-preview.6 | publishedUnits=2 [csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d, csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349] | unit csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d nodes=5 edges=10 occurrences=1 requiresAuthority=True coverageAnalyzed=True coverageComplete=True | unit csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 nodes=5 edges=6 occurrences=0 requiresAuthority=True coverageAnalyzed=True coverageComplete=True | receipt AndiritOccurrenceUnit|repo:s23-pub-q1\\npenghou.hetu.csharp\\ncsharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   requiresAuthority=True hasAuthority=True authorityPublicationRun=run:q1:a |   authorityIndexUnitId=csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   authoritySourceUnitId=csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   authorityVersion=1 members=2 facts=1 |   fact definingUnit=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 target=asmctx3:sha256:3a3b7c5ebfaad… | receipt AndiritOccurrenceUnit|repo:s23-pub-q1\\npenghou.hetu.csharp\\ncsharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   requiresAuthority=True hasAuthority=True authorityPublicationRun=run:q1:a |   authorityIndexUnitId=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   authoritySourceUnitId=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   authorityVersion=1 members=2 facts=0 | metaRows=1 pageRows=1"
+    },
+    {
+        "Phase":  "P02-verify-fresh.json",
+        "Verb":  "verify",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  36024,
+        "Database":  "positive.ltdb",
+        "Detail":  "",
+        "Notes":  "expectedTarget=asmctx3:sha256:3a3b7c5ebfaad68ef43e8e977e3b5af60002f3b6c03f1b15053ae3e3b2d613ff | crossProjectEdge=resolved | availability=Available hits=1 isComplete=true | sourceUnitId=csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d | examined=1 totalMatches=1 | coverageVerifiedUnits=4/4 state=Produced | definingProjectUnitId=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349"
+    },
+    {
+        "Phase":  "P03-graphonly-ref-first-publish.json",
+        "Verb":  "graphonly-publish",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  22012,
+        "Database":  "graphonly-ref-first.ltdb",
+        "Detail":  "ref-first",
+        "Notes":  "variant=ref-first persistedOrder=[a-app, z-lib] | occurrenceMetaRows=0 occurrenceUnitRows=0"
+    },
+    {
+        "Phase":  "P04-graphonly-ref-first-verify.json",
+        "Verb":  "graphonly-verify",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  20040,
+        "Database":  "graphonly-ref-first.ltdb",
+        "Detail":  "",
+        "Notes":  "graphOnlyReopen=ok crossUnitEdge=resolved units=2 unitOccurrences=0,0"
+    },
+    {
+        "Phase":  "P05-graphonly-refd-first-publish.json",
+        "Verb":  "graphonly-publish",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  8964,
+        "Database":  "graphonly-refd-first.ltdb",
+        "Detail":  "refd-first",
+        "Notes":  "variant=refd-first persistedOrder=[a-lib, z-app] | occurrenceMetaRows=0 occurrenceUnitRows=0"
+    },
+    {
+        "Phase":  "P06-graphonly-refd-first-verify.json",
+        "Verb":  "graphonly-verify",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  9828,
+        "Database":  "graphonly-refd-first.ltdb",
+        "Detail":  "",
+        "Notes":  "graphOnlyReopen=ok crossUnitEdge=resolved units=2 unitOccurrences=0,0"
+    },
+    {
+        "Phase":  "P07-publish-missing-endpoint.json",
+        "Verb":  "publish",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  18800,
+        "Database":  "corrupt-missing-endpoint.ltdb",
+        "Detail":  "missing-endpoint",
+        "Notes":  "plugin=penghou.hetu.csharp version=0.2.0-preview.6 | publishedUnits=2 [csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d, csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349] | unit csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d nodes=5 edges=10 occurrences=1 requiresAuthority=True coverageAnalyzed=True coverageComplete=True | unit csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 nodes=5 edges=6 occurrences=0 requiresAuthority=True coverageAnalyzed=True coverageComplete=True | receipt AndiritOccurrenceUnit|repo:s23-pub-q1\\npenghou.hetu.csharp\\ncsharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   requiresAuthority=True hasAuthority=True authorityPublicationRun=run:q1:a |   authorityIndexUnitId=csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   authoritySourceUnitId=csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   authorityVersion=1 members=2 facts=1 |   fact definingUnit=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 target=asmctx3:sha256:3a3b7c5ebfaad… | receipt AndiritOccurrenceUnit|repo:s23-pub-q1\\npenghou.hetu.csharp\\ncsharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   requiresAuthority=True hasAuthority=True authorityPublicationRun=run:q1:a |   authorityIndexUnitId=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   authoritySourceUnitId=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   authorityVersion=1 members=2 facts=0 | metaRows=1 pageRows=1"
+    },
+    {
+        "Phase":  "P08-corrupt-missing-endpoint.json",
+        "Verb":  "corrupt",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  31748,
+        "Database":  "corrupt-missing-endpoint.ltdb",
+        "Detail":  "missing-endpoint",
+        "Notes":  "removedGraphRow=repo:s23-pub-q1\\npenghou.hetu.csharp\\ncsharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 | snapshotChanged=True"
+    },
+    {
+        "Phase":  "P09-refuse-missing-endpoint.json",
+        "Verb":  "corrupt-verify",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  18360,
+        "Database":  "corrupt-missing-endpoint.ltdb",
+        "Detail":  "missing-endpoint",
+        "Notes":  "refused=true exception=CodeGraphBatchRejectedException codes=[graph.edge.endpoint-missing, graph.edge.endpoint-missing, graph.edge.endpoint-missing, graph.edge.endpoint-missing] | durableSnapshotUnchanged=true (no partial published state, no write-back)"
+    },
+    {
+        "Phase":  "P07-publish-inconsistent-edge.json",
+        "Verb":  "publish",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  41504,
+        "Database":  "corrupt-inconsistent-edge.ltdb",
+        "Detail":  "inconsistent-edge",
+        "Notes":  "plugin=penghou.hetu.csharp version=0.2.0-preview.6 | publishedUnits=2 [csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d, csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349] | unit csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d nodes=5 edges=10 occurrences=1 requiresAuthority=True coverageAnalyzed=True coverageComplete=True | unit csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 nodes=5 edges=6 occurrences=0 requiresAuthority=True coverageAnalyzed=True coverageComplete=True | receipt AndiritOccurrenceUnit|repo:s23-pub-q1\\npenghou.hetu.csharp\\ncsharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   requiresAuthority=True hasAuthority=True authorityPublicationRun=run:q1:a |   authorityIndexUnitId=csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   authoritySourceUnitId=csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   authorityVersion=1 members=2 facts=1 |   fact definingUnit=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 target=asmctx3:sha256:3a3b7c5ebfaad… | receipt AndiritOccurrenceUnit|repo:s23-pub-q1\\npenghou.hetu.csharp\\ncsharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   requiresAuthority=True hasAuthority=True authorityPublicationRun=run:q1:a |   authorityIndexUnitId=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   authoritySourceUnitId=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   authorityVersion=1 members=2 facts=0 | metaRows=1 pageRows=1"
+    },
+    {
+        "Phase":  "P08-corrupt-inconsistent-edge.json",
+        "Verb":  "corrupt",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  7176,
+        "Database":  "corrupt-inconsistent-edge.ltdb",
+        "Detail":  "inconsistent-edge",
+        "Notes":  "retargetedCrossProjectEdge=true | snapshotChanged=True"
+    },
+    {
+        "Phase":  "P09-refuse-inconsistent-edge.json",
+        "Verb":  "corrupt-verify",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  9312,
+        "Database":  "corrupt-inconsistent-edge.ltdb",
+        "Detail":  "inconsistent-edge",
+        "Notes":  "refused=true exception=CodeGraphBatchRejectedException codes=[graph.edge.endpoint-missing] | durableSnapshotUnchanged=true (no partial published state, no write-back)"
+    },
+    {
+        "Phase":  "P07-publish-malformed-row.json",
+        "Verb":  "publish",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  38360,
+        "Database":  "corrupt-malformed-row.ltdb",
+        "Detail":  "malformed-row",
+        "Notes":  "plugin=penghou.hetu.csharp version=0.2.0-preview.6 | publishedUnits=2 [csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d, csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349] | unit csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d nodes=5 edges=10 occurrences=1 requiresAuthority=True coverageAnalyzed=True coverageComplete=True | unit csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 nodes=5 edges=6 occurrences=0 requiresAuthority=True coverageAnalyzed=True coverageComplete=True | receipt AndiritOccurrenceUnit|repo:s23-pub-q1\\npenghou.hetu.csharp\\ncsharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   requiresAuthority=True hasAuthority=True authorityPublicationRun=run:q1:a |   authorityIndexUnitId=csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   authoritySourceUnitId=csharp:project:281033171eca14738c4ad77899619c8d939de062afe9b6a68f954b14df3d811d |   authorityVersion=1 members=2 facts=1 |   fact definingUnit=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 target=asmctx3:sha256:3a3b7c5ebfaad… | receipt AndiritOccurrenceUnit|repo:s23-pub-q1\\npenghou.hetu.csharp\\ncsharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   requiresAuthority=True hasAuthority=True authorityPublicationRun=run:q1:a |   authorityIndexUnitId=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   authoritySourceUnitId=csharp:project:2e8a3d558edabd8c48d40ff1c9fd7c59371e901801eeceb2c2e5e05796da8349 |   authorityVersion=1 members=2 facts=0 | metaRows=1 pageRows=1"
+    },
+    {
+        "Phase":  "P08-corrupt-malformed-row.json",
+        "Verb":  "corrupt",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  35300,
+        "Database":  "corrupt-malformed-row.ltdb",
+        "Detail":  "malformed-row",
+        "Notes":  "malformedPayload=true | snapshotChanged=True"
+    },
+    {
+        "Phase":  "P09-refuse-malformed-row.json",
+        "Verb":  "corrupt-verify",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  8968,
+        "Database":  "corrupt-malformed-row.ltdb",
+        "Detail":  "malformed-row",
+        "Notes":  "refused=true exception=JsonException | durableSnapshotUnchanged=true (no partial published state, no write-back)"
+    },
+    {
+        "Phase":  "P10-segment-stage.json",
+        "Verb":  "segment-stage",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  34108,
+        "Database":  "segment-failclosed.ltdb",
+        "Detail":  "referencing-first",
+        "Notes":  "naming=referencing-first definingUnitFirst=False stageKeyOrder=[csharp:project, csharp:project] | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segmentsStaged=true runNotCompleted=true"
+    },
+    {
+        "Phase":  "P11-segment-resume-failclosed.json",
+        "Verb":  "segment-resume-complete",
+        "Exit":  1,
+        "Ok":  false,
+        "Pid":  11536,
+        "Database":  "segment-failclosed.ltdb",
+        "Detail":  "referencing-first",
+        "Notes":  "EXCEPTION Andirit.CodeGraphBatchRejectedException: The index-unit replacement would violate graph invariants. |   rejection graph.edge.endpoint-missing | csharp:3807052c806e1eda200f10753ac1bf5704db17118189718924e30a389616bc6a | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:48d5fe526cf262fb44da99fdb46ea8c09f25b7d298440dccb7c30bd5742ef02c | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:8a216b1e2b6c45ec458ca657769a66da39e020eaf293aeee14e2712bcf9ce68b | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:e31bd290c8e9ccea370f99200839871583fd39414eb7c7c1107a8d925332ed82 | An edge endpoint does not exist in the materialized graph."
+    },
+    {
+        "Phase":  "P12-segment-stage-restage.json",
+        "Verb":  "segment-stage",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  41320,
+        "Database":  "segment-restage.ltdb",
+        "Detail":  "referencing-first",
+        "Notes":  "naming=referencing-first definingUnitFirst=False stageKeyOrder=[csharp:project, csharp:project] | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segmentsStaged=true runNotCompleted=true"
+    },
+    {
+        "Phase":  "P13-segment-resume-restaged.json",
+        "Verb":  "segment-resume-restage",
+        "Exit":  1,
+        "Ok":  false,
+        "Pid":  6532,
+        "Database":  "segment-restage.ltdb",
+        "Detail":  "referencing-first",
+        "Notes":  "EXCEPTION Andirit.CodeGraphBatchRejectedException: The index-unit replacement would violate graph invariants. |   rejection graph.edge.endpoint-missing | csharp:3807052c806e1eda200f10753ac1bf5704db17118189718924e30a389616bc6a | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:48d5fe526cf262fb44da99fdb46ea8c09f25b7d298440dccb7c30bd5742ef02c | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:8a216b1e2b6c45ec458ca657769a66da39e020eaf293aeee14e2712bcf9ce68b | An edge endpoint does not exist in the materialized graph. |   rejection graph.edge.endpoint-missing | csharp:e31bd290c8e9ccea370f99200839871583fd39414eb7c7c1107a8d925332ed82 | An edge endpoint does not exist in the materialized graph."
+    },
+    {
+        "Phase":  "P17-segment-stage-defining-first.json",
+        "Verb":  "segment-stage",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  40520,
+        "Database":  "segment-defining-first.ltdb",
+        "Detail":  "defining-first",
+        "Notes":  "naming=defining-first definingUnitFirst=True stageKeyOrder=[csharp:project, csharp:project] | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segment csharp:project requiresAuthority=True hasOccurrencesProperty=False hasAuthorityProperty=False | segmentsStaged=true runNotCompleted=true"
+    },
+    {
+        "Phase":  "P18-segment-resume-defining-first.json",
+        "Verb":  "segment-resume-complete",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  1548,
+        "Database":  "segment-defining-first.ltdb",
+        "Detail":  "defining-first",
+        "Notes":  "publishedUnitsAfterResumeComplete=2 markers=True,True | failClosed=true availability=AnalysisUnavailable hits=0 examined=0 isComplete=False reason=Missing or malformed recorded occurrence authority; re-ingestion required."
+    },
+    {
+        "Phase":  "P14-negative-authority.json",
+        "Verb":  "negative-authority",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  32736,
+        "Database":  "negative-authority.ltdb",
+        "Detail":  "",
+        "Notes":  "wrongPluginAuthorityRefused=True | mismatchedEnvelopeRefused=True | unconsumedAuthorityRefused=True | missingCurrentAuthority=AnalysisUnavailable hits=0 examined=0 isComplete=false | wrongUnitAssociation=CorruptedIndex reason=An authority-bearing occurrence unit is orphaned from the published graph units."
+    },
+    {
+        "Phase":  "P15-stale-after-reopen.json",
+        "Verb":  "stale-after-reopen",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  3456,
+        "Database":  "stale-reopen.ltdb",
+        "Detail":  "",
+        "Notes":  "directChange=StalePublication hits=0 examined=0 isComplete=False | unchangedControl=Available isComplete=true"
+    },
+    {
+        "Phase":  "P16-replay-probe.json",
+        "Verb":  "replay-probe",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  31600,
+        "Database":  "unused.ltdb",
+        "Detail":  "",
+        "Notes":  "forwardAndReverseIdentical=true units=2 edges=1 | mixedInvalidRefused=true codes=[graph.edge.endpoint-missing] | repeatedReplacementLastWins=true units=2 | unitDuplicateRefused=true codes=[replacement.node.duplicate, replacement.node.duplicate]"
+    }
+]
