@@ -1,0 +1,47 @@
+{
+  "action": "corpus",
+  "processId": 7684,
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "gc": "workstation",
+  "processors": 18,
+  "ok": true,
+  "matrix": [
+    {
+      "pageSize": 1,
+      "pages": 8,
+      "count": 8,
+      "matchesOracle": true,
+      "ok": true
+    },
+    {
+      "pageSize": 2,
+      "pages": 4,
+      "count": 8,
+      "matchesOracle": true,
+      "ok": true
+    },
+    {
+      "pageSize": 3,
+      "pages": 3,
+      "count": 8,
+      "matchesOracle": true,
+      "ok": true
+    },
+    {
+      "pageSize": 100,
+      "pages": 1,
+      "count": 8,
+      "matchesOracle": true,
+      "ok": true
+    }
+  ],
+  "expectedCount": 8,
+  "notes": [
+    "PASS: authentic corpus pageSize=1 matches the Roslyn oracle",
+    "PASS: authentic corpus pageSize=2 matches the Roslyn oracle",
+    "PASS: authentic corpus pageSize=3 matches the Roslyn oracle",
+    "PASS: authentic corpus pageSize=100 matches the Roslyn oracle"
+  ]
+}

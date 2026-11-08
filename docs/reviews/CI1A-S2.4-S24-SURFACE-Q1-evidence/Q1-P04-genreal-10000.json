@@ -1,0 +1,30 @@
+{
+  "action": "genreal",
+  "processId": 9020,
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "gc": "workstation",
+  "processors": 18,
+  "ok": true,
+  "results": [
+    {
+      "cardinality": 10000,
+      "pageSize": 100,
+      "pages": 100,
+      "matchesOracle": true,
+      "ok": true
+    },
+    {
+      "cardinality": 10000,
+      "pageSize": 1000,
+      "pages": 10,
+      "matchesOracle": true,
+      "ok": true
+    }
+  ],
+  "notes": [
+    "PASS: generated-real size=10000 pageSize=100 matches the generation oracle",
+    "PASS: generated-real size=10000 pageSize=1000 matches the generation oracle"
+  ]
+}

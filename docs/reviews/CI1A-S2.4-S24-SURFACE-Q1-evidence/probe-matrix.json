@@ -1,0 +1,66 @@
+﻿[
+    {
+        "Phase":  "Q1-P01-mapping.json",
+        "Verb":  "mapping",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  41492,
+        "Notes":  "PASS: IF-05 mapping: 13/13 cases match the normative mapping"
+    },
+    {
+        "Phase":  "Q1-P02-corpus.json",
+        "Verb":  "corpus",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  7684,
+        "Notes":  "PASS: authentic corpus pageSize=1 matches the Roslyn oracle | PASS: authentic corpus pageSize=2 matches the Roslyn oracle | PASS: authentic corpus pageSize=3 matches the Roslyn oracle | PASS: authentic corpus pageSize=100 matches the Roslyn oracle"
+    },
+    {
+        "Phase":  "Q1-P03-genreal-100-1000.json",
+        "Verb":  "genreal",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  25264,
+        "Notes":  "PASS: generated-real size=100 pageSize=1 matches the generation oracle | PASS: generated-real size=100 pageSize=10 matches the generation oracle | PASS: generated-real size=100 pageSize=100 matches the generation oracle | PASS: generated-real size=100 pageSize=1000 matches the generation oracle | PASS: generated-real size=1000 pageSize=1 matches the generation oracle | PASS: generated-real size=1000 pageSize=10 matches the generation oracle | PASS: generated-real size=1000 pageSize=100 matches the generation oracle | PASS: generated-real size=1000 pageSize=1000 matches the generation oracle"
+    },
+    {
+        "Phase":  "Q1-P04-genreal-10000.json",
+        "Verb":  "genreal",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  9020,
+        "Notes":  "PASS: generated-real size=10000 pageSize=100 matches the generation oracle | PASS: generated-real size=10000 pageSize=1000 matches the generation oracle"
+    },
+    {
+        "Phase":  "Q1-P05-measure-1000.json",
+        "Verb":  "measure",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  10084,
+        "Notes":  "PASS: measurement harness recorded the required repetitions"
+    },
+    {
+        "Phase":  "Q1-P06-coverage.json",
+        "Verb":  "coverage",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  33996,
+        "Notes":  "PASS: scope-level worst-wins IncompleteAnalysis on every page | PASS: no false-complete coverage across pages | PASS: per-unit provenance retained (complete + incomplete) | PASS: breakdown stable across pages"
+    },
+    {
+        "Phase":  "Q1-P07-publication.json",
+        "Verb":  "publication",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  4936,
+        "Notes":  "PASS: continuation after durable reopen | PASS: recovery between pages stays in run:1 | PASS: stale token after replacement refuses (no restart/blend)"
+    },
+    {
+        "Phase":  "Q1-P08-environment.json",
+        "Verb":  "environment",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  2264,
+        "Notes":  ""
+    }
+]
