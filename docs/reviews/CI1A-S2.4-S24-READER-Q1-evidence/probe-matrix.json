@@ -1,0 +1,66 @@
+﻿[
+    {
+        "Phase":  "P01-oracle.json",
+        "Verb":  "oracle",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  15272,
+        "Notes":  "PASS: all page sizes reproduce the independent total-order oracle with no duplicates or omissions"
+    },
+    {
+        "Phase":  "P02-tokens.json",
+        "Verb":  "tokens",
+        "Exit":  1,
+        "Ok":  false,
+        "Pid":  31884,
+        "Notes":  "FAIL: token adversarial matrix: all binding/tamper cases produce the normative status (1 failures)"
+    },
+    {
+        "Phase":  "P03-bounded.json",
+        "Verb":  "bounded",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  18216,
+        "Notes":  "PASS: scaling recorded (see codePath); target-local only, no repository-global scan"
+    },
+    {
+        "Phase":  "P04-publication.json",
+        "Verb":  "publication",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  27916,
+        "Notes":  "PASS: publication/authority: stale/reopen/recovery refusal and continuity (0 failures)"
+    },
+    {
+        "Phase":  "P05-coverage.json",
+        "Verb":  "coverage",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  36908,
+        "Notes":  "PASS: partial contribution forces IncompleteAnalysis on every page (worst-wins) | PASS: scope-level per-unit breakdown is stable across pages and lists both contributors | PASS: complete and incomplete contributors are distinguished with provenance | PASS: no false-complete coverage on any page of a partial scope"
+    },
+    {
+        "Phase":  "P06-noninterference.json",
+        "Verb":  "noninterference",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  9828,
+        "Notes":  "PASS: D3 graph identities unchanged across pagination | PASS: no persisted row/label change from pagination (no token/session persistence)"
+    },
+    {
+        "Phase":  "P07-authority.json",
+        "Verb":  "authority",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  36440,
+        "Notes":  "PASS: real-project verified authority serves a first page | PASS: per-page authority revalidation: continuation without current authority is refused"
+    },
+    {
+        "Phase":  "P08-environment.json",
+        "Verb":  "environment",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  26172,
+        "Notes":  ""
+    }
+]

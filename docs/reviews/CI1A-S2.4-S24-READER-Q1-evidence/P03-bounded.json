@@ -1,0 +1,48 @@
+{
+  "action": "bounded",
+  "processId": 18216,
+  "database": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.4-S24-READER-Q1-tests\\..\\CI1A-S2.4-S24-READER-Q1-evidence\\probe-databases\\P03-bounded.json.ltdb",
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "ok": true,
+  "scaling": [
+    {
+      "targetCardinality": 500,
+      "pageSize": 10,
+      "firstPageExamined": 500,
+      "firstPageReturned": 10,
+      "firstPageTotalMatches": 500,
+      "firstPageMs": 8.38,
+      "secondPageExamined": 500,
+      "secondPageReturned": 10,
+      "secondPageMs": 2.994
+    },
+    {
+      "targetCardinality": 2000,
+      "pageSize": 10,
+      "firstPageExamined": 2000,
+      "firstPageReturned": 10,
+      "firstPageTotalMatches": 2000,
+      "firstPageMs": 0.527,
+      "secondPageExamined": 2000,
+      "secondPageReturned": 10,
+      "secondPageMs": 0.356
+    },
+    {
+      "targetCardinality": 8000,
+      "pageSize": 10,
+      "firstPageExamined": 8000,
+      "firstPageReturned": 10,
+      "firstPageTotalMatches": 8000,
+      "firstPageMs": 2.252,
+      "secondPageExamined": 8000,
+      "secondPageReturned": 10,
+      "secondPageMs": 1.725
+    }
+  ],
+  "codePath": "Per request: index lookup O(1); copy\u002BArray.Sort of the whole target array O(n log n); linear scan for the page. Examined == target cardinality (full target read), not the returned page.",
+  "notes": [
+    "PASS: scaling recorded (see codePath); target-local only, no repository-global scan"
+  ]
+}
