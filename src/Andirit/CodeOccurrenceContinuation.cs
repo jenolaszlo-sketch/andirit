@@ -1,6 +1,7 @@
 using System.Buffers.Binary;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace Andirit;
@@ -86,26 +87,34 @@ internal static class CodeOccurrenceContinuation
             return false;
         if (!Base64UrlTryDecode(token, out var bytes) || bytes.Length is 0 or > MaxEnvelopeBytes)
             return false;
+        // D1: a non-canonical encoding (padding, standard base64 alphabet, or any
+        // variant that is not the exact canonical base64url form) is invalid.
+        if (!string.Equals(Base64UrlEncode(bytes), token, StringComparison.Ordinal))
+            return false;
 
-        JsonNode? node;
+        JsonObject json;
         try
         {
-            node = JsonNode.Parse(bytes);
-        }
-        catch
-        {
-            return false;
-        }
-
-        if (node is not JsonObject json || json.Count != Fields.Length + 1)
-            return false;
-        foreach (var field in Fields)
-        {
-            if (!json.ContainsKey(field))
+            // Duplicate envelope keys and malformed JSON are rejected here. Note that
+            // JsonObject detects duplicate property names lazily, on Count/enumeration,
+            // so materialization and membership checks must stay inside this boundary:
+            // a duplicate key would otherwise surface as an unhandled ArgumentException.
+            if (JsonNode.Parse(bytes) is not JsonObject parsed || parsed.Count != Fields.Length + 1)
                 return false;
+            foreach (var field in Fields)
+            {
+                if (!parsed.ContainsKey(field))
+                    return false;
+            }
+            if (!parsed.ContainsKey("sum"))
+                return false;
+            json = parsed;
         }
-        if (!json.ContainsKey("sum"))
+        catch (Exception exception) when (exception is JsonException or ArgumentException)
+        {
+            // Malformed or duplicated caller-controlled envelope.
             return false;
+        }
 
         if (!TryInt(json, "v", out var version) || version != Version)
             return false;
@@ -133,6 +142,24 @@ internal static class CodeOccurrenceContinuation
 
         envelope = candidate;
         return true;
+    }
+
+    // D1: a cursor that is not a well-formed sort key (or an out-of-range page
+    // size) is invalid continuation. Checked by the reader against trusted
+    // publication state (after publication binding) so a foreign-publication token
+    // still reports publication staleness rather than a structural refusal.
+    internal static bool IsWellFormedCursor(in Envelope envelope)
+    {
+        if (string.IsNullOrEmpty(envelope.AfterPath))
+            return false;
+        if (!CodeOccurrenceIdentity.IsCanonicalOccurrence(envelope.AfterId))
+            return false;
+        if (envelope.AfterStartLine < 1 || envelope.AfterStartColumn < 1 ||
+            envelope.AfterEndLine < envelope.AfterStartLine || envelope.AfterEndColumn < 1)
+            return false;
+        if (envelope.AfterEndLine == envelope.AfterStartLine && envelope.AfterEndColumn < envelope.AfterStartColumn)
+            return false;
+        return envelope.Size >= 1 && envelope.Size <= CodeOccurrenceQuery.AbsoluteMaxPageSize;
     }
 
     private static bool TryString(JsonObject json, string name, out string value)

@@ -376,6 +376,67 @@ public sealed class S24ReaderContinuationTests : IDisposable
         Assert.NotEqual(page1.Occurrences[0].Id, page2.Occurrences[0].Id);
     }
 
+    // R1/R2 (F-Q1-01, F-OBS-Q1-02): every malformed caller-controlled token is
+    // refused as Invalid continuation and never propagates an exception.
+    [Fact]
+    public async Task MalformedTokens_FailClosedWithoutPropagating()
+    {
+        var repo = new CodeRepositoryId("repo:s24:malformed");
+        var target = Target(repo, "T");
+        using var store = await PublishedAsync(repo, "run",
+            Unit(repo, "run", "u", [Fact(repo, "u", target, "src/A.cs", 1, 1), Fact(repo, "u", target, "src/A.cs", 2, 1)]));
+        var publication = (await store.GetLatestPublicationAsync(repo))!;
+        var good = (await store.FindOccurrencesAsync(new CodeOccurrenceQuery(repo, target, maxResults: 1))).NextContinuationToken!;
+        var afterId = Hex("cursor"); // canonical 64-hex occurrence id
+        var repoV = repo.Value;
+        var targetV = target.Value;
+        var runV = publication.IndexRunId.Value;
+        var idV = publication.IndexIdentity.Value;
+        var fakeSum = "0000000000000000";
+        var valid = $"{{\"v\":1,\"repo\":\"{repoV}\",\"mode\":\"target\",\"target\":\"{targetV}\",\"pubRun\":\"{runV}\",\"pubId\":\"{idV}\",\"dir\":\"asc\",\"afterPath\":\"src/A.cs\",\"afterStartLine\":1,\"afterStartColumn\":1,\"afterEndLine\":1,\"afterEndColumn\":4,\"afterId\":\"{afterId}\",\"size\":1,\"sum\":\"{fakeSum}\"}}";
+
+        var cases = new (string Name, string Token)[]
+        {
+            ("duplicate-v", RawToken(valid.Replace("\"v\":1,", "\"v\":1,\"v\":1,"))),
+            ("duplicate-repo", RawToken(valid.Replace($"\"repo\":\"{repoV}\",", $"\"repo\":\"{repoV}\",\"repo\":\"{repoV}\","))),
+            ("duplicate-pubRun", RawToken(valid.Replace($"\"pubRun\":\"{runV}\",", $"\"pubRun\":\"{runV}\",\"pubRun\":\"{runV}\","))),
+            ("duplicate-pubId", RawToken(valid.Replace($"\"pubId\":\"{idV}\",", $"\"pubId\":\"{idV}\",\"pubId\":\"{idV}\","))),
+            ("missing-size", RawToken(valid.Replace("\"size\":1,", ""))),
+            ("wrong-type-v", RawToken(valid.Replace("\"v\":1", "\"v\":\"1\""))),
+            ("malformed-json", RawToken("{not-json")),
+            ("unsupported-version", RawToken(valid.Replace("\"v\":1", "\"v\":2"))),
+            ("invalid-checksum", RawToken(valid)),
+            ("oversized", new string('A', 5000)),
+            ("out-of-range-size", CodeOccurrenceContinuation.Encode(new CodeOccurrenceContinuation.Envelope(
+                repoV, "target", targetV, runV, idV, "asc", "src/A.cs", 1, 1, 1, 4, afterId, 0))),
+            ("out-of-range-cursor", CodeOccurrenceContinuation.Encode(new CodeOccurrenceContinuation.Envelope(
+                repoV, "target", targetV, runV, idV, "asc", "src/A.cs", -1, 1, 1, 4, afterId, 1))),
+            ("altered", (good[0] == 'A' ? "B" : "A") + good[1..]),
+            ("noncanonical-padded-standard", NonCanonical(good)),
+        };
+
+        foreach (var (name, token) in cases)
+        {
+            var result = await store.FindOccurrencesAsync(
+                new CodeOccurrenceQuery(repo, target, maxResults: 1) { ContinuationToken = token });
+            Assert.True(
+                result.Continuation == CodeOccurrenceContinuationState.Invalid &&
+                result.Occurrences.Count == 0 &&
+                result.NextContinuationToken is null &&
+                !result.IsComplete,
+                name + ": expected Invalid refusal");
+        }
+
+        // Valid-token controls: pagination and publication binding remain unchanged.
+        var page2 = await store.FindOccurrencesAsync(new CodeOccurrenceQuery(repo, target, maxResults: 1) { ContinuationToken = good });
+        Assert.Equal(CodeOccurrenceAvailability.Available, page2.Availability);
+        Assert.Single(page2.Occurrences);
+        Assert.NotEqual((await store.FindOccurrencesAsync(new CodeOccurrenceQuery(repo, target, maxResults: 1))).Occurrences[0].Id, page2.Occurrences[0].Id);
+        var foreign = new CodeGraphPublication(repo, new CodeIndexRunId("run:foreign"), null, true, new CodeIndexIdentity("identity:foreign"));
+        var stale = await store.FindOccurrencesAsync(new CodeOccurrenceQuery(repo, target, foreign, maxResults: 1) { ContinuationToken = good });
+        Assert.Equal(CodeOccurrenceAvailability.StalePublication, stale.Availability);
+    }
+
     // ---- helpers ----
 
     private static async Task<List<CodeOccurrenceHit>> ReadAllAsync(
@@ -392,6 +453,17 @@ public sealed class S24ReaderContinuationTests : IDisposable
         }
         while (token is not null);
         return seen;
+    }
+
+    private static string RawToken(string json) =>
+        Convert.ToBase64String(Encoding.UTF8.GetBytes(json)).TrimEnd('=').Replace('+', '-').Replace('/', '_');
+
+    private static string NonCanonical(string token)
+    {
+        var padded = token.Replace('-', '+').Replace('_', '/');
+        padded = (padded.Length % 4) switch { 2 => padded + "==", 3 => padded + "=", _ => padded };
+        var standard = Convert.ToBase64String(Convert.FromBase64String(padded));
+        return standard != token ? standard : token + "=";
     }
 
     private static async Task AssertInvalidAsync(

@@ -924,6 +924,14 @@ public sealed class InMemoryCodeGraphStore :
                         "The continuation token is bound to a superseded publication; restart the query.",
                         coverage, null, CodeOccurrenceContinuationState.Invalid, breakdown));
                 }
+
+                if (!CodeOccurrenceContinuation.IsWellFormedCursor(cursor))
+                {
+                    return new(new CodeOccurrenceQueryResult(
+                        availability, publication, [], 0, 0,
+                        "The continuation token cursor is not a well-formed occurrence sort key.",
+                        coverage, null, CodeOccurrenceContinuationState.Invalid, breakdown));
+                }
             }
 
             var indexKey = query.RepositoryId.Value + "\n" + query.TargetId.Value;
