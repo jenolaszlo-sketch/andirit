@@ -1,0 +1,142 @@
+{
+  "action": "tokens",
+  "processId": 1256,
+  "database": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.4-S24-READER-Q2-tests\\..\\CI1A-S2.4-S24-READER-Q2-evidence\\probe-databases\\Q2-reuse-tokens.json.ltdb",
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "ok": true,
+  "matrix": [
+    {
+      "case": "malformed-base64url",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "noncanonical-standard-base64",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "oversized",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "unsupported-version",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "missing-field",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "duplicated-field",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "size-zero",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "size-over-max",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "wrong-repository",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "wrong-target",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "wrong-mode",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "wrong-direction",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "wrong-publication-run",
+      "availability": "StalePublication",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "wrong-publication-identity",
+      "availability": "StalePublication",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "good-token-continues",
+      "availability": "Available",
+      "continuation": "More",
+      "occurrences": 1,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "forged-checksum-consistent-cursor",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "ok": true,
+      "note": "accepted (unkeyed checksum); cursor before all =\u003E restartable page (documented limitation, not authority bypass)"
+    }
+  ],
+  "notes": [
+    "PASS: token adversarial matrix: all binding/tamper cases produce the normative status (0 failures)"
+  ]
+}

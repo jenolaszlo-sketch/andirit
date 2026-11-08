@@ -1,0 +1,54 @@
+{
+  "action": "pagination",
+  "processId": 8504,
+  "database": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.4-S24-READER-Q2-tests\\..\\CI1A-S2.4-S24-READER-Q2-evidence\\probe-databases\\Q2-P04-pagination.json.ltdb",
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "ok": true,
+  "matrix": [
+    {
+      "pageSize": 1,
+      "pages": 7,
+      "returned": 7,
+      "noDuplicatesOrOmissions": true,
+      "terminal": true,
+      "ok": true
+    },
+    {
+      "pageSize": 2,
+      "pages": 4,
+      "returned": 7,
+      "noDuplicatesOrOmissions": true,
+      "terminal": true,
+      "ok": true
+    },
+    {
+      "pageSize": 3,
+      "pages": 3,
+      "returned": 7,
+      "noDuplicatesOrOmissions": true,
+      "terminal": true,
+      "ok": true
+    },
+    {
+      "pageSize": 7,
+      "pages": 1,
+      "returned": 7,
+      "noDuplicatesOrOmissions": true,
+      "terminal": true,
+      "ok": true
+    },
+    {
+      "pageSize": 100,
+      "pages": 1,
+      "returned": 7,
+      "noDuplicatesOrOmissions": true,
+      "terminal": true,
+      "ok": true
+    }
+  ],
+  "notes": [
+    "PASS: pagination reproduces the reviewer-owned total-order oracle at every page size"
+  ]
+}

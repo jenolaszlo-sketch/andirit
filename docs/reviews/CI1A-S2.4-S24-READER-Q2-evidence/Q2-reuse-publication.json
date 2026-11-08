@@ -1,0 +1,42 @@
+{
+  "action": "publication",
+  "processId": 12612,
+  "database": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.4-S24-READER-Q2-tests\\..\\CI1A-S2.4-S24-READER-Q2-evidence\\probe-databases\\Q2-reuse-publication.json.ltdb",
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "ok": true,
+  "matrix": [
+    {
+      "case": "stale-after-replacement",
+      "ok": true,
+      "availability": "StalePublication",
+      "continuation": "Invalid",
+      "occurrences": 0
+    },
+    {
+      "case": "stale-after-retirement",
+      "ok": true,
+      "availability": "AnalysisUnavailable",
+      "continuation": "NotRequested",
+      "occurrences": 0
+    },
+    {
+      "case": "continuation-after-durable-reopen",
+      "ok": true,
+      "availability": "Available",
+      "continuation": "Complete",
+      "occurrences": 1
+    },
+    {
+      "case": "continuation-after-recovery",
+      "ok": true,
+      "availability": "Available",
+      "continuation": "More",
+      "occurrences": 1
+    }
+  ],
+  "notes": [
+    "PASS: publication/authority: stale/reopen/recovery refusal and continuity (0 failures)"
+  ]
+}

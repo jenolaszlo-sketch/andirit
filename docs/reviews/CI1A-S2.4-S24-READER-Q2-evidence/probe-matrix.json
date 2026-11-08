@@ -1,0 +1,114 @@
+﻿[
+    {
+        "Phase":  "Q2-P01-malformed.json",
+        "Verb":  "malformed",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  27320,
+        "Notes":  "PASS: all 40 malformed/out-of-range tokens refused as Invalid without propagating (0 failures) | PASS: valid canonical token still continues"
+    },
+    {
+        "Phase":  "Q2-P02-canonical.json",
+        "Verb":  "canonical",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  7076,
+        "Notes":  "PASS: canonical encoding: noncanonical variants refused, canonical control continues (0 failures) | PASS: canonical token round-trips byte-exactly through decode/re-encode"
+    },
+    {
+        "Phase":  "Q2-P03-precedence.json",
+        "Verb":  "precedence",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  31432,
+        "Notes":  "PASS: refusal precedence normative (Invalid / StalePublication / AnalysisUnavailable) (0 failures)"
+    },
+    {
+        "Phase":  "Q2-P04-pagination.json",
+        "Verb":  "pagination",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  8504,
+        "Notes":  "PASS: pagination reproduces the reviewer-owned total-order oracle at every page size"
+    },
+    {
+        "Phase":  "Q2-P05-bounded.json",
+        "Verb":  "bounded",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  24976,
+        "Notes":  "PASS: Examined equals target cardinality (honest full-target read), page size bounded | PASS: oversized token rejected quickly with Invalid (length validated up front)"
+    },
+    {
+        "Phase":  "Q2-P06-noninterference.json",
+        "Verb":  "noninterference",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  40588,
+        "Notes":  "PASS: D3 graph identities unchanged across pagination | PASS: no persisted token/session rows from pagination"
+    },
+    {
+        "Phase":  "Q2-P07-environment.json",
+        "Verb":  "environment",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  17956,
+        "Notes":  ""
+    },
+    {
+        "Phase":  "Q2-reuse-oracle.json",
+        "Verb":  "oracle",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  3544,
+        "Notes":  "PASS: all page sizes reproduce the independent total-order oracle with no duplicates or omissions"
+    },
+    {
+        "Phase":  "Q2-reuse-tokens.json",
+        "Verb":  "tokens",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  1256,
+        "Notes":  "PASS: token adversarial matrix: all binding/tamper cases produce the normative status (0 failures)"
+    },
+    {
+        "Phase":  "Q2-reuse-publication.json",
+        "Verb":  "publication",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  12612,
+        "Notes":  "PASS: publication/authority: stale/reopen/recovery refusal and continuity (0 failures)"
+    },
+    {
+        "Phase":  "Q2-reuse-coverage.json",
+        "Verb":  "coverage",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  20128,
+        "Notes":  "PASS: partial contribution forces IncompleteAnalysis on every page (worst-wins) | PASS: scope-level per-unit breakdown is stable across pages and lists both contributors | PASS: complete and incomplete contributors are distinguished with provenance | PASS: no false-complete coverage on any page of a partial scope"
+    },
+    {
+        "Phase":  "Q2-reuse-noninterference.json",
+        "Verb":  "noninterference",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  20840,
+        "Notes":  "PASS: D3 graph identities unchanged across pagination | PASS: no persisted row/label change from pagination (no token/session persistence)"
+    },
+    {
+        "Phase":  "Q2-reuse-authority.json",
+        "Verb":  "authority",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  13448,
+        "Notes":  "PASS: real-project verified authority serves a first page | PASS: per-page authority revalidation: continuation without current authority is refused"
+    },
+    {
+        "Phase":  "Q2-reuse-bounded.json",
+        "Verb":  "bounded",
+        "Exit":  0,
+        "Ok":  true,
+        "Pid":  31836,
+        "Notes":  "PASS: scaling recorded (see codePath); target-local only, no repository-global scan"
+    }
+]

@@ -1,0 +1,86 @@
+{
+  "action": "canonical",
+  "processId": 7076,
+  "database": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.4-S24-READER-Q2-tests\\..\\CI1A-S2.4-S24-READER-Q2-evidence\\probe-databases\\Q2-P02-canonical.json.ltdb",
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "ok": true,
+  "controlTokenLength": 604,
+  "controlTokenHasSpecialAlphabetByte": false,
+  "alphabetTokenHasSpecialAlphabetByte": false,
+  "alphabetNote": "base64url of the ASCII canonical envelope contains no \u0027-\u0027/\u0027_\u0027 for these tokens, so the base64url and standard-base64 forms coincide; the equivalent noncanonical-encoding requirement is exercised by padding, trailing-pad-bit, invalid-character, whitespace and mixed-alphabet variants.",
+  "matrix": [
+    {
+      "case": "canonical-control",
+      "availability": "Available",
+      "continuation": "Complete",
+      "occurrences": 1,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "standard-alphabet",
+      "ok": true,
+      "note": "not-applicable: no canonical token with a special base64url byte was produced"
+    },
+    {
+      "case": "padded-standard",
+      "ok": true,
+      "note": "not-applicable: no canonical token with a special base64url byte was produced"
+    },
+    {
+      "case": "padded-base64url",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "same-bytes-trailing-pad-bits",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "invalid-char-percent",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "invalid-char-exclamation",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "whitespace",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "mixed-alphabet",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    }
+  ],
+  "roundTripEqual": true,
+  "notes": [
+    "PASS: canonical encoding: noncanonical variants refused, canonical control continues (0 failures)",
+    "PASS: canonical token round-trips byte-exactly through decode/re-encode"
+  ]
+}

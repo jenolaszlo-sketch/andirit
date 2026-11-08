@@ -1,0 +1,40 @@
+{
+  "action": "bounded",
+  "processId": 24976,
+  "database": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.4-S24-READER-Q2-tests\\..\\CI1A-S2.4-S24-READER-Q2-evidence\\probe-databases\\Q2-P05-bounded.json.ltdb",
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "ok": true,
+  "scaling": [
+    {
+      "cardinality": 500,
+      "firstExamined": 500,
+      "secondExamined": 500,
+      "firstReturned": 10,
+      "secondReturned": 10,
+      "secondPageMs": 3.007
+    },
+    {
+      "cardinality": 2000,
+      "firstExamined": 2000,
+      "secondExamined": 2000,
+      "firstReturned": 10,
+      "secondReturned": 10,
+      "secondPageMs": 0.421
+    },
+    {
+      "cardinality": 8000,
+      "firstExamined": 8000,
+      "secondExamined": 8000,
+      "firstReturned": 10,
+      "secondReturned": 10,
+      "secondPageMs": 1.755
+    }
+  ],
+  "hugeTokenMs": 0.104,
+  "notes": [
+    "PASS: Examined equals target cardinality (honest full-target read), page size bounded",
+    "PASS: oversized token rejected quickly with Invalid (length validated up front)"
+  ]
+}

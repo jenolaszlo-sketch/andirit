@@ -1,0 +1,78 @@
+{
+  "action": "precedence",
+  "processId": 31432,
+  "database": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.4-S24-READER-Q2-tests\\..\\CI1A-S2.4-S24-READER-Q2-evidence\\probe-databases\\Q2-P03-precedence.json.ltdb",
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "ok": true,
+  "matrix": [
+    {
+      "case": "valid-current",
+      "availability": "Available",
+      "continuation": "Complete",
+      "occurrences": 1,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "wrong-pub-run",
+      "availability": "StalePublication",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "wrong-pub-id",
+      "availability": "StalePublication",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "malformed-cursor-current",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "malformed-envelope-current",
+      "availability": "Available",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "stale-after-replacement",
+      "availability": "StalePublication",
+      "continuation": "Invalid",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "stale-after-retirement",
+      "availability": "AnalysisUnavailable",
+      "continuation": "NotRequested",
+      "occurrences": 0,
+      "threw": false,
+      "ok": true
+    },
+    {
+      "case": "recovery-between-pages",
+      "availability": "Available",
+      "continuation": "More",
+      "occurrences": 1,
+      "threw": false,
+      "ok": true
+    }
+  ],
+  "notes": [
+    "PASS: refusal precedence normative (Invalid / StalePublication / AnalysisUnavailable) (0 failures)"
+  ]
+}
