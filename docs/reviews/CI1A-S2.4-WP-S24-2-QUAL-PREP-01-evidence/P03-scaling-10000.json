@@ -1,0 +1,51 @@
+{
+  "action": "scaling",
+  "processId": 15816,
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "sdk": "10.0.12",
+  "gc": "workstation",
+  "processors": 18,
+  "ok": true,
+  "results": [
+    {
+      "targetCardinality": 10000,
+      "pageSize": 10,
+      "pages": 1000,
+      "distinct": 10000,
+      "matchesOracle": true,
+      "totalMs": 726544.8,
+      "allocatedBytes": 533208520392
+    },
+    {
+      "targetCardinality": 10000,
+      "pageSize": 100,
+      "pages": 100,
+      "distinct": 10000,
+      "matchesOracle": true,
+      "totalMs": 61257.6,
+      "allocatedBytes": 53322612056
+    },
+    {
+      "targetCardinality": 10000,
+      "pageSize": 1000,
+      "pages": 10,
+      "distinct": 10000,
+      "matchesOracle": true,
+      "totalMs": 6126.6,
+      "allocatedBytes": 5334051752
+    },
+    {
+      "targetCardinality": 10000,
+      "compileMs": 956,
+      "publishMs": 9136.9,
+      "files": 103
+    }
+  ],
+  "notes": [
+    "PASS: size=10000 pageSize=10 pages=1000 oracle=True",
+    "PASS: size=10000 pageSize=100 pages=100 oracle=True",
+    "PASS: size=10000 pageSize=1000 pages=10 oracle=True"
+  ]
+}

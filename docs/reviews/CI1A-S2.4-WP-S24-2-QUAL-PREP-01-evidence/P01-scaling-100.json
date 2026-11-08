@@ -1,0 +1,61 @@
+{
+  "action": "scaling",
+  "processId": 37124,
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "sdk": "10.0.12",
+  "gc": "workstation",
+  "processors": 18,
+  "ok": true,
+  "results": [
+    {
+      "targetCardinality": 100,
+      "pageSize": 1,
+      "pages": 100,
+      "distinct": 100,
+      "matchesOracle": true,
+      "totalMs": 1458.6,
+      "allocatedBytes": 540354768
+    },
+    {
+      "targetCardinality": 100,
+      "pageSize": 10,
+      "pages": 10,
+      "distinct": 100,
+      "matchesOracle": true,
+      "totalMs": 206.7,
+      "allocatedBytes": 54027128
+    },
+    {
+      "targetCardinality": 100,
+      "pageSize": 100,
+      "pages": 1,
+      "distinct": 100,
+      "matchesOracle": true,
+      "totalMs": 24.6,
+      "allocatedBytes": 5406920
+    },
+    {
+      "targetCardinality": 100,
+      "pageSize": 1000,
+      "pages": 1,
+      "distinct": 100,
+      "matchesOracle": true,
+      "totalMs": 24.9,
+      "allocatedBytes": 5406920
+    },
+    {
+      "targetCardinality": 100,
+      "compileMs": 919.7,
+      "publishMs": 621.7,
+      "files": 4
+    }
+  ],
+  "notes": [
+    "PASS: size=100 pageSize=1 pages=100 oracle=True",
+    "PASS: size=100 pageSize=10 pages=10 oracle=True",
+    "PASS: size=100 pageSize=100 pages=1 oracle=True",
+    "PASS: size=100 pageSize=1000 pages=1 oracle=True"
+  ]
+}
