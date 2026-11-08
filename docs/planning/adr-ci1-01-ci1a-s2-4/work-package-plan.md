@@ -76,3 +76,18 @@ serialized single-writer; preserve all S2.3 binding qualifications.
 - **This plan authorizes nothing.** WP-S24-1 requires its own owner commission.
   `S24-READER-Q1` is a separate qualification commission. S2.5, Stage 6, and public
   Find Usages remain unauthorized.
+
+---
+
+## Authorization status (additive; current state)
+
+This note is additive status only; it changes no package definition, scope,
+dependency, or gate above. Package definitions remain the controlling record.
+
+| Package | Status |
+| --- | --- |
+| WP-S24-1 (exact-target internal continuation + coverage breakdown) | **accepted with qualifications by owner (`adr-ci1-01-ci1a-s2-4-wp-s24-1-owner-01.md`)** — implementation `de92eeb`, R1 remediation `39cb0ef`, independent Q1 `04ab118` (`REMEDIATION REQUIRED`, F-Q1-01), independent Q2 `f37efd7` (`SUPPORTED WITH QUALIFICATIONS`). F-Q1-01 and F-OBS-Q1-02 resolved; F-OBS-Q1-01/Q1-03 and Q2-OBS-01 preserved. No production change after R1 |
+| WP-S24-2 (refusal mapping, real-size mapping, cost measurement) | **planned but unauthorized**; requires its own entry/authorization decision |
+| WP-S24-3 (bounded cross-target continuation, optional) | **optional and unauthorized** |
+
+**S2.4 stage disposition (additive).** S2.4 as a whole is **not** accepted. WP-S24-1 closure is bounded to the accepted internal exact-target continuation and coverage scope; WP-S24-2 remains the next planned bounded package but is not authorized; cross-target, pagination optimization, public Find Usages, S2.5, and Stage 6 remain unauthorized. All qualifications (F-01, F-02, F-03, Q1-Q1, Q1-Q2, S-01, Q2-Q01, Q2-Q02, O-Q2-01, Q-I01, Q-I08, same-harness independence, Windows-x64/serialized boundary, unauthenticated tokens, target-local sorting) and the deferred S2.5/Stage-2 obligations (SQ-04, SQ-05, SQ-06 remainder, S-01, D4.5, full S-02, D3-full, IF-02/IF-05 residuals, SQ-07) remain binding.
