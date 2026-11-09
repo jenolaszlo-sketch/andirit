@@ -1,0 +1,28 @@
+{
+  "reviewer": "ANDIRIT-CI1A-S2.5-S25-SQ04-Q1",
+  "case": "pre-rem",
+  "processId": 27696,
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "stagedPath": "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\sq04-q1-8138360e\\run2\\A\\prerem-authentic.ltdb",
+  "stagedSha256BeforeOpen": "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885",
+  "stagedWalPath": "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\sq04-q1-8138360e\\run2\\A\\prerem-authentic.ltdb-wal",
+  "stagedWalSha256BeforeOpen": "8ca170cdc55a4428a5506bcb447a0667ab10c92c77ef149ae36460a5603aeab4",
+  "originalPath": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.5-WP-S25-1-BIND-01-evidence\\fixtures\\prerem\\prerem-authentic.ltdb",
+  "originalExpectedSha256": "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885",
+  "originalSha256BeforeRun": "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885",
+  "ok": true,
+  "openSucceeded": false,
+  "exceptionType": "CodeOccurrenceSchemaException",
+  "exceptionMessage": "The occurrence payload is not canonical or is incompatible with the accepted occurrence contract.",
+  "stagedSha256AfterRun": "d40cdfc186ad6bc8d3313b04d9fb993289aa758e6301b0a8279a8bbae4f0236e",
+  "stagedWalSha256AfterRun": "8ca170cdc55a4428a5506bcb447a0667ab10c92c77ef149ae36460a5603aeab4",
+  "originalSha256AfterRun": "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885",
+  "notes": [
+    "PASS: open-time refusal carries the accepted CodeOccurrenceSchemaException type (P13b)",
+    "PASS: the store never reaches a usable state (store-wide refusal, including graph-only access)",
+    "PASS: a concrete refusal message is preserved for the record",
+    "PASS: committed original master bytes unchanged by this run"
+  ]
+}

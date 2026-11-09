@@ -1,0 +1,45 @@
+﻿search: Andirit git history for superseded experimental codec labels in src/ (occurrence-facts/2, occurrence-facts/3, asmctx1)
+
+pattern 'occurrence-facts/2' in src/ history: 0 commits
+pattern 'occurrence-facts/3' in src/ history: 0 commits
+pattern 'asmctx1' in src/ history: 0 commits
+pattern 'usage1' in src/ history: 0 commits
+
+search: experiment lineage (retained writer code/docs) for the same generations
+
+baseline-r1\experiment\c\CLatticeOccurrenceStore.cs:48  public const string FormatVersion = "occurrence-facts/3";
+baseline-r1\experiment\c\CReferenceOccurrenceStore.cs:20  public const string FormatVersion = "occurrence-facts/3";
+baseline-r1\experiment\shared\OccurrenceContract.cs:14  public const string SemanticsVersion = "usage3-b2c-exp-r1-20261101";
+baseline-r1\experiment\shared\OccurrenceContract.cs:15  public const string IdentityDomain = "usage3";
+baseline-r1\experiment\shared\OccurrenceContract.cs:34  /// <summary>Canonical, versioned target-defining-assembly identity (asmctx2:sha256:...).</summary>
+baseline-r1\experiment\shared\OccurrenceContract.cs:114  "target defining assembly must be a canonical asmctx2 identity; " +
+baseline-r1\experiment\shared\OccurrenceContract.cs:262  Part("usage1");
+baseline-r1\experiment\shared\OccurrenceContract.cs:265  Part("usage1-b2c-exp");
+baseline-r1\experiment\shared\TargetAssemblyContext.cs:34  /// asmctx2 target-definition context: metadata assembly identity + defining
+baseline-r1\experiment\shared\TargetAssemblyContext.cs:49  public const string Domain = "asmctx2";
+baseline-r1\experiment\shared\TargetAssemblyContext.cs:60  /// Resolves an asmctx2 target-definition context. The two-argument overload
+baseline-r1\experiment\shared\TargetAssemblyContext.cs:103  var shapeDigest = HashParts("asmctx2-target", [targetShape]);
+baseline-r1\experiment\shared\TargetAssemblyContext.cs:107  var declarationDigest = HashParts("asmctx2-declarations",
+baseline-r1\experiment\shared\TargetAssemblyContext.cs:124  var canonical = TargetAssemblyContext.CanonicalPrefix + HashParts("asmctx2-context",
+baseline-r1\experiment\shared\TargetAssemblyContext.cs:162  HashParts("asmctx2-target", [shape]),
+baseline-r1\experiment\shared\TargetAssemblyContext.cs:166  : HashParts("asmctx2-declarations", declarations.Select(d => d.CanonicalForm)),
+
+search: exp-02 (first experiment) docs for usage2/asmctx1
+
+
+current Andirit occurrence namespace (src):
+LatticeCodeGraphStore.cs:43  internal const string OccurrenceNamespace = "andirit-occurrence-facts/1";
+
+appendix A: R2-era C-store writer (retained experiment code)
+
+repro\experiment\c\CLatticeOccurrenceStore.cs:48  public const string FormatVersion = "occurrence-facts/4";
+repro\experiment\c\CReferenceOccurrenceStore.cs:20  public const string FormatVersion = "occurrence-facts/4";
+
+appendix B: exp-02 (first experiment) doc references for usage2/asmctx1
+
+adr-ci1-01-exp-02-final-report.md:24  | Occurrence semantics | `usage2-b2c-exp-20261031` |
+adr-ci1-01-exp-02-final-report.md:25  | Target-assembly domain | `asmctx1` |
+adr-ci1-01-exp-02-final-report.md:66  usage2, repository, plugin, semantics, unit, source path, source hash,
+adr-ci1-01-exp-02-final-report.md:76  asmctx1:sha256:<hash(metadataIdentity, moduleName, targetShapeDigest)>
+adr-ci1-01-exp-02-final-report.md:105  occurrence; the sentinel `asmctx1:unavailable` is rejected by validation.
+adr-ci1-01-exp-02-final-report.md:129  identity is equal; their canonical `asmctx1` identities and occurrence IDs are
