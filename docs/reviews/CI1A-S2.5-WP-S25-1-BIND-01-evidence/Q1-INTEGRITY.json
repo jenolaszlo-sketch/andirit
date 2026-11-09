@@ -1,0 +1,75 @@
+﻿{
+    "commission":  "ANDIRIT-CI1A-S2.5-WP-S25-1-BIND-01",
+    "procedure":  "complete SHA-256 verification -\u003e exact staging copies -\u003e fresh process per case -\u003e masters re-verified; committed masters never opened by a store",
+    "workDir":  "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s25-1-3bc1bb2b",
+    "stagedCopies":  [
+                         {
+                             "run":  "run1",
+                             "path":  "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s25-1-3bc1bb2b\\run1\\A\\prerem-authentic.ltdb",
+                             "sha256":  "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885"
+                         },
+                         {
+                             "run":  "run2",
+                             "path":  "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s25-1-3bc1bb2b\\run2\\A\\prerem-authentic.ltdb",
+                             "sha256":  "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885"
+                         },
+                         {
+                             "run":  "run3",
+                             "path":  "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s25-1-3bc1bb2b\\run3\\B\\baseline-graph-only.master.db",
+                             "sha256":  "f21a72bee2c2e378e16766ca7b84c29010ab4d50360bf3111a82706f947781e0"
+                         },
+                         {
+                             "run":  "run4",
+                             "path":  "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s25-1-3bc1bb2b\\run4\\B\\baseline-graph-only.master.db",
+                             "sha256":  "f21a72bee2c2e378e16766ca7b84c29010ab4d50360bf3111a82706f947781e0"
+                         }
+                     ],
+    "runs":  [
+                 {
+                     "run":  "run1",
+                     "case":  "pre-rem",
+                     "out":  "Q1-P13B.json",
+                     "exitCode":  0,
+                     "ok":  true
+                 },
+                 {
+                     "run":  "run2",
+                     "case":  "pre-rem",
+                     "out":  "Q1-P13B-REPEAT.json",
+                     "exitCode":  0,
+                     "ok":  true
+                 },
+                 {
+                     "run":  "run3",
+                     "case":  "graph-only",
+                     "out":  "Q1-GRAPH-ONLY.json",
+                     "exitCode":  0,
+                     "ok":  true
+                 },
+                 {
+                     "run":  "run4",
+                     "case":  "graph-only",
+                     "out":  "Q1-GRAPH-ONLY-REPEAT.json",
+                     "exitCode":  0,
+                     "ok":  true
+                 }
+             ],
+    "mastersAfter":  [
+                         {
+                             "path":  "fixtures/prerem/prerem-authentic.ltdb",
+                             "expected":  "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885",
+                             "actual":  "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885"
+                         },
+                         {
+                             "path":  "fixtures/prerem/prerem-authentic.ltdb-wal",
+                             "expected":  "8ca170cdc55a4428a5506bcb447a0667ab10c92c77ef149ae36460a5603aeab4",
+                             "actual":  "8ca170cdc55a4428a5506bcb447a0667ab10c92c77ef149ae36460a5603aeab4"
+                         },
+                         {
+                             "path":  "fixtures/baseline/baseline-graph-only.master.db",
+                             "expected":  "f21a72bee2c2e378e16766ca7b84c29010ab4d50360bf3111a82706f947781e0",
+                             "actual":  "f21a72bee2c2e378e16766ca7b84c29010ab4d50360bf3111a82706f947781e0"
+                         }
+                     ],
+    "generatedAt":  "2026-11-09T23:11:30.8727870+08:00"
+}
