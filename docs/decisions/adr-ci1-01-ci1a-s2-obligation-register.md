@@ -13,6 +13,21 @@ corpus/reference oracle. Q3 remains `SUPPORTED WITH QUALIFICATIONS`.
 F12's native end-to-end obligations remain mandatory at S2.3–S2.5; all other
 gates and earlier-reliance rules below are unchanged.
 
+**Current owner update, 2026-11-10:** [SQ-04 bounded amendment](adr-ci1-01-ci1a-s2-5-sq04-amend-owner-01.md)
+(`ANDIRIT-CI1A-S2.5-SQ04-AMEND-OWNER-01`) records
+`SQ-04 BOUNDED AMENDMENT APPROVED WITH QUALIFICATIONS`; obligation status
+`SQ-04 SATISFIED WITH QUALIFICATIONS UNDER AMENDED CONTRACT`. The two authenticated
+prior-writer fixture sets bound by WP-S25-1 (`ANDIRIT-CI1A-S2.5-WP-S25-1-BIND-01`,
+`bf1af23`) and independently qualified by `ANDIRIT-CI1A-S2.5-S25-SQ04-Q1` (`3d3980a`)
+remain binding. The experimental codecs `occurrence-facts/1..3`, `usage1..3`, and
+`asmctx1/2` are **excluded from positive historical-compatibility claims** — no authentic
+retained artifact exists for any of them (historical writer existence ≠ artifact
+availability), D5 refusal remains their operative runtime guarantee, and future discovery
+of an authentic artifact reopens the obligation. Full historical compatibility is **not**
+claimed. The SQ-04 and F15 rows below are preserved verbatim as the historical record of
+the original requirement; the amendment supersedes their breadth for Stage-2 acceptance
+purposes only.
+
 ## 1. Sources and closure rules
 
 Authority keys (paths relative to the canonical repository unless external):
