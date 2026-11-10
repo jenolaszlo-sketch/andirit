@@ -1,0 +1,1005 @@
+{
+  "harness": "ANDIRIT-CI1A-S2.5-WP-S25-3-P1-PROOF-01",
+  "action": "oracle",
+  "processId": 38356,
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "knownAnswers": [
+    {
+      "id": "KAT-1 hand-written bytes: asmctx3-identifier \u002B \u0027Write\u0027",
+      "domain": "asmctx3-identifier",
+      "fields": [
+        "Write"
+      ],
+      "messageHex": "0000001261736d637478332d6964656e746966696572000000055772697465",
+      "expected": "4a468c685e4033c579aff4dcbf371062dc6a88c33318a89d54dedaf60f61af88",
+      "actual": "4a468c685e4033c579aff4dcbf371062dc6a88c33318a89d54dedaf60f61af88",
+      "pass": true
+    },
+    {
+      "id": "KAT-2 identifier Cyrillic",
+      "domain": "asmctx3-identifier",
+      "fields": [
+        "\u041F\u0440\u043E\u0432\u0435\u0440\u043A\u0430"
+      ],
+      "messageHex": "0000001261736d637478332d6964656e74696669657200000010d09fd180d0bed0b2d0b5d180d0bad0b0",
+      "expected": "dac77ac2640bd99154d369c793a6312289998b61d9cbeb92d0e82d6978c2b02c",
+      "actual": "dac77ac2640bd99154d369c793a6312289998b61d9cbeb92d0e82d6978c2b02c",
+      "pass": true
+    },
+    {
+      "id": "KAT-3 identifier Japanese",
+      "domain": "asmctx3-identifier",
+      "fields": [
+        "\u65E5\u672C\u8A9E"
+      ],
+      "messageHex": "0000001261736d637478332d6964656e74696669657200000009e697a5e69cace8aa9e",
+      "expected": "288f4f3c0d1077d922276b535a8e84fb28cb9b65981f329658596593e818e5e9",
+      "actual": "288f4f3c0d1077d922276b535a8e84fb28cb9b65981f329658596593e818e5e9",
+      "pass": true
+    },
+    {
+      "id": "KAT-4 identifier multi-part",
+      "domain": "asmctx3-identifier",
+      "fields": [
+        "Alpha",
+        "Beta"
+      ],
+      "messageHex": "0000001261736d637478332d6964656e74696669657200000005416c7068610000000442657461",
+      "expected": "9a6b45c723b5c445af2270f2edcf6cf575e85c81c7319860501c4868325705ba",
+      "actual": "9a6b45c723b5c445af2270f2edcf6cf575e85c81c7319860501c4868325705ba",
+      "pass": true
+    },
+    {
+      "id": "KAT-5 declaration",
+      "domain": "asmctx3-declarations",
+      "fields": [
+        "M:Corpus.Core.Methods.Add(System.Int32,System.Int32)"
+      ],
+      "messageHex": "0000001461736d637478332d6465636c61726174696f6e73000000344d3a436f727075732e436f72652e4d6574686f64732e4164642853797374656d2e496e7433322c53797374656d2e496e74333229",
+      "expected": "af62216ef7e4072f23830e3bde5c0a25cd844c38689dcbe5e2828c8f30d561d0",
+      "actual": "af62216ef7e4072f23830e3bde5c0a25cd844c38689dcbe5e2828c8f30d561d0",
+      "pass": true
+    },
+    {
+      "id": "KAT-6 shape",
+      "domain": "asmctx3-target",
+      "fields": [
+        "method|0|global::System.Int32"
+      ],
+      "messageHex": "0000000e61736d637478332d7461726765740000001d6d6574686f647c307c676c6f62616c3a3a53797374656d2e496e743332",
+      "expected": "ad47228477bbdae9045034f7050471112e4cb63c65e95beef6df3910308434e4",
+      "actual": "ad47228477bbdae9045034f7050471112e4cb63c65e95beef6df3910308434e4",
+      "pass": true
+    },
+    {
+      "id": "KAT-7 domain separation (identifier vs declarations, field \u0027x\u0027)",
+      "domain": "asmctx3-identifier|asmctx3-declarations",
+      "fields": [
+        "x"
+      ],
+      "messageHex": "-",
+      "expected": "4a75a60152f86338d592641249a0dfd2bfb191ea22afe8190b1469e21fa2e10e | 72891609498a5a40626811af3ee848493ddaf524a900d13cbad81592e0b15b86",
+      "actual": "4a75a60152f86338d592641249a0dfd2bfb191ea22afe8190b1469e21fa2e10e | 72891609498a5a40626811af3ee848493ddaf524a900d13cbad81592e0b15b86",
+      "pass": true
+    },
+    {
+      "id": "KAT-8 multi-part ordering sensitivity",
+      "domain": "asmctx3-identifier",
+      "fields": [
+        "A",
+        "B",
+        "(vs)",
+        "B",
+        "A"
+      ],
+      "messageHex": "-",
+      "expected": "f9d3b7807a79943ea8217e09a2c05aef96490c40ce709d316650d54d0ccb4760 | d4bf17a52e81baaed960fa7583ca293516ef70f40d132ee24405a2379990191a",
+      "actual": "-",
+      "pass": true
+    },
+    {
+      "id": "KAT-9 empty field: encoding computes, form layer rejects",
+      "domain": "asmctx3-identifier",
+      "fields": [
+        "(empty)"
+      ],
+      "messageHex": "0000001261736d637478332d6964656e74696669657200000000",
+      "expected": "bfc94e29357152d9d7759cf169c04e8cfd5efb5f749b3e1c09fe76590f3952eb",
+      "actual": "ArgumentException",
+      "pass": true
+    },
+    {
+      "id": "KAT-10 lowercase-hex length and canonical-target validation",
+      "domain": "asmctx3",
+      "fields": [],
+      "messageHex": "-",
+      "expected": "all validation predicates true",
+      "actual": {
+        "validAccepted": true,
+        "uppercaseRejected": true,
+        "shortRejected": true,
+        "wrongPrefixRejected": true,
+        "lowercaseOnly": true
+      },
+      "pass": true
+    }
+  ],
+  "formCases": [
+    {
+      "id": "FC-1",
+      "description": "simple static method invocation",
+      "expectedIdentifierForm": "Write",
+      "expectedDeclarationForm": "M:Fixture.Core.Logger.Write(System.String)",
+      "expectedShapeForm": "method|0|string",
+      "expectedIdentifierDigest": "4a468c685e4033c579aff4dcbf371062dc6a88c33318a89d54dedaf60f61af88",
+      "expectedDeclarationDigest": "0f828c5d4e32d3006efc5f2c6ae258edab383fe3b4d5ffbe9d7b60cf141cca16",
+      "expectedShapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Logger.Write(\u0022x\u0022);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Logger\n{\n    public static void Write(string value) { }\n}\n"
+      },
+      "actualTargetId": "asmctx3:sha256:b48613efc8e4cff001265ea6c9957fbce2b4eb6f26ce13783e38cd15fed28eae",
+      "actualIdentifierDigest": "4a468c685e4033c579aff4dcbf371062dc6a88c33318a89d54dedaf60f61af88",
+      "actualDeclarationDigest": "0f828c5d4e32d3006efc5f2c6ae258edab383fe3b4d5ffbe9d7b60cf141cca16",
+      "actualShapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-2a",
+      "description": "same simple name, owner Alpha",
+      "expectedIdentifierForm": "Ping",
+      "expectedDeclarationForm": "M:Fixture.Core.Alpha.Ping",
+      "expectedShapeForm": "method|0|",
+      "expectedIdentifierDigest": "bf8cb43bac5080f7337d437c3a24e6cfc6610919705bdeecc2e6afc44c9f50af",
+      "expectedDeclarationDigest": "8ab65759558b4634bbd578f1f2b0d507c5fa118b330e381cfb19eb32897977fa",
+      "expectedShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Alpha.Ping();\n        Beta.Ping();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Alpha\n{\n    public static void Ping() { }\n}\npublic static class Beta\n{\n    public static void Ping() { }\n}\n"
+      },
+      "actualTargetId": "asmctx3:sha256:c91435ca95f7ba1c95b7419e38782762584e06633e2c356bd2cb37da446281cd",
+      "actualIdentifierDigest": "bf8cb43bac5080f7337d437c3a24e6cfc6610919705bdeecc2e6afc44c9f50af",
+      "actualDeclarationDigest": "8ab65759558b4634bbd578f1f2b0d507c5fa118b330e381cfb19eb32897977fa",
+      "actualShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-2b",
+      "description": "same simple name, owner Beta",
+      "expectedIdentifierForm": "Ping",
+      "expectedDeclarationForm": "M:Fixture.Core.Beta.Ping",
+      "expectedShapeForm": "method|0|",
+      "expectedIdentifierDigest": "bf8cb43bac5080f7337d437c3a24e6cfc6610919705bdeecc2e6afc44c9f50af",
+      "expectedDeclarationDigest": "32a4bc7936c1330d3430a496bb3e68e8e9a5a7321594a6b2a19eb9bcf040dc61",
+      "expectedShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Alpha.Ping();\n        Beta.Ping();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Alpha\n{\n    public static void Ping() { }\n}\npublic static class Beta\n{\n    public static void Ping() { }\n}\n"
+      },
+      "actualTargetId": "asmctx3:sha256:b3410ea5bacc79e2176893359b8661f269786f8c9597e9f0ef9093333b7645d4",
+      "actualIdentifierDigest": "bf8cb43bac5080f7337d437c3a24e6cfc6610919705bdeecc2e6afc44c9f50af",
+      "actualDeclarationDigest": "32a4bc7936c1330d3430a496bb3e68e8e9a5a7321594a6b2a19eb9bcf040dc61",
+      "actualShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-3",
+      "description": "overload selection Add(int)",
+      "expectedIdentifierForm": "Add",
+      "expectedDeclarationForm": "M:Fixture.Core.Methods.Add(System.Int32)",
+      "expectedShapeForm": "method|0|int",
+      "expectedIdentifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+      "expectedDeclarationDigest": "4860f8c38cdef4b62941520e37dc6a3dfc470ec1e18e8d37a75e535b96de2e32",
+      "expectedShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Methods.Add(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Methods\n{\n    public static int Add(int a) =\u003E a;\n    public static string Add(string a) =\u003E a;\n}\n"
+      },
+      "actualTargetId": "asmctx3:sha256:9a77b3674fb66952e2fa382ed719454c35e79848ed63994d4379f8149a4e3a34",
+      "actualIdentifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+      "actualDeclarationDigest": "4860f8c38cdef4b62941520e37dc6a3dfc470ec1e18e8d37a75e535b96de2e32",
+      "actualShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-4",
+      "description": "generic method definition (inferred call)",
+      "expectedIdentifierForm": "Pick",
+      "expectedDeclarationForm": "M:Fixture.Core.Generic.Pick\u0060\u00601(\u0060\u00600)",
+      "expectedShapeForm": "method|1|T",
+      "expectedIdentifierDigest": "e9e46f80a8c1115e81c47fd1c242a024453527314137ed7081c820e6c0c8466e",
+      "expectedDeclarationDigest": "5d5d3e8f2e61f555fae161408918b5b0cc009d3501cdad328ade19ac743f6f01",
+      "expectedShapeDigest": "af2c463835c11a3396c179709087b2b644584875af3955869f7713cb337d109d",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Generic.Pick(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Generic\n{\n    public static T Pick\u003CT\u003E(T value) =\u003E value;\n}\n"
+      },
+      "actualTargetId": "asmctx3:sha256:7092f8f6ee6c44a059c107f82ad0d2283aeb009eecc23b786dfaeb7bcf0e07c7",
+      "actualIdentifierDigest": "e9e46f80a8c1115e81c47fd1c242a024453527314137ed7081c820e6c0c8466e",
+      "actualDeclarationDigest": "5d5d3e8f2e61f555fae161408918b5b0cc009d3501cdad328ade19ac743f6f01",
+      "actualShapeDigest": "af2c463835c11a3396c179709087b2b644584875af3955869f7713cb337d109d",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-5",
+      "description": "reduced extension method call",
+      "expectedIdentifierForm": "DoubleIt",
+      "expectedDeclarationForm": "M:Fixture.Core.Ext.DoubleIt(System.Int32)",
+      "expectedShapeForm": "method|0|int",
+      "expectedIdentifierDigest": "e6144096d2484cd9cb0e136ebedfeff50d8a03b8bbd1736f09c3a73a5692e62b",
+      "expectedDeclarationDigest": "8278e365ab18a5a3005c0c7cda63a8ac7b8702ec356b4b6b84ff94a756a551b8",
+      "expectedShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        5.DoubleIt();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Ext\n{\n    public static int DoubleIt(this int value) =\u003E value * 2;\n}\n"
+      },
+      "actualTargetId": "asmctx3:sha256:5882f29e84d43cecebd2645d15b0dc59f6badf8fd34faeb71571214214168608",
+      "actualIdentifierDigest": "e6144096d2484cd9cb0e136ebedfeff50d8a03b8bbd1736f09c3a73a5692e62b",
+      "actualDeclarationDigest": "8278e365ab18a5a3005c0c7cda63a8ac7b8702ec356b4b6b84ff94a756a551b8",
+      "actualShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-6",
+      "description": "ref parameter (doc-ID @)",
+      "expectedIdentifierForm": "Swap",
+      "expectedDeclarationForm": "M:Fixture.Core.Mods.Swap(System.Int32@)",
+      "expectedShapeForm": "method|0|int",
+      "expectedIdentifierDigest": "2bb57ca4396be4a6ef563f2af47a6ea41499559b5e0b46823f6d915d22f59e86",
+      "expectedDeclarationDigest": "7eb6a68f641a1041a663f456f1a3bea8fe387c73711244082ca842e9d49f7d2f",
+      "expectedShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        int x = 0;\n        Mods.Swap(ref x);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Mods\n{\n    public static void Swap(ref int first) { }\n}\n"
+      },
+      "note": "shape uses the parameter TYPE display; ref-kind is not part of the type.",
+      "actualTargetId": "asmctx3:sha256:efce64f1020bb81db03f6d70b592fbab93348082d6f69114337e40d7c4ff5737",
+      "actualIdentifierDigest": "2bb57ca4396be4a6ef563f2af47a6ea41499559b5e0b46823f6d915d22f59e86",
+      "actualDeclarationDigest": "7eb6a68f641a1041a663f456f1a3bea8fe387c73711244082ca842e9d49f7d2f",
+      "actualShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-7",
+      "description": "frozen corpus S03: Corpus.Core.Methods.Add(int,int)",
+      "expectedIdentifierForm": "Add",
+      "expectedDeclarationForm": "M:Corpus.Core.Methods.Add(System.Int32,System.Int32)",
+      "expectedShapeForm": "method|0|int,int",
+      "expectedIdentifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+      "expectedDeclarationDigest": "af62216ef7e4072f23830e3bde5c0a25cd844c38689dcbe5e2828c8f30d561d0",
+      "expectedShapeDigest": "4bb442d7c9fbfb3195f4fad6e2d0038d99b2b88489d683457e0c71070c1c6ad0",
+      "sourceFiles": {
+        "App/Bulk.cs": "using Corpus.Core;\n\nnamespace Corpus.App;\n\n/// \u003Csummary\u003E\n/// Volume sites to meet the F12 minima (\u003E= 50 invocations, \u003E= 20 method\n/// references). \u003Cc\u003E/*@INV-nn*/\u003C/c\u003E markers are additional supported occurrences;\n/// \u003Cc\u003E/*@MR-nn*/\u003C/c\u003E markers are method-group references (qualification-only:\n/// the resolved symbol is a method, but a method group is not an occurrence\n/// fact). Every site binds to a source-defined \u003Csee cref=\u0022Methods\u0022/\u003E,\n/// \u003Csee cref=\u0022StringExtensions\u0022/\u003E, \u003Csee cref=\u0022PartialType\u0022/\u003E,\n/// \u003Csee cref=\u0022ConditionalApi\u0022/\u003E or \u003Csee cref=\u0022Corpus.Leaf.Helper\u0022/\u003E member.\n/// \u003C/summary\u003E\npublic sealed class Bulk\n{\n    public int RunAll()\n    {\n        var m = new Methods();\n        var sum = 0;\n        sum \u002B= /*@INV-01*/ m.Add(1, 2);\n        sum \u002B= /*@INV-02*/ m.Add(3, 4);\n        sum \u002B= /*@INV-03*/ m.Add(5, 6);\n        sum \u002B= /*@INV-04*/ m.Add(7, 8);\n        sum \u002B= /*@INV-05*/ m.Add(9, 10);\n        sum \u002B= /*@INV-06*/ Methods.Static(11);\n        sum \u002B= /*@INV-07*/ Methods.Static(12);\n        sum \u002B= /*@INV-08*/ Methods.Static(13);\n        sum \u002B= /*@INV-09*/ Methods.Static(14);\n        sum \u002B= /*@INV-10*/ Methods.Static(15);\n        sum \u002B= /*@INV-11*/ m.Direct(16);\n        sum \u002B= /*@INV-12*/ m.Direct(17);\n        sum \u002B= /*@INV-13*/ m.Direct(18);\n        sum \u002B= /*@INV-14*/ m.Direct(19);\n        sum \u002B= /*@INV-15*/ m.Direct(20);\n        sum \u002B= /*@INV-16*/ m.Add(21, 22, 23);\n        sum \u002B= /*@INV-17*/ m.Add(24, 25, 26);\n        sum \u002B= /*@INV-18*/ m.Add(27, 28, 29);\n        sum \u002B= /*@INV-19*/ m.Add(100, 200);\n        sum \u002B= /*@INV-20*/ m.Add(101, 202);\n        sum \u002B= /*@INV-21*/ m.Identity(30);\n        sum \u002B= /*@INV-22*/ m.Identity(31);\n        sum \u002B= /*@INV-23*/ m.Identity(32);\n        sum \u002B= /*@INV-24*/ m.Identity(33);\n        sum \u002B= /*@INV-25*/ m.Identity(34);\n        sum \u002B= /*@INV-26*/ (int)m.Add(300L, 400L);\n        sum \u002B= /*@INV-27*/ (int)m.Add(25.0, 26.0);\n        sum \u002B= /*@INV-28*/ m.WithOptional(35).Length;\n        sum \u002B= /*@INV-29*/ m.WithOptional(36, 37).Length;\n        sum \u002B= /*@INV-30*/ m.Named(38).Length;\n        sum \u002B= /*@INV-31*/ \u0022alpha beta\u0022.WordCount();\n        sum \u002B= /*@INV-32*/ \u0022gamma delta\u0022.WordCount();\n\n        System.Action mr01 = /*@MR-01*/ m.Raise;\n        System.Func\u003Cint, int\u003E mr02 = /*@MR-02*/ m.Direct;\n        System.Func\u003Cint, int, int\u003E mr03 = /*@MR-03*/ m.Add;\n        System.Func\u003Cint, int\u003E mr04 = /*@MR-04*/ Methods.Static;\n        System.Func\u003Cint, int\u003E mr05 = /*@MR-05*/ m.Identity;\n        System.Func\u003Cint, int, int, int\u003E mr06 = /*@MR-06*/ m.Add;\n        System.Func\u003Cstring, string, string\u003E mr07 = /*@MR-07*/ m.Add;\n        System.Func\u003Cdouble, double, double\u003E mr08 = /*@MR-08*/ m.Add;\n        System.Func\u003Clong, long, long\u003E mr09 = /*@MR-09*/ m.Add;\n        System.Func\u003Cint, int, string\u003E mr10 = /*@MR-10*/ m.WithOptional;\n        System.Func\u003Cint, int, string, string\u003E mr11 = /*@MR-11*/ m.Named;\n        System.Func\u003Cstring, string\u003E mr12 = /*@MR-12*/ StringExtensions.Shout;\n        System.Func\u003Cstring, int\u003E mr13 = /*@MR-13*/ StringExtensions.WordCount;\n        System.Func\u003Cint\u003E mr14 = /*@MR-14*/ PartialType.Left;\n        System.Func\u003Cint\u003E mr15 = /*@MR-15*/ PartialType.Right;\n        System.Func\u003Cint, int\u003E mr16 = /*@MR-16*/ m.Direct;\n        System.Func\u003Cint, int\u003E mr17 = /*@MR-17*/ Corpus.Leaf.Helper.Compute;\n        System.Func\u003Cint, int\u003E mr18 = /*@MR-18*/ Corpus.Leaf.Helper.Extra;\n        System.Func\u003Cint, int, int\u003E mr19 = /*@MR-19*/ m.Add;\n        System.Func\u003Cint, int\u003E mr20 = /*@MR-20*/ m.Direct;\n\n        System.Action all = mr01;\n        all \u002B= () =\u003E { };\n        _ = mr02; _ = mr03; _ = mr04; _ = mr05; _ = mr06; _ = mr07; _ = mr08; _ = mr09; _ = mr10;\n        _ = mr11; _ = mr12; _ = mr13; _ = mr14; _ = mr15; _ = mr16; _ = mr17; _ = mr18; _ = mr19; _ = mr20;\n\n        return sum;\n    }\n}\n",
+        "App/Sites.cs": "using Corpus.Core;\r\n\r\nnamespace Corpus.App;\r\n\r\n/// \u003Csummary\u003E\r\n/// Named semantic scenarios. Each \u003Cc\u003E/*@Sxx*/\u003C/c\u003E marker is immediately followed\r\n/// by the syntax node whose binding the oracle must establish. Markers are data,\r\n/// not instructions, and are never read by production code.\r\n/// \u003C/summary\u003E\r\npublic sealed class Sites\r\n{\r\n    public int Run()\r\n    {\r\n        var methods = new Methods();\r\n        _ = /*@S01*/ methods.Direct(1);\r\n        _ = /*@S02*/ Methods.Static(2);\r\n        _ = /*@S03*/ methods.Add(1, 2);\r\n        _ = /*@S04*/ methods.Identity\u003Cint\u003E(3);\r\n        _ = /*@S05*/ methods.Named(1, second: 2, label: \u0022y\u0022);\r\n        _ = /*@S06*/ \u0022hello world\u0022.Shout();\r\n        var constructed = /*@S07*/ new Methods();\r\n        Animal animal = new Dog();\r\n        _ = /*@S08*/ animal.BaseOnly();\r\n        _ = /*@S09*/ animal.Speak();\r\n        IGreeter greeter = new Impl();\r\n        _ = /*@S10*/ greeter.Greet(\u0022a\u0022);\r\n        Animal hidden = new Dog();\r\n        _ = /*@S11*/ hidden.Describe();\r\n        IGreeter explicitGreeter = new ExplicitGreeter();\r\n        _ = /*@S12*/ explicitGreeter.Greet(\u0022b\u0022);\r\n        _ = /*@S13*/ methods.Prop;\r\n        _ = /*@S14*/ methods.Field;\r\n        /*@S15*/ methods.Changed \u002B= OnChanged;\r\n        System.Action action = /*@S16*/ methods.Raise;\r\n        System.Func\u003Cint\u003E del = () =\u003E 7;\r\n        _ = /*@S17*/ del();\r\n        _ = /*@S18*/ Local(4);\r\n        System.Type kind = /*@S19*/ typeof(Methods);\r\n        _ = /*@S20*/ PartialType.Left();\r\n        _ = PartialType.Right();\r\n        _ = /*@S21*/ methods.Add(1, 2, 3);\r\n        _ = /*@S22*/ methods.Add(1.5, 2.5);\r\n        _ = /*@S23*/ methods.Add(\u0022a\u0022, \u0022b\u0022);\r\n        _ = /*@S24*/ methods.WithOptional(1);\r\n        _ = /*@S25*/ ConditionalApi.Value();\r\n        _ = /*@S26*/ Corpus.Leaf.Helper.Compute(5);\r\n        _ = constructed;\r\n        _ = kind;\r\n        _ = action;\r\n        return 0;\r\n\r\n        void OnChanged() { }\r\n\r\n        static int Local(int value) =\u003E value \u002B 1;\r\n    }\r\n}\r\n",
+        "Core/Extensions.cs": "namespace Corpus.Core;\n\npublic static class StringExtensions\n{\n    public static string Shout(this string value) =\u003E value.ToUpperInvariant();\n\n    public static int WordCount(this string value) =\u003E value.Split(\u0027 \u0027).Length;\n}\n",
+        "Core/LeafUser.cs": "namespace Corpus.Core;\n\n/// \u003Csummary\u003E\n/// Makes this project dependency-bearing so its R2-faithful legacy compctx1 and\n/// its verified compctx2 can be compared.\n/// \u003C/summary\u003E\npublic static class LeafUser\n{\n    public static int UseLeaf() =\u003E Corpus.Leaf.Helper.Compute(21);\n}\n",
+        "Core/Methods.cs": "namespace Corpus.Core;\n\npublic sealed class Methods\n{\n    public int Direct(int value) =\u003E value;\n\n    public static int Static(int value) =\u003E value;\n\n    // Five overloads (plus string) to cover overload selection.\n    public int Add(int a, int b) =\u003E a \u002B b;\n\n    public int Add(int a, int b, int c) =\u003E a \u002B b \u002B c;\n\n    public string Add(string a, string b) =\u003E a \u002B b;\n\n    public double Add(double a, double b) =\u003E a \u002B b;\n\n    public long Add(long a, long b) =\u003E a \u002B b;\n\n    // Deliberately ambiguous pair: Add(1, 1) cannot resolve.\n    public int Amb(int a, long b) =\u003E a \u002B (int)b;\n\n    public int Amb(long a, int b) =\u003E (int)a \u002B b;\n\n    public T Identity\u003CT\u003E(T value) =\u003E value;\n\n    public string Named(int first, int second = 5, string label = \u0022x\u0022) =\u003E label \u002B (first \u002B second);\n\n    public string WithOptional(int a, int b = 10) =\u003E (a \u002B b).ToString();\n\n    public int Prop { get; set; }\n\n    public int Field;\n\n    public event System.Action? Changed;\n\n    public void Raise() =\u003E Changed?.Invoke();\n\n    public string Describe(int a) =\u003E \u0022int:\u0022 \u002B a;\n}\n\npublic static partial class PartialType\n{\n    public static int Left() =\u003E 1;\n}\n\npublic static partial class PartialType\n{\n    public static int Right() =\u003E 2;\n}\n\npublic static class ConditionalApi\n{\n#if CORE_FEATURE\n    public static string Value() =\u003E \u0022feature\u0022;\n#else\n    public static int Value() =\u003E 1;\n#endif\n}\n",
+        "Core/Types.cs": "namespace Corpus.Core;\n\npublic interface IGreeter\n{\n    string Greet(string name);\n}\n\npublic class Animal\n{\n    public virtual string Speak() =\u003E \u0022animal\u0022;\n\n    public string BaseOnly() =\u003E \u0022base\u0022;\n\n    public string Describe() =\u003E \u0022animal\u0022;\n}\n\npublic sealed class Dog : Animal\n{\n    public override string Speak() =\u003E \u0022woof\u0022;\n\n    public new string Describe() =\u003E \u0022dog\u0022;\n}\n\npublic sealed class Impl : IGreeter\n{\n    public string Greet(string name) =\u003E \u0022hi \u0022 \u002B name;\n}\n\npublic sealed class ExplicitGreeter : IGreeter\n{\n    string IGreeter.Greet(string name) =\u003E \u0022explicit \u0022 \u002B name;\n}\n",
+        "Leaf/Helper.cs": "namespace Corpus.Leaf;\n\n/// \u003Csummary\u003E\n/// Dependency-free leaf project. Used to demonstrate transitive dependency\n/// context propagation (compctx2) while a defining project\u0027s R2 tree material\n/// stays unchanged when only this project\u0027s preprocessor symbols change.\n/// \u003C/summary\u003E\npublic static class Helper\n{\n    public static int Compute(int value) =\u003E value * 2;\n\n    public static int Extra(int value) =\u003E value \u002B 1;\n\n#if LEAF_TRACE\n    public static string Trace() =\u003E \u0022leaf-trace\u0022;\n#endif\n}\n",
+        "Solo/Declarations.cs": "namespace Corpus.Solo;\n\n/// \u003Csummary\u003E\n/// Valid dependency-free source unit with no accepted semantic occurrences.\n/// Used to demonstrate a complete-empty analysis result that is distinct from\n/// an incomplete or unavailable analysis.\n/// \u003C/summary\u003E\npublic sealed class Declarations\n{\n    public int Value { get; set; }\n\n    public int Field;\n\n    public void Noop()\n    {\n        Value = Field;\n    }\n\n    public sealed class Nested\n    {\n        public int Inner { get; set; }\n    }\n}\n\npublic interface IMarker\n{\n    void Touch();\n}\n"
+      },
+      "actualTargetId": "asmctx3:sha256:e6ec9ea632b447c7cbaf5bb630b217861fdd5c1d6332562e6a09cec9b96b61cf",
+      "actualIdentifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+      "actualDeclarationDigest": "af62216ef7e4072f23830e3bde5c0a25cd844c38689dcbe5e2828c8f30d561d0",
+      "actualShapeDigest": "4bb442d7c9fbfb3195f4fad6e2d0038d99b2b88489d683457e0c71070c1c6ad0",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-8",
+      "description": "frozen corpus S12: interface binding through explicit implementation",
+      "expectedIdentifierForm": "Greet",
+      "expectedDeclarationForm": "M:Corpus.Core.IGreeter.Greet(System.String)",
+      "expectedShapeForm": "method|0|string",
+      "expectedIdentifierDigest": "8352c8be11821da0d2b749e82f00ac1cef2c8c61667cb998a8983d049c79f8e1",
+      "expectedDeclarationDigest": "38707a66ae00d5af55d148afdbecc920994a9600302bce8115308dd12677ab99",
+      "expectedShapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "sourceFiles": {
+        "App/Bulk.cs": "using Corpus.Core;\n\nnamespace Corpus.App;\n\n/// \u003Csummary\u003E\n/// Volume sites to meet the F12 minima (\u003E= 50 invocations, \u003E= 20 method\n/// references). \u003Cc\u003E/*@INV-nn*/\u003C/c\u003E markers are additional supported occurrences;\n/// \u003Cc\u003E/*@MR-nn*/\u003C/c\u003E markers are method-group references (qualification-only:\n/// the resolved symbol is a method, but a method group is not an occurrence\n/// fact). Every site binds to a source-defined \u003Csee cref=\u0022Methods\u0022/\u003E,\n/// \u003Csee cref=\u0022StringExtensions\u0022/\u003E, \u003Csee cref=\u0022PartialType\u0022/\u003E,\n/// \u003Csee cref=\u0022ConditionalApi\u0022/\u003E or \u003Csee cref=\u0022Corpus.Leaf.Helper\u0022/\u003E member.\n/// \u003C/summary\u003E\npublic sealed class Bulk\n{\n    public int RunAll()\n    {\n        var m = new Methods();\n        var sum = 0;\n        sum \u002B= /*@INV-01*/ m.Add(1, 2);\n        sum \u002B= /*@INV-02*/ m.Add(3, 4);\n        sum \u002B= /*@INV-03*/ m.Add(5, 6);\n        sum \u002B= /*@INV-04*/ m.Add(7, 8);\n        sum \u002B= /*@INV-05*/ m.Add(9, 10);\n        sum \u002B= /*@INV-06*/ Methods.Static(11);\n        sum \u002B= /*@INV-07*/ Methods.Static(12);\n        sum \u002B= /*@INV-08*/ Methods.Static(13);\n        sum \u002B= /*@INV-09*/ Methods.Static(14);\n        sum \u002B= /*@INV-10*/ Methods.Static(15);\n        sum \u002B= /*@INV-11*/ m.Direct(16);\n        sum \u002B= /*@INV-12*/ m.Direct(17);\n        sum \u002B= /*@INV-13*/ m.Direct(18);\n        sum \u002B= /*@INV-14*/ m.Direct(19);\n        sum \u002B= /*@INV-15*/ m.Direct(20);\n        sum \u002B= /*@INV-16*/ m.Add(21, 22, 23);\n        sum \u002B= /*@INV-17*/ m.Add(24, 25, 26);\n        sum \u002B= /*@INV-18*/ m.Add(27, 28, 29);\n        sum \u002B= /*@INV-19*/ m.Add(100, 200);\n        sum \u002B= /*@INV-20*/ m.Add(101, 202);\n        sum \u002B= /*@INV-21*/ m.Identity(30);\n        sum \u002B= /*@INV-22*/ m.Identity(31);\n        sum \u002B= /*@INV-23*/ m.Identity(32);\n        sum \u002B= /*@INV-24*/ m.Identity(33);\n        sum \u002B= /*@INV-25*/ m.Identity(34);\n        sum \u002B= /*@INV-26*/ (int)m.Add(300L, 400L);\n        sum \u002B= /*@INV-27*/ (int)m.Add(25.0, 26.0);\n        sum \u002B= /*@INV-28*/ m.WithOptional(35).Length;\n        sum \u002B= /*@INV-29*/ m.WithOptional(36, 37).Length;\n        sum \u002B= /*@INV-30*/ m.Named(38).Length;\n        sum \u002B= /*@INV-31*/ \u0022alpha beta\u0022.WordCount();\n        sum \u002B= /*@INV-32*/ \u0022gamma delta\u0022.WordCount();\n\n        System.Action mr01 = /*@MR-01*/ m.Raise;\n        System.Func\u003Cint, int\u003E mr02 = /*@MR-02*/ m.Direct;\n        System.Func\u003Cint, int, int\u003E mr03 = /*@MR-03*/ m.Add;\n        System.Func\u003Cint, int\u003E mr04 = /*@MR-04*/ Methods.Static;\n        System.Func\u003Cint, int\u003E mr05 = /*@MR-05*/ m.Identity;\n        System.Func\u003Cint, int, int, int\u003E mr06 = /*@MR-06*/ m.Add;\n        System.Func\u003Cstring, string, string\u003E mr07 = /*@MR-07*/ m.Add;\n        System.Func\u003Cdouble, double, double\u003E mr08 = /*@MR-08*/ m.Add;\n        System.Func\u003Clong, long, long\u003E mr09 = /*@MR-09*/ m.Add;\n        System.Func\u003Cint, int, string\u003E mr10 = /*@MR-10*/ m.WithOptional;\n        System.Func\u003Cint, int, string, string\u003E mr11 = /*@MR-11*/ m.Named;\n        System.Func\u003Cstring, string\u003E mr12 = /*@MR-12*/ StringExtensions.Shout;\n        System.Func\u003Cstring, int\u003E mr13 = /*@MR-13*/ StringExtensions.WordCount;\n        System.Func\u003Cint\u003E mr14 = /*@MR-14*/ PartialType.Left;\n        System.Func\u003Cint\u003E mr15 = /*@MR-15*/ PartialType.Right;\n        System.Func\u003Cint, int\u003E mr16 = /*@MR-16*/ m.Direct;\n        System.Func\u003Cint, int\u003E mr17 = /*@MR-17*/ Corpus.Leaf.Helper.Compute;\n        System.Func\u003Cint, int\u003E mr18 = /*@MR-18*/ Corpus.Leaf.Helper.Extra;\n        System.Func\u003Cint, int, int\u003E mr19 = /*@MR-19*/ m.Add;\n        System.Func\u003Cint, int\u003E mr20 = /*@MR-20*/ m.Direct;\n\n        System.Action all = mr01;\n        all \u002B= () =\u003E { };\n        _ = mr02; _ = mr03; _ = mr04; _ = mr05; _ = mr06; _ = mr07; _ = mr08; _ = mr09; _ = mr10;\n        _ = mr11; _ = mr12; _ = mr13; _ = mr14; _ = mr15; _ = mr16; _ = mr17; _ = mr18; _ = mr19; _ = mr20;\n\n        return sum;\n    }\n}\n",
+        "App/Sites.cs": "using Corpus.Core;\r\n\r\nnamespace Corpus.App;\r\n\r\n/// \u003Csummary\u003E\r\n/// Named semantic scenarios. Each \u003Cc\u003E/*@Sxx*/\u003C/c\u003E marker is immediately followed\r\n/// by the syntax node whose binding the oracle must establish. Markers are data,\r\n/// not instructions, and are never read by production code.\r\n/// \u003C/summary\u003E\r\npublic sealed class Sites\r\n{\r\n    public int Run()\r\n    {\r\n        var methods = new Methods();\r\n        _ = /*@S01*/ methods.Direct(1);\r\n        _ = /*@S02*/ Methods.Static(2);\r\n        _ = /*@S03*/ methods.Add(1, 2);\r\n        _ = /*@S04*/ methods.Identity\u003Cint\u003E(3);\r\n        _ = /*@S05*/ methods.Named(1, second: 2, label: \u0022y\u0022);\r\n        _ = /*@S06*/ \u0022hello world\u0022.Shout();\r\n        var constructed = /*@S07*/ new Methods();\r\n        Animal animal = new Dog();\r\n        _ = /*@S08*/ animal.BaseOnly();\r\n        _ = /*@S09*/ animal.Speak();\r\n        IGreeter greeter = new Impl();\r\n        _ = /*@S10*/ greeter.Greet(\u0022a\u0022);\r\n        Animal hidden = new Dog();\r\n        _ = /*@S11*/ hidden.Describe();\r\n        IGreeter explicitGreeter = new ExplicitGreeter();\r\n        _ = /*@S12*/ explicitGreeter.Greet(\u0022b\u0022);\r\n        _ = /*@S13*/ methods.Prop;\r\n        _ = /*@S14*/ methods.Field;\r\n        /*@S15*/ methods.Changed \u002B= OnChanged;\r\n        System.Action action = /*@S16*/ methods.Raise;\r\n        System.Func\u003Cint\u003E del = () =\u003E 7;\r\n        _ = /*@S17*/ del();\r\n        _ = /*@S18*/ Local(4);\r\n        System.Type kind = /*@S19*/ typeof(Methods);\r\n        _ = /*@S20*/ PartialType.Left();\r\n        _ = PartialType.Right();\r\n        _ = /*@S21*/ methods.Add(1, 2, 3);\r\n        _ = /*@S22*/ methods.Add(1.5, 2.5);\r\n        _ = /*@S23*/ methods.Add(\u0022a\u0022, \u0022b\u0022);\r\n        _ = /*@S24*/ methods.WithOptional(1);\r\n        _ = /*@S25*/ ConditionalApi.Value();\r\n        _ = /*@S26*/ Corpus.Leaf.Helper.Compute(5);\r\n        _ = constructed;\r\n        _ = kind;\r\n        _ = action;\r\n        return 0;\r\n\r\n        void OnChanged() { }\r\n\r\n        static int Local(int value) =\u003E value \u002B 1;\r\n    }\r\n}\r\n",
+        "Core/Extensions.cs": "namespace Corpus.Core;\n\npublic static class StringExtensions\n{\n    public static string Shout(this string value) =\u003E value.ToUpperInvariant();\n\n    public static int WordCount(this string value) =\u003E value.Split(\u0027 \u0027).Length;\n}\n",
+        "Core/LeafUser.cs": "namespace Corpus.Core;\n\n/// \u003Csummary\u003E\n/// Makes this project dependency-bearing so its R2-faithful legacy compctx1 and\n/// its verified compctx2 can be compared.\n/// \u003C/summary\u003E\npublic static class LeafUser\n{\n    public static int UseLeaf() =\u003E Corpus.Leaf.Helper.Compute(21);\n}\n",
+        "Core/Methods.cs": "namespace Corpus.Core;\n\npublic sealed class Methods\n{\n    public int Direct(int value) =\u003E value;\n\n    public static int Static(int value) =\u003E value;\n\n    // Five overloads (plus string) to cover overload selection.\n    public int Add(int a, int b) =\u003E a \u002B b;\n\n    public int Add(int a, int b, int c) =\u003E a \u002B b \u002B c;\n\n    public string Add(string a, string b) =\u003E a \u002B b;\n\n    public double Add(double a, double b) =\u003E a \u002B b;\n\n    public long Add(long a, long b) =\u003E a \u002B b;\n\n    // Deliberately ambiguous pair: Add(1, 1) cannot resolve.\n    public int Amb(int a, long b) =\u003E a \u002B (int)b;\n\n    public int Amb(long a, int b) =\u003E (int)a \u002B b;\n\n    public T Identity\u003CT\u003E(T value) =\u003E value;\n\n    public string Named(int first, int second = 5, string label = \u0022x\u0022) =\u003E label \u002B (first \u002B second);\n\n    public string WithOptional(int a, int b = 10) =\u003E (a \u002B b).ToString();\n\n    public int Prop { get; set; }\n\n    public int Field;\n\n    public event System.Action? Changed;\n\n    public void Raise() =\u003E Changed?.Invoke();\n\n    public string Describe(int a) =\u003E \u0022int:\u0022 \u002B a;\n}\n\npublic static partial class PartialType\n{\n    public static int Left() =\u003E 1;\n}\n\npublic static partial class PartialType\n{\n    public static int Right() =\u003E 2;\n}\n\npublic static class ConditionalApi\n{\n#if CORE_FEATURE\n    public static string Value() =\u003E \u0022feature\u0022;\n#else\n    public static int Value() =\u003E 1;\n#endif\n}\n",
+        "Core/Types.cs": "namespace Corpus.Core;\n\npublic interface IGreeter\n{\n    string Greet(string name);\n}\n\npublic class Animal\n{\n    public virtual string Speak() =\u003E \u0022animal\u0022;\n\n    public string BaseOnly() =\u003E \u0022base\u0022;\n\n    public string Describe() =\u003E \u0022animal\u0022;\n}\n\npublic sealed class Dog : Animal\n{\n    public override string Speak() =\u003E \u0022woof\u0022;\n\n    public new string Describe() =\u003E \u0022dog\u0022;\n}\n\npublic sealed class Impl : IGreeter\n{\n    public string Greet(string name) =\u003E \u0022hi \u0022 \u002B name;\n}\n\npublic sealed class ExplicitGreeter : IGreeter\n{\n    string IGreeter.Greet(string name) =\u003E \u0022explicit \u0022 \u002B name;\n}\n",
+        "Leaf/Helper.cs": "namespace Corpus.Leaf;\n\n/// \u003Csummary\u003E\n/// Dependency-free leaf project. Used to demonstrate transitive dependency\n/// context propagation (compctx2) while a defining project\u0027s R2 tree material\n/// stays unchanged when only this project\u0027s preprocessor symbols change.\n/// \u003C/summary\u003E\npublic static class Helper\n{\n    public static int Compute(int value) =\u003E value * 2;\n\n    public static int Extra(int value) =\u003E value \u002B 1;\n\n#if LEAF_TRACE\n    public static string Trace() =\u003E \u0022leaf-trace\u0022;\n#endif\n}\n",
+        "Solo/Declarations.cs": "namespace Corpus.Solo;\n\n/// \u003Csummary\u003E\n/// Valid dependency-free source unit with no accepted semantic occurrences.\n/// Used to demonstrate a complete-empty analysis result that is distinct from\n/// an incomplete or unavailable analysis.\n/// \u003C/summary\u003E\npublic sealed class Declarations\n{\n    public int Value { get; set; }\n\n    public int Field;\n\n    public void Noop()\n    {\n        Value = Field;\n    }\n\n    public sealed class Nested\n    {\n        public int Inner { get; set; }\n    }\n}\n\npublic interface IMarker\n{\n    void Touch();\n}\n"
+      },
+      "actualTargetId": "asmctx3:sha256:654912549666c5520b4875b1f478272614ee45fe29c7bcd4d1566984ecd8cc78",
+      "actualIdentifierDigest": "8352c8be11821da0d2b749e82f00ac1cef2c8c61667cb998a8983d049c79f8e1",
+      "actualDeclarationDigest": "38707a66ae00d5af55d148afdbecc920994a9600302bce8115308dd12677ab99",
+      "actualShapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-14",
+      "description": "P0 explicit-interface observation: implementation declaration symbol (not an occurrence target)",
+      "symbolDisplay": "Greet",
+      "documentationCommentId": "M:Corpus.Core.ExplicitGreeter.Corpus#Core#IGreeter#Greet(System.String)",
+      "selectedPath": "doc-ID-first",
+      "canonicalForm": "M:Corpus.Core.ExplicitGreeter.Corpus#Core#IGreeter#Greet(System.String)",
+      "fallbackForm": "Method:Greet",
+      "interfaceMemberDocId": "M:Corpus.Core.IGreeter.Greet(System.String)",
+      "sourceFiles": {
+        "App/Bulk.cs": "using Corpus.Core;\n\nnamespace Corpus.App;\n\n/// \u003Csummary\u003E\n/// Volume sites to meet the F12 minima (\u003E= 50 invocations, \u003E= 20 method\n/// references). \u003Cc\u003E/*@INV-nn*/\u003C/c\u003E markers are additional supported occurrences;\n/// \u003Cc\u003E/*@MR-nn*/\u003C/c\u003E markers are method-group references (qualification-only:\n/// the resolved symbol is a method, but a method group is not an occurrence\n/// fact). Every site binds to a source-defined \u003Csee cref=\u0022Methods\u0022/\u003E,\n/// \u003Csee cref=\u0022StringExtensions\u0022/\u003E, \u003Csee cref=\u0022PartialType\u0022/\u003E,\n/// \u003Csee cref=\u0022ConditionalApi\u0022/\u003E or \u003Csee cref=\u0022Corpus.Leaf.Helper\u0022/\u003E member.\n/// \u003C/summary\u003E\npublic sealed class Bulk\n{\n    public int RunAll()\n    {\n        var m = new Methods();\n        var sum = 0;\n        sum \u002B= /*@INV-01*/ m.Add(1, 2);\n        sum \u002B= /*@INV-02*/ m.Add(3, 4);\n        sum \u002B= /*@INV-03*/ m.Add(5, 6);\n        sum \u002B= /*@INV-04*/ m.Add(7, 8);\n        sum \u002B= /*@INV-05*/ m.Add(9, 10);\n        sum \u002B= /*@INV-06*/ Methods.Static(11);\n        sum \u002B= /*@INV-07*/ Methods.Static(12);\n        sum \u002B= /*@INV-08*/ Methods.Static(13);\n        sum \u002B= /*@INV-09*/ Methods.Static(14);\n        sum \u002B= /*@INV-10*/ Methods.Static(15);\n        sum \u002B= /*@INV-11*/ m.Direct(16);\n        sum \u002B= /*@INV-12*/ m.Direct(17);\n        sum \u002B= /*@INV-13*/ m.Direct(18);\n        sum \u002B= /*@INV-14*/ m.Direct(19);\n        sum \u002B= /*@INV-15*/ m.Direct(20);\n        sum \u002B= /*@INV-16*/ m.Add(21, 22, 23);\n        sum \u002B= /*@INV-17*/ m.Add(24, 25, 26);\n        sum \u002B= /*@INV-18*/ m.Add(27, 28, 29);\n        sum \u002B= /*@INV-19*/ m.Add(100, 200);\n        sum \u002B= /*@INV-20*/ m.Add(101, 202);\n        sum \u002B= /*@INV-21*/ m.Identity(30);\n        sum \u002B= /*@INV-22*/ m.Identity(31);\n        sum \u002B= /*@INV-23*/ m.Identity(32);\n        sum \u002B= /*@INV-24*/ m.Identity(33);\n        sum \u002B= /*@INV-25*/ m.Identity(34);\n        sum \u002B= /*@INV-26*/ (int)m.Add(300L, 400L);\n        sum \u002B= /*@INV-27*/ (int)m.Add(25.0, 26.0);\n        sum \u002B= /*@INV-28*/ m.WithOptional(35).Length;\n        sum \u002B= /*@INV-29*/ m.WithOptional(36, 37).Length;\n        sum \u002B= /*@INV-30*/ m.Named(38).Length;\n        sum \u002B= /*@INV-31*/ \u0022alpha beta\u0022.WordCount();\n        sum \u002B= /*@INV-32*/ \u0022gamma delta\u0022.WordCount();\n\n        System.Action mr01 = /*@MR-01*/ m.Raise;\n        System.Func\u003Cint, int\u003E mr02 = /*@MR-02*/ m.Direct;\n        System.Func\u003Cint, int, int\u003E mr03 = /*@MR-03*/ m.Add;\n        System.Func\u003Cint, int\u003E mr04 = /*@MR-04*/ Methods.Static;\n        System.Func\u003Cint, int\u003E mr05 = /*@MR-05*/ m.Identity;\n        System.Func\u003Cint, int, int, int\u003E mr06 = /*@MR-06*/ m.Add;\n        System.Func\u003Cstring, string, string\u003E mr07 = /*@MR-07*/ m.Add;\n        System.Func\u003Cdouble, double, double\u003E mr08 = /*@MR-08*/ m.Add;\n        System.Func\u003Clong, long, long\u003E mr09 = /*@MR-09*/ m.Add;\n        System.Func\u003Cint, int, string\u003E mr10 = /*@MR-10*/ m.WithOptional;\n        System.Func\u003Cint, int, string, string\u003E mr11 = /*@MR-11*/ m.Named;\n        System.Func\u003Cstring, string\u003E mr12 = /*@MR-12*/ StringExtensions.Shout;\n        System.Func\u003Cstring, int\u003E mr13 = /*@MR-13*/ StringExtensions.WordCount;\n        System.Func\u003Cint\u003E mr14 = /*@MR-14*/ PartialType.Left;\n        System.Func\u003Cint\u003E mr15 = /*@MR-15*/ PartialType.Right;\n        System.Func\u003Cint, int\u003E mr16 = /*@MR-16*/ m.Direct;\n        System.Func\u003Cint, int\u003E mr17 = /*@MR-17*/ Corpus.Leaf.Helper.Compute;\n        System.Func\u003Cint, int\u003E mr18 = /*@MR-18*/ Corpus.Leaf.Helper.Extra;\n        System.Func\u003Cint, int, int\u003E mr19 = /*@MR-19*/ m.Add;\n        System.Func\u003Cint, int\u003E mr20 = /*@MR-20*/ m.Direct;\n\n        System.Action all = mr01;\n        all \u002B= () =\u003E { };\n        _ = mr02; _ = mr03; _ = mr04; _ = mr05; _ = mr06; _ = mr07; _ = mr08; _ = mr09; _ = mr10;\n        _ = mr11; _ = mr12; _ = mr13; _ = mr14; _ = mr15; _ = mr16; _ = mr17; _ = mr18; _ = mr19; _ = mr20;\n\n        return sum;\n    }\n}\n",
+        "App/Sites.cs": "using Corpus.Core;\r\n\r\nnamespace Corpus.App;\r\n\r\n/// \u003Csummary\u003E\r\n/// Named semantic scenarios. Each \u003Cc\u003E/*@Sxx*/\u003C/c\u003E marker is immediately followed\r\n/// by the syntax node whose binding the oracle must establish. Markers are data,\r\n/// not instructions, and are never read by production code.\r\n/// \u003C/summary\u003E\r\npublic sealed class Sites\r\n{\r\n    public int Run()\r\n    {\r\n        var methods = new Methods();\r\n        _ = /*@S01*/ methods.Direct(1);\r\n        _ = /*@S02*/ Methods.Static(2);\r\n        _ = /*@S03*/ methods.Add(1, 2);\r\n        _ = /*@S04*/ methods.Identity\u003Cint\u003E(3);\r\n        _ = /*@S05*/ methods.Named(1, second: 2, label: \u0022y\u0022);\r\n        _ = /*@S06*/ \u0022hello world\u0022.Shout();\r\n        var constructed = /*@S07*/ new Methods();\r\n        Animal animal = new Dog();\r\n        _ = /*@S08*/ animal.BaseOnly();\r\n        _ = /*@S09*/ animal.Speak();\r\n        IGreeter greeter = new Impl();\r\n        _ = /*@S10*/ greeter.Greet(\u0022a\u0022);\r\n        Animal hidden = new Dog();\r\n        _ = /*@S11*/ hidden.Describe();\r\n        IGreeter explicitGreeter = new ExplicitGreeter();\r\n        _ = /*@S12*/ explicitGreeter.Greet(\u0022b\u0022);\r\n        _ = /*@S13*/ methods.Prop;\r\n        _ = /*@S14*/ methods.Field;\r\n        /*@S15*/ methods.Changed \u002B= OnChanged;\r\n        System.Action action = /*@S16*/ methods.Raise;\r\n        System.Func\u003Cint\u003E del = () =\u003E 7;\r\n        _ = /*@S17*/ del();\r\n        _ = /*@S18*/ Local(4);\r\n        System.Type kind = /*@S19*/ typeof(Methods);\r\n        _ = /*@S20*/ PartialType.Left();\r\n        _ = PartialType.Right();\r\n        _ = /*@S21*/ methods.Add(1, 2, 3);\r\n        _ = /*@S22*/ methods.Add(1.5, 2.5);\r\n        _ = /*@S23*/ methods.Add(\u0022a\u0022, \u0022b\u0022);\r\n        _ = /*@S24*/ methods.WithOptional(1);\r\n        _ = /*@S25*/ ConditionalApi.Value();\r\n        _ = /*@S26*/ Corpus.Leaf.Helper.Compute(5);\r\n        _ = constructed;\r\n        _ = kind;\r\n        _ = action;\r\n        return 0;\r\n\r\n        void OnChanged() { }\r\n\r\n        static int Local(int value) =\u003E value \u002B 1;\r\n    }\r\n}\r\n",
+        "Core/Extensions.cs": "namespace Corpus.Core;\n\npublic static class StringExtensions\n{\n    public static string Shout(this string value) =\u003E value.ToUpperInvariant();\n\n    public static int WordCount(this string value) =\u003E value.Split(\u0027 \u0027).Length;\n}\n",
+        "Core/LeafUser.cs": "namespace Corpus.Core;\n\n/// \u003Csummary\u003E\n/// Makes this project dependency-bearing so its R2-faithful legacy compctx1 and\n/// its verified compctx2 can be compared.\n/// \u003C/summary\u003E\npublic static class LeafUser\n{\n    public static int UseLeaf() =\u003E Corpus.Leaf.Helper.Compute(21);\n}\n",
+        "Core/Methods.cs": "namespace Corpus.Core;\n\npublic sealed class Methods\n{\n    public int Direct(int value) =\u003E value;\n\n    public static int Static(int value) =\u003E value;\n\n    // Five overloads (plus string) to cover overload selection.\n    public int Add(int a, int b) =\u003E a \u002B b;\n\n    public int Add(int a, int b, int c) =\u003E a \u002B b \u002B c;\n\n    public string Add(string a, string b) =\u003E a \u002B b;\n\n    public double Add(double a, double b) =\u003E a \u002B b;\n\n    public long Add(long a, long b) =\u003E a \u002B b;\n\n    // Deliberately ambiguous pair: Add(1, 1) cannot resolve.\n    public int Amb(int a, long b) =\u003E a \u002B (int)b;\n\n    public int Amb(long a, int b) =\u003E (int)a \u002B b;\n\n    public T Identity\u003CT\u003E(T value) =\u003E value;\n\n    public string Named(int first, int second = 5, string label = \u0022x\u0022) =\u003E label \u002B (first \u002B second);\n\n    public string WithOptional(int a, int b = 10) =\u003E (a \u002B b).ToString();\n\n    public int Prop { get; set; }\n\n    public int Field;\n\n    public event System.Action? Changed;\n\n    public void Raise() =\u003E Changed?.Invoke();\n\n    public string Describe(int a) =\u003E \u0022int:\u0022 \u002B a;\n}\n\npublic static partial class PartialType\n{\n    public static int Left() =\u003E 1;\n}\n\npublic static partial class PartialType\n{\n    public static int Right() =\u003E 2;\n}\n\npublic static class ConditionalApi\n{\n#if CORE_FEATURE\n    public static string Value() =\u003E \u0022feature\u0022;\n#else\n    public static int Value() =\u003E 1;\n#endif\n}\n",
+        "Core/Types.cs": "namespace Corpus.Core;\n\npublic interface IGreeter\n{\n    string Greet(string name);\n}\n\npublic class Animal\n{\n    public virtual string Speak() =\u003E \u0022animal\u0022;\n\n    public string BaseOnly() =\u003E \u0022base\u0022;\n\n    public string Describe() =\u003E \u0022animal\u0022;\n}\n\npublic sealed class Dog : Animal\n{\n    public override string Speak() =\u003E \u0022woof\u0022;\n\n    public new string Describe() =\u003E \u0022dog\u0022;\n}\n\npublic sealed class Impl : IGreeter\n{\n    public string Greet(string name) =\u003E \u0022hi \u0022 \u002B name;\n}\n\npublic sealed class ExplicitGreeter : IGreeter\n{\n    string IGreeter.Greet(string name) =\u003E \u0022explicit \u0022 \u002B name;\n}\n",
+        "Leaf/Helper.cs": "namespace Corpus.Leaf;\n\n/// \u003Csummary\u003E\n/// Dependency-free leaf project. Used to demonstrate transitive dependency\n/// context propagation (compctx2) while a defining project\u0027s R2 tree material\n/// stays unchanged when only this project\u0027s preprocessor symbols change.\n/// \u003C/summary\u003E\npublic static class Helper\n{\n    public static int Compute(int value) =\u003E value * 2;\n\n    public static int Extra(int value) =\u003E value \u002B 1;\n\n#if LEAF_TRACE\n    public static string Trace() =\u003E \u0022leaf-trace\u0022;\n#endif\n}\n",
+        "Solo/Declarations.cs": "namespace Corpus.Solo;\n\n/// \u003Csummary\u003E\n/// Valid dependency-free source unit with no accepted semantic occurrences.\n/// Used to demonstrate a complete-empty analysis result that is distinct from\n/// an incomplete or unavailable analysis.\n/// \u003C/summary\u003E\npublic sealed class Declarations\n{\n    public int Value { get; set; }\n\n    public int Field;\n\n    public void Noop()\n    {\n        Value = Field;\n    }\n\n    public sealed class Nested\n    {\n        public int Inner { get; set; }\n    }\n}\n\npublic interface IMarker\n{\n    void Touch();\n}\n"
+      },
+      "pass": true,
+      "note": "observation row; the supported occurrence surface at the call site binds the interface member"
+    },
+    {
+      "id": "FC-9",
+      "description": "nested generic parameter type (internal comma)",
+      "expectedIdentifierForm": "Use",
+      "expectedDeclarationForm": "M:Fixture.Core.Nested.Use(System.Collections.Generic.Dictionary{System.String,System.Int32})",
+      "expectedShapeForm": "method|0|global::System.Collections.Generic.Dictionary\u003Cstring, int\u003E",
+      "expectedIdentifierDigest": "a50fd89dcef1a920d9579ff98d063a9cbc8c38b76f16fd2730d18f44685897dc",
+      "expectedDeclarationDigest": "c2741fe53e3f5284327b44e077df2b0c6e5c8554b3fd698a3b26a623b8951e59",
+      "expectedShapeDigest": "f7f7074bebd591e1779d9ed64c4fdf87e451efb1947dc5483230a5614e453803",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Nested.Use(new System.Collections.Generic.Dictionary\u003Cstring, int\u003E());\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Nested\n{\n    public static void Use(System.Collections.Generic.Dictionary\u003Cstring, int\u003E map) { }\n}\n"
+      },
+      "note": "expected assembled from contract section 4/5 formulas over Roslyn primitives; displays=global::System.Collections.Generic.Dictionary\u003Cstring, int\u003E",
+      "actualTargetId": "asmctx3:sha256:0322dc66471b4c4270ce86f906d341a633e05a17218d3ba2c5cd919a500bdc0c",
+      "actualIdentifierDigest": "a50fd89dcef1a920d9579ff98d063a9cbc8c38b76f16fd2730d18f44685897dc",
+      "actualDeclarationDigest": "c2741fe53e3f5284327b44e077df2b0c6e5c8554b3fd698a3b26a623b8951e59",
+      "actualShapeDigest": "f7f7074bebd591e1779d9ed64c4fdf87e451efb1947dc5483230a5614e453803",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-10",
+      "description": "tuple parameter type (internal comma)",
+      "expectedIdentifierForm": "Handle",
+      "expectedDeclarationForm": "M:Fixture.Core.Tuples.Handle(System.ValueTuple{System.Int32,System.String})",
+      "expectedShapeForm": "method|0|(int, string)",
+      "expectedIdentifierDigest": "ef29515d5007ed28fdbd0bb2d27e59a201ca11bfe2e46c83f21a27f576dcf893",
+      "expectedDeclarationDigest": "c564de6742eb647bdcec719d6a3f871be10a889a4aacdb6d1ce95b8209a1ff2d",
+      "expectedShapeDigest": "b9c31ef4e36bf5d821d0b432583c0e3347d4fb8f2edb3f07d63e2c192a9697f9",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Tuples.Handle((1, \u0022x\u0022));\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Tuples\n{\n    public static void Handle((int, string) pair) { }\n}\n"
+      },
+      "note": "expected assembled from contract section 4/5 formulas over Roslyn primitives; displays=(int, string)",
+      "actualTargetId": "asmctx3:sha256:480b0147e3da4782dc8f608d009e78d905e9d74c843c03bfbea512c63fefbd78",
+      "actualIdentifierDigest": "ef29515d5007ed28fdbd0bb2d27e59a201ca11bfe2e46c83f21a27f576dcf893",
+      "actualDeclarationDigest": "c564de6742eb647bdcec719d6a3f871be10a889a4aacdb6d1ce95b8209a1ff2d",
+      "actualShapeDigest": "b9c31ef4e36bf5d821d0b432583c0e3347d4fb8f2edb3f07d63e2c192a9697f9",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-10b",
+      "description": "two-parameter near-collision partner for the tuple case",
+      "expectedIdentifierForm": "Handle",
+      "expectedDeclarationForm": "M:Fixture.Core.Pairs.Handle(System.Int32,System.String)",
+      "expectedShapeForm": "method|0|int,string",
+      "expectedIdentifierDigest": "ef29515d5007ed28fdbd0bb2d27e59a201ca11bfe2e46c83f21a27f576dcf893",
+      "expectedDeclarationDigest": "7a917691430ba9593d3c8c57b2cf7291a308f7f57518a9788eb62c43b7a1e74b",
+      "expectedShapeDigest": "18b2e20d115ae8e54e616ebf0e1e59edc66be489e721afc58696c0a9db2dacbf",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Pairs.Handle(1, \u0022x\u0022);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Pairs\n{\n    public static void Handle(int first, string second) { }\n}\n"
+      },
+      "actualTargetId": "asmctx3:sha256:3f0f37568bca1d0a0287e413ab798d7f87b00d4232ee6c8e2a1dd4b76decfa7a",
+      "actualIdentifierDigest": "ef29515d5007ed28fdbd0bb2d27e59a201ca11bfe2e46c83f21a27f576dcf893",
+      "actualDeclarationDigest": "7a917691430ba9593d3c8c57b2cf7291a308f7f57518a9788eb62c43b7a1e74b",
+      "actualShapeDigest": "18b2e20d115ae8e54e616ebf0e1e59edc66be489e721afc58696c0a9db2dacbf",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-11",
+      "description": "nested generic near-collision partner (Dictionary\u003Cstring\u003E \u002B int)",
+      "expectedIdentifierForm": "Handle",
+      "expectedDeclarationForm": "M:Fixture.Core.Partners.Handle(System.Collections.Generic.Dictionary{System.String},System.Int32)",
+      "expectedShapeForm": "method|0|global::System.Collections.Generic.Dictionary\u003Cstring\u003E,int",
+      "expectedIdentifierDigest": "ef29515d5007ed28fdbd0bb2d27e59a201ca11bfe2e46c83f21a27f576dcf893",
+      "expectedDeclarationDigest": "4a0aa23fcd9ba9a72f775143917877ed6f5f700ac0fc102794eb90c2cf4cc38b",
+      "expectedShapeDigest": "3c96a872171e4217e093a8e7231db16454e2b071ad522cba1e51bd8e517c0081",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Partners.Handle(new System.Collections.Generic.Dictionary\u003Cstring\u003E(), 2);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Partners\n{\n    public static void Handle(System.Collections.Generic.Dictionary\u003Cstring\u003E first, int second) { }\n}\n"
+      },
+      "note": "expected assembled from contract section 4/5 formulas over Roslyn primitives; displays=global::System.Collections.Generic.Dictionary\u003Cstring\u003E ;; int",
+      "actualTargetId": "asmctx3:sha256:298dc38c902b0e90f0e7877fcf35107b7ddff2fa9947af8e082793e555fa3efb",
+      "actualIdentifierDigest": "ef29515d5007ed28fdbd0bb2d27e59a201ca11bfe2e46c83f21a27f576dcf893",
+      "actualDeclarationDigest": "4a0aa23fcd9ba9a72f775143917877ed6f5f700ac0fc102794eb90c2cf4cc38b",
+      "actualShapeDigest": "3c96a872171e4217e093a8e7231db16454e2b071ad522cba1e51bd8e517c0081",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-12",
+      "description": "array parameter type",
+      "expectedIdentifierForm": "Sum",
+      "expectedDeclarationForm": "M:Fixture.Core.Arrays.Sum(System.Int32[])",
+      "expectedShapeForm": "method|0|int[]",
+      "expectedIdentifierDigest": "707cd0d69f248ae2a326308be63f81d70a53598fad4828e9be295bf1b034d894",
+      "expectedDeclarationDigest": "cf3670274f56cba6ebfe9b9d4edb7cc100490542a95f9ac0593a1a78691ec7f3",
+      "expectedShapeDigest": "2af15c495dc13bb81c3e8de0321a9ca3bf80c5e601ccbb1960a877dc9974a3ba",
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Arrays.Sum(new int[] { 1 });\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Arrays\n{\n    public static void Sum(int[] values) { }\n}\n"
+      },
+      "actualTargetId": "asmctx3:sha256:0da7432aa37ba5cf51f90e0f481b49a694ee5a3fda381b346929c78aa314192c",
+      "actualIdentifierDigest": "707cd0d69f248ae2a326308be63f81d70a53598fad4828e9be295bf1b034d894",
+      "actualDeclarationDigest": "cf3670274f56cba6ebfe9b9d4edb7cc100490542a95f9ac0593a1a78691ec7f3",
+      "actualShapeDigest": "2af15c495dc13bb81c3e8de0321a9ca3bf80c5e601ccbb1960a877dc9974a3ba",
+      "identifierMatch": true,
+      "declarationMatch": true,
+      "shapeMatch": true,
+      "pass": true
+    },
+    {
+      "id": "FC-13",
+      "description": "return-type change: identifier/declaration/shape invariant (return type intentionally omitted)",
+      "expectedIdentifierForm": "Get",
+      "expectedDeclarationForm": "M:Fixture.Core.Returns.Get(System.Int32)",
+      "expectedShapeForm": "method|0|int",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Returns.Get(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Returns\n{\n    public static int Get(int value) =\u003E value;\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Returns.Get(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Returns\n{\n    public static string Get(int value) =\u003E value.ToString();\n}\n"
+      },
+      "intReturnShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "stringReturnShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "identifierInvariant": true,
+      "declarationInvariant": true,
+      "shapeInvariant": true,
+      "pass": true
+    },
+    {
+      "id": "FC-DELIM",
+      "description": "shape delimiter collision challenge using real Roslyn displays",
+      "tupleSingle": "method|0|(int, string)",
+      "twoParamPartner": "method|0|int,string",
+      "nestedGenericSingle": "method|0|global::System.Collections.Generic.Dictionary\u003Cstring, int\u003E",
+      "nestedGenericPartner": "method|0|global::System.Collections.Generic.Dictionary\u003Cstring\u003E,int",
+      "allChallengedPairsDistinct": true,
+      "pass": true
+    }
+  ],
+  "matrix": [
+    {
+      "id": "R1",
+      "description": "whitespace/formatting of the target declaration",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Formatting.Target1();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Formatting\n{\n    public static void Target1() { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Formatting.Target1();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Formatting\n{\n    public static void Target1(\n        )\n    {\n    }\n}\n"
+      },
+      "beforeIdentifierDigest": "beadacfc201f4daaad36b23afae09274c01e63d24db25892169f5e603d482f8c",
+      "afterIdentifierDigest": "beadacfc201f4daaad36b23afae09274c01e63d24db25892169f5e603d482f8c",
+      "beforeDeclarationDigest": "795e378a33c5695951bdff83589f590ba2cf9ff3cd989231d818f68901b62e9f",
+      "afterDeclarationDigest": "795e378a33c5695951bdff83589f590ba2cf9ff3cd989231d818f68901b62e9f",
+      "beforeShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "afterShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "=",
+      "observedDeclaration": "=",
+      "v1Shape": "=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R2",
+      "description": "comments/trivia",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Comments.Target2();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Comments\n{\n    public static void Target2() { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Comments.Target2();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\n// leading comment\npublic static class Comments\n{\n    /* block */\n    public static void Target2() { /* inline */ }\n}\n"
+      },
+      "beforeIdentifierDigest": "2ef6bcae0985afd5f93c6b61c1f26db258cedf8b1b35c0590681c9aee4f746e8",
+      "afterIdentifierDigest": "2ef6bcae0985afd5f93c6b61c1f26db258cedf8b1b35c0590681c9aee4f746e8",
+      "beforeDeclarationDigest": "634f0ddfbb8c0ae883305ba581917fbb5f163a73821b2153b72f1cd45e0e123f",
+      "afterDeclarationDigest": "634f0ddfbb8c0ae883305ba581917fbb5f163a73821b2153b72f1cd45e0e123f",
+      "beforeShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "afterShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "=",
+      "observedDeclaration": "=",
+      "v1Shape": "=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R3",
+      "description": "declaration relocation (file path change)",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Relocated.Target3();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Relocated\n{\n    public static void Target3() { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Relocated.Target3();\n        return 0;\n    }\n}\n",
+        "Core/Nested/Targets.cs": "namespace Fixture.Core;\npublic static class Relocated\n{\n    public static void Target3() { }\n}\n"
+      },
+      "beforeIdentifierDigest": "3033ea46862ed3329033bb51f50e5269490f38e446b89ea0d1b7e56fcdc28bdf",
+      "afterIdentifierDigest": "3033ea46862ed3329033bb51f50e5269490f38e446b89ea0d1b7e56fcdc28bdf",
+      "beforeDeclarationDigest": "31ba138d4e0a8aa97e5b4250ec27c70127d1b35b4a4eb04ce1e27a2eb24333bf",
+      "afterDeclarationDigest": "31ba138d4e0a8aa97e5b4250ec27c70127d1b35b4a4eb04ce1e27a2eb24333bf",
+      "beforeShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "afterShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "=",
+      "observedDeclaration": "=",
+      "v1Shape": "=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R4",
+      "description": "namespace-qualification style",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Logger.Target4(\u0022x\u0022);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Logger\n{\n    public static void Target4(string value) { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "// fully qualified call\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Fixture.Core.Logger.Target4(\u0022x\u0022);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Logger\n{\n    public static void Target4(string value) { }\n}\n"
+      },
+      "beforeIdentifierDigest": "be9c55f60fc29c68df99b3f4ff64da5ababb84739484ca25c5e7ced114857445",
+      "afterIdentifierDigest": "be9c55f60fc29c68df99b3f4ff64da5ababb84739484ca25c5e7ced114857445",
+      "beforeDeclarationDigest": "a78e7e765b5637787d2660fa4e47a34b4b4827a94669db362d98b112bef8de12",
+      "afterDeclarationDigest": "a78e7e765b5637787d2660fa4e47a34b4b4827a94669db362d98b112bef8de12",
+      "beforeShapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "afterShapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "=",
+      "observedDeclaration": "=",
+      "v1Shape": "=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R5",
+      "description": "type alias at the call site",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Logger.Target4(\u0022x\u0022);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Logger\n{\n    public static void Target4(string value) { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using L = Fixture.Core.Logger;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        L.Target4(\u0022x\u0022);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Logger\n{\n    public static void Target4(string value) { }\n}\n"
+      },
+      "beforeIdentifierDigest": "be9c55f60fc29c68df99b3f4ff64da5ababb84739484ca25c5e7ced114857445",
+      "afterIdentifierDigest": "be9c55f60fc29c68df99b3f4ff64da5ababb84739484ca25c5e7ced114857445",
+      "beforeDeclarationDigest": "a78e7e765b5637787d2660fa4e47a34b4b4827a94669db362d98b112bef8de12",
+      "afterDeclarationDigest": "a78e7e765b5637787d2660fa4e47a34b4b4827a94669db362d98b112bef8de12",
+      "beforeShapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "afterShapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "=",
+      "observedDeclaration": "=",
+      "v1Shape": "=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R6a",
+      "description": "unrelated overload addition (existing target invariant)",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Methods.Add(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Methods\n{\n    public static int Add(int a) =\u003E a;\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Methods.Add(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Methods\n{\n    public static int Add(int a) =\u003E a;\n    public static string Add(string a) =\u003E a;\n}\n"
+      },
+      "beforeIdentifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+      "afterIdentifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+      "beforeDeclarationDigest": "4860f8c38cdef4b62941520e37dc6a3dfc470ec1e18e8d37a75e535b96de2e32",
+      "afterDeclarationDigest": "4860f8c38cdef4b62941520e37dc6a3dfc470ec1e18e8d37a75e535b96de2e32",
+      "beforeShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "afterShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "=",
+      "observedDeclaration": "=",
+      "v1Shape": "=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R6b",
+      "description": "retargeted overload Add(int) -\u003E Add(string)",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Methods.Add(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Methods\n{\n    public static int Add(int a) =\u003E a;\n    public static string Add(string a) =\u003E a;\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Methods.Add(\u0022a\u0022);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Methods\n{\n    public static int Add(int a) =\u003E a;\n    public static string Add(string a) =\u003E a;\n}\n"
+      },
+      "beforeIdentifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+      "afterIdentifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+      "beforeDeclarationDigest": "4860f8c38cdef4b62941520e37dc6a3dfc470ec1e18e8d37a75e535b96de2e32",
+      "afterDeclarationDigest": "64779caefb594edc803116fb0de46ad03428de7d0876ba0f6da5b9102594819d",
+      "beforeShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "afterShapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "!=",
+      "observedDeclaration": "!=",
+      "v1Shape": "!=",
+      "observedShape": "!=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R7",
+      "description": "method rename",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Rename.Before7(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Rename\n{\n    public static void Before7(int value) { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Rename.After7(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Rename\n{\n    public static void After7(int value) { }\n}\n"
+      },
+      "beforeIdentifierDigest": "3f7cace12a1039ac6283a58c011ffc23ebedf0b545c0c849ce8b91c8f6467b25",
+      "afterIdentifierDigest": "8691c0014d225caf2d08dad442956d70c0ac0dc477beb41490ba87d800463312",
+      "beforeDeclarationDigest": "b07cbd004e329421f6c356502b6477bdd96e376848e9cd3dbf1be2a5373cd12a",
+      "afterDeclarationDigest": "93e70634f32a42655ce01467ae28c167d5cb63c561025f3ed19f8147f2f665a6",
+      "beforeShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "afterShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "v1Identifier": "!=",
+      "observedIdentifier": "!=",
+      "v1Declaration": "!=",
+      "observedDeclaration": "!=",
+      "v1Shape": "=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R8",
+      "description": "parameter-type change (int -\u003E string)",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Take.Take8(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Take\n{\n    public static void Take8(int value) { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Take.Take8(\u0022x\u0022);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Take\n{\n    public static void Take8(string value) { }\n}\n"
+      },
+      "beforeIdentifierDigest": "3a2d5740290835a954d42cd0ab04c4399a4535c82e5722a3740862d1adf87187",
+      "afterIdentifierDigest": "3a2d5740290835a954d42cd0ab04c4399a4535c82e5722a3740862d1adf87187",
+      "beforeDeclarationDigest": "b772858688d5b61155568d061feedb55f0dca1b503b60b8c176fc0a35e4054af",
+      "afterDeclarationDigest": "5968dd5d992eaf4629210d2f2885382dabd65edb686b69c5b4806467243ad3df",
+      "beforeShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "afterShapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "!=",
+      "observedDeclaration": "!=",
+      "v1Shape": "!=",
+      "observedShape": "!=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R9",
+      "description": "parameter-order change",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Two.Two9(1, \u0022x\u0022);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Two\n{\n    public static void Two9(int a, string b) { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Two.Two9(\u0022x\u0022, 1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Two\n{\n    public static void Two9(string b, int a) { }\n}\n"
+      },
+      "beforeIdentifierDigest": "85700f6eae0a6106ec433e17c410146797fb3d78afdf19bf782182674c88c27a",
+      "afterIdentifierDigest": "85700f6eae0a6106ec433e17c410146797fb3d78afdf19bf782182674c88c27a",
+      "beforeDeclarationDigest": "f1be456ec0da2a4ee8b87961ac33a1d7d593e3fe7fadffbf4e6b56a8e90ad4e3",
+      "afterDeclarationDigest": "075abfab2631a20b007a1d2db89d19e15500f80ccd5190aa7d602b195bd0e2d3",
+      "beforeShapeDigest": "18b2e20d115ae8e54e616ebf0e1e59edc66be489e721afc58696c0a9db2dacbf",
+      "afterShapeDigest": "aaedf9623a2e189cbe1fac7baaf03d1b34ba16258dc60186d442213ed534c72b",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "!=",
+      "observedDeclaration": "!=",
+      "v1Shape": "!=",
+      "observedShape": "!=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R10",
+      "description": "generic arity change (non-generic -\u003E \u003CT\u003E)",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Arity.Pick10(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Arity\n{\n    public static void Pick10(int value) { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Arity.Pick10(2);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Arity\n{\n    public static void Pick10\u003CT\u003E(T value) { }\n}\n"
+      },
+      "beforeIdentifierDigest": "f9e5b2055ef28c230fd63b3857691969a54ad03dce4cf8f0a46ec4755d546fc2",
+      "afterIdentifierDigest": "f9e5b2055ef28c230fd63b3857691969a54ad03dce4cf8f0a46ec4755d546fc2",
+      "beforeDeclarationDigest": "906e03222305dea814b55ea592fb813c9f0aa3ea2d1b94c4777badaac046c07a",
+      "afterDeclarationDigest": "9dcb853434159b51bdbb9df3fd01d804de8de843168bc63b86df63657acd74ff",
+      "beforeShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "afterShapeDigest": "af2c463835c11a3396c179709087b2b644584875af3955869f7713cb337d109d",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "!=",
+      "observedDeclaration": "!=",
+      "v1Shape": "!=",
+      "observedShape": "!=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R11",
+      "description": "generic substitution (Box\u003Cint\u003E vs Box\u003Cstring\u003E)",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        new Box\u003Cint\u003E().Get();\n        new Box\u003Cstring\u003E().Get();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic sealed class Box\u003CT\u003E\n{\n    public T Get() =\u003E default!;\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        new Box\u003Cint\u003E().Get();\n        new Box\u003Cstring\u003E().Get();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic sealed class Box\u003CT\u003E\n{\n    public T Get() =\u003E default!;\n}\n"
+      },
+      "beforeIdentifierDigest": "a4d9ced7c6e35fad8d1971edb6b6497c7ed3c4ba0de07375ccd021273c00b573",
+      "afterIdentifierDigest": "a4d9ced7c6e35fad8d1971edb6b6497c7ed3c4ba0de07375ccd021273c00b573",
+      "beforeDeclarationDigest": "d2573b4864d7e3173f2615bae9a90c51c7badfa7431dc178369c2342bdd2ca97",
+      "afterDeclarationDigest": "d2573b4864d7e3173f2615bae9a90c51c7badfa7431dc178369c2342bdd2ca97",
+      "beforeShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "afterShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "=",
+      "observedDeclaration": "=",
+      "v1Shape": "=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R12",
+      "description": "reduced extension call vs static form",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        5.Double12();\n        Ext12.Double12(5);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Ext12\n{\n    public static int Double12(this int value) =\u003E value * 2;\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        5.Double12();\n        Ext12.Double12(5);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Ext12\n{\n    public static int Double12(this int value) =\u003E value * 2;\n}\n"
+      },
+      "beforeIdentifierDigest": "062e1d5547056a1c43404c3d7cbe8a6f8b8bac0d1b92b52e1eaf043ca3639e3f",
+      "afterIdentifierDigest": "062e1d5547056a1c43404c3d7cbe8a6f8b8bac0d1b92b52e1eaf043ca3639e3f",
+      "beforeDeclarationDigest": "e88f0435f2a257e6bb2a24916679edf6a7c6f1f8f64d2ecbaa75009bda3730a6",
+      "afterDeclarationDigest": "e88f0435f2a257e6bb2a24916679edf6a7c6f1f8f64d2ecbaa75009bda3730a6",
+      "beforeShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "afterShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "=",
+      "observedDeclaration": "=",
+      "v1Shape": "=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R13a",
+      "description": "value vs ref parameter",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        Mods.Change13(1);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Mods\n{\n    public static void Change13(int value) { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        int v = 0;\n        Mods.Change13(ref v);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Mods\n{\n    public static void Change13(ref int value) { }\n}\n"
+      },
+      "beforeIdentifierDigest": "230ed9abc22b729bbc2c6912d4d3e2c5f302bb22f04dddce3aaadfa8eef8408e",
+      "afterIdentifierDigest": "230ed9abc22b729bbc2c6912d4d3e2c5f302bb22f04dddce3aaadfa8eef8408e",
+      "beforeDeclarationDigest": "7001080de4fb76bdbbd0007a6544b6ff68a5712d0aa83942fc07df26e6676433",
+      "afterDeclarationDigest": "df577e8f759af780c518813a96270638ccf3dabbb8525fbbca28d4639f73bad0",
+      "beforeShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "afterShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "!=",
+      "observedDeclaration": "!=",
+      "v1Shape": "!=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": false,
+      "pass": false
+    },
+    {
+      "id": "R13b",
+      "description": "ref vs out parameter",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        int v = 0;\n        Mods.Change13B(ref v);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Mods\n{\n    public static void Change13B(ref int value) { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        int v;\n        Mods.Change13B(out v);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Mods\n{\n    public static void Change13B(out int value) { value = 0; }\n}\n"
+      },
+      "beforeIdentifierDigest": "2a75197266fa5329e2828b9efcc744ca691edf53dbfe4539acfacaa4ee9dd308",
+      "afterIdentifierDigest": "2a75197266fa5329e2828b9efcc744ca691edf53dbfe4539acfacaa4ee9dd308",
+      "beforeDeclarationDigest": "224f8100104b12cb6fd022cdfbfd4bd344964dfd48718316d610de9328174fbc",
+      "afterDeclarationDigest": "224f8100104b12cb6fd022cdfbfd4bd344964dfd48718316d610de9328174fbc",
+      "beforeShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "afterShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "!=",
+      "observedDeclaration": "=",
+      "v1Shape": "!=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": false,
+      "shapePass": false,
+      "pass": false
+    },
+    {
+      "id": "R13c",
+      "description": "ref vs in parameter",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        int v = 0;\n        Mods.Change13C(ref v);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Mods\n{\n    public static void Change13C(ref int value) { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        int v = 0;\n        Mods.Change13C(in v);\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Mods\n{\n    public static void Change13C(in int value) { }\n}\n"
+      },
+      "beforeIdentifierDigest": "6be36109d8b693500b5e84cfc7e618e7c9ad7b32c0a23fca51f0b352fd85fa47",
+      "afterIdentifierDigest": "6be36109d8b693500b5e84cfc7e618e7c9ad7b32c0a23fca51f0b352fd85fa47",
+      "beforeDeclarationDigest": "9c3fcb17c31e3c67ab5f5bbae409890f54af2d13fbe50d0d5eb6a23c1c52357a",
+      "afterDeclarationDigest": "9c3fcb17c31e3c67ab5f5bbae409890f54af2d13fbe50d0d5eb6a23c1c52357a",
+      "beforeShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "afterShapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "!=",
+      "observedDeclaration": "=",
+      "v1Shape": "!=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": false,
+      "shapePass": false,
+      "pass": false
+    },
+    {
+      "id": "R14",
+      "description": "same simple name, different owner",
+      "sourceBefore": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        OwnerA.Ping14();\n        OwnerB.Ping14();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class OwnerA\n{\n    public static void Ping14() { }\n}\npublic static class OwnerB\n{\n    public static void Ping14() { }\n}\n"
+      },
+      "sourceAfter": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        OwnerA.Ping14();\n        OwnerB.Ping14();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class OwnerA\n{\n    public static void Ping14() { }\n}\npublic static class OwnerB\n{\n    public static void Ping14() { }\n}\n"
+      },
+      "beforeIdentifierDigest": "94db54bba4605e9dfe93dee4e0ce80a93217978168d101ce66c9fa9ee16d3c04",
+      "afterIdentifierDigest": "94db54bba4605e9dfe93dee4e0ce80a93217978168d101ce66c9fa9ee16d3c04",
+      "beforeDeclarationDigest": "c829bd77250143c34c9c7486337ab36459135a64fe73f80b1a65a07aa0132dab",
+      "afterDeclarationDigest": "dda5427a8ba226677771104684e1e761e9323f0262ae3f86557f8f9328d3455c",
+      "beforeShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "afterShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+      "v1Identifier": "=",
+      "observedIdentifier": "=",
+      "v1Declaration": "!=",
+      "observedDeclaration": "!=",
+      "v1Shape": "=",
+      "observedShape": "=",
+      "identifierPass": true,
+      "declarationPass": true,
+      "shapePass": true,
+      "pass": true
+    },
+    {
+      "id": "R15",
+      "description": "unresolved/external binding refused; no fact",
+      "v1Identifier": "refusal",
+      "v1Declaration": "refusal",
+      "v1Shape": "refusal",
+      "observedIdentifier": "refusal",
+      "observedDeclaration": "refusal",
+      "observedShape": "refusal",
+      "knownControlFactPresent": true,
+      "sourceFiles": {
+        "App/Consumer.cs": "using Fixture.Core;\nnamespace Fixture.App;\npublic static class Consumer\n{\n    public static int Run()\n    {\n        System.Console.WriteLine(\u0022x\u0022);\n        Known.Ok15();\n        return 0;\n    }\n}\n",
+        "Core/Targets.cs": "namespace Fixture.Core;\npublic static class Known\n{\n    public static void Ok15() { }\n}\n"
+      },
+      "pass": true
+    }
+  ],
+  "knownAnswersPass": "10/10",
+  "formCasesPass": "17/17",
+  "matrixPass": "15/18"
+}

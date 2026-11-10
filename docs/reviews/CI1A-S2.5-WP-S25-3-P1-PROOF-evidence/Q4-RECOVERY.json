@@ -1,0 +1,85 @@
+{
+  "harness": "ANDIRIT-CI1A-S2.5-WP-S25-3-P1-PROOF-01",
+  "action": "recovery",
+  "processId": 29448,
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "database": "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\p1-proof-be849e07.ltdb",
+  "f02Note": "Managed fault injection exercises the accepted recovery contract; it is not evidence of actual process crash or power-loss durability.",
+  "baseline": {
+    "availability": "Available",
+    "isComplete": true,
+    "factCount": 8,
+    "totalMatches": 8,
+    "examined": 8,
+    "publicationRun": "run:corpus",
+    "allTargetsMatch": true,
+    "refusalReason": null,
+    "spans": [
+      "App/Bulk.cs:20:30",
+      "App/Bulk.cs:21:30",
+      "App/Bulk.cs:22:30",
+      "App/Bulk.cs:23:30",
+      "App/Bulk.cs:24:30",
+      "App/Bulk.cs:38:30",
+      "App/Bulk.cs:39:30",
+      "App/Sites.cs:17:30"
+    ]
+  },
+  "knownFailure": {
+    "expectedFailureObserved": true,
+    "exceptionType": "ProbeFault",
+    "afterFailure": {
+      "availability": "Available",
+      "isComplete": true,
+      "factCount": 8,
+      "totalMatches": 8,
+      "examined": 8,
+      "publicationRun": "run:corpus",
+      "allTargetsMatch": true,
+      "refusalReason": null,
+      "spans": [
+        "App/Bulk.cs:20:30",
+        "App/Bulk.cs:21:30",
+        "App/Bulk.cs:22:30",
+        "App/Bulk.cs:23:30",
+        "App/Bulk.cs:24:30",
+        "App/Bulk.cs:38:30",
+        "App/Bulk.cs:39:30",
+        "App/Sites.cs:17:30"
+      ]
+    }
+  },
+  "unknownOutcome": {
+    "expectedUnknownOutcome": true,
+    "exceptionType": "CodeGraphCommitOutcomeUnknownException",
+    "quarantinedRead": "throw:CodeGraphCommitOutcomeUnknownException",
+    "quarantinedMutation": "throw:CodeGraphCommitOutcomeUnknownException"
+  },
+  "unknownOutcomeReconciled": {
+    "availability": "Available",
+    "isComplete": true,
+    "factCount": 8,
+    "totalMatches": 8,
+    "examined": 8,
+    "publicationRun": "run:unknown",
+    "allTargetsMatch": true,
+    "refusalReason": null,
+    "spans": [
+      "App/Bulk.cs:20:30",
+      "App/Bulk.cs:21:30",
+      "App/Bulk.cs:22:30",
+      "App/Bulk.cs:23:30",
+      "App/Bulk.cs:24:30",
+      "App/Bulk.cs:38:30",
+      "App/Bulk.cs:39:30",
+      "App/Sites.cs:17:30"
+    ]
+  },
+  "tamperedPayloadRefusal": {
+    "scenario": "occurrence page publication binding altered",
+    "outcome": "refused",
+    "openExceptionType": "CodeOccurrenceIndexException"
+  }
+}

@@ -1,0 +1,596 @@
+{
+  "harness": "ANDIRIT-CI1A-S2.5-WP-S25-3-P1-PROOF-01",
+  "action": "publish",
+  "processId": 42700,
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "database": "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\p1-proof-be849e07.ltdb",
+  "corpus": {
+    "name": "corpus",
+    "repo": "p1:integration",
+    "run": "run:corpus",
+    "files": [
+      "App/App.csproj",
+      "App/Bulk.cs",
+      "App/Sites.cs",
+      "Core/Core.csproj",
+      "Core/Extensions.cs",
+      "Core/LeafUser.cs",
+      "Core/Methods.cs",
+      "Core/Types.cs",
+      "Leaf/Helper.cs",
+      "Leaf/Leaf.csproj",
+      "Solo/Declarations.cs",
+      "Solo/Solo.csproj"
+    ],
+    "fileHashes": {
+      "App/App.csproj": "sha256:875b972c134e8c78a9d67355029ab213bfc549d1ba0158d37b2981356d5c6e34",
+      "App/Bulk.cs": "sha256:46fd7103dbef4d73e60dc76381f47e3b42acbfd24c428a219c4e929a4a32e272",
+      "App/Sites.cs": "sha256:786b189ff0aca5c886d6e84fb9f862017ea2b0bc1259cef9537e9e936339bdb1",
+      "Core/Core.csproj": "sha256:a10779122a426f8e824e4f80545423790929185b4dd7a1728bbf961867cce93b",
+      "Core/Extensions.cs": "sha256:711e9419ad6af66ce434a837a676448a946d2a7032a0cada8433cdbb7587f46f",
+      "Core/LeafUser.cs": "sha256:02f93c6cc73b992344c37fa97d5384415bd62441c918b22f46dd418020ed713c",
+      "Core/Methods.cs": "sha256:82158b625ce989dd62dd5b66a8e63dc3ddcb8e0ba1bbf401a42b062a54f8673a",
+      "Core/Types.cs": "sha256:3a74ae4d66c2aaf43e362989fb40ae7d3c03a63357fb7910dcbc5a7b176560c5",
+      "Leaf/Helper.cs": "sha256:18eee8cce256076d6906a645b4510add6273362a6fea706407373465c7b00d0a",
+      "Leaf/Leaf.csproj": "sha256:c184a87b0f67249d52e5ab6539e80ea0c464448b0e03464f2ff173b511694949",
+      "Solo/Declarations.cs": "sha256:762714765fe6bab1aff65fb757bada25878b78461efd89ab7156fa5816239fe1",
+      "Solo/Solo.csproj": "sha256:2380bc455127f11bad949b0723b53982e947e2202589f028adf1fea002767a68"
+    },
+    "compositeHash": "sha256:3576791bd7318fb9949769d5676342a1473d84b38d42f86626e8ee6553876948",
+    "span": {
+      "path": "App/Sites.cs",
+      "line": 17
+    },
+    "expected": {
+      "identifierForm": "Add",
+      "declarationForm": "M:Corpus.Core.Methods.Add(System.Int32,System.Int32)",
+      "shapeForm": "method|0|int,int",
+      "identifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+      "declarationDigest": "af62216ef7e4072f23830e3bde5c0a25cd844c38689dcbe5e2828c8f30d561d0",
+      "shapeDigest": "4bb442d7c9fbfb3195f4fad6e2d0038d99b2b88489d683457e0c71070c1c6ad0",
+      "mappedDescriptorDigest": "compctx1:sha256:9f328083bbeeb80888089c9b2b1e1760a92475d8c99e2bcc4bb17c83c4e6c9e5",
+      "frozenDescriptorDigest": "compctx1:sha256:9f328083bbeeb80888089c9b2b1e1760a92475d8c99e2bcc4bb17c83c4e6c9e5",
+      "metadataIdentity": "Corpus.Core|0.0.0.0||",
+      "moduleName": "Corpus.Core.dll",
+      "targetId": "asmctx3:sha256:3e3e2e8cfee1a47a0abae00fa4d0bb10676a2eabd5e7335a15e672c5fcfa7aea"
+    },
+    "extraExpected": {
+      "identifierForm": "Greet",
+      "declarationForm": "M:Corpus.Core.IGreeter.Greet(System.String)",
+      "shapeForm": "method|0|string",
+      "identifierDigest": "8352c8be11821da0d2b749e82f00ac1cef2c8c61667cb998a8983d049c79f8e1",
+      "declarationDigest": "38707a66ae00d5af55d148afdbecc920994a9600302bce8115308dd12677ab99",
+      "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "mappedDescriptorDigest": "compctx1:sha256:9f328083bbeeb80888089c9b2b1e1760a92475d8c99e2bcc4bb17c83c4e6c9e5",
+      "frozenDescriptorDigest": "compctx1:sha256:9f328083bbeeb80888089c9b2b1e1760a92475d8c99e2bcc4bb17c83c4e6c9e5",
+      "metadataIdentity": "Corpus.Core|0.0.0.0||",
+      "moduleName": "Corpus.Core.dll",
+      "targetId": "asmctx3:sha256:80d9b399c79c30dbe896608f3a46f1eaa098acd73d77f0396c9f7cf02cf99ebd"
+    }
+  },
+  "fixture": {
+    "name": "fixture",
+    "repo": "p1:fixture",
+    "run": "run:fixture",
+    "files": [
+      "P1Fixture/P1App/Consumer.cs",
+      "P1Fixture/P1App/P1App.csproj",
+      "P1Fixture/P1Core/P1Core.csproj",
+      "P1Fixture/P1Core/Targets.cs"
+    ],
+    "fileHashes": {
+      "P1Fixture/P1App/Consumer.cs": "sha256:b1e4ea08489570d1598705f6900a33db242671d7d9db624181f3b5bb6d312881",
+      "P1Fixture/P1App/P1App.csproj": "sha256:d9e4c263bab2f68b837ee7d4243f1ecf3f340f26869ce9c015747aadf87b9cc4",
+      "P1Fixture/P1Core/P1Core.csproj": "sha256:3e1a9f612f8cfcc2e2a8b2ef085685f9f3d1a55c4b901e8d88af6ec37d283195",
+      "P1Fixture/P1Core/Targets.cs": "sha256:027bf6989fde7327646d99480fe4d6c1da617ed5bd9d45103c80fd6d86e7947e"
+    },
+    "compositeHash": "sha256:43f990c0bfead8eb7408605db8c903a5dde20d35730e8a727465c286edaced3f",
+    "span": {
+      "path": "P1Fixture/P1App/Consumer.cs",
+      "line": 7
+    },
+    "expected": {
+      "identifierForm": "Hit",
+      "declarationForm": "M:Fixture.Core.P1Marker.Hit(System.String)",
+      "shapeForm": "method|0|string",
+      "identifierDigest": "c023a97fdbf1a85836001d6194d127c9261a9a54c7f3f5d9c941c35fa43a1350",
+      "declarationDigest": "6db54450ec72d8155e26be08f6f8023f84c03b4d2ef68a9910f47fddd57fc57f",
+      "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+      "mappedDescriptorDigest": "compctx1:sha256:c5e9271c434a1cf4f18bf6482df37aac00f754ff43eb9b61e2bf43ddf067352c",
+      "frozenDescriptorDigest": "compctx1:sha256:c5e9271c434a1cf4f18bf6482df37aac00f754ff43eb9b61e2bf43ddf067352c",
+      "metadataIdentity": "P1Core|0.0.0.0||",
+      "moduleName": "P1Core.dll",
+      "targetId": "asmctx3:sha256:a98ee84a48e659f87709c71d6cfbb69d92996c0a362e6f846474542e7c4cdcec"
+    },
+    "extraExpected": null
+  },
+  "corpusPublish": {
+    "run": "run:corpus",
+    "status": "Completed",
+    "authorityEnvelopes": 4,
+    "batches": [
+      {
+        "unit": "csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 8,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 6,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 14,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": true,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 1
+      },
+      {
+        "unit": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 75,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 74,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 186,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": true,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 51
+      },
+      {
+        "unit": "csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 11,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 9,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 107,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": true,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 11,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 9,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 20,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:corpus",
+        "completesIndexUnit": true,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      }
+    ]
+  },
+  "fixturePublish": {
+    "run": "run:fixture",
+    "status": "Completed",
+    "authorityEnvelopes": 2,
+    "batches": [
+      {
+        "unit": "csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:fixture",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:fixture",
+        "completesIndexUnit": false,
+        "nodes": 6,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:fixture",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 4,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:fixture",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 8,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:fixture",
+        "completesIndexUnit": true,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:fixture",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 1
+      },
+      {
+        "unit": "csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:fixture",
+        "completesIndexUnit": false,
+        "nodes": 5,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:fixture",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 3,
+        "edges": 0,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:fixture",
+        "completesIndexUnit": false,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 11,
+        "occurrences": 0
+      },
+      {
+        "unit": "csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195",
+        "plugin": "penghou.hetu.csharp",
+        "run": "run:fixture",
+        "completesIndexUnit": true,
+        "nodes": 0,
+        "declarations": 0,
+        "edges": 0,
+        "occurrences": 0
+      }
+    ]
+  },
+  "nativeRows": {
+    "occurrenceMetaRows": [
+      {
+        "SchemaVersion": 1,
+        "Namespace": "andirit-occurrence-facts/1",
+        "RepositoryId": "p1:integration",
+        "PublicationIndexRunId": "run:corpus",
+        "IndexIdentity": "74488c2dec507f842d1b4b9bf4d65f4cb51c462b25679caabe39fd70598296df",
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "FactCount": 52,
+        "UnitCount": 4,
+        "PageCount": 20,
+        "AnalysisIncluded": true,
+        "CoverageState": 0,
+        "ScopeId": "analysisscope1:sha256:9aa29e6b381f20004b4ac16f62345f40796891df734a43690348e30dc894ccf7",
+        "UniverseId": "compilation-universe1:sha256:936e15bfe093bd1e7763e5bdfb707fde5d06a95ff9831c5427650f010f7ef564",
+        "CompleteCoverage": true,
+        "RequiresAuthority": true
+      },
+      {
+        "SchemaVersion": 1,
+        "Namespace": "andirit-occurrence-facts/1",
+        "RepositoryId": "p1:fixture",
+        "PublicationIndexRunId": "run:fixture",
+        "IndexIdentity": "4ea672190f8cf4af85966e64e4153216d3177abddfcdb396514b75043cf5fd9a",
+        "SnapshotIdentity": null,
+        "IsConsistentSnapshot": false,
+        "FactCount": 1,
+        "UnitCount": 2,
+        "PageCount": 1,
+        "AnalysisIncluded": true,
+        "CoverageState": 0,
+        "ScopeId": "analysisscope1:sha256:4d4c4f3e172c2372cca403ac5b2be6286d744a8c9af4f467b693fec02fbbd63d",
+        "UniverseId": "compilation-universe1:sha256:49d857c76c6c30b89fb610c502429b465fe6af3a56acb8c7dc09f0d169d7edf6",
+        "CompleteCoverage": true,
+        "RequiresAuthority": true
+      }
+    ],
+    "occurrenceMetaRowCount": 2,
+    "occurrencePages": [
+      {
+        "key": "p1:integration\nasmctx3:sha256:10931917b250ebd7a55b7f7bafe6830726676a39dde422d1cd671aa9c21188b8",
+        "payloadBytes": 420,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:3e3e2e8cfee1a47a0abae00fa4d0bb10676a2eabd5e7335a15e672c5fcfa7aea",
+        "payloadBytes": 956,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:b5159745d14d1e0f0e4e486cb7716f844f0f33c96f5c47db0418ff483e0363e4",
+        "payloadBytes": 780,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:f34e89f2052cb2e1696ac1b6786b03d5bc44807733957c2af0098496cf06c20a",
+        "payloadBytes": 780,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:d10a2ddeed68156b658e9153b9d4b73c0c7cb7467052e71a572f8eccbce08ece",
+        "payloadBytes": 600,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:34bbb1e520c1be7221ac82a9ac059f1600722f2460eed3d7fba88351984a8194",
+        "payloadBytes": 780,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:e5ef2fad842374dbc070c06d85cacbb20e8fa487a5a79d287a982782f6876263",
+        "payloadBytes": 332,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:95ce32ec0f3040441d2bdb2bc0e98c13ee5ea23bcc6aa74427786c28f0afe6bf",
+        "payloadBytes": 420,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:6fa97adb26f8b01f940ae5568a57011a888a06f51c58bbf9dcf1a1c274ef8e25",
+        "payloadBytes": 512,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:17fcfc72e56b65c7917efba91aa7063566afdb27e119a8e401dab2a5f783d411",
+        "payloadBytes": 420,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:a077660f21e24da383d5a9f5186ceed6637827461d933ed79a73b16d36d90792",
+        "payloadBytes": 420,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:b9ee06ecfb7172b3fda54b4602361c789a181ef05245ffac629c75d6dcd8725b",
+        "payloadBytes": 332,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:1f9d8b8c30e3b2eec7da8bb3710a46023edfa557e5b975d4f82d81f137ed8515",
+        "payloadBytes": 332,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:b4bf182a6a427c98319eea3acb9e0548a52ebc3b26fe1d0729407751cce648fd",
+        "payloadBytes": 332,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:80d9b399c79c30dbe896608f3a46f1eaa098acd73d77f0396c9f7cf02cf99ebd",
+        "payloadBytes": 420,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:02fd0a79219046a6c0c1d6457ea0d8ef1d0a17c72ade7fb004de7baf96b1bda3",
+        "payloadBytes": 332,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:8b7c0b2b0a14ad47b04da135887f2d9a4751c6f292c561bf4f55a951cb8c1148",
+        "payloadBytes": 332,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:990057cf879d08fb4bce730661f818f2a97e775578406f64b3514347ca555ed9",
+        "payloadBytes": 332,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:d76c66c80319f5403e5c129408e4b3fba71a995795c71cf06fda10855bbc5cab",
+        "payloadBytes": 332,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:integration\nasmctx3:sha256:be22d561889ad59b817a3c43de4ee396054150db638adbddcaaef62237549ff0",
+        "payloadBytes": 332,
+        "publicationIndexRunId": "run:corpus"
+      },
+      {
+        "key": "p1:fixture\nasmctx3:sha256:a98ee84a48e659f87709c71d6cfbb69d92996c0a362e6f846474542e7c4cdcec",
+        "payloadBytes": 328,
+        "publicationIndexRunId": "run:fixture"
+      }
+    ],
+    "occurrencePageCount": 21,
+    "occurrenceUnitCount": 6,
+    "expectedTargetPresentInUnits": {
+      "corpusAdd": true,
+      "corpusGreet": true,
+      "fixtureHit": true
+    },
+    "nativeGraphUnitRows": 6,
+    "unitPayloadExcerpts": [
+      "{\u0022RepositoryId\u0022:\u0022p1:integration\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8\u0022,\u0022AnalysisIncluded\u0022:true,\u0022Facts\u0022:[],\u0022Coverage\u0022:{\u0022InvocationFacts\u0022:0,\u0022UnsupportedCategories\u0022:0,\u0022State\u0022:0,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:9aa29e6b381f20004b4ac16f62345f40796891df734a43690348e30dc894ccf7\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:936e15bfe093bd1e7763e5bdfb707fde5d06a95ff9831c5427650f010f7ef564\u0022,\u0022DeclaredUnitCount\u0022:4,\u0022VerifiedUnitCount\u0022:4,\u0022External\u0022:0,\u0022Ambiguous\u0022:0,\u0022Unresolved\u0022:0,\u0022Unsupported\u0022:0,\u0022ConditionalInactive\u0022:1,\u0022UnavailableReasons\u0022:{},\u0022TotalFacts\u0022:0,\u0022AnalysisPerformed\u0022:true,\u0022IsComplete\u0022:true},\u0022Authority\u0022:{\u0022Version\u0022:1,\u0022RepositoryId\u0022:\u0022p1:integration\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8\u0022,\u0022SourceUnitId\u0022:\u0022csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8\u0022,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:9aa29e6b381f20004b4ac16f62345f40796891df734a43690348e30dc894ccf7\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:936e15bfe093bd1e7763e5bdfb707fde5d06a95ff9831c5427650f010f7ef564\u0022,\u0022Coverage\u0022:{\u0022InvocationFacts\u0022:0,\u0022UnsupportedCategories\u0022:0,\u0022State\u0022:0,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:9aa29e6b381f20004b4ac16f62345f40796891df734a43690348e30dc894ccf7\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:936e15bfe093bd1e7763e5bdfb707fde5d06a95ff9831c5427650f010f7ef564\u0022,\u0022DeclaredUnitCount\u0022:4,\u0022VerifiedUnitCount\u0022:4,\u0022External\u0022:0,\u0022Ambiguous\u0022:0,\u0022Unresolved\u0022:0,\u0022Unsupported\u0022:0,\u0022ConditionalInactive\u0022:1,\u0022UnavailableReasons\u0022:{},\u0022TotalFacts\u0022:0,\u0022AnalysisPerformed\u0022:true,\u0022IsComplete\u0022:true},\u0022Members\u0022:[{\u0022ProjectUnitId\u0022:\u0022csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:7b5b2dc62f7bf9b02638ca5e89a526b540612adea0c4e9f053dfa596468153bd\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:321d755c3ff9cbf744252dbed448236d865081181e978bb44ff415e34647d281\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:21cf0c7e32e734c7bbc03967b1325d6a43a06e1ed834871cab417b414af6500e\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:438095de65c9c8f279532989f25ce176e9dd19ffd957e27cf85f2a264b1c7083\u0022}],\u0022Facts\u0022:[]},\u0022RequiresAuthority\u0022:true,\u0022AuthorityPublicationIndexRunId\u0022:\u0022run:corpus\u0022}",
+      "{\u0022RepositoryId\u0022:\u0022p1:integration\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583\u0022,\u0022AnalysisIncluded\u0022:true,\u0022Facts\u0022:[{\u0022Id\u0022:{\u0022Value\u0022:\u00221dc9533d6b76fcf11bbb381a80599c30436ab35b49140ee7cde98c3141932884\u0022},\u0022TargetId\u0022:{\u0022Value\u0022:\u0022asmctx3:sha256:10931917b250ebd7a55b7f7bafe6830726676a39dde422d1cd671aa9c21188b8\u0022},\u0022TargetDocumentId\u0022:\u0022M:Corpus.Leaf.Helper.Compute(System.Int32)\u0022,\u0022RepositoryId\u0022:{\u0022Value\u0022:\u0022p1:integration\u0022},\u0022Category\u0022:0,\u0022SourceUnitId\u0022:\u0022csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583\u0022,\u0022Contributor\u0022:{\u0022PluginId\u0022:{\u0022Value\u0022:\u0022penghou.hetu.csharp\u0022},\u0022IndexUnitId\u0022:\u0022csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583\u0022},\u0022Span\u0022:{\u0022Path\u0022:\u0022Core/LeafUser.cs\u0022,\u0022StartLine\u0022:9,\u0022StartColumn\u0022:55,\u0022EndLine\u0022:9,\u0022EndColumn\u0022:62},\u0022DeclarationSpan\u0022:{\u0022Path\u0022:\u0022Leaf/Helper.cs\u0022,\u0022StartLine\u0022:10,\u0022StartColumn\u0022:5,\u0022EndLine\u0022:10,\u0022EndColumn\u0022:55},\u0022SourceHash\u0022:\u0022sha256:02f93c6cc73b992344c37fa97d5384415bd62441c918b22f46dd418020ed713c\u0022,\u0022ContentHash\u0022:\u0022sha256:02f93c6cc73b992344c37fa97d5384415bd62441c918b22f46dd418020ed713c\u0022,\u0022PluginVersion\u0022:\u00220.2.0-preview.6\u0022,\u0022SemanticsVersion\u0022:4,\u0022PayloadHash\u0022:\u00224a861123a424efc6a539cc573f3cf6ec14249b3a757da2b224a3cb5d432f483c\u0022}],\u0022Coverage\u0022:{\u0022InvocationFacts\u0022:1,\u0022UnsupportedCategories\u0022:1,\u0022State\u0022:0,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:9aa29e6b381f20004b4ac16f62345f40796891df734a43690348e30dc894ccf7\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:936e15bfe093bd1e7763e5bdfb707fde5d06a95ff9831c5427650f010f7ef564\u0022,\u0022DeclaredUnitCount\u0022:4,\u0022VerifiedUnitCount\u0022:4,\u0022External\u0022:0,\u0022Ambiguous\u0022:0,\u0022Unresolved\u0022:3,\u0022Unsupported\u0022:1,\u0022ConditionalInactive\u0022:1,\u0022UnavailableReasons\u0022:{},\u0022TotalFacts\u0022:1,\u0022AnalysisPerformed\u0022:true,\u0022IsComplete\u0022:true},\u0022Authority\u0022:{\u0022Version\u0022:1,\u0022RepositoryId\u0022:\u0022p1:integration\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583\u0022,\u0022SourceUnitId\u0022:\u0022csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583\u0022,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:9aa29e6b381f20004b4ac16f62345f40796891df734a43690348e30dc894ccf7\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:936e15bfe093bd1e7763e5bdfb707fde5d06a95ff9831c5427650f010f7ef564\u0022,\u0022Coverage\u0022:{\u0022InvocationFacts\u0022:1,\u0022UnsupportedCategories\u0022:1,\u0022State\u0022:0,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:9aa29e6b381f20004b4ac16f62345f40796891df734a43690348e30dc894ccf7\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:936e15bfe093bd1e7763e5bdfb707fde5d06a95ff9831c5427650f010f7ef564\u0022,\u0022DeclaredUnitCount\u0022:4,\u0022VerifiedUnitCount\u0022:4,\u0022External\u0022:0,\u0022Ambiguous\u0022:0,\u0022Unresolved\u0022:3,\u0022Unsupported\u0022:1,\u0022ConditionalInactive\u0022:1,\u0022UnavailableReasons\u0022:{},\u0022TotalFacts\u0022:1,\u0022AnalysisPerformed\u0022:true,\u0022IsComplete\u0022:true},\u0022Members\u0022:[{\u0022ProjectUnitId\u0022:\u0022csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:7b5b2dc62f7bf9b02638ca5e89a526b540612adea0c4e9f053dfa596468153bd\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:321d755c3ff9cbf744252dbed448236d865081181e978bb44ff415e34647d281\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:21cf0c7e32e734c7bbc03967b1325d6a43a06e1ed834871cab417b414af6500e\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:438095de65c9c8f279532989f25ce176e9dd19ffd957e27cf85f2a264b1c7083\u0022}],\u0022Facts\u0022:[{\u0022OccurrenceId\u0022:\u00221dc9533d6b76fcf11bbb381a80599c30436ab35b49140ee7cde98c3141932884\u0022,\u0022PayloadHash\u0022:\u00224a861123a424efc6a539cc573f3cf6ec14249b3a757da2b224a3cb5d432f483c\u0022,\u0022TargetId\u0022:\u0022asmctx3:sha256:10931917b250ebd7a55b7f7bafe6830726676a39dde422d1cd671aa9c21188b8\u0022,\u0022DefiningProjectUnitId\u0022:\u0022csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:7b5b2dc62f7bf9b02638ca5e89a526b540612adea0c4e9f053dfa596468153bd\u0022,\u0022IdentifierDigest\u0022:\u002260a0",
+      "{\u0022RepositoryId\u0022:\u0022p1:integration\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022,\u0022AnalysisIncluded\u0022:true,\u0022Facts\u0022:[{\u0022Id\u0022:{\u0022Value\u0022:\u0022867f5a037009ad32f84fc32181c18c3701dd13136ac736a28f0870b40931a3e0\u0022},\u0022TargetId\u0022:{\u0022Value\u0022:\u0022asmctx3:sha256:3e3e2e8cfee1a47a0abae00fa4d0bb10676a2eabd5e7335a15e672c5fcfa7aea\u0022},\u0022TargetDocumentId\u0022:\u0022M:Corpus.Core.Methods.Add(System.Int32,System.Int32)\u0022,\u0022RepositoryId\u0022:{\u0022Value\u0022:\u0022p1:integration\u0022},\u0022Category\u0022:0,\u0022SourceUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022,\u0022Contributor\u0022:{\u0022PluginId\u0022:{\u0022Value\u0022:\u0022penghou.hetu.csharp\u0022},\u0022IndexUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022},\u0022Span\u0022:{\u0022Path\u0022:\u0022App/Bulk.cs\u0022,\u0022StartLine\u0022:20,\u0022StartColumn\u0022:30,\u0022EndLine\u0022:20,\u0022EndColumn\u0022:33},\u0022DeclarationSpan\u0022:{\u0022Path\u0022:\u0022Core/Methods.cs\u0022,\u0022StartLine\u0022:10,\u0022StartColumn\u0022:5,\u0022EndLine\u0022:10,\u0022EndColumn\u0022:43},\u0022SourceHash\u0022:\u0022sha256:46fd7103dbef4d73e60dc76381f47e3b42acbfd24c428a219c4e929a4a32e272\u0022,\u0022ContentHash\u0022:\u0022sha256:46fd7103dbef4d73e60dc76381f47e3b42acbfd24c428a219c4e929a4a32e272\u0022,\u0022PluginVersion\u0022:\u00220.2.0-preview.6\u0022,\u0022SemanticsVersion\u0022:4,\u0022PayloadHash\u0022:\u0022f6ff56deadd8021d9b86d19d62258db91ce88cb3684894bec4e12b66914f5f80\u0022},{\u0022Id\u0022:{\u0022Value\u0022:\u00228234173e34634de2b9c6d96b1d2d9464f465d4d44e65dcbc3c6b02aaec26954a\u0022},\u0022TargetId\u0022:{\u0022Value\u0022:\u0022asmctx3:sha256:3e3e2e8cfee1a47a0abae00fa4d0bb10676a2eabd5e7335a15e672c5fcfa7aea\u0022},\u0022TargetDocumentId\u0022:\u0022M:Corpus.Core.Methods.Add(System.Int32,System.Int32)\u0022,\u0022RepositoryId\u0022:{\u0022Value\u0022:\u0022p1:integration\u0022},\u0022Category\u0022:0,\u0022SourceUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022,\u0022Contributor\u0022:{\u0022PluginId\u0022:{\u0022Value\u0022:\u0022penghou.hetu.csharp\u0022},\u0022IndexUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022},\u0022Span\u0022:{\u0022Path\u0022:\u0022App/Bulk.cs\u0022,\u0022StartLine\u0022:21,\u0022StartColumn\u0022:30,\u0022EndLine\u0022:21,\u0022EndColumn\u0022:33},\u0022DeclarationSpan\u0022:{\u0022Path\u0022:\u0022Core/Methods.cs\u0022,\u0022StartLine\u0022:10,\u0022StartColumn\u0022:5,\u0022EndLine\u0022:10,\u0022EndColumn\u0022:43},\u0022SourceHash\u0022:\u0022sha256:46fd7103dbef4d73e60dc76381f47e3b42acbfd24c428a219c4e929a4a32e272\u0022,\u0022ContentHash\u0022:\u0022sha256:46fd7103dbef4d73e60dc76381f47e3b42acbfd24c428a219c4e929a4a32e272\u0022,\u0022PluginVersion\u0022:\u00220.2.0-preview.6\u0022,\u0022SemanticsVersion\u0022:4,\u0022PayloadHash\u0022:\u0022fb1656cb6cc18c8a11f98e43566811492f8cc91546b172767063d6258bf77a4f\u0022},{\u0022Id\u0022:{\u0022Value\u0022:\u00226df389e7e3b33da09cf26e50fd838150b37495364a928c6dc553ed64cb1e006f\u0022},\u0022TargetId\u0022:{\u0022Value\u0022:\u0022asmctx3:sha256:3e3e2e8cfee1a47a0abae00fa4d0bb10676a2eabd5e7335a15e672c5fcfa7aea\u0022},\u0022TargetDocumentId\u0022:\u0022M:Corpus.Core.Methods.Add(System.Int32,System.Int32)\u0022,\u0022RepositoryId\u0022:{\u0022Value\u0022:\u0022p1:integration\u0022},\u0022Category\u0022:0,\u0022SourceUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022,\u0022Contributor\u0022:{\u0022PluginId\u0022:{\u0022Value\u0022:\u0022penghou.hetu.csharp\u0022},\u0022IndexUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022},\u0022Span\u0022:{\u0022Path\u0022:\u0022App/Bulk.cs\u0022,\u0022StartLine\u0022:22,\u0022StartColumn\u0022:30,\u0022EndLine\u0022:22,\u0022EndColumn\u0022:33},\u0022DeclarationSpan\u0022:{\u0022Path\u0022:\u0022Core/Methods.cs\u0022,\u0022StartLine\u0022:10,\u0022StartColumn\u0022:5,\u0022EndLine\u0022:10,\u0022EndColumn\u0022:43},\u0022SourceHash\u0022:\u0022sha256:46fd7103dbef4d73e60dc76381f47e3b42acbfd24c428a219c4e929a4a32e272\u0022,\u0022ContentHash\u0022:\u0022sha256:46fd7103dbef4d73e60dc76381f47e3b42acbfd24c428a219c4e929a4a32e272\u0022,\u0022PluginVersion\u0022:\u00220.2.0-preview.6\u0022,\u0022SemanticsVersion\u0022:4,\u0022PayloadHash\u0022:\u0022041b6db42f35bc58c7695a42202f58ca66fac9bce572c64ef7c947081791e0cc\u0022},{\u0022Id\u0022:{\u0022Value\u0022:\u0022293f84569896a60ba79d8f30dd2d3c08bce56b1fd9fcede6ead66c2cf079c4b6\u0022},\u0022TargetId\u0022:{\u0022Value\u0022:\u0022asmctx3:sha256:3e3e2e8cfee1a47a0abae00fa4d0bb10676a2eabd5e7335a15e672c5fcfa7aea\u0022},\u0022TargetDocumentId\u0022:\u0022M:Corpus.Core.Methods.Add(System.Int32,System.Int32)\u0022,\u0022RepositoryId\u0022:{\u0022Value\u0022:\u0022p1:integration\u0022},\u0022Category\u0022:0,\u0022SourceUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022,\u0022Contributor\u0022:{\u0022PluginId\u0022:{\u0022Value\u0022:\u0022penghou.hetu.csharp\u0022},\u0022IndexUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022},\u0022Span\u0022:{\u0022Path\u0022:\u0022App",
+      "{\u0022RepositoryId\u0022:\u0022p1:integration\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a\u0022,\u0022AnalysisIncluded\u0022:true,\u0022Facts\u0022:[],\u0022Coverage\u0022:{\u0022InvocationFacts\u0022:0,\u0022UnsupportedCategories\u0022:0,\u0022State\u0022:0,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:9aa29e6b381f20004b4ac16f62345f40796891df734a43690348e30dc894ccf7\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:936e15bfe093bd1e7763e5bdfb707fde5d06a95ff9831c5427650f010f7ef564\u0022,\u0022DeclaredUnitCount\u0022:4,\u0022VerifiedUnitCount\u0022:4,\u0022External\u0022:0,\u0022Ambiguous\u0022:0,\u0022Unresolved\u0022:0,\u0022Unsupported\u0022:0,\u0022ConditionalInactive\u0022:0,\u0022UnavailableReasons\u0022:{},\u0022TotalFacts\u0022:0,\u0022AnalysisPerformed\u0022:true,\u0022IsComplete\u0022:true},\u0022Authority\u0022:{\u0022Version\u0022:1,\u0022RepositoryId\u0022:\u0022p1:integration\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a\u0022,\u0022SourceUnitId\u0022:\u0022csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a\u0022,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:9aa29e6b381f20004b4ac16f62345f40796891df734a43690348e30dc894ccf7\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:936e15bfe093bd1e7763e5bdfb707fde5d06a95ff9831c5427650f010f7ef564\u0022,\u0022Coverage\u0022:{\u0022InvocationFacts\u0022:0,\u0022UnsupportedCategories\u0022:0,\u0022State\u0022:0,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:9aa29e6b381f20004b4ac16f62345f40796891df734a43690348e30dc894ccf7\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:936e15bfe093bd1e7763e5bdfb707fde5d06a95ff9831c5427650f010f7ef564\u0022,\u0022DeclaredUnitCount\u0022:4,\u0022VerifiedUnitCount\u0022:4,\u0022External\u0022:0,\u0022Ambiguous\u0022:0,\u0022Unresolved\u0022:0,\u0022Unsupported\u0022:0,\u0022ConditionalInactive\u0022:0,\u0022UnavailableReasons\u0022:{},\u0022TotalFacts\u0022:0,\u0022AnalysisPerformed\u0022:true,\u0022IsComplete\u0022:true},\u0022Members\u0022:[{\u0022ProjectUnitId\u0022:\u0022csharp:project:111d69c598ea465637db697ed8c1df6e57d239211b2c136fa67168b6956d62f8\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:7b5b2dc62f7bf9b02638ca5e89a526b540612adea0c4e9f053dfa596468153bd\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:396233b7c81a46ef9ef1115ebfa3e3de10d5e17711d435ec6fbff8501d253a7a\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:321d755c3ff9cbf744252dbed448236d865081181e978bb44ff415e34647d281\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:94c63064f49eeaccb60140a697171a915648e90cec09dd5b168e9e969b250311\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:21cf0c7e32e734c7bbc03967b1325d6a43a06e1ed834871cab417b414af6500e\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:438095de65c9c8f279532989f25ce176e9dd19ffd957e27cf85f2a264b1c7083\u0022}],\u0022Facts\u0022:[]},\u0022RequiresAuthority\u0022:true,\u0022AuthorityPublicationIndexRunId\u0022:\u0022run:corpus\u0022}",
+      "{\u0022RepositoryId\u0022:\u0022p1:fixture\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6\u0022,\u0022AnalysisIncluded\u0022:true,\u0022Facts\u0022:[],\u0022Coverage\u0022:{\u0022InvocationFacts\u0022:0,\u0022UnsupportedCategories\u0022:0,\u0022State\u0022:0,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:4d4c4f3e172c2372cca403ac5b2be6286d744a8c9af4f467b693fec02fbbd63d\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:49d857c76c6c30b89fb610c502429b465fe6af3a56acb8c7dc09f0d169d7edf6\u0022,\u0022DeclaredUnitCount\u0022:2,\u0022VerifiedUnitCount\u0022:2,\u0022External\u0022:0,\u0022Ambiguous\u0022:0,\u0022Unresolved\u0022:0,\u0022Unsupported\u0022:0,\u0022ConditionalInactive\u0022:0,\u0022UnavailableReasons\u0022:{},\u0022TotalFacts\u0022:0,\u0022AnalysisPerformed\u0022:true,\u0022IsComplete\u0022:true},\u0022Authority\u0022:{\u0022Version\u0022:1,\u0022RepositoryId\u0022:\u0022p1:fixture\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6\u0022,\u0022SourceUnitId\u0022:\u0022csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6\u0022,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:4d4c4f3e172c2372cca403ac5b2be6286d744a8c9af4f467b693fec02fbbd63d\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:49d857c76c6c30b89fb610c502429b465fe6af3a56acb8c7dc09f0d169d7edf6\u0022,\u0022Coverage\u0022:{\u0022InvocationFacts\u0022:0,\u0022UnsupportedCategories\u0022:0,\u0022State\u0022:0,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:4d4c4f3e172c2372cca403ac5b2be6286d744a8c9af4f467b693fec02fbbd63d\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:49d857c76c6c30b89fb610c502429b465fe6af3a56acb8c7dc09f0d169d7edf6\u0022,\u0022DeclaredUnitCount\u0022:2,\u0022VerifiedUnitCount\u0022:2,\u0022External\u0022:0,\u0022Ambiguous\u0022:0,\u0022Unresolved\u0022:0,\u0022Unsupported\u0022:0,\u0022ConditionalInactive\u0022:0,\u0022UnavailableReasons\u0022:{},\u0022TotalFacts\u0022:0,\u0022AnalysisPerformed\u0022:true,\u0022IsComplete\u0022:true},\u0022Members\u0022:[{\u0022ProjectUnitId\u0022:\u0022csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:c36ceeeedce3fb5637426ad21845224bceab9da05209753909d4d496e2e04811\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:ce4e0d3d91dad685b00c013e8f113db3e6d2adf769804cb75cc579f26148b276\u0022}],\u0022Facts\u0022:[]},\u0022RequiresAuthority\u0022:true,\u0022AuthorityPublicationIndexRunId\u0022:\u0022run:fixture\u0022}",
+      "{\u0022RepositoryId\u0022:\u0022p1:fixture\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195\u0022,\u0022AnalysisIncluded\u0022:true,\u0022Facts\u0022:[{\u0022Id\u0022:{\u0022Value\u0022:\u00229ec069139eccdefdeb426b9acc5f19a2e3cfc1382913cbbfd88ddfc4e91645ce\u0022},\u0022TargetId\u0022:{\u0022Value\u0022:\u0022asmctx3:sha256:a98ee84a48e659f87709c71d6cfbb69d92996c0a362e6f846474542e7c4cdcec\u0022},\u0022TargetDocumentId\u0022:\u0022M:Fixture.Core.P1Marker.Hit(System.String)\u0022,\u0022RepositoryId\u0022:{\u0022Value\u0022:\u0022p1:fixture\u0022},\u0022Category\u0022:0,\u0022SourceUnitId\u0022:\u0022csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195\u0022,\u0022Contributor\u0022:{\u0022PluginId\u0022:{\u0022Value\u0022:\u0022penghou.hetu.csharp\u0022},\u0022IndexUnitId\u0022:\u0022csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195\u0022},\u0022Span\u0022:{\u0022Path\u0022:\u0022P1Fixture/P1App/Consumer.cs\u0022,\u0022StartLine\u0022:7,\u0022StartColumn\u0022:18,\u0022EndLine\u0022:7,\u0022EndColumn\u0022:21},\u0022DeclarationSpan\u0022:{\u0022Path\u0022:\u0022P1Fixture/P1Core/Targets.cs\u0022,\u0022StartLine\u0022:4,\u0022StartColumn\u0022:5,\u0022EndLine\u0022:4,\u0022EndColumn\u0022:45},\u0022SourceHash\u0022:\u0022sha256:b1e4ea08489570d1598705f6900a33db242671d7d9db624181f3b5bb6d312881\u0022,\u0022ContentHash\u0022:\u0022sha256:b1e4ea08489570d1598705f6900a33db242671d7d9db624181f3b5bb6d312881\u0022,\u0022PluginVersion\u0022:\u00220.2.0-preview.6\u0022,\u0022SemanticsVersion\u0022:4,\u0022PayloadHash\u0022:\u0022478d2ec7e6b0b2667c454e98bbba22416dc7ef47aef2fcbe0c85a337f7315360\u0022}],\u0022Coverage\u0022:{\u0022InvocationFacts\u0022:1,\u0022UnsupportedCategories\u0022:0,\u0022State\u0022:0,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:4d4c4f3e172c2372cca403ac5b2be6286d744a8c9af4f467b693fec02fbbd63d\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:49d857c76c6c30b89fb610c502429b465fe6af3a56acb8c7dc09f0d169d7edf6\u0022,\u0022DeclaredUnitCount\u0022:2,\u0022VerifiedUnitCount\u0022:2,\u0022External\u0022:0,\u0022Ambiguous\u0022:0,\u0022Unresolved\u0022:0,\u0022Unsupported\u0022:0,\u0022ConditionalInactive\u0022:0,\u0022UnavailableReasons\u0022:{},\u0022TotalFacts\u0022:1,\u0022AnalysisPerformed\u0022:true,\u0022IsComplete\u0022:true},\u0022Authority\u0022:{\u0022Version\u0022:1,\u0022RepositoryId\u0022:\u0022p1:fixture\u0022,\u0022PluginId\u0022:\u0022penghou.hetu.csharp\u0022,\u0022IndexUnitId\u0022:\u0022csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195\u0022,\u0022SourceUnitId\u0022:\u0022csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195\u0022,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:4d4c4f3e172c2372cca403ac5b2be6286d744a8c9af4f467b693fec02fbbd63d\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:49d857c76c6c30b89fb610c502429b465fe6af3a56acb8c7dc09f0d169d7edf6\u0022,\u0022Coverage\u0022:{\u0022InvocationFacts\u0022:1,\u0022UnsupportedCategories\u0022:0,\u0022State\u0022:0,\u0022ScopeId\u0022:\u0022analysisscope1:sha256:4d4c4f3e172c2372cca403ac5b2be6286d744a8c9af4f467b693fec02fbbd63d\u0022,\u0022UniverseId\u0022:\u0022compilation-universe1:sha256:49d857c76c6c30b89fb610c502429b465fe6af3a56acb8c7dc09f0d169d7edf6\u0022,\u0022DeclaredUnitCount\u0022:2,\u0022VerifiedUnitCount\u0022:2,\u0022External\u0022:0,\u0022Ambiguous\u0022:0,\u0022Unresolved\u0022:0,\u0022Unsupported\u0022:0,\u0022ConditionalInactive\u0022:0,\u0022UnavailableReasons\u0022:{},\u0022TotalFacts\u0022:1,\u0022AnalysisPerformed\u0022:true,\u0022IsComplete\u0022:true},\u0022Members\u0022:[{\u0022ProjectUnitId\u0022:\u0022csharp:project:bc752a854e7fa8566611ecb3d835ba0dbc12b4cb084a7c5ed5ed0f64d0067195\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:c36ceeeedce3fb5637426ad21845224bceab9da05209753909d4d496e2e04811\u0022},{\u0022ProjectUnitId\u0022:\u0022csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:ce4e0d3d91dad685b00c013e8f113db3e6d2adf769804cb75cc579f26148b276\u0022}],\u0022Facts\u0022:[{\u0022OccurrenceId\u0022:\u00229ec069139eccdefdeb426b9acc5f19a2e3cfc1382913cbbfd88ddfc4e91645ce\u0022,\u0022PayloadHash\u0022:\u0022478d2ec7e6b0b2667c454e98bbba22416dc7ef47aef2fcbe0c85a337f7315360\u0022,\u0022TargetId\u0022:\u0022asmctx3:sha256:a98ee84a48e659f87709c71d6cfbb69d92996c0a362e6f846474542e7c4cdcec\u0022,\u0022DefiningProjectUnitId\u0022:\u0022csharp:project:dbf03ef184ebb815c1c457f074cce31f4faf0749f894ab1349776cefccf488a6\u0022,\u0022Compctx2\u0022:\u0022compctx2:sha256:ce4e0d3d91dad685b00c013e8f113db3e6d2adf769804cb75cc579f26148b276\u0022,\u0022IdentifierDigest\u0022:\u0022c023a97fdbf1a85836001d6194d127c9261a9a54c7f3f5d9c941c35fa43a1350\u0022,\u0022DeclarationDigest\u0022:\u00226db54450ec72d8155e26be08f6f8023f84c03b4d2ef68a9910f47fddd57fc57f\u0022,\u0022ShapeDigest\u0022:\u0022a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c\u0022}]},\u0022RequiresAuthority\u0022:true,\u0022AuthorityPublicationIndexRunId\u0022:\u0022run:fixture\u0022}"
+    ]
+  },
+  "storageLayerRefusal": {
+    "scenario": "edge with missing endpoint",
+    "outcome": "refused",
+    "exceptionType": "CodeGraphBatchRejectedException",
+    "message": "The index-unit replacement would violate graph invariants.",
+    "errorCodes": [
+      "graph.edge.endpoint-missing"
+    ]
+  }
+}
