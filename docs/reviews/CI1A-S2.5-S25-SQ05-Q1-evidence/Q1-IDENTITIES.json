@@ -1,0 +1,88 @@
+﻿{
+    "commission":  "ANDIRIT-CI1A-S2.5-S25-SQ05-Q1",
+    "method":  "primary-source verification: Git objects, git ls-remote, GitHub PR/run API; fresh read-only remote inspection; G1 section 7 binding conditions applied verbatim",
+    "pinnedCommit":  "7457284451dff8ddb0417f83ecc19097103316fc",
+    "pinnedTree":  "fba379453ceb3088cab97141ebae5c4c4978e3d3",
+    "remoteBranchSha":  "7457284451dff8ddb0417f83ecc19097103316fc",
+    "prHead":  "7457284451dff8ddb0417f83ecc19097103316fc",
+    "prBase":  "443c192733a53d2f1da415743debb84e8c81acb5",
+    "runHeadSha":  "7457284451dff8ddb0417f83ecc19097103316fc",
+    "runConclusion":  "failure",
+    "mergeCommit":  "331ad6062908458665a40ca0c777b79507c52709",
+    "mergeTree":  "fba379453ceb3088cab97141ebae5c4c4978e3d3",
+    "workflowBlob":  "be48426f9be77eacf5dc3de925566126eedad03b",
+    "ok":  true,
+    "checks":  [
+                   {
+                       "check":  "1a. pinned qualification commit exists",
+                       "pass":  true,
+                       "detail":  "type=commit"
+                   },
+                   {
+                       "check":  "1b. pinned commit tree equals the authorized tree",
+                       "pass":  true,
+                       "detail":  "tree=fba379453ceb3088cab97141ebae5c4c4978e3d3"
+                   },
+                   {
+                       "check":  "1c. pinned commit is an ancestor of the reviewed HEAD",
+                       "pass":  true,
+                       "detail":  "head=df57a2a52bd89ff54e56faaf384ff98d7aa0a9b2"
+                   },
+                   {
+                       "check":  "1d. implementation identical from pinned to HEAD (src/tests/.github)",
+                       "pass":  true,
+                       "detail":  "diff=[]"
+                   },
+                   {
+                       "check":  "2. remote qualification branch HEAD equals the pinned commit",
+                       "pass":  true,
+                       "detail":  "ls-remote=7457284451dff8ddb0417f83ecc19097103316fc\trefs/heads/qualification/ci1a-s25-sq05-linux"
+                   },
+                   {
+                       "check":  "3. PR head SHA equals the pinned commit",
+                       "pass":  true,
+                       "detail":  "headRefOid=7457284451dff8ddb0417f83ecc19097103316fc"
+                   },
+                   {
+                       "check":  "3b. PR base is main at the recorded remote state",
+                       "pass":  true,
+                       "detail":  "baseRefOid=443c192733a53d2f1da415743debb84e8c81acb5"
+                   },
+                   {
+                       "check":  "3c. PR #6 is OPEN (not merged)",
+                       "pass":  true,
+                       "detail":  "state=OPEN"
+                   },
+                   {
+                       "check":  "4. workflow run head_sha equals the pinned commit",
+                       "pass":  true,
+                       "detail":  "head_sha=7457284451dff8ddb0417f83ecc19097103316fc"
+                   },
+                   {
+                       "check":  "4b. run is the pull_request CI workflow on the hosted runner",
+                       "pass":  true,
+                       "detail":  "event=pull_request name=ci status=completed conclusion=failure"
+                   },
+                   {
+                       "check":  "5a. synthetic merge commit exists on the remote",
+                       "pass":  true,
+                       "detail":  "merge=331ad6062908458665a40ca0c777b79507c52709"
+                   },
+                   {
+                       "check":  "5b. synthetic merge TREE equals the authorized qualification tree (G1 binding condition)",
+                       "pass":  true,
+                       "detail":  "tree=fba379453ceb3088cab97141ebae5c4c4978e3d3"
+                   },
+                   {
+                       "check":  "5c. synthetic merge contains the pinned commit",
+                       "pass":  true,
+                       "detail":  "merge=331ad6062908458665a40ca0c777b79507c52709 pinned=7457284451dff8ddb0417f83ecc19097103316fc"
+                   },
+                   {
+                       "check":  "6. workflow blob identical at pinned revision, HEAD, and index",
+                       "pass":  true,
+                       "detail":  "blob=be48426f9be77eacf5dc3de925566126eedad03b"
+                   }
+               ],
+    "generatedAt":  "2026-11-10T12:13:25.0630163+08:00"
+}

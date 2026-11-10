@@ -1,0 +1,353 @@
+﻿test (ubuntu-latest)	Set up job	∩╗┐2026-11-10T02:39:54.5202921Z Current runner version: '2.338.2'
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5229322Z ##[group]Runner Image Provisioner
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5230286Z Hosted Compute Agent
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5231094Z Version: 20261028.624
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5231891Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5232640Z Build Date: 2026-10-28T21:51:42Z
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5233365Z Worker ID: {904543eb-335c-4859-b1a1-e1ed31a67ad8}
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5234099Z Region: westus
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5234654Z Cloud: Azure
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5235282Z ##[endgroup]
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5237183Z ##[group]Operating System
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5237977Z Ubuntu
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5238531Z 24.04.5
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5239052Z LTS
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5239659Z ##[endgroup]
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5240233Z ##[group]Runner Image
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5241080Z Image: ubuntu-24.04
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5241775Z Version: 20261101.360.1
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5242874Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5244844Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5245816Z ##[endgroup]
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5247027Z ##[group]GITHUB_TOKEN Permissions
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5248945Z Contents: read
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5249689Z Metadata: read
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5250263Z ##[endgroup]
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5252930Z Secret source: Actions
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5253978Z Cache mode: write
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5254776Z Prepare workflow directory
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5603316Z Prepare all required actions
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.5654550Z Getting action download info
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:54.9465047Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:55.0798368Z Download action repository 'actions/setup-dotnet@v5' (SHA:26b0ec14cb23fa6904739307f278c14f94c95bf1)
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:55.4472042Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+test (ubuntu-latest)	Set up job	2026-11-10T02:39:55.6537746Z Complete job name: test (ubuntu-latest)
+test (ubuntu-latest)	Run actions/checkout@v4	∩╗┐2026-11-10T02:39:55.7457240Z ##[group]Run actions/checkout@v4
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7458154Z with:
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7458623Z   repository: jenolaszlo-sketch/andirit
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7462623Z   token: ***
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7463076Z   ssh-strict: true
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7463526Z   ssh-user: git
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7463979Z   persist-credentials: true
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7464466Z   clean: true
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7464911Z   sparse-checkout-cone-mode: true
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7465437Z   fetch-depth: 1
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7465881Z   fetch-tags: false
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7466330Z   show-progress: true
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7466776Z   lfs: false
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7467192Z   submodules: false
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7467658Z   set-safe-directory: true
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7468188Z   allow-unsafe-pr-checkout: false
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:55.7468985Z ##[endgroup]
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0269698Z Syncing repository: jenolaszlo-sketch/andirit
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0272739Z ##[group]Getting Git version info
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0273971Z Working directory is '/home/runner/work/andirit/andirit'
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0275424Z [command]/usr/bin/git version
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0390158Z git version 2.56.0
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0418572Z ##[endgroup]
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0435728Z Temporarily overriding HOME='/home/runner/work/_temp/2c0238dc-7412-4387-8671-cebf992e89ff' before making global git config changes
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0438729Z Adding repository directory to the temporary git global config as a safe directory
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0443980Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/andirit/andirit
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0529195Z Deleting the contents of '/home/runner/work/andirit/andirit'
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0531471Z ##[group]Initializing the repository
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0533073Z [command]/usr/bin/git init /home/runner/work/andirit/andirit
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0664332Z hint: Using 'master' as the name for the initial branch. This default branch name
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0667013Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0668694Z hint: to use in all of your new repositories, which will suppress this warning,
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0669748Z hint: call:
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0670299Z hint:
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0671394Z hint: 	git config --global init.defaultBranch <name>
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0672325Z hint:
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0673133Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0674845Z hint: 'development'. The just-created branch can be renamed via this command:
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0676433Z hint:
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0677191Z hint: 	git branch -m <name>
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0678055Z hint:
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0679197Z hint: Disable this message with "git config set advice.defaultBranchName false"
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0681385Z Initialized empty Git repository in /home/runner/work/andirit/andirit/.git/
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0691991Z [command]/usr/bin/git remote add origin https://github.com/jenolaszlo-sketch/andirit
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0748895Z ##[endgroup]
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0750292Z ##[group]Disabling automatic garbage collection
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0755615Z [command]/usr/bin/git config --local gc.auto 0
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0796878Z ##[endgroup]
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0805451Z ##[group]Setting up auth
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0806808Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.0849218Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.1270592Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.1353453Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.1581691Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.1630174Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.1882705Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.1936204Z ##[endgroup]
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.1937175Z ##[group]Fetching the repository
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:56.1950311Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +331ad6062908458665a40ca0c777b79507c52709:refs/remotes/pull/6/merge
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.1857984Z From https://github.com/jenolaszlo-sketch/andirit
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.1859556Z  * [new ref]         331ad6062908458665a40ca0c777b79507c52709 -> pull/6/merge
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.1863862Z ##[endgroup]
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.1865060Z ##[group]Determining the checkout info
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.1867335Z ##[endgroup]
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.1874565Z [command]/usr/bin/git sparse-checkout disable
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.1941855Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.2078810Z ##[group]Checking out the ref
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.2080509Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/6/merge
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4009418Z evidence: is not a valid attribute name: docs/reviews/CI1A-S2.5-S25-SQ04-Q1-evidence/.gitattributes:1
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4026184Z evidence: is not a valid attribute name: docs/reviews/CI1A-S2.5-WP-S25-1-BIND-01-evidence/.gitattributes:1
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4406945Z Note: switching to 'refs/remotes/pull/6/merge'.
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4407813Z 
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4408338Z You are in 'detached HEAD' state. You can look around, make experimental
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4409516Z changes and commit them, and you can discard any commits you make in this
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4410767Z state without impacting any branches by switching back to a branch.
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4412264Z 
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4412849Z If you want to create a new branch to retain commits you create, you may
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4414123Z do so (now or later) by using -c with the switch command. Example:
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4414824Z 
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4415220Z   git switch -c <new-branch-name>
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4415749Z 
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4416107Z Or undo this operation with:
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4416606Z 
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4417010Z   git switch -
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4417447Z 
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4418037Z Turn off this advice by setting config variable advice.detachedHead to false
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4418848Z 
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4419712Z HEAD is now at 331ad60 Merge 7457284451dff8ddb0417f83ecc19097103316fc into 443c192733a53d2f1da415743debb84e8c81acb5
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4441359Z ##[endgroup]
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4498398Z [command]/usr/bin/git log -1 --format=%H
+test (ubuntu-latest)	Run actions/checkout@v4	2026-11-10T02:39:57.4533731Z 331ad6062908458665a40ca0c777b79507c52709
+test (ubuntu-latest)	Run actions/setup-dotnet@v5	∩╗┐2026-11-10T02:39:57.4828404Z ##[group]Run actions/setup-dotnet@v5
+test (ubuntu-latest)	Run actions/setup-dotnet@v5	2026-11-10T02:39:57.4828977Z with:
+test (ubuntu-latest)	Run actions/setup-dotnet@v5	2026-11-10T02:39:57.4829371Z   dotnet-version: 10.0.x
+test (ubuntu-latest)	Run actions/setup-dotnet@v5	2026-11-10T02:39:57.4829805Z   cache: false
+test (ubuntu-latest)	Run actions/setup-dotnet@v5	2026-11-10T02:39:57.4830187Z ##[endgroup]
+test (ubuntu-latest)	Run actions/setup-dotnet@v5	2026-11-10T02:39:57.6370008Z [command]/home/runner/work/_actions/actions/setup-dotnet/v5/externals/install-dotnet.sh --skip-non-versioned-files --runtime dotnet --channel LTS
+test (ubuntu-latest)	Run actions/setup-dotnet@v5	2026-11-10T02:39:57.8437638Z dotnet-install: .NET Core Runtime with version '10.0.14' is already installed.
+test (ubuntu-latest)	Run actions/setup-dotnet@v5	2026-11-10T02:39:57.8472114Z [command]/home/runner/work/_actions/actions/setup-dotnet/v5/externals/install-dotnet.sh --skip-non-versioned-files --channel 10.0
+test (ubuntu-latest)	Run actions/setup-dotnet@v5	2026-11-10T02:39:58.0699423Z dotnet-install: .NET Core SDK with version '10.0.403' is already installed.
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	∩╗┐2026-11-10T02:39:58.0885793Z ##[group]Run dotnet restore Andirit.slnx
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:39:58.0886312Z ^[[36;1mdotnet restore Andirit.slnx^[[0m
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:39:58.0913128Z shell: /usr/bin/bash -e {0}
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:39:58.0913514Z env:
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:39:58.0913781Z   DOTNET_ROOT: /usr/share/dotnet
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:39:58.0914096Z ##[endgroup]
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:03.8881217Z   Determining projects to restore...
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:05.7204784Z   Restored /home/runner/work/andirit/andirit/src/Andirit/Andirit.csproj (in 289 ms).
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:05.7283223Z   Restored /home/runner/work/andirit/andirit/src/Andirit.Abstractions/Andirit.Abstractions.csproj (in 3 ms).
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:07.4953211Z   Restored /home/runner/work/andirit/andirit/src/Andirit.LatticeDb/Andirit.LatticeDb.csproj (in 2.1 sec).
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:07.4955006Z   Restored /home/runner/work/andirit/andirit/src/Andirit.CSharp/Andirit.CSharp.csproj (in 2.12 sec).
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:07.5284155Z   Restored /home/runner/work/andirit/andirit/tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj (in 27 ms).
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:07.5492899Z   Restored /home/runner/work/andirit/andirit/tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj (in 11 ms).
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:08.1922912Z   Restored /home/runner/work/andirit/andirit/benchmarks/Andirit.Benchmarks/Andirit.Benchmarks.csproj (in 2.82 sec).
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:08.1993584Z   Restored /home/runner/work/andirit/andirit/src/Andirit.Testing/Andirit.Testing.csproj (in 3 ms).
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:08.3654212Z   Restored /home/runner/work/andirit/andirit/src/Andirit.TreeSitter/Andirit.TreeSitter.csproj (in 812 ms).
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:08.3781467Z   Restored /home/runner/work/andirit/andirit/tests/Andirit.Tests/Andirit.Tests.csproj (in 876 ms).
+test (ubuntu-latest)	Run dotnet restore Andirit.slnx	2026-11-10T02:40:08.3786776Z   Restored /home/runner/work/andirit/andirit/tests/Andirit.TreeSitter.Tests/Andirit.TreeSitter.Tests.csproj (in 2.64 sec).
+test (ubuntu-latest)	Run dotnet format Andirit.slnx --verify-no-changes --no-restore	∩╗┐2026-11-10T02:40:08.4458946Z ##[group]Run dotnet format Andirit.slnx --verify-no-changes --no-restore
+test (ubuntu-latest)	Run dotnet format Andirit.slnx --verify-no-changes --no-restore	2026-11-10T02:40:08.4459633Z ^[[36;1mdotnet format Andirit.slnx --verify-no-changes --no-restore^[[0m
+test (ubuntu-latest)	Run dotnet format Andirit.slnx --verify-no-changes --no-restore	2026-11-10T02:40:08.4482188Z shell: /usr/bin/bash -e {0}
+test (ubuntu-latest)	Run dotnet format Andirit.slnx --verify-no-changes --no-restore	2026-11-10T02:40:08.4482463Z env:
+test (ubuntu-latest)	Run dotnet format Andirit.slnx --verify-no-changes --no-restore	2026-11-10T02:40:08.4482684Z   DOTNET_ROOT: /usr/share/dotnet
+test (ubuntu-latest)	Run dotnet format Andirit.slnx --verify-no-changes --no-restore	2026-11-10T02:40:08.4483186Z ##[endgroup]
+test (ubuntu-latest)	Test and coverage (core)	∩╗┐2026-11-10T02:40:47.2521752Z ##[group]Run dotnet test tests/Andirit.Tests/Andirit.Tests.csproj -c Release --no-restore /p:CollectCoverage=true /p:CoverletOutput=/home/runner/work/andirit/andirit/coverage/ /p:CoverletOutputFormat=cobertura '/p:Include=[Andirit]*%2c[Andirit.Abstractions]*' /p:Threshold=55 /p:ThresholdType=line%2cbranch
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:40:47.2524034Z ^[[36;1mdotnet test tests/Andirit.Tests/Andirit.Tests.csproj -c Release --no-restore /p:CollectCoverage=true /p:CoverletOutput=/home/runner/work/andirit/andirit/coverage/ /p:CoverletOutputFormat=cobertura '/p:Include=[Andirit]*%2c[Andirit.Abstractions]*' /p:Threshold=55 /p:ThresholdType=line%2cbranch^[[0m
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:40:47.2545402Z shell: /usr/bin/bash -e {0}
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:40:47.2545669Z env:
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:40:47.2545901Z   DOTNET_ROOT: /usr/share/dotnet
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:40:47.2546167Z ##[endgroup]
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:40:52.8099944Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:40:55.2859812Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:40:57.2013629Z   Andirit.Testing -> /home/runner/work/andirit/andirit/src/Andirit.Testing/bin/Release/net10.0/Andirit.Testing.dll
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:40:57.4652726Z   Andirit.TreeSitter -> /home/runner/work/andirit/andirit/src/Andirit.TreeSitter/bin/Release/net10.0/Andirit.TreeSitter.dll
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:40:57.5081454Z   Andirit.LatticeDb -> /home/runner/work/andirit/andirit/src/Andirit.LatticeDb/bin/Release/net10.0/Andirit.LatticeDb.dll
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:01.7742274Z   Andirit.Tests -> /home/runner/work/andirit/andirit/tests/Andirit.Tests/bin/Release/net10.0/Andirit.Tests.dll
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:01.8029825Z   [coverlet] _mapping file name: 'CoverletSourceRootsMapping_Andirit.Tests'
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:03.8139350Z Test run for /home/runner/work/andirit/andirit/tests/Andirit.Tests/bin/Release/net10.0/Andirit.Tests.dll (.NETCoreApp,Version=v10.0)
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:04.3845503Z A total of 1 test files matched the specified pattern.
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.4717647Z 
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.4759664Z Passed!  - Failed:     0, Passed:   345, Skipped:     0, Total:   345, Duration: 6 s - Andirit.Tests.dll (net10.0)
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.4926073Z   [coverlet] 
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.4936476Z   Calculating coverage result...
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8048942Z    Generating report '/home/runner/work/andirit/andirit/coverage/coverage.cobertura.xml'
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8145639Z 
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8182128Z +----------------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8192209Z | Module               | Line   | Branch | Method |
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8193177Z +----------------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8194083Z | Andirit              | 81.48% | 70.72% | 83.79% |
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8194875Z +----------------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8195719Z | Andirit.Abstractions | 88.02% | 72%    | 86.11% |
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8196527Z +----------------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8197102Z 
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8197498Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8198158Z |         | Line   | Branch | Method |
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8198806Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8199442Z | Total   | 82.48% | 70.89% | 84.28% |
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8200073Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8200702Z | Average | 84.75% | 71.36% | 84.95% |
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8201580Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (core)	2026-11-10T02:41:11.8202040Z 
+test (ubuntu-latest)	Test and coverage (CSharp)	∩╗┐2026-11-10T02:41:11.9056190Z ##[group]Run dotnet test tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj -c Release --no-restore /p:CollectCoverage=true /p:CoverletOutput=/home/runner/work/andirit/andirit/coverage-csharp/ /p:CoverletOutputFormat=cobertura '/p:Include=[Andirit.CSharp]*' /p:Threshold=75 /p:ThresholdType=line%2cbranch
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:11.9058640Z ^[[36;1mdotnet test tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj -c Release --no-restore /p:CollectCoverage=true /p:CoverletOutput=/home/runner/work/andirit/andirit/coverage-csharp/ /p:CoverletOutputFormat=cobertura '/p:Include=[Andirit.CSharp]*' /p:Threshold=75 /p:ThresholdType=line%2cbranch^[[0m
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:11.9080726Z shell: /usr/bin/bash -e {0}
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:11.9081383Z env:
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:11.9081599Z   DOTNET_ROOT: /usr/share/dotnet
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:11.9081865Z ##[endgroup]
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:13.8094912Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:14.0639320Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:14.3994557Z   Andirit.LatticeDb -> /home/runner/work/andirit/andirit/src/Andirit.LatticeDb/bin/Release/net10.0/Andirit.LatticeDb.dll
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:14.4382552Z   Andirit.Testing -> /home/runner/work/andirit/andirit/src/Andirit.Testing/bin/Release/net10.0/Andirit.Testing.dll
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:16.3508045Z   Andirit.CSharp -> /home/runner/work/andirit/andirit/src/Andirit.CSharp/bin/Release/net10.0/Andirit.CSharp.dll
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:20.3960082Z   Andirit.CSharp.Tests -> /home/runner/work/andirit/andirit/tests/Andirit.CSharp.Tests/bin/Release/net10.0/Andirit.CSharp.Tests.dll
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:20.4295171Z   [coverlet] _mapping file name: 'CoverletSourceRootsMapping_Andirit.CSharp.Tests'
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:21.1507958Z Test run for /home/runner/work/andirit/andirit/tests/Andirit.CSharp.Tests/bin/Release/net10.0/Andirit.CSharp.Tests.dll (.NETCoreApp,Version=v10.0)
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:21.3362686Z A total of 1 test files matched the specified pattern.
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.5457827Z 
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.5503621Z Passed!  - Failed:     0, Passed:   353, Skipped:     0, Total:   353, Duration: 28 s - Andirit.CSharp.Tests.dll (net10.0)
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.5689253Z   [coverlet] 
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.5690060Z   Calculating coverage result...
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7201902Z    Generating report '/home/runner/work/andirit/andirit/coverage-csharp/coverage.cobertura.xml'
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7261592Z 
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7297393Z +----------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7298416Z | Module         | Line   | Branch | Method |
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7299259Z +----------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7300043Z | Andirit.CSharp | 94.98% | 87.32% | 98.08% |
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7301015Z +----------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7301464Z 
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7301759Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7302381Z |         | Line   | Branch | Method |
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7303049Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7303695Z | Total   | 94.98% | 87.32% | 98.08% |
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7304353Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7305052Z | Average | 94.98% | 87.32% | 98.08% |
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7305672Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (CSharp)	2026-11-10T02:41:51.7306000Z 
+test (ubuntu-latest)	Test and coverage (TreeSitter)	∩╗┐2026-11-10T02:41:51.7914291Z ##[group]Run dotnet test tests/Andirit.TreeSitter.Tests/Andirit.TreeSitter.Tests.csproj -c Release --no-restore /p:CollectCoverage=true /p:CoverletOutput=/home/runner/work/andirit/andirit/coverage-treesitter/ /p:CoverletOutputFormat=cobertura '/p:Include=[Andirit.TreeSitter]*' /p:Threshold=60 /p:ThresholdType=line%2cbranch
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:51.7916699Z ^[[36;1mdotnet test tests/Andirit.TreeSitter.Tests/Andirit.TreeSitter.Tests.csproj -c Release --no-restore /p:CollectCoverage=true /p:CoverletOutput=/home/runner/work/andirit/andirit/coverage-treesitter/ /p:CoverletOutputFormat=cobertura '/p:Include=[Andirit.TreeSitter]*' /p:Threshold=60 /p:ThresholdType=line%2cbranch^[[0m
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:51.7937933Z shell: /usr/bin/bash -e {0}
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:51.7938192Z env:
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:51.7938389Z   DOTNET_ROOT: /usr/share/dotnet
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:51.7938638Z ##[endgroup]
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:53.6916405Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:53.9251802Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:54.1302686Z   Andirit.TreeSitter -> /home/runner/work/andirit/andirit/src/Andirit.TreeSitter/bin/Release/net10.0/Andirit.TreeSitter.dll
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:54.2483012Z   Andirit.LatticeDb -> /home/runner/work/andirit/andirit/src/Andirit.LatticeDb/bin/Release/net10.0/Andirit.LatticeDb.dll
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:54.2693650Z   Andirit.CSharp -> /home/runner/work/andirit/andirit/src/Andirit.CSharp/bin/Release/net10.0/Andirit.CSharp.dll
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:56.6647600Z   Andirit.TreeSitter.Tests -> /home/runner/work/andirit/andirit/tests/Andirit.TreeSitter.Tests/bin/Release/net10.0/Andirit.TreeSitter.Tests.dll
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:56.7093750Z   [coverlet] _mapping file name: 'CoverletSourceRootsMapping_Andirit.TreeSitter.Tests'
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:57.4926415Z Test run for /home/runner/work/andirit/andirit/tests/Andirit.TreeSitter.Tests/bin/Release/net10.0/Andirit.TreeSitter.Tests.dll (.NETCoreApp,Version=v10.0)
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:41:57.6629309Z A total of 1 test files matched the specified pattern.
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:00.9587652Z 
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:00.9629000Z Passed!  - Failed:     0, Passed:   157, Skipped:     0, Total:   157, Duration: 2 s - Andirit.TreeSitter.Tests.dll (net10.0)
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:00.9793856Z   [coverlet] 
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:00.9794425Z   Calculating coverage result...
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1411598Z    Generating report '/home/runner/work/andirit/andirit/coverage-treesitter/coverage.cobertura.xml'
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1472133Z 
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1504598Z +--------------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1505238Z | Module             | Line   | Branch | Method |
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1505684Z +--------------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1506113Z | Andirit.TreeSitter | 89.89% | 75.56% | 96.41% |
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1506550Z +--------------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1506806Z 
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1507517Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1507982Z |         | Line   | Branch | Method |
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1508356Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1508694Z | Total   | 89.89% | 75.56% | 96.41% |
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1509034Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1509367Z | Average | 89.89% | 75.56% | 96.41% |
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1509703Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (TreeSitter)	2026-11-10T02:42:01.1509912Z 
+test (ubuntu-latest)	Test and coverage (LatticeDb)	∩╗┐2026-11-10T02:42:01.2141665Z ##[group]Run dotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj -c Release --no-restore /p:CollectCoverage=true /p:CoverletOutput=/home/runner/work/andirit/andirit/coverage-latticedb/ /p:CoverletOutputFormat=cobertura '/p:Include=[Andirit.LatticeDb]*' /p:Threshold=70 /p:ThresholdType=line%2cbranch
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:01.2144111Z ^[[36;1mdotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj -c Release --no-restore /p:CollectCoverage=true /p:CoverletOutput=/home/runner/work/andirit/andirit/coverage-latticedb/ /p:CoverletOutputFormat=cobertura '/p:Include=[Andirit.LatticeDb]*' /p:Threshold=70 /p:ThresholdType=line%2cbranch^[[0m
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:01.2165117Z shell: /usr/bin/bash -e {0}
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:01.2165380Z env:
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:01.2165599Z   DOTNET_ROOT: /usr/share/dotnet
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:01.2165856Z ##[endgroup]
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:03.0120492Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:03.2361985Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:03.4344399Z   Andirit.LatticeDb -> /home/runner/work/andirit/andirit/src/Andirit.LatticeDb/bin/Release/net10.0/Andirit.LatticeDb.dll
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:03.4754862Z   Andirit.Testing -> /home/runner/work/andirit/andirit/src/Andirit.Testing/bin/Release/net10.0/Andirit.Testing.dll
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:03.9308560Z   Andirit.LatticeDb.Tests -> /home/runner/work/andirit/andirit/tests/Andirit.LatticeDb.Tests/bin/Release/net10.0/Andirit.LatticeDb.Tests.dll
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:03.9622836Z   [coverlet] _mapping file name: 'CoverletSourceRootsMapping_Andirit.LatticeDb.Tests'
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:04.4516243Z Test run for /home/runner/work/andirit/andirit/tests/Andirit.LatticeDb.Tests/bin/Release/net10.0/Andirit.LatticeDb.Tests.dll (.NETCoreApp,Version=v10.0)
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:04.6736442Z A total of 1 test files matched the specified pattern.
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.0211088Z 
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.0252486Z Passed!  - Failed:     0, Passed:    52, Skipped:     0, Total:    52, Duration: 4 s - Andirit.LatticeDb.Tests.dll (net10.0)
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.0424323Z   [coverlet] 
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.0424926Z   Calculating coverage result...
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1539918Z    Generating report '/home/runner/work/andirit/andirit/coverage-latticedb/coverage.cobertura.xml'
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1657462Z 
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1692603Z +-------------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1693359Z | Module            | Line   | Branch | Method |
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1694033Z +-------------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1694779Z | Andirit.LatticeDb | 87.01% | 65.77% | 97.14% |
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1695385Z +-------------------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1695745Z 
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1696591Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1697133Z |         | Line   | Branch | Method |
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1697654Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1698190Z | Total   | 87.01% | 65.77% | 97.14% |
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1698709Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1699224Z | Average | 87.01% | 65.77% | 97.14% |
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1699727Z +---------+--------+--------+--------+
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1700040Z 
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1756295Z /home/runner/.nuget/packages/coverlet.msbuild/6.0.4/build/coverlet.msbuild.targets(72,5): error : The minimum branch coverage is below the specified 70 [/home/runner/work/andirit/andirit/tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj]
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1759214Z /home/runner/.nuget/packages/coverlet.msbuild/6.0.4/build/coverlet.msbuild.targets(72,5): error :  [/home/runner/work/andirit/andirit/tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj]
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.1762379Z /home/runner/.nuget/packages/coverlet.msbuild/6.0.4/build/coverlet.msbuild.targets(72,5): error :    at Coverlet.MSbuild.Tasks.CoverageResultTask.Execute() in /_/src/coverlet.msbuild.tasks/CoverageResultTask.cs:line 251 [/home/runner/work/andirit/andirit/tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj]
+test (ubuntu-latest)	Test and coverage (LatticeDb)	2026-11-10T02:42:10.2383125Z ##[error]Process completed with exit code 1.
+test (ubuntu-latest)	Upload coverage	∩╗┐2026-11-10T02:42:10.2469866Z ##[group]Run actions/upload-artifact@v4
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.2470185Z with:
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.2470402Z   name: coverage-results-ubuntu-latest
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.2471359Z   path: coverage/
+test (ubuntu-latest)	Upload coverage	coverage-csharp/
+test (ubuntu-latest)	Upload coverage	coverage-treesitter/
+test (ubuntu-latest)	Upload coverage	coverage-latticedb/
+test (ubuntu-latest)	Upload coverage	**/TestResults/**/coverage.cobertura.xml
+test (ubuntu-latest)	Upload coverage	
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.2471951Z   if-no-files-found: warn
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.2472207Z   compression-level: 6
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.2472424Z   overwrite: false
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.2472639Z   include-hidden-files: false
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.2472872Z env:
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.2473083Z   DOTNET_ROOT: /usr/share/dotnet
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.2473329Z ##[endgroup]
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.4372262Z (node:4729) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.4374154Z (Use `node --trace-deprecation ...` to show where the warning was created)
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.8829706Z With the provided path, there will be 4 files uploaded
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.8831687Z Artifact name is valid!
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:10.8832135Z Root directory input is valid!
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:11.2887978Z Beginning upload of artifact content to blob storage
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:11.3519448Z (node:4729) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:11.8052025Z Uploaded bytes 174681
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:11.8946178Z Finished uploading artifact content to blob storage!
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:11.8947442Z SHA256 digest of uploaded artifact zip is b2bb16de47adcc981344d9186a2d51ebb08c0a6a2c89c4f58279dab2d7b46cd6
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:11.8948444Z Finalizing artifact upload
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:12.2818624Z Artifact coverage-results-ubuntu-latest.zip successfully finalized. Artifact ID 13731315517
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:12.2821283Z Artifact coverage-results-ubuntu-latest has been successfully uploaded! Final size is 174681 bytes. Artifact ID is 13731315517
+test (ubuntu-latest)	Upload coverage	2026-11-10T02:42:12.2827374Z Artifact download URL: https://github.com/jenolaszlo-sketch/andirit/actions/runs/42744298084/artifacts/13731315517
+test (ubuntu-latest)	Post Run actions/checkout@v4	∩╗┐2026-11-10T02:42:12.3080594Z Post job cleanup.
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.3992004Z [command]/usr/bin/git version
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4043646Z git version 2.56.0
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4116838Z Temporarily overriding HOME='/home/runner/work/_temp/cc9ecb8e-d7b4-4cba-8e25-44ae0a32c150' before making global git config changes
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4118299Z Adding repository directory to the temporary git global config as a safe directory
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4123226Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/andirit/andirit
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4192440Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4236542Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4515567Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4548136Z http.https://github.com/.extraheader
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4561888Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4608873Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4932734Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+test (ubuntu-latest)	Post Run actions/checkout@v4	2026-11-10T02:42:12.4992436Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+test (ubuntu-latest)	Complete job	∩╗┐2026-11-10T02:42:12.5470162Z Cleaning up orphan processes
+test (ubuntu-latest)	Complete job	2026-11-10T02:42:12.5809031Z Terminate orphan process: pid (2599) (dotnet)
+test (ubuntu-latest)	Complete job	2026-11-10T02:42:12.5843681Z Terminate orphan process: pid (2600) (dotnet)
+test (ubuntu-latest)	Complete job	2026-11-10T02:42:12.5878214Z Terminate orphan process: pid (2601) (dotnet)
+test (ubuntu-latest)	Complete job	2026-11-10T02:42:12.5941389Z Terminate orphan process: pid (2872) (VBCSCompiler)
+test (ubuntu-latest)	Complete job	2026-11-10T02:42:12.6057002Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

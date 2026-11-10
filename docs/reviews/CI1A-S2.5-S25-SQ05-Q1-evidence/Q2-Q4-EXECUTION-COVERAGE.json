@@ -1,0 +1,134 @@
+﻿{
+    "commission":  "ANDIRIT-CI1A-S2.5-S25-SQ05-Q1",
+    "method":  "fresh GitHub log download vs committed copy; actual test output; independent Cobertura recomputation from per-line data; static ci.yml analysis",
+    "latticeSummary":  "Passed!  - Failed:     0, Passed:    52, Skipped:     0, Total:    52, Duration: 4 s - Andirit.LatticeDb.Tests.dll (net10.0)",
+    "environment":  {
+                        "runnerImage":  "ubuntu-24.04",
+                        "osVersion":  "Ubuntu 24.04.5 LTS",
+                        "sdk":  "10.0.403"
+                    },
+    "coverage":  {
+                     "source":  "coverage-results-ubuntu-latest/coverage-latticedb/coverage.cobertura.xml (committed G2 artifact, run 42744298084)",
+                     "lineRate":  87.01,
+                     "branchRate":  65.77,
+                     "linesCovered":  838,
+                     "linesValid":  963,
+                     "branchesCovered":  296,
+                     "branchesValid":  450,
+                     "recomputedAgrees":  true,
+                     "gate":  "70% line+branch (ci.yml LatticeDb step)",
+                     "gatePass":  false,
+                     "branchesNeededForGate":  19,
+                     "worstBranchRateClasses":  [
+                                                    {
+                                                        "class":  "Andirit.LatticeCodeGraphStore/\u003cCheckOccurrenceAuthorityAsync\u003ed__90",
+                                                        "branchRate":  7.57,
+                                                        "lineRate":  9.09
+                                                    },
+                                                    {
+                                                        "class":  "Andirit.LatticeCodeGraphStore",
+                                                        "branchRate":  72,
+                                                        "lineRate":  92.1
+                                                    },
+                                                    {
+                                                        "class":  "Andirit.NativeGraphMirror",
+                                                        "branchRate":  73.17,
+                                                        "lineRate":  85.46
+                                                    },
+                                                    {
+                                                        "class":  "Andirit.LatticeCodeGraphStore/\u003cFindOccurrencesAsync\u003ed__49",
+                                                        "branchRate":  75,
+                                                        "lineRate":  90.9
+                                                    }
+                                                ]
+                 },
+    "ok":  true,
+    "checks":  [
+                   {
+                       "check":  "Ubuntu job log: reviewer-fresh download is byte-identical to the committed G2 copy",
+                       "pass":  true,
+                       "detail":  "fresh=284ad7e51fe5e5f2683d3109c43fd81e5f5a91ad13fb1038a51a4da939c58eb3 committed=284ad7e51fe5e5f2683d3109c43fd81e5f5a91ad13fb1038a51a4da939c58eb3"
+                   },
+                   {
+                       "check":  "L2: LatticeDb suite result is Passed 52 / Failed 0 / Skipped 0 / Total 52 on genuine Linux",
+                       "pass":  true,
+                       "detail":  "Passed!  - Failed:     0, Passed:    52, Skipped:     0, Total:    52, Duration: 4 s - Andirit.LatticeDb.Tests.dll (net10.0)"
+                   },
+                   {
+                       "check":  "L-other: Andirit\\.Tests\\.dll green on Linux (345 passed)",
+                       "pass":  true,
+                       "detail":  "test (ubuntu-latest)\tTest and coverage (core)\t2026-11-10T02:41:11.4759664Z Passed!  - Failed:     0, Passed:   345, Skipped:     0, Total:   345, Duration: 6 s - Andirit.Tests.dll (net10.0)"
+                   },
+                   {
+                       "check":  "L-other: Andirit\\.CSharp\\.Tests\\.dll green on Linux (353 passed)",
+                       "pass":  true,
+                       "detail":  "test (ubuntu-latest)\tTest and coverage (CSharp)\t2026-11-10T02:41:51.5503621Z Passed!  - Failed:     0, Passed:   353, Skipped:     0, Total:   353, Duration: 28 s - Andirit.CSharp.Tests.dll (net10.0)"
+                   },
+                   {
+                       "check":  "L-other: Andirit\\.TreeSitter\\.Tests\\.dll green on Linux (157 passed)",
+                       "pass":  true,
+                       "detail":  "test (ubuntu-latest)\tTest and coverage (TreeSitter)\t2026-11-10T02:42:00.9629000Z Passed!  - Failed:     0, Passed:   157, Skipped:     0, Total:   157, Duration: 2 s - Andirit.TreeSitter.Tests.dll (net10.0)"
+                   },
+                   {
+                       "check":  "L2b: CI LatticeDb step contains no test filter (complete suite)",
+                       "pass":  true,
+                       "detail":  "      - name: Test and coverage (LatticeDb)         run: \u003e           dotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj           -c Release --no-restore           /p:CollectCoverage=true           /p:CoverletOutput=${{ github.workspace }}/coverage-latticedb/           /p:CoverletOutputFormat=cobertura           \u0027/p:Include=[Andirit.LatticeDb]*\u0027           /p:Threshold=70           /p:ThresholdType=line%2cbranch       - name: Upload coverage         if: always()         uses: actions/upload-artifact@v4"
+                   },
+                   {
+                       "check":  "L2c: CI LatticeDb step uses Release configuration",
+                       "pass":  true,
+                       "detail":  "      - name: Test and coverage (LatticeDb)         run: \u003e           dotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj           -c Release --no-restore           /p:CollectCoverage=true           /p:CoverletOutput=${{ github.workspace }}/coverage-latticedb/           /p:CoverletOutputFormat=cobertura           \u0027/p:Include=[Andirit.LatticeDb]*\u0027           /p:Threshold=70           /p:ThresholdType=line%2cbranch       - name: Upload coverage         if: always()         uses: actions/upload-artifact@v4"
+                   },
+                   {
+                       "check":  "L1: runner image is ubuntu-24.04 (genuine hosted Linux)",
+                       "pass":  true,
+                       "detail":  "test (ubuntu-latest)\tSet up job\t2026-11-10T02:39:54.5241080Z Image: ubuntu-24.04"
+                   },
+                   {
+                       "check":  "L1b: operating system is Ubuntu 24.04.5 LTS",
+                       "pass":  true,
+                       "detail":  "test (ubuntu-latest)\tSet up job\t2026-11-10T02:39:54.5238531Z 24.04.5"
+                   },
+                   {
+                       "check":  "L1c: .NET SDK 10.0.403 installed on the runner",
+                       "pass":  true,
+                       "detail":  "test (ubuntu-latest)\tRun actions/setup-dotnet@v5\t2026-11-10T02:39:58.0699423Z dotnet-install: .NET Core SDK with version \u002710.0.403\u0027 is already installed."
+                   },
+                   {
+                       "check":  "Q4: raw Cobertura root branch-rate is 65.77% â€” matches F-G2-01",
+                       "pass":  true,
+                       "detail":  "branchRate=65.77 (296/450)"
+                   },
+                   {
+                       "check":  "Q4b: raw Cobertura root line-rate is 87.01%",
+                       "pass":  true,
+                       "detail":  "lineRate=87.01 (838/963)"
+                   },
+                   {
+                       "check":  "Q4c: independent per-line recomputation agrees with the root rates (within 0.5pp; the raw document duplicates the main partial class)",
+                       "pass":  true,
+                       "detail":  "recomputed branch=66.07 (592/896) line=87.02 (1676/1926)"
+                   },
+                   {
+                       "check":  "Q4d: the 70% branch gate is the failure cause (65.77% \u003c 70%)",
+                       "pass":  true,
+                       "detail":  "deficit: 19 more covered branches needed for 70%"
+                   },
+                   {
+                       "check":  "Q4e: the 70% line+branch threshold is configured in ci.yml on the LatticeDb step",
+                       "pass":  true,
+                       "detail":  "      - name: Test and coverage (LatticeDb)         run: \u003e           dotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj           -c Release --no-restore           /p:CollectCoverage=true           /p:CoverletOutput=${{ github.workspace }}/coverage-latticedb/           /p:CoverletOutputFormat=cobertura           \u0027/p:Include=[Andirit.LatticeDb]*\u0027           /p:Threshold=70           /p:ThresholdType=line%2cbranch       - name: Upload coverage         if: always()         uses: actions/upload-artifact@v4"
+                   },
+                   {
+                       "check":  "Q4f: identical branch-coverage threshold error in the Windows log extract",
+                       "pass":  true,
+                       "detail":  "see extract"
+                   },
+                   {
+                       "check":  "Q4g: identical branch-coverage threshold error in the macOS log extract",
+                       "pass":  true,
+                       "detail":  "see extract"
+                   }
+               ],
+    "generatedAt":  "2026-11-10T12:13:27.0965757+08:00"
+}
