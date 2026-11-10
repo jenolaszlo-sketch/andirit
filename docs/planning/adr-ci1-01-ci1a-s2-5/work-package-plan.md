@@ -137,3 +137,20 @@ contract is amended by the owner.
   qualification is not complete, and Stage-2 owner acceptance remains unauthorized.
   WP-S24-3 remains optional, deferred, and unauthorized; S2.5/Stage 6, public Find Usages,
   and optimization remain unauthorized.
+
+---
+
+## Authorization status (additive; current state)
+
+This note is additive status only; it changes no package definition, scope,
+dependency, or gate above. Package definitions remain the controlling record.
+
+| Package | Status |
+| --- | --- |
+| WP-S25-1 (SQ-04 authentic historical-fixture binding) | **accepted with qualifications by owner (`adr-ci1-01-ci1a-s2-5-wp-s25-1-owner-01.md`)** — BIND-01 `bf1af23` (`FIXTURE BINDING COMPLETE — READY FOR INDEPENDENT QUALIFICATION`), independent `S25-SQ04-Q1` `3d3980a` (`SUPPORTED WITH QUALIFICATIONS`; 26/0 authentication checks, 4/4 fresh-process reproductions, staging isolation verified). SQ-04 is **satisfied for the two available formats** (pre-REM occurrence store + WAL; R2 baseline graph-only store) with the F-03 refinement, the H-03 inapplicability record, and the experimental-codec gaps preserved. WP-S25-1 is **closed within its bounded qualified scope** |
+| SQ-04 (stage-level obligation) | **NOT FULLY DISCHARGED** — `occurrence-facts/1..3`, `usage1..3`, `asmctx1/2` have no authentic prior-writer artifacts (writer existence ≠ artifact availability); an owner amendment (wording proposed in the owner decision §8) or additional authentic evidence is required; blocked for any Stage-2 claim requiring authentic prior-writer evidence for those codecs under the unamended contract |
+| WP-S25-2 (SQ-05 expanded Linux native qualification) | **planned; NOT authorized** — route A (owner-authorized CI publication) or route B (owner-provided genuine Linux runner) requires a separate authorization; entry authorization is not push authorization |
+| WP-S25-3 (S-01 integrated proof) | **planned; NOT authorized** |
+| WP-S25-4 (final integrated Stage-2 qualification) | **planned; NOT authorized** — requires WP-S25-1/2/3 completed and independently reviewed |
+
+**S2.5 stage disposition (additive).** WP-S25-1 is closed; SQ-04 remains open under the unamended contract (Decision B recorded by `adr-ci1-01-ci1a-s2-5-wp-s25-1-owner-01.md`; the amendment is **not granted** there). WP-S25-2/3/4 require their own commissions. Stage-2 final integration is incomplete and Stage-2 owner acceptance remains unauthorized. WP-S24-3 remains optional, deferred, and unauthorized; S2.5/Stage 6, public Find Usages, and optimization remain unauthorized.
