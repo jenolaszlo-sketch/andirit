@@ -1,0 +1,866 @@
+{
+  "harness": "ANDIRIT-CI1A-S2.5-WP-S25-3-P1-DELTA-01",
+  "processId": 10808,
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "encodingVectors": [
+    {
+      "id": "KAT-identifier-Write",
+      "domain": "asmctx3-identifier",
+      "field": "Write",
+      "messageHex": "0000001261736d637478332d6964656e746966696572000000055772697465",
+      "expectedMessageHex": "0000001261736d637478332d6964656e746966696572000000055772697465",
+      "expectedDigest": "4a468c685e4033c579aff4dcbf371062dc6a88c33318a89d54dedaf60f61af88",
+      "refEncDigest": "4a468c685e4033c579aff4dcbf371062dc6a88c33318a89d54dedaf60f61af88",
+      "productionDigestAgrees": true,
+      "pass": true
+    },
+    {
+      "id": "KAT-declaration-ref",
+      "domain": "asmctx3-declarations",
+      "field": "M:Fixture.Core.Mods.Change13(System.Int32@)",
+      "messageHex": "0000001461736d637478332d6465636c61726174696f6e730000002b4d3a466978747572652e436f72652e4d6f64732e4368616e676531332853797374656d2e496e7433324029",
+      "expectedMessageHex": "(not constrained by this vector)",
+      "expectedDigest": "df577e8f759af780c518813a96270638ccf3dabbb8525fbbca28d4639f73bad0",
+      "refEncDigest": "df577e8f759af780c518813a96270638ccf3dabbb8525fbbca28d4639f73bad0",
+      "productionDigestAgrees": true,
+      "pass": true
+    },
+    {
+      "id": "KAT-shape-int",
+      "domain": "asmctx3-target",
+      "field": "method|0|int",
+      "messageHex": "0000000e61736d637478332d7461726765740000000c6d6574686f647c307c696e74",
+      "expectedMessageHex": "(not constrained by this vector)",
+      "expectedDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "refEncDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+      "productionDigestAgrees": true,
+      "pass": true
+    }
+  ],
+  "revisionPairs": [
+    {
+      "pair": "R13a",
+      "label": "value vs ref",
+      "identifier": "Change",
+      "expected": {
+        "identifierForm": "Change",
+        "declarationFormA": "M:Fixture.Core.Mods.Change(System.Int32)",
+        "declarationFormB": "M:Fixture.Core.Mods.Change(System.Int32@)",
+        "shapeForm": "method|0|int",
+        "identifierDigest": "cf655206667baa761ce9c443a1fa914ca4a481c9f811214531dc734290034342",
+        "declarationDigestA": "c0ba1a0a3b424164000c540174920dcfcaf1b140215850058909a584078c781d",
+        "declarationDigestB": "778e90edfc8c0965a7fae00e7be650c642e9c69cef8cb2130d573907468e585a",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+        "declarationDistinguishes": true
+      },
+      "factsA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:0a7d99ac91d71b0289a3633bc686db62bb21e8b3f90505535d0fd6b52de95721",
+          "identifierDigest": "cf655206667baa761ce9c443a1fa914ca4a481c9f811214531dc734290034342",
+          "declarationDigest": "c0ba1a0a3b424164000c540174920dcfcaf1b140215850058909a584078c781d",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "factsB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:8:14",
+          "targetId": "asmctx3:sha256:c1a369c5a316f45ea2813475f05aa956478ddafee48ba004c3084a4cefe85164",
+          "identifierDigest": "cf655206667baa761ce9c443a1fa914ca4a481c9f811214531dc734290034342",
+          "declarationDigest": "778e90edfc8c0965a7fae00e7be650c642e9c69cef8cb2130d573907468e585a",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "sideA": {
+        "runId": "delta:R13a:a2",
+        "fileHashes": {
+          "App/App.csproj": "sha256:9afa840da6d7c15b5abcab20a954b38b76d8a034a72612ed59ec0d3dcdb045d4",
+          "App/Consumer.cs": "sha256:dee5f6ede608770d4119b7e631a3660a8babaa8874fee4bfa686c23765f942e7",
+          "Core/Core.csproj": "sha256:3e1a9f612f8cfcc2e2a8b2ef085685f9f3d1a55c4b901e8d88af6ec37d283195",
+          "Core/Targets.cs": "sha256:559d024a9e4fcff64658366baa2dbecd230fb239e6062a050bfc089230a7dcf8"
+        },
+        "diagnostics": {
+          "errors": 0,
+          "warnings": 2
+        },
+        "descriptor": {
+          "contractVersion": "compctx1",
+          "repositoryId": "delta:fixture",
+          "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+          "assemblyName": "Core",
+          "metadataIdentity": "Core|0.0.0.0||",
+          "moduleName": "Core.dll",
+          "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+          "sources": [
+            "Core/Targets.cs|sha256:559d024a9e4fcff64658366baa2dbecd230fb239e6062a050bfc089230a7dcf8|CSharp14|"
+          ],
+          "referencesCount": 179,
+          "referencesDigest": "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980",
+          "descriptorDigest": "compctx1:sha256:58aa6f3232442644a7655d17d79569fd29d69031011b8ec0abf12bad82e79e34"
+        },
+        "frozenCrossCheck": {
+          "descriptorAgrees": true,
+          "sourcesAgree": true,
+          "referencesAgree": true,
+          "optionsAgree": true,
+          "metadataAgrees": true,
+          "frozenAgrees": true
+        },
+        "composed": {
+          "productionTarget": "asmctx3:sha256:0a7d99ac91d71b0289a3633bc686db62bb21e8b3f90505535d0fd6b52de95721",
+          "independentTarget": "asmctx3:sha256:0a7d99ac91d71b0289a3633bc686db62bb21e8b3f90505535d0fd6b52de95721",
+          "refEncHashAgrees": true,
+          "targetsAgree": true,
+          "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a353861613666333233323434323634346137363535643137643739353639666432396436393033313031316238656330616266313262616438326537396533340000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000406366363535323036363637626161373631636539633434336131666139313463613461343831633966383131323134353331646337333432393030333433343200000040633062613161306133623432343136343030306335343031373439323064636663616631623134303231353835303035383930396135383430373863373831640000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+        }
+      },
+      "sideB": {
+        "runId": "delta:R13a:b2",
+        "fileHashes": {
+          "App/App.csproj": "sha256:9afa840da6d7c15b5abcab20a954b38b76d8a034a72612ed59ec0d3dcdb045d4",
+          "App/Consumer.cs": "sha256:dd34e153f4ace8f8ec4991632e570bee4f65cbebed7b76efbf2e8f6d7e8ac86e",
+          "Core/Core.csproj": "sha256:3e1a9f612f8cfcc2e2a8b2ef085685f9f3d1a55c4b901e8d88af6ec37d283195",
+          "Core/Targets.cs": "sha256:85c58b0ff79f5f47cb3cbb7036b547a34b157161be6bac79d218925401b34a69"
+        },
+        "diagnostics": {
+          "errors": 0,
+          "warnings": 2
+        },
+        "descriptor": {
+          "contractVersion": "compctx1",
+          "repositoryId": "delta:fixture",
+          "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+          "assemblyName": "Core",
+          "metadataIdentity": "Core|0.0.0.0||",
+          "moduleName": "Core.dll",
+          "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+          "sources": [
+            "Core/Targets.cs|sha256:85c58b0ff79f5f47cb3cbb7036b547a34b157161be6bac79d218925401b34a69|CSharp14|"
+          ],
+          "referencesCount": 179,
+          "referencesDigest": "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980",
+          "descriptorDigest": "compctx1:sha256:2da03571f8835b7149f5527f24a556edf6fafdd2d0d53ae47671793b2f6f8226"
+        },
+        "frozenCrossCheck": {
+          "descriptorAgrees": true,
+          "sourcesAgree": true,
+          "referencesAgree": true,
+          "optionsAgree": true,
+          "metadataAgrees": true,
+          "frozenAgrees": true
+        },
+        "composed": {
+          "productionTarget": "asmctx3:sha256:c1a369c5a316f45ea2813475f05aa956478ddafee48ba004c3084a4cefe85164",
+          "independentTarget": "asmctx3:sha256:c1a369c5a316f45ea2813475f05aa956478ddafee48ba004c3084a4cefe85164",
+          "refEncHashAgrees": true,
+          "targetsAgree": true,
+          "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a326461303335373166383833356237313439663535323766323461353536656466366661666464326430643533616534373637313739336232663666383232360000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000406366363535323036363637626161373631636539633434336131666139313463613461343831633966383131323134353331646337333432393030333433343200000040373738653930656466633863303936356137666165303065376265363530633634326539633639636566386362323133306435373339303734363865353835610000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+        }
+      },
+      "changedInputFiles": [
+        "App/Consumer.cs",
+        "Core/Targets.cs"
+      ]
+    },
+    {
+      "pair": "R13b",
+      "label": "ref vs out",
+      "identifier": "ChangeB",
+      "expected": {
+        "identifierForm": "ChangeB",
+        "declarationFormA": "M:Fixture.Core.Mods.ChangeB(System.Int32@)",
+        "declarationFormB": "M:Fixture.Core.Mods.ChangeB(System.Int32@)",
+        "shapeForm": "method|0|int",
+        "identifierDigest": "2ac84b6a2f3c2e17773ef3f8052c9e044b7f24292cf9ad50d721c0d6214938b7",
+        "declarationDigestA": "b2dc1473f8e9a8ceca470630ba453929462efd804fce4ebd8775c7090b0f4776",
+        "declarationDigestB": "b2dc1473f8e9a8ceca470630ba453929462efd804fce4ebd8775c7090b0f4776",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+        "declarationDistinguishes": false
+      },
+      "factsA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:8:14",
+          "targetId": "asmctx3:sha256:af61f13251a2afe08c861535e2807010b4e687e80b567b47cebab849c4c5472f",
+          "identifierDigest": "2ac84b6a2f3c2e17773ef3f8052c9e044b7f24292cf9ad50d721c0d6214938b7",
+          "declarationDigest": "b2dc1473f8e9a8ceca470630ba453929462efd804fce4ebd8775c7090b0f4776",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "factsB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:8:14",
+          "targetId": "asmctx3:sha256:391eb04898b9db065b6e21bc800055fce63fc8f07dc37ee5d133bdede855475a",
+          "identifierDigest": "2ac84b6a2f3c2e17773ef3f8052c9e044b7f24292cf9ad50d721c0d6214938b7",
+          "declarationDigest": "b2dc1473f8e9a8ceca470630ba453929462efd804fce4ebd8775c7090b0f4776",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "sideA": {
+        "runId": "delta:R13b:a2",
+        "fileHashes": {
+          "App/App.csproj": "sha256:9afa840da6d7c15b5abcab20a954b38b76d8a034a72612ed59ec0d3dcdb045d4",
+          "App/Consumer.cs": "sha256:876035707d7229a1bd9958f83b5a04916e8220c6cbc518d4b5165fe4d1b9a806",
+          "Core/Core.csproj": "sha256:3e1a9f612f8cfcc2e2a8b2ef085685f9f3d1a55c4b901e8d88af6ec37d283195",
+          "Core/Targets.cs": "sha256:8192db211d0f8d04bd73ede1ccc9c0a0a7728f20dc6c295f669c090155a0ac4b"
+        },
+        "diagnostics": {
+          "errors": 0,
+          "warnings": 2
+        },
+        "descriptor": {
+          "contractVersion": "compctx1",
+          "repositoryId": "delta:fixture",
+          "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+          "assemblyName": "Core",
+          "metadataIdentity": "Core|0.0.0.0||",
+          "moduleName": "Core.dll",
+          "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+          "sources": [
+            "Core/Targets.cs|sha256:8192db211d0f8d04bd73ede1ccc9c0a0a7728f20dc6c295f669c090155a0ac4b|CSharp14|"
+          ],
+          "referencesCount": 179,
+          "referencesDigest": "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980",
+          "descriptorDigest": "compctx1:sha256:a274cbb0d8a48c6f9f94fdeff38a62fa6647875688de75658bc46b47c6c23cb1"
+        },
+        "frozenCrossCheck": {
+          "descriptorAgrees": true,
+          "sourcesAgree": true,
+          "referencesAgree": true,
+          "optionsAgree": true,
+          "metadataAgrees": true,
+          "frozenAgrees": true
+        },
+        "composed": {
+          "productionTarget": "asmctx3:sha256:af61f13251a2afe08c861535e2807010b4e687e80b567b47cebab849c4c5472f",
+          "independentTarget": "asmctx3:sha256:af61f13251a2afe08c861535e2807010b4e687e80b567b47cebab849c4c5472f",
+          "refEncHashAgrees": true,
+          "targetsAgree": true,
+          "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a613237346362623064386134386336663966393466646566663338613632666136363437383735363838646537353635386263343662343763366332336362310000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000403261633834623661326633633265313737373365663366383035326339653034346237663234323932636639616435306437323163306436323134393338623700000040623264633134373366386539613863656361343730363330626134353339323934363265666438303466636534656264383737356337303930623066343737360000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+        }
+      },
+      "sideB": {
+        "runId": "delta:R13b:b2",
+        "fileHashes": {
+          "App/App.csproj": "sha256:9afa840da6d7c15b5abcab20a954b38b76d8a034a72612ed59ec0d3dcdb045d4",
+          "App/Consumer.cs": "sha256:cf38a75eac1d0b64d7fe838bcf02507c97e786ed8ae99ff25eead6ad1815f626",
+          "Core/Core.csproj": "sha256:3e1a9f612f8cfcc2e2a8b2ef085685f9f3d1a55c4b901e8d88af6ec37d283195",
+          "Core/Targets.cs": "sha256:56f84140e774c2c433aa51ab391db77568160cff06021af1655071f2f6a04ccf"
+        },
+        "diagnostics": {
+          "errors": 0,
+          "warnings": 2
+        },
+        "descriptor": {
+          "contractVersion": "compctx1",
+          "repositoryId": "delta:fixture",
+          "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+          "assemblyName": "Core",
+          "metadataIdentity": "Core|0.0.0.0||",
+          "moduleName": "Core.dll",
+          "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+          "sources": [
+            "Core/Targets.cs|sha256:56f84140e774c2c433aa51ab391db77568160cff06021af1655071f2f6a04ccf|CSharp14|"
+          ],
+          "referencesCount": 179,
+          "referencesDigest": "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980",
+          "descriptorDigest": "compctx1:sha256:4cd1f6c22e1f5534df763f994a729deeb0c031ea9c700aeea6718057e97b4942"
+        },
+        "frozenCrossCheck": {
+          "descriptorAgrees": true,
+          "sourcesAgree": true,
+          "referencesAgree": true,
+          "optionsAgree": true,
+          "metadataAgrees": true,
+          "frozenAgrees": true
+        },
+        "composed": {
+          "productionTarget": "asmctx3:sha256:391eb04898b9db065b6e21bc800055fce63fc8f07dc37ee5d133bdede855475a",
+          "independentTarget": "asmctx3:sha256:391eb04898b9db065b6e21bc800055fce63fc8f07dc37ee5d133bdede855475a",
+          "refEncHashAgrees": true,
+          "targetsAgree": true,
+          "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a346364316636633232653166353533346466373633663939346137323964656562306330333165613963373030616565613637313830353765393762343934320000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000403261633834623661326633633265313737373365663366383035326339653034346237663234323932636639616435306437323163306436323134393338623700000040623264633134373366386539613863656361343730363330626134353339323934363265666438303466636534656264383737356337303930623066343737360000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+        }
+      },
+      "changedInputFiles": [
+        "App/Consumer.cs",
+        "Core/Targets.cs"
+      ]
+    },
+    {
+      "pair": "R13c",
+      "label": "ref vs in",
+      "identifier": "ChangeC",
+      "expected": {
+        "identifierForm": "ChangeC",
+        "declarationFormA": "M:Fixture.Core.Mods.ChangeC(System.Int32@)",
+        "declarationFormB": "M:Fixture.Core.Mods.ChangeC(System.Int32@)",
+        "shapeForm": "method|0|int",
+        "identifierDigest": "981da0ca3b60eaf0c070e0775f2a7a65e2cf2dd3f06c3ac267ad1b44f605b1b3",
+        "declarationDigestA": "06f27302852dfa7b98d61d85b9248028f84944bcf6a5dc5d1cc46467e2aab164",
+        "declarationDigestB": "06f27302852dfa7b98d61d85b9248028f84944bcf6a5dc5d1cc46467e2aab164",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+        "declarationDistinguishes": false
+      },
+      "factsA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:8:14",
+          "targetId": "asmctx3:sha256:0e2bce04d59d8646518c2ab072dfb2202a4870d1a490e5f3ee482cebe860531f",
+          "identifierDigest": "981da0ca3b60eaf0c070e0775f2a7a65e2cf2dd3f06c3ac267ad1b44f605b1b3",
+          "declarationDigest": "06f27302852dfa7b98d61d85b9248028f84944bcf6a5dc5d1cc46467e2aab164",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "factsB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:8:14",
+          "targetId": "asmctx3:sha256:b4795e081f01ba5c913595fdeec2c34cdd0bb767f4a10270da791492ac4ac28b",
+          "identifierDigest": "981da0ca3b60eaf0c070e0775f2a7a65e2cf2dd3f06c3ac267ad1b44f605b1b3",
+          "declarationDigest": "06f27302852dfa7b98d61d85b9248028f84944bcf6a5dc5d1cc46467e2aab164",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "sideA": {
+        "runId": "delta:R13c:a2",
+        "fileHashes": {
+          "App/App.csproj": "sha256:9afa840da6d7c15b5abcab20a954b38b76d8a034a72612ed59ec0d3dcdb045d4",
+          "App/Consumer.cs": "sha256:043f3aaeca484f02f2c38c2a2cf4ec520e5292459d72e0535be77a6675e8aec2",
+          "Core/Core.csproj": "sha256:3e1a9f612f8cfcc2e2a8b2ef085685f9f3d1a55c4b901e8d88af6ec37d283195",
+          "Core/Targets.cs": "sha256:116d5241d3cae3d336f7fea0adf3c47a45d78b341d00835fba1d406a4195c89c"
+        },
+        "diagnostics": {
+          "errors": 0,
+          "warnings": 2
+        },
+        "descriptor": {
+          "contractVersion": "compctx1",
+          "repositoryId": "delta:fixture",
+          "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+          "assemblyName": "Core",
+          "metadataIdentity": "Core|0.0.0.0||",
+          "moduleName": "Core.dll",
+          "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+          "sources": [
+            "Core/Targets.cs|sha256:116d5241d3cae3d336f7fea0adf3c47a45d78b341d00835fba1d406a4195c89c|CSharp14|"
+          ],
+          "referencesCount": 179,
+          "referencesDigest": "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980",
+          "descriptorDigest": "compctx1:sha256:95c8bc7da0ec240650a5cd803d19ff666f03977c459395489aa427ebd9a4ebe2"
+        },
+        "frozenCrossCheck": {
+          "descriptorAgrees": true,
+          "sourcesAgree": true,
+          "referencesAgree": true,
+          "optionsAgree": true,
+          "metadataAgrees": true,
+          "frozenAgrees": true
+        },
+        "composed": {
+          "productionTarget": "asmctx3:sha256:0e2bce04d59d8646518c2ab072dfb2202a4870d1a490e5f3ee482cebe860531f",
+          "independentTarget": "asmctx3:sha256:0e2bce04d59d8646518c2ab072dfb2202a4870d1a490e5f3ee482cebe860531f",
+          "refEncHashAgrees": true,
+          "targetsAgree": true,
+          "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a393563386263376461306563323430363530613563643830336431396666363636663033393737633435393339353438396161343237656264396134656265320000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000403938316461306361336236306561663063303730653037373566326137613635653263663264643366303663336163323637616431623434663630356231623300000040303666323733303238353264666137623938643631643835623932343830323866383439343462636636613564633564316363343634363765326161623136340000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+        }
+      },
+      "sideB": {
+        "runId": "delta:R13c:b2",
+        "fileHashes": {
+          "App/App.csproj": "sha256:9afa840da6d7c15b5abcab20a954b38b76d8a034a72612ed59ec0d3dcdb045d4",
+          "App/Consumer.cs": "sha256:7daaf1f58a48f94c8cc0f55a08a8651c9b6c22b7b14881ad8bf3beb31f78d1a0",
+          "Core/Core.csproj": "sha256:3e1a9f612f8cfcc2e2a8b2ef085685f9f3d1a55c4b901e8d88af6ec37d283195",
+          "Core/Targets.cs": "sha256:ab9887ce7d66b70c1c1bd3eb78fdba5d64c74d1dd40e29945f3c83c9039c8e4d"
+        },
+        "diagnostics": {
+          "errors": 0,
+          "warnings": 2
+        },
+        "descriptor": {
+          "contractVersion": "compctx1",
+          "repositoryId": "delta:fixture",
+          "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+          "assemblyName": "Core",
+          "metadataIdentity": "Core|0.0.0.0||",
+          "moduleName": "Core.dll",
+          "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+          "sources": [
+            "Core/Targets.cs|sha256:ab9887ce7d66b70c1c1bd3eb78fdba5d64c74d1dd40e29945f3c83c9039c8e4d|CSharp14|"
+          ],
+          "referencesCount": 179,
+          "referencesDigest": "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980",
+          "descriptorDigest": "compctx1:sha256:37588d327d912634d082d9b3f7d9bbccbefdeb7a4eb776d2536403906fc22c6c"
+        },
+        "frozenCrossCheck": {
+          "descriptorAgrees": true,
+          "sourcesAgree": true,
+          "referencesAgree": true,
+          "optionsAgree": true,
+          "metadataAgrees": true,
+          "frozenAgrees": true
+        },
+        "composed": {
+          "productionTarget": "asmctx3:sha256:b4795e081f01ba5c913595fdeec2c34cdd0bb767f4a10270da791492ac4ac28b",
+          "independentTarget": "asmctx3:sha256:b4795e081f01ba5c913595fdeec2c34cdd0bb767f4a10270da791492ac4ac28b",
+          "refEncHashAgrees": true,
+          "targetsAgree": true,
+          "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a333735383864333237643931323633346430383264396233663764396262636362656664656237613465623737366432353336343033393036666332326336630000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000403938316461306361336236306561663063303730653037373566326137613635653263663264643366303663336163323637616431623434663630356231623300000040303666323733303238353264666137623938643631643835623932343830323866383439343462636636613564633564316363343634363765326161623136340000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+        }
+      },
+      "changedInputFiles": [
+        "App/Consumer.cs",
+        "Core/Targets.cs"
+      ]
+    },
+    {
+      "pair": "family-out-in",
+      "label": "out vs in",
+      "identifier": "ChangeD",
+      "expected": {
+        "identifierForm": "ChangeD",
+        "declarationFormA": "M:Fixture.Core.Mods.ChangeD(System.Int32@)",
+        "declarationFormB": "M:Fixture.Core.Mods.ChangeD(System.Int32@)",
+        "shapeForm": "method|0|int",
+        "identifierDigest": "081b866110473d06e4fe47f62ed7cda9d5ae884b2027a4b3b56d7c9bc68c91de",
+        "declarationDigestA": "cc548ff4c2e070bb080ef3bffc0921a6ceb81294fc07cbccb83831d97343b6d0",
+        "declarationDigestB": "cc548ff4c2e070bb080ef3bffc0921a6ceb81294fc07cbccb83831d97343b6d0",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+        "declarationDistinguishes": false
+      },
+      "factsA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:8:14",
+          "targetId": "asmctx3:sha256:b72d1e0da9a3f08b67c1c69fdeaace2871741b837c4c4ed53520af52aa971575",
+          "identifierDigest": "081b866110473d06e4fe47f62ed7cda9d5ae884b2027a4b3b56d7c9bc68c91de",
+          "declarationDigest": "cc548ff4c2e070bb080ef3bffc0921a6ceb81294fc07cbccb83831d97343b6d0",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "factsB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:8:14",
+          "targetId": "asmctx3:sha256:c2bc061e909718bf39d66330a00504750a323d323f1b3565fb5e58170ac5e713",
+          "identifierDigest": "081b866110473d06e4fe47f62ed7cda9d5ae884b2027a4b3b56d7c9bc68c91de",
+          "declarationDigest": "cc548ff4c2e070bb080ef3bffc0921a6ceb81294fc07cbccb83831d97343b6d0",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "sideA": {
+        "runId": "delta:family-out-in:a2",
+        "fileHashes": {
+          "App/App.csproj": "sha256:9afa840da6d7c15b5abcab20a954b38b76d8a034a72612ed59ec0d3dcdb045d4",
+          "App/Consumer.cs": "sha256:9a868e376499d7b6b6aea9d3e6bcf6c333d4c3240dbcdc2bc3e30c99822f1f17",
+          "Core/Core.csproj": "sha256:3e1a9f612f8cfcc2e2a8b2ef085685f9f3d1a55c4b901e8d88af6ec37d283195",
+          "Core/Targets.cs": "sha256:09097d18052750968a9f88f1298f265234b2737dc48ea9a1efe2a4a89a27070f"
+        },
+        "diagnostics": {
+          "errors": 0,
+          "warnings": 2
+        },
+        "descriptor": {
+          "contractVersion": "compctx1",
+          "repositoryId": "delta:fixture",
+          "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+          "assemblyName": "Core",
+          "metadataIdentity": "Core|0.0.0.0||",
+          "moduleName": "Core.dll",
+          "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+          "sources": [
+            "Core/Targets.cs|sha256:09097d18052750968a9f88f1298f265234b2737dc48ea9a1efe2a4a89a27070f|CSharp14|"
+          ],
+          "referencesCount": 179,
+          "referencesDigest": "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980",
+          "descriptorDigest": "compctx1:sha256:b936f85d8c84516423b787ea645ebaf7517eaa7cb8f7d40a37ef83ffaf125ee7"
+        },
+        "frozenCrossCheck": {
+          "descriptorAgrees": true,
+          "sourcesAgree": true,
+          "referencesAgree": true,
+          "optionsAgree": true,
+          "metadataAgrees": true,
+          "frozenAgrees": true
+        },
+        "composed": {
+          "productionTarget": "asmctx3:sha256:b72d1e0da9a3f08b67c1c69fdeaace2871741b837c4c4ed53520af52aa971575",
+          "independentTarget": "asmctx3:sha256:b72d1e0da9a3f08b67c1c69fdeaace2871741b837c4c4ed53520af52aa971575",
+          "refEncHashAgrees": true,
+          "targetsAgree": true,
+          "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a623933366638356438633834353136343233623738376561363435656261663735313765616137636238663764343061333765663833666661663132356565370000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000403038316238363631313034373364303665346665343766363265643763646139643561653838346232303237613462336235366437633962633638633931646500000040636335343866663463326530373062623038306566336266666330393231613663656238313239346663303763626363623833383331643937333433623664300000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+        }
+      },
+      "sideB": {
+        "runId": "delta:family-out-in:b2",
+        "fileHashes": {
+          "App/App.csproj": "sha256:9afa840da6d7c15b5abcab20a954b38b76d8a034a72612ed59ec0d3dcdb045d4",
+          "App/Consumer.cs": "sha256:feab2a1445dda415f5e17c9d4274ff7763d153ee7076209c86679c9b6b930ae1",
+          "Core/Core.csproj": "sha256:3e1a9f612f8cfcc2e2a8b2ef085685f9f3d1a55c4b901e8d88af6ec37d283195",
+          "Core/Targets.cs": "sha256:deee40b7a243f18822fd432be993b398eb2b98abbdb76fb12c95b9a562ad46c1"
+        },
+        "diagnostics": {
+          "errors": 0,
+          "warnings": 2
+        },
+        "descriptor": {
+          "contractVersion": "compctx1",
+          "repositoryId": "delta:fixture",
+          "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+          "assemblyName": "Core",
+          "metadataIdentity": "Core|0.0.0.0||",
+          "moduleName": "Core.dll",
+          "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+          "sources": [
+            "Core/Targets.cs|sha256:deee40b7a243f18822fd432be993b398eb2b98abbdb76fb12c95b9a562ad46c1|CSharp14|"
+          ],
+          "referencesCount": 179,
+          "referencesDigest": "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980",
+          "descriptorDigest": "compctx1:sha256:f1e91bc8bfa6cb2a4ace4fea1b209f6b11314ef7c130e7dde55f89e347f74982"
+        },
+        "frozenCrossCheck": {
+          "descriptorAgrees": true,
+          "sourcesAgree": true,
+          "referencesAgree": true,
+          "optionsAgree": true,
+          "metadataAgrees": true,
+          "frozenAgrees": true
+        },
+        "composed": {
+          "productionTarget": "asmctx3:sha256:c2bc061e909718bf39d66330a00504750a323d323f1b3565fb5e58170ac5e713",
+          "independentTarget": "asmctx3:sha256:c2bc061e909718bf39d66330a00504750a323d323f1b3565fb5e58170ac5e713",
+          "refEncHashAgrees": true,
+          "targetsAgree": true,
+          "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a663165393162633862666136636232613461636534666561316232303966366231313331346566376331333065376464653535663839653334376637343938320000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000403038316238363631313034373364303665346665343766363265643763646139643561653838346232303237613462336235366437633962633638633931646500000040636335343866663463326530373062623038306566336266666330393231613663656238313239346663303763626363623833383331643937333433623664300000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+        }
+      },
+      "changedInputFiles": [
+        "App/Consumer.cs",
+        "Core/Targets.cs"
+      ]
+    }
+  ],
+  "coexistence": {
+    "fixture": "Both.Ping(int) \u002B Both.Ping(ref int) in one compilation",
+    "facts": [
+      {
+        "label": "plain",
+        "span": "App/Consumer.cs:7:14",
+        "targetId": "asmctx3:sha256:e415797709f4e3828a1097f3a2d5def062eeccb13674080cc1019260bfc98902",
+        "identifierDigest": "bf8cb43bac5080f7337d437c3a24e6cfc6610919705bdeecc2e6afc44c9f50af",
+        "declarationDigest": "71d85f790871f89f4b12909c70722f00aee2a9262dbd316043886c5550b32bbb",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      },
+      {
+        "label": "ref",
+        "span": "App/Consumer.cs:9:14",
+        "targetId": "asmctx3:sha256:9f156d6b82fdb9e86a12fc218436e3d4d42b7653cc27a01fc704d02e6533959d",
+        "identifierDigest": "bf8cb43bac5080f7337d437c3a24e6cfc6610919705bdeecc2e6afc44c9f50af",
+        "declarationDigest": "06d649bfae4486b574729c3e93d800e12b224f1f2fc9b653807e625976c8fea8",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      }
+    ],
+    "context": "compctx1:sha256:0d1a78689f8be5cc4954dfa8f5d2cd8abded8cc1eb7e07156018e9a7dd20116a",
+    "targetPlain": "asmctx3:sha256:e415797709f4e3828a1097f3a2d5def062eeccb13674080cc1019260bfc98902",
+    "targetRef": "asmctx3:sha256:9f156d6b82fdb9e86a12fc218436e3d4d42b7653cc27a01fc704d02e6533959d",
+    "errors": 0
+  },
+  "languageBoundaries": [
+    {
+      "id": "ref-out",
+      "errorCount": 1,
+      "diagnosticIds": [
+        "CS0663"
+      ],
+      "messages": [
+        "\u0027BadMods\u0027 cannot define an overloaded method that differs only on parameter modifiers \u0027out\u0027 and \u0027ref\u0027"
+      ]
+    },
+    {
+      "id": "ref-in",
+      "errorCount": 1,
+      "diagnosticIds": [
+        "CS0663"
+      ],
+      "messages": [
+        "\u0027BadMods2\u0027 cannot define an overloaded method that differs only on parameter modifiers \u0027in\u0027 and \u0027ref\u0027"
+      ]
+    }
+  ],
+  "editorial": {
+    "greetDocId": "M:Corpus.Core.IGreeter.Greet(System.String)",
+    "greetMemberDisplay": "Greet",
+    "greeterTypeDisplay": "global::Corpus.Core.IGreeter",
+    "greetParamDisplay": "string",
+    "explicitImplDocId": "M:Corpus.Core.ExplicitGreeter.Corpus#Core#IGreeter#Greet(System.String)",
+    "localFunctionDocId": "M:Fixture.App.Consumer.Local(System.Collections.Generic.Dictionary{System.String,System.Int32})",
+    "localFunctionParamDisplay": "global::System.Collections.Generic.Dictionary\u003Cstring, int\u003E",
+    "observationMemberDisplay": "FullyQualifiedFormat renders member symbols with minimal member options (e.g. \u0027Greet\u0027); type and parameter-type displays carry qualification (e.g. \u0027global::Corpus.Core.IGreeter\u0027, \u0027global::System.Collections.Generic.Dictionary\u003Cstring, int\u003E\u0027). No supported occurrence target reaches the documented section-4 fallback path in this Roslyn generation (local functions and explicit-interface implementations both receive documentation IDs)."
+  },
+  "checks": [
+    {
+      "id": "encoding:KAT-identifier-Write",
+      "pass": true
+    },
+    {
+      "id": "encoding:KAT-declaration-ref",
+      "pass": true
+    },
+    {
+      "id": "encoding:KAT-shape-int",
+      "pass": true
+    },
+    {
+      "id": "R13a:facts-present",
+      "pass": true
+    },
+    {
+      "id": "R13a:identifier-equal-and-expected",
+      "pass": true,
+      "note": "identifier digest equal across revisions and equal to the independent expected digest"
+    },
+    {
+      "id": "R13a:declaration-relations",
+      "pass": true,
+      "note": "declaration digests differ (value vs mode, doc-ID @) and match independent expectations"
+    },
+    {
+      "id": "R13a:shape-equal-and-expected",
+      "pass": true,
+      "note": "shape digest equal across revisions and equal to the independent expected digest"
+    },
+    {
+      "id": "R13a:compctx1-differs",
+      "pass": true,
+      "note": "defining-compilation context differs for the revision pair"
+    },
+    {
+      "id": "R13a:context-isolation",
+      "pass": true,
+      "note": "only the defining project\u0027s Core/Targets.cs source identity differs; metadata/module/assembly/unit/options/references identical"
+    },
+    {
+      "id": "R13a:frozen-descriptor-agrees",
+      "pass": true,
+      "note": "production compctx1 mapping equals the frozen R2 recomputation field-for-field on both sides"
+    },
+    {
+      "id": "R13a:composed-agrees",
+      "pass": true
+    },
+    {
+      "id": "R13a:fact-target-matches-composed",
+      "pass": true,
+      "note": "extracted fact target equals the composed target from the same inputs"
+    },
+    {
+      "id": "R13a:composed-targets-differ",
+      "pass": true,
+      "note": "composed targets differ for the revision pair (declaration and/or context)"
+    },
+    {
+      "id": "R13b:facts-present",
+      "pass": true
+    },
+    {
+      "id": "R13b:identifier-equal-and-expected",
+      "pass": true,
+      "note": "identifier digest equal across revisions and equal to the independent expected digest"
+    },
+    {
+      "id": "R13b:declaration-relations",
+      "pass": true,
+      "note": "declaration digests equal (within ref/out/in family, doc-ID @ uniform) and match independent expectations"
+    },
+    {
+      "id": "R13b:shape-equal-and-expected",
+      "pass": true,
+      "note": "shape digest equal across revisions and equal to the independent expected digest"
+    },
+    {
+      "id": "R13b:compctx1-differs",
+      "pass": true,
+      "note": "defining-compilation context differs for the revision pair"
+    },
+    {
+      "id": "R13b:context-isolation",
+      "pass": true,
+      "note": "only the defining project\u0027s Core/Targets.cs source identity differs; metadata/module/assembly/unit/options/references identical"
+    },
+    {
+      "id": "R13b:frozen-descriptor-agrees",
+      "pass": true,
+      "note": "production compctx1 mapping equals the frozen R2 recomputation field-for-field on both sides"
+    },
+    {
+      "id": "R13b:composed-agrees",
+      "pass": true
+    },
+    {
+      "id": "R13b:fact-target-matches-composed",
+      "pass": true,
+      "note": "extracted fact target equals the composed target from the same inputs"
+    },
+    {
+      "id": "R13b:composed-targets-differ",
+      "pass": true,
+      "note": "composed targets differ for the revision pair (declaration and/or context)"
+    },
+    {
+      "id": "R13c:facts-present",
+      "pass": true
+    },
+    {
+      "id": "R13c:identifier-equal-and-expected",
+      "pass": true,
+      "note": "identifier digest equal across revisions and equal to the independent expected digest"
+    },
+    {
+      "id": "R13c:declaration-relations",
+      "pass": true,
+      "note": "declaration digests equal (within ref/out/in family, doc-ID @ uniform) and match independent expectations"
+    },
+    {
+      "id": "R13c:shape-equal-and-expected",
+      "pass": true,
+      "note": "shape digest equal across revisions and equal to the independent expected digest"
+    },
+    {
+      "id": "R13c:compctx1-differs",
+      "pass": true,
+      "note": "defining-compilation context differs for the revision pair"
+    },
+    {
+      "id": "R13c:context-isolation",
+      "pass": true,
+      "note": "only the defining project\u0027s Core/Targets.cs source identity differs; metadata/module/assembly/unit/options/references identical"
+    },
+    {
+      "id": "R13c:frozen-descriptor-agrees",
+      "pass": true,
+      "note": "production compctx1 mapping equals the frozen R2 recomputation field-for-field on both sides"
+    },
+    {
+      "id": "R13c:composed-agrees",
+      "pass": true
+    },
+    {
+      "id": "R13c:fact-target-matches-composed",
+      "pass": true,
+      "note": "extracted fact target equals the composed target from the same inputs"
+    },
+    {
+      "id": "R13c:composed-targets-differ",
+      "pass": true,
+      "note": "composed targets differ for the revision pair (declaration and/or context)"
+    },
+    {
+      "id": "family-out-in:facts-present",
+      "pass": true
+    },
+    {
+      "id": "family-out-in:identifier-equal-and-expected",
+      "pass": true,
+      "note": "identifier digest equal across revisions and equal to the independent expected digest"
+    },
+    {
+      "id": "family-out-in:declaration-relations",
+      "pass": true,
+      "note": "declaration digests equal (within ref/out/in family, doc-ID @ uniform) and match independent expectations"
+    },
+    {
+      "id": "family-out-in:shape-equal-and-expected",
+      "pass": true,
+      "note": "shape digest equal across revisions and equal to the independent expected digest"
+    },
+    {
+      "id": "family-out-in:compctx1-differs",
+      "pass": true,
+      "note": "defining-compilation context differs for the revision pair"
+    },
+    {
+      "id": "family-out-in:context-isolation",
+      "pass": true,
+      "note": "only the defining project\u0027s Core/Targets.cs source identity differs; metadata/module/assembly/unit/options/references identical"
+    },
+    {
+      "id": "family-out-in:frozen-descriptor-agrees",
+      "pass": true,
+      "note": "production compctx1 mapping equals the frozen R2 recomputation field-for-field on both sides"
+    },
+    {
+      "id": "family-out-in:composed-agrees",
+      "pass": true
+    },
+    {
+      "id": "family-out-in:fact-target-matches-composed",
+      "pass": true,
+      "note": "extracted fact target equals the composed target from the same inputs"
+    },
+    {
+      "id": "family-out-in:composed-targets-differ",
+      "pass": true,
+      "note": "composed targets differ for the revision pair (declaration and/or context)"
+    },
+    {
+      "id": "coexist:compiles",
+      "pass": true
+    },
+    {
+      "id": "coexist:identifier-equal",
+      "pass": true
+    },
+    {
+      "id": "coexist:declaration-distinguishes",
+      "pass": true
+    },
+    {
+      "id": "coexist:shape-equal",
+      "pass": true
+    },
+    {
+      "id": "coexist:same-context-targets-differ",
+      "pass": true,
+      "note": "within one defining context, the declaration form alone separates value vs ref targets"
+    },
+    {
+      "id": "boundary:ref-out:rejected",
+      "pass": true,
+      "note": "modifier-only overload set must not compile"
+    },
+    {
+      "id": "boundary:ref-in:rejected",
+      "pass": true,
+      "note": "modifier-only overload set must not compile"
+    },
+    {
+      "id": "editorial:docid-exact",
+      "pass": true
+    },
+    {
+      "id": "editorial:docid-no-global",
+      "pass": true
+    },
+    {
+      "id": "editorial:display-vs-docid-distinct",
+      "pass": true,
+      "note": "display construction (type display) uses global:: while documentation-ID construction never does"
+    },
+    {
+      "id": "editorial:fully-qualified-special",
+      "pass": true
+    },
+    {
+      "id": "editorial:fully-qualified-global",
+      "pass": true,
+      "note": "documented FullyQualifiedFormat semantics (E-1) corroborated on a non-special type"
+    }
+  ],
+  "allPass": true,
+  "checkSummary": "55/55"
+}
