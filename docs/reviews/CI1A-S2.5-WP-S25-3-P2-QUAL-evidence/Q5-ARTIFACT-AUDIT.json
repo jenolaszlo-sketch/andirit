@@ -1,0 +1,1024 @@
+﻿{
+    "audit":  "ANDIRIT-CI1A-S2.5-WP-S25-3-P2-QUAL-01 artifact audit",
+    "classification":  "producer-recorded primitives recomputed by reviewer; complements fresh execution",
+    "p1":  {
+               "knownAnswers":  10,
+               "formCases":  17,
+               "matrix":  18,
+               "matrixPass":  15,
+               "matrixFail":  3
+           },
+    "delta":  {
+                  "pairs":  [
+                                {
+                                    "pair":  "R13a",
+                                    "contextA":  "compctx1:sha256:58aa6f3232442644a7655d17d79569fd29d69031011b8ec0abf12bad82e79e34",
+                                    "contextB":  "compctx1:sha256:2da03571f8835b7149f5527f24a556edf6fafdd2d0d53ae47671793b2f6f8226",
+                                    "targetA":  "asmctx3:sha256:0a7d99ac91d71b0289a3633bc686db62bb21e8b3f90505535d0fd6b52de95721",
+                                    "targetB":  "asmctx3:sha256:c1a369c5a316f45ea2813475f05aa956478ddafee48ba004c3084a4cefe85164",
+                                    "changedFiles":  [
+                                                         "App/Consumer.cs",
+                                                         "Core/Targets.cs"
+                                                     ],
+                                    "referencesCount":  179,
+                                    "referencesDigest":  "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980"
+                                },
+                                {
+                                    "pair":  "R13b",
+                                    "contextA":  "compctx1:sha256:a274cbb0d8a48c6f9f94fdeff38a62fa6647875688de75658bc46b47c6c23cb1",
+                                    "contextB":  "compctx1:sha256:4cd1f6c22e1f5534df763f994a729deeb0c031ea9c700aeea6718057e97b4942",
+                                    "targetA":  "asmctx3:sha256:af61f13251a2afe08c861535e2807010b4e687e80b567b47cebab849c4c5472f",
+                                    "targetB":  "asmctx3:sha256:391eb04898b9db065b6e21bc800055fce63fc8f07dc37ee5d133bdede855475a",
+                                    "changedFiles":  [
+                                                         "App/Consumer.cs",
+                                                         "Core/Targets.cs"
+                                                     ],
+                                    "referencesCount":  179,
+                                    "referencesDigest":  "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980"
+                                },
+                                {
+                                    "pair":  "R13c",
+                                    "contextA":  "compctx1:sha256:95c8bc7da0ec240650a5cd803d19ff666f03977c459395489aa427ebd9a4ebe2",
+                                    "contextB":  "compctx1:sha256:37588d327d912634d082d9b3f7d9bbccbefdeb7a4eb776d2536403906fc22c6c",
+                                    "targetA":  "asmctx3:sha256:0e2bce04d59d8646518c2ab072dfb2202a4870d1a490e5f3ee482cebe860531f",
+                                    "targetB":  "asmctx3:sha256:b4795e081f01ba5c913595fdeec2c34cdd0bb767f4a10270da791492ac4ac28b",
+                                    "changedFiles":  [
+                                                         "App/Consumer.cs",
+                                                         "Core/Targets.cs"
+                                                     ],
+                                    "referencesCount":  179,
+                                    "referencesDigest":  "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980"
+                                },
+                                {
+                                    "pair":  "family-out-in",
+                                    "contextA":  "compctx1:sha256:b936f85d8c84516423b787ea645ebaf7517eaa7cb8f7d40a37ef83ffaf125ee7",
+                                    "contextB":  "compctx1:sha256:f1e91bc8bfa6cb2a4ace4fea1b209f6b11314ef7c130e7dde55f89e347f74982",
+                                    "targetA":  "asmctx3:sha256:b72d1e0da9a3f08b67c1c69fdeaace2871741b837c4c4ed53520af52aa971575",
+                                    "targetB":  "asmctx3:sha256:c2bc061e909718bf39d66330a00504750a323d323f1b3565fb5e58170ac5e713",
+                                    "changedFiles":  [
+                                                         "App/Consumer.cs",
+                                                         "Core/Targets.cs"
+                                                     ],
+                                    "referencesCount":  179,
+                                    "referencesDigest":  "b8cdb1ce80017278f839f9ba1778fbcb1251697cde1ae3de342c1bac29e29980"
+                                }
+                            ],
+                  "checksRecorded":  55,
+                  "producerAllPass":  true
+              },
+    "referenceIdentityLimitation":  "Q1-DELTA.json records referencesCount and referencesDigest per side but not the 179 reference identity strings. The reference-closure identities/order and therefore compctx1 cannot be recomputed from the artifact alone. Cross-side closure equality is evidenced by identical count+digest (collision-resistant); identity/order verification is performed in the fresh reviewer run (Q1-P2A.json), where the full ordered closure is recorded per side.",
+    "checks":  [
+                   {
+                       "id":  "p1:kat:KAT-1 hand-written bytes: asmctx3-identifier + \u0027Write\u0027",
+                       "pass":  true,
+                       "detail":  "recomputed message/digest from recorded domain+fields"
+                   },
+                   {
+                       "id":  "p1:kat:KAT-2 identifier Cyrillic",
+                       "pass":  true,
+                       "detail":  "recomputed message/digest from recorded domain+fields"
+                   },
+                   {
+                       "id":  "p1:kat:KAT-3 identifier Japanese",
+                       "pass":  true,
+                       "detail":  "recomputed message/digest from recorded domain+fields"
+                   },
+                   {
+                       "id":  "p1:kat:KAT-4 identifier multi-part",
+                       "pass":  true,
+                       "detail":  "recomputed message/digest from recorded domain+fields"
+                   },
+                   {
+                       "id":  "p1:kat:KAT-5 declaration",
+                       "pass":  true,
+                       "detail":  "recomputed message/digest from recorded domain+fields"
+                   },
+                   {
+                       "id":  "p1:kat:KAT-6 shape",
+                       "pass":  true,
+                       "detail":  "recomputed message/digest from recorded domain+fields"
+                   },
+                   {
+                       "id":  "p1:kat:KAT-7 domain separation (identifier vs declarations, field \u0027x\u0027)",
+                       "pass":  true,
+                       "detail":  "recomputed both domain digests from recorded domain list + field"
+                   },
+                   {
+                       "id":  "p1:kat:KAT-8 multi-part ordering sensitivity",
+                       "pass":  true,
+                       "detail":  "recomputed ordered multi-part digests from recorded fields (row records no actual)"
+                   },
+                   {
+                       "id":  "p1:kat:KAT-9 empty field: encoding computes, form layer rejects",
+                       "pass":  true,
+                       "detail":  "recomputed empty-field message/digest; recorded form-layer rejection preserved"
+                   },
+                   {
+                       "id":  "p1:kat:KAT-10 lowercase-hex length and canonical-target validation",
+                       "pass":  true,
+                       "detail":  "recorded validation predicates all true (artifact audit; no digest in row)"
+                   },
+                   {
+                       "id":  "p1:knownAnswers-count-10",
+                       "pass":  true,
+                       "detail":  "recorded 10/10"
+                   },
+                   {
+                       "id":  "p1:form:FC-1",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-2a",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-2b",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-3",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-4",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-5",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-6",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-7",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-8",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-14",
+                       "pass":  true,
+                       "detail":  "recorded doc-ID-first canonical form (observation row; no occurrence digest)"
+                   },
+                   {
+                       "id":  "p1:form:FC-9",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-10",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-10b",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-11",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-12",
+                       "pass":  true,
+                       "detail":  "recomputed all three digests from recorded literal forms"
+                   },
+                   {
+                       "id":  "p1:form:FC-13",
+                       "pass":  true,
+                       "detail":  "recomputed invariant identifier/declaration + return-type-free shape digest"
+                   },
+                   {
+                       "id":  "p1:form:FC-DELIM",
+                       "pass":  true,
+                       "detail":  "recomputed delimiter-collision shape digests; challenged pairs distinct"
+                   },
+                   {
+                       "id":  "p1:formCases-count-17",
+                       "pass":  true,
+                       "detail":  "recorded 17/17"
+                   },
+                   {
+                       "id":  "p1:matrix-15-pass-3-fail",
+                       "pass":  true,
+                       "detail":  "recorded 18 pairs: 15 pass, 3 fail"
+                   },
+                   {
+                       "id":  "p1:matrix:R1:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R2:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R3:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R4:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R5:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R6a:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R6b:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R7:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R8:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R9:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R10:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R11:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R12:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R13a:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R13b:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R13c:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R14:relations",
+                       "pass":  true,
+                       "detail":  "observed relations recomputed from recorded before/after digests"
+                   },
+                   {
+                       "id":  "p1:matrix:R15:relations",
+                       "pass":  true,
+                       "detail":  "refusal row recorded consistently; no fact digest expected"
+                   },
+                   {
+                       "id":  "p1:matrix:R13a:historical-failure-preserved",
+                       "pass":  true,
+                       "detail":  "original v1 shape assertion not met under original wording; recorded failure preserved"
+                   },
+                   {
+                       "id":  "p1:matrix:R13b:historical-failure-preserved",
+                       "pass":  true,
+                       "detail":  "original v1 shape assertion not met under original wording; recorded failure preserved"
+                   },
+                   {
+                       "id":  "p1:matrix:R13c:historical-failure-preserved",
+                       "pass":  true,
+                       "detail":  "original v1 shape assertion not met under original wording; recorded failure preserved"
+                   },
+                   {
+                       "id":  "delta:vector:KAT-identifier-Write",
+                       "pass":  true,
+                       "detail":  "recomputed encoding vector from recorded domain+field"
+                   },
+                   {
+                       "id":  "delta:vector:KAT-declaration-ref",
+                       "pass":  true,
+                       "detail":  "recomputed encoding vector from recorded domain+field"
+                   },
+                   {
+                       "id":  "delta:vector:KAT-shape-int",
+                       "pass":  true,
+                       "detail":  "recomputed encoding vector from recorded domain+field"
+                   },
+                   {
+                       "id":  "delta:encodingVectors-count-3",
+                       "pass":  true,
+                       "detail":  "recorded three anchors"
+                   },
+                   {
+                       "id":  "delta:R13a:expected-digests",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded literal forms"
+                   },
+                   {
+                       "id":  "delta:R13a:declaration-relation",
+                       "pass":  true,
+                       "detail":  "declaration distinction matches expected"
+                   },
+                   {
+                       "id":  "delta:R13a:sideA:composed-target",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded compctx1/metadata/module/components"
+                   },
+                   {
+                       "id":  "delta:R13a:sideA:message-bytes",
+                       "pass":  true,
+                       "detail":  "exact length-prefixed message bytes recomputed"
+                   },
+                   {
+                       "id":  "delta:R13a:sideA:fact-target",
+                       "pass":  true,
+                       "detail":  "extracted fact target equals recomposed target"
+                   },
+                   {
+                       "id":  "delta:R13a:sideA:fact-digests",
+                       "pass":  true,
+                       "detail":  "extracted fact components equal recomputed digests"
+                   },
+                   {
+                       "id":  "delta:R13a:sideA:diagnostics-clean",
+                       "pass":  true,
+                       "detail":  "compilation valid (errors=0)"
+                   },
+                   {
+                       "id":  "delta:R13a:sideB:composed-target",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded compctx1/metadata/module/components"
+                   },
+                   {
+                       "id":  "delta:R13a:sideB:message-bytes",
+                       "pass":  true,
+                       "detail":  "exact length-prefixed message bytes recomputed"
+                   },
+                   {
+                       "id":  "delta:R13a:sideB:fact-target",
+                       "pass":  true,
+                       "detail":  "extracted fact target equals recomposed target"
+                   },
+                   {
+                       "id":  "delta:R13a:sideB:fact-digests",
+                       "pass":  true,
+                       "detail":  "extracted fact components equal recomputed digests"
+                   },
+                   {
+                       "id":  "delta:R13a:sideB:diagnostics-clean",
+                       "pass":  true,
+                       "detail":  "compilation valid (errors=0)"
+                   },
+                   {
+                       "id":  "delta:R13a:descriptor:contractVersion-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13a:descriptor:repositoryId-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13a:descriptor:projectUnitId-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13a:descriptor:assemblyName-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13a:descriptor:metadataIdentity-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13a:descriptor:moduleName-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13a:descriptor:optionsDigest-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13a:descriptor:referencesCount-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13a:descriptor:referencesDigest-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13a:descriptor-digest-differs",
+                       "pass":  true,
+                       "detail":  "defining context differs"
+                   },
+                   {
+                       "id":  "delta:R13a:sources-one-each",
+                       "pass":  true,
+                       "detail":  "one defining source each"
+                   },
+                   {
+                       "id":  "delta:R13a:source-path-equal",
+                       "pass":  true,
+                       "detail":  "same defining file path"
+                   },
+                   {
+                       "id":  "delta:R13a:source-language-equal",
+                       "pass":  true,
+                       "detail":  "same language version"
+                   },
+                   {
+                       "id":  "delta:R13a:source-bytes-differ",
+                       "pass":  true,
+                       "detail":  "changed source bytes"
+                   },
+                   {
+                       "id":  "delta:R13a:source-hash-consistent",
+                       "pass":  true,
+                       "detail":  "source canonical form matches file hash"
+                   },
+                   {
+                       "id":  "delta:R13a:changed-files",
+                       "pass":  true,
+                       "detail":  "changed input set matches receipt"
+                   },
+                   {
+                       "id":  "delta:R13a:isolation",
+                       "pass":  true,
+                       "detail":  "exactly one defining source + the mechanically required consumer call-site edit"
+                   },
+                   {
+                       "id":  "delta:R13a:targets-differ",
+                       "pass":  true,
+                       "detail":  "composed target distinct"
+                   },
+                   {
+                       "id":  "delta:R13b:expected-digests",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded literal forms"
+                   },
+                   {
+                       "id":  "delta:R13b:declaration-relation",
+                       "pass":  true,
+                       "detail":  "declaration distinction matches expected"
+                   },
+                   {
+                       "id":  "delta:R13b:sideA:composed-target",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded compctx1/metadata/module/components"
+                   },
+                   {
+                       "id":  "delta:R13b:sideA:message-bytes",
+                       "pass":  true,
+                       "detail":  "exact length-prefixed message bytes recomputed"
+                   },
+                   {
+                       "id":  "delta:R13b:sideA:fact-target",
+                       "pass":  true,
+                       "detail":  "extracted fact target equals recomposed target"
+                   },
+                   {
+                       "id":  "delta:R13b:sideA:fact-digests",
+                       "pass":  true,
+                       "detail":  "extracted fact components equal recomputed digests"
+                   },
+                   {
+                       "id":  "delta:R13b:sideA:diagnostics-clean",
+                       "pass":  true,
+                       "detail":  "compilation valid (errors=0)"
+                   },
+                   {
+                       "id":  "delta:R13b:sideB:composed-target",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded compctx1/metadata/module/components"
+                   },
+                   {
+                       "id":  "delta:R13b:sideB:message-bytes",
+                       "pass":  true,
+                       "detail":  "exact length-prefixed message bytes recomputed"
+                   },
+                   {
+                       "id":  "delta:R13b:sideB:fact-target",
+                       "pass":  true,
+                       "detail":  "extracted fact target equals recomposed target"
+                   },
+                   {
+                       "id":  "delta:R13b:sideB:fact-digests",
+                       "pass":  true,
+                       "detail":  "extracted fact components equal recomputed digests"
+                   },
+                   {
+                       "id":  "delta:R13b:sideB:diagnostics-clean",
+                       "pass":  true,
+                       "detail":  "compilation valid (errors=0)"
+                   },
+                   {
+                       "id":  "delta:R13b:descriptor:contractVersion-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13b:descriptor:repositoryId-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13b:descriptor:projectUnitId-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13b:descriptor:assemblyName-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13b:descriptor:metadataIdentity-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13b:descriptor:moduleName-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13b:descriptor:optionsDigest-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13b:descriptor:referencesCount-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13b:descriptor:referencesDigest-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13b:descriptor-digest-differs",
+                       "pass":  true,
+                       "detail":  "defining context differs"
+                   },
+                   {
+                       "id":  "delta:R13b:sources-one-each",
+                       "pass":  true,
+                       "detail":  "one defining source each"
+                   },
+                   {
+                       "id":  "delta:R13b:source-path-equal",
+                       "pass":  true,
+                       "detail":  "same defining file path"
+                   },
+                   {
+                       "id":  "delta:R13b:source-language-equal",
+                       "pass":  true,
+                       "detail":  "same language version"
+                   },
+                   {
+                       "id":  "delta:R13b:source-bytes-differ",
+                       "pass":  true,
+                       "detail":  "changed source bytes"
+                   },
+                   {
+                       "id":  "delta:R13b:source-hash-consistent",
+                       "pass":  true,
+                       "detail":  "source canonical form matches file hash"
+                   },
+                   {
+                       "id":  "delta:R13b:changed-files",
+                       "pass":  true,
+                       "detail":  "changed input set matches receipt"
+                   },
+                   {
+                       "id":  "delta:R13b:isolation",
+                       "pass":  true,
+                       "detail":  "exactly one defining source + the mechanically required consumer call-site edit"
+                   },
+                   {
+                       "id":  "delta:R13b:targets-differ",
+                       "pass":  true,
+                       "detail":  "composed target distinct"
+                   },
+                   {
+                       "id":  "delta:R13c:expected-digests",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded literal forms"
+                   },
+                   {
+                       "id":  "delta:R13c:declaration-relation",
+                       "pass":  true,
+                       "detail":  "declaration distinction matches expected"
+                   },
+                   {
+                       "id":  "delta:R13c:sideA:composed-target",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded compctx1/metadata/module/components"
+                   },
+                   {
+                       "id":  "delta:R13c:sideA:message-bytes",
+                       "pass":  true,
+                       "detail":  "exact length-prefixed message bytes recomputed"
+                   },
+                   {
+                       "id":  "delta:R13c:sideA:fact-target",
+                       "pass":  true,
+                       "detail":  "extracted fact target equals recomposed target"
+                   },
+                   {
+                       "id":  "delta:R13c:sideA:fact-digests",
+                       "pass":  true,
+                       "detail":  "extracted fact components equal recomputed digests"
+                   },
+                   {
+                       "id":  "delta:R13c:sideA:diagnostics-clean",
+                       "pass":  true,
+                       "detail":  "compilation valid (errors=0)"
+                   },
+                   {
+                       "id":  "delta:R13c:sideB:composed-target",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded compctx1/metadata/module/components"
+                   },
+                   {
+                       "id":  "delta:R13c:sideB:message-bytes",
+                       "pass":  true,
+                       "detail":  "exact length-prefixed message bytes recomputed"
+                   },
+                   {
+                       "id":  "delta:R13c:sideB:fact-target",
+                       "pass":  true,
+                       "detail":  "extracted fact target equals recomposed target"
+                   },
+                   {
+                       "id":  "delta:R13c:sideB:fact-digests",
+                       "pass":  true,
+                       "detail":  "extracted fact components equal recomputed digests"
+                   },
+                   {
+                       "id":  "delta:R13c:sideB:diagnostics-clean",
+                       "pass":  true,
+                       "detail":  "compilation valid (errors=0)"
+                   },
+                   {
+                       "id":  "delta:R13c:descriptor:contractVersion-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13c:descriptor:repositoryId-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13c:descriptor:projectUnitId-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13c:descriptor:assemblyName-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13c:descriptor:metadataIdentity-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13c:descriptor:moduleName-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13c:descriptor:optionsDigest-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13c:descriptor:referencesCount-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13c:descriptor:referencesDigest-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:R13c:descriptor-digest-differs",
+                       "pass":  true,
+                       "detail":  "defining context differs"
+                   },
+                   {
+                       "id":  "delta:R13c:sources-one-each",
+                       "pass":  true,
+                       "detail":  "one defining source each"
+                   },
+                   {
+                       "id":  "delta:R13c:source-path-equal",
+                       "pass":  true,
+                       "detail":  "same defining file path"
+                   },
+                   {
+                       "id":  "delta:R13c:source-language-equal",
+                       "pass":  true,
+                       "detail":  "same language version"
+                   },
+                   {
+                       "id":  "delta:R13c:source-bytes-differ",
+                       "pass":  true,
+                       "detail":  "changed source bytes"
+                   },
+                   {
+                       "id":  "delta:R13c:source-hash-consistent",
+                       "pass":  true,
+                       "detail":  "source canonical form matches file hash"
+                   },
+                   {
+                       "id":  "delta:R13c:changed-files",
+                       "pass":  true,
+                       "detail":  "changed input set matches receipt"
+                   },
+                   {
+                       "id":  "delta:R13c:isolation",
+                       "pass":  true,
+                       "detail":  "exactly one defining source + the mechanically required consumer call-site edit"
+                   },
+                   {
+                       "id":  "delta:R13c:targets-differ",
+                       "pass":  true,
+                       "detail":  "composed target distinct"
+                   },
+                   {
+                       "id":  "delta:family-out-in:expected-digests",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded literal forms"
+                   },
+                   {
+                       "id":  "delta:family-out-in:declaration-relation",
+                       "pass":  true,
+                       "detail":  "declaration distinction matches expected"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sideA:composed-target",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded compctx1/metadata/module/components"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sideA:message-bytes",
+                       "pass":  true,
+                       "detail":  "exact length-prefixed message bytes recomputed"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sideA:fact-target",
+                       "pass":  true,
+                       "detail":  "extracted fact target equals recomposed target"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sideA:fact-digests",
+                       "pass":  true,
+                       "detail":  "extracted fact components equal recomputed digests"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sideA:diagnostics-clean",
+                       "pass":  true,
+                       "detail":  "compilation valid (errors=0)"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sideB:composed-target",
+                       "pass":  true,
+                       "detail":  "recomputed from recorded compctx1/metadata/module/components"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sideB:message-bytes",
+                       "pass":  true,
+                       "detail":  "exact length-prefixed message bytes recomputed"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sideB:fact-target",
+                       "pass":  true,
+                       "detail":  "extracted fact target equals recomposed target"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sideB:fact-digests",
+                       "pass":  true,
+                       "detail":  "extracted fact components equal recomputed digests"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sideB:diagnostics-clean",
+                       "pass":  true,
+                       "detail":  "compilation valid (errors=0)"
+                   },
+                   {
+                       "id":  "delta:family-out-in:descriptor:contractVersion-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:family-out-in:descriptor:repositoryId-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:family-out-in:descriptor:projectUnitId-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:family-out-in:descriptor:assemblyName-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:family-out-in:descriptor:metadataIdentity-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:family-out-in:descriptor:moduleName-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:family-out-in:descriptor:optionsDigest-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:family-out-in:descriptor:referencesCount-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:family-out-in:descriptor:referencesDigest-equal",
+                       "pass":  true,
+                       "detail":  "unchanged configuration field"
+                   },
+                   {
+                       "id":  "delta:family-out-in:descriptor-digest-differs",
+                       "pass":  true,
+                       "detail":  "defining context differs"
+                   },
+                   {
+                       "id":  "delta:family-out-in:sources-one-each",
+                       "pass":  true,
+                       "detail":  "one defining source each"
+                   },
+                   {
+                       "id":  "delta:family-out-in:source-path-equal",
+                       "pass":  true,
+                       "detail":  "same defining file path"
+                   },
+                   {
+                       "id":  "delta:family-out-in:source-language-equal",
+                       "pass":  true,
+                       "detail":  "same language version"
+                   },
+                   {
+                       "id":  "delta:family-out-in:source-bytes-differ",
+                       "pass":  true,
+                       "detail":  "changed source bytes"
+                   },
+                   {
+                       "id":  "delta:family-out-in:source-hash-consistent",
+                       "pass":  true,
+                       "detail":  "source canonical form matches file hash"
+                   },
+                   {
+                       "id":  "delta:family-out-in:changed-files",
+                       "pass":  true,
+                       "detail":  "changed input set matches receipt"
+                   },
+                   {
+                       "id":  "delta:family-out-in:isolation",
+                       "pass":  true,
+                       "detail":  "exactly one defining source + the mechanically required consumer call-site edit"
+                   },
+                   {
+                       "id":  "delta:family-out-in:targets-differ",
+                       "pass":  true,
+                       "detail":  "composed target distinct"
+                   },
+                   {
+                       "id":  "delta:coexistence:compiles",
+                       "pass":  true,
+                       "detail":  "one compilation"
+                   },
+                   {
+                       "id":  "delta:coexistence:identifier-equal",
+                       "pass":  true,
+                       "detail":  "shared simple name"
+                   },
+                   {
+                       "id":  "delta:coexistence:declaration-distinct",
+                       "pass":  true,
+                       "detail":  "value vs ref declaration"
+                   },
+                   {
+                       "id":  "delta:coexistence:shape-equal",
+                       "pass":  true,
+                       "detail":  "mode-blind shape"
+                   },
+                   {
+                       "id":  "delta:coexistence:targets-distinct",
+                       "pass":  true,
+                       "detail":  "same context, distinct targets"
+                   },
+                   {
+                       "id":  "delta:boundary:ref-out",
+                       "pass":  true,
+                       "detail":  "modifier-only overload set rejected with CS0663"
+                   },
+                   {
+                       "id":  "delta:boundary:ref-in",
+                       "pass":  true,
+                       "detail":  "modifier-only overload set rejected with CS0663"
+                   },
+                   {
+                       "id":  "delta:editorial:greet-docid",
+                       "pass":  true,
+                       "detail":  "exact doc-ID"
+                   },
+                   {
+                       "id":  "delta:editorial:no-global-in-docids",
+                       "pass":  true,
+                       "detail":  "doc-IDs never carry global::"
+                   },
+                   {
+                       "id":  "delta:editorial:explicit-impl-docid",
+                       "pass":  true,
+                       "detail":  "explicit implementation doc-ID format"
+                   },
+                   {
+                       "id":  "delta:editorial:type-display",
+                       "pass":  true,
+                       "detail":  "FullyQualifiedFormat carries global::"
+                   },
+                   {
+                       "id":  "delta:editorial:param-display",
+                       "pass":  true,
+                       "detail":  "special-type display"
+                   },
+                   {
+                       "id":  "delta:editorial:member-display",
+                       "pass":  true,
+                       "detail":  "minimal member display (D-1)"
+                   },
+                   {
+                       "id":  "delta:checks-count-55",
+                       "pass":  true,
+                       "detail":  "recorded check count"
+                   },
+                   {
+                       "id":  "delta:producer-allpass-asserted",
+                       "pass":  true,
+                       "detail":  "producer-asserted only; independent recomputations above are the P2 evidence"
+                   }
+               ],
+    "checkSummary":  "190/190",
+    "allPass":  true
+}

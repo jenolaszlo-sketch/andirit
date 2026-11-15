@@ -1,0 +1,1487 @@
+{
+  "harness": "ANDIRIT-CI1A-S2.5-WP-S25-3-P2-QUAL-01",
+  "part": "A",
+  "processId": 25400,
+  "os": "Microsoft Windows 10.0.26200",
+  "architecture": "X64",
+  "runtime": ".NET 10.0.12",
+  "reviewerProvenance": {
+    "model": "DeepSeek V4.1 Flash Free (provider opencode, model deepseek-v4.1-flash-free) via OpenCode",
+    "session": "same assistant session as the P1/delta producer \u2014 limitation recorded; independence derived from fresh harness, fresh fixtures, and cross-toolchain (PowerShell) known-answer derivation",
+    "expectedValueSource": "canonical-forms v1 (clarified) \u002B PowerShell-computed known-answer literals \u002B reviewer-owned encoder"
+  },
+  "encoder": [
+    {
+      "id": "kat1-identifier",
+      "domain": "asmctx3-identifier",
+      "field": "ReviewerPing",
+      "messageHex": "0000001261736d637478332d6964656e7469666965720000000c526576696577657250696e67",
+      "expectedDigest": "2184752575bbc9b65b8b85e52134904216bc39aeb9d60d9f7f19bd3c97bdebb9",
+      "reviewerDigest": "2184752575bbc9b65b8b85e52134904216bc39aeb9d60d9f7f19bd3c97bdebb9",
+      "productionDigest": "2184752575bbc9b65b8b85e52134904216bc39aeb9d60d9f7f19bd3c97bdebb9",
+      "pass": true
+    },
+    {
+      "id": "kat2-declaration",
+      "domain": "asmctx3-declarations",
+      "field": "M:Review.Core.Spec.Confirm(System.Int32@)",
+      "messageHex": "0000001461736d637478332d6465636c61726174696f6e73000000294d3a5265766965772e436f72652e537065632e436f6e6669726d2853797374656d2e496e7433324029",
+      "expectedDigest": "a9df5dcd8f6c83641d7b24ec981d8974872f7915d56e2821b67bf2c485e72bbb",
+      "reviewerDigest": "a9df5dcd8f6c83641d7b24ec981d8974872f7915d56e2821b67bf2c485e72bbb",
+      "productionDigest": "a9df5dcd8f6c83641d7b24ec981d8974872f7915d56e2821b67bf2c485e72bbb",
+      "pass": true
+    },
+    {
+      "id": "kat3-target-generic",
+      "domain": "asmctx3-target",
+      "field": "method|1|T",
+      "messageHex": "0000000e61736d637478332d7461726765740000000a6d6574686f647c317c54",
+      "expectedDigest": "af2c463835c11a3396c179709087b2b644584875af3955869f7713cb337d109d",
+      "reviewerDigest": "af2c463835c11a3396c179709087b2b644584875af3955869f7713cb337d109d",
+      "productionDigest": "af2c463835c11a3396c179709087b2b644584875af3955869f7713cb337d109d",
+      "pass": true
+    },
+    {
+      "id": "kat4-empty-component",
+      "domain": "asmctx3-identifier",
+      "field": "",
+      "messageHex": "0000001261736d637478332d6964656e74696669657200000000",
+      "expectedDigest": "bfc94e29357152d9d7759cf169c04e8cfd5efb5f749b3e1c09fe76590f3952eb",
+      "reviewerDigest": "bfc94e29357152d9d7759cf169c04e8cfd5efb5f749b3e1c09fe76590f3952eb",
+      "productionDigest": "bfc94e29357152d9d7759cf169c04e8cfd5efb5f749b3e1c09fe76590f3952eb",
+      "pass": true
+    },
+    {
+      "id": "kat5-unicode",
+      "domain": "asmctx3-identifier",
+      "field": "\u0418\u0434\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0430\u0442\u043E\u0440\u03A9",
+      "messageHex": "0000001261736d637478332d6964656e7469666965720000001cd098d0b4d0b5d0bdd182d0b8d184d0b8d0bad0b0d182d0bed180cea9",
+      "expectedDigest": "45b29ca1c4e3a6efaf29ef99ad42a4214aa85f722abd2324ecd0b0ac12e3a1af",
+      "reviewerDigest": "45b29ca1c4e3a6efaf29ef99ad42a4214aa85f722abd2324ecd0b0ac12e3a1af",
+      "productionDigest": "45b29ca1c4e3a6efaf29ef99ad42a4214aa85f722abd2324ecd0b0ac12e3a1af",
+      "pass": true
+    }
+  ],
+  "forms": [
+    {
+      "id": "simple",
+      "description": "simple method (doc-ID \u002B special-type display)",
+      "expected": {
+        "identifierForm": "Confirm",
+        "declarationForm": "M:Review.Core.Spec.Confirm(System.String)",
+        "shapeForm": "method|0|string",
+        "identifierDigest": "1537b36a98a5132e029d7170d012835560e7b5bcd38889491c9a6c4c402d0f1a",
+        "declarationDigest": "ca5d221d928d78820af449f59322cf8fa688d0cb56129289d1bf737970132d0a",
+        "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+      },
+      "actual": {
+        "label": "simple",
+        "span": "App/Consumer.cs:7:14",
+        "targetId": "asmctx3:sha256:2f6a6b11734743f58a6bc296eed67cdb52fce79f274ee07f9576fae165e226fd",
+        "identifierDigest": "1537b36a98a5132e029d7170d012835560e7b5bcd38889491c9a6c4c402d0f1a",
+        "declarationDigest": "ca5d221d928d78820af449f59322cf8fa688d0cb56129289d1bf737970132d0a",
+        "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+      },
+      "pass": true
+    },
+    {
+      "id": "overloads",
+      "description": "overload selection (declaration distinguishes)",
+      "expected": {
+        "identifierForm": "Add",
+        "declarationForm": "M:Review.Core.Spec.Add(System.Int32)",
+        "shapeForm": "method|0|int",
+        "identifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+        "declarationDigest": "2c7a1fc3beb682c2635205148234d284f51f98597f3861e78031fb2070cc4144",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      },
+      "actual": {
+        "label": "overloads",
+        "span": "App/Consumer.cs:7:14",
+        "targetId": "asmctx3:sha256:cd6a50c46a4952c8a25cb7938fa7de4fd8757c4760669ddb9552f4777f566da4",
+        "identifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+        "declarationDigest": "2c7a1fc3beb682c2635205148234d284f51f98597f3861e78031fb2070cc4144",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      },
+      "pass": true
+    },
+    {
+      "id": "generic",
+      "description": "generic definition (arity in name, T in shape)",
+      "expected": {
+        "identifierForm": "Pick",
+        "declarationForm": "M:Review.Core.Generic.Pick\u0060\u00601(\u0060\u00600)",
+        "shapeForm": "method|1|T",
+        "identifierDigest": "e9e46f80a8c1115e81c47fd1c242a024453527314137ed7081c820e6c0c8466e",
+        "declarationDigest": "588609c9747ba654a0e4b0959f9d95b5b376093c23617d0dfb249cfd93dcb5fb",
+        "shapeDigest": "af2c463835c11a3396c179709087b2b644584875af3955869f7713cb337d109d"
+      },
+      "actual": {
+        "label": "generic",
+        "span": "App/Consumer.cs:7:17",
+        "targetId": "asmctx3:sha256:0fdf4c6838f2a1d6aa99d1ba9ce1086c079be6af20a780e5fd19928aedb57968",
+        "identifierDigest": "e9e46f80a8c1115e81c47fd1c242a024453527314137ed7081c820e6c0c8466e",
+        "declarationDigest": "588609c9747ba654a0e4b0959f9d95b5b376093c23617d0dfb249cfd93dcb5fb",
+        "shapeDigest": "af2c463835c11a3396c179709087b2b644584875af3955869f7713cb337d109d"
+      },
+      "pass": true
+    },
+    {
+      "id": "extension",
+      "description": "reduced extension method (ReducedFrom normalization)",
+      "expected": {
+        "identifierForm": "Twice",
+        "declarationForm": "M:Review.Core.Ext.Twice(System.Int32)",
+        "shapeForm": "method|0|int",
+        "identifierDigest": "68ed221e3eba330ee2abbdb455731f4fafbe602e0d0c81a7080945b63a8ff34d",
+        "declarationDigest": "dcaceb31930864f50504c2ebdbac60e217f966b86e80169098875704401452c6",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      },
+      "actual": {
+        "label": "extension",
+        "span": "App/Consumer.cs:7:11",
+        "targetId": "asmctx3:sha256:61df61fe8f23e1eb179894991845fe1d6d55d4b13b5632d97ff5e96022437c4d",
+        "identifierDigest": "68ed221e3eba330ee2abbdb455731f4fafbe602e0d0c81a7080945b63a8ff34d",
+        "declarationDigest": "dcaceb31930864f50504c2ebdbac60e217f966b86e80169098875704401452c6",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      },
+      "pass": true
+    },
+    {
+      "id": "nested-generic",
+      "description": "nested generic display with internal comma",
+      "expected": {
+        "identifierForm": "Merge",
+        "declarationForm": "M:Review.Core.Util.Merge(System.Collections.Generic.Dictionary{System.String,System.Int32})",
+        "shapeForm": "method|0|global::System.Collections.Generic.Dictionary\u003Cstring, int\u003E",
+        "identifierDigest": "c090148bb8a09c2b6a99e1e23bc5bf63407eb3142de645d11e8f23bdfe7ddb2b",
+        "declarationDigest": "68f8b924c44499995cf8a7f3d87137b9ed40f960cd69a68f5b1076af27c28413",
+        "shapeDigest": "f7f7074bebd591e1779d9ed64c4fdf87e451efb1947dc5483230a5614e453803"
+      },
+      "actual": {
+        "label": "nested-generic",
+        "span": "App/Consumer.cs:7:14",
+        "targetId": "asmctx3:sha256:eb6eef442ed836678cd4b69d0185eec87c7b9700f4d7c7ed6b848647a353f8a9",
+        "identifierDigest": "c090148bb8a09c2b6a99e1e23bc5bf63407eb3142de645d11e8f23bdfe7ddb2b",
+        "declarationDigest": "68f8b924c44499995cf8a7f3d87137b9ed40f960cd69a68f5b1076af27c28413",
+        "shapeDigest": "f7f7074bebd591e1779d9ed64c4fdf87e451efb1947dc5483230a5614e453803"
+      },
+      "pass": true
+    },
+    {
+      "id": "tuple",
+      "description": "tuple display with internal comma",
+      "expected": {
+        "identifierForm": "Pair",
+        "declarationForm": "M:Review.Core.Util.Pair(System.ValueTuple{System.Int32,System.String})",
+        "shapeForm": "method|0|(int, string)",
+        "identifierDigest": "23ae8e0a164452990823553752ba9a442d846fb5a35ac459a2642dfb034fc72c",
+        "declarationDigest": "6ac1b68ed2b2178bdc622701f95366a6d164f1a6b5ac5241f35d6b1413c28f06",
+        "shapeDigest": "b9c31ef4e36bf5d821d0b432583c0e3347d4fb8f2edb3f07d63e2c192a9697f9"
+      },
+      "actual": {
+        "label": "tuple",
+        "span": "App/Consumer.cs:7:14",
+        "targetId": "asmctx3:sha256:fe48828bc43a4fc92fae8500d99a671fe409619875284bae5bd492db640835ef",
+        "identifierDigest": "23ae8e0a164452990823553752ba9a442d846fb5a35ac459a2642dfb034fc72c",
+        "declarationDigest": "6ac1b68ed2b2178bdc622701f95366a6d164f1a6b5ac5241f35d6b1413c28f06",
+        "shapeDigest": "b9c31ef4e36bf5d821d0b432583c0e3347d4fb8f2edb3f07d63e2c192a9697f9"
+      },
+      "pass": true
+    },
+    {
+      "id": "array",
+      "description": "array display",
+      "expected": {
+        "identifierForm": "Sum",
+        "declarationForm": "M:Review.Core.Util.Sum(System.Int32[])",
+        "shapeForm": "method|0|int[]",
+        "identifierDigest": "707cd0d69f248ae2a326308be63f81d70a53598fad4828e9be295bf1b034d894",
+        "declarationDigest": "b945eaa590490bb61f0f030977ab345ee91f35ed2f4242c69407858dab840784",
+        "shapeDigest": "2af15c495dc13bb81c3e8de0321a9ca3bf80c5e601ccbb1960a877dc9974a3ba"
+      },
+      "actual": {
+        "label": "array",
+        "span": "App/Consumer.cs:7:14",
+        "targetId": "asmctx3:sha256:349aedd6fa14fe675c1ebd334a51eff5fc9c7c1ddaf1f76a64f8fcb4dcc8f0e8",
+        "identifierDigest": "707cd0d69f248ae2a326308be63f81d70a53598fad4828e9be295bf1b034d894",
+        "declarationDigest": "b945eaa590490bb61f0f030977ab345ee91f35ed2f4242c69407858dab840784",
+        "shapeDigest": "2af15c495dc13bb81c3e8de0321a9ca3bf80c5e601ccbb1960a877dc9974a3ba"
+      },
+      "pass": true
+    },
+    {
+      "id": "explicit-interface",
+      "facts": [
+        {
+          "label": "implicit",
+          "span": "App/Consumer.cs:8:15",
+          "targetId": "asmctx3:sha256:664e7ffe6a2d3b9b4dd5772a327375324f8d7fd2756cbedef60279a49974f125",
+          "identifierDigest": "389b7398492c99685d9abb91a3fb2b2bd688debcd57387a3f00acd3a7badef15",
+          "declarationDigest": "4aa3c4f7a4caf6c7e281867716b6bbd0fc8f3fd098e4aaed15f3b558a206c634",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        },
+        {
+          "label": "explicit",
+          "span": "App/Consumer.cs:10:15",
+          "targetId": "asmctx3:sha256:664e7ffe6a2d3b9b4dd5772a327375324f8d7fd2756cbedef60279a49974f125",
+          "identifierDigest": "389b7398492c99685d9abb91a3fb2b2bd688debcd57387a3f00acd3a7badef15",
+          "declarationDigest": "4aa3c4f7a4caf6c7e281867716b6bbd0fc8f3fd098e4aaed15f3b558a206c634",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "explicitImplDocId": "M:Review.Core.ExplicitThing.Review#Core#IThing#Go(System.String)",
+      "expectedImplDocId": "M:Review.Core.ExplicitThing.Review#Core#IThing#Go(System.String)"
+    }
+  ],
+  "matrix": [
+    {
+      "row": "R1",
+      "description": "whitespace/formatting",
+      "expectedRelations": "=/=/=",
+      "observedRelations": "=/=/=",
+      "expected": {
+        "identifierA": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+        "identifierB": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+        "declarationA": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+        "declarationB": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+        "shapeA": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+        "shapeB": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:13",
+          "targetId": "asmctx3:sha256:f732115e48e14b4f3191fc0904dfac461c40985c463b507e4a2b147b464ad91b",
+          "identifierDigest": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+          "declarationDigest": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:13",
+          "targetId": "asmctx3:sha256:fa3044dabe46942b6b4fefc3f2da824c0dbb8771dbfd2e4078b8f48597d18492",
+          "identifierDigest": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+          "declarationDigest": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R2",
+      "description": "comments/trivia",
+      "expectedRelations": "=/=/=",
+      "observedRelations": "=/=/=",
+      "expected": {
+        "identifierA": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+        "identifierB": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+        "declarationA": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+        "declarationB": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+        "shapeA": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+        "shapeB": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:13",
+          "targetId": "asmctx3:sha256:f732115e48e14b4f3191fc0904dfac461c40985c463b507e4a2b147b464ad91b",
+          "identifierDigest": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+          "declarationDigest": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:13",
+          "targetId": "asmctx3:sha256:c385275116d5d1c16b5e2a53dd7993fb5f2179fd3bf25697bedd9367abeae151",
+          "identifierDigest": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+          "declarationDigest": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R3",
+      "description": "declaration relocation (Core/Targets.cs -\u003E Core/Deep/Targets.cs)",
+      "expectedRelations": "=/=/=",
+      "observedRelations": "=/=/=",
+      "expected": {
+        "identifier": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+        "declaration": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+        "shape": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:13",
+          "targetId": "asmctx3:sha256:f732115e48e14b4f3191fc0904dfac461c40985c463b507e4a2b147b464ad91b",
+          "identifierDigest": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+          "declarationDigest": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:13",
+          "targetId": "asmctx3:sha256:8462e04afad884e047420d52cdda88dbc5df2179d3772543632f21b102d30f3c",
+          "identifierDigest": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+          "declarationDigest": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R4",
+      "description": "namespace-qualification style",
+      "expectedRelations": "=/=/=",
+      "observedRelations": "=/=/=",
+      "expected": {
+        "identifierA": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+        "identifierB": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+        "declarationA": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+        "declarationB": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+        "shapeA": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+        "shapeB": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:13",
+          "targetId": "asmctx3:sha256:f732115e48e14b4f3191fc0904dfac461c40985c463b507e4a2b147b464ad91b",
+          "identifierDigest": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+          "declarationDigest": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:25",
+          "targetId": "asmctx3:sha256:f732115e48e14b4f3191fc0904dfac461c40985c463b507e4a2b147b464ad91b",
+          "identifierDigest": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+          "declarationDigest": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R5",
+      "description": "type alias",
+      "expectedRelations": "=/=/=",
+      "observedRelations": "=/=/=",
+      "expected": {
+        "identifierA": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+        "identifierB": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+        "declarationA": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+        "declarationB": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+        "shapeA": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c",
+        "shapeB": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:13",
+          "targetId": "asmctx3:sha256:f732115e48e14b4f3191fc0904dfac461c40985c463b507e4a2b147b464ad91b",
+          "identifierDigest": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+          "declarationDigest": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:11",
+          "targetId": "asmctx3:sha256:f732115e48e14b4f3191fc0904dfac461c40985c463b507e4a2b147b464ad91b",
+          "identifierDigest": "0a74b81e7babfe5c0d3f545cf2fbfa689f8a0a386d4056e7bfa0c1d530e62217",
+          "declarationDigest": "edfe1128941efbcee092a49edf903cc2a265c10e91ab3fafbdcc25096a26d77b",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R6a",
+      "description": "overload addition (existing target)",
+      "expectedRelations": "=/=/=",
+      "observedRelations": "=/=/=",
+      "expected": {
+        "identifierA": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+        "identifierB": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+        "declarationA": "5ea120bf8b0588e8c268b2d83d2dfd66e86d5bffc3daf57731fcc5684565fab2",
+        "declarationB": "5ea120bf8b0588e8c268b2d83d2dfd66e86d5bffc3daf57731fcc5684565fab2",
+        "shapeA": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+        "shapeB": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:f7f749dac87697b8e712b5624470fcbf4bfe7080bbe0a7a9fea6e2c8b1592efb",
+          "identifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+          "declarationDigest": "5ea120bf8b0588e8c268b2d83d2dfd66e86d5bffc3daf57731fcc5684565fab2",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:61a05aba8e3ae2159ead3f23723b9077fdcf33e16be00cbbd7e546dd4499299a",
+          "identifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+          "declarationDigest": "5ea120bf8b0588e8c268b2d83d2dfd66e86d5bffc3daf57731fcc5684565fab2",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R6b",
+      "description": "retargeted overload",
+      "expectedRelations": "=/!=/!=",
+      "observedRelations": "=/!=/!=",
+      "expected": {
+        "identifierA": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+        "identifierB": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+        "declarationA": "5ea120bf8b0588e8c268b2d83d2dfd66e86d5bffc3daf57731fcc5684565fab2",
+        "declarationB": "084cdac82cbd03de90984a64945d51cd3aebb3f9287c94bf67698521aea7e27a",
+        "shapeA": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+        "shapeB": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:61a05aba8e3ae2159ead3f23723b9077fdcf33e16be00cbbd7e546dd4499299a",
+          "identifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+          "declarationDigest": "5ea120bf8b0588e8c268b2d83d2dfd66e86d5bffc3daf57731fcc5684565fab2",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:6a9c59bb9a73cbe558bde99e7af256f5632661b7749f0a696946a87800a4eb20",
+          "identifierDigest": "cf6ce0970e0d3693a6c200cf32e616d7d74843e740654a6cb8ea8b2d8a0722bf",
+          "declarationDigest": "084cdac82cbd03de90984a64945d51cd3aebb3f9287c94bf67698521aea7e27a",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R7",
+      "description": "rename",
+      "expectedRelations": "!=/!=/=",
+      "observedRelations": "!=/!=/=",
+      "expected": {
+        "identifierA": "0fb144f322acc6f808ca226dca131d0b6263328cf3c9476ebbe50f351c3abbf9",
+        "identifierB": "3a428e67705e18271e4f74f8ebd668a81a7d359076c384d2542e88fc4b0a136b",
+        "declarationA": "e7c1ad9dde30c3647dee2ac00cd8a7b25460d5a46316f99c529c66c6b163dacb",
+        "declarationB": "cb95ee0972ca2c9fc8d99a6a7b8f856eaf22d376e02a4bb036e5276fe5bf54a8",
+        "shapeA": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+        "shapeB": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:65e438f5491ea560295493b33dd3998836b3796156095ff7fba075581cbbe19f",
+          "identifierDigest": "0fb144f322acc6f808ca226dca131d0b6263328cf3c9476ebbe50f351c3abbf9",
+          "declarationDigest": "e7c1ad9dde30c3647dee2ac00cd8a7b25460d5a46316f99c529c66c6b163dacb",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:2e26f1f55fefb5af19d71196bfd3624cb453d0a42dca15d4cee7678d6c8bf13f",
+          "identifierDigest": "3a428e67705e18271e4f74f8ebd668a81a7d359076c384d2542e88fc4b0a136b",
+          "declarationDigest": "cb95ee0972ca2c9fc8d99a6a7b8f856eaf22d376e02a4bb036e5276fe5bf54a8",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R8",
+      "description": "parameter-type change",
+      "expectedRelations": "=/!=/!=",
+      "observedRelations": "=/!=/!=",
+      "expected": {
+        "identifierA": "3a2d5740290835a954d42cd0ab04c4399a4535c82e5722a3740862d1adf87187",
+        "identifierB": "3a2d5740290835a954d42cd0ab04c4399a4535c82e5722a3740862d1adf87187",
+        "declarationA": "9d9d05a637c73cc906fb6e37e1b7b3e042cdefc2b460409b462ffe9fbf050942",
+        "declarationB": "676554cfc58d91813c54938921a030882a728c1df3713e5dbc419ced283c3994",
+        "shapeA": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+        "shapeB": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:b6e0f54bc314948936f79d679a7dc9e57d2b4999ee0164dcbfd7ca327da65354",
+          "identifierDigest": "3a2d5740290835a954d42cd0ab04c4399a4535c82e5722a3740862d1adf87187",
+          "declarationDigest": "9d9d05a637c73cc906fb6e37e1b7b3e042cdefc2b460409b462ffe9fbf050942",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:9ab13f63822081f743f182c31b11f81e269a646c7527316139810ea1a4c33dbd",
+          "identifierDigest": "3a2d5740290835a954d42cd0ab04c4399a4535c82e5722a3740862d1adf87187",
+          "declarationDigest": "676554cfc58d91813c54938921a030882a728c1df3713e5dbc419ced283c3994",
+          "shapeDigest": "a1f8207c60f1f681ebca9e59bbcfb8924810c2fbc9ac75c5da4445c1bd26761c"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R9",
+      "description": "parameter-order change",
+      "expectedRelations": "=/!=/!=",
+      "observedRelations": "=/!=/!=",
+      "expected": {
+        "identifierA": "68a758a828427940b8003c50866db98224310fc277ac2965090c708e15705381",
+        "identifierB": "68a758a828427940b8003c50866db98224310fc277ac2965090c708e15705381",
+        "declarationA": "45ba1998e84e037b2b8cfa67f001ac7194abfaf768bfbe2cf5a069a44d508a28",
+        "declarationB": "483d9ce7e61d74bc6caea4cfcb99e91c1f9ef295bd2697ea556331a9f5acd2e0",
+        "shapeA": "18b2e20d115ae8e54e616ebf0e1e59edc66be489e721afc58696c0a9db2dacbf",
+        "shapeB": "aaedf9623a2e189cbe1fac7baaf03d1b34ba16258dc60186d442213ed534c72b"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:c6d5ffc08b5cbf334e9b8eea641192bb2b2f170a36e2ff307e1c1166d62c861f",
+          "identifierDigest": "68a758a828427940b8003c50866db98224310fc277ac2965090c708e15705381",
+          "declarationDigest": "45ba1998e84e037b2b8cfa67f001ac7194abfaf768bfbe2cf5a069a44d508a28",
+          "shapeDigest": "18b2e20d115ae8e54e616ebf0e1e59edc66be489e721afc58696c0a9db2dacbf"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:e69069908ce995c08509d392891988c301e6cb0da7d1cf220b20f41e3c247a27",
+          "identifierDigest": "68a758a828427940b8003c50866db98224310fc277ac2965090c708e15705381",
+          "declarationDigest": "483d9ce7e61d74bc6caea4cfcb99e91c1f9ef295bd2697ea556331a9f5acd2e0",
+          "shapeDigest": "aaedf9623a2e189cbe1fac7baaf03d1b34ba16258dc60186d442213ed534c72b"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R10",
+      "description": "generic arity change",
+      "expectedRelations": "=/!=/!=",
+      "observedRelations": "=/!=/!=",
+      "expected": {
+        "identifierA": "f9e5b2055ef28c230fd63b3857691969a54ad03dce4cf8f0a46ec4755d546fc2",
+        "identifierB": "f9e5b2055ef28c230fd63b3857691969a54ad03dce4cf8f0a46ec4755d546fc2",
+        "declarationA": "8333edefc4b6fe5026ea9fef63f5f502fcbfb5c8fb47171137744e35b4e6863a",
+        "declarationB": "322a494a0ecdf7796cb795d74d0b03f79c9ae06eb6b713fb68783dd34d95cd29",
+        "shapeA": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+        "shapeB": "af2c463835c11a3396c179709087b2b644584875af3955869f7713cb337d109d"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:f6077c08e5a25b42eef73b19cdba7ea12454a1748bae4abe0fe90508277608ab",
+          "identifierDigest": "f9e5b2055ef28c230fd63b3857691969a54ad03dce4cf8f0a46ec4755d546fc2",
+          "declarationDigest": "8333edefc4b6fe5026ea9fef63f5f502fcbfb5c8fb47171137744e35b4e6863a",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:14",
+          "targetId": "asmctx3:sha256:723d4fd66a7fc762166bcc0e663323f24cc9a3d2e0c6c37bbeb9c1b992faafcf",
+          "identifierDigest": "f9e5b2055ef28c230fd63b3857691969a54ad03dce4cf8f0a46ec4755d546fc2",
+          "declarationDigest": "322a494a0ecdf7796cb795d74d0b03f79c9ae06eb6b713fb68783dd34d95cd29",
+          "shapeDigest": "af2c463835c11a3396c179709087b2b644584875af3955869f7713cb337d109d"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R11",
+      "description": "generic substitution",
+      "expectedRelations": "=/=/=",
+      "observedRelations": "=/=/=",
+      "expected": {
+        "identifier": "a4d9ced7c6e35fad8d1971edb6b6497c7ed3c4ba0de07375ccd021273c00b573",
+        "declaration": "95c9c552ff182eecf3236b7628acba3a66653d17987cf3ae781271ee87815b06",
+        "shape": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+        "declarationForm": "M:Review.Core.Box\u00601.Get",
+        "shapeForm": "method|0|"
+      },
+      "actual": [
+        {
+          "label": "int",
+          "span": "App/Consumer.cs:7:24",
+          "targetId": "asmctx3:sha256:adba7f80bfba082a08888978aff986b416ee9ac05ade84a0499b585c8946ff34",
+          "identifierDigest": "a4d9ced7c6e35fad8d1971edb6b6497c7ed3c4ba0de07375ccd021273c00b573",
+          "declarationDigest": "95c9c552ff182eecf3236b7628acba3a66653d17987cf3ae781271ee87815b06",
+          "shapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12"
+        },
+        {
+          "label": "string",
+          "span": "App/Consumer.cs:8:27",
+          "targetId": "asmctx3:sha256:adba7f80bfba082a08888978aff986b416ee9ac05ade84a0499b585c8946ff34",
+          "identifierDigest": "a4d9ced7c6e35fad8d1971edb6b6497c7ed3c4ba0de07375ccd021273c00b573",
+          "declarationDigest": "95c9c552ff182eecf3236b7628acba3a66653d17987cf3ae781271ee87815b06",
+          "shapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R12",
+      "description": "extension reduction (both call forms)",
+      "expectedRelations": "=/=/=",
+      "observedRelations": "=/=/=",
+      "expected": {
+        "identifierA": "062e1d5547056a1c43404c3d7cbe8a6f8b8bac0d1b92b52e1eaf043ca3639e3f",
+        "identifierB": "062e1d5547056a1c43404c3d7cbe8a6f8b8bac0d1b92b52e1eaf043ca3639e3f",
+        "declarationA": "d71fd4b726efa8e88bf55c59c4bd249387926798cfe161e6fe4873c655867cdb",
+        "declarationB": "d71fd4b726efa8e88bf55c59c4bd249387926798cfe161e6fe4873c655867cdb",
+        "shapeA": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+        "shapeB": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:11",
+          "targetId": "asmctx3:sha256:3e7849cf04b37f2753bf94ab04cc7d2885d341d2d59223deea564bec400c2343",
+          "identifierDigest": "062e1d5547056a1c43404c3d7cbe8a6f8b8bac0d1b92b52e1eaf043ca3639e3f",
+          "declarationDigest": "d71fd4b726efa8e88bf55c59c4bd249387926798cfe161e6fe4873c655867cdb",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:15",
+          "targetId": "asmctx3:sha256:3e7849cf04b37f2753bf94ab04cc7d2885d341d2d59223deea564bec400c2343",
+          "identifierDigest": "062e1d5547056a1c43404c3d7cbe8a6f8b8bac0d1b92b52e1eaf043ca3639e3f",
+          "declarationDigest": "d71fd4b726efa8e88bf55c59c4bd249387926798cfe161e6fe4873c655867cdb",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R14",
+      "description": "same simple name, different owner",
+      "expectedRelations": "=/!=/=",
+      "observedRelations": "=/!=/=",
+      "expected": {
+        "identifierA": "94db54bba4605e9dfe93dee4e0ce80a93217978168d101ce66c9fa9ee16d3c04",
+        "identifierB": "94db54bba4605e9dfe93dee4e0ce80a93217978168d101ce66c9fa9ee16d3c04",
+        "declarationA": "842dfec726dff6221c11a5d4a1e26b28e0b1c01c77e850f6bb1485ba03cbf0f2",
+        "declarationB": "c55c302a7f18c7c2dc8a9d926629e7e4e3ae4c0082a36bd49236bead10100dbb",
+        "shapeA": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12",
+        "shapeB": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12"
+      },
+      "actualA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:16",
+          "targetId": "asmctx3:sha256:bfd252951af3fc24b61935f051fe73f5a190a41734af7437a4dc68ec977fcb42",
+          "identifierDigest": "94db54bba4605e9dfe93dee4e0ce80a93217978168d101ce66c9fa9ee16d3c04",
+          "declarationDigest": "842dfec726dff6221c11a5d4a1e26b28e0b1c01c77e850f6bb1485ba03cbf0f2",
+          "shapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12"
+        }
+      ],
+      "actualB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:7:16",
+          "targetId": "asmctx3:sha256:0657df97cdda5a0fe6b3abe748a7d0667a2c687266a6203bf7e7fdb0b0c9af1e",
+          "identifierDigest": "94db54bba4605e9dfe93dee4e0ce80a93217978168d101ce66c9fa9ee16d3c04",
+          "declarationDigest": "c55c302a7f18c7c2dc8a9d926629e7e4e3ae4c0082a36bd49236bead10100dbb",
+          "shapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "row": "R15",
+      "description": "unresolved/external refusal",
+      "v1Clarified": "refusal",
+      "observed": "refusal",
+      "pass": true
+    }
+  ],
+  "r13": [
+    {
+      "pair": "value-ref",
+      "declarationDistinguishes": true,
+      "factsA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:7:15",
+          "targetId": "asmctx3:sha256:1f0b883a938976b83b873a5231fcb223b5790f0b5e6aec2af4e12cae18848bd0",
+          "identifierDigest": "c023a97fdbf1a85836001d6194d127c9261a9a54c7f3f5d9c941c35fa43a1350",
+          "declarationDigest": "745e92cc12856bb9ae86815b9afaf8256e8d0e971e00eca601091aacda04a29c",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "factsB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:8:15",
+          "targetId": "asmctx3:sha256:97612ad461c3c62dce745d52a2d09fc49ef64f5114859c1a5bf475aff43f4e80",
+          "identifierDigest": "c023a97fdbf1a85836001d6194d127c9261a9a54c7f3f5d9c941c35fa43a1350",
+          "declarationDigest": "9f0d4e047d393431585536514de5f1d6f17537b3d797c659ea9241d1698679a9",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "sides": [
+        {
+          "side": "a",
+          "diagnostics": {
+            "errors": 0,
+            "warnings": 2
+          },
+          "descriptor": {
+            "repositoryId": "p2:review",
+            "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+            "assemblyName": "Core",
+            "metadataIdentity": "Core|0.0.0.0||",
+            "moduleName": "Core.dll",
+            "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+            "sources": [
+              "Core/Targets.cs|sha256:d44e3f84d5a4a6077a6b0b4a380edfc1bdbc41b701e7d18cc79341256402bb7b|CSharp14|"
+            ],
+            "referencesCount": 181,
+            "referencesDigest": "a5bc0419e461dc434278a6618a1359a9962122cd6152e51173ead670d68a5941",
+            "descriptorDigest": "compctx1:sha256:74137c5c19e6b829064c90f98aeefe84dedbc24b4d55d51a98ab2b9d228d4788"
+          },
+          "reviewerReconstruction": {
+            "compctx1": "compctx1:sha256:74137c5c19e6b829064c90f98aeefe84dedbc24b4d55d51a98ab2b9d228d4788",
+            "matchesProduction": true,
+            "matchesFrozen": true,
+            "referencesOrdered": true
+          },
+          "composed": {
+            "productionTarget": "asmctx3:sha256:1f0b883a938976b83b873a5231fcb223b5790f0b5e6aec2af4e12cae18848bd0",
+            "reviewerTarget": "asmctx3:sha256:1f0b883a938976b83b873a5231fcb223b5790f0b5e6aec2af4e12cae18848bd0",
+            "agree": true,
+            "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a373431333763356331396536623832393036346339306639386165656665383464656462633234623464353564353161393861623262396432323864343738380000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000406330323361393766646266316138353833363030316436313934643132376339323631613961353463376633663564396339343163333566613433613133353000000040373435653932636331323835366262396165383638313562396166616638323536653864306539373165303065636136303130393161616364613034613239630000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+          },
+          "expected": {
+            "identifierDigest": "c023a97fdbf1a85836001d6194d127c9261a9a54c7f3f5d9c941c35fa43a1350",
+            "declarationDigest": "745e92cc12856bb9ae86815b9afaf8256e8d0e971e00eca601091aacda04a29c",
+            "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+            "declarationForm": "M:Review.Core.Probe.Hit(System.Int32)"
+          }
+        },
+        {
+          "side": "b",
+          "diagnostics": {
+            "errors": 0,
+            "warnings": 2
+          },
+          "descriptor": {
+            "repositoryId": "p2:review",
+            "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+            "assemblyName": "Core",
+            "metadataIdentity": "Core|0.0.0.0||",
+            "moduleName": "Core.dll",
+            "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+            "sources": [
+              "Core/Targets.cs|sha256:b3a135811ae60f6f85471df48c8e289d8d3e665316eccc5e74a555acbdbf4ce9|CSharp14|"
+            ],
+            "referencesCount": 181,
+            "referencesDigest": "a5bc0419e461dc434278a6618a1359a9962122cd6152e51173ead670d68a5941",
+            "descriptorDigest": "compctx1:sha256:35cb902358f9c8a00434825b3a41c44e4fda99dfbe70d69f27fdb2d4b5a9de92"
+          },
+          "reviewerReconstruction": {
+            "compctx1": "compctx1:sha256:35cb902358f9c8a00434825b3a41c44e4fda99dfbe70d69f27fdb2d4b5a9de92",
+            "matchesProduction": true,
+            "matchesFrozen": true,
+            "referencesOrdered": true
+          },
+          "composed": {
+            "productionTarget": "asmctx3:sha256:97612ad461c3c62dce745d52a2d09fc49ef64f5114859c1a5bf475aff43f4e80",
+            "reviewerTarget": "asmctx3:sha256:97612ad461c3c62dce745d52a2d09fc49ef64f5114859c1a5bf475aff43f4e80",
+            "agree": true,
+            "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a333563623930323335386639633861303034333438323562336134316334346534666461393964666265373064363966323766646232643462356139646539320000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000406330323361393766646266316138353833363030316436313934643132376339323631613961353463376633663564396339343163333566613433613133353000000040396630643465303437643339333433313538353533363531346465356631643666313735333762336437393763363539656139323431643136393836373961390000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+          },
+          "expected": {
+            "identifierDigest": "c023a97fdbf1a85836001d6194d127c9261a9a54c7f3f5d9c941c35fa43a1350",
+            "declarationDigest": "9f0d4e047d393431585536514de5f1d6f17537b3d797c659ea9241d1698679a9",
+            "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+            "declarationForm": "M:Review.Core.Probe.Hit(System.Int32@)"
+          }
+        }
+      ]
+    },
+    {
+      "pair": "ref-out",
+      "declarationDistinguishes": false,
+      "factsA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:8:15",
+          "targetId": "asmctx3:sha256:238bb137f9e3d79ebdad72da4bcc381b6ccdeaa7327728364deb311c436b22a7",
+          "identifierDigest": "b66b41bb01c7c02565c1f6b69dcee0bee419d882ee76b549bc4eb59513a14556",
+          "declarationDigest": "70e1c52277b4297eb5afea786daf4a9c0347e2eca6e747fb36ae5cd95d8c3670",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "factsB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:8:15",
+          "targetId": "asmctx3:sha256:360475434f4cdc103e3bbca152eff5d4669fd446ea10a30ad05fba49910c13d1",
+          "identifierDigest": "b66b41bb01c7c02565c1f6b69dcee0bee419d882ee76b549bc4eb59513a14556",
+          "declarationDigest": "70e1c52277b4297eb5afea786daf4a9c0347e2eca6e747fb36ae5cd95d8c3670",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "sides": [
+        {
+          "side": "a",
+          "diagnostics": {
+            "errors": 0,
+            "warnings": 2
+          },
+          "descriptor": {
+            "repositoryId": "p2:review",
+            "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+            "assemblyName": "Core",
+            "metadataIdentity": "Core|0.0.0.0||",
+            "moduleName": "Core.dll",
+            "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+            "sources": [
+              "Core/Targets.cs|sha256:76f1a65d8e005610f93c278610122a0fbb39a63862fb20dbd1ede99c0dc8f3b6|CSharp14|"
+            ],
+            "referencesCount": 181,
+            "referencesDigest": "a5bc0419e461dc434278a6618a1359a9962122cd6152e51173ead670d68a5941",
+            "descriptorDigest": "compctx1:sha256:3fa86dc31811ef68373700838f755be92f7272c0ae0aa1b509028161689026fd"
+          },
+          "reviewerReconstruction": {
+            "compctx1": "compctx1:sha256:3fa86dc31811ef68373700838f755be92f7272c0ae0aa1b509028161689026fd",
+            "matchesProduction": true,
+            "matchesFrozen": true,
+            "referencesOrdered": true
+          },
+          "composed": {
+            "productionTarget": "asmctx3:sha256:238bb137f9e3d79ebdad72da4bcc381b6ccdeaa7327728364deb311c436b22a7",
+            "reviewerTarget": "asmctx3:sha256:238bb137f9e3d79ebdad72da4bcc381b6ccdeaa7327728364deb311c436b22a7",
+            "agree": true,
+            "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a336661383664633331383131656636383337333730303833386637353562653932663732373263306165306161316235303930323831363136383930323666640000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000406236366234316262303163376330323536356331663662363964636565306265653431396438383265653736623534396263346562353935313361313435353600000040373065316335323237376234323937656235616665613738366461663461396330333437653265636136653734376662333661653563643935643863333637300000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+          },
+          "expected": {
+            "identifierDigest": "b66b41bb01c7c02565c1f6b69dcee0bee419d882ee76b549bc4eb59513a14556",
+            "declarationDigest": "70e1c52277b4297eb5afea786daf4a9c0347e2eca6e747fb36ae5cd95d8c3670",
+            "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+            "declarationForm": "M:Review.Core.Probe.Hit2(System.Int32@)"
+          }
+        },
+        {
+          "side": "b",
+          "diagnostics": {
+            "errors": 0,
+            "warnings": 2
+          },
+          "descriptor": {
+            "repositoryId": "p2:review",
+            "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+            "assemblyName": "Core",
+            "metadataIdentity": "Core|0.0.0.0||",
+            "moduleName": "Core.dll",
+            "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+            "sources": [
+              "Core/Targets.cs|sha256:75f930484978d8aa8f8d01bd1607a5da12308b49a8d34d2e8ce7c1de62366c92|CSharp14|"
+            ],
+            "referencesCount": 181,
+            "referencesDigest": "a5bc0419e461dc434278a6618a1359a9962122cd6152e51173ead670d68a5941",
+            "descriptorDigest": "compctx1:sha256:b120cd0e8853b0cc1b6515cb6b3226509cff1e41189bda57337e367d837b80a1"
+          },
+          "reviewerReconstruction": {
+            "compctx1": "compctx1:sha256:b120cd0e8853b0cc1b6515cb6b3226509cff1e41189bda57337e367d837b80a1",
+            "matchesProduction": true,
+            "matchesFrozen": true,
+            "referencesOrdered": true
+          },
+          "composed": {
+            "productionTarget": "asmctx3:sha256:360475434f4cdc103e3bbca152eff5d4669fd446ea10a30ad05fba49910c13d1",
+            "reviewerTarget": "asmctx3:sha256:360475434f4cdc103e3bbca152eff5d4669fd446ea10a30ad05fba49910c13d1",
+            "agree": true,
+            "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a623132306364306538383533623063633162363531356362366233323236353039636666316534313138396264613537333337653336376438333762383061310000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000406236366234316262303163376330323536356331663662363964636565306265653431396438383265653736623534396263346562353935313361313435353600000040373065316335323237376234323937656235616665613738366461663461396330333437653265636136653734376662333661653563643935643863333637300000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+          },
+          "expected": {
+            "identifierDigest": "b66b41bb01c7c02565c1f6b69dcee0bee419d882ee76b549bc4eb59513a14556",
+            "declarationDigest": "70e1c52277b4297eb5afea786daf4a9c0347e2eca6e747fb36ae5cd95d8c3670",
+            "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+            "declarationForm": "M:Review.Core.Probe.Hit2(System.Int32@)"
+          }
+        }
+      ]
+    },
+    {
+      "pair": "ref-in",
+      "declarationDistinguishes": false,
+      "factsA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:8:15",
+          "targetId": "asmctx3:sha256:2cc6c3b73786a539cd4daf7c24d905adc7ec11afa1bd2c6c4aa948ba20d85dfe",
+          "identifierDigest": "4dc328c1e76f841277b15f9bcd16829337cda76ba31c8607bb41b289a0e3c512",
+          "declarationDigest": "1993d5ef45ab5f459388f090d34695afa9d8308f89a6d9d9697c359d014e88a5",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "factsB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:8:15",
+          "targetId": "asmctx3:sha256:3ad651e487103b84df839a2809e37083528ef83cd517e7b31e6c13b8d6ba2539",
+          "identifierDigest": "4dc328c1e76f841277b15f9bcd16829337cda76ba31c8607bb41b289a0e3c512",
+          "declarationDigest": "1993d5ef45ab5f459388f090d34695afa9d8308f89a6d9d9697c359d014e88a5",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "sides": [
+        {
+          "side": "a",
+          "diagnostics": {
+            "errors": 0,
+            "warnings": 2
+          },
+          "descriptor": {
+            "repositoryId": "p2:review",
+            "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+            "assemblyName": "Core",
+            "metadataIdentity": "Core|0.0.0.0||",
+            "moduleName": "Core.dll",
+            "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+            "sources": [
+              "Core/Targets.cs|sha256:cb908894101b67ef6a4f496faa0a5e8ac6f7d016164603b579599deee88afc61|CSharp14|"
+            ],
+            "referencesCount": 181,
+            "referencesDigest": "a5bc0419e461dc434278a6618a1359a9962122cd6152e51173ead670d68a5941",
+            "descriptorDigest": "compctx1:sha256:f1a4f104dc06666c9bcf7b1ab6fb153af3cb9439da533bab573b956697e4a7f8"
+          },
+          "reviewerReconstruction": {
+            "compctx1": "compctx1:sha256:f1a4f104dc06666c9bcf7b1ab6fb153af3cb9439da533bab573b956697e4a7f8",
+            "matchesProduction": true,
+            "matchesFrozen": true,
+            "referencesOrdered": true
+          },
+          "composed": {
+            "productionTarget": "asmctx3:sha256:2cc6c3b73786a539cd4daf7c24d905adc7ec11afa1bd2c6c4aa948ba20d85dfe",
+            "reviewerTarget": "asmctx3:sha256:2cc6c3b73786a539cd4daf7c24d905adc7ec11afa1bd2c6c4aa948ba20d85dfe",
+            "agree": true,
+            "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a663161346631303464633036363636633962636637623161623666623135336166336362393433396461353333626162353733623935363639376534613766380000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000403464633332386331653736663834313237376231356639626364313638323933333763646137366261333163383630376262343162323839613065336335313200000040313939336435656634356162356634353933383866303930643334363935616661396438333038663839613664396439363937633335396430313465383861350000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+          },
+          "expected": {
+            "identifierDigest": "4dc328c1e76f841277b15f9bcd16829337cda76ba31c8607bb41b289a0e3c512",
+            "declarationDigest": "1993d5ef45ab5f459388f090d34695afa9d8308f89a6d9d9697c359d014e88a5",
+            "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+            "declarationForm": "M:Review.Core.Probe.Hit3(System.Int32@)"
+          }
+        },
+        {
+          "side": "b",
+          "diagnostics": {
+            "errors": 0,
+            "warnings": 2
+          },
+          "descriptor": {
+            "repositoryId": "p2:review",
+            "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+            "assemblyName": "Core",
+            "metadataIdentity": "Core|0.0.0.0||",
+            "moduleName": "Core.dll",
+            "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+            "sources": [
+              "Core/Targets.cs|sha256:565afd53429159225066504aff5d7d9a5726c351b0b299ae9c557eeb4bf0c86d|CSharp14|"
+            ],
+            "referencesCount": 181,
+            "referencesDigest": "a5bc0419e461dc434278a6618a1359a9962122cd6152e51173ead670d68a5941",
+            "descriptorDigest": "compctx1:sha256:0639de895c52f2a4e344db12355d2c0ab2114e6f62b9df255233a9e22a78ed83"
+          },
+          "reviewerReconstruction": {
+            "compctx1": "compctx1:sha256:0639de895c52f2a4e344db12355d2c0ab2114e6f62b9df255233a9e22a78ed83",
+            "matchesProduction": true,
+            "matchesFrozen": true,
+            "referencesOrdered": true
+          },
+          "composed": {
+            "productionTarget": "asmctx3:sha256:3ad651e487103b84df839a2809e37083528ef83cd517e7b31e6c13b8d6ba2539",
+            "reviewerTarget": "asmctx3:sha256:3ad651e487103b84df839a2809e37083528ef83cd517e7b31e6c13b8d6ba2539",
+            "agree": true,
+            "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a303633396465383935633532663261346533343464623132333535643263306162323131346536663632623964663235353233336139653232613738656438330000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000403464633332386331653736663834313237376231356639626364313638323933333763646137366261333163383630376262343162323839613065336335313200000040313939336435656634356162356634353933383866303930643334363935616661396438333038663839613664396439363937633335396430313465383861350000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+          },
+          "expected": {
+            "identifierDigest": "4dc328c1e76f841277b15f9bcd16829337cda76ba31c8607bb41b289a0e3c512",
+            "declarationDigest": "1993d5ef45ab5f459388f090d34695afa9d8308f89a6d9d9697c359d014e88a5",
+            "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+            "declarationForm": "M:Review.Core.Probe.Hit3(System.Int32@)"
+          }
+        }
+      ]
+    },
+    {
+      "pair": "out-in",
+      "declarationDistinguishes": false,
+      "factsA": [
+        {
+          "label": "a",
+          "span": "App/Consumer.cs:8:15",
+          "targetId": "asmctx3:sha256:b1a3375940be3ef2f23d9b145659f7c31444e705853d9674baad602e99fcac3e",
+          "identifierDigest": "bf4707631dae736e008779bed14a06dc34602dd7d57fb8a20e2c4b26dddff699",
+          "declarationDigest": "a8c67a216bfbc1d7335c8242a24bbfdbdfd63d6bc0bfeff026e3f3eba757b4e4",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "factsB": [
+        {
+          "label": "b",
+          "span": "App/Consumer.cs:8:15",
+          "targetId": "asmctx3:sha256:523d1f4dc88ccdfbd7bb923582b2388094ddba1760d87fcc25dc1663d05d15a5",
+          "identifierDigest": "bf4707631dae736e008779bed14a06dc34602dd7d57fb8a20e2c4b26dddff699",
+          "declarationDigest": "a8c67a216bfbc1d7335c8242a24bbfdbdfd63d6bc0bfeff026e3f3eba757b4e4",
+          "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+        }
+      ],
+      "sides": [
+        {
+          "side": "a",
+          "diagnostics": {
+            "errors": 0,
+            "warnings": 2
+          },
+          "descriptor": {
+            "repositoryId": "p2:review",
+            "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+            "assemblyName": "Core",
+            "metadataIdentity": "Core|0.0.0.0||",
+            "moduleName": "Core.dll",
+            "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+            "sources": [
+              "Core/Targets.cs|sha256:7b960002bf2dfebcdf60fda820b3f0303a028f1d9f7160b3db357568bbed6ac6|CSharp14|"
+            ],
+            "referencesCount": 181,
+            "referencesDigest": "a5bc0419e461dc434278a6618a1359a9962122cd6152e51173ead670d68a5941",
+            "descriptorDigest": "compctx1:sha256:c0f0df2a18578977778afdad8999b8312c361c0c95f17215596600b4d9e8753f"
+          },
+          "reviewerReconstruction": {
+            "compctx1": "compctx1:sha256:c0f0df2a18578977778afdad8999b8312c361c0c95f17215596600b4d9e8753f",
+            "matchesProduction": true,
+            "matchesFrozen": true,
+            "referencesOrdered": true
+          },
+          "composed": {
+            "productionTarget": "asmctx3:sha256:b1a3375940be3ef2f23d9b145659f7c31444e705853d9674baad602e99fcac3e",
+            "reviewerTarget": "asmctx3:sha256:b1a3375940be3ef2f23d9b145659f7c31444e705853d9674baad602e99fcac3e",
+            "agree": true,
+            "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a633066306466326131383537383937373737386166646164383939396238333132633336316330633935663137323135353936363030623464396538373533660000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000406266343730373633316461653733366530303837373962656431346130366463333436303264643764353766623861323065326334623236646464666636393900000040613863363761323136626662633164373333356338323432613234626266646264666436336436626330626665666630323665336633656261373537623465340000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+          },
+          "expected": {
+            "identifierDigest": "bf4707631dae736e008779bed14a06dc34602dd7d57fb8a20e2c4b26dddff699",
+            "declarationDigest": "a8c67a216bfbc1d7335c8242a24bbfdbdfd63d6bc0bfeff026e3f3eba757b4e4",
+            "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+            "declarationForm": "M:Review.Core.Probe.Hit4(System.Int32@)"
+          }
+        },
+        {
+          "side": "b",
+          "diagnostics": {
+            "errors": 0,
+            "warnings": 2
+          },
+          "descriptor": {
+            "repositoryId": "p2:review",
+            "projectUnitId": "csharp:project:bffa11e97f2f4e59cba967c07362182e3c16b3541004dc67fe04aa0ad4e4c583",
+            "assemblyName": "Core",
+            "metadataIdentity": "Core|0.0.0.0||",
+            "moduleName": "Core.dll",
+            "optionsDigest": "8428dcbc604b2cd33d5cdc99caadb723344df0b4ad57c9ae5f82a05316c0db80",
+            "sources": [
+              "Core/Targets.cs|sha256:fbc68b80f604a912f23c3c91f0d871b9b8bcf32f7c42a05707471451f9cac014|CSharp14|"
+            ],
+            "referencesCount": 181,
+            "referencesDigest": "a5bc0419e461dc434278a6618a1359a9962122cd6152e51173ead670d68a5941",
+            "descriptorDigest": "compctx1:sha256:a3e517bbbda590bb0facce93395c98e68b6d94fae280d3244550eea85576848d"
+          },
+          "reviewerReconstruction": {
+            "compctx1": "compctx1:sha256:a3e517bbbda590bb0facce93395c98e68b6d94fae280d3244550eea85576848d",
+            "matchesProduction": true,
+            "matchesFrozen": true,
+            "referencesOrdered": true
+          },
+          "composed": {
+            "productionTarget": "asmctx3:sha256:523d1f4dc88ccdfbd7bb923582b2388094ddba1760d87fcc25dc1663d05d15a5",
+            "reviewerTarget": "asmctx3:sha256:523d1f4dc88ccdfbd7bb923582b2388094ddba1760d87fcc25dc1663d05d15a5",
+            "agree": true,
+            "messageHex": "0000000f61736d637478332d636f6e7465787400000008636f6d706374783100000050636f6d70637478313a7368613235363a613365353137626262646135393062623066616363653933333935633938653638623664393466616532383064333234343535306565613835353736383438640000000e436f72657c302e302e302e307c7c00000008436f72652e646c6c000000406266343730373633316461653733366530303837373962656431346130366463333436303264643764353766623861323065326334623236646464666636393900000040613863363761323136626662633164373333356338323432613234626266646264666436336436626330626665666630323665336633656261373537623465340000004039323866303430653761343961653235616336326438333630633732363537326431633538626633326363363837633861646461396631323637646366656638"
+          },
+          "expected": {
+            "identifierDigest": "bf4707631dae736e008779bed14a06dc34602dd7d57fb8a20e2c4b26dddff699",
+            "declarationDigest": "a8c67a216bfbc1d7335c8242a24bbfdbdfd63d6bc0bfeff026e3f3eba757b4e4",
+            "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8",
+            "declarationForm": "M:Review.Core.Probe.Hit4(System.Int32@)"
+          }
+        }
+      ]
+    }
+  ],
+  "coexistence": {
+    "facts": [
+      {
+        "label": "plain",
+        "span": "App/Consumer.cs:7:14",
+        "targetId": "asmctx3:sha256:dcb0cbfcd4b32c0371199ed147e0c546a4ff021bde7fce9f58a9a704b3774f2e",
+        "identifierDigest": "bf8cb43bac5080f7337d437c3a24e6cfc6610919705bdeecc2e6afc44c9f50af",
+        "declarationDigest": "40136edcadff022de164ebc5406e4dac5ba5982d60358f60f9e9929f5368884d",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      },
+      {
+        "label": "ref",
+        "span": "App/Consumer.cs:9:14",
+        "targetId": "asmctx3:sha256:ddce4e094374c5686d6de48266d68dd99b1bf3bb4258580c8863b01708d61c82",
+        "identifierDigest": "bf8cb43bac5080f7337d437c3a24e6cfc6610919705bdeecc2e6afc44c9f50af",
+        "declarationDigest": "c8d023867cd7a46cdfa7b677bb6ac4e6ea228afe383b5e5a276f43b933a611a5",
+        "shapeDigest": "928f040e7a49ae25ac62d8360c726572d1c58bf32cc687c8adda9f1267dcfef8"
+      }
+    ],
+    "context": "compctx1:sha256:99f2372a3ce727dab303593d7063f21a9db3aaad8790fe07d7ed90135bc905f9",
+    "targetPlain": "asmctx3:sha256:dcb0cbfcd4b32c0371199ed147e0c546a4ff021bde7fce9f58a9a704b3774f2e",
+    "targetRef": "asmctx3:sha256:ddce4e094374c5686d6de48266d68dd99b1bf3bb4258580c8863b01708d61c82"
+  },
+  "languageBoundaries": [
+    {
+      "id": "ref-out",
+      "errorCount": 1,
+      "diagnosticIds": [
+        "CS0663"
+      ],
+      "messages": [
+        "\u0027No\u0027 cannot define an overloaded method that differs only on parameter modifiers \u0027out\u0027 and \u0027ref\u0027"
+      ]
+    },
+    {
+      "id": "ref-in",
+      "errorCount": 1,
+      "diagnosticIds": [
+        "CS0663"
+      ],
+      "messages": [
+        "\u0027No\u0027 cannot define an overloaded method that differs only on parameter modifiers \u0027in\u0027 and \u0027ref\u0027"
+      ]
+    }
+  ],
+  "editorial": {
+    "goDocId": "M:Review.Core.IThing.Go(System.String)",
+    "thingTypeDisplay": "global::Review.Core.IThing",
+    "paramDisplay": "string"
+  },
+  "checks": [
+    {
+      "id": "encoder:kat1-identifier",
+      "pass": true
+    },
+    {
+      "id": "encoder:kat2-declaration",
+      "pass": true
+    },
+    {
+      "id": "encoder:kat3-target-generic",
+      "pass": true
+    },
+    {
+      "id": "encoder:kat4-empty-component",
+      "pass": true
+    },
+    {
+      "id": "encoder:kat5-unicode",
+      "pass": true
+    },
+    {
+      "id": "form:simple",
+      "pass": true
+    },
+    {
+      "id": "form:overloads",
+      "pass": true
+    },
+    {
+      "id": "form:generic",
+      "pass": true
+    },
+    {
+      "id": "form:extension",
+      "pass": true
+    },
+    {
+      "id": "form:nested-generic",
+      "pass": true
+    },
+    {
+      "id": "form:tuple",
+      "pass": true
+    },
+    {
+      "id": "form:array",
+      "pass": true
+    },
+    {
+      "id": "form:explicit-interface",
+      "pass": true,
+      "note": "call sites bind the interface member; doc-IDs carry no global::; explicit implementation uses # escaping"
+    },
+    {
+      "id": "matrix:R1",
+      "pass": true
+    },
+    {
+      "id": "matrix:R2",
+      "pass": true
+    },
+    {
+      "id": "matrix:R3",
+      "pass": true
+    },
+    {
+      "id": "matrix:R4",
+      "pass": true
+    },
+    {
+      "id": "matrix:R5",
+      "pass": true
+    },
+    {
+      "id": "matrix:R6a",
+      "pass": true
+    },
+    {
+      "id": "matrix:R6b",
+      "pass": true
+    },
+    {
+      "id": "matrix:R7",
+      "pass": true
+    },
+    {
+      "id": "matrix:R8",
+      "pass": true
+    },
+    {
+      "id": "matrix:R9",
+      "pass": true
+    },
+    {
+      "id": "matrix:R10",
+      "pass": true
+    },
+    {
+      "id": "matrix:R11",
+      "pass": true
+    },
+    {
+      "id": "matrix:R12",
+      "pass": true
+    },
+    {
+      "id": "matrix:R14",
+      "pass": true
+    },
+    {
+      "id": "matrix:R15",
+      "pass": true
+    },
+    {
+      "id": "r13:value-ref:identifier",
+      "pass": true
+    },
+    {
+      "id": "r13:value-ref:declaration",
+      "pass": true
+    },
+    {
+      "id": "r13:value-ref:shape",
+      "pass": true
+    },
+    {
+      "id": "r13:value-ref:compctx-reconstructed",
+      "pass": true,
+      "note": "reviewer-owned reconstruction from recorded fields matches production and frozen descriptors"
+    },
+    {
+      "id": "r13:value-ref:compctx-differs",
+      "pass": true
+    },
+    {
+      "id": "r13:value-ref:composed-agrees",
+      "pass": true
+    },
+    {
+      "id": "r13:value-ref:targets-differ",
+      "pass": true
+    },
+    {
+      "id": "r13:value-ref:fact-target-matches",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-out:identifier",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-out:declaration",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-out:shape",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-out:compctx-reconstructed",
+      "pass": true,
+      "note": "reviewer-owned reconstruction from recorded fields matches production and frozen descriptors"
+    },
+    {
+      "id": "r13:ref-out:compctx-differs",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-out:composed-agrees",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-out:targets-differ",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-out:fact-target-matches",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-in:identifier",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-in:declaration",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-in:shape",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-in:compctx-reconstructed",
+      "pass": true,
+      "note": "reviewer-owned reconstruction from recorded fields matches production and frozen descriptors"
+    },
+    {
+      "id": "r13:ref-in:compctx-differs",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-in:composed-agrees",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-in:targets-differ",
+      "pass": true
+    },
+    {
+      "id": "r13:ref-in:fact-target-matches",
+      "pass": true
+    },
+    {
+      "id": "r13:out-in:identifier",
+      "pass": true
+    },
+    {
+      "id": "r13:out-in:declaration",
+      "pass": true
+    },
+    {
+      "id": "r13:out-in:shape",
+      "pass": true
+    },
+    {
+      "id": "r13:out-in:compctx-reconstructed",
+      "pass": true,
+      "note": "reviewer-owned reconstruction from recorded fields matches production and frozen descriptors"
+    },
+    {
+      "id": "r13:out-in:compctx-differs",
+      "pass": true
+    },
+    {
+      "id": "r13:out-in:composed-agrees",
+      "pass": true
+    },
+    {
+      "id": "r13:out-in:targets-differ",
+      "pass": true
+    },
+    {
+      "id": "r13:out-in:fact-target-matches",
+      "pass": true
+    },
+    {
+      "id": "coexist:compiles",
+      "pass": true
+    },
+    {
+      "id": "coexist:identifier-equal",
+      "pass": true
+    },
+    {
+      "id": "coexist:declaration-distinguishes",
+      "pass": true
+    },
+    {
+      "id": "coexist:same-context-targets-differ",
+      "pass": true
+    },
+    {
+      "id": "boundary:ref-out",
+      "pass": true
+    },
+    {
+      "id": "boundary:ref-in",
+      "pass": true
+    },
+    {
+      "id": "editorial:docid-exact",
+      "pass": true
+    },
+    {
+      "id": "editorial:docid-no-global",
+      "pass": true
+    },
+    {
+      "id": "editorial:type-display-has-global",
+      "pass": true
+    },
+    {
+      "id": "editorial:special-type-display",
+      "pass": true
+    }
+  ],
+  "allPass": true,
+  "checkSummary": "70/70"
+}
