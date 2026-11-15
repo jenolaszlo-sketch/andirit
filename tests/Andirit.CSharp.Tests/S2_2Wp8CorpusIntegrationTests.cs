@@ -205,7 +205,8 @@ public sealed class S2_2Wp8CorpusIntegrationTests
         Assert.True(extraction.Coverage.Ambiguous >= 1);
         Assert.True(extraction.Coverage.Unresolved >= 2);
         Assert.True(extraction.Coverage.ConditionalInactive >= 1);
-        Assert.Equal(0, extraction.Coverage.External); // F4: construction-stage refusal
+        // E01 binds to a captured external PE assembly and contributes only external coverage.
+        Assert.Equal(1, extraction.Coverage.External);
         Assert.Equal(CodeRelationshipCoverageState.Produced, extraction.Coverage.State);
         Console.WriteLine("WP8 negatives coverage: ambiguous=" + extraction.Coverage.Ambiguous +
             " unresolved=" + extraction.Coverage.Unresolved +

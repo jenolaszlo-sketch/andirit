@@ -183,6 +183,67 @@ public sealed class S23PublicationIntegrationTests : IDisposable
     }
 
     [Fact]
+    public async Task ExternalBinding_CoverageSurvivesAuthorityBoundPublicationAndReopen()
+    {
+        // The focused producer gate also runs each phase in its own test host.
+        var phase = Environment.GetEnvironmentVariable("S254_R1_EXTERNAL_PHASE");
+        var path = phase is null ? _path :
+            Environment.GetEnvironmentVariable("S254_R1_EXTERNAL_PATH") ??
+            throw new InvalidOperationException("S254_R1_EXTERNAL_PATH must name the durable store.");
+        if (phase is not null)
+            Console.WriteLine($"s254-r1-external phase={phase} pid={Environment.ProcessId} path={path}");
+
+        var files = new Dictionary<string, string>(CrossProjectFixture(), StringComparer.Ordinal)
+        {
+            [Names.AppSource] = """
+                namespace App;
+                public static class Application
+                {
+                    public static int Run() => Lib.Value.Get();
+                    public static string External() => string.Concat("left", "right");
+                }
+                """,
+        };
+        var context = Context(Repo, "run:external", files);
+        var (analysis, app, lib) = await LiveCrossProjectAsync(context);
+        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
+        var query = VerifiedCSharpOccurrenceAuthority.Bind(new(Repo, target), analysis.Universe, app.Compilation);
+
+        if (phase != "verify")
+        {
+            using var published = await PublishAsync(path, "run:external", context);
+            CheckExternalCoverage(await published.FindOccurrencesAsync(query), target, app.Descriptor.ProjectUnitId);
+        }
+
+        if (phase != "publish")
+        {
+            using var reopened = Open(path);
+            CheckExternalCoverage(await reopened.FindOccurrencesAsync(query), target, app.Descriptor.ProjectUnitId);
+        }
+
+        var unit = PublishedUnit(path, app.Descriptor.ProjectUnitId);
+        Assert.True(unit["RequiresAuthority"]!.GetValue<bool>());
+        Assert.Single(unit["Facts"]!.AsArray());
+        Assert.Equal(lib.Descriptor.ProjectUnitId,
+            unit["Authority"]!["Facts"]![0]!["DefiningProjectUnitId"]!.GetValue<string>());
+        Assert.Equal(1, unit["Coverage"]!["External"]!.GetValue<int>());
+        Assert.Equal(0, unit["Coverage"]!["Unresolved"]!.GetValue<int>());
+    }
+
+    private static void CheckExternalCoverage(CodeOccurrenceQueryResult result, CodeOccurrenceTargetId target, string owner)
+    {
+        Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
+        Assert.True(result.IsComplete);
+        var occurrence = Assert.Single(result.Occurrences);
+        Assert.Equal(target, occurrence.TargetId);
+        Assert.Equal(owner, occurrence.SourceUnitId);
+        Assert.Equal(1, result.Coverage!.InvocationFacts);
+        Assert.Equal(1, result.Coverage.External);
+        Assert.Equal(0, result.Coverage.Unresolved);
+        Assert.Equal(0, result.Coverage.Ambiguous);
+    }
+
+    [Fact]
     public async Task TransitiveDependencyChange_RefusesStaleRealFact()
     {
         var a = Context(Repo, "run:a", CrossProjectFixture());

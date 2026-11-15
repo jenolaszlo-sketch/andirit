@@ -107,8 +107,18 @@ internal sealed class VerifiedCSharpUniverse
 
         var binding = Entries.Where(entry => BindsDefining(entry, target, caller)).ToArray();
         if (binding.Length == 0)
+        {
+            // Verification binds the caller's PE references to captured metadata.
+            // Roslyn associates the target assembly with the actual reference.
+            if (caller is not null && target.ContainingAssembly is { } assembly &&
+                caller.GetMetadataReference(assembly) is PortableExecutableReference &&
+                Entries.Any(entry => ReferenceEquals(entry.Compilation, caller)))
+                return new(VerifiedDefiningStatus.UnsupportedExternalEvidence,
+                    "the target's defining assembly is available to the verified caller only as PE metadata");
+
             return new(VerifiedDefiningStatus.MissingDefiningCompilation,
                 "no verified compilation in the declared universe is the symbol's defining assembly");
+        }
         if (binding.Length > 1)
             return new(VerifiedDefiningStatus.Ambiguous,
                 binding.Length + " verified compilations bind the same target symbol");
