@@ -6,12 +6,14 @@ at reviewed `aaea1ca7f32a666bc9c6480e91c75c7dd14779d4` /
 `4012bf14e680a742da7a3785831fb578d9f92eb4`.
 No Stage 2 production implementation is authorized by this register.
 
-**Current owner update, 2026-11-03:** [S2.0/F12 OWNER-01](adr-ci1-01-ci1a-s2-0-corpus-01-owner-acceptance.md)
+**Owner update, 2026-11-03:** [S2.0/F12 OWNER-01](adr-ci1-01-ci1a-s2-0-corpus-01-owner-acceptance.md)
 records `F12 CLOSED — ACCEPTED WITH QUALIFICATIONS` for the source-bound R2
 corpus/reference oracle. Q3 remains `SUPPORTED WITH QUALIFICATIONS`.
 `S2.2 SEMANTIC EXTRACTION — NOT AUTHORIZED BY OWNER-01`.
 F12's native end-to-end obligations remain mandatory at S2.3–S2.5; all other
-gates and earlier-reliance rules below are unchanged.
+gates and earlier-reliance rules below were retained by that decision.
+
+**Current S2.5 owner update, 2026-11-15.** See [WP-S25-3 closure and Stage-2 reconciliation](#wp-s25-3-closure-and-stage-2-reconciliation-2026-11-15).
 
 **Current owner update, 2026-11-10:** [SQ-04 bounded amendment](adr-ci1-01-ci1a-s2-5-sq04-amend-owner-01.md)
 (`ANDIRIT-CI1A-S2.5-SQ04-AMEND-OWNER-01`) records
@@ -225,3 +227,16 @@ No “future work” entry waives a correctness condition. If a dependency is re
 earlier, its correction/evidence gate moves before that reliance. Producer tests
 do not constitute independent closure, and successful acceptance of one slice
 does not authorize the next.
+
+### WP-S25-3 closure and Stage-2 reconciliation (2026-11-15)
+
+This dated status update governs the completed S-01 proof entry in §7 and the WP-S25-3 portion of the S2.5 progression in §8. [CLOSURE-OWNER-01](../reviews/ANDIRIT-CI1A-S2.5-WP-S25-3-CLOSURE-OWNER-01.md) records **S-01 — SATISFIED WITH QUALIFICATIONS** and **WP-S25-3 — CLOSED WITH QUALIFICATIONS**. [P2 erratum](../reviews/ANDIRIT-CI1A-S2.5-WP-S25-3-P2-QUAL-01-ERRATUM.md) records **P3-F-01 — CLOSED BY VERIFIED ADDITIVE ERRATUM**. Q-P2-01 through Q-P2-06 continue under the owner dispositions and downstream routes in the closure record.
+
+| Item | Current status and route |
+| --- | --- |
+| B3 cross-project binding | Carried, with independent reconciliation under the S-01 Provenance, Cross-Project and applicable Semantic Identity gates. WP-S25-4 owns the reconciliation before Stage-2 acceptance. |
+| B6 contributor union and B7 payload conflict | Carried, with independent reconciliation under IF-01 and the Semantic Identity gates. WP-S25-4 owns the reconciliation before Stage-2 acceptance. |
+| Applicable D3/D4/D5, SQ-06/IF-05 and Linux scope | WP-S25-4 owns the reconciliation. Earlier D3 and D5 variants, graph-only isolation and applicable D4 invariants retain their historical scope. Linux coverage is bounded to the accepted WP-S25-2 evidence. |
+| F-G2-01 | **OPEN**. LatticeDb branch coverage 296/450 = 65.77%, below the 70% gate. Separate owner decision required. |
+| Full D3 corpus, D4.5, full S-02, F-02 and full platform certification | Outstanding Stage 6 obligations. F-02 crash and power-loss evidence requires separately commissioned qualification. |
+| WP-S25-4 | **Eligible for entry assessment, subject to separate owner authorization.** S2.5 completion and Stage-2 owner acceptance remain pending. |

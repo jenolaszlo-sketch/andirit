@@ -1,6 +1,6 @@
 # Agent-oriented code intelligence and dependency roadmap
 
-**Status:** Proposed future direction, recorded 2026-10-29; current status updated 2026-11-01. **Documentation only.**
+**Status:** Proposed future direction, recorded 2026-10-29; current status updated 2026-11-15. **Documentation only.**
 No milestone below is authorized for implementation, release, or publication by
 this document. Exact API names are working names, not accepted public contracts.
 
@@ -85,6 +85,8 @@ incomplete and S2.3/later stages remain gated. Next eligible action is a
 separately commissioned S2.2 scope/entry-criteria preparation, retaining Option A
 and every remaining prerequisite. See [the owner decision](decisions/adr-ci1-01-ci1a-s2-0-corpus-01-owner-acceptance.md)
 and [current status/work queue](planning/adr-ci1-01-ci1a-impl-01/s2-0-owner-handoff.md).
+
+**S2.5 status (2026-11-15).** **WP-S25-3 — CLOSED WITH QUALIFICATIONS** and **S-01 — SATISFIED WITH QUALIFICATIONS**. WP-S25-4 is eligible for entry assessment, subject to separate owner authorization. It carries the cross-project binding, contributor union and payload conflict reconciliation to the Stage-2 gates. S2.5 and Stage-2 acceptance remain pending. [Formal closure](reviews/ANDIRIT-CI1A-S2.5-WP-S25-3-CLOSURE-OWNER-01.md) · [S2.5 work-package plan](planning/adr-ci1-01-ci1a-s2-5/work-package-plan.md)
 
 ## Candidate capability sequence
 
