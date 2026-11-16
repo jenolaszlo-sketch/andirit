@@ -33,6 +33,17 @@ public sealed partial class CSharpCodeGraphPlugin
             var relationshipTotals = new Dictionary<string, RelationshipCounters>(
                 StringComparer.Ordinal);
             var indexUnitCoverage = new List<CodeIndexUnitCoverage>();
+            var missingScopeUnitCount = analysis.Universe.MissingScopeUnits.Length;
+            // Coverage alone can describe a partially analyzed declared scope.
+            // Preserve graph-only behavior if there is no usable source analysis
+            // or the universe also has an unrelated provenance refusal.
+            int? unreportedMissingUnits = missingScopeUnitCount > 0 &&
+                analysis.Universe.Entries.Any(entry => !entry.Sources.IsEmpty) &&
+                analysis.Universe.Refusals.All(reason => reason == "MissingDeclaredProject" ||
+                    reason.StartsWith("MissingDeclaredProject:", StringComparison.Ordinal) ||
+                    reason.StartsWith("MissingDeclaredSource:", StringComparison.Ordinal))
+                ? missingScopeUnitCount
+                : null;
             foreach (var prepared in analysis.Projects)
             {
                 var project = prepared.Project;
@@ -71,7 +82,10 @@ public sealed partial class CSharpCodeGraphPlugin
                         CSharpProjectDiscovery.IndexUnitId(project.Path),
                         analysis.Universe,
                         prepared.Verified,
+                        unreportedMissingUnits,
                         cancellationToken).ConfigureAwait(false);
+                    if (unreportedMissingUnits is not null)
+                        unreportedMissingUnits = 0;
                 }
 
                 await builder.WriteAsync(sink, cancellationToken).ConfigureAwait(false);
@@ -401,6 +415,7 @@ public sealed partial class CSharpCodeGraphPlugin
         string unitId,
         VerifiedCSharpUniverse universe,
         VerifiedCSharpCompilation source,
+        int? missingDeclaredUnits,
         CancellationToken cancellationToken)
     {
         if (sink is not ICodeOccurrenceAuthoritySink authoritySink)
@@ -410,11 +425,34 @@ public sealed partial class CSharpCodeGraphPlugin
             new VerifiedOccurrenceExtractionRequest(repositoryId, pluginId, source,
                 OccurrenceIdentifierDigest, OccurrenceDeclarationDigest, OccurrenceShapeDigest,
                 OccurrenceTargetDocumentId, pluginVersion));
-        if (extraction.Authority is null)
-            return;
-
         var origin = new CodeFactOrigin(repositoryId, pluginId, pluginVersion, runId,
             new CodeIndexUnitId(unitId));
+        if (extraction.Authority is null)
+        {
+            if (missingDeclaredUnits is not { } missing || !extraction.Facts.IsEmpty)
+                return;
+
+            // Partial units contribute disjoint membership counts. Assign all
+            // missing units to the first verified unit so aggregation adds them
+            // exactly once, while each scanned unit preserves its diagnostics.
+            var observed = extraction.Coverage;
+            var partial = new CodeOccurrenceCoverage(
+                unsupportedCategories: observed.UnsupportedCategories,
+                state: CodeRelationshipCoverageState.Partial,
+                scopeId: observed.ScopeId,
+                universeId: observed.UniverseId,
+                declaredUnitCount: 1 + missing,
+                verifiedUnitCount: 1,
+                external: observed.External,
+                ambiguous: observed.Ambiguous,
+                unresolved: observed.Unresolved,
+                unsupported: observed.Unsupported,
+                conditionalInactive: observed.ConditionalInactive);
+            await sink.WriteBatchAsync(new CodeGraphBatch(origin, occurrenceCoverage: partial), cancellationToken)
+                .ConfigureAwait(false);
+            return;
+        }
+
         await authoritySink.SetOccurrenceAuthorityAsync(origin, extraction.Authority, cancellationToken)
             .ConfigureAwait(false);
         await sink.WriteBatchAsync(new CodeGraphBatch(origin,
