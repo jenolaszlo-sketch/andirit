@@ -1,0 +1,10 @@
+Command: dotnet docs/reviews/CI1A-S2.5-WP-S25-3-P2-QUAL-tests/bin/Release/net10.0/Andirit.CSharp.Tests.dll reopen C:/Users/Laszlos/source/repos/Solo/.tmp/andirit-qual02/database/confirmation/recovery.ltdb C:/Users/Laszlos/source/repos/Solo/.tmp/andirit-qual02/evidence/confirmation/p2-reopen.json
+Unhandled exception. Andirit.CodeOccurrenceIndexException: An occurrence page is not bound to the accepted occurrence publication.
+   at Andirit.LatticeCodeGraphStore.RestoreOccurrences(CancellationToken cancellationToken) in C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-qual02\corrected\src\Andirit.LatticeDb\LatticeCodeGraphStore.cs:line 582
+   at Andirit.LatticeCodeGraphStore..ctor(String databasePath, LatticeDbStoreOptions options, Action`1 faultInjector, CancellationToken cancellationToken) in C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-qual02\corrected\src\Andirit.LatticeDb\LatticeCodeGraphStore.cs:line 123
+   at Andirit.LatticeCodeGraphStore..ctor(String databasePath, LatticeDbStoreOptions options, Action`1 faultInjector) in C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-qual02\corrected\src\Andirit.LatticeDb\LatticeCodeGraphStore.cs:line 86
+   at Andirit.LatticeCodeGraphStore..ctor(String databasePath) in C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-qual02\corrected\src\Andirit.LatticeDb\LatticeCodeGraphStore.cs:line 73
+   at P2Qual.ReviewIntegration.ReopenAsync(String database) in C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-qual02\corrected\docs\reviews\CI1A-S2.5-WP-S25-3-P2-QUAL-tests\ReviewIntegration.cs:line 242
+   at Program.<Main>$(String[] args) in C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-qual02\corrected\docs\reviews\CI1A-S2.5-WP-S25-3-P2-QUAL-tests\Program.cs:line 18
+   at Program.<Main>(String[] args)
+Exit code: -532462766

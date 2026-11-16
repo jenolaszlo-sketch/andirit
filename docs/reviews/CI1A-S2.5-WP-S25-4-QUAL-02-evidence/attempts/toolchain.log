@@ -1,0 +1,61 @@
+Working directory: C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-qual02/corrected
+Command: dotnet --info
+.NET SDK:
+ Version:           10.0.401
+ Commit:            e34a38d2ae
+System.InvalidOperationException: Cannot open Service Control Manager on computer '.'. This operation might require other privileges.
+ ---> System.ComponentModel.Win32Exception (5): Access is denied.
+   --- End of inner exception stack trace ---
+   at System.ServiceProcess.ServiceController.GetDataBaseHandleWithAccess(String machineName, Int32 serviceControlManagerAccess)
+   at System.ServiceProcess.ServiceController.GetServices[T](String machineName, Int32 serviceType, String group, Func`2 selector)
+   at System.ServiceProcess.ServiceController.GetServicesOfType(String machineName, Int32 serviceType)
+   at Microsoft.DotNet.Cli.Installer.Windows.WindowsUpdateAgent..ctor(ISetupLogger logger)
+   at Microsoft.DotNet.Cli.Commands.Workload.Install.MsiInstallerBase..ctor(InstallElevationContextBase elevationContext, ISetupLogger logger, Boolean verifySignatures, IReporter reporter)
+   at Microsoft.DotNet.Cli.Commands.Workload.Install.NetSdkMsiInstallerClient..ctor(InstallElevationContextBase elevationContext, ISetupLogger logger, Boolean verifySignatures, IWorkloadResolver workloadResolver, SdkFeatureBand sdkFeatureBand, INuGetPackageDownloader nugetPackageDownloader, VerbosityOptions verbosity, PackageSourceLocation packageSourceLocation, IReporter reporter)
+   at Microsoft.DotNet.Cli.Commands.Workload.Install.NetSdkMsiInstallerClient.Create(Boolean verifySignatures, SdkFeatureBand sdkFeatureBand, IWorkloadResolver workloadResolver, INuGetPackageDownloader nugetPackageDownloader, VerbosityOptions verbosity, PackageSourceLocation packageSourceLocation, IReporter reporter, String tempDirPath, RestoreActionConfig restoreActionConfig, Boolean shouldLog)
+   at Microsoft.DotNet.Cli.Commands.Workload.Install.WorkloadInstallerFactory.GetWorkloadInstaller(IReporter reporter, SdkFeatureBand sdkFeatureBand, IWorkloadResolver workloadResolver, VerbosityOptions verbosity, String userProfileDir, Boolean verifySignatures, INuGetPackageDownloader nugetPackageDownloader, String dotnetDir, String tempDirPath, PackageSourceLocation packageSourceLocation, RestoreActionConfig restoreActionConfig, Boolean elevationRequired, Boolean shouldLog)
+   at Microsoft.DotNet.Cli.Commands.Workload.WorkloadInfoHelper..ctor(Boolean isInteractive, VerbosityOptions verbosity, String targetSdkVersion, Nullable`1 verifySignatures, IReporter reporter, IWorkloadInstallationRecordRepository workloadRecordRepo, String currentSdkVersion, String dotnetDir, String userProfileDir, IWorkloadResolver workloadResolver)
+   at Microsoft.DotNet.Cli.Commands.Workload.WorkloadInfoHelper.GetWorkloadsVersion(WorkloadInfoHelper workloadInfoHelper)
+   at Microsoft.DotNet.Cli.CommandLineInfo.PrintInfo()
+   at Microsoft.DotNet.Cli.Program.ProcessArgs(String[] args, TimeSpan startupTime)
+   at Microsoft.DotNet.Cli.Program.Main(String[] args)
+
+Host:
+  Version:      10.0.12
+  Architecture: x64
+  Commit:       95017c711e
+  RID:          win-x64
+
+.NET SDKs installed:
+  10.0.401 [C:\Program Files\dotnet\sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.App 8.0.31 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 9.0.20 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 10.0.12 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.NETCore.App 8.0.31 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 9.0.20 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 10.0.12 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.WindowsDesktop.App 8.0.31 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 9.0.20 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 10.0.12 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+
+Other architectures found:
+  x86   [C:\Program Files (x86)\dotnet]
+    registered at [HKLM\SOFTWARE\dotnet\Setup\InstalledVersions\x86\InstallLocation]
+
+Environment variables:
+  DOTNET_CLI_HOME                          [C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-qual02\evidence\gates\dotnet-home]
+  DOTNET_CLI_TELEMETRY_OPTOUT              [1]
+  DOTNET_NOLOGO                            [1]
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE        [1]
+
+global.json file:
+  Not found
+
+Learn more:
+  https://aka.ms/dotnet/info
+
+Download .NET:
+  https://aka.ms/dotnet/download
+Exit code: 1

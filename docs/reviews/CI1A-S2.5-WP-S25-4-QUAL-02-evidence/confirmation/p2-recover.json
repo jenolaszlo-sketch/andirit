@@ -1,0 +1,71 @@
+{
+  "action": "recover",
+  "database": "C:/Users/Laszlos/source/repos/Solo/.tmp/andirit-qual02/database/confirmation/recovery.ltdb",
+  "processId": 16288,
+  "f02Note": "Managed fault injection exercises the accepted recovery contract; it is not crash or power-loss durability evidence.",
+  "baseline": {
+    "availability": "Available",
+    "isComplete": true,
+    "factCount": 8,
+    "totalMatches": 8,
+    "examined": 8,
+    "publicationRun": "run:review",
+    "allTargetsMatch": true,
+    "refusalReason": null,
+    "firstSpans": [
+      "App/Bulk.cs:20:30",
+      "App/Bulk.cs:21:30",
+      "App/Bulk.cs:22:30",
+      "App/Bulk.cs:23:30",
+      "App/Bulk.cs:24:30"
+    ]
+  },
+  "knownFailure": {
+    "faultObserved": true,
+    "exceptionType": "ReviewFault",
+    "afterFailure": {
+      "availability": "Available",
+      "isComplete": true,
+      "factCount": 8,
+      "totalMatches": 8,
+      "examined": 8,
+      "publicationRun": "run:review",
+      "allTargetsMatch": true,
+      "refusalReason": null,
+      "firstSpans": [
+        "App/Bulk.cs:20:30",
+        "App/Bulk.cs:21:30",
+        "App/Bulk.cs:22:30",
+        "App/Bulk.cs:23:30",
+        "App/Bulk.cs:24:30"
+      ]
+    }
+  },
+  "unknownOutcome": {
+    "faultObserved": true,
+    "exceptionType": "CodeGraphCommitOutcomeUnknownException",
+    "quarantinedRead": "throw:CodeGraphCommitOutcomeUnknownException",
+    "quarantinedMutation": "throw:CodeGraphCommitOutcomeUnknownException"
+  },
+  "reconciled": {
+    "availability": "Available",
+    "isComplete": true,
+    "factCount": 8,
+    "totalMatches": 8,
+    "examined": 8,
+    "publicationRun": "run:review3",
+    "allTargetsMatch": true,
+    "refusalReason": null,
+    "firstSpans": [
+      "App/Bulk.cs:20:30",
+      "App/Bulk.cs:21:30",
+      "App/Bulk.cs:22:30",
+      "App/Bulk.cs:23:30",
+      "App/Bulk.cs:24:30"
+    ]
+  },
+  "tamperedPayloadRefusal": {
+    "outcome": "refused",
+    "openExceptionType": "CodeOccurrenceIndexException"
+  }
+}
