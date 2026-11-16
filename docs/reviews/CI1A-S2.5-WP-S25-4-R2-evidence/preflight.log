@@ -1,0 +1,15 @@
+Commission ANDIRIT-CI1A-S2.5-WP-S25-4-R2
+Producer session and chat 01a1e288-3681-7a82-8b58-298834f17a05
+Starting gate from unsandboxed read-only git status, log, worktree, stash, rev-list and protected diff.
+Result clean main, one worktree, zero stashes, 0 behind and 5 ahead of recorded origin/main.
+The R1 baseline was a plain Git archive of the QUAL-02 starting commit, whose non-docs tree matches the R1 implementation.
+Baseline archive command: git --git-dir=D:/projects/Andirit/.git archive --format=tar --output=<scratch>/r1.tar 6d4d45f7aedc85f4b52310cf9a3fa6082f885296
+R2 build used another export of that archive and the four exact implementation files verified in build-source.jsonl.
+No fetch, push, branch, additional worktree, remote execution or CI publication.
+Verified starting ancestry (immutable commit, tree, parent and subject):
+6d4d45f7aedc85f4b52310cf9a3fa6082f885296 d60f3527090aa0a11a68abb10ce05cd3c6e87ee9 d48feeaa316f76901b6e37264d6d115f689a7000 docs(review): record independent R1 requalification and Stage-2 integration findings (ANDIRIT-CI1A-S2.5-WP-S25-4-QUAL-02)
+d48feeaa316f76901b6e37264d6d115f689a7000 8050060b64fa2444282167c2a0f60131795c0f64 afa136f4033f35d9a657d8c5f1d5db92d736b679 docs(review): record external-binding classification remediation evidence (ANDIRIT-CI1A-S2.5-WP-S25-4-R1)
+afa136f4033f35d9a657d8c5f1d5db92d736b679 2962442c4c1528193fe79df9ea0ecc31701a463d 8ab2d25d058e5bb4301094078f1737b139868e6a fix(binding): preserve external metadata binding classification (ANDIRIT-CI1A-S2.5-WP-S25-4-R1)
+8ab2d25d058e5bb4301094078f1737b139868e6a 01571db59dfdd1bbb39b42b9096cc0f8d583ce2a 581b84a5e910626b87fb260becf90aac500dd7bb docs(review): record Stage-2 independent qualification (ANDIRIT-CI1A-S2.5-WP-S25-4-QUAL-01)
+581b84a5e910626b87fb260becf90aac500dd7bb e43297f5cfa25eca93ab3d30b644ccab1363ac31 48370711a6247b972dfc83628618924e864be374 docs(planning): establish final integrated Stage-2 qualification entry (ANDIRIT-CI1A-S2.5-WP-S25-4-ENTRY-OWNER-01)
+48370711a6247b972dfc83628618924e864be374 3483bd278c7a628383a372cb788559cbdaf5c717 92e72c99425733b0e0ed4ff5f15049df78fbb0f5 docs(review): formally close WP-S25-3 with qualifications and record P2 erratum (ANDIRIT-CI1A-S2.5-WP-S25-3-CLOSURE-OWNER-01)

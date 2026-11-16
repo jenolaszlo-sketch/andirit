@@ -1,0 +1,13 @@
+# Reproduce the R2 producer evidence
+
+Use Windows x64 and the .NET SDK, runtime and package cache shown in `gates/toolchain.log`. Use a new scratch directory and disposable databases for every run.
+
+1. Create Git archives of `6d4d45f7aedc85f4b52310cf9a3fa6082f885296` and `25bc6e3b4305c7ce088deb36cfb000138dc76648` from the canonical repository. Extract them to `<scratch>/baseline` and `<scratch>/impl`. These are plain source directories. Run `verify-build-source.py <scratch>/impl` against the immutable R2 production commit.
+2. Copy the package's `harness/baseline` files to `<scratch>/probe` and its `harness/corrected` files to `<scratch>/corrected-probe`. The baseline is the sealed QUAL-02 probe source. Copy the runner scripts to `<scratch>/evidence`. The real fixture inputs come from the sealed QUAL-01 package in each export.
+3. Run `run-probes.ps1 -Work <scratch> -Root <scratch>/baseline -Baseline` and `run-probes.ps1 -Work <scratch> -Root <scratch>/impl`. The baseline category checks exit 1 where observed counters contradict the matrix. The original before-edit execution receipts are under `baseline/`. To regenerate the summary from newly executed baseline receipts, point the baseline prefix at `probes/baseline/`. Fresh-process phases reuse the published store within each profile.
+4. Create `<scratch>/evidence/gates`. Run `run-gates.ps1 -Root <scratch>/impl -Evidence <scratch>/evidence/gates` with the installed package cache as `NUGET_PACKAGES` when required. Run `run-historical.ps1 -Work <scratch>`. The historical script hashes the original masters and operates on disposable copies.
+5. Run `check-results.py <scratch>/impl/docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture <canonical-QUAL-02-evidence-dir>` in the scratch evidence directory after copying the results script there. It checks positive identities, the live-reference boundary, discovered and executed tests, and the oracle bytes. Run `check-remediation.py` and `make-impact.py <canonical-QUAL-02-evidence-dir>` in the same directory to regenerate the producer summary and 64-row impact matrix.
+6. Run `python seal.py --verify <canonical R2 evidence directory>` to verify membership and exact bytes. The report is bound by Git. `commit-and-verify.ps1 -Action Verify -Staged <staged-scratch>` verifies the committed scope, legacy evidence, seals and canonical repository state.
+
+The transitive M5.4 probe intentionally reports the exact continuity booleans and Roslyn diagnoses in its JSON. A zero exit verifies the investigated controls. The exact production resolver-to-persistence receipt remains absent.
+
