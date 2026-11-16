@@ -1,0 +1,158 @@
+Initial sandboxed git -C status and explicit work-tree attempts failed with permission/work-tree errors.
+Approved pre-implementation git status --porcelain=v1 --branch returned only:
+## main...origin/main [ahead 2]
+Approved preflight git worktree list --porcelain output:
+worktree D:/projects/Andirit
+HEAD 8ab2d25d058e5bb4301094078f1737b139868e6a
+branch refs/heads/main
+Approved preflight git stash list output was empty. git rev-list --left-right --count origin/main...HEAD returned 0<TAB>2.
+Immutable commit, tree, parent and subject, oldest first:
+7457284451dff8ddb0417f83ecc19097103316fc fba379453ceb3088cab97141ebae5c4c4978e3d3 487f17a3eb687430f96a400eabf224997d93adec docs(andirit): approve bounded SQ-04 amendment for experimental codecs without authentic artifacts (ANDIRIT-CI1A-S2.5-SQ04-AMEND-OWNER-01)
+48370711a6247b972dfc83628618924e864be374 3483bd278c7a628383a372cb788559cbdaf5c717 92e72c99425733b0e0ed4ff5f15049df78fbb0f5 docs(review): formally close WP-S25-3 with qualifications and record P2 erratum (ANDIRIT-CI1A-S2.5-WP-S25-3-CLOSURE-OWNER-01)
+581b84a5e910626b87fb260becf90aac500dd7bb e43297f5cfa25eca93ab3d30b644ccab1363ac31 48370711a6247b972dfc83628618924e864be374 docs(planning): establish final integrated Stage-2 qualification entry (ANDIRIT-CI1A-S2.5-WP-S25-4-ENTRY-OWNER-01)
+8ab2d25d058e5bb4301094078f1737b139868e6a 01571db59dfdd1bbb39b42b9096cc0f8d583ce2a 581b84a5e910626b87fb260becf90aac500dd7bb docs(review): record Stage-2 independent qualification (ANDIRIT-CI1A-S2.5-WP-S25-4-QUAL-01)
+afa136f4033f35d9a657d8c5f1d5db92d736b679 2962442c4c1528193fe79df9ea0ecc31701a463d 8ab2d25d058e5bb4301094078f1737b139868e6a fix(binding): preserve external metadata binding classification (ANDIRIT-CI1A-S2.5-WP-S25-4-R1)
+Exact starting delta from frozen baseline:
+M	docs/agent-code-intelligence-roadmap.md
+M	docs/decisions/adr-ci1-01-ci1a-s2-obligation-register.md
+M	docs/planning/adr-ci1-01-ci1a-s2-5/work-package-plan.md
+A	docs/planning/adr-ci1-01-ci1a-s2-5/wp-s25-4-evidence-inventory.md
+A	docs/planning/adr-ci1-01-ci1a-s2-5/wp-s25-4-execution-plan.md
+A	docs/planning/adr-ci1-01-ci1a-s2-5/wp-s25-4-obligation-inventory.md
+A	docs/planning/adr-ci1-01-ci1a-s2-5/wp-s25-4-qualification-matrix.md
+A	docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-ENTRY-OWNER-01.md
+A	docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-QUAL-01.md
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/.gitattributes
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/.gitignore
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/attempts/b3-publish.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/attempts/b3-publish.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/attempts/b3-reopen.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/attempts/b3-reopen.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b3-ambiguous.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b3-ambiguous.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b3-missing.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b3-missing.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b3-publish.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b3-publish.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b3-reopen.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b3-reopen.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b6-delete-a.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b6-delete-a.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b6-delete-b.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b6-delete-b.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b6-publish.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b6-publish.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b6-reopen-a.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b6-reopen-a.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b6-reopen-b.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b6-reopen-b.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b7-conflict.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b7-conflict.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b7-reopen.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/b7-reopen.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/binding-expectations.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d3-d5-probe-build.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d3-d5-probe-executables.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d3.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d3.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d4-established-executable.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d4-established-integrate.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d4-established-integrate.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d4-established-probe-build.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d4-established-recover.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d4-established-recover.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d4-established-reopen.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d4-established-reopen.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d4-schedule.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d4-schedule.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d5-namespace.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d5-namespace.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d5-page.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d5-page.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d5-schema.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/d5-schema.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/final-probe-build.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/final-probe-executables.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Caller.csproj
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Fixture1.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Fixture10.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Fixture2.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Fixture3.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Fixture4.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Fixture5.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Fixture6.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Fixture7.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Fixture8.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Caller/Fixture9.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Dependency/Api.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/fixture/Dependency/Dependency.csproj
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/focused-csharp-binding.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/focused-historical-tests.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/focused-native-publication.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/format.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/full-solution-discovery.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/full-solution-tests.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/historical-copy-integrity.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/historical-graph-only.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/historical-graph-only.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/historical-manifests.jsonl
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/historical-pre-rem.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/historical-pre-rem.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/historical-probe-build.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/manifest.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/matrix.md
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/obligations.md
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/oracle-r2.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/oracle.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/overlays.md
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/preflight.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b3-ambiguous.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b3-ambiguous.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b3-missing.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b3-missing.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b3-publish.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b3-publish.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b3-reopen.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b3-reopen.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b6-delete-a.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b6-delete-a.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b6-delete-b.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b6-delete-b.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b6-publish.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b6-publish.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b6-reopen-a.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b6-reopen-a.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b6-reopen-b.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b6-reopen-b.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b7-conflict.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b7-conflict.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b7-reopen.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/prior-run/b7-reopen.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/probe-build-attempt-1.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/probe-build.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/probe-executables.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/probe/Contributors.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/probe/GraphAndRefusals.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/probe/Program.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/probe/Qual.csproj
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/probe/Schedule.cs
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/regression-summary.json
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/release-build.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/reproduction.md
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/run-established-recovery.ps1
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/run-historical.ps1
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/source-audit.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/toolchain.log
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/trx/Laszlos_LAPTOP-KBD8D8JG_2026-11-15_23_59_14_net10.0.trx
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/trx/Laszlos_LAPTOP-KBD8D8JG_2026-11-15_23_59_14_net10.0[1].trx
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/trx/Laszlos_LAPTOP-KBD8D8JG_2026-11-15_23_59_14_net10.0[2].trx
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/trx/Laszlos_LAPTOP-KBD8D8JG_2026-11-15_23_59_15_net10.0.trx
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/verify-history.ps1
+A	docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence/verify-manifest.py
+Protected baseline diff exit 0.
+Accepted Linux commit is an ancestor of the starting revision.
+Linux to starting protected diff exit 0. Linux to implementation protected delta:
+M	src/Andirit.CSharp/VerifiedCSharpAnalysis.cs
+M	tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs
+M	tests/Andirit.CSharp.Tests/S2_2Wp5R1AmbiguityTests.cs
+M	tests/Andirit.CSharp.Tests/S2_2Wp8CorpusIntegrationTests.cs
