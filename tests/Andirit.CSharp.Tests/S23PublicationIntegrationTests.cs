@@ -154,6 +154,67 @@ public sealed class S23PublicationIntegrationTests : IDisposable
             unit["Authority"] is { } authority &&
             authority["SourceUnitId"]!.GetValue<string>() == sourceUnitId);
 
+    [Theory]
+    [InlineData("_ = new Sample(); Sample implicitNew = new();", 2)]
+    [InlineData("_ = Property; item.Property = 2; _ = item?.Property; _ = item[0]; _ = Sample.StaticProperty;", 5)]
+    [InlineData("System.Func<int> assignment = Lib.Value.Get; _ = (System.Func<int>)Lib.Value.Get;", 2)]
+    [InlineData("_ = new Sample { Property = 1 }; System.Func<int> group = Lib.Value.Get; _ = item.Property;", 4)]
+    [InlineData("_ = (1, 2); _ = item.Field; _ = \"Property and Get\";", 0)]
+    public async Task UnsupportedSites_CountOnce_AndSurviveNativePublication(string sites, int expectedUnsupported)
+    {
+        var files = new Dictionary<string, string>(CrossProjectFixture(), StringComparer.Ordinal)
+        {
+            [Names.AppSource] = """
+                namespace App;
+                public sealed class Sample
+                {
+                    public int Property { get; set; }
+                    public static int StaticProperty => 0;
+                    public int this[int index] => 0;
+                    public int Field;
+
+                    public int Run(Sample item)
+                    {
+                """ + sites + """
+                        _ = string.Concat("left", "right");
+                        Missing();
+                        return Lib.Value.Get();
+                    }
+                }
+                """
+        };
+        const string run = "run:unsupported";
+        var context = Context(Repo, run, files);
+        var (analysis, app, lib) = await LiveCrossProjectAsync(context);
+        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
+        var query = VerifiedCSharpOccurrenceAuthority.Bind(new(Repo, target), analysis.Universe, app.Compilation);
+
+        async Task VerifyAsync(LatticeCodeGraphStore store)
+        {
+            var result = await store.FindOccurrencesAsync(query);
+            Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
+            Assert.True(result.IsComplete);
+            var hit = Assert.Single(result.Occurrences);
+            Assert.Equal(app.Descriptor.ProjectUnitId, hit.SourceUnitId);
+            Assert.Equal(target, hit.TargetId);
+            Assert.Equal(1, result.Coverage!.InvocationFacts);
+            Assert.Equal(expectedUnsupported, result.Coverage.UnsupportedCategories);
+            Assert.Equal(expectedUnsupported, result.Coverage.Unsupported);
+            Assert.Equal(1, result.Coverage.External);
+            Assert.Equal(1, result.Coverage.Unresolved);
+            Assert.Equal(0, result.Coverage.Ambiguous);
+        }
+
+        using (var store = await PublishAsync(_path, run, context))
+            await VerifyAsync(store);
+        var unit = PublishedUnit(_path, app.Descriptor.ProjectUnitId);
+        Assert.Single(unit["Facts"]!.AsArray());
+        Assert.Equal(expectedUnsupported, unit["Coverage"]!["UnsupportedCategories"]!.GetValue<int>());
+        Assert.Equal(expectedUnsupported, unit["Coverage"]!["Unsupported"]!.GetValue<int>());
+        using var reopened = Open(_path);
+        await VerifyAsync(reopened);
+    }
+
     [Fact]
     public async Task RealCrossProjectFact_IsPublishedWithAuthority_AndServed()
     {
