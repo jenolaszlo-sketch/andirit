@@ -1,0 +1,145 @@
+commit 786574e34de0e5e1b242a784a5dc7297e0162bb1
+Author:     jenol <jenolaszlo-sketch@users.noreply.github.com>
+AuthorDate: Mon Nov 16 16:31:59 2026 +0800
+Commit:     jenol <jenolaszlo-sketch@users.noreply.github.com>
+CommitDate: Mon Nov 16 16:31:59 2026 +0800
+
+    fix(analysis): account for unsupported occurrence sites (F-S254-02)
+
+diff --git a/src/Andirit.CSharp/VerifiedCSharpOccurrenceExtractor.cs b/src/Andirit.CSharp/VerifiedCSharpOccurrenceExtractor.cs
+index 0401018..87937c6 100644
+--- a/src/Andirit.CSharp/VerifiedCSharpOccurrenceExtractor.cs
++++ b/src/Andirit.CSharp/VerifiedCSharpOccurrenceExtractor.cs
+@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
+ using Microsoft.CodeAnalysis;
+ using Microsoft.CodeAnalysis.CSharp;
+ using Microsoft.CodeAnalysis.CSharp.Syntax;
++using Microsoft.CodeAnalysis.Operations;
+ 
+ namespace Andirit;
+ 
+@@ -53,8 +54,18 @@ internal static class VerifiedCSharpOccurrenceExtractor
+             var sourceHash = source.ContentHash;
+             var model = sourceUnit.Compilation.GetSemanticModel(tree);
+ 
+-            foreach (var invocation in tree.GetRoot().DescendantNodes().OfType<InvocationExpressionSyntax>())
++            foreach (var node in tree.GetRoot().DescendantNodes())
+             {
++                if (node is not InvocationExpressionSyntax invocation)
++                {
++                    if (IsUnsupportedNonInvocation(node, model))
++                    {
++                        unsupported++;
++                        unsupportedCategories++;
++                    }
++                    continue;
++                }
++
+                 var info = model.GetSymbolInfo(invocation);
+                 var symbol = info.Symbol as IMethodSymbol;
+                 if (symbol is null)
+@@ -130,6 +141,32 @@ internal static class VerifiedCSharpOccurrenceExtractor
+         return new(facts.ToImmutable(), coverage, authority);
+     }
+ 
++    private static bool IsUnsupportedNonInvocation(SyntaxNode node, SemanticModel model)
++    {
++        // Query the outer spelling of a site once. The name inside a member
++        // access is part of that site, and the invoked expression has its own
++        // invocation classification (including delegate-valued properties).
++        if (node is not (BaseObjectCreationExpressionSyntax or SimpleNameSyntax or MemberAccessExpressionSyntax
++            or MemberBindingExpressionSyntax or ElementAccessExpressionSyntax or ElementBindingExpressionSyntax
++            or ImplicitElementAccessSyntax) ||
++            node.Parent is MemberAccessExpressionSyntax access && access.Name == node ||
++            node.Parent is MemberBindingExpressionSyntax binding && binding.Name == node ||
++            node.Parent is InvocationExpressionSyntax call && call.Expression == node)
++            return false;
++
++        var operation = model.GetOperation(node);
++        if (operation is not (IObjectCreationOperation { Constructor: not null } or IPropertyReferenceOperation
++            or IMethodReferenceOperation or IDelegateCreationOperation { Target: IMethodReferenceOperation }))
++            return false;
++
++        // A symbol named by nameof is not a property access or delegate conversion.
++        for (var parent = operation.Parent; parent is not null; parent = parent.Parent)
++            if (parent is INameOfOperation)
++                return false;
++
++        return true;
++    }
++
+     private static bool IsSupportedInvocation(IMethodSymbol symbol) =>
+         symbol.MethodKind is MethodKind.Ordinary
+             or MethodKind.ReducedExtension
+diff --git a/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs b/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs
+index ad3bab2..c069b5d 100644
+--- a/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs
++++ b/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs
+@@ -154,6 +154,67 @@ public sealed class S23PublicationIntegrationTests : IDisposable
+             unit["Authority"] is { } authority &&
+             authority["SourceUnitId"]!.GetValue<string>() == sourceUnitId);
+ 
++    [Theory]
++    [InlineData("_ = new Sample(); Sample implicitNew = new();", 2)]
++    [InlineData("_ = Property; item.Property = 2; _ = item?.Property; _ = item[0]; _ = Sample.StaticProperty;", 5)]
++    [InlineData("System.Func<int> assignment = Lib.Value.Get; _ = (System.Func<int>)Lib.Value.Get;", 2)]
++    [InlineData("_ = new Sample { Property = 1 }; System.Func<int> group = Lib.Value.Get; _ = item.Property;", 4)]
++    [InlineData("_ = (1, 2); _ = item.Field; _ = \"Property and Get\";", 0)]
++    public async Task UnsupportedSites_CountOnce_AndSurviveNativePublication(string sites, int expectedUnsupported)
++    {
++        var files = new Dictionary<string, string>(CrossProjectFixture(), StringComparer.Ordinal)
++        {
++            [Names.AppSource] = """
++                namespace App;
++                public sealed class Sample
++                {
++                    public int Property { get; set; }
++                    public static int StaticProperty => 0;
++                    public int this[int index] => 0;
++                    public int Field;
++
++                    public int Run(Sample item)
++                    {
++                """ + sites + """
++                        _ = string.Concat("left", "right");
++                        Missing();
++                        return Lib.Value.Get();
++                    }
++                }
++                """
++        };
++        const string run = "run:unsupported";
++        var context = Context(Repo, run, files);
++        var (analysis, app, lib) = await LiveCrossProjectAsync(context);
++        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
++        var query = VerifiedCSharpOccurrenceAuthority.Bind(new(Repo, target), analysis.Universe, app.Compilation);
++
++        async Task VerifyAsync(LatticeCodeGraphStore store)
++        {
++            var result = await store.FindOccurrencesAsync(query);
++            Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
++            Assert.True(result.IsComplete);
++            var hit = Assert.Single(result.Occurrences);
++            Assert.Equal(app.Descriptor.ProjectUnitId, hit.SourceUnitId);
++            Assert.Equal(target, hit.TargetId);
++            Assert.Equal(1, result.Coverage!.InvocationFacts);
++            Assert.Equal(expectedUnsupported, result.Coverage.UnsupportedCategories);
++            Assert.Equal(expectedUnsupported, result.Coverage.Unsupported);
++            Assert.Equal(1, result.Coverage.External);
++            Assert.Equal(1, result.Coverage.Unresolved);
++            Assert.Equal(0, result.Coverage.Ambiguous);
++        }
++
++        using (var store = await PublishAsync(_path, run, context))
++            await VerifyAsync(store);
++        var unit = PublishedUnit(_path, app.Descriptor.ProjectUnitId);
++        Assert.Single(unit["Facts"]!.AsArray());
++        Assert.Equal(expectedUnsupported, unit["Coverage"]!["UnsupportedCategories"]!.GetValue<int>());
++        Assert.Equal(expectedUnsupported, unit["Coverage"]!["Unsupported"]!.GetValue<int>());
++        using var reopened = Open(_path);
++        await VerifyAsync(reopened);
++    }
++
+     [Fact]
+     public async Task RealCrossProjectFact_IsPublishedWithAuthority_AndServed()
+     {

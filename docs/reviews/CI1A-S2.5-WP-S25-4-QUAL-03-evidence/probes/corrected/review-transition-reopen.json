@@ -1,0 +1,282 @@
+{
+  "case": "review-transition-reopen",
+  "processId": 8560,
+  "database": "C:\\Users\\Laszlos\\source\\repos\\Solo\\andirit-qual03\\stores\\exact\\corrected/review-transition.ltdb",
+  "sources": {
+    "Caller/Caller.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CPropertyGroup\u003E\u003CTargetFramework\u003Enet10.0\u003C/TargetFramework\u003E\u003C/PropertyGroup\u003E\u003CItemGroup\u003E\u003CProjectReference Include=\u0022../Dependency/Dependency.csproj\u0022 /\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E\r\n",
+    "Caller/Fixture1.cs": "namespace QualifierCaller;\npublic static class Work1\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        _ = string.Concat(\u0022left\u0022, \u0022right\u0022);\n    }\n}\n",
+    "Caller/Fixture10.cs": "namespace QualifierCaller;\npublic static class Work10\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture2.cs": "namespace QualifierCaller;\npublic static class Work2\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture3.cs": "namespace QualifierCaller;\npublic static class Work3\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture4.cs": "namespace QualifierCaller;\npublic static class Work4\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture5.cs": "namespace QualifierCaller;\npublic static class Work5\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture6.cs": "namespace QualifierCaller;\npublic static class Work6\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture7.cs": "namespace QualifierCaller;\npublic static class Work7\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture8.cs": "namespace QualifierCaller;\npublic static class Work8\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture9.cs": "namespace QualifierCaller;\npublic static class Work9\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Dependency/Api.cs": "namespace QualifierDependency;\npublic static class Api\n{\n    public static int Mark() =\u003E 7;\n}\r\n",
+    "Dependency/Dependency.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CPropertyGroup\u003E\u003CTargetFramework\u003Enet10.0\u003C/TargetFramework\u003E\u003C/PropertyGroup\u003E\u003C/Project\u003E\r\n",
+    "Review.slnx": "\u003CSolution\u003E\u003CProject Path=\u0022Caller/Caller.csproj\u0022/\u003E\u003CProject Path=\u0022Dependency/Dependency.csproj\u0022/\u003E\u003CProject Path=\u0022Gone/Gone.csproj\u0022/\u003E\u003C/Solution\u003E"
+  },
+  "membership": {
+    "declared": [
+      {
+        "ProjectUnitId": "csharp:project:28778c4583d8a473d948dd759cecc81691a344f491523ed96f034667e438925e",
+        "ProjectPath": "Gone/Gone.csproj",
+        "SourcePaths": []
+      },
+      {
+        "ProjectUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "ProjectPath": "Caller/Caller.csproj",
+        "SourcePaths": [
+          "Caller/Fixture1.cs",
+          "Caller/Fixture10.cs",
+          "Caller/Fixture2.cs",
+          "Caller/Fixture3.cs",
+          "Caller/Fixture4.cs",
+          "Caller/Fixture5.cs",
+          "Caller/Fixture6.cs",
+          "Caller/Fixture7.cs",
+          "Caller/Fixture8.cs",
+          "Caller/Fixture9.cs"
+        ]
+      },
+      {
+        "ProjectUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "ProjectPath": "Dependency/Dependency.csproj",
+        "SourcePaths": [
+          "Dependency/Api.cs"
+        ]
+      }
+    ],
+    "verified": [
+      "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+      "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8"
+    ],
+    "Refusals": [
+      "MissingDeclaredProject",
+      "MissingDeclaredProject:Gone/Gone.csproj"
+    ],
+    "IsComplete": false
+  },
+  "result": {
+    "Availability": 5,
+    "Publication": {
+      "RepositoryId": {
+        "Value": "review:qual03:transition"
+      },
+      "IndexRunId": {
+        "Value": "after"
+      },
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "ed4dc8d158ba2cd8b581355c99340107cd0db9aac059cde80569e38637429645"
+      }
+    },
+    "Occurrences": [],
+    "TotalMatches": 0,
+    "Examined": 0,
+    "RefusalReason": "The declared analysis scope is not proven complete; a zero-result answer is not a complete negative.",
+    "Coverage": {
+      "InvocationFacts": 0,
+      "UnsupportedCategories": 0,
+      "State": 1,
+      "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+      "UniverseId": "compilation-universe1:sha256:6b23198698df873ddcdfe0ea2ba44713eed6bd5179bec2f30b023382a3c3fc19",
+      "DeclaredUnitCount": 3,
+      "VerifiedUnitCount": 2,
+      "External": 0,
+      "Ambiguous": 0,
+      "Unresolved": 51,
+      "Unsupported": 0,
+      "ConditionalInactive": 0,
+      "UnavailableReasons": {},
+      "TotalFacts": 0,
+      "AnalysisPerformed": true,
+      "IsComplete": false
+    },
+    "NextContinuationToken": null,
+    "Continuation": 2,
+    "CoverageBreakdown": [
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "State": 1,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 51,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:6b23198698df873ddcdfe0ea2ba44713eed6bd5179bec2f30b023382a3c3fc19"
+      },
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "State": 1,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:6b23198698df873ddcdfe0ea2ba44713eed6bd5179bec2f30b023382a3c3fc19"
+      }
+    ],
+    "UnitCoverage": [
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "State": 1,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 51,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:6b23198698df873ddcdfe0ea2ba44713eed6bd5179bec2f30b023382a3c3fc19"
+      },
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "State": 1,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:6b23198698df873ddcdfe0ea2ba44713eed6bd5179bec2f30b023382a3c3fc19"
+      }
+    ],
+    "Truncated": false,
+    "IsComplete": false
+  },
+  "obsoleteAuthority": {
+    "Availability": 1,
+    "Publication": {
+      "RepositoryId": {
+        "Value": "review:qual03:transition"
+      },
+      "IndexRunId": {
+        "Value": "after"
+      },
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "ed4dc8d158ba2cd8b581355c99340107cd0db9aac059cde80569e38637429645"
+      }
+    },
+    "Occurrences": [],
+    "TotalMatches": 0,
+    "Examined": 0,
+    "RefusalReason": "Missing or malformed recorded occurrence authority; re-ingestion required.",
+    "Coverage": null,
+    "NextContinuationToken": null,
+    "Continuation": 0,
+    "CoverageBreakdown": null,
+    "UnitCoverage": [],
+    "Truncated": false,
+    "IsComplete": false
+  },
+  "authorityRefusal": "IncompleteCompilationUniverse",
+  "native": {
+    "AndiritOccurrenceMeta": [
+      {
+        "key": "review:qual03:transition",
+        "payload": "eyJTY2hlbWFWZXJzaW9uIjoxLCJOYW1lc3BhY2UiOiJhbmRpcml0LW9jY3VycmVuY2UtZmFjdHMvMSIsIlJlcG9zaXRvcnlJZCI6InJldmlldzpxdWFsMDM6dHJhbnNpdGlvbiIsIlB1YmxpY2F0aW9uSW5kZXhSdW5JZCI6ImFmdGVyIiwiSW5kZXhJZGVudGl0eSI6ImVkNGRjOGQxNThiYTJjZDhiNTgxMzU1Yzk5MzQwMTA3Y2QwZGI5YWFjMDU5Y2RlODA1NjllMzg2Mzc0Mjk2NDUiLCJTbmFwc2hvdElkZW50aXR5IjpudWxsLCJJc0NvbnNpc3RlbnRTbmFwc2hvdCI6ZmFsc2UsIkZhY3RDb3VudCI6MCwiVW5pdENvdW50IjoyLCJQYWdlQ291bnQiOjAsIkFuYWx5c2lzSW5jbHVkZWQiOnRydWUsIkNvdmVyYWdlU3RhdGUiOjEsIlNjb3BlSWQiOiJhbmFseXNpc3Njb3BlMTpzaGEyNTY6ZmIwMTIwYWE2ZmRlMDU2MDQ1NTBlZjFjMmQwZmQyN2YwZTdlZGZlMTRlZWQ4NDdlMWM4YWI1MTcxYThlNmZlNSIsIlVuaXZlcnNlSWQiOiJjb21waWxhdGlvbi11bml2ZXJzZTE6c2hhMjU2OjZiMjMxOTg2OThkZjg3M2RkY2RmZTBlYTJiYTQ0NzEzZWVkNmJkNTE3OWJlYzJmMzBiMDIzMzgyYTNjM2ZjMTkiLCJDb21wbGV0ZUNvdmVyYWdlIjpmYWxzZSwiUmVxdWlyZXNBdXRob3JpdHkiOmZhbHNlfQ=="
+      }
+    ],
+    "AndiritOccurrencePage": [],
+    "AndiritOccurrenceUnit": [
+      {
+        "key": "review:qual03:transition\npenghou.hetu.csharp\ncsharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "payload": "eyJSZXBvc2l0b3J5SWQiOiJyZXZpZXc6cXVhbDAzOnRyYW5zaXRpb24iLCJQbHVnaW5JZCI6InBlbmdob3UuaGV0dS5jc2hhcnAiLCJJbmRleFVuaXRJZCI6ImNzaGFycDpwcm9qZWN0Ojc1MjY3OTdjZWE3YmNmNmQ2NjRlZjAzYTZmZWM0Y2Q1MzU2NDc3MzhiYTE2OTkxMmZjZDU1Yzk5MjYxYzRmNzciLCJBbmFseXNpc0luY2x1ZGVkIjp0cnVlLCJGYWN0cyI6W10sIkNvdmVyYWdlIjp7Ikludm9jYXRpb25GYWN0cyI6MCwiVW5zdXBwb3J0ZWRDYXRlZ29yaWVzIjowLCJTdGF0ZSI6MSwiU2NvcGVJZCI6ImFuYWx5c2lzc2NvcGUxOnNoYTI1NjpmYjAxMjBhYTZmZGUwNTYwNDU1MGVmMWMyZDBmZDI3ZjBlN2VkZmUxNGVlZDg0N2UxYzhhYjUxNzFhOGU2ZmU1IiwiVW5pdmVyc2VJZCI6ImNvbXBpbGF0aW9uLXVuaXZlcnNlMTpzaGEyNTY6NmIyMzE5ODY5OGRmODczZGRjZGZlMGVhMmJhNDQ3MTNlZWQ2YmQ1MTc5YmVjMmYzMGIwMjMzODJhM2MzZmMxOSIsIkRlY2xhcmVkVW5pdENvdW50IjoxLCJWZXJpZmllZFVuaXRDb3VudCI6MSwiRXh0ZXJuYWwiOjAsIkFtYmlndW91cyI6MCwiVW5yZXNvbHZlZCI6NTEsIlVuc3VwcG9ydGVkIjowLCJDb25kaXRpb25hbEluYWN0aXZlIjowLCJVbmF2YWlsYWJsZVJlYXNvbnMiOnt9LCJUb3RhbEZhY3RzIjowLCJBbmFseXNpc1BlcmZvcm1lZCI6dHJ1ZSwiSXNDb21wbGV0ZSI6ZmFsc2V9LCJBdXRob3JpdHkiOm51bGwsIlJlcXVpcmVzQXV0aG9yaXR5IjpmYWxzZSwiQXV0aG9yaXR5UHVibGljYXRpb25JbmRleFJ1bklkIjpudWxsfQ=="
+      },
+      {
+        "key": "review:qual03:transition\npenghou.hetu.csharp\ncsharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "payload": "eyJSZXBvc2l0b3J5SWQiOiJyZXZpZXc6cXVhbDAzOnRyYW5zaXRpb24iLCJQbHVnaW5JZCI6InBlbmdob3UuaGV0dS5jc2hhcnAiLCJJbmRleFVuaXRJZCI6ImNzaGFycDpwcm9qZWN0OmYwZjUyMDhjZWRmNTAyNjQ4M2RhMjAzNjVmYjE5ODU0YWQ5MzExZTI0ZDRlYjFjMzJkMjc3YTczNGM3Mzg2ZTgiLCJBbmFseXNpc0luY2x1ZGVkIjp0cnVlLCJGYWN0cyI6W10sIkNvdmVyYWdlIjp7Ikludm9jYXRpb25GYWN0cyI6MCwiVW5zdXBwb3J0ZWRDYXRlZ29yaWVzIjowLCJTdGF0ZSI6MSwiU2NvcGVJZCI6ImFuYWx5c2lzc2NvcGUxOnNoYTI1NjpmYjAxMjBhYTZmZGUwNTYwNDU1MGVmMWMyZDBmZDI3ZjBlN2VkZmUxNGVlZDg0N2UxYzhhYjUxNzFhOGU2ZmU1IiwiVW5pdmVyc2VJZCI6ImNvbXBpbGF0aW9uLXVuaXZlcnNlMTpzaGEyNTY6NmIyMzE5ODY5OGRmODczZGRjZGZlMGVhMmJhNDQ3MTNlZWQ2YmQ1MTc5YmVjMmYzMGIwMjMzODJhM2MzZmMxOSIsIkRlY2xhcmVkVW5pdENvdW50IjoyLCJWZXJpZmllZFVuaXRDb3VudCI6MSwiRXh0ZXJuYWwiOjAsIkFtYmlndW91cyI6MCwiVW5yZXNvbHZlZCI6MCwiVW5zdXBwb3J0ZWQiOjAsIkNvbmRpdGlvbmFsSW5hY3RpdmUiOjAsIlVuYXZhaWxhYmxlUmVhc29ucyI6e30sIlRvdGFsRmFjdHMiOjAsIkFuYWx5c2lzUGVyZm9ybWVkIjp0cnVlLCJJc0NvbXBsZXRlIjpmYWxzZX0sIkF1dGhvcml0eSI6bnVsbCwiUmVxdWlyZXNBdXRob3JpdHkiOmZhbHNlLCJBdXRob3JpdHlQdWJsaWNhdGlvbkluZGV4UnVuSWQiOm51bGx9"
+      }
+    ]
+  },
+  "decodedUnits": [
+    {
+      "RepositoryId": "review:qual03:transition",
+      "PluginId": "penghou.hetu.csharp",
+      "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+      "AnalysisIncluded": true,
+      "Facts": [],
+      "Coverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 1,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:6b23198698df873ddcdfe0ea2ba44713eed6bd5179bec2f30b023382a3c3fc19",
+        "DeclaredUnitCount": 1,
+        "VerifiedUnitCount": 1,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 51,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": false
+      },
+      "Authority": null,
+      "RequiresAuthority": false,
+      "AuthorityPublicationIndexRunId": null
+    },
+    {
+      "RepositoryId": "review:qual03:transition",
+      "PluginId": "penghou.hetu.csharp",
+      "IndexUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+      "AnalysisIncluded": true,
+      "Facts": [],
+      "Coverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 1,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:6b23198698df873ddcdfe0ea2ba44713eed6bd5179bec2f30b023382a3c3fc19",
+        "DeclaredUnitCount": 2,
+        "VerifiedUnitCount": 1,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": false
+      },
+      "Authority": null,
+      "RequiresAuthority": false,
+      "AuthorityPublicationIndexRunId": null
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,928 @@
+Working directory: C:\Users\Laszlos\source\repos\Solo\andirit-qual03/production
+Command: dotnet test Andirit.slnx -c Release --no-build --list-tests
+Test run for C:\Users\Laszlos\source\repos\Solo\andirit-qual03\production\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll (.NETCoreApp,Version=v10.0)
+Test run for C:\Users\Laszlos\source\repos\Solo\andirit-qual03\production\tests\Andirit.Tests\bin\Release\net10.0\Andirit.Tests.dll (.NETCoreApp,Version=v10.0)
+Test run for C:\Users\Laszlos\source\repos\Solo\andirit-qual03\production\tests\Andirit.CSharp.Tests\bin\Release\net10.0\Andirit.CSharp.Tests.dll (.NETCoreApp,Version=v10.0)
+Test run for C:\Users\Laszlos\source\repos\Solo\andirit-qual03\production\tests\Andirit.TreeSitter.Tests\bin\Release\net10.0\Andirit.TreeSitter.Tests.dll (.NETCoreApp,Version=v10.0)
+The following Tests are available:The following Tests are available:The following Tests are available:
+
+
+The following Tests are available:
+    Andirit.Tests.AndiritHostTests.Build_WithInMemoryStore_CreatesQueryableHost
+    Andirit.Tests.AndiritHostTests.Build_ValidatesRegistrationsBeforeCreatingStore
+    Andirit.Tests.AndiritHostTests.Build_TransfersResourcesOnlyOnce
+    Andirit.Tests.AndiritHostTests.IndexRepositoryAsync_PublishesAndQueriesWork
+    Andirit.Tests.AndiritHostTests.ConfiguredIndexingOptions_AreDefaultsForRepositoryIndexing
+    Andirit.Tests.AndiritHostTests.CheckHealthAsync_ReportsStoreAndDeterministicComposition
+    Andirit.Tests.CodeGraphDiscoveryTests.Discovery_FiltersByKindAndLanguage
+    Andirit.Tests.CodeGraphDiscoveryTests.Discovery_ScopesToContainersAndProjects
+    Andirit.Tests.CodeGraphDiscoveryTests.Discovery_TruncatesDeterministically
+    Andirit.Tests.CodeGraphDiscoveryTests.Discovery_RequiresScopeAndRejectsAmbiguousScope
+    Andirit.Tests.CodeGraphDiscoveryTests.EnclosingSymbol_SelectsTightestDeclaration
+    Andirit.Tests.CodeGraphDiscoveryTests.SymbolsInFile_ReturnsDeclaredSymbols
+    Andirit.Tests.CodeGraphDiscoveryTests.ProjectQueries_ReturnSymbolsAndDeclarations
+    Andirit.Tests.CodeGraphIngestionSinkTests.CompleteAsync_RejectsAnIncompleteBufferedUnit
+    Andirit.Tests.CodeGraphIngestionSinkTests.IncompleteBatches_AreNotVisibleBeforeCompletion
+    Andirit.Tests.CodeGraphIngestionSinkTests.InvalidFinalBatch_DoesNotReplaceExistingUnit
+    Andirit.Tests.CodeGraphIngestionSinkTests.RepeatedSmallBatches_CannotEvadeIndexUnitLimit
+    Andirit.Tests.CodeGraphIngestionSinkTests.Completion_EmitsPrivacySafeCounts
+    Andirit.Tests.CodeGraphIngestionSinkTests.DiagnosticsFailure_DoesNotChangeCommittedResult
+    Andirit.Tests.CodeGraphIngestionSinkTests.CompleteEmptyCoverage_PropagatesThroughSinkAndQuery
+    Andirit.Tests.CodeGraphIngestionSinkTests.Validator_RejectsDuplicateFactsAndOversizedText
+    Andirit.Tests.CodeGraphPluginRegistryTests.Registry_OrdersPluginsDeterministically
+    Andirit.Tests.CodeGraphPluginRegistryTests.Resolve_ReturnsNullWhenNoPluginClaimsPath
+    Andirit.Tests.CodeGraphPluginRegistryTests.Resolve_ReportsAmbiguousClaimsRatherThanGuessing
+    Andirit.Tests.CodeGraphPluginRegistryTests.Registry_RejectsDuplicatePluginIdentity
+    Andirit.Tests.CodeGraphPluginRegistryTests.Resolve_WithoutMap_PreservesStrictAmbiguity
+    Andirit.Tests.CodeGraphPluginRegistryTests.Resolve_WithMap_SelectsPreferredCandidate
+    Andirit.Tests.CodeGraphPluginRegistryTests.Resolve_WithMap_SkipsPreferredWhenItDeclinesThePath
+    Andirit.Tests.CodeGraphPluginRegistryTests.Resolve_WithMap_RejectsUnlistedCandidateForMappedLanguage
+    Andirit.Tests.CodeGraphPluginRegistryTests.Resolve_WithMap_KeepsLegacyBehaviorForUnmappedLanguages
+    Andirit.Tests.CodeGraphPluginRegistryTests.Registry_RejectsMapEntriesForUnregisteredPlugins
+    Andirit.Tests.CodeGraphPluginRegistryTests.TryGetFallback_ReturnsNextProviderInOrder
+    Andirit.Tests.CodeGraphPluginRegistryTests.TryGetFallback_ReturnsFalseWithoutMapEntry
+    Andirit.Tests.CodeGraphQueryServiceTests.SemanticQueries_UseExactDirectionKindsEvidenceAndBounds
+    Andirit.Tests.CodeGraphQueryServiceTests.ResolvedOnlyTraversal_DoesNotCrossStructuralContainment
+    Andirit.Tests.CodeGraphQueryServiceTests.ExactLookup_PreservesAmbiguityAndDeclarationOrder
+    Andirit.Tests.CodeGraphQueryServiceTests.ResolveSymbols_ReturnsCandidatesPerName
+    Andirit.Tests.CodeGraphQueryServiceTests.GetDeclarationsInFile_ReturnsOrderedDeclarationsForOneFile
+    Andirit.Tests.CodeGraphQueryServiceTests.PublicSurface_CrossesFileDeclarationBoundaryWithProvenance
+    Andirit.Tests.CodeGraphQueryServiceTests.PublicationQuery_RejectsLaterPublication
+    Andirit.Tests.CodeGraphQueryServiceTests.BatchQueries_AreBoundedAndShareOnePublication
+    Andirit.Tests.CodeGraphQueryServiceTests.EmptyBatch_StillIdentifiesPublication
+    Andirit.Tests.CodeGraphQueryServiceTests.BatchQueries_RejectRequestsBeyondTheirDeclaredLimits
+    Andirit.Tests.CodeGraphQueryServiceTests.DeclarationsInFileWithProvenance_ReturnsOnlySelectedDeclarations
+    Andirit.Tests.CodeGraphQueryServiceTests.NamePatternSearch_IsBoundedDeterministicAndValidated
+    Andirit.Tests.CodeGraphQueryServiceTests.AffectedTests_ReturnsOnlyMarkedTestsReachingEachSeed
+    Andirit.Tests.CodeIndexIdentityTests.SameExactSourceState_HasSameIdentityAcrossRunsAndInputOrder
+    Andirit.Tests.CodeIndexIdentityTests.SourcePluginOrSnapshotChange_ChangesIdentity
+    Andirit.Tests.CodeIndexIdentityTests.SuppliedIdentity_MustMatchComputedSourceState
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_CompletesRunPublishesStateAndDeletesObsoletePluginUnit
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_FailedRunRetainsLastSuccessfulSourceState
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_DiagnosticsCallbackCannotBreakSuccessfulIndexing
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_CancelledExtractionRecordsCancelledRun
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_SkipsPluginWhenEverySourceIsUnchanged
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_RejectsBatchOutsideExecutingPluginScope
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_DetectsSourceChangedAfterPlanning
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_EnforcesPerSourceByteLimit
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_EnforcesTotalHashByteLimit
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_ExecutesPluginsInParallelWithinConfiguredBound
+    Andirit.Tests.CodeIndexingServiceTests.CheckFreshnessAsync_ReportsUnknownBeforeFirstIndex
+    Andirit.Tests.CodeIndexingServiceTests.CheckFreshnessAsync_ReportsFreshWithoutTouchingTheGraph
+    Andirit.Tests.CodeIndexingServiceTests.CheckFreshnessAsync_ReportsStaleOnChangeAddAndDelete
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_ReusesPublicationWhenNothingChanged
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_FallbackOnUnavailableTakesOverUnitsManifestsAndSelection
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_RepeatedFallbackThenRecoveryLeavesSingleOwner
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_ProjectLoadFailureDoesNotFallBackByDefault
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_ProjectLoadFailureFallsBackUnderOnFailure
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_FallbackPolicyNoneDisablesFallback
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_CancelledPreferredNeverFallsBack
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_ChainedFallbackRecordsFullAttemptHistory
+    Andirit.Tests.CodeIndexingServiceTests.IndexAsync_FallbackDecliningThePathDoesNotFallBack
+    Andirit.Tests.CodeIndexPlannerTests.CreatePlan_ClassifiesNewChangedUnchangedAndDeletedUnits
+    Andirit.Tests.CodeIndexPlannerTests.CreatePlan_PluginVersionChangeInvalidatesUnchangedContent
+    Andirit.Tests.CodeIndexPlannerTests.CreatePlan_RepresentsMovedSourceAsDeletedAndNewWithoutGuessingIdentity
+    Andirit.Tests.CodeIndexPlannerTests.CreatePlan_UsesProviderHashWithoutOpeningContent
+    Andirit.Tests.CodeIndexPlannerTests.CreatePlan_RespectsExplicitPluginSelection
+    Andirit.Tests.CodeIndexPlannerTests.CreatePlan_HonorsCancellationWhileHashing
+    Andirit.Tests.CodeIndexPlannerTests.CreatePlan_RejectsUnknownExplicitPluginSelection
+    Andirit.Tests.CodeRepositorySourceTests.RepositoryDescriptor_SettingsAreAnImmutableSnapshot
+    Andirit.Tests.CodeRepositorySourceTests.EnumerationOptions_ExclusionsAreAnImmutableSnapshot
+    Andirit.Tests.CodeRepositorySourceTests.FileSystemSource_EnumeratesLazilyWithDefaultExclusions
+    Andirit.Tests.CodeRepositorySourceTests.FileSystemSource_OpensSelectedEntryLazily
+    Andirit.Tests.CodeRepositorySourceTests.FileSystemSource_EnforcesEntryLimit
+    Andirit.Tests.CodeRepositorySourceTests.Builder_RegistersFileSystemProviderByDefault
+    Andirit.Tests.CodeRepositorySourceTests.Builder_AllowsCustomProviderRegistration
+    Andirit.Tests.CodeRepositorySourceTests.Registry_ReportsProviderAmbiguityRatherThanGuessing
+    Andirit.Tests.CodeRepositorySourceTests.Builder_CanReplaceDefaultProvidersEntirely
+    Andirit.Tests.CodeRepositorySourceTests.Entry_RejectsNonNormalizedOrEscapingPath(path: "../outside.cs")
+    Andirit.Tests.CodeRepositorySourceTests.Entry_RejectsNonNormalizedOrEscapingPath(path: "src/../outside.cs")
+    Andirit.Tests.CodeRepositorySourceTests.Entry_RejectsNonNormalizedOrEscapingPath(path: "/absolute.cs")
+    Andirit.Tests.ContractValidationTests.Identities_RejectMalformedValues(value: "")
+    Andirit.Tests.ContractValidationTests.Identities_RejectMalformedValues(value: "  ")
+    Andirit.Tests.ContractValidationTests.Identities_RejectMalformedValues(value: " leading")
+    Andirit.Tests.ContractValidationTests.Identities_RejectMalformedValues(value: "trailing ")
+    Andirit.Tests.ContractValidationTests.Identities_RejectMalformedValues(value: "line\nbreak")
+    Andirit.Tests.ContractValidationTests.Location_RejectsPathsOutsideRepository(path: "/absolute/file.cs")
+    Andirit.Tests.ContractValidationTests.Location_RejectsPathsOutsideRepository(path: "../outside.cs")
+    Andirit.Tests.ContractValidationTests.Location_RejectsPathsOutsideRepository(path: "src/../../outside.cs")
+    Andirit.Tests.ContractValidationTests.Location_NormalizesDirectorySeparators
+    Andirit.Tests.ContractValidationTests.NumberProperty_RejectsNonFiniteValues(value: NaN)
+    Andirit.Tests.ContractValidationTests.NumberProperty_RejectsNonFiniteValues(value: ∞)
+    Andirit.Tests.ContractValidationTests.NumberProperty_RejectsNonFiniteValues(value: -∞)
+    Andirit.Tests.ContractValidationTests.Node_RejectsNullPropertyValues
+    Andirit.Tests.ContractValidationTests.Evidence_RejectsConfidenceForDeterministicFacts
+    Andirit.Tests.ContractValidationTests.Evidence_AllowsBoundedConfidenceForInferredFacts
+    Andirit.Tests.ContractValidationTests.Evidence_RejectsConfidenceForDerivedFacts
+    Andirit.Tests.ContractValidationTests.CallsEdge_WithStructuralEvidence_FailsValidation
+    Andirit.Tests.ContractValidationTests.CallsEdge_WithResolvedEvidence_PassesValidation
+    Andirit.Tests.ContractValidationTests.EvidenceQuality_IsDeterministicOnlyForNonProbabilisticQualities
+    Andirit.Tests.ContractValidationTests.EvidenceQuality_NumericValuesArePersistenceCompatibilityOnly
+    Andirit.Tests.ContractValidationTests.Origin_RequiresSourcePathAndHashTogether
+    Andirit.Tests.ContractValidationTests.BatchLimits_MustBePositive
+    Andirit.Tests.ContractValidationTests.Kinds_AllowNamespacedConsumerExtensions
+    Andirit.Tests.GraphSemanticsTests.PartialSymbol_HasStableIdentityAndMultiplePhysicalDeclarations
+    Andirit.Tests.GraphSemanticsTests.CrossFileRelationship_CarriesItsOwnEvidenceLocation
+    Andirit.Tests.InMemoryCodeGraphStoreTests.Store_PassesProviderConformanceSuite
+    Andirit.Tests.InMemoryCodeGraphStoreTests.StageIndexUnitDeletionAsync_RejectsDanglingReferences
+    Andirit.Tests.InterfaceImpactTests.Remediation_MixedRoutesRetainPerWitnessMetadataAndCanonicalSummary(durable: False)
+    Andirit.Tests.InterfaceImpactTests.Remediation_MixedRoutesRetainPerWitnessMetadataAndCanonicalSummary(durable: True)
+    Andirit.Tests.InterfaceImpactTests.Remediation_UnsupportedHeritageRemainsStoredAndObservable(durable: False, anonymous: False)
+    Andirit.Tests.InterfaceImpactTests.Remediation_UnsupportedHeritageRemainsStoredAndObservable(durable: True, anonymous: False)
+    Andirit.Tests.InterfaceImpactTests.Remediation_UnsupportedHeritageRemainsStoredAndObservable(durable: False, anonymous: True)
+    Andirit.Tests.InterfaceImpactTests.Remediation_UnsupportedHeritageRemainsStoredAndObservable(durable: True, anonymous: True)
+    Andirit.Tests.InterfaceImpactTests.Remediation_ImportEqualsPreservesTypeOnlyWithoutBinding(durable: False)
+    Andirit.Tests.InterfaceImpactTests.Remediation_ImportEqualsPreservesTypeOnlyWithoutBinding(durable: True)
+    Andirit.Tests.InterfaceImpactTests.Remediation_MandatoryInputValidationPrecedesRelationshipBudget(durable: False, limit: 1)
+    Andirit.Tests.InterfaceImpactTests.Remediation_MandatoryInputValidationPrecedesRelationshipBudget(durable: True, limit: 1)
+    Andirit.Tests.InterfaceImpactTests.Remediation_MandatoryInputValidationPrecedesRelationshipBudget(durable: False, limit: 100000)
+    Andirit.Tests.InterfaceImpactTests.Remediation_MandatoryInputValidationPrecedesRelationshipBudget(durable: True, limit: 100000)
+    Andirit.Tests.InterfaceImpactTests.Remediation_OfficialTransportAndAuthorityRejectMissingIdentities(missing: "RepositoryId")
+    Andirit.Tests.InterfaceImpactTests.Remediation_OfficialTransportAndAuthorityRejectMissingIdentities(missing: "IndexRunId")
+    Andirit.Tests.InterfaceImpactTests.Remediation_OfficialTransportAndAuthorityRejectMissingIdentities(missing: "IndexIdentity")
+    Andirit.Tests.InterfaceImpactTests.Remediation_OfficialTransportAndAuthorityRejectMissingIdentities(missing: "DeclarationNodeId")
+    Andirit.Tests.InterfaceImpactTests.Remediation_BareAttributionFrontierDoesNotInventReasonSubjects(durable: False, shape: "ambiguous")
+    Andirit.Tests.InterfaceImpactTests.Remediation_BareAttributionFrontierDoesNotInventReasonSubjects(durable: True, shape: "ambiguous")
+    Andirit.Tests.InterfaceImpactTests.Remediation_BareAttributionFrontierDoesNotInventReasonSubjects(durable: False, shape: "missing")
+    Andirit.Tests.InterfaceImpactTests.Remediation_BareAttributionFrontierDoesNotInventReasonSubjects(durable: True, shape: "missing")
+    Andirit.Tests.InterfaceImpactTests.Remediation_BareAttributionFrontierDoesNotInventReasonSubjects(durable: False, shape: "ineligible")
+    Andirit.Tests.InterfaceImpactTests.Remediation_BareAttributionFrontierDoesNotInventReasonSubjects(durable: True, shape: "ineligible")
+    Andirit.Tests.InterfaceImpactTests.Remediation_ResolverVersionAndPolicyAreIndependentIntegrityChecks(durable: False, corruption: "status")
+    Andirit.Tests.InterfaceImpactTests.Remediation_ResolverVersionAndPolicyAreIndependentIntegrityChecks(durable: True, corruption: "status")
+    Andirit.Tests.InterfaceImpactTests.Remediation_ResolverVersionAndPolicyAreIndependentIntegrityChecks(durable: False, corruption: "proof")
+    Andirit.Tests.InterfaceImpactTests.Remediation_ResolverVersionAndPolicyAreIndependentIntegrityChecks(durable: True, corruption: "proof")
+    Andirit.Tests.InterfaceImpactTests.Remediation_ResolverVersionAndPolicyAreIndependentIntegrityChecks(durable: False, corruption: "policy")
+    Andirit.Tests.InterfaceImpactTests.Remediation_ResolverVersionAndPolicyAreIndependentIntegrityChecks(durable: True, corruption: "policy")
+    Andirit.Tests.InterfaceImpactTests.Remediation_WitnessWorkIsChargedAsStepsExecuteBeforeOutput(durable: False, steps: 1)
+    Andirit.Tests.InterfaceImpactTests.Remediation_WitnessWorkIsChargedAsStepsExecuteBeforeOutput(durable: True, steps: 1)
+    Andirit.Tests.InterfaceImpactTests.Remediation_WitnessWorkIsChargedAsStepsExecuteBeforeOutput(durable: False, steps: 7)
+    Andirit.Tests.InterfaceImpactTests.Remediation_WitnessWorkIsChargedAsStepsExecuteBeforeOutput(durable: True, steps: 7)
+    Andirit.Tests.InterfaceImpactTests.Remediation_NestedImportIsRelevanceOnly_NotAVisibleBinding(durable: False)
+    Andirit.Tests.InterfaceImpactTests.Remediation_NestedImportIsRelevanceOnly_NotAVisibleBinding(durable: True)
+    Andirit.Tests.InterfaceImpactTests.Remediation_RehashedAttributionCannotOmitPhysicalContributor(durable: False)
+    Andirit.Tests.InterfaceImpactTests.Remediation_RehashedAttributionCannotOmitPhysicalContributor(durable: True)
+    Andirit.Tests.InterfaceImpactTests.Remediation_AliasedExtendsIsUnknown_DirectImplementsStillConfirms(durable: False)
+    Andirit.Tests.InterfaceImpactTests.Remediation_AliasedExtendsIsUnknown_DirectImplementsStillConfirms(durable: True)
+    Andirit.Tests.InterfaceImpactTests.ControlledCorpus_ExactClassificationsCompleteStoredWitnessesAndLegacyCompatibility(durable: False)
+    Andirit.Tests.InterfaceImpactTests.ControlledCorpus_ExactClassificationsCompleteStoredWitnessesAndLegacyCompatibility(durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "collision", positive: null, reason: "conflicting-local-binding", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "nested-shadow", positive: null, reason: "nested-scope-heritage", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "merged", positive: null, reason: "ambiguous-export", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "wrong-export", positive: null, reason: "unresolved-heritage-name", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "nested-export", positive: null, reason: "unattributed-export", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "barrel", positive: "Direct", reason: "re-export-barrier", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "idle", positive: null, reason: null, durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "duplicate-imports", positive: null, reason: "duplicate-local-name", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "multi-specifier", positive: "A", reason: null, durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "export-alias", positive: "Renamed", reason: null, durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "unsupported", positive: null, reason: "qualified-heritage-unresolved", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "type-value", positive: null, reason: "ambiguous-export", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "same-file", positive: "Local", reason: null, durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "repeated-export", positive: "ViaOne", reason: null, durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "absent-export", positive: null, reason: "missing-export", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-named", positive: null, reason: "re-export-barrier", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-star", positive: null, reason: "re-export-barrier", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-missing", positive: null, reason: "re-export-barrier", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-multi", positive: null, reason: "re-export-barrier", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-no-declaration", positive: null, reason: "re-export-barrier", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-ordinary-consumer", positive: null, reason: "missing-export", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-missing-consumer", positive: null, reason: "re-export-barrier", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "forms-import-equals", positive: null, reason: "unsupported-import-form", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "forms-inline-type", positive: "ViaInline", reason: null, durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "forms-dynamic", positive: null, reason: null, durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "expression-heritage", positive: null, reason: "unsupported-heritage-form", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "interface-extends", positive: null, reason: "heritage-kind-not-supported", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "same-file-merged", positive: null, reason: "ambiguous-local-declaration", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "ambient-export", positive: null, reason: "ineligible-declaration", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "ambient-script", positive: null, reason: "ambient-or-global-context", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "recovered-clause", positive: null, reason: "recovered-heritage-syntax", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "ghost", positive: null, reason: "unattributed-export", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "external-package", positive: null, reason: "external-module", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrier-scope", positive: "Direct", reason: "re-export-barrier", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "nested-unrelated", positive: "ViaNestedContrast", reason: null, durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "default-implement", positive: null, reason: "unsupported-import-form", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "qualified-member", positive: null, reason: "qualified-heritage-unresolved", durable: False)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "collision", positive: null, reason: "conflicting-local-binding", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "nested-shadow", positive: null, reason: "nested-scope-heritage", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "merged", positive: null, reason: "ambiguous-export", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "wrong-export", positive: null, reason: "unresolved-heritage-name", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "nested-export", positive: null, reason: "unattributed-export", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "barrel", positive: "Direct", reason: "re-export-barrier", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "idle", positive: null, reason: null, durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "duplicate-imports", positive: null, reason: "duplicate-local-name", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "multi-specifier", positive: "A", reason: null, durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "export-alias", positive: "Renamed", reason: null, durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "unsupported", positive: null, reason: "qualified-heritage-unresolved", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "type-value", positive: null, reason: "ambiguous-export", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "same-file", positive: "Local", reason: null, durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "q2", name: "repeated-export", positive: "ViaOne", reason: null, durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "absent-export", positive: null, reason: "missing-export", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-named", positive: null, reason: "re-export-barrier", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-star", positive: null, reason: "re-export-barrier", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-missing", positive: null, reason: "re-export-barrier", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-multi", positive: null, reason: "re-export-barrier", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-no-declaration", positive: null, reason: "re-export-barrier", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-ordinary-consumer", positive: null, reason: "missing-export", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrel-missing-consumer", positive: null, reason: "re-export-barrier", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "forms-import-equals", positive: null, reason: "unsupported-import-form", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "forms-inline-type", positive: "ViaInline", reason: null, durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "forms-dynamic", positive: null, reason: null, durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "expression-heritage", positive: null, reason: "unsupported-heritage-form", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "interface-extends", positive: null, reason: "heritage-kind-not-supported", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "same-file-merged", positive: null, reason: "ambiguous-local-declaration", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "ambient-export", positive: null, reason: "ineligible-declaration", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "ambient-script", positive: null, reason: "ambient-or-global-context", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "recovered-clause", positive: null, reason: "recovered-heritage-syntax", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "ghost", positive: null, reason: "unattributed-export", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "external-package", positive: null, reason: "external-module", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "barrier-scope", positive: "Direct", reason: "re-export-barrier", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "nested-unrelated", positive: "ViaNestedContrast", reason: null, durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "default-implement", positive: null, reason: "unsupported-import-form", durable: True)
+    Andirit.Tests.InterfaceImpactTests.AcceptedAdversarialCorpus_UsesReviewedExpectations(corpus: "r2", name: "qualified-member", positive: null, reason: "qualified-heritage-unresolved", durable: True)
+    Andirit.Tests.InterfaceImpactTests.WorkBudgets_AreChargedAndDeterministicallyTruncated(bound: 0)
+    Andirit.Tests.InterfaceImpactTests.WorkBudgets_AreChargedAndDeterministicallyTruncated(bound: 1)
+    Andirit.Tests.InterfaceImpactTests.WorkBudgets_AreChargedAndDeterministicallyTruncated(bound: 2)
+    Andirit.Tests.InterfaceImpactTests.WorkBudgets_AreChargedAndDeterministicallyTruncated(bound: 3)
+    Andirit.Tests.InterfaceImpactTests.WorkBudgets_AreChargedAndDeterministicallyTruncated(bound: 4)
+    Andirit.Tests.InterfaceImpactTests.QualificationTruthTable_SerializationAndCheckedAuthority(consistent: False, snapshot: null, expected: "qualified")
+    Andirit.Tests.InterfaceImpactTests.QualificationTruthTable_SerializationAndCheckedAuthority(consistent: False, snapshot: "snapshot:provided", expected: "qualified")
+    Andirit.Tests.InterfaceImpactTests.QualificationTruthTable_SerializationAndCheckedAuthority(consistent: True, snapshot: null, expected: "qualified")
+    Andirit.Tests.InterfaceImpactTests.QualificationTruthTable_SerializationAndCheckedAuthority(consistent: True, snapshot: "   ", expected: "qualified")
+    Andirit.Tests.InterfaceImpactTests.QualificationTruthTable_SerializationAndCheckedAuthority(consistent: True, snapshot: "snapshot:identified", expected: "consistent")
+    Andirit.Tests.InterfaceImpactTests.TargetInventoryTransitions_RemoveStaleFactsAndRetainLastPublicationOnFailure(durable: False)
+    Andirit.Tests.InterfaceImpactTests.TargetInventoryTransitions_RemoveStaleFactsAndRetainLastPublicationOnFailure(durable: True)
+    Andirit.Tests.InterfaceImpactTests.QueryFailureBoundaries_ReturnNoPartialClassifications(scenario: "missing-context")
+    Andirit.Tests.InterfaceImpactTests.QueryFailureBoundaries_ReturnNoPartialClassifications(scenario: "missing-resolver")
+    Andirit.Tests.InterfaceImpactTests.QueryFailureBoundaries_ReturnNoPartialClassifications(scenario: "publication-movement")
+    Andirit.Tests.InterfaceImpactTests.QueryFailureBoundaries_ReturnNoPartialClassifications(scenario: "cancel")
+    Andirit.Tests.InterfaceImpactTests.QueryFailureBoundaries_ReturnNoPartialClassifications(scenario: "store-failure")
+    Andirit.Tests.InterfaceImpactTests.QueryFailureBoundaries_ReturnNoPartialClassifications(scenario: "reversed")
+    Andirit.Tests.InterfaceImpactTests.InvalidBounds_AreRejected
+    Andirit.Tests.InterfaceImpactTests.ForeignLanguageHeritage_DoesNotBecomeATargetRelationship
+    Andirit.Tests.InterfaceImpactTests.RepeatedClausesAndExportOccurrences_PreserveEveryCompleteWitness
+    Andirit.Tests.InterfaceImpactTests.Occurrences_PreserveUtf16SpecifierSpansAndPerSpecifierTypeOnlyStatus
+    Andirit.Tests.InterfaceImpactTests.AdditionalLexicalGuards_PreserveIdentityAndAliasUncertainty(scenario: "type-parameter-shadowing")
+    Andirit.Tests.InterfaceImpactTests.AdditionalLexicalGuards_PreserveIdentityAndAliasUncertainty(scenario: "unresolved-alias")
+    Andirit.Tests.InterfaceImpactTests.AdditionalLexicalGuards_PreserveIdentityAndAliasUncertainty(scenario: "same-file-different-target")
+    Andirit.Tests.InterfaceImpactTests.AdditionalLexicalGuards_PreserveIdentityAndAliasUncertainty(scenario: "unsupported-resolver")
+    Andirit.Tests.InterfaceImpactTests.OutputCaps_AreIndependentOfChargedExecutionBounds(category: "confirmed")
+    Andirit.Tests.InterfaceImpactTests.OutputCaps_AreIndependentOfChargedExecutionBounds(category: "occurrences")
+    Andirit.Tests.InterfaceImpactTests.OutputCaps_AreIndependentOfChargedExecutionBounds(category: "unknowns")
+    Andirit.Tests.InterfaceImpactTests.ContradictoryOrSupersededFacts_FailClosed(corruption: "missing-export-evidence")
+    Andirit.Tests.InterfaceImpactTests.ContradictoryOrSupersededFacts_FailClosed(corruption: "wrong-attribution-record")
+    Andirit.Tests.InterfaceImpactTests.ContradictoryOrSupersededFacts_FailClosed(corruption: "wrong-context-owner")
+    Andirit.Tests.InterfaceImpactTests.ContradictoryOrSupersededFacts_FailClosed(corruption: "stale-hash")
+    Andirit.Tests.InterfaceImpactTests.ContradictoryOrSupersededFacts_FailClosed(corruption: "provider-version")
+    Andirit.Tests.InterfaceImpactTests.ContradictoryOrSupersededFacts_FailClosed(corruption: "missing-declaration-context")
+    Andirit.Tests.InterfaceImpactTests.InvalidTargetsAndUnsupportedPublications_AreInputErrors(scenario: "unknown-target")
+    Andirit.Tests.InterfaceImpactTests.InvalidTargetsAndUnsupportedPublications_AreInputErrors(scenario: "non-interface")
+    Andirit.Tests.InterfaceImpactTests.InvalidTargetsAndUnsupportedPublications_AreInputErrors(scenario: "missing-provider")
+    Andirit.Tests.OccurrenceIdentityRemediationTests.Usage4_MatchesTheFrozenR2Vector
+    Andirit.Tests.OccurrenceIdentityRemediationTests.Usage4_DistinguishesDefiningCompilationContexts
+    Andirit.Tests.OccurrenceIdentityRemediationTests.Usage4_IncludesSemanticUnitAndSourceHash
+    Andirit.Tests.OccurrenceIdentityRemediationTests.Target_UsesTheAcceptedAsmctx3ComponentsAndCanonicalFormat
+    Andirit.Tests.OccurrenceIdentityRemediationTests.Target_RejectsUnavailableAndFabricatedIdentities
+    Andirit.Tests.OccurrenceIdentityRemediationTests.Fact_RejectsANonCanonicalOccurrenceIdentity
+    Andirit.Tests.OccurrenceIdentityRemediationTests.Fact_KeepsIdentityStableAndPayloadSensitiveToNonIdentityContent
+    Andirit.Tests.OccurrenceIdentityRemediationTests.Fact_RejectsAnIdentityThatDoesNotMatchTheTuple
+    Andirit.Tests.OccurrenceIdentityRemediationTests.Coverage_DistinguishesNoAnalysisIncompleteAndCompleteEmpty
+    Andirit.Tests.OccurrenceInMemoryParityTests.InMemory_PublishQueryReplaceAndDelete
+    Andirit.Tests.OccurrenceInMemoryParityTests.InMemory_ContributorUnionAndConflictRejection
+    Andirit.Tests.OccurrenceInMemoryParityTests.InMemory_BoundedDeterministicAndStaleRefusal
+    Andirit.Tests.PluginContractTests.ExtractionResult_RejectsInvalidOrUnboundedDiagnostics
+    Andirit.Tests.PluginContractTests.SyntaxAndProjectAwarePlugins_UseTheSameSessionContract
+    Andirit.Tests.PluginContractTests.PluginContext_RejectsDuplicateSourcePaths
+    Andirit.Tests.PluginContractTests.PluginContext_SettingsAreAnImmutableSnapshot
+    Andirit.Tests.PluginContractTests.PluginContext_PreviousUnitsAreAnImmutableOrderedSnapshot
+    Andirit.Tests.PluginContractTests.PluginContext_PreservesProviderLocationWithoutTreatingItAsAPath
+    Andirit.Tests.ProviderFallbackTests.OnUnavailable_FallsBackOnlyForUnavailableCapability(kind: UnsupportedLanguage, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnUnavailable_FallsBackOnlyForUnavailableCapability(kind: ProviderUnavailable, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnUnavailable_FallsBackOnlyForUnavailableCapability(kind: VersionMismatch, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnUnavailable_FallsBackOnlyForUnavailableCapability(kind: ProjectLoadFailure, expected: False)
+    Andirit.Tests.ProviderFallbackTests.OnUnavailable_FallsBackOnlyForUnavailableCapability(kind: ParseFailure, expected: False)
+    Andirit.Tests.ProviderFallbackTests.OnUnavailable_FallsBackOnlyForUnavailableCapability(kind: SemanticModelUnavailable, expected: False)
+    Andirit.Tests.ProviderFallbackTests.OnUnavailable_FallsBackOnlyForUnavailableCapability(kind: ProviderCrash, expected: False)
+    Andirit.Tests.ProviderFallbackTests.OnUnavailable_FallsBackOnlyForUnavailableCapability(kind: PartialResult, expected: False)
+    Andirit.Tests.ProviderFallbackTests.OnUnavailable_FallsBackOnlyForUnavailableCapability(kind: Cancelled, expected: False)
+    Andirit.Tests.ProviderFallbackTests.OnUnavailable_FallsBackOnlyForUnavailableCapability(kind: SourceChanged, expected: False)
+    Andirit.Tests.ProviderFallbackTests.OnFailure_FallsBackForAnalysisFailuresButNeverCancellationOrConflict(kind: UnsupportedLanguage, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnFailure_FallsBackForAnalysisFailuresButNeverCancellationOrConflict(kind: ProviderUnavailable, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnFailure_FallsBackForAnalysisFailuresButNeverCancellationOrConflict(kind: VersionMismatch, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnFailure_FallsBackForAnalysisFailuresButNeverCancellationOrConflict(kind: ProjectLoadFailure, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnFailure_FallsBackForAnalysisFailuresButNeverCancellationOrConflict(kind: ParseFailure, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnFailure_FallsBackForAnalysisFailuresButNeverCancellationOrConflict(kind: SemanticModelUnavailable, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnFailure_FallsBackForAnalysisFailuresButNeverCancellationOrConflict(kind: ProviderCrash, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnFailure_FallsBackForAnalysisFailuresButNeverCancellationOrConflict(kind: PartialResult, expected: True)
+    Andirit.Tests.ProviderFallbackTests.OnFailure_FallsBackForAnalysisFailuresButNeverCancellationOrConflict(kind: Cancelled, expected: False)
+    Andirit.Tests.ProviderFallbackTests.OnFailure_FallsBackForAnalysisFailuresButNeverCancellationOrConflict(kind: SourceChanged, expected: False)
+    Andirit.Tests.ProviderFallbackTests.None_NeverFallsBack
+    Andirit.Tests.ProviderFallbackTests.FailureKinds_HaveStableWarningCodes
+    Andirit.Tests.ProviderFallbackTests.Selection_RequiresNonemptyAttempts
+    Andirit.Tests.ProviderFallbackTests.Selection_RecordsAttemptHistoryBeyondRequestedActual
+    Andirit.Tests.ProviderFallbackTests.FailureException_CarriesKind
+    Andirit.Tests.PublicApiContractTests.Abstractions_PublicTypeSnapshot_IsIntentional
+    Andirit.Tests.PublicApiContractTests.Abstractions_DoNotReferenceParserDatabaseOrAiFrameworks
+    Andirit.Tests.PublicApiContractTests.PluginContract_DoesNotExposeParserSpecificTypes
+    Andirit.Tests.PublicationSnapshotTests.Snapshot_RoundTripReproducesSupersededPublication
+    Andirit.Tests.PublicationSnapshotTests.Snapshot_TamperedContentIsRejected
+    Andirit.Tests.PublicationSnapshotTests.Snapshot_BoundsAndMissingPublicationFailExplicitly
+    Andirit.Tests.PublicationSnapshotTests.Snapshot_JsonRoundTripImportsIdenticalPublication
+    Andirit.Tests.PublicationSnapshotTests.Snapshot_CorruptJsonIsRejected
+    Andirit.Tests.RuntimePublicApiContractTests.Runtime_PublicTypeSnapshot_IsIntentional
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.OriginalDefect_UnitCountsMustSum_NotMax
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.OriginalDefect_MixedScopes_NeverClaimProducedOrSingleScope
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.OriginalDefect_DifferingUniverses_MergeRefused
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.OriginalDefect_ZeroDeclaredWithObservedVerified_Rejected
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.PositiveControl_MatchingScopeCompleteBatches_ProduceComplete
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.PartialPlusComplete_IsPartial
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.CompletePlusNotAnalyzed_IsPartial
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.NotProducedPlusNotProduced_IsNotProduced
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.UnavailableDominates
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.RefusalCounters_PreserveAndSum
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.UnsupportedCategories_Sum
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.UnavailableReasons_Sum
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.ZeroDeclared_NoObservations_IsValid
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.MixedZeroAndNonZeroDeclared_Sum
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.VerifiedWithinDeclared_RemainsValid
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.UnattributedPlusAttributed_KeepsSoleAttribution
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.UnattributedPlusUnattributed_StaysUnattributed
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.HeuristicConditionalInactive_IsCountedNeverConverted
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.RepeatedEquivalentInput_DoublesAccountingNeverCompleteness
+    Andirit.Tests.S2_2Wp6CoverageMergeTests.Merge_ReturnsCoverageOnly_NoFactAuthority
+    Andirit.Tests.SerializationTests.GraphBatch_RoundTripsWithoutLosingTypedPropertiesOrEvidence
+    Andirit.Tests.SerializationTests.RepositoryIndexState_RoundTripsAsPortableIncrementalData
+    Andirit.Tests.SerializationTests.ExtractionResult_RoundTripsDiagnosticsAndObsoleteUnits
+    Andirit.Tests.TestingPublicApiContractTests.Testing_PublicTypeSnapshot_IsIntentional
+    Andirit.LatticeDb.Tests.HistoricalStorageIdentityTests.Schema2_LabelsRemainHistoricalHetuProtocolIdentities
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.PublicApi_IsIntentional
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_PassesProviderConformanceSuite
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_ReopensDurableState
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_ReopensCompletedRunIndexStateAndGraphFacts
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_ResumedRunConflictsAfterNewerPublication
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_ReopensHistoricalAndLatestCompletedRuns
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_ReopensStagedRunWithoutPublishingItAndCanResumePublication
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_RejectsIncompatibleSchemaVersion
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_RejectsCorruptedDurablePayloadOnReopen
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_RollsBackInterruptedNativeTransactionAndReopensPriorUnit
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.FailedCommitNeverPublishesProspectiveStateToReaders
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.FailedUnrelatedWritePreservesRunningRunBaseline
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.IdempotentRunningRetryDoesNotRewriteOriginalBaseline
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.DisposeWaitsForActiveMutationAndAllReadsRejectAfterward
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_OpensAsyncAndHonorsCancellation
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_AcceptsTuningOptions
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Host_UseLatticeStoreBuildsHealthyHost
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_RejectsSecondOwnerOfSameFile
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_ReportsUnhealthyAfterDispose
+    Andirit.LatticeDb.Tests.LatticeCodeGraphStoreTests.Store_IsolatesMultipleRepositories
+    Andirit.LatticeDb.Tests.LatticeDbPublicApiContractTests.LatticeDb_PublicTypeSnapshot_IsIntentional
+    Andirit.LatticeDb.Tests.NativeGraphMirrorTests.NativeTraversalMatchesProjection
+    Andirit.LatticeDb.Tests.NativeGraphMirrorTests.StagedFactsStayOutOfNativeTraversal
+    Andirit.LatticeDb.Tests.NativeGraphMirrorTests.EvidenceFilteredTraversalFallsBackToProjection
+    Andirit.LatticeDb.Tests.NativeGraphMirrorTests.NativeMirrorSurvivesReopen
+    Andirit.LatticeDb.Tests.NativeGraphMirrorTests.NativeMirrorRebuildsAfterPublicationWhileTraversalIsDisabled
+    Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_AfterPreCommitFailure_MatchesDurableOccurrenceProjection
+    Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_AfterInMemoryApplyFailure_PreservesCommittedOccurrenceProjection
+    Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_PreservesCompleteEmptyEvidence
+    Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_PreservesPartialCoverage
+    Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_ConflictRefusalStillEffective
+    Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.Recovery_PreservesPublishedGraphUnits
+    Andirit.LatticeDb.Tests.New01RecoveryProjectionTests.UnknownOutcome_StillQuarantinesAndReopenSeesDurableState
+    Andirit.LatticeDb.Tests.OccurrenceRemediationNativeTests.CompleteEmptyAnalysisSurvivesReplacementAndReopen
+    Andirit.LatticeDb.Tests.OccurrenceRemediationNativeTests.IncompleteCoverageCannotMasqueradeAsCompleteEmpty
+    Andirit.LatticeDb.Tests.OccurrenceRemediationNativeTests.NoAnalysisWithZeroFactsRemainsUnavailable
+    Andirit.LatticeDb.Tests.OccurrenceRemediationNativeTests.DeletingACompleteUnitInvalidatesCoverage
+    Andirit.LatticeDb.Tests.OccurrenceRemediationNativeTests.AfterCommitAcknowledgementLossRefusesCurrentStateAndReopenSeesDurableState
+    Andirit.LatticeDb.Tests.OccurrenceStage1NativeTests.N1_InitialPublicationPersistsNativeFactsPagesAndMeta
+    Andirit.LatticeDb.Tests.OccurrenceStage1NativeTests.N2_BoundedQueryIsDeterministicAndDoesNotScanUnrelatedTargets
+    Andirit.LatticeDb.Tests.OccurrenceStage1NativeTests.N3_ReplacementRetiresObsoleteFactsAndPreservesOtherUnits
+    Andirit.LatticeDb.Tests.OccurrenceStage1NativeTests.N4_ContributorUnionAndScopedDeletionPreserveRemainingContributors
+    Andirit.LatticeDb.Tests.OccurrenceStage1NativeTests.N5_ReopenPreservesOccurrenceAndIndexState
+    Andirit.LatticeDb.Tests.OccurrenceStage1NativeTests.N6_FailedCompletionPreservesPriorOccurrencePublication
+    Andirit.LatticeDb.Tests.OccurrenceStage1NativeTests.N7_StalePublicationAndGraphOnlyStoresRefuseExplicitly
+    Andirit.LatticeDb.Tests.OccurrenceStage1NativeTests.N8_D3GraphNoninterferenceAcrossOccurrenceLifecycle
+    Andirit.LatticeDb.Tests.OccurrenceStage1NativeTests.Store_RejectsUnsupportedOccurrenceSchemaOnOpen
+    Andirit.LatticeDb.Tests.OccurrenceStage1NativeTests.Store_RejectsOccurrenceUnitsWithoutMeta
+    Andirit.LatticeDb.Tests.OccurrenceStage1PerformanceProbe.Stage1WorkloadMeasurements
+    Andirit.LatticeDb.Tests.S23Wp5NamespaceRefusalTests.Store_RejectsUnsupportedOccurrenceNamespaceOnOpen
+    Andirit.LatticeDb.Tests.S24SurfaceRefusalMappingTests.If05_MappingMatrix_MatchesAcceptedContract
+    Andirit.TreeSitter.Tests.HistoricalProviderIdentityTests.ProductRename_PreservesPersistedPluginsResolversExportsAndProfile
+    Andirit.TreeSitter.Tests.QueryDogfoodTests.Dogfood_DiscoverySpansResolvedAndStructuralSymbols
+    Andirit.TreeSitter.Tests.QueryDogfoodTests.Dogfood_EnclosingSymbolBridgesDiffsIntoBothGraphs
+    Andirit.TreeSitter.Tests.QueryDogfoodTests.Dogfood_StructuralContainmentStopsResolvedOnlyTraversal
+    Andirit.TreeSitter.Tests.TreeSitterCapabilityContractTests.TypeScriptCapabilities_AdvertiseInheritanceForBothGrammars
+    Andirit.TreeSitter.Tests.TreeSitterCapabilityContractTests.JavaScriptCapabilities_AdvertiseInheritance
+    Andirit.TreeSitter.Tests.TreeSitterCapabilityContractTests.ElixirCapabilities_DoNotAdvertiseInheritanceWithoutOutput
+    Andirit.TreeSitter.Tests.TreeSitterCapabilityContractTests.InheritsCoverage_MatchesTheAdvertisedInheritanceCapability
+    Andirit.TreeSitter.Tests.TreeSitterCapabilityContractTests.TypeScriptOnly_ProducesImplementsCoverage
+    Andirit.TreeSitter.Tests.TreeSitterCapabilityContractTests.InheritanceCapablePlugins_NeverPresentHeritageAsResolved
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_KeepsSameNameClassesAndMethodsDistinctAcrossTypeScriptModules
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_KeepsSameNameClassesAndMethodsDistinctAcrossJavaScriptModules
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_KeepsSameNameMembersOnUnrelatedClassesDistinct
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_KeepsStaticAndInstanceMethodsWithTheSameNameDistinct
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_KeepsMethodsAndAccessorsWithTheSameNameDistinct
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_KeepsJavaScriptStaticAccessorsAndInstanceMethodsDistinct
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_HandlesJavaScriptCombinedStaticGetToken
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_KeepsSameNameClassAndInterfaceDistinct
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_NestedClassDeclarationsRetainTheirOwnerAndIdentity
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_ConvergesDuplicateClassDeclarationsInOneFileWithSeparateDeclarations
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_KeepsClassIdentityStableAcrossUnrelatedEdits
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_HeritageTargetStaysDeclarationlessBesideSameNameClass
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_ShadowedHeritageTargetDoesNotConvergeWithOuterClass
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_HeritagePlaceholdersStayFileScoped
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassIdentityTests.ExtractAsync_ImplementsTargetStaysDeclarationLess
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassLifecycleTests.IndexAsync_PublishedShadowedHeritageDoesNotImpactSameNameClass
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassLifecycleTests.IndexAsync_OrdinaryReindexReplacesHeritageEdgesAndTargets
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassLifecycleTests.IndexAsync_RemovesRenamedAndRemovedClassMembers
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassLifecycleTests.IndexAsync_RemovesFactsForRenamedClasses
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassLifecycleTests.IndexAsync_RemovesClassFactsWhenSourceFileIsDeleted
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassLifecycleTests.IndexAsync_KeepsSameNameClassesDistinctThroughQueries
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassMemberTests.ExtractAsync_ModelsTypeScriptClassFieldsWithContainmentAndLocations
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassMemberTests.ExtractAsync_RecordsTypeScriptFieldModifiersAndAccess
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassMemberTests.ExtractAsync_ModelsJavaScriptClassFields
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassMemberTests.ExtractAsync_KeepsFieldAndMethodWithTheSameNameDistinct
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassMemberTests.ExtractAsync_AttributesInitializerInvocationsToTheField
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassMemberTests.ExtractAsync_SkipsComputedPrivateAndAccessorFields
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassMemberTests.ExtractAsync_PreservesValidClassFactsFromPartialFiles
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassMemberTests.ExtractAsync_RepeatsClassMemberFactsDeterministically
+    Andirit.TreeSitter.Tests.TreeSitterEcmaClassMemberTests.IndexAsync_AnswersExactClassMemberAndEnclosingSymbolQueries
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.PublishesModuleScopedSlotsAndIndependentOccurrenceEdges
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.EntryIdentityIsModuleAndNameScopedWithoutUnicodeNormalization
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.MapsDirectDefaultAndExpressionFormsToAcceptedMetadata
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.IndexAsync_ReplacesAliasesAndRemovesFinalExportFacts(durable: False)
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.IndexAsync_ReplacesAliasesAndRemovesFinalExportFacts(durable: True)
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.LatticeDb_ReopensAndQueriesMaximumUnicodeExportName
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.PublisherIsIdempotentAndRejectsSameIdDifferentOccurrenceFacts
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.ResolverFailureRetainsPreviouslyPublishedExportFacts(durable: False)
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.ResolverFailureRetainsPreviouslyPublishedExportFacts(durable: True)
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.CancellationRetainsPreviouslyPublishedExportFacts(durable: False)
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportPublicationTests.CancellationRetainsPreviouslyPublishedExportFacts(durable: True)
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.ExtractsDirectDeclarationsWithSyntaxGroundedProjectionAndSpans
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.KeepsDirectOverloadSitesAsSeparateOccurrences
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.PreservesEachLocalNameAliasDuplicateAndDefaultAlias
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.CapturesGrammarDerivedTypeOnlyAndContextualTypeNames
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.CapturesImportedLocalExportWithoutRemoteBinding
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.CapturesDefaultDeclarationExpressionAndLocalNameForms
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.AcceptsSimpleQuotedAndUnicodeNamesButRejectsEscapesAndInvalidNames
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.AppliesNameBoundToWrittenQuotedAliases
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.ValidatesStrictUnicodeScalarBoundariesWithoutNormalization
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.PreservesUtf16SpansLineEndingsAndDeterministicOccurrenceOrder
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.OrdersDuplicateNamesAcrossFilesBySourcePath
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.ExcludesReexportsCommonJsAmbientDestructuringAndRecoveredNames
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.CapturesJavaScriptValueExportsOnly
+    Andirit.TreeSitter.Tests.TreeSitterEcmaExportShapeTests.PublishedGraphAddsExportsWithoutChangingPreChangeP8Facts
+    Andirit.TreeSitter.Tests.TreeSitterEcmaVariableLifecycleTests.IndexAsync_PublishesAndReplacesVariableFactsAcrossIncrementalChanges
+    Andirit.TreeSitter.Tests.TreeSitterEcmaVariableLifecycleTests.IndexAsync_IndexesMjsVariablesThroughTheJavaScriptPipeline
+    Andirit.TreeSitter.Tests.TreeSitterEcmaVariableTests.ExtractAsync_ModelsTypeScriptFileVariablesWithWrittenModifiersAndLocations
+    Andirit.TreeSitter.Tests.TreeSitterEcmaVariableTests.ExtractAsync_ModelsJavaScriptVariablesThroughMjsPipeline
+    Andirit.TreeSitter.Tests.TreeSitterEcmaVariableTests.ExtractAsync_UsesEachSupportedTypeScriptExtensionAndTsxGrammar
+    Andirit.TreeSitter.Tests.TreeSitterEcmaVariableTests.ExtractAsync_KeepsVariableIdentitiesFileScopedKindScopedAndDeterministic
+    Andirit.TreeSitter.Tests.TreeSitterEcmaVariableTests.ExtractAsync_SkipsLocalDestructuredAndMalformedBindings
+    Andirit.TreeSitter.Tests.TreeSitterEcmaVariableTests.ExtractAsync_RetainsJavaScriptDuplicateVariableOccurrences
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.ExtractAsync_ModelsModulesFunctionsAndContainment
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.ExtractAsync_EmitsImportsAndStructuralInvocationsOnly
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.ExtractAsync_PreservesValidFactsFromPartialFiles
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.ExtractAsync_RepeatsNormalizedFactsDeterministically
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.ExtractAsync_EmittedBatchesPassHetuValidation
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.ExtractAsync_ReportsCapabilitiesHonestly
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.ExtractAsync_ScopesScriptInvocationsToTheirFile
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.ExtractAsync_SkipsUndecodableSourcesButClearsTheirUnits
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.ExtractAsync_EmptySessionProducesEmptyResult
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.Plugin_ExposesPinnedGrammarIdentity
+    Andirit.TreeSitter.Tests.TreeSitterElixirPluginTests.IndexAsync_SelectsElixirPluginThroughProviderMapAndAnswersQueries
+    Andirit.TreeSitter.Tests.TreeSitterJavaScriptPluginTests.ExtractAsync_ModelsClassesFunctionsAndContainment
+    Andirit.TreeSitter.Tests.TreeSitterJavaScriptPluginTests.ExtractAsync_TreatsRequireAndImportAsImportsAndOtherCallsAsInvocations
+    Andirit.TreeSitter.Tests.TreeSitterJavaScriptPluginTests.ExtractAsync_DerivesPrototypeInheritanceAsDerivedEvidence
+    Andirit.TreeSitter.Tests.TreeSitterJavaScriptPluginTests.ExtractAsync_PreservesValidFactsFromPartialFiles
+    Andirit.TreeSitter.Tests.TreeSitterJavaScriptPluginTests.ExtractAsync_RepeatsNormalizedFactsDeterministically
+    Andirit.TreeSitter.Tests.TreeSitterJavaScriptPluginTests.ExtractAsync_EmittedBatchesPassHetuValidation
+    Andirit.TreeSitter.Tests.TreeSitterJavaScriptPluginTests.ExtractAsync_ReportsCapabilitiesHonestly
+    Andirit.TreeSitter.Tests.TreeSitterJavaScriptPluginTests.Plugin_ExposesPinnedGrammarIdentity
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.IndexAsync_RebuildsResolutionUnitOnTargetAndImporterChanges(durable: False)
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.IndexAsync_RebuildsResolutionUnitOnTargetAndImporterChanges(durable: True)
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.IndexAsync_RemovesOneOfTwoSameTargetOccurrences(durable: False)
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.IndexAsync_RemovesOneOfTwoSameTargetOccurrences(durable: True)
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.IndexAsync_ResolverFailureRetainsPreviousPublication(durable: False)
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.IndexAsync_ResolverFailureRetainsPreviousPublication(durable: True)
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.IndexAsync_CancellationBeforeResolutionPublicationRetainsPreviousGraph(durable: False)
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.IndexAsync_CancellationBeforeResolutionPublicationRetainsPreviousGraph(durable: True)
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.LatticeDb_ReopensPublishedModuleRelationships
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.Store_RejectsResolutionUnitBeforeEndpointFileUnits(durable: False)
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.Store_RejectsResolutionUnitBeforeEndpointFileUnits(durable: True)
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionLifecycleTests.IndexAsync_DoesNotResolveAcrossTypeScriptAndJavaScriptPluginInventories
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_EmitsPolicyScopedModuleEdgesAfterFileUnits
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.Resolver_RelativeV1UsesOrderedSuffixesAndClassifiesWithoutFilesystemFallback
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.Resolver_RelativeV1UsesOrderedJavaScriptSuffixesForFilesAndIndexes
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_CapturesLiteralRequireAndRejectsDynamicAndTemplateForms
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_IdentityPreservesOccurrencesAndIsLineEndingStable
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_IdentifiesSharedTargetsAcrossImporterFiles
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.Resolver_RejectsIdentityCollisionWithConflictingProperties
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_UsesOnlyTheOwningPluginInventory
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_MarksResolverCoveragePartialForParseAndDecodeErrors
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_RejectsImportEqualsAndExportEqualsResolution
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_RejectedPathFormsNeverResolveAtCaptureLevel
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_EscapedSpecifiersAreUnsupportedAndNeverResolve
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_BindingNamedTypeIsNotTypeOnly(source: "import { type } from './m';", moduleReference: "import")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_BindingNamedTypeIsNotTypeOnly(source: "import { type as t } from './m';", moduleReference: "import")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_BindingNamedTypeIsNotTypeOnly(source: "import type from './m';", moduleReference: "import")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_BindingNamedTypeIsNotTypeOnly(source: "export { type as u } from './m';", moduleReference: "export-from")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_ExplicitTypeOnlySyntaxStaysTypeOnly(source: "import type { T } from './m';", moduleReference: "import-type")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_ExplicitTypeOnlySyntaxStaysTypeOnly(source: "import { type T } from './m';", moduleReference: "import")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_ExplicitTypeOnlySyntaxStaysTypeOnly(source: "import { type T as U } from './m';", moduleReference: "import")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_ExplicitTypeOnlySyntaxStaysTypeOnly(source: "export type { T } from './m';", moduleReference: "export-type-from")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_ExplicitTypeOnlySyntaxStaysTypeOnly(source: "export { type T } from './m';", moduleReference: "export-from")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_ExplicitTypeOnlySyntaxStaysTypeOnly(source: "export { type T as U } from './m';", moduleReference: "export-from")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_ExplicitTypeOnlySyntaxStaysTypeOnly(source: "export type * from './m';", moduleReference: "export-type-from")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_ExplicitTypeOnlySyntaxStaysTypeOnly(source: "export type * as ns from './m';", moduleReference: "export-type-from")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_MixedTypeAndValueBindingsAreNotWhollyTypeOnly(source: "import { type T, V } from './m';", moduleReference: "import")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_MixedTypeAndValueBindingsAreNotWhollyTypeOnly(source: "export { type T, V } from './m';", moduleReference: "export-from")
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_JavaScriptBindingNamedTypeIsNotTypeOnly
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_LiteralRequireNestedInExportEqualsIsCaptured
+    Andirit.TreeSitter.Tests.TreeSitterModuleResolutionTests.ExtractAsync_ReportsUtf16CodeUnitColumns
+    Andirit.TreeSitter.Tests.TreeSitterPublicApiContractTests.TreeSitter_PublicTypeSnapshot_IsIntentional
+    Andirit.TreeSitter.Tests.TreeSitterPublicApiContractTests.TreeSitter_PublicSurfaceDoesNotExposeNativeConcepts
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_ModelsClassesInterfacesAndContainment
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_TreatsArrowAndFunctionExpressionsAsCallables
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_EmitsImportsAndStructuralInvocationsOnly
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_EmitsStructuralHeritage
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_ModelsInterfaceMembersWithContainmentAndLocations
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_RecordsOptionalAndReadonlyInterfaceModifiers
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_KeepsEveryInterfaceMethodOverloadSignature
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_KeepsIdenticallyNamedMembersOnDistinctInterfaces
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_KeepsSameNameInterfacesInSeparateModulesDistinct
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_SkipsComputedAndUnsupportedInterfaceMemberNames
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_PreservesValidInterfaceFactsFromPartialFiles
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_RepeatsInterfaceFactsDeterministically
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_TsxTreatsJsxAsStructureNotInvocation
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_PreservesValidFactsFromPartialFiles
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_RepeatsNormalizedFactsDeterministically
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_EmittedBatchesPassHetuValidation
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.ExtractAsync_ReportsCapabilitiesHonestly
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.Plugin_ExposesPinnedGrammarIdentity
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.IndexAsync_SelectsTypeScriptPluginThroughProviderMapAndAnswersQueries
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.IndexAsync_RemovesStaleInterfaceMembersOnReindex
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.IndexAsync_AnswersExactInterfaceDeclarationAndContainmentQueries
+    Andirit.TreeSitter.Tests.TreeSitterTypeScriptPluginTests.Plan_InvalidatesPreviousExtractionProfileRevisions
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ModelsPartialTypesMembersParametersAndContainment
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_RepeatsNormalizedFactsDeterministically
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_RebindRemovesStaleCallRelationships
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ChunksRelationshipBatchesWithinSinkLimits
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ReportsCompilerProblemsWithoutSourceContent
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.PublicApi_DoesNotExposeRoslynTypes
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.Version_MatchesPackageInformationalVersionWithoutBuildMetadata
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_DoesNotMislabelSyntaxErrorsAsUnresolvedRelationships
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.IndexingLifecycle_PersistsAndSkipsUnchangedCSharpRepository
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.IndexingLifecycle_ProjectOptionChangesAndDeletionReplaceCorrectUnits
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.IndexingLifecycle_RemovesProjectUnitWhenSolutionMembershipChanges
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.IndexingLifecycle_ChangedProjectReferenceRemovesDependencyEdge
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ModelsProjectsReferencesLinkedFilesAndCompileRemovals
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ReportsDeletedProjectUnitForAtomicCleanup
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_EmitsInheritanceImplementsAndCallsEdges
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ClassifiesExplicitInterfaceRelationshipsWithoutTransitiveEdges
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_EmitsImplicitCreationAndConstructorInitializerCalls
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ModelsLocalFunctionsAndUsesThemAsCallOwners
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ReferencesUseTheSmallestIndexedOwner
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_RepeatedReferencesKeepFirstEvidenceAndVarIsNotUnresolved
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ImportsPreserveAliasFlagsAndSemanticScope
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_EmitsReferencesImportsAndCoverage
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_UnresolvedCallTargetsAreCountedNotGuessed
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_CrossProjectCallsResolveToDependencySymbols
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ResolvesGenericMethodCallsToTheirDefinition
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ResolvesExtensionMethodCallsToTheirDefinition
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ResolvesInterfaceDispatchToTheInterfaceMember
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_EmitsPackageReferenceNodesWithSyntaxEvidence
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_CapsPackageReferencesDeterministically
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_SolutionDefinesTheCanonicalProjectSet
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_SolutionXmlDefinesTheCanonicalProjectSet
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_PreservesCaseDistinctProjectPathsOnCaseSensitiveHosts
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_MarksExactAllowlistedTestMethods
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_MarksTestProjectsFromExactPackageAllowlist
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_EmitsExercisedByEdgesFromAllowlistedTestMethods
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_EmitsDocRemarksAlongsideSummary
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_MarksExactAllowlistedHttpEndpoints
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ReportsSolutionScopeDiagnostics
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_CoverageReportsDetailedCandidateBreakdown
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_LateDuplicateRegistrationStaysCrossProject
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_UnrelatedDuplicateDoesNotMakeAnExactDependencyAmbiguous
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_PerUnitCoverageExplainsEmptyAndPartial
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_UnitWithoutSourcesReportsUnavailableCoverage
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.Plugin_AdvertisesCapabilitiesMatchingEmittedFacts
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_EvidenceQualitiesMatchEdgeSemantics
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ProductRename_PreservesHistoricalCSharpPluginAndLooseAssemblyEvidence
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ExternalCallIsNeverConfirmedAsAnUnrelatedDocumentationIdShadow(shadowProject: "src/A/A.csproj", shadowPath: "src/A/Shadow.cs", callerProject: "src/Z/Z.csproj", callerPath: "src/Z/App.cs")
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ExternalCallIsNeverConfirmedAsAnUnrelatedDocumentationIdShadow(shadowProject: "src/Z/Z.csproj", shadowPath: "src/Z/Shadow.cs", callerProject: "src/A/A.csproj", callerPath: "src/A/App.cs")
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_CrossProjectCallResolvesToTheRealDependencyDespiteDuplicateDocumentationId
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_SameAssemblyNameUsesProjectProvenanceNotNameEquality
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_LinkedSourceFileKeepsDistinctProjectContexts
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_GenericDefinitionResolutionIgnoresUnrelatedDocumentationIdCollision
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ReducedExtensionResolutionIgnoresUnrelatedDocumentationIdCollision
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_OverloadResolutionUsesTheBoundSignatureAndDependencyContext
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_SameNameLocalDeclarationRemainsTheCurrentProjectTarget
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_RepeatedExtractionKeepsValidIdentityAndRefusesTheShadow
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_RemovedOrReplacedTargetContributionDoesNotLeaveAStaleEdge
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_CrossProjectImportsInheritanceAndReferencesRemainResolved
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_MergedCrossProjectNamespaceImportStaysAmbiguous
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_DocumentedSealedPartialTypeMergesDeclarationDocumentation
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_UndocumentedPartialTypeHasNoDocumentationProperties
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_IdenticalPartialDocumentationIsStoredOnce
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_DifferentPartialDocumentationMergesDeterministicallyAndOrderIndependently
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_PartialDocumentationMergeIsBounded
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_RepeatedDocumentedPartialExtractionIsDeterministic
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_ReplacementRemovesStalePartialDocumentation
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_GenuineInvariantConflictFailsWithTypeSafeDiagnostic
+    Andirit.CSharp.Tests.CSharpCodeGraphPluginTests.ExtractAsync_RealAndiritCSharpPluginPartialDeclarationsExtract
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.ProductionPreparationRetainsExactTreesOptionsAndMembers
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.EnumerationOrderAndRunDoNotChangeIdentities
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.ConditionalPublicApiChangesPropagateThroughActualLiveProjectReference
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.UnsupportedProjectInputsRefuseStrongProvenance(project: "<Project><ItemGroup><ProjectReference Include=\".."···, reason: "MissingOrCyclicProjectDependency")
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.UnsupportedProjectInputsRefuseStrongProvenance(project: "<Project><ItemGroup><Compile Include=\"Absent.cs\""···, reason: "MissingDeclaredSource")
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.UnsupportedProjectInputsRefuseStrongProvenance(project: "<Project><PropertyGroup><LangVersion>invalid</Lang"···, reason: "UnsupportedLanguageVersion")
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.UnsupportedProjectInputsRefuseStrongProvenance(project: "<Project><ItemGroup><PackageReference Include=\"Un"···, reason: "UnsupportedPackageResolution")
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.UnsupportedProjectInputsRefuseStrongProvenance(project: "<Project><Import Project=\"unknown.props\"/></Proj"···, reason: "UnsupportedProjectEvaluation")
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.CyclicDependenciesRefuseButIndependentCompilationSurvives
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.MissingSolutionProjectCannotBecomeCompleteEmpty
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.ScopeRejectsWrongMembersDuplicatesAndRepositoryMismatch
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.IncompleteUniverseAndAbsentLiveCompilationRefuse
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.FailedAcquisitionDoesNotYieldAnalysis
+    Andirit.CSharp.Tests.CSharpProvenanceIntegrationTests.SessionExposesOnlyCompletedSnapshotAndDoesNotPublishOccurrences
+    Andirit.CSharp.Tests.CSharpProvenanceLifecycleTests.RealLifecycleHandsOffVerifiedSnapshotAndSourceEditCreatesNewContext
+    Andirit.CSharp.Tests.CSharpProvenanceLifecycleTests.VersionedContextsCannotEnterLegacyOccurrenceMinting
+    Andirit.CSharp.Tests.CSharpProvenanceLifecycleTests.SolutionWithoutAnyAcquiredProjectsRefusesCompleteness
+    Andirit.CSharp.Tests.CSharpProvenanceLifecycleTests.InvalidSolutionXmlRefusesCompleteness
+    Andirit.CSharp.Tests.CSharpPublicApiContractTests.CSharp_PublicTypeSnapshot_IsIntentional
+    Andirit.CSharp.Tests.S23DurableGraphReopenTests.GraphOnlyCrossUnitEdges_SurviveDurableReopen_WhenReferencingUnitPersistsFirst
+    Andirit.CSharp.Tests.S23DurableGraphReopenTests.GraphOnlyCrossUnitEdges_SurviveDurableReopen_WhenReferencedUnitPersistsFirst
+    Andirit.CSharp.Tests.S23DurableGraphReopenTests.SingleUnitGraphOnlyPublication_SurvivesDurableReopen
+    Andirit.CSharp.Tests.S23DurableGraphReopenTests.Replay_IsIndependentOfPersistedUnitEnumerationOrder
+    Andirit.CSharp.Tests.S23DurableGraphReopenTests.GenuinelyMissingEndpoint_AfterCompleteReconstruction_IsStillRefused
+    Andirit.CSharp.Tests.S23DurableGraphReopenTests.InconsistentPersistedUnit_RemainsRefused
+    Andirit.CSharp.Tests.S23DurableGraphReopenTests.MalformedPersistedUnitRow_RemainsRefused
+    Andirit.CSharp.Tests.S23DurableGraphReopenTests.FailedReplay_RefusesReopen_WithoutPublishingPartialState
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L01_InitialPublication_PersistsRealFactUnitPageMetaInOneTransaction
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L02_SameUnitReplacement_AfterRealSourceEdit_RetiresObsoleteAndShowsNew
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L03_ScopedUnitDeletion_RemovesRealFactsAndPreservesRemaining
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L04_IdenticalRealFactIdentity_TwoStorageUnits_UnionToOneFactTwoContributors
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L04b_DistinctSemanticUnits_RemainDistinctFactsForOneTarget
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L05_ContributorConflict_RealIdentity_IsRefusedAtStagingWithPriorIntact
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L06_CompleteEmpty_RealFacts_PersistsAndReopensAsCompleteZero
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L07_NativeReopen_RealFacts_OrderedResultsAreIdentical
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L08_StalePublication_RealFact_AfterTransitiveOnlyChange_RefusesAcrossReopen
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L09_BeforeCommitFailure_RealFacts_PreservesPriorPublication
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L10_RecoveryProjection_RealFacts_MatchesDurableReopen
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L12_Sq03_DeterministicSchedule_NeverExposesAPartialBlend
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L12b_Sq03_ConcurrentReaders_SeeOnlyCompleteOldOrNewPublications
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L13_CoverageClassification_RealFacts_DistinguishesProducedPartialUnavailable
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L14_DeletionInvalidatesCoverage_RealFacts_AnalysisUnavailable
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L16_D3GraphNoninterference_RealFacts_AcrossOccurrenceLifecycle
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L18_CrossProjectTargetIdentity_IsPersistedAndReopened
+    Andirit.CSharp.Tests.S23LifecycleQualificationTests.L20_UnknownOutcome_RealFacts_QuarantinesAndReopenReconciles
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.Test8b_TransitiveOnlyChange_StableIdentityRefusesNativeReopenedAuthority(variant: "source")
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.Test8b_TransitiveOnlyChange_StableIdentityRefusesNativeReopenedAuthority(variant: "options")
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.CrossProjectMultiContext_DurableReceiptsBindEachFactToItsDefiningCompilation
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "missing-envelope", expected: AnalysisUnavailable)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "wrong-owner", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "duplicate-receipts", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "missing-receipts", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "wrong-payload", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "wrong-target", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "missing-members", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "duplicate-membership", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "wrong-publication", expected: StalePublication)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "different-membership", expected: StalePublication)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "caller-as-defining", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "wrong-defining-unit", expected: StalePublication)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "malformed-envelope", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "corrupt-version", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "unsupported-version", expected: UnsupportedSchema)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "corrupt-context", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "missing-context", expected: AnalysisUnavailable)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "formatted-unverified-context", expected: StalePublication)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MalformedOrSubstitutedAuthority_RefusesWithoutChangingDurableRows(mutation: "coverage-substitution", expected: CorruptedIndex)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.CompleteEmpty_RequiresCurrentVerifiedScope_AndRemainsDistinctFromGraphOnly
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.PartialCoverage_RemainsIncompleteAfterVerifiedReopen
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.ReplacementDeletion_RetiresReceipts_AndVerifiedRetiredTargetIsAvailableZero
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.KnownFailure_RecoversPublishedAuthority_WithOriginalExceptionAndAtomicRetry(corruptCarrier: False)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.KnownFailure_RecoversPublishedAuthority_WithOriginalExceptionAndAtomicRetry(corruptCarrier: True)
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.SegmentResumption_MarkerSurvives_ButMissingFactsAndCarrierNeverBecomeVerifiedEmpty
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.SubstitutedLiveInstanceAndIncompleteUniverse_CannotSupplyNativeAuthority
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.ApplyFailure_RestoresPublishedAuthority_WithoutNewReconstructionFailure
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.LegacyRawEvidence_IsNeverPromotedByTheVerifiedNativeGate
+    Andirit.CSharp.Tests.S23NativeAuthorityTests.MixedVerifiedContexts_CannotOverwriteOrSelectOneContextForAStableTarget
+    Andirit.CSharp.Tests.S23OccurrenceOwnershipRegressionTests.GraphOwnerRemoved_OrphanedOccurrence_RefusesAsCorruptedIndex_AcrossReopen
+    Andirit.CSharp.Tests.S23OccurrenceOwnershipRegressionTests.PublishedAuthorityUnitWithoutOccurrenceAssociation_Refuses
+    Andirit.CSharp.Tests.S23OccurrenceOwnershipRegressionTests.StagedDeletionOfOneUnit_LeavesUnaffectedUnitsQueryable_AcrossReopen
+    Andirit.CSharp.Tests.S23OccurrenceOwnershipRegressionTests.RetainedOwnerBesideGraphOnlyUnit_IsNotMistakenForOrphan
+    Andirit.CSharp.Tests.S23OccurrenceOwnershipRegressionTests.CompleteEmptyPublication_RemainsCompleteZero_NotRefused
+    Andirit.CSharp.Tests.S23OccurrenceOwnershipRegressionTests.Replacement_ReportsNewValidState_AndRefusesOldContext_AcrossReopen
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.UnsupportedSites_CountOnce_AndSurviveNativePublication(sites: "_ = new Sample(); Sample implicitNew = new();", expectedUnsupported: 2)
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.UnsupportedSites_CountOnce_AndSurviveNativePublication(sites: "_ = Property; item.Property = 2; _ = item?.Propert"···, expectedUnsupported: 5)
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.UnsupportedSites_CountOnce_AndSurviveNativePublication(sites: "System.Func<int> assignment = Lib.Value.Get; _ = ("···, expectedUnsupported: 2)
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.UnsupportedSites_CountOnce_AndSurviveNativePublication(sites: "_ = new Sample { Property = 1 }; System.Func<int> "···, expectedUnsupported: 4)
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.UnsupportedSites_CountOnce_AndSurviveNativePublication(sites: "_ = (1, 2); _ = item.Field; _ = \"Property and Get"···, expectedUnsupported: 0)
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.RealCrossProjectFact_IsPublishedWithAuthority_AndServed
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.ExternalBinding_CoverageSurvivesAuthorityBoundPublicationAndReopen
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.TransitiveDependencyChange_RefusesStaleRealFact
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.MissingCurrentAuthority_IsUnavailable_NotEmptySuccess
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.IncompleteUniverse_PublishesGraphOnly_AndNoOccurrenceRows
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.MissingDeclaredUnit_ReportsIncompleteAcrossNativeReopen(projectIsPresent: False)
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.MissingDeclaredUnit_ReportsIncompleteAcrossNativeReopen(projectIsPresent: True)
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.MissingDeclaredUnitWithUnrelatedProvenanceRefusal_PreservesUnavailableAnalysis
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.CrossProjectRealFact_SurvivesDurableReopen_WithCorrectUnitsAndCoverage
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.CrossProjectRealFact_DefiningUnitPersistedFirst_ReopensWithIdenticalOutcome
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.ReopenedStore_RefusesStaleRealFact_AfterTransitiveDependencyChange
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.ReopenedStore_MissingAuthority_IsUnavailable_NotEmptySuccess
+    Andirit.CSharp.Tests.S23PublicationIntegrationTests.SingleUnitRealFact_SurvivesDurableReopen
+    Andirit.CSharp.Tests.S23StagedReopenTests.StagedCrossUnitGraph_ReferencingUnitFirst_SurvivesReopenAndCompletes
+    Andirit.CSharp.Tests.S23StagedReopenTests.StagedCrossUnitGraph_DefiningUnitFirst_SurvivesReopenAndCompletes
+    Andirit.CSharp.Tests.S23StagedReopenTests.SingleUnitStagedReopen_RemainsCorrect
+    Andirit.CSharp.Tests.S23StagedReopenTests.RealCrossProjectInterruptedRun_Reopens_AuthorityFailsClosed
+    Andirit.CSharp.Tests.S23StagedReopenTests.RealCrossProjectInterruptedRun_ReStagedResumption_BecomesAvailable
+    Andirit.CSharp.Tests.S23StagedReopenTests.StagedMissingEndpoint_AfterCompleteReconstruction_IsStillRefused
+    Andirit.CSharp.Tests.S23StagedReopenTests.InconsistentStagedRecord_IsRefused
+    Andirit.CSharp.Tests.S23StagedReopenTests.MalformedStagedRecord_IsRefused
+    Andirit.CSharp.Tests.S23StagedReopenTests.DuplicateStagedIdentity_IsRefused
+    Andirit.CSharp.Tests.S23StagedReopenTests.ConflictingStagedIdentity_IsRefused
+    Andirit.CSharp.Tests.S23StagedReopenTests.RepeatedStagedCommands_LastCommandWins
+    Andirit.CSharp.Tests.S23StagedReopenTests.StagedGroups_AreIsolatedPerRunAndRepository
+    Andirit.CSharp.Tests.S23StagedReopenTests.FailedStagedReconstruction_ExposesNothing_AndWritesNothing
+    Andirit.CSharp.Tests.S23StagedReopenTests.PublishedAndStagedReconstruction_Coexist
+    Andirit.CSharp.Tests.S23Wp5IntegrationTests.I01_RealProjectFixture_PublishReopenCrossProject_WithOverloadTargets
+    Andirit.CSharp.Tests.S23Wp5IntegrationTests.I02_RecoveryOverAuthorityAndCarrier_MatchesDurableReopen_AndKeepsPriorPublication
+    Andirit.CSharp.Tests.S23Wp5IntegrationTests.I03_I07_RealSourceChange_StaleRefusal_Deletion_AndReopen
+    Andirit.CSharp.Tests.S23Wp5IntegrationTests.I09_IntegratedAvailability_NoFalseAvailable_NoFalseEmpty
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.SinglePage_CompletesWithNoNextToken
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.MultiPage_TraversesEveryOccurrenceExactlyOnce
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.EqualPosition_TiesAreOrderedByIdWithoutDuplicates
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.Overloads_HaveIndependentContinuationPages
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.CrossUnitContributors_AreDeduplicatedAcrossPages
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.StalePublicationBetweenPages_IsRefusedNotBlended
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.RecoveryBetweenPages_PreservesPublicationAndContinuation
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.MalformedAndMismatchedTokens_AreRefusedAsInvalid
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.TokenBoundToAnotherRepository_IsRefused
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.SmallPage_DoesNotHideAnUnboundedScan
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.PartialCoverage_RemainsIncompleteAcrossPages
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.GraphOnlyRepository_IsUnavailableWithEmptyBreakdown
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.LegacyQuery_WithoutToken_ReturnsAll
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.Pagination_DoesNotChangeGraphOrPersistedRows
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.PerPageAuthority_IsRevalidatedOnEveryContinuation
+    Andirit.CSharp.Tests.S24ReaderContinuationTests.MalformedTokens_FailClosedWithoutPropagating
+    Andirit.CSharp.Tests.S24SurfaceAuthenticCorpusTests.AuthenticCorpus_RealTargets_PaginateWithIndependentOracle
+    Andirit.CSharp.Tests.S24SurfaceAuthenticCorpusTests.AuthenticCorpus_CrossProjectTarget_HasCorrectIdentityAndProvenance
+    Andirit.CSharp.Tests.S2_2FoundationBoundaryTests.SourceRead_RefusesBomlessUtf16AndUtf32NulInterleavedDecode
+    Andirit.CSharp.Tests.S2_2FoundationBoundaryTests.SourceRead_RefusesAmbiguousBomlessDecodeWithNonAsciiBytes
+    Andirit.CSharp.Tests.S2_2FoundationBoundaryTests.SourceRead_BomlessUtf8ContainingNulIsRefusedUnderBoundedContract
+    Andirit.CSharp.Tests.S2_2FoundationBoundaryTests.SourceRead_BomPresenceExcludesTheBoundedBomlessNulRule
+    Andirit.CSharp.Tests.S2_2FoundationBoundaryTests.SourceRead_AmbiguousRefusalPreventsVerifiedCompilation
+    Andirit.CSharp.Tests.S2_2FoundationBoundaryTests.MetadataCapture_RefusesTruncatedGarbageAndNonAssemblyImages
+    Andirit.CSharp.Tests.S2_2FoundationBoundaryTests.VerifiedCompilation_RejectsPreprocessorSymbolsWithCommaOrPipe
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(damage: "first-type-name")
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(damage: "later-type-name")
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.Q1F01_OriginalCounterexamplesRefuseBeforeIdentity(damage: "method-signature")
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.ReferencedNamesDereferenceBothStringFields(nameSpace: False)
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.ReferencedNamesDereferenceBothStringFields(nameSpace: True)
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "empty", signature: [])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "truncated-header", signature: [0])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "field-header", signature: [6, 0, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "property-header", signature: [8, 0, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "reserved-header", signature: [128, 0, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "unmanaged-methoddef", signature: [1, 0, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "explicit-this-methoddef", signature: [64, 0, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "instance-static-mismatch", signature: [32, 0, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "compressed-count-truncated", signature: [0, 128])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "missing-return", signature: [0, 0])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "missing-parameter", signature: [0, 1, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "huge-count", signature: [0, 223, 255, 255, 255, ···])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "bad-type", signature: [0, 0, 255])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "trailing", signature: [0, 0, 1, 8])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "void-parameter", signature: [0, 1, 1, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "void-array", signature: [0, 0, 29, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "nested-byref", signature: [0, 0, 16, 16, 8])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "pinned-return", signature: [0, 0, 69, 8])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "methoddef-sentinel", signature: [5, 1, 1, 65, 8])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "generic-zero", signature: [16, 0, 0, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "generic-count-mismatch", signature: [16, 1, 0, 1])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "unbound-mvar", signature: [0, 0, 30, 0])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "unbound-var", signature: [0, 0, 19, 0])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "nil-type-handle", signature: [0, 0, 18, 0])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "out-of-range-type-handle", signature: [0, 0, 18, 124])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "typespec-as-class", signature: [0, 0, 18, 6])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "array-rank-zero", signature: [0, 0, 20, 8, 0, ···])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "array-size-count", signature: [0, 0, 20, 8, 1, ···])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodSignatureStructureRefuses(name: "genericinst-nonclass", signature: [0, 0, 21, 8, 1, ···])
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MethodGenericAndParameterRelationshipsRefuse
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MetadataNamesUseMetadataRulesRatherThanCSharpIdentifierRules(name: "a,b|c.d+<> 😀")
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MetadataNamesUseMetadataRulesRatherThanCSharpIdentifierRules(name: "é")
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.MetadataNamesUseMetadataRulesRatherThanCSharpIdentifierRules(name: "é")
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.ValidGenericAndComplexSignaturesCapture
+    Andirit.CSharp.Tests.S2_2MetadataRemediationTests.PlatformAndEmittedComplexCSharpStillCapture
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Mapper_StandaloneEqualsLegacyTwinAndIndependentR2Tuple
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Mapper_DependencyBearingReplacesContextItemWithR2LegacyItem
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Mapper_TransitiveLegacyItemEqualsFrozenR2Formula
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Mapper_IsDeterministicAcrossRepeatedAndEquivalentInstances
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Mapper_TransitiveOnlyDependencyContextChangeDoesNotChurnIdentity
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Mapper_DefiningSourceChangeChangesMappedIdentity
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Mapper_TransitiveDependencySourceChangePropagatesToCaller
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Mapper_PreservesActualPeIdentityAndDoesNotSubstituteFixtureLabels
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Mapper_PreservesCompctx2Isolation
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Resolver_CompletesForVerifiedDefiningContextAndMapsCompctx1
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Resolver_RefusesStaleOrFabricatedRecordedContext
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Resolver_RefusesMissingDefiningCompilation
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Resolver_RefusesAmbiguousBinding
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Resolver_RefusesIncompleteUniverse
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Resolver_RefusesExternalDefiningUnit
+    Andirit.CSharp.Tests.S2_2Wp3MapperResolverTests.Resolver_RefusesSubstitutedLiveInstanceWithSameDigest
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_ValidDirectAssociation_ProducesCanonicalAsmctx3
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_ValidCrossProjectAssociation_UsesDefiningCompilationContext
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_ForeignMetadataEquivalentTarget_MintsDefiningMemberContext
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_DeterministicAcrossRepeatedAndEquivalentInstances
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_NullOrEmptyRecordedContext_RefusesWithoutArtifact
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_NullRecordedContext_ResolveDefiningIsComplete_ButMintRefuses
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_StaleOrFabricatedRecordedContext_Refuses
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_PreviouslyValidButStaleContext_Refuses
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_SubstitutedLiveInstanceWithSameDigest_Refuses
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_IncompleteUniverse_Refuses
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_AmbiguousDefiningCompilation_Refuses
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_MissingDefiningCompilation_Refuses
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_ExternalUnitRefusedAtConstruction
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_OverlappingFailures_NeverMint
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_ConditionalDefiningApiChange_ChangesAsmctx3
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_TransitiveOnlyChange_Asmctx3StableWhileCompctx2Changes
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_RestoreInputs_ReproducesOriginalAsmctx3
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_DistinctDefiningCompilations_DistinctAsmctx3
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_EquivalentDefiningCompilations_EqualAsmctx3
+    Andirit.CSharp.Tests.S2_2Wp4MintTests.Mint_Compctx2CannotEnterAsmctx3
+    Andirit.CSharp.Tests.S2_2Wp5R1AmbiguityTests.R1_T1_AmbiguousOverload_EmitsNoTrustedFact
+    Andirit.CSharp.Tests.S2_2Wp5R1AmbiguityTests.R1_T2_UnresolvedBindings_AreNeverConvertedToFacts
+    Andirit.CSharp.Tests.S2_2Wp5R1AmbiguityTests.R1_T3_UniquelyResolvedOverload_StillMintsAuthorizedUsage
+    Andirit.CSharp.Tests.S2_2Wp5R1AmbiguityTests.R1_T4_CrossProjectInvocation_KeepsDefiningCompilationAuthority
+    Andirit.CSharp.Tests.S2_2Wp5R1AmbiguityTests.R1_T5_MixedSource_RefusesOnlyTheAmbiguousInvocation
+    Andirit.CSharp.Tests.S2_2Wp5R1AmbiguityTests.ExternalBinding_MixedWithCrossProjectMissingAndAmbiguousCalls
+    Andirit.CSharp.Tests.S2_2Wp5R1AmbiguityTests.R1_T6_CandidateOrder_CannotAffectTrustedEmission
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_ValidDirectInvocation_ProducesCanonicalUsage4
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_CrossProjectInvocation_UsesDefiningCompilationTarget
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_ComponentDigests_AreCallerSupplied
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_DeterministicAcrossRepeatedExtraction
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_UnsupportedCategories_AreCoverageNotFacts
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_UnresolvedExternalTarget_IsCoverageNotFact
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_AmbiguousDefining_IsRefused
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_IncompleteUniverse_IsPartial_AndNoCompleteEmpty
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_F09_ConditionalInactive_IsNotAConfirmedFact
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_MintUsage_NullRecordedContext_ProducesNoFact
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_MintUsage_StaleRecordedContext_ProducesNoFact
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_MintUsage_ValidContext_ProducesTrustedFact
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_StructuralIdentifierAloneIsNotAuthority
+    Andirit.CSharp.Tests.S2_2Wp5UsageTests.Usage_Coverage_IsConstructedWithoutMerge
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test2_TransitiveOnlyChange_StableIdentityChangedContextStaleRefused
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test2_CrossProjectAssociation_StaleRecordedContextRefused
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test2_DirectDependencyChange_ChangesTheDependentsIdentity
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test6_EquivalentCaptures_ProductionProfile_EqualIdentityAndTarget
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test6_DifferentPath_NotSilentlyEquivalent
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test6_DifferentReferenceBytes_NotEquivalent
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test6_CompilationOptionChange_ChangesIdentity
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test6_CrossProfileEqualityIsNotClaimed
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test8_StalePublicationRefused_CurrentPublicationAccepted
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test8_StaleRecordedContext_NoMintAndNoTrustedUsage
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Test8_SubstitutedAndIncompleteUniverses_Refused
+    Andirit.CSharp.Tests.S2_2Wp7IdentityStabilityTests.Wp7_Determinism_FreshEquivalentGraphs_CanonicalDigest
+    Andirit.CSharp.Tests.S2_2Wp8CorpusIntegrationTests.Wp8_CorpusAuthentication_ManifestAndMinima
+    Andirit.CSharp.Tests.S2_2Wp8CorpusIntegrationTests.Wp8_Baseline_Invocations_MatchFrozenSemantics
+    Andirit.CSharp.Tests.S2_2Wp8CorpusIntegrationTests.Wp8_Baseline_UnsupportedAndDeferred_NeverEmitFacts
+    Andirit.CSharp.Tests.S2_2Wp8CorpusIntegrationTests.Wp8_Negatives_RefusalsAndCoverage
+    Andirit.CSharp.Tests.S2_2Wp8CorpusIntegrationTests.Wp8_Identity_ProductionProfile_IndependentReconstruction
+    Andirit.CSharp.Tests.S2_2Wp8CorpusIntegrationTests.Wp8_Variants_Relations
+    Andirit.CSharp.Tests.S2_2Wp8CorpusIntegrationTests.Wp8_Coverage_StatesMergingAndCompleteness
+    Andirit.CSharp.Tests.S2_2Wp8CorpusIntegrationTests.Wp8_Adversarial_StaleSubstitutedAndScopeMismatch
+    Andirit.CSharp.Tests.S2_2Wp8CorpusIntegrationTests.Wp8_Determinism_CanonicalDigest
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.SourceRead_BindsExactUtf8BytesToTextAndHash
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.SourceRead_DecodesBomAndPreservesUnicodeEmptyAndLineEndings
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.SourceRead_RefusesInvalidUtf8NonShaAndMismatchedHash
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.SourceRead_RetainsImmutableSnapshotIfBackingStreamChanges
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.SourceRead_CancellationThrows
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.MetadataCapture_CapturedPeIdentityTracksBytesAtSamePath
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.MetadataCapture_MissingImageAndCancellationThrow
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_RejectsTreeTextMismatchMissingOrExtraSnapshots
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_RejectsRefusedSource
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_SourceOptionsAndParseChangesChangeContext
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_EachR2MaterialOptionChangesContext
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_LanguageVersionChangesContextButConcurrentBuildDoesNot
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_RejectsUnsupportedDocumentationScriptAndExtraOptions
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_SourceBytesAndProjectUnitChangeContext
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_ProjectSourceParseAndOptionChangesPropagateToCaller
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_TransitiveDependencyChangesPropagateToCaller
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_BindsDependencyToExactLiveReference
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_RejectsSubstitutedDependencyInstanceEvenWhenDigestMatches
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_RejectsMissingDependencyWithoutTextOnlyFallback
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_RejectsNonDefaultProjectReferenceProperties
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_ReferenceInventoryChangeChangesContext
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_SourceAndReferenceEnumerationOrderIsDeterministic
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.Descriptor_Compctx1SyntheticR2TupleVectorMatchesIndependentOracle
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.Descriptor_Compctx2UsesVersionedDomainAndCanonicalProjectReferenceItem
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.Descriptor_RejectsForgedDigestAndUnsupportedVersion
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_CancellationThrows
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_LegacyDescriptorExistsOnlyWithoutProjectReferences
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_RejectsSelfDependencyCycle
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_ValidatesExpectedDescriptorAgainstConstructedInputs
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.VerifiedCompilation_RejectsSemanticCyclesAndConflictingDependencyRevisions
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.UniverseRejectsReusedLiveCompilationAcrossDifferentUnits
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.MetadataProofRejectsUncapturedReferenceInstance
+    Andirit.CSharp.Tests.VerifiedCompilationProvenanceTests.SourceReadSupportsStrictBigEndianUtf16AndBothUtf32Boms
+Exit code: 0
