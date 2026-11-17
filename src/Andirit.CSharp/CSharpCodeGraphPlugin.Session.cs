@@ -456,7 +456,8 @@ public sealed partial class CSharpCodeGraphPlugin
         await authoritySink.SetOccurrenceAuthorityAsync(origin, extraction.Authority, cancellationToken)
             .ConfigureAwait(false);
         await sink.WriteBatchAsync(new CodeGraphBatch(origin,
-                occurrences: extraction.Facts, occurrenceCoverage: extraction.Coverage),
+                occurrences: extraction.Facts,
+                occurrenceCoverage: CodeOccurrenceAuthority.SourceContribution(extraction.Coverage)),
             cancellationToken).ConfigureAwait(false);
     }
 }
