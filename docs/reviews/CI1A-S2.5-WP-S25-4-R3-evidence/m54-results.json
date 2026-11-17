@@ -1,0 +1,274 @@
+{
+  "processId": 29432,
+  "platform": "win-x64",
+  "compiler": {
+    "name": "Microsoft.CodeAnalysis.CSharp, Version=5.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35",
+    "version": "5.9.0-1.26357.3\u002B35d9211b841e7613c1d2f8f5af6d628ace696c4c",
+    "sha256": "fc571a6647ac45b0b0dc1866b795529bb2eeb93adf9be97fcd5903cf482f700a"
+  },
+  "common": {
+    "name": "Microsoft.CodeAnalysis, Version=5.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35",
+    "version": "5.9.0-1.26357.3\u002B35d9211b841e7613c1d2f8f5af6d628ace696c4c",
+    "sha256": "55618d457128eec582017545b8929ebf195669003b6ec737110f9519e1711d28"
+  },
+  "records": [
+    {
+      "scenario": "signature",
+      "files": {
+        "Root/Root.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CItemGroup\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+        "Root/Code.cs": "namespace Root; public class Hidden {} ",
+        "Bridge/Bridge.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CItemGroup\u003E\u003CProjectReference Include=\u0022../Root/Root.csproj\u0022 /\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+        "Bridge/Code.cs": "namespace Bridge; public static class Api { public static int Signature(Root.Hidden? x = null) =\u003E 7; public static int Primitive() =\u003E 9; }",
+        "Caller/Caller.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CItemGroup\u003E\u003CProjectReference Include=\u0022../Bridge/Bridge.csproj\u0022 /\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+        "Caller/Code.cs": "public static class Use { public static int Call() =\u003E Bridge.Api.Signature(); }"
+      },
+      "invocation": "Bridge.Api.Signature()",
+      "IsComplete": true,
+      "Refusals": [],
+      "declared": [
+        {
+          "ProjectUnitId": "csharp:project:35eebb6d08dae83d9da0d7a473c342198cff7f1720daf267d65f86d5c4756dce",
+          "ProjectPath": "Bridge/Bridge.csproj",
+          "SourcePaths": [
+            "Bridge/Code.cs"
+          ]
+        },
+        {
+          "ProjectUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+          "ProjectPath": "Caller/Caller.csproj",
+          "SourcePaths": [
+            "Caller/Code.cs"
+          ]
+        },
+        {
+          "ProjectUnitId": "csharp:project:76e9c2d27fdb3962737bcb561f126577dd8ea8d6b1f9ec2281f1ba6ff44344ce",
+          "ProjectPath": "Root/Root.csproj",
+          "SourcePaths": [
+            "Root/Code.cs"
+          ]
+        }
+      ],
+      "verified": [
+        "csharp:project:35eebb6d08dae83d9da0d7a473c342198cff7f1720daf267d65f86d5c4756dce",
+        "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "csharp:project:76e9c2d27fdb3962737bcb561f126577dd8ea8d6b1f9ec2281f1ba6ff44344ce"
+      ],
+      "exactCaller": true,
+      "eligible": false,
+      "symbol": null,
+      "kind": null,
+      "owner": null,
+      "ownerReferenceType": null,
+      "ownerReferenceDisplay": null,
+      "ownAssembly": false,
+      "directSources": [
+        {
+          "path": "Bridge/Bridge.csproj",
+          "referenceEqualsOwner": false,
+          "identityEqualsOwner": false
+        }
+      ],
+      "capturedReferenceCount": 180,
+      "forwardingFacade": null,
+      "forwardedOwner": null,
+      "forwardedTypeMatchesInvocationOwner": false,
+      "candidateReason": "OverloadResolutionFailure",
+      "candidates": [
+        "Bridge.Api.Signature(Root.Hidden?)"
+      ],
+      "diagnostics": [
+        "Caller/Code.cs(1,55): error CS0012: The type \u0027Hidden\u0027 is defined in an assembly that is not referenced. You must add a reference to assembly \u0027Root, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\u0027.",
+        "Caller/Code.cs(1,21): warning CS1591: Missing XML comment for publicly visible type or member \u0027Use\u0027",
+        "Caller/Code.cs(1,45): warning CS1591: Missing XML comment for publicly visible type or member \u0027Use.Call()\u0027"
+      ],
+      "resolver": null,
+      "Detail": null
+    },
+    {
+      "scenario": "signature-direct",
+      "files": {
+        "Root/Root.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CItemGroup\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+        "Root/Code.cs": "namespace Root; public class Hidden {} ",
+        "Bridge/Bridge.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CItemGroup\u003E\u003CProjectReference Include=\u0022../Root/Root.csproj\u0022 /\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+        "Bridge/Code.cs": "namespace Bridge; public static class Api { public static int Signature(Root.Hidden? x = null) =\u003E 7; public static int Primitive() =\u003E 9; }",
+        "Caller/Caller.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CItemGroup\u003E\u003CProjectReference Include=\u0022../Bridge/Bridge.csproj\u0022 /\u003E\u003CProjectReference Include=\u0022../Root/Root.csproj\u0022 /\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+        "Caller/Code.cs": "public static class Use { public static int Call() =\u003E Bridge.Api.Signature(); }"
+      },
+      "invocation": "Bridge.Api.Signature()",
+      "IsComplete": true,
+      "Refusals": [],
+      "declared": [
+        {
+          "ProjectUnitId": "csharp:project:35eebb6d08dae83d9da0d7a473c342198cff7f1720daf267d65f86d5c4756dce",
+          "ProjectPath": "Bridge/Bridge.csproj",
+          "SourcePaths": [
+            "Bridge/Code.cs"
+          ]
+        },
+        {
+          "ProjectUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+          "ProjectPath": "Caller/Caller.csproj",
+          "SourcePaths": [
+            "Caller/Code.cs"
+          ]
+        },
+        {
+          "ProjectUnitId": "csharp:project:76e9c2d27fdb3962737bcb561f126577dd8ea8d6b1f9ec2281f1ba6ff44344ce",
+          "ProjectPath": "Root/Root.csproj",
+          "SourcePaths": [
+            "Root/Code.cs"
+          ]
+        }
+      ],
+      "verified": [
+        "csharp:project:35eebb6d08dae83d9da0d7a473c342198cff7f1720daf267d65f86d5c4756dce",
+        "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "csharp:project:76e9c2d27fdb3962737bcb561f126577dd8ea8d6b1f9ec2281f1ba6ff44344ce"
+      ],
+      "exactCaller": true,
+      "eligible": true,
+      "symbol": "Bridge.Api.Signature(Root.Hidden?)",
+      "kind": "Ordinary",
+      "owner": "Bridge, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "ownerReferenceType": "CSharpCompilationReference",
+      "ownerReferenceDisplay": "Bridge",
+      "ownAssembly": false,
+      "directSources": [
+        {
+          "path": "Bridge/Bridge.csproj",
+          "referenceEqualsOwner": true,
+          "identityEqualsOwner": true
+        },
+        {
+          "path": "Root/Root.csproj",
+          "referenceEqualsOwner": false,
+          "identityEqualsOwner": false
+        }
+      ],
+      "capturedReferenceCount": 181,
+      "forwardingFacade": null,
+      "forwardedOwner": null,
+      "forwardedTypeMatchesInvocationOwner": false,
+      "candidateReason": "None",
+      "candidates": [],
+      "diagnostics": [
+        "Caller/Code.cs(1,21): warning CS1591: Missing XML comment for publicly visible type or member \u0027Use\u0027",
+        "Caller/Code.cs(1,45): warning CS1591: Missing XML comment for publicly visible type or member \u0027Use.Call()\u0027"
+      ],
+      "resolver": "Complete",
+      "Detail": "verified defining compilation context \u0027csharp:project:35eebb6d08dae83d9da0d7a473c342198cff7f1720daf267d65f86d5c4756dce\u0027"
+    },
+    {
+      "scenario": "retarget",
+      "files": {
+        "Root/Root.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CItemGroup\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+        "Root/Code.cs": "namespace Root; public class Hidden {} ",
+        "Bridge/Bridge.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CItemGroup\u003E\u003CProjectReference Include=\u0022../Root/Root.csproj\u0022 /\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+        "Bridge/Code.cs": "namespace Bridge; public static class Api { public static int Signature(Root.Hidden? x = null) =\u003E 7; public static int Primitive() =\u003E 9; }",
+        "Caller/Caller.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CItemGroup\u003E\u003CProjectReference Include=\u0022../Bridge/Bridge.csproj\u0022 /\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+        "Caller/Code.cs": "public static class Use { public static int Call() =\u003E Bridge.Api.Primitive(); }"
+      },
+      "invocation": "Bridge.Api.Primitive()",
+      "IsComplete": true,
+      "Refusals": [],
+      "declared": [
+        {
+          "ProjectUnitId": "csharp:project:35eebb6d08dae83d9da0d7a473c342198cff7f1720daf267d65f86d5c4756dce",
+          "ProjectPath": "Bridge/Bridge.csproj",
+          "SourcePaths": [
+            "Bridge/Code.cs"
+          ]
+        },
+        {
+          "ProjectUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+          "ProjectPath": "Caller/Caller.csproj",
+          "SourcePaths": [
+            "Caller/Code.cs"
+          ]
+        },
+        {
+          "ProjectUnitId": "csharp:project:76e9c2d27fdb3962737bcb561f126577dd8ea8d6b1f9ec2281f1ba6ff44344ce",
+          "ProjectPath": "Root/Root.csproj",
+          "SourcePaths": [
+            "Root/Code.cs"
+          ]
+        }
+      ],
+      "verified": [
+        "csharp:project:35eebb6d08dae83d9da0d7a473c342198cff7f1720daf267d65f86d5c4756dce",
+        "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "csharp:project:76e9c2d27fdb3962737bcb561f126577dd8ea8d6b1f9ec2281f1ba6ff44344ce"
+      ],
+      "exactCaller": true,
+      "eligible": true,
+      "symbol": "Bridge.Api.Primitive()",
+      "kind": "Ordinary",
+      "owner": "Bridge, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "ownerReferenceType": "CSharpCompilationReference",
+      "ownerReferenceDisplay": "Bridge",
+      "ownAssembly": false,
+      "directSources": [
+        {
+          "path": "Bridge/Bridge.csproj",
+          "referenceEqualsOwner": false,
+          "identityEqualsOwner": true
+        }
+      ],
+      "capturedReferenceCount": 180,
+      "forwardingFacade": null,
+      "forwardedOwner": null,
+      "forwardedTypeMatchesInvocationOwner": false,
+      "candidateReason": "None",
+      "candidates": [],
+      "diagnostics": [
+        "Caller/Code.cs(1,21): warning CS1591: Missing XML comment for publicly visible type or member \u0027Use\u0027",
+        "Caller/Code.cs(1,45): warning CS1591: Missing XML comment for publicly visible type or member \u0027Use.Call()\u0027"
+      ],
+      "resolver": "Complete",
+      "Detail": "verified defining compilation context \u0027csharp:project:35eebb6d08dae83d9da0d7a473c342198cff7f1720daf267d65f86d5c4756dce\u0027"
+    },
+    {
+      "scenario": "forwarding",
+      "files": {
+        "Caller/Caller.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CItemGroup\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+        "Caller/Code.cs": "public static class Use { public static bool Call() =\u003E System.Uri.IsWellFormedUriString(\u0022path\u0022, System.UriKind.Relative); }"
+      },
+      "invocation": "System.Uri.IsWellFormedUriString(\u0022path\u0022, System.UriKind.Relative)",
+      "IsComplete": true,
+      "Refusals": [],
+      "declared": [
+        {
+          "ProjectUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+          "ProjectPath": "Caller/Caller.csproj",
+          "SourcePaths": [
+            "Caller/Code.cs"
+          ]
+        }
+      ],
+      "verified": [
+        "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+      ],
+      "exactCaller": true,
+      "eligible": true,
+      "symbol": "System.Uri.IsWellFormedUriString(string?, System.UriKind)",
+      "kind": "Ordinary",
+      "owner": "System.Private.Uri, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+      "ownerReferenceType": "MetadataImageReference",
+      "ownerReferenceDisplay": "C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App\\10.0.12\\System.Private.Uri.dll",
+      "ownAssembly": false,
+      "directSources": [],
+      "capturedReferenceCount": 179,
+      "forwardingFacade": "C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App\\10.0.12\\System.dll",
+      "forwardedOwner": "System.Private.Uri, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+      "forwardedTypeMatchesInvocationOwner": true,
+      "candidateReason": "None",
+      "candidates": [],
+      "diagnostics": [
+        "Caller/Code.cs(1,21): warning CS1591: Missing XML comment for publicly visible type or member \u0027Use\u0027",
+        "Caller/Code.cs(1,46): warning CS1591: Missing XML comment for publicly visible type or member \u0027Use.Call()\u0027"
+      ],
+      "resolver": "UnsupportedExternalEvidence",
+      "Detail": "the target\u0027s defining assembly is available to the verified caller only as PE metadata"
+    }
+  ]
+}
