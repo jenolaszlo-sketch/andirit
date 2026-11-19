@@ -1,0 +1,575 @@
+{
+  "case": "M3",
+  "processId": 3504,
+  "database": "C:\\Windows\\Temp\\opencode\\qual04\\stores\\r2-M3.ltdb",
+  "productionAssembly": "Andirit, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null",
+  "csharpAssembly": "Andirit.CSharp, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null",
+  "platformAssemblyCount": 182,
+  "andiritAssemblyReferences": [
+    "Andirit.Abstractions.dll",
+    "Andirit.CSharp.Tests.dll",
+    "Andirit.CSharp.dll",
+    "Andirit.LatticeDb.dll",
+    "Andirit.dll",
+    "LatticeDbSharp.dll"
+  ],
+  "fixture": {
+    "projects": 3,
+    "missing": 0,
+    "calls": [
+      1,
+      1,
+      1
+    ]
+  },
+  "target": "asmctx3:sha256:919ee5ae9b7f27bbc81e570e698ac3c1d0236499473e34ad00574d8cb9ecf21f",
+  "query": {
+    "availability": "Available",
+    "isComplete": true,
+    "occurrences": [
+      {
+        "id": "30c97fce2eb0766a18e3d79738380b9bf1f70308fb925e3359ed7bf559cd1cc1",
+        "sourceUnit": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+        "target": "asmctx3:sha256:919ee5ae9b7f27bbc81e570e698ac3c1d0236499473e34ad00574d8cb9ecf21f",
+        "span": {
+          "Path": "P0/Value.cs",
+          "StartLine": 1,
+          "StartColumn": 102,
+          "EndLine": 1,
+          "EndColumn": 105
+        },
+        "category": "Invocation",
+        "contributors": [
+          "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1"
+        ],
+        "contributorPlugin": [
+          "penghou.hetu.csharp"
+        ]
+      }
+    ],
+    "publication": "run:m3",
+    "coverage": {
+      "invocationFacts": 3,
+      "unsupportedCategories": 0,
+      "state": "Produced",
+      "scopeId": "analysisscope1:sha256:e709dbc58a14698c40358284b1c6979b52b7192a020d9b8f2a005678a26dc2ec",
+      "universeId": "compilation-universe1:sha256:6f88837e5630493ae60ca9afad091a8a12aabb88f1fa533fda19a7e8af4467a5",
+      "declaredUnitCount": 9,
+      "verifiedUnitCount": 9,
+      "external": 0,
+      "ambiguous": 0,
+      "unresolved": 0,
+      "unsupported": 0,
+      "conditionalInactive": 0,
+      "reasons": []
+    },
+    "unitCoverage": [
+      {
+        "indexUnit": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+        "state": "Produced",
+        "invocationFacts": 1,
+        "unsupportedCategories": 0,
+        "external": 0,
+        "ambiguous": 0,
+        "unresolved": 0,
+        "unsupported": 0,
+        "conditionalInactive": 0
+      },
+      {
+        "indexUnit": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+        "state": "Produced",
+        "invocationFacts": 1,
+        "unsupportedCategories": 0,
+        "external": 0,
+        "ambiguous": 0,
+        "unresolved": 0,
+        "unsupported": 0,
+        "conditionalInactive": 0
+      },
+      {
+        "indexUnit": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+        "state": "Produced",
+        "invocationFacts": 1,
+        "unsupportedCategories": 0,
+        "external": 0,
+        "ambiguous": 0,
+        "unresolved": 0,
+        "unsupported": 0,
+        "conditionalInactive": 0
+      }
+    ],
+    "refusal": null,
+    "examined": 1,
+    "totalMatches": 1
+  },
+  "authorityMismatch": {
+    "availability": "StalePublication",
+    "isComplete": false,
+    "occurrences": [],
+    "publication": "run:m3",
+    "coverage": null,
+    "unitCoverage": [],
+    "refusal": "The recorded analysis scope/universe is not the current verified universe.",
+    "examined": 0,
+    "totalMatches": 0
+  },
+  "native": {
+    "unitCount": [
+      3
+    ],
+    "factCount": [
+      3
+    ],
+    "completeCoverage": [
+      true
+    ],
+    "requiresAuthority": [
+      true
+    ],
+    "units": [
+      {
+        "indexUnitId": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+        "facts": 1,
+        "factIds": [
+          "30c97fce2eb0766a18e3d79738380b9bf1f70308fb925e3359ed7bf559cd1cc1"
+        ],
+        "coverage": {
+          "declared": 3,
+          "verified": 3,
+          "facts": 1,
+          "state": "0",
+          "external": 0,
+          "unresolved": 0,
+          "unsupported": 0,
+          "unsupportedCategories": 0
+        },
+        "authoritySourceUnit": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+        "authorityCoverage": {
+          "declared": 3,
+          "verified": 3,
+          "facts": 1
+        },
+        "authorityMembers": 3,
+        "raw": {
+          "RepositoryId": "qual4:m3",
+          "PluginId": "penghou.hetu.csharp",
+          "IndexUnitId": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+          "AnalysisIncluded": true,
+          "Facts": [
+            {
+              "Id": {
+                "Value": "30c97fce2eb0766a18e3d79738380b9bf1f70308fb925e3359ed7bf559cd1cc1"
+              },
+              "TargetId": {
+                "Value": "asmctx3:sha256:919ee5ae9b7f27bbc81e570e698ac3c1d0236499473e34ad00574d8cb9ecf21f"
+              },
+              "TargetDocumentId": "M:P0.Value.Get",
+              "RepositoryId": {
+                "Value": "qual4:m3"
+              },
+              "Category": 0,
+              "SourceUnitId": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+              "Contributor": {
+                "PluginId": {
+                  "Value": "penghou.hetu.csharp"
+                },
+                "IndexUnitId": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1"
+              },
+              "Span": {
+                "Path": "P0/Value.cs",
+                "StartLine": 1,
+                "StartColumn": 102,
+                "EndLine": 1,
+                "EndColumn": 105
+              },
+              "DeclarationSpan": {
+                "Path": "P0/Value.cs",
+                "StartLine": 1,
+                "StartColumn": 43,
+                "EndLine": 1,
+                "EndColumn": 72
+              },
+              "SourceHash": "sha256:f0fd14259ef3c62340a8b983e871b2c32738534533031dc7b4920175a68615c2",
+              "ContentHash": "sha256:f0fd14259ef3c62340a8b983e871b2c32738534533031dc7b4920175a68615c2",
+              "PluginVersion": "0.2.0-preview.6",
+              "SemanticsVersion": 4,
+              "PayloadHash": "4f47716f3b78e9334976b4edd679c23aa147b1895926047d6b12279f9b408693"
+            }
+          ],
+          "Coverage": {
+            "InvocationFacts": 1,
+            "UnsupportedCategories": 0,
+            "State": 0,
+            "ScopeId": "analysisscope1:sha256:e709dbc58a14698c40358284b1c6979b52b7192a020d9b8f2a005678a26dc2ec",
+            "UniverseId": "compilation-universe1:sha256:6f88837e5630493ae60ca9afad091a8a12aabb88f1fa533fda19a7e8af4467a5",
+            "DeclaredUnitCount": 3,
+            "VerifiedUnitCount": 3,
+            "External": 0,
+            "Ambiguous": 0,
+            "Unresolved": 0,
+            "Unsupported": 0,
+            "ConditionalInactive": 0,
+            "UnavailableReasons": {},
+            "TotalFacts": 1,
+            "AnalysisPerformed": true,
+            "IsComplete": true
+          },
+          "Authority": {
+            "Version": 1,
+            "RepositoryId": "qual4:m3",
+            "PluginId": "penghou.hetu.csharp",
+            "IndexUnitId": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+            "SourceUnitId": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+            "ScopeId": "analysisscope1:sha256:e709dbc58a14698c40358284b1c6979b52b7192a020d9b8f2a005678a26dc2ec",
+            "UniverseId": "compilation-universe1:sha256:6f88837e5630493ae60ca9afad091a8a12aabb88f1fa533fda19a7e8af4467a5",
+            "Coverage": {
+              "InvocationFacts": 1,
+              "UnsupportedCategories": 0,
+              "State": 0,
+              "ScopeId": "analysisscope1:sha256:e709dbc58a14698c40358284b1c6979b52b7192a020d9b8f2a005678a26dc2ec",
+              "UniverseId": "compilation-universe1:sha256:6f88837e5630493ae60ca9afad091a8a12aabb88f1fa533fda19a7e8af4467a5",
+              "DeclaredUnitCount": 3,
+              "VerifiedUnitCount": 3,
+              "External": 0,
+              "Ambiguous": 0,
+              "Unresolved": 0,
+              "Unsupported": 0,
+              "ConditionalInactive": 0,
+              "UnavailableReasons": {},
+              "TotalFacts": 1,
+              "AnalysisPerformed": true,
+              "IsComplete": true
+            },
+            "Members": [
+              {
+                "ProjectUnitId": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+                "Compctx2": "compctx2:sha256:24c46ec71e6e800350f798da7db5a5d3173e94ac854c560f5ef3a6b0eae6cf79"
+              },
+              {
+                "ProjectUnitId": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+                "Compctx2": "compctx2:sha256:f1f62b0bafd9a311fbc3376e855fbc646073bd8614a41a55ddd28b0c3bfb09e4"
+              },
+              {
+                "ProjectUnitId": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+                "Compctx2": "compctx2:sha256:33ba5a4ba8a7d6b014cea027d90c8d90db064b768bb2fe1076a35d88823edadc"
+              }
+            ],
+            "Facts": [
+              {
+                "OccurrenceId": "30c97fce2eb0766a18e3d79738380b9bf1f70308fb925e3359ed7bf559cd1cc1",
+                "PayloadHash": "4f47716f3b78e9334976b4edd679c23aa147b1895926047d6b12279f9b408693",
+                "TargetId": "asmctx3:sha256:919ee5ae9b7f27bbc81e570e698ac3c1d0236499473e34ad00574d8cb9ecf21f",
+                "DefiningProjectUnitId": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+                "Compctx2": "compctx2:sha256:24c46ec71e6e800350f798da7db5a5d3173e94ac854c560f5ef3a6b0eae6cf79",
+                "IdentifierDigest": "a4d9ced7c6e35fad8d1971edb6b6497c7ed3c4ba0de07375ccd021273c00b573",
+                "DeclarationDigest": "71bf547ba5fee8063da025ec5e1ae08b2584581a227e850c8e45e3de7dd031c7",
+                "ShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12"
+              }
+            ]
+          },
+          "RequiresAuthority": true,
+          "AuthorityPublicationIndexRunId": "run:m3"
+        }
+      },
+      {
+        "indexUnitId": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+        "facts": 1,
+        "factIds": [
+          "7f31c59dbe892748d3ece79ddcdb002d41f8f7b3ccf68a4a95d8671d7eba282c"
+        ],
+        "coverage": {
+          "declared": 3,
+          "verified": 3,
+          "facts": 1,
+          "state": "0",
+          "external": 0,
+          "unresolved": 0,
+          "unsupported": 0,
+          "unsupportedCategories": 0
+        },
+        "authoritySourceUnit": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+        "authorityCoverage": {
+          "declared": 3,
+          "verified": 3,
+          "facts": 1
+        },
+        "authorityMembers": 3,
+        "raw": {
+          "RepositoryId": "qual4:m3",
+          "PluginId": "penghou.hetu.csharp",
+          "IndexUnitId": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+          "AnalysisIncluded": true,
+          "Facts": [
+            {
+              "Id": {
+                "Value": "7f31c59dbe892748d3ece79ddcdb002d41f8f7b3ccf68a4a95d8671d7eba282c"
+              },
+              "TargetId": {
+                "Value": "asmctx3:sha256:42db7ed3cb33c369ba604ea00315078c933e3203af9d3cfaee85dbc5b3a496a0"
+              },
+              "TargetDocumentId": "M:P1.Value.Get",
+              "RepositoryId": {
+                "Value": "qual4:m3"
+              },
+              "Category": 0,
+              "SourceUnitId": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+              "Contributor": {
+                "PluginId": {
+                  "Value": "penghou.hetu.csharp"
+                },
+                "IndexUnitId": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34"
+              },
+              "Span": {
+                "Path": "P1/Value.cs",
+                "StartLine": 1,
+                "StartColumn": 102,
+                "EndLine": 1,
+                "EndColumn": 105
+              },
+              "DeclarationSpan": {
+                "Path": "P1/Value.cs",
+                "StartLine": 1,
+                "StartColumn": 43,
+                "EndLine": 1,
+                "EndColumn": 72
+              },
+              "SourceHash": "sha256:6abbba2e5508604a7944cb04771a91b0857d58b21d6a70b2cf26b209d891f424",
+              "ContentHash": "sha256:6abbba2e5508604a7944cb04771a91b0857d58b21d6a70b2cf26b209d891f424",
+              "PluginVersion": "0.2.0-preview.6",
+              "SemanticsVersion": 4,
+              "PayloadHash": "68846325a0e5da661e3f8695b55543da3c75513a61a983d63a913a28f3a721c2"
+            }
+          ],
+          "Coverage": {
+            "InvocationFacts": 1,
+            "UnsupportedCategories": 0,
+            "State": 0,
+            "ScopeId": "analysisscope1:sha256:e709dbc58a14698c40358284b1c6979b52b7192a020d9b8f2a005678a26dc2ec",
+            "UniverseId": "compilation-universe1:sha256:6f88837e5630493ae60ca9afad091a8a12aabb88f1fa533fda19a7e8af4467a5",
+            "DeclaredUnitCount": 3,
+            "VerifiedUnitCount": 3,
+            "External": 0,
+            "Ambiguous": 0,
+            "Unresolved": 0,
+            "Unsupported": 0,
+            "ConditionalInactive": 0,
+            "UnavailableReasons": {},
+            "TotalFacts": 1,
+            "AnalysisPerformed": true,
+            "IsComplete": true
+          },
+          "Authority": {
+            "Version": 1,
+            "RepositoryId": "qual4:m3",
+            "PluginId": "penghou.hetu.csharp",
+            "IndexUnitId": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+            "SourceUnitId": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+            "ScopeId": "analysisscope1:sha256:e709dbc58a14698c40358284b1c6979b52b7192a020d9b8f2a005678a26dc2ec",
+            "UniverseId": "compilation-universe1:sha256:6f88837e5630493ae60ca9afad091a8a12aabb88f1fa533fda19a7e8af4467a5",
+            "Coverage": {
+              "InvocationFacts": 1,
+              "UnsupportedCategories": 0,
+              "State": 0,
+              "ScopeId": "analysisscope1:sha256:e709dbc58a14698c40358284b1c6979b52b7192a020d9b8f2a005678a26dc2ec",
+              "UniverseId": "compilation-universe1:sha256:6f88837e5630493ae60ca9afad091a8a12aabb88f1fa533fda19a7e8af4467a5",
+              "DeclaredUnitCount": 3,
+              "VerifiedUnitCount": 3,
+              "External": 0,
+              "Ambiguous": 0,
+              "Unresolved": 0,
+              "Unsupported": 0,
+              "ConditionalInactive": 0,
+              "UnavailableReasons": {},
+              "TotalFacts": 1,
+              "AnalysisPerformed": true,
+              "IsComplete": true
+            },
+            "Members": [
+              {
+                "ProjectUnitId": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+                "Compctx2": "compctx2:sha256:24c46ec71e6e800350f798da7db5a5d3173e94ac854c560f5ef3a6b0eae6cf79"
+              },
+              {
+                "ProjectUnitId": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+                "Compctx2": "compctx2:sha256:f1f62b0bafd9a311fbc3376e855fbc646073bd8614a41a55ddd28b0c3bfb09e4"
+              },
+              {
+                "ProjectUnitId": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+                "Compctx2": "compctx2:sha256:33ba5a4ba8a7d6b014cea027d90c8d90db064b768bb2fe1076a35d88823edadc"
+              }
+            ],
+            "Facts": [
+              {
+                "OccurrenceId": "7f31c59dbe892748d3ece79ddcdb002d41f8f7b3ccf68a4a95d8671d7eba282c",
+                "PayloadHash": "68846325a0e5da661e3f8695b55543da3c75513a61a983d63a913a28f3a721c2",
+                "TargetId": "asmctx3:sha256:42db7ed3cb33c369ba604ea00315078c933e3203af9d3cfaee85dbc5b3a496a0",
+                "DefiningProjectUnitId": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+                "Compctx2": "compctx2:sha256:f1f62b0bafd9a311fbc3376e855fbc646073bd8614a41a55ddd28b0c3bfb09e4",
+                "IdentifierDigest": "a4d9ced7c6e35fad8d1971edb6b6497c7ed3c4ba0de07375ccd021273c00b573",
+                "DeclarationDigest": "807c66e104b22800192ab25afced9afffabef440fb430f4b03bef54db0cc3e1b",
+                "ShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12"
+              }
+            ]
+          },
+          "RequiresAuthority": true,
+          "AuthorityPublicationIndexRunId": "run:m3"
+        }
+      },
+      {
+        "indexUnitId": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+        "facts": 1,
+        "factIds": [
+          "bc4c7f327e931053550524ca3ab8cc40e8e0430745546a9b07b7ac3995d1086c"
+        ],
+        "coverage": {
+          "declared": 3,
+          "verified": 3,
+          "facts": 1,
+          "state": "0",
+          "external": 0,
+          "unresolved": 0,
+          "unsupported": 0,
+          "unsupportedCategories": 0
+        },
+        "authoritySourceUnit": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+        "authorityCoverage": {
+          "declared": 3,
+          "verified": 3,
+          "facts": 1
+        },
+        "authorityMembers": 3,
+        "raw": {
+          "RepositoryId": "qual4:m3",
+          "PluginId": "penghou.hetu.csharp",
+          "IndexUnitId": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+          "AnalysisIncluded": true,
+          "Facts": [
+            {
+              "Id": {
+                "Value": "bc4c7f327e931053550524ca3ab8cc40e8e0430745546a9b07b7ac3995d1086c"
+              },
+              "TargetId": {
+                "Value": "asmctx3:sha256:55cac48b05f999992f660435c070d6adf3be30c8d9f3da46d4138cfbad6863b9"
+              },
+              "TargetDocumentId": "M:P2.Value.Get",
+              "RepositoryId": {
+                "Value": "qual4:m3"
+              },
+              "Category": 0,
+              "SourceUnitId": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+              "Contributor": {
+                "PluginId": {
+                  "Value": "penghou.hetu.csharp"
+                },
+                "IndexUnitId": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b"
+              },
+              "Span": {
+                "Path": "P2/Value.cs",
+                "StartLine": 1,
+                "StartColumn": 102,
+                "EndLine": 1,
+                "EndColumn": 105
+              },
+              "DeclarationSpan": {
+                "Path": "P2/Value.cs",
+                "StartLine": 1,
+                "StartColumn": 43,
+                "EndLine": 1,
+                "EndColumn": 72
+              },
+              "SourceHash": "sha256:393edcab9d1bf7ed9dfb1f7e143803f70296bbe672cb7d2359f08d4010ef41df",
+              "ContentHash": "sha256:393edcab9d1bf7ed9dfb1f7e143803f70296bbe672cb7d2359f08d4010ef41df",
+              "PluginVersion": "0.2.0-preview.6",
+              "SemanticsVersion": 4,
+              "PayloadHash": "fb576a920e82d9951dd1e43e929367631713bd4ea976f28055c7c6eea4e89429"
+            }
+          ],
+          "Coverage": {
+            "InvocationFacts": 1,
+            "UnsupportedCategories": 0,
+            "State": 0,
+            "ScopeId": "analysisscope1:sha256:e709dbc58a14698c40358284b1c6979b52b7192a020d9b8f2a005678a26dc2ec",
+            "UniverseId": "compilation-universe1:sha256:6f88837e5630493ae60ca9afad091a8a12aabb88f1fa533fda19a7e8af4467a5",
+            "DeclaredUnitCount": 3,
+            "VerifiedUnitCount": 3,
+            "External": 0,
+            "Ambiguous": 0,
+            "Unresolved": 0,
+            "Unsupported": 0,
+            "ConditionalInactive": 0,
+            "UnavailableReasons": {},
+            "TotalFacts": 1,
+            "AnalysisPerformed": true,
+            "IsComplete": true
+          },
+          "Authority": {
+            "Version": 1,
+            "RepositoryId": "qual4:m3",
+            "PluginId": "penghou.hetu.csharp",
+            "IndexUnitId": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+            "SourceUnitId": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+            "ScopeId": "analysisscope1:sha256:e709dbc58a14698c40358284b1c6979b52b7192a020d9b8f2a005678a26dc2ec",
+            "UniverseId": "compilation-universe1:sha256:6f88837e5630493ae60ca9afad091a8a12aabb88f1fa533fda19a7e8af4467a5",
+            "Coverage": {
+              "InvocationFacts": 1,
+              "UnsupportedCategories": 0,
+              "State": 0,
+              "ScopeId": "analysisscope1:sha256:e709dbc58a14698c40358284b1c6979b52b7192a020d9b8f2a005678a26dc2ec",
+              "UniverseId": "compilation-universe1:sha256:6f88837e5630493ae60ca9afad091a8a12aabb88f1fa533fda19a7e8af4467a5",
+              "DeclaredUnitCount": 3,
+              "VerifiedUnitCount": 3,
+              "External": 0,
+              "Ambiguous": 0,
+              "Unresolved": 0,
+              "Unsupported": 0,
+              "ConditionalInactive": 0,
+              "UnavailableReasons": {},
+              "TotalFacts": 1,
+              "AnalysisPerformed": true,
+              "IsComplete": true
+            },
+            "Members": [
+              {
+                "ProjectUnitId": "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+                "Compctx2": "compctx2:sha256:24c46ec71e6e800350f798da7db5a5d3173e94ac854c560f5ef3a6b0eae6cf79"
+              },
+              {
+                "ProjectUnitId": "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+                "Compctx2": "compctx2:sha256:f1f62b0bafd9a311fbc3376e855fbc646073bd8614a41a55ddd28b0c3bfb09e4"
+              },
+              {
+                "ProjectUnitId": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+                "Compctx2": "compctx2:sha256:33ba5a4ba8a7d6b014cea027d90c8d90db064b768bb2fe1076a35d88823edadc"
+              }
+            ],
+            "Facts": [
+              {
+                "OccurrenceId": "bc4c7f327e931053550524ca3ab8cc40e8e0430745546a9b07b7ac3995d1086c",
+                "PayloadHash": "fb576a920e82d9951dd1e43e929367631713bd4ea976f28055c7c6eea4e89429",
+                "TargetId": "asmctx3:sha256:55cac48b05f999992f660435c070d6adf3be30c8d9f3da46d4138cfbad6863b9",
+                "DefiningProjectUnitId": "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b",
+                "Compctx2": "compctx2:sha256:33ba5a4ba8a7d6b014cea027d90c8d90db064b768bb2fe1076a35d88823edadc",
+                "IdentifierDigest": "a4d9ced7c6e35fad8d1971edb6b6497c7ed3c4ba0de07375ccd021273c00b573",
+                "DeclarationDigest": "28511be9ff0c05966909ff970addda2e0edfdd7a935f4c66a05213a1894ef7ea",
+                "ShapeDigest": "3abcdca60cc76f9d6852ac1d10498dd568f88e5e5a0630aeb2c9ec9bc3243a12"
+              }
+            ]
+          },
+          "RequiresAuthority": true,
+          "AuthorityPublicationIndexRunId": "run:m3"
+        }
+      }
+    ]
+  },
+  "verifiedUnitIds": [
+    "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+    "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+    "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b"
+  ],
+  "declaredUnitIds": [
+    "csharp:project:070e2d6495245a19d38717e2239c9659783a6e14a6d82004f285ef2ef1376eb1",
+    "csharp:project:5b02c44988b967c5b485fd97d356bd07f58d79a95abb5af9ecdb2f5f345ade34",
+    "csharp:project:9185045302dcfc6b14b8ac2f96517095ff90b11ec0b67f8fcbdca7aeabd3d12b"
+  ],
+  "failures": []
+}

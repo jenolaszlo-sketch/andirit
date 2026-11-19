@@ -1,0 +1,47 @@
+# QUAL-04 bounded mutation N1 applied to a disposable copy of the pinned R3
+# export (8b83e0558f4c757272cd60a1c81b8dbc6fd7873f) at
+# C:\Windows\Temp\opencode\qual04\mutation\N1. The pinned export and the
+# canonical repository were never modified.
+#
+# Control purpose: revert BOTH R3 remediations (the disjoint row contribution in
+# the extraction session and the legacy restore projection), which is exactly the
+# pinned R2 semantics on R3 code. Observed result (registered as N1):
+# two complete projects 4/4, two complete-empty projects 4/4, three complete
+# projects 9/9, with the historical whole-universe row shape. The reviewer harness
+# therefore detects the historical defect against R3 code.
+
+diff --git a/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs b/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
+index 4efc493..8fded54 100644
+--- a/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
++++ b/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
+@@ -457,7 +457,7 @@ public sealed partial class CSharpCodeGraphPlugin
+             .ConfigureAwait(false);
+         await sink.WriteBatchAsync(new CodeGraphBatch(origin,
+                 occurrences: extraction.Facts,
+-                occurrenceCoverage: CodeOccurrenceAuthority.SourceContribution(extraction.Coverage)),
++                occurrenceCoverage: extraction.Coverage),
+             cancellationToken).ConfigureAwait(false);
+     }
+ }
+diff --git a/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs b/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
+index f877b6c..24810a1 100644
+--- a/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
++++ b/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
+@@ -807,15 +807,8 @@ public sealed partial class LatticeCodeGraphStore :
+     {
+         if (unit.Coverage is { } coverage)
+         {
+-            // Legacy C# source rows stored the full membership in both the row
+-            // and its authority envelope. Project only the aggregation view;
+-            // the query gate still checks the original row against the envelope.
+-            if (coverage.IsComplete && coverage.DeclaredUnitCount > 1 &&
+-                coverage.DeclaredUnitCount == coverage.VerifiedUnitCount &&
+-                unit.Authority is { ValueKind: JsonValueKind.Object } authority &&
+-                authority.TryGetProperty(nameof(CodeOccurrenceAuthority.SourceUnitId), out var source) &&
+-                source.ValueKind == JsonValueKind.String && source.GetString() == unit.IndexUnitId)
+-                return CodeOccurrenceAuthority.SourceContribution(coverage);
++            // NEGATIVE CONTROL (N1-combined): both the disjoint row contribution
++            // and the restore projection are reverted, i.e. exact R2 semantics.
+             return coverage;
+         }
+         if (unit.AnalysisIncluded || unit.Facts.Count > 0)

@@ -1,0 +1,26 @@
+# QUAL-04 bounded mutation N1a applied to a disposable copy of the pinned R3
+# export (8b83e0558f4c757272cd60a1c81b8dbc6fd7873f) at
+# C:\Windows\Temp\opencode\qual04\mutation\N1a. The pinned export and the
+# canonical repository were never modified.
+#
+# Control purpose: revert only the R3 disjoint row contribution in the extraction
+# session and keep the restore projection, to establish whether the projection
+# alone carries the corrected aggregate. Observed result: membership stays
+# correct (2/2, 2/2, 3/3) while the persisted rows keep the historical
+# whole-universe shape (2/2, 2/2, 3/3). The reviewer's pre-registered detection
+# expectation for N1 was therefore not met by this single-line mutation; the
+# combined control N1 (both remediations reverted) does reproduce the defect.
+
+diff --git a/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs b/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
+index 4efc493..8fded54 100644
+--- a/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
++++ b/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
+@@ -457,7 +457,7 @@ public sealed partial class CSharpCodeGraphPlugin
+             .ConfigureAwait(false);
+         await sink.WriteBatchAsync(new CodeGraphBatch(origin,
+                 occurrences: extraction.Facts,
+-                occurrenceCoverage: CodeOccurrenceAuthority.SourceContribution(extraction.Coverage)),
++                occurrenceCoverage: extraction.Coverage),
+             cancellationToken).ConfigureAwait(false);
+     }
+ }
