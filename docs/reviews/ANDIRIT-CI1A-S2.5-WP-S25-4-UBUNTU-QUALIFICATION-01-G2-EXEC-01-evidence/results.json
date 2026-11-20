@@ -1,0 +1,53 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.5-WP-S25-4-UBUNTU-QUALIFICATION-01-G2-EXEC-01",
+  "run": {
+    "id": 44746950426,
+    "event": "pull_request",
+    "conclusion": "success",
+    "startedAt": "2026-11-20T13:44:23Z",
+    "workflow": ".github/workflows/ci.yml",
+    "runUrl": "https://github.com/jenolaszlo-sketch/andirit/actions/runs/44746950426",
+    "jobs": [
+      {"name": "test (ubuntu-latest)", "jobId": 136324608459, "conclusion": "success", "startedAt": "2026-11-20T13:44:25Z", "completedAt": "2026-11-20T13:46:50Z"},
+      {"name": "test (windows-latest)", "jobId": 136324608301, "conclusion": "success", "startedAt": "2026-11-20T13:44:26Z", "completedAt": "2026-11-20T13:48:32Z"},
+      {"name": "test (macos-latest)", "jobId": 136324608313, "conclusion": "success", "startedAt": "2026-11-20T13:44:27Z", "completedAt": "2026-11-20T13:46:52Z"},
+      {"name": "pack", "jobId": 136324608009, "conclusion": "success", "startedAt": "2026-11-20T13:44:25Z", "completedAt": "2026-11-20T13:45:14Z"}
+    ]
+  },
+  "ubuntuEnvironment": {
+    "os": "Ubuntu 26.04.1 LTS x64 (genuine hosted runner)",
+    "image": "ubuntu-26.04, version 20261111.196.1 (test job); pack job 20261116.202 / provisioner 20261111.635",
+    "runner": "GitHub-hosted, region northcentralus, Azure, runner version 2.338.2, worker ID {f631239f-9d18-48bb-995f-f79864a18761}",
+    "dotnet": "SDK 10.0.404, runtime 10.0.15 (LTS) via setup-dotnet@v5, dotnet-version 10.0.x (workflow pin)",
+    "note": "image generation differs from the SQ-05 run (Ubuntu 24.04.5, SDK 10.0.403) because ubuntu-latest rolls forward; recorded honestly as the demonstrated environment"
+  },
+  "suiteResultsOnUbuntu": {
+    "LatticeDb": {"passed": 75, "failed": 0, "skipped": 0, "total": 75},
+    "core": {"passed": 345, "failed": 0, "skipped": 0, "total": 345},
+    "CSharp": {"passed": 372, "failed": 0, "skipped": 0, "total": 372},
+    "TreeSitter": {"passed": 157, "failed": 0, "skipped": 0, "total": 157}
+  },
+  "coverageOnUbuntu": {
+    "LatticeDb": {"lineRate": 0.9287, "lineCovered": 900, "lineValid": 969, "branchRate": 0.7896, "branchCovered": 368, "branchValid": 466, "methodRate": 0.9857, "threshold": 70, "thresholdType": "line,branch", "result": "PASS"},
+    "core": {"lineRate": 0.8242, "branchRate": 0.7074, "threshold": 55, "result": "PASS"},
+    "CSharp": {"lineRate": 0.9511, "branchRate": 0.8785, "threshold": 75, "result": "PASS"},
+    "TreeSitter": {"lineRate": 0.8989, "branchRate": 0.7595, "threshold": 60, "result": "PASS"},
+    "independentDerivation": "reviewer re-derived from the downloaded Cobertura artifacts (condition-coverage sums): LatticeDb 736/928 -> 368/464 covered-halved; root 368/466 with the same +2 coverlet granularity offset present in the Windows artifact; core 4126/5846; CSharp 2300/2616; TreeSitter 2808/3698",
+    "artifactIdentity": "coverage-results-ubuntu-latest.zip artifact ID 14632894264, 175324 bytes, run-log SHA256 digest 06fa165fcd3fa684427d3fc055755c856607572c94279bebd5931b9a0ec13979"
+  },
+  "formattingOnUbuntu": {
+    "command": "dotnet format Andirit.slnx --verify-no-changes --no-restore",
+    "result": "exit 0 (step completed; subsequent steps under bash -e proceeded; job conclusion success)"
+  },
+  "nativeExecutionEvidence": {
+    "dependency": "LatticeDbSharp 0.2.0 pinned at eafd632:src/Andirit.LatticeDb/Andirit.LatticeDb.csproj; ships runtimes/linux-x64/native/liblattice.so",
+    "restore": "src/Andirit.LatticeDb.csproj restored on the Ubuntu runner (log lines 156-158)",
+    "behavioralProof": "all 75 LatticeDb cases, which open/publish/reopen native LatticeDb stores, passed on Ubuntu; coverage artifact instruments Andirit.LatticeDb production code at 368/466 branches"
+  },
+  "packJob": {
+    "conclusion": "success",
+    "os": "Ubuntu 26.04 (hosted)",
+    "commands": ["dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages"]
+  },
+  "repositoryCiConsequence": "first green full-matrix repository CI conclusion (windows/ubuntu/macos test jobs + pack) at the pinned revision; F-G2-01 closed at the repository level by the GATE-OWNER-01 decision"
+}

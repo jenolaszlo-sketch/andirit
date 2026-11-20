@@ -1,0 +1,71 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.5-WP-S25-4-UBUNTU-QUALIFICATION-01-G2-EXEC-01",
+  "publication": {
+    "authorization": "owner G1/G2 commission 2026-11-20 (UBUNTU-QUALIFICATION-01 G1/G2)",
+    "remote": "origin — https://github.com/jenolaszlo-sketch/andirit.git",
+    "pushCommand": "git push origin eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6:refs/heads/qualification/wp-s25-4-sq05-linux-r2",
+    "pushResult": "* [new branch] eafd632b... -> qualification/wp-s25-4-sq05-linux-r2 (explicit refspec, no force)",
+    "remoteBranchAfterPush": "refs/heads/qualification/wp-s25-4-sq05-linux-r2 = eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6",
+    "pr": {
+      "number": 7,
+      "url": "https://github.com/jenolaszlo-sketch/andirit/pull/7",
+      "state": "OPEN (never merged)",
+      "head": "qualification/wp-s25-4-sq05-linux-r2",
+      "base": "main",
+      "headRefOid": "eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6",
+      "mergeCommit": null
+    },
+    "workflowRun": {
+      "id": 44746950426,
+      "event": "pull_request",
+      "path": ".github/workflows/ci.yml",
+      "head_sha": "eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6",
+      "runStartedAt": "2026-11-20T13:44:23Z",
+      "runAttempt": 1
+    }
+  },
+  "stopConditionVerification": {
+    "1-remote-main-unchanged": {
+      "prePush": "refs/heads/main = 48370711a6247b972dfc83628618924e864be374",
+      "basis": "strict ancestor of eafd632; read-only ls-remote before publication",
+      "result": "PASS"
+    },
+    "2-branch-available": {
+      "prePush": "refs/heads/qualification/wp-s25-4-sq05-linux-r2 absent (ls-remote)",
+      "note": "the SQ-05 branch qualification/ci1a-s25-sq05-linux remains at 7457284... and untouched",
+      "result": "PASS"
+    },
+    "3-workflow-identity": {
+      "pinnedBlob": "be48426f9be77eacf5dc3de925566126eedad03b",
+      "mergeTreeBlob": "be48426f9be77eacf5dc3de925566126eedad03b (verified at FETCH_HEAD)",
+      "baseBlob": "be48426f9be77eacf5dc3de925566126eedad03b",
+      "result": "PASS"
+    },
+    "4-credentials": {
+      "identity": "gh auth: jenolaszlo-sketch (keyring), scopes gist/read:org/repo/workflow",
+      "push": "succeeded; PR creation succeeded",
+      "result": "PASS"
+    },
+    "5-ancestry": {
+      "mergeParents": ["48370711a6247b972dfc83628618924e864be374 (base)", "eafd632b... (head)"],
+      "result": "PASS — exactly the pinned ancestry"
+    },
+    "6-executed-tree": {
+      "mergeCommit": "e753e991eb255446cbd1ce2be72ec49fb3f4c733",
+      "mergeTree": "823e3c655f8fa8aea64b68e0935b1048bc9b6f7d",
+      "pinnedTree": "823e3c655f8fa8aea64b68e0935b1048bc9b6f7d",
+      "method": "git fetch origin refs/pull/7/merge (read-only, FETCH_HEAD only); git rev-parse FETCH_HEAD^{tree}",
+      "result": "PASS — executed tree equals the pinned execution tree"
+    }
+  },
+  "fiveIdentityCheck": {
+    "1-pinned-branch-commit": "eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6",
+    "2-pr-head-sha": "eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6",
+    "3-synthetic-merge-sha": "e753e991eb255446cbd1ce2be72ec49fb3f4c733",
+    "4-run-head-sha": "eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6",
+    "5-executed-source-tree": "823e3c655f8fa8aea64b68e0935b1048bc9b6f7d",
+    "equality": "(1) = (2) = (4); (5) = pinned tree 823e3c65...; (3) recorded with its fetched tree",
+    "result": "PASS — the run executed the pinned revision's exact source/test/CI content"
+  },
+  "prohibitedOperations": "none performed: no main push, no force-push, no modification of the SQ-05 branch, no workflow edit, no re-run, no PR merge, no deletion"
+}
