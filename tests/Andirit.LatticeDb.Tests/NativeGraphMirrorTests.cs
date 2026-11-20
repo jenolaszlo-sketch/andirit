@@ -1,3 +1,5 @@
+using System.Text.Json;
+using LatticeDbSharp;
 using Andirit.LatticeDb;
 using Andirit.Testing;
 
@@ -251,6 +253,336 @@ public sealed class NativeGraphMirrorTests
             DeleteDatabase(path);
         }
     }
+
+    [Fact]
+    public void MirrorManifestTreatsNullPayloadAsAnEmptyDerivedManifest()
+    {
+        var manifest = NativeGraphMirror.ReadManifest("null");
+
+        Assert.Empty(manifest.Nodes);
+        Assert.Empty(manifest.Edges);
+    }
+
+    [Fact]
+    public void RebuildRejectsAnEdgeWhoseSourceIsNotMirrored()
+    {
+        var path = TemporaryDatabasePath();
+        try
+        {
+            using var database = LatticeDatabase.Open(
+                path,
+                new LatticeDatabaseOptions { Create = true });
+            using var transaction = database.BeginWriteTransaction();
+            var source = Node("missing-source", "Example.MissingSource");
+            var target = Node("target", "Example.Target");
+            var unit = new CodeIndexUnitReplacement(
+                Origin("unit:missing-source"),
+                [target],
+                edges: [Edge("edge:missing-source", source.Id, target.Id, CodeEdgeKinds.Calls)]);
+
+            var exception = Assert.Throws<InvalidDataException>(() =>
+                NativeGraphMirror.Rebuild(transaction, [unit], null));
+
+            Assert.Contains("missing mirrored node", exception.Message, StringComparison.Ordinal);
+            transaction.Rollback();
+        }
+        finally
+        {
+            DeleteDatabase(path);
+        }
+    }
+
+    [Fact]
+    public void RebuildRejectsAnEdgeWhoseTargetIsNotMirrored()
+    {
+        var path = TemporaryDatabasePath();
+        try
+        {
+            using var database = LatticeDatabase.Open(
+                path,
+                new LatticeDatabaseOptions { Create = true });
+            using var transaction = database.BeginWriteTransaction();
+            var source = Node("source", "Example.Source");
+            var target = Node("missing-target", "Example.MissingTarget");
+            var unit = new CodeIndexUnitReplacement(
+                Origin("unit:missing-target"),
+                [source],
+                edges: [Edge("edge:missing-target", source.Id, target.Id, CodeEdgeKinds.Calls)]);
+
+            var exception = Assert.Throws<InvalidDataException>(() =>
+                NativeGraphMirror.Rebuild(transaction, [unit], null));
+
+            Assert.Contains("missing mirrored node", exception.Message, StringComparison.Ordinal);
+            transaction.Rollback();
+        }
+        finally
+        {
+            DeleteDatabase(path);
+        }
+    }
+
+    [Fact]
+    public void RebuildRejectsNullTransactionAndUnits()
+    {
+        var path = TemporaryDatabasePath();
+        try
+        {
+            using var database = LatticeDatabase.Open(
+                path,
+                new LatticeDatabaseOptions { Create = true });
+            using var transaction = database.BeginWriteTransaction();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                NativeGraphMirror.Rebuild(null!, [], null));
+            Assert.Throws<ArgumentNullException>(() =>
+                NativeGraphMirror.Rebuild(transaction, null!, null));
+            transaction.Rollback();
+        }
+        finally
+        {
+            DeleteDatabase(path);
+        }
+    }
+
+    [Fact]
+    public void TraverseRejectsEvidenceFilteredQueries()
+    {
+        var path = TemporaryDatabasePath();
+        try
+        {
+            using var database = LatticeDatabase.Open(
+                path,
+                new LatticeDatabaseOptions { Create = true });
+            using var transaction = database.BeginReadTransaction();
+            var mirror = new NativeGraphMirror(new(
+                new Dictionary<string, ulong>(StringComparer.Ordinal),
+                new Dictionary<string, ulong>(StringComparer.Ordinal)));
+            var query = new CodeGraphTraversalQuery(
+                new CodeNodeId("node:missing"),
+                evidenceQualities: [EvidenceQuality.Resolved]);
+
+            var exception = Assert.Throws<ArgumentException>(() =>
+                mirror.Traverse(transaction, query, CancellationToken.None));
+
+            Assert.Equal("query", exception.ParamName);
+            transaction.Commit();
+        }
+        finally
+        {
+            DeleteDatabase(path);
+        }
+    }
+
+    [Fact]
+    public void TraverseReturnsAnEmptyResultForAnUnknownStartNode()
+    {
+        var path = TemporaryDatabasePath();
+        try
+        {
+            using var database = LatticeDatabase.Open(
+                path,
+                new LatticeDatabaseOptions { Create = true });
+            using var transaction = database.BeginReadTransaction();
+            var mirror = new NativeGraphMirror(new(
+                new Dictionary<string, ulong>(StringComparer.Ordinal),
+                new Dictionary<string, ulong>(StringComparer.Ordinal)));
+
+            var result = mirror.Traverse(
+                transaction,
+                new CodeGraphTraversalQuery(new CodeNodeId("node:missing")),
+                CancellationToken.None);
+
+            Assert.Empty(result.Nodes);
+            Assert.Empty(result.Edges);
+            Assert.False(result.Truncated);
+            transaction.Commit();
+        }
+        finally
+        {
+            DeleteDatabase(path);
+        }
+    }
+
+    [Fact]
+    public void TraverseRejectsANativeEdgeMissingFromTheManifest()
+    {
+        var path = TemporaryDatabasePath();
+        try
+        {
+            var (database, mirror, node, _, nativeNodeId, _) = CreateNativeMirror(
+                path,
+                includeEdgeMapping: false);
+            using (database)
+            using (var transaction = database.BeginWriteTransaction())
+            {
+                var exception = Assert.Throws<InvalidDataException>(() =>
+                    mirror.Traverse(
+                        transaction,
+                        new CodeGraphTraversalQuery(node.Id),
+                        CancellationToken.None));
+
+                Assert.Contains("unmapped fact", exception.Message, StringComparison.Ordinal);
+                transaction.Rollback();
+            }
+
+            Assert.NotEqual(0UL, nativeNodeId);
+        }
+        finally
+        {
+            DeleteDatabase(path);
+        }
+    }
+
+    [Fact]
+    public void TraverseRejectsANativeTargetMissingFromTheManifest()
+    {
+        var path = TemporaryDatabasePath();
+        try
+        {
+            var (database, mirror, node, _, _, _) = CreateNativeMirror(
+                path,
+                includeTargetMapping: false);
+            using (database)
+            using (var transaction = database.BeginWriteTransaction())
+            {
+                var exception = Assert.Throws<InvalidDataException>(() =>
+                    mirror.Traverse(
+                        transaction,
+                        new CodeGraphTraversalQuery(node.Id),
+                        CancellationToken.None));
+
+                Assert.Contains("unmapped fact", exception.Message, StringComparison.Ordinal);
+                transaction.Rollback();
+            }
+        }
+        finally
+        {
+            DeleteDatabase(path);
+        }
+    }
+
+    [Fact]
+    public void TraverseRejectsANullNativeNodePayload()
+    {
+        var path = TemporaryDatabasePath();
+        try
+        {
+            var (database, mirror, node, _, nativeNodeId, _) = CreateNativeMirror(path);
+            using (database)
+            using (var transaction = database.BeginWriteTransaction())
+            {
+                transaction.SetProperty(
+                    new LatticeNodeId(nativeNodeId),
+                    "hetu_json",
+                    LatticeValue.From("null"));
+
+                var exception = Assert.Throws<InvalidDataException>(() =>
+                    mirror.Traverse(
+                        transaction,
+                        new CodeGraphTraversalQuery(node.Id),
+                        CancellationToken.None));
+
+                Assert.Contains("missing node", exception.Message, StringComparison.Ordinal);
+                transaction.Rollback();
+            }
+        }
+        finally
+        {
+            DeleteDatabase(path);
+        }
+    }
+
+    [Fact]
+    public void TraverseRejectsANullNativeEdgePayload()
+    {
+        var path = TemporaryDatabasePath();
+        try
+        {
+            var (database, mirror, node, _, _, nativeEdgeId) = CreateNativeMirror(path);
+            using (database)
+            using (var transaction = database.BeginWriteTransaction())
+            {
+                transaction.SetEdgeProperty(
+                    new LatticeEdgeId(nativeEdgeId),
+                    "hetu_json",
+                    LatticeValue.From("null"));
+
+                var exception = Assert.Throws<InvalidDataException>(() =>
+                    mirror.Traverse(
+                        transaction,
+                        new CodeGraphTraversalQuery(node.Id),
+                        CancellationToken.None));
+
+                Assert.Contains("missing edge", exception.Message, StringComparison.Ordinal);
+                transaction.Rollback();
+            }
+        }
+        finally
+        {
+            DeleteDatabase(path);
+        }
+    }
+
+    private static (LatticeDatabase Database, NativeGraphMirror Mirror, CodeGraphNode Node,
+        CodeGraphEdge Edge, ulong NativeNodeId, ulong NativeEdgeId) CreateNativeMirror(
+            string path,
+            bool includeTargetMapping = true,
+            bool includeEdgeMapping = true)
+    {
+        var database = LatticeDatabase.Open(
+            path,
+            new LatticeDatabaseOptions { Create = true });
+        var node = Node("a", "Example.A");
+        var target = Node("b", "Example.B");
+        var edge = Edge("ab", node.Id, target.Id, CodeEdgeKinds.Calls);
+        ulong nativeNodeId;
+        ulong nativeTargetId;
+        ulong nativeEdgeId;
+        using (var transaction = database.BeginWriteTransaction())
+        {
+            var nativeNode = transaction.CreateNode(NativeGraphMirror.NodeLabel);
+            nativeNodeId = nativeNode.Value;
+            transaction.SetProperty(
+                nativeNode,
+                "hetu_json",
+                LatticeValue.From(JsonSerializer.Serialize(node)));
+            var nativeTarget = transaction.CreateNode(NativeGraphMirror.NodeLabel);
+            nativeTargetId = nativeTarget.Value;
+            transaction.SetProperty(
+                nativeTarget,
+                "hetu_json",
+                LatticeValue.From(JsonSerializer.Serialize(target)));
+            var nativeEdge = transaction.CreateEdge(
+                new LatticeNodeId(nativeNodeId),
+                new LatticeNodeId(nativeTargetId),
+                edge.Kind.Value);
+            nativeEdgeId = nativeEdge.Value;
+            transaction.SetEdgeProperty(
+                nativeEdge,
+                "hetu_json",
+                LatticeValue.From(JsonSerializer.Serialize(edge)));
+            transaction.Commit();
+        }
+
+        var nodes = new Dictionary<string, ulong>(StringComparer.Ordinal)
+        {
+            [node.Id.Value] = nativeNodeId
+        };
+        if (includeTargetMapping)
+            nodes[target.Id.Value] = nativeTargetId;
+        var edges = new Dictionary<string, ulong>(StringComparer.Ordinal);
+        if (includeEdgeMapping)
+            edges[edge.Id.Value] = nativeEdgeId;
+        return (database, new NativeGraphMirror(new(nodes, edges)), node, edge, nativeNodeId, nativeEdgeId);
+    }
+
+    private static CodeFactOrigin Origin(string unit) =>
+        new(
+            new CodeRepositoryId("repo:mirror-contract"),
+            new CodePluginId("plugin:mirror-contract"),
+            "1.0.0",
+            new CodeIndexRunId("run:mirror-contract"),
+            new CodeIndexUnitId(unit));
 
     private static void AssertTraversalEqual(CodeGraphTraversalResult expected, CodeGraphTraversalResult actual)
     {
