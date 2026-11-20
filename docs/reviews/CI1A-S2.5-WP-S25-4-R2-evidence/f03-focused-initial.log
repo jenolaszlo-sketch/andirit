@@ -1,0 +1,30 @@
+Command: dotnet test tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj -c Release --no-restore --filter FullyQualifiedName~MissingDeclaredUnit|FullyQualifiedName~UnsupportedSites_CountOnce
+  Andirit.Abstractions -> C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r2\impl\src\Andirit.Abstractions\bin\Release\net10.0\Andirit.Abstractions.dll
+  Andirit -> C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r2\impl\src\Andirit\bin\Release\net10.0\Andirit.dll
+  Andirit.Testing -> C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r2\impl\src\Andirit.Testing\bin\Release\net10.0\Andirit.Testing.dll
+  Andirit.LatticeDb -> C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r2\impl\src\Andirit.LatticeDb\bin\Release\net10.0\Andirit.LatticeDb.dll
+  Andirit.CSharp -> C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r2\impl\src\Andirit.CSharp\bin\Release\net10.0\Andirit.CSharp.dll
+  Andirit.CSharp.Tests -> C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r2\impl\tests\Andirit.CSharp.Tests\bin\Release\net10.0\Andirit.CSharp.Tests.dll
+Test run for C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r2\impl\tests\Andirit.CSharp.Tests\bin\Release\net10.0\Andirit.CSharp.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:02.88]     Andirit.CSharp.Tests.S23PublicationIntegrationTests.MissingDeclaredUnit_ReportsIncompleteAcrossNativeReopen(projectIsPresent: False) [FAIL]
+[xUnit.net 00:00:02.95]     Andirit.CSharp.Tests.S23PublicationIntegrationTests.MissingDeclaredUnit_ReportsIncompleteAcrossNativeReopen(projectIsPresent: True) [FAIL]
+  Failed Andirit.CSharp.Tests.S23PublicationIntegrationTests.MissingDeclaredUnit_ReportsIncompleteAcrossNativeReopen(projectIsPresent: False) [95 ms]
+  Error Message:
+   Assert.Equal() Failure: Collections differ
+Expected: ["csharp:project:fa5dd923cfc05cbdbb90a82d17372dad8db"···]
+Actual:   ["csharp:project:fa5dd923cfc05cbdbb90a82d17372dad8db"···]
+  Stack Trace:
+     at Andirit.CSharp.Tests.S23PublicationIntegrationTests.MissingDeclaredUnit_ReportsIncompleteAcrossNativeReopen(Boolean projectIsPresent) in C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r2\impl\tests\Andirit.CSharp.Tests\S23PublicationIntegrationTests.cs:line 408
+--- End of stack trace from previous location ---
+  Failed Andirit.CSharp.Tests.S23PublicationIntegrationTests.MissingDeclaredUnit_ReportsIncompleteAcrossNativeReopen(projectIsPresent: True) [76 ms]
+  Error Message:
+   Assert.Equal() Failure: Collections differ
+Expected: ["csharp:project:fa5dd923cfc05cbdbb90a82d17372dad8db"···]
+Actual:   ["csharp:project:fa5dd923cfc05cbdbb90a82d17372dad8db"···]
+  Stack Trace:
+     at Andirit.CSharp.Tests.S23PublicationIntegrationTests.MissingDeclaredUnit_ReportsIncompleteAcrossNativeReopen(Boolean projectIsPresent) in C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r2\impl\tests\Andirit.CSharp.Tests\S23PublicationIntegrationTests.cs:line 408
+--- End of stack trace from previous location ---
+
+Failed!  - Failed:     2, Passed:     6, Skipped:     0, Total:     8, Duration: 2 s - Andirit.CSharp.Tests.dll (net10.0)
+Exit code: 1

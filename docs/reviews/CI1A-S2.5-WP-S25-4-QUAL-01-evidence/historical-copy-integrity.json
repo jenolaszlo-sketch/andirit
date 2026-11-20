@@ -1,0 +1,62 @@
+[
+  {
+    "case": "pre-rem",
+    "expected": "store-wide CodeOccurrenceSchemaException on open",
+    "files": [
+      {
+        "master": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.5-WP-S25-1-BIND-01-evidence\\fixtures\\prerem\\prerem-authentic.ltdb",
+        "copy": "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s254-hist-ecbe6f4d556745bba8093ce6bd2da0eb\\pre-rem\\prerem-authentic.ltdb",
+        "bytes": 86016,
+        "expectedHash": "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885",
+        "masterBefore": "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885",
+        "copyBefore": "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885",
+        "copyAfter": "88cb145090c357f37ae5817abfeebf920d2dc7544e2889bd34a53e9f13755d7e",
+        "masterAfter": "7646b98288a9803cff6f9930c78a3e7df5c676f6fc4e0cd2df2af5e79bc68885"
+      },
+      {
+        "master": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.5-WP-S25-1-BIND-01-evidence\\fixtures\\prerem\\prerem-authentic.ltdb-wal",
+        "copy": "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s254-hist-ecbe6f4d556745bba8093ce6bd2da0eb\\pre-rem\\prerem-authentic.ltdb-wal",
+        "bytes": 4096,
+        "expectedHash": "8ca170cdc55a4428a5506bcb447a0667ab10c92c77ef149ae36460a5603aeab4",
+        "masterBefore": "8ca170cdc55a4428a5506bcb447a0667ab10c92c77ef149ae36460a5603aeab4",
+        "copyBefore": "8ca170cdc55a4428a5506bcb447a0667ab10c92c77ef149ae36460a5603aeab4",
+        "copyAfter": "8ca170cdc55a4428a5506bcb447a0667ab10c92c77ef149ae36460a5603aeab4",
+        "masterAfter": "8ca170cdc55a4428a5506bcb447a0667ab10c92c77ef149ae36460a5603aeab4"
+      }
+    ],
+    "exitCode": 0,
+    "executableSha256": "2054878ea3e247bc7748370f68f256b69e5853f9770c1f2089fa95026660c12e",
+    "command": [
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.5-S25-SQ04-Q1-tests\\bin\\Release\\net10.0\\Sq04QualProbe.dll",
+      "pre-rem",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s254-hist-ecbe6f4d556745bba8093ce6bd2da0eb\\pre-rem\\prerem-authentic.ltdb",
+      "C:\\Users\\Laszlos\\source\\repos\\Solo\\andirit-wp-s25-4-qual-01\\historical-pre-rem.json"
+    ],
+    "resultFile": "historical-pre-rem.json"
+  },
+  {
+    "case": "graph-only",
+    "expected": "historical-master-1, one Logger.Write(string) caller, AnalysisUnavailable and incomplete",
+    "files": [
+      {
+        "master": "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.5-WP-S25-1-BIND-01-evidence\\fixtures\\baseline\\baseline-graph-only.master.db",
+        "copy": "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s254-hist-ecbe6f4d556745bba8093ce6bd2da0eb\\graph-only\\baseline-graph-only.master.db",
+        "bytes": 163840,
+        "expectedHash": "f21a72bee2c2e378e16766ca7b84c29010ab4d50360bf3111a82706f947781e0",
+        "masterBefore": "f21a72bee2c2e378e16766ca7b84c29010ab4d50360bf3111a82706f947781e0",
+        "copyBefore": "f21a72bee2c2e378e16766ca7b84c29010ab4d50360bf3111a82706f947781e0",
+        "copyAfter": "b1b6f1ad31066c156824e273199427a06d2bc6e405a5ce5a87972806579d4763",
+        "masterAfter": "f21a72bee2c2e378e16766ca7b84c29010ab4d50360bf3111a82706f947781e0"
+      }
+    ],
+    "exitCode": 0,
+    "executableSha256": "2054878ea3e247bc7748370f68f256b69e5853f9770c1f2089fa95026660c12e",
+    "command": [
+      "D:\\projects\\Andirit\\docs\\reviews\\CI1A-S2.5-S25-SQ04-Q1-tests\\bin\\Release\\net10.0\\Sq04QualProbe.dll",
+      "graph-only",
+      "C:\\Users\\Laszlos\\AppData\\Local\\Temp\\andirit-s254-hist-ecbe6f4d556745bba8093ce6bd2da0eb\\graph-only\\baseline-graph-only.master.db",
+      "C:\\Users\\Laszlos\\source\\repos\\Solo\\andirit-wp-s25-4-qual-01\\historical-graph-only.json"
+    ],
+    "resultFile": "historical-graph-only.json"
+  }
+]

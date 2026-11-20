@@ -173,6 +173,57 @@ public sealed class S2_2Wp5R1AmbiguityTests
         Assert.Equal(CodeRelationshipCoverageState.Produced, extraction.Coverage.State);
     }
 
+    [Fact]
+    public async Task ExternalBinding_MixedWithCrossProjectMissingAndAmbiguousCalls()
+    {
+        var lib = await SourceUnit("Lib/Lib.csproj", "Lib",
+            "namespace N; public static class Lib { public static int Get() => 1; }");
+        var app = await SourceUnit("App/App.csproj", "App", """
+            namespace N;
+            public static class App
+            {
+                public static int Amb(int a, long b) => a;
+                public static int Amb(long a, int b) => b;
+                public static int Good() => Lib.Get();
+                public static string External() => string.Concat("left", "right");
+                public static int Missing() => Absent.Type.Invoke();
+                public static int Ambiguous() => Amb(1, 1);
+            }
+            """, lib);
+        var universe = Universe(lib, app);
+        var external = Assert.IsAssignableFrom<IMethodSymbol>(Binding(app, "Concat").Symbol);
+        Assert.Empty(external.DeclaringSyntaxReferences);
+        Assert.Same(Platform.Value.Reference, app.Compilation.GetMetadataReference(external.ContainingAssembly));
+        Assert.Equal(0, Binding(app, "Invoke").CandidateCount);
+        Assert.Null(Binding(app, "Invoke").Symbol);
+        Assert.Equal(2, Binding(app, "Amb").CandidateCount);
+        Assert.Null(Binding(app, "Amb").Symbol);
+
+        var externalResolution = universe.ResolveDefining(external, caller: app.Compilation);
+        Assert.Equal(VerifiedDefiningStatus.UnsupportedExternalEvidence, externalResolution.Status);
+        Assert.Null(externalResolution.Defining);
+        Assert.Null(externalResolution.Compctx1);
+        Assert.Equal(VerifiedDefiningStatus.MissingDefiningCompilation, universe.ResolveDefining(external).Status);
+        var substitute = app.Compilation.Clone();
+        Assert.Equal(VerifiedDefiningStatus.MissingDefiningCompilation,
+            universe.ResolveDefining(external, caller: substitute).Status);
+        var substitutedSource = Target(substitute, "N.App", "Good", parameterCount: 0);
+        Assert.Equal(VerifiedDefiningStatus.MissingDefiningCompilation,
+            universe.ResolveDefining(substitutedSource, caller: app.Compilation).Status);
+
+        var extraction = Extract(universe, app);
+        var fact = Assert.Single(extraction.Facts);
+        var method = Target(lib.Compilation, "N.Lib", "Get", parameterCount: 0);
+        Assert.Equal(ExpectedAsmctx3(lib, method), fact.TargetId.Value);
+        Assert.Equal(ExpectedUsage4(app, lib, "Get", method), fact.Id.Value);
+        Assert.Equal(app.Descriptor.ProjectUnitId, fact.SourceUnitId);
+        Assert.Equal(1, extraction.Coverage.InvocationFacts);
+        Assert.Equal(1, extraction.Coverage.External);
+        Assert.Equal(1, extraction.Coverage.Unresolved);
+        Assert.Equal(1, extraction.Coverage.Ambiguous);
+        Assert.Equal(CodeRelationshipCoverageState.Produced, extraction.Coverage.State);
+    }
+
     // ------------------------------------------------------------ R1-T6
 
     [Fact]

@@ -298,11 +298,11 @@ internal static partial class CSharpProjectDiscovery
             warnings);
     }
 
+    // Historical graph property: changing this would alter unchanged loose-source facts.
     private static CSharpProjectModel Loose(IReadOnlyList<string> sources) =>
         new(
             LooseProjectPath,
             "Loose C# Sources",
-            // Historical graph property: changing this would alter unchanged loose-source facts.
             "Hetu.Loose.CSharp",
             sources,
             [],

@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Operations;
 
 namespace Andirit;
 
@@ -53,8 +54,18 @@ internal static class VerifiedCSharpOccurrenceExtractor
             var sourceHash = source.ContentHash;
             var model = sourceUnit.Compilation.GetSemanticModel(tree);
 
-            foreach (var invocation in tree.GetRoot().DescendantNodes().OfType<InvocationExpressionSyntax>())
+            foreach (var node in tree.GetRoot().DescendantNodes())
             {
+                if (node is not InvocationExpressionSyntax invocation)
+                {
+                    if (IsUnsupportedNonInvocation(node, model))
+                    {
+                        unsupported++;
+                        unsupportedCategories++;
+                    }
+                    continue;
+                }
+
                 var info = model.GetSymbolInfo(invocation);
                 var symbol = info.Symbol as IMethodSymbol;
                 if (symbol is null)
@@ -128,6 +139,32 @@ internal static class VerifiedCSharpOccurrenceExtractor
                 e.Descriptor.ProjectUnitId, e.Descriptor.DescriptorDigest)).ToArray(),
             authorities.ToImmutable()) : null;
         return new(facts.ToImmutable(), coverage, authority);
+    }
+
+    private static bool IsUnsupportedNonInvocation(SyntaxNode node, SemanticModel model)
+    {
+        // Query the outer spelling of a site once. The name inside a member
+        // access is part of that site, and the invoked expression has its own
+        // invocation classification (including delegate-valued properties).
+        if (node is not (BaseObjectCreationExpressionSyntax or SimpleNameSyntax or MemberAccessExpressionSyntax
+            or MemberBindingExpressionSyntax or ElementAccessExpressionSyntax or ElementBindingExpressionSyntax
+            or ImplicitElementAccessSyntax) ||
+            node.Parent is MemberAccessExpressionSyntax access && access.Name == node ||
+            node.Parent is MemberBindingExpressionSyntax binding && binding.Name == node ||
+            node.Parent is InvocationExpressionSyntax call && call.Expression == node)
+            return false;
+
+        var operation = model.GetOperation(node);
+        if (operation is not (IObjectCreationOperation { Constructor: not null } or IPropertyReferenceOperation
+            or IMethodReferenceOperation or IDelegateCreationOperation { Target: IMethodReferenceOperation }))
+            return false;
+
+        // A symbol named by nameof is not a property access or delegate conversion.
+        for (var parent = operation.Parent; parent is not null; parent = parent.Parent)
+            if (parent is INameOfOperation)
+                return false;
+
+        return true;
     }
 
     private static bool IsSupportedInvocation(IMethodSymbol symbol) =>

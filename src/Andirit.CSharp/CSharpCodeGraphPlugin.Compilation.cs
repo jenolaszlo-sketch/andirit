@@ -95,6 +95,7 @@ public sealed partial class CSharpCodeGraphPlugin
         // A solution referencing an absent accepted project cannot claim scope completeness.
         if (discovery.Warnings.Contains("csharp.solution.missing-project"))
             allRefusals.Add("MissingDeclaredProject");
+        var missingProjects = new HashSet<string>(CSharpProjectDiscovery.PathComparer);
         foreach (var solution in sources.Where(s => s.Path.EndsWith(".slnx", StringComparison.OrdinalIgnoreCase) ||
                      s.Path.EndsWith(".sln", StringComparison.OrdinalIgnoreCase)))
         {
@@ -105,7 +106,10 @@ public sealed partial class CSharpCodeGraphPlugin
             }
             foreach (var declared in CSharpProjectDiscovery.DeclaredSolutionProjects(solution.Path, solution.Text.ToString()))
                 if (!content.Keys.Contains(declared, CSharpProjectDiscovery.PathComparer))
+                {
+                    missingProjects.Add(declared);
                     allRefusals.Add("MissingDeclaredProject:" + declared);
+                }
         }
         var ordered = OrderProjects(discovery.Projects, byProject, warnings);
         foreach (var project in ordered)
@@ -172,7 +176,8 @@ public sealed partial class CSharpCodeGraphPlugin
             prepared.Add(project.Path, new(project, compilation, available, verified, refusals.ToImmutableArray()));
         }
         var scope = VerifiedCSharpScope.Declare(context.RepositoryId.Value, discovery.Projects.Select(p =>
-            new CSharpScopeUnit(CSharpProjectDiscovery.IndexUnitId(p.Path), p.Path, p.SourcePaths.ToImmutableArray())));
+                new CSharpScopeUnit(CSharpProjectDiscovery.IndexUnitId(p.Path), p.Path, p.SourcePaths.ToImmutableArray()))
+            .Concat(missingProjects.Select(path => new CSharpScopeUnit(CSharpProjectDiscovery.IndexUnitId(path), path, []))));
         var universe = VerifiedCSharpUniverse.Create(context.RepositoryId.Value, scope,
             prepared.Values.Where(p => p.Verified is not null).Select(p => p.Verified!), allRefusals);
         cancellationToken.ThrowIfCancellationRequested();

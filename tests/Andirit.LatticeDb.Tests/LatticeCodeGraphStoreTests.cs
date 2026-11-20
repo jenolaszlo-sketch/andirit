@@ -572,7 +572,13 @@ public sealed class LatticeCodeGraphStoreTests
         {
             using var store = new LatticeCodeGraphStore(
                 path,
-                new LatticeDbStoreOptions { CacheSizeMb = 32, EnableWal = true });
+                new LatticeDbStoreOptions
+                {
+                    CacheSizeMb = 32,
+                    PageSize = 4096,
+                    EnableWal = true,
+                    EnableAdjacencyCache = true
+                });
             await store.UpsertRepositoryAsync(new(new CodeRepositoryId("repo:options")));
             Assert.True((await store.CheckHealthAsync()).IsHealthy);
         }

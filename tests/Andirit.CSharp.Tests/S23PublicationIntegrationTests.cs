@@ -154,6 +154,67 @@ public sealed class S23PublicationIntegrationTests : IDisposable
             unit["Authority"] is { } authority &&
             authority["SourceUnitId"]!.GetValue<string>() == sourceUnitId);
 
+    [Theory]
+    [InlineData("_ = new Sample(); Sample implicitNew = new();", 2)]
+    [InlineData("_ = Property; item.Property = 2; _ = item?.Property; _ = item[0]; _ = Sample.StaticProperty;", 5)]
+    [InlineData("System.Func<int> assignment = Lib.Value.Get; _ = (System.Func<int>)Lib.Value.Get;", 2)]
+    [InlineData("_ = new Sample { Property = 1 }; System.Func<int> group = Lib.Value.Get; _ = item.Property;", 4)]
+    [InlineData("_ = (1, 2); _ = item.Field; _ = \"Property and Get\";", 0)]
+    public async Task UnsupportedSites_CountOnce_AndSurviveNativePublication(string sites, int expectedUnsupported)
+    {
+        var files = new Dictionary<string, string>(CrossProjectFixture(), StringComparer.Ordinal)
+        {
+            [Names.AppSource] = """
+                namespace App;
+                public sealed class Sample
+                {
+                    public int Property { get; set; }
+                    public static int StaticProperty => 0;
+                    public int this[int index] => 0;
+                    public int Field;
+
+                    public int Run(Sample item)
+                    {
+                """ + sites + """
+                        _ = string.Concat("left", "right");
+                        Missing();
+                        return Lib.Value.Get();
+                    }
+                }
+                """
+        };
+        const string run = "run:unsupported";
+        var context = Context(Repo, run, files);
+        var (analysis, app, lib) = await LiveCrossProjectAsync(context);
+        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
+        var query = VerifiedCSharpOccurrenceAuthority.Bind(new(Repo, target), analysis.Universe, app.Compilation);
+
+        async Task VerifyAsync(LatticeCodeGraphStore store)
+        {
+            var result = await store.FindOccurrencesAsync(query);
+            Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
+            Assert.True(result.IsComplete);
+            var hit = Assert.Single(result.Occurrences);
+            Assert.Equal(app.Descriptor.ProjectUnitId, hit.SourceUnitId);
+            Assert.Equal(target, hit.TargetId);
+            Assert.Equal(1, result.Coverage!.InvocationFacts);
+            Assert.Equal(expectedUnsupported, result.Coverage.UnsupportedCategories);
+            Assert.Equal(expectedUnsupported, result.Coverage.Unsupported);
+            Assert.Equal(1, result.Coverage.External);
+            Assert.Equal(1, result.Coverage.Unresolved);
+            Assert.Equal(0, result.Coverage.Ambiguous);
+        }
+
+        using (var store = await PublishAsync(_path, run, context))
+            await VerifyAsync(store);
+        var unit = PublishedUnit(_path, app.Descriptor.ProjectUnitId);
+        Assert.Single(unit["Facts"]!.AsArray());
+        Assert.Equal(expectedUnsupported, unit["Coverage"]!["UnsupportedCategories"]!.GetValue<int>());
+        Assert.Equal(expectedUnsupported, unit["Coverage"]!["Unsupported"]!.GetValue<int>());
+        using var reopened = Open(_path);
+        await VerifyAsync(reopened);
+    }
+
     [Fact]
     public async Task RealCrossProjectFact_IsPublishedWithAuthority_AndServed()
     {
@@ -180,6 +241,67 @@ public sealed class S23PublicationIntegrationTests : IDisposable
         Assert.True(unit["RequiresAuthority"]!.GetValue<bool>());
         Assert.Equal(lib.Descriptor.ProjectUnitId,
             unit["Authority"]!["Facts"]![0]!["DefiningProjectUnitId"]!.GetValue<string>());
+    }
+
+    [Fact]
+    public async Task ExternalBinding_CoverageSurvivesAuthorityBoundPublicationAndReopen()
+    {
+        // The focused producer gate also runs each phase in its own test host.
+        var phase = Environment.GetEnvironmentVariable("S254_R1_EXTERNAL_PHASE");
+        var path = phase is null ? _path :
+            Environment.GetEnvironmentVariable("S254_R1_EXTERNAL_PATH") ??
+            throw new InvalidOperationException("S254_R1_EXTERNAL_PATH must name the durable store.");
+        if (phase is not null)
+            Console.WriteLine($"s254-r1-external phase={phase} pid={Environment.ProcessId} path={path}");
+
+        var files = new Dictionary<string, string>(CrossProjectFixture(), StringComparer.Ordinal)
+        {
+            [Names.AppSource] = """
+                namespace App;
+                public static class Application
+                {
+                    public static int Run() => Lib.Value.Get();
+                    public static string External() => string.Concat("left", "right");
+                }
+                """,
+        };
+        var context = Context(Repo, "run:external", files);
+        var (analysis, app, lib) = await LiveCrossProjectAsync(context);
+        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
+        var query = VerifiedCSharpOccurrenceAuthority.Bind(new(Repo, target), analysis.Universe, app.Compilation);
+
+        if (phase != "verify")
+        {
+            using var published = await PublishAsync(path, "run:external", context);
+            CheckExternalCoverage(await published.FindOccurrencesAsync(query), target, app.Descriptor.ProjectUnitId);
+        }
+
+        if (phase != "publish")
+        {
+            using var reopened = Open(path);
+            CheckExternalCoverage(await reopened.FindOccurrencesAsync(query), target, app.Descriptor.ProjectUnitId);
+        }
+
+        var unit = PublishedUnit(path, app.Descriptor.ProjectUnitId);
+        Assert.True(unit["RequiresAuthority"]!.GetValue<bool>());
+        Assert.Single(unit["Facts"]!.AsArray());
+        Assert.Equal(lib.Descriptor.ProjectUnitId,
+            unit["Authority"]!["Facts"]![0]!["DefiningProjectUnitId"]!.GetValue<string>());
+        Assert.Equal(1, unit["Coverage"]!["External"]!.GetValue<int>());
+        Assert.Equal(0, unit["Coverage"]!["Unresolved"]!.GetValue<int>());
+    }
+
+    private static void CheckExternalCoverage(CodeOccurrenceQueryResult result, CodeOccurrenceTargetId target, string owner)
+    {
+        Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
+        Assert.True(result.IsComplete);
+        var occurrence = Assert.Single(result.Occurrences);
+        Assert.Equal(target, occurrence.TargetId);
+        Assert.Equal(owner, occurrence.SourceUnitId);
+        Assert.Equal(1, result.Coverage!.InvocationFacts);
+        Assert.Equal(1, result.Coverage.External);
+        Assert.Equal(0, result.Coverage.Unresolved);
+        Assert.Equal(0, result.Coverage.Ambiguous);
     }
 
     [Fact]
@@ -245,6 +367,116 @@ public sealed class S23PublicationIntegrationTests : IDisposable
 
         Assert.NotEmpty(published);
         Assert.Empty(F.Rows(_path, "AndiritOccurrenceUnit"));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task MissingDeclaredUnit_ReportsIncompleteAcrossNativeReopen(bool projectIsPresent)
+    {
+        const string firstRun = "run:full-before-missing";
+        const string secondRun = "run:missing-declared-unit";
+        var files = new Dictionary<string, string>(CrossProjectFixture(), StringComparer.Ordinal);
+        var completeContext = Context(Repo, firstRun, files);
+        var (complete, app, lib) = await LiveCrossProjectAsync(completeContext);
+        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
+        var boundComplete = VerifiedCSharpOccurrenceAuthority.Bind(new(Repo, target), complete.Universe, app.Compilation);
+        CodeGraphPublication previous;
+        using (var store = await PublishAsync(_path, firstRun, completeContext))
+        {
+            var result = await store.FindOccurrencesAsync(boundComplete);
+            Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
+            Assert.True(result.IsComplete);
+            Assert.Single(result.Occurrences);
+            previous = Assert.IsType<CodeGraphPublication>(result.Publication);
+        }
+
+        const string missing = "Missing/Missing.csproj";
+        files["Repository.slnx"] = """
+            <Solution>
+              <Project Path="App/App.csproj" />
+              <Project Path="Lib/Lib.csproj" />
+              <Project Path="Missing/Missing.csproj" />
+            </Solution>
+            """;
+        if (projectIsPresent)
+            files[missing] = """<Project><ItemGroup><Compile Include="Uncaptured.cs" /></ItemGroup></Project>""";
+
+        var context = Context(Repo, secondRun, files);
+        var incomplete = await CSharpCodeGraphPlugin.PrepareAnalysisAsync(context);
+        var missingUnit = CSharpProjectDiscovery.IndexUnitId(missing);
+        Assert.Equal(missingUnit, Assert.Single(incomplete.Universe.MissingScopeUnits));
+        Assert.Equal(3, incomplete.Universe.Scope.Units.Length);
+        Assert.Equal(2, incomplete.Universe.Entries.Length);
+        Assert.False(incomplete.Universe.IsComplete);
+
+        async Task VerifyAsync(LatticeCodeGraphStore store)
+        {
+            var result = await store.FindOccurrencesAsync(new CodeOccurrenceQuery(Repo, target));
+            Assert.Equal(CodeOccurrenceAvailability.IncompleteAnalysis, result.Availability);
+            Assert.Equal(secondRun, result.Publication!.IndexRunId.Value);
+            Assert.False(result.IsComplete);
+            Assert.Empty(result.Occurrences);
+            Assert.Equal(CodeRelationshipCoverageState.Partial, result.Coverage!.State);
+            Assert.Equal(3, result.Coverage.DeclaredUnitCount);
+            Assert.Equal(2, result.Coverage.VerifiedUnitCount);
+            Assert.Equal(incomplete.Universe.Scope.Identity, result.Coverage.ScopeId);
+            Assert.Equal(incomplete.Universe.Identity, result.Coverage.UniverseId);
+            Assert.Equal(0, result.Coverage.InvocationFacts);
+
+            var stale = await store.FindOccurrencesAsync(new CodeOccurrenceQuery(Repo, target, previous));
+            Assert.Equal(CodeOccurrenceAvailability.StalePublication, stale.Availability);
+            Assert.Empty(stale.Occurrences);
+            Assert.False(stale.IsComplete);
+
+            var obsoleteAuthority = await store.FindOccurrencesAsync(boundComplete);
+            Assert.Equal(CodeOccurrenceAvailability.AnalysisUnavailable, obsoleteAuthority.Availability);
+            Assert.Empty(obsoleteAuthority.Occurrences);
+        }
+
+        using (var store = await PublishAsync(_path, secondRun, context))
+            await VerifyAsync(store);
+        var rows = F.Rows(_path, "AndiritOccurrenceUnit");
+        Assert.Equal(2, rows.Count);
+        Assert.All(rows.Values, row =>
+        {
+            Assert.Null(row["Authority"]);
+            Assert.False(row["RequiresAuthority"]!.GetValue<bool>());
+            Assert.Empty(row["Facts"]!.AsArray());
+        });
+        using var reopened = Open(_path);
+        await VerifyAsync(reopened);
+    }
+
+    [Fact]
+    public async Task MissingDeclaredUnitWithUnrelatedProvenanceRefusal_PreservesUnavailableAnalysis()
+    {
+        var files = new Dictionary<string, string>(CrossProjectFixture(), StringComparer.Ordinal)
+        {
+            ["Repository.slnx"] = """
+                <Solution>
+                  <Project Path="App/App.csproj" />
+                  <Project Path="Lib/Lib.csproj" />
+                  <Project Path="Missing/Missing.csproj" />
+                </Solution>
+                """,
+            ["Missing/Missing.csproj"] = """<Project><Import Project="Unknown.props" /></Project>"""
+        };
+        const string run = "run:malformed-scope";
+        var context = Context(Repo, run, files);
+        var (analysis, _, lib) = await LiveCrossProjectAsync(context);
+        Assert.Equal(2, analysis.Universe.Entries.Length);
+        Assert.Single(analysis.Universe.MissingScopeUnits);
+        Assert.Contains("UnsupportedProjectEvaluation:Missing/Missing.csproj", analysis.Universe.Refusals);
+        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
+        (await PublishAsync(_path, run, context)).Dispose();
+
+        using var reopened = Open(_path);
+        var result = await reopened.FindOccurrencesAsync(new CodeOccurrenceQuery(Repo, target));
+        Assert.Equal(CodeOccurrenceAvailability.AnalysisUnavailable, result.Availability);
+        Assert.Empty(result.Occurrences);
+        Assert.False(result.IsComplete);
+        Assert.Null(result.Coverage);
     }
 
     // WP-S23-3A R1: the previously pinned blocker (durable reopen of a
@@ -412,6 +644,220 @@ public sealed class S23PublicationIntegrationTests : IDisposable
         Assert.Equal(CodeOccurrenceAvailability.AnalysisUnavailable, result.Availability);
         Assert.Empty(result.Occurrences);
         Assert.False(result.IsComplete);
+    }
+
+    [Theory]
+    [InlineData(1, 1, 0)]
+    [InlineData(2, 2, 0)]
+    [InlineData(3, 3, 0)]
+    [InlineData(2, 0, 0)]
+    [InlineData(2, 1, 0)]
+    [InlineData(2, 2, 1)]
+    [InlineData(2, 2, 2)]
+    public async Task CompleteScopeMembership_PublishesDisjointRows(int projects, int calls, int missing)
+    {
+        const string run = "run:membership";
+        var files = MembershipFixture(projects, calls, missing);
+        var context = Context(Repo, run, files);
+        var phase = FreshProcessPhase;
+        var path = phase is null ? _path : FreshProcessHarnessPath() + $"-{projects}-{calls}-{missing}";
+        if (phase is not null)
+            Console.WriteLine($"membership phase={phase} pid={Environment.ProcessId} path={path}");
+
+        if (phase != "verify")
+        {
+            using var store = await PublishAsync(path, run, context);
+            await CheckMembershipAsync(store, context, projects, calls, missing);
+        }
+        if (phase != "publish")
+        {
+            using var reopened = Open(path);
+            await CheckMembershipAsync(reopened, context, projects, calls, missing);
+        }
+        CheckMembershipRows(path, projects, calls, missing);
+    }
+
+    [Fact]
+    public async Task CompleteScopeMembership_ReplacementRestoresWithoutAccumulating()
+    {
+        var generations = new[] { ("first", 0), ("partial", 1), ("restored", 0), ("repeat", 0) };
+        if (FreshProcessPhase is { } phase && phase.Contains('-', StringComparison.Ordinal))
+        {
+            var parts = phase.Split('-', 2);
+            var (action, generation) = (parts[0], parts[1]);
+            var (_, missing) = Assert.Single(generations, item => item.Item1 == generation);
+            var context = Context(Repo, "run:membership-" + generation, MembershipFixture(2, 2, missing));
+            var path = FreshProcessHarnessPath() + "-replacement";
+            Console.WriteLine($"membership phase={phase} pid={Environment.ProcessId} path={path}");
+            using (var store = action == "publish" ? await PublishAsync(path, context.IndexRunId.Value, context) : Open(path))
+                await CheckMembershipAsync(store, context, 2, 2, missing);
+            CheckMembershipRows(path, 2, 2, missing);
+            return;
+        }
+
+        CodeOccurrenceQuery? firstQuery = null;
+        CodeGraphPublication? firstPublication = null;
+        foreach (var (run, missing) in generations)
+        {
+            var context = Context(Repo, "run:membership-" + run, MembershipFixture(2, 2, missing));
+            using (var store = await PublishAsync(_path, context.IndexRunId.Value, context))
+            {
+                await CheckMembershipAsync(store, context, 2, 2, missing);
+                if (firstQuery is null)
+                {
+                    firstQuery = await MembershipQueryAsync(context, 2, 0);
+                    firstPublication = await store.GetLatestPublicationAsync(Repo);
+                    Assert.NotNull(firstPublication);
+                }
+            }
+
+            CheckMembershipRows(_path, 2, 2, missing);
+            using var reopened = Open(_path);
+            await CheckMembershipAsync(reopened, context, 2, 2, missing);
+            if (run != "first")
+            {
+                var stale = await reopened.FindOccurrencesAsync(new CodeOccurrenceQuery(Repo, firstQuery.TargetId, firstPublication)
+                {
+                    CurrentAuthority = firstQuery.CurrentAuthority,
+                });
+                Assert.Equal(CodeOccurrenceAvailability.StalePublication, stale.Availability);
+                Assert.False(stale.IsComplete);
+                Assert.Empty(stale.Occurrences);
+                Assert.Null(stale.Coverage);
+            }
+        }
+    }
+
+    [Fact]
+    public async Task CompleteScopeMembership_ReopensLegacyRowsWithMatchingAuthority()
+    {
+        const string run = "run:legacy-membership";
+        var fixture = await F.Build();
+        var phase = FreshProcessPhase;
+        var path = phase is null ? _path : FreshProcessHarnessPath() + "-legacy";
+        if (phase is not null)
+            Console.WriteLine($"membership phase={phase} pid={Environment.ProcessId} path={path}");
+
+        // The controlled native handoff writes the legacy full counts to each row.
+        // Its fixed platform evidence can be rebuilt across processes without
+        // including the changed application binaries in the platform reference set.
+        if (phase != "verify")
+        {
+            using (var store = Open(path))
+                await fixture.Publish(store, run, fixture.Entries);
+            var rows = F.Rows(path, "AndiritOccurrenceUnit").Values;
+            Assert.Equal(6, rows.Count);
+            Assert.All(rows, row => Assert.Equal(6, row["Coverage"]!["VerifiedUnitCount"]!.GetValue<int>()));
+        }
+        if (phase != "publish")
+        {
+            using var reopened = Open(path);
+            var result = await reopened.FindOccurrencesAsync(fixture.Query(fixture.LibTarget));
+            Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
+            Assert.True(result.IsComplete);
+            Assert.Equal(2, result.Occurrences.Count);
+            Assert.Equal(6, result.Coverage!.DeclaredUnitCount);
+            Assert.Equal(6, result.Coverage.VerifiedUnitCount);
+            Assert.Equal(5, result.Coverage.InvocationFacts);
+            Assert.Equal(0, result.Coverage.Unresolved);
+            Console.WriteLine($"{run} {result.Availability} {result.Coverage.DeclaredUnitCount}/{result.Coverage.VerifiedUnitCount} " +
+                $"complete={result.IsComplete} hits={result.Occurrences.Count} facts={result.Coverage.InvocationFacts}");
+        }
+    }
+
+    private static Dictionary<string, string> MembershipFixture(int projects, int calls, int missing)
+    {
+        var files = new Dictionary<string, string>(StringComparer.Ordinal);
+        var solution = new StringBuilder("<Solution>");
+        for (var i = 0; i < projects + missing; i++)
+        {
+            var path = $"P{i}/P{i}.csproj";
+            solution.Append($"<Project Path=\"{path}\"/>");
+            if (i >= projects)
+                continue;
+
+            files[path] = "<Project Sdk=\"Microsoft.NET.Sdk\" />";
+            files[$"P{i}/Value.cs"] = $"namespace P{i}; public static class Value {{ " +
+                "public static int Get() => 1; " +
+                (i < calls ? "public static int Call() => Get(); }" : "}");
+        }
+        files["Membership.slnx"] = solution.Append("</Solution>").ToString();
+        return files;
+    }
+
+    private static async Task<CodeOccurrenceQuery> MembershipQueryAsync(CodeGraphPluginContext context,
+        int projects, int missing)
+    {
+        var analysis = await CSharpCodeGraphPlugin.PrepareAnalysisAsync(context);
+        var declared = Enumerable.Range(0, projects + missing)
+            .Select(i => CSharpProjectDiscovery.IndexUnitId($"P{i}/P{i}.csproj")).Order(StringComparer.Ordinal);
+        var verified = Enumerable.Range(0, projects)
+            .Select(i => CSharpProjectDiscovery.IndexUnitId($"P{i}/P{i}.csproj")).Order(StringComparer.Ordinal);
+        Assert.Equal(declared, analysis.Universe.Scope.Units.Select(unit => unit.ProjectUnitId).Order(StringComparer.Ordinal));
+        Assert.Equal(verified, analysis.Universe.Entries.Select(unit => unit.Descriptor.ProjectUnitId).Order(StringComparer.Ordinal));
+        var first = analysis.Universe.Entries.Single(unit => unit.Descriptor.ProjectUnitId == CSharpProjectDiscovery.IndexUnitId("P0/P0.csproj"));
+        var query = new CodeOccurrenceQuery(Repo, ExpectedTarget(first, Method(first, "P0.Value", "Get")));
+        return missing == 0 ? VerifiedCSharpOccurrenceAuthority.Bind(query, analysis.Universe, first.Compilation) : query;
+    }
+
+    private static async Task CheckMembershipAsync(LatticeCodeGraphStore store, CodeGraphPluginContext context,
+        int projects, int calls, int missing)
+    {
+        var query = await MembershipQueryAsync(context, projects, missing);
+        var result = await store.FindOccurrencesAsync(query);
+        var complete = missing == 0;
+        Assert.Equal(complete ? CodeOccurrenceAvailability.Available : CodeOccurrenceAvailability.IncompleteAnalysis,
+            result.Availability);
+        Assert.Equal(context.IndexRunId, result.Publication!.IndexRunId);
+        Assert.Equal(complete, result.IsComplete);
+        Assert.Equal(complete && calls > 0 ? 1 : 0, result.Occurrences.Count);
+        Assert.Equal(projects + missing, result.Coverage!.DeclaredUnitCount);
+        Assert.Equal(projects, result.Coverage.VerifiedUnitCount);
+        Assert.Equal(complete ? calls : 0, result.Coverage.InvocationFacts);
+        Assert.Equal(complete ? 0 : calls, result.Coverage.Unresolved);
+        Assert.Equal(0, result.Coverage.External);
+        Assert.Equal(0, result.Coverage.Ambiguous);
+        Assert.Equal(0, result.Coverage.Unsupported);
+        Assert.Equal(0, result.Coverage.UnsupportedCategories);
+        Assert.Equal(0, result.Coverage.ConditionalInactive);
+        Assert.Empty(result.Coverage.UnavailableReasons);
+        if (complete)
+        {
+            var changed = MembershipFixture(projects, calls, missing);
+            changed["P0/Value.cs"] = changed["P0/Value.cs"].Replace("Get() => 1", "Get() => 2", StringComparison.Ordinal);
+            var current = await MembershipQueryAsync(Context(Repo, context.IndexRunId.Value, changed), projects, missing);
+            var mismatched = await store.FindOccurrencesAsync(query with { CurrentAuthority = current.CurrentAuthority });
+            Assert.Equal(CodeOccurrenceAvailability.StalePublication, mismatched.Availability);
+            Assert.False(mismatched.IsComplete);
+            Assert.Empty(mismatched.Occurrences);
+            Assert.Null(mismatched.Coverage);
+        }
+        Console.WriteLine($"{context.IndexRunId.Value} {result.Availability} {result.Coverage.DeclaredUnitCount}/{result.Coverage.VerifiedUnitCount} " +
+            $"complete={result.IsComplete} hits={result.Occurrences.Count} facts={result.Coverage.InvocationFacts} unresolved={result.Coverage.Unresolved}");
+    }
+
+    private static void CheckMembershipRows(string path, int projects, int calls, int missing)
+    {
+        var rows = F.Rows(path, "AndiritOccurrenceUnit").Values.ToArray();
+        Assert.Equal(projects, rows.Length);
+        Assert.Equal(projects + missing, rows.Sum(row => row["Coverage"]!["DeclaredUnitCount"]!.GetValue<int>()));
+        Assert.Equal(missing == 0 ? calls : 0, rows.Sum(row => row["Facts"]!.AsArray().Count));
+        Assert.Equal(missing == 0 ? 0 : calls, rows.Sum(row => row["Coverage"]!["Unresolved"]!.GetValue<int>()));
+        Assert.All(rows, row =>
+        {
+            Assert.Equal(1, row["Coverage"]!["VerifiedUnitCount"]!.GetValue<int>());
+            if (missing == 0)
+            {
+                Assert.Equal(1, row["Coverage"]!["DeclaredUnitCount"]!.GetValue<int>());
+                var authority = row["Authority"]!;
+                Assert.Equal(row["IndexUnitId"]!.GetValue<string>(), authority["SourceUnitId"]!.GetValue<string>());
+                Assert.Equal(projects, authority["Members"]!.AsArray().Count);
+                Assert.Equal(projects, authority["Coverage"]!["DeclaredUnitCount"]!.GetValue<int>());
+                Assert.Equal(projects, authority["Coverage"]!["VerifiedUnitCount"]!.GetValue<int>());
+            }
+            else
+                Assert.Null(row["Authority"]);
+        });
     }
 
     [Fact]

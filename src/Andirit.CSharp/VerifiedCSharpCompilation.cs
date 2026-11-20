@@ -106,12 +106,12 @@ internal sealed class VerifiedCSharpCompilation
             if (!byPath.TryGetValue(tree.FilePath, out var source) ||
                 !tree.GetText(cancellationToken).ContentEquals(source.Text))
                 throw new InvalidDataException("RoslynTextMismatch:" + tree.FilePath);
+            // A-01: preprocessor symbols are joined with ',' in the canonical
+            // source item, so a symbol containing ',' or '|' could collide with
+            // the field separators. Valid C# symbols are identifiers and cannot
+            // contain either character.
             if (tree.Options is not CSharpParseOptions parse || parse.Kind != SourceCodeKind.Regular ||
                 parse.DocumentationMode != DocumentationMode.Diagnose || parse.Features.Any() || tree.FilePath.Contains('|') ||
-                // A-01: preprocessor symbols are joined with ',' in the canonical
-                // source item, so a symbol containing ',' or '|' could collide with
-                // the field separators. Valid C# symbols are identifiers and cannot
-                // contain either character.
                 parse.PreprocessorSymbolNames.Any(symbol => symbol.Contains(',') || symbol.Contains('|')))
                 throw new InvalidDataException("UnsupportedParseConfiguration");
             identities.Add(new(tree.FilePath.Replace('\\', '/'), source.ContentHash,

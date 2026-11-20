@@ -1,0 +1,120 @@
+{
+  "review": "ANDIRIT-CI1A-S2.5-WP-S25-4-QUAL-04",
+  "review_window_utc": {
+    "started": "2026-11-18T11:03:32.7828283Z",
+    "finalized": "2026-11-19"
+  },
+  "repository": {
+    "path": "D:\\projects\\Andirit",
+    "branch": "main",
+    "head_commit": "dba6597284c655b7fd7d2645c1ecb9486fe6d693",
+    "head_tree": "fda08e42428625ea96e0deccf3a1d97eff7a99d1",
+    "recorded_origin_main": "48370711a6247b972dfc83628618924e864be374",
+    "ahead_of_recorded_origin_main": 11,
+    "behind_recorded_origin_main": 0,
+    "worktrees": 1,
+    "stashes": 0,
+    "canonical_changes_before_review": "none"
+  },
+  "reviewed_revisions": {
+    "r3_implementation": {
+      "commit": "8b83e0558f4c757272cd60a1c81b8dbc6fd7873f",
+      "tree": "0f89a469858abd2126f3be01cd060bc534e930c0",
+      "parent": "495e73a0f24413d2dc8ce5e75e8dd3bf58833228",
+      "author_date": "2026-11-17T17:37:18+08:00",
+      "commit_date": "2026-11-17T17:37:18+08:00",
+      "subject": "fix(analysis): correct complete-scope membership accounting (Q03-F-01)",
+      "is_ancestor_of_review_head": true
+    },
+    "r2_negative_baseline": {
+      "commit": "25bc6e3b4305c7ce088deb36cfb000138dc76648",
+      "tree": "2a1309d8e08f230e61a1cd1bf0f1b596179ea8b3",
+      "parent": "786574e34de0e5e1b242a784a5dc7297e0162bb1",
+      "author_date": "2026-11-16T16:34:50+08:00",
+      "commit_date": "2026-11-16T16:34:50+08:00",
+      "subject": "fix(analysis): distinguish incomplete declared analysis (F-S254-03)",
+      "is_ancestor_of_r3": true
+    },
+    "qual03_handoff": {
+      "commit": "495e73a0f24413d2dc8ce5e75e8dd3bf58833228",
+      "tree": "804bdf4aa7fdedc9ca7c30d6dac0caf9d174592d",
+      "is_ancestor_of_r3": true
+    },
+    "r1_external_baseline": {
+      "commit": "afa136f4033f35d9a657d8c5f1d5db92d736b679",
+      "tree": "2962442c4c1528193fe79df9ea0ecc31701a463d"
+    }
+  },
+  "r3_implementation_files": {
+    "count": 5,
+    "production": 4,
+    "test": 1,
+    "paths": [
+      "src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs",
+      "src/Andirit.CSharp/VerifiedCSharpOccurrenceAuthority.cs",
+      "src/Andirit.LatticeDb/LatticeCodeGraphStore.cs",
+      "src/Andirit/CodeOccurrenceAuthority.cs",
+      "tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs"
+    ],
+    "sha256": {
+      "src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs": "05fecf10e1a178915f34fc2a6d566f0d003530aa43b725ea63be016303135af6",
+      "src/Andirit.CSharp/VerifiedCSharpOccurrenceAuthority.cs": "91bbe590b4fd87e5ac3ede18dbb2fd0846d72a150ffddca35cccdfe16cbd420c",
+      "src/Andirit.LatticeDb/LatticeCodeGraphStore.cs": "61b68380ab50e9d41863b2475371646ee1f7b66fd292fbc9fdd573d23db23dd4",
+      "src/Andirit/CodeOccurrenceAuthority.cs": "03895695bf53289510e0655126feb2fc4250c175e74cc6a4e0ec8d360d31c329",
+      "tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs": "e306141b15ff91eac42ef32db37f42e564934ac5714f8d9fd177899a93197de9"
+    }
+  },
+  "exports": {
+    "r3_exact": {
+      "revision": "8b83e0558f4c757272cd60a1c81b8dbc6fd7873f",
+      "tracked_entries": 4054,
+      "missing": 0,
+      "mismatched": 0,
+      "build_output_extras": 1961,
+      "unexpected_extras": 0
+    },
+    "r2_exact": {
+      "revision": "25bc6e3b4305c7ce088deb36cfb000138dc76648",
+      "tracked_entries": 3331,
+      "missing": 0,
+      "mismatched": 0,
+      "build_output_extras": 1284,
+      "unexpected_extras": 0
+    },
+    "r3_checkout_profile": {
+      "tracked_entries": 4054,
+      "missing": 0,
+      "mismatched": 790,
+      "line_ending_only": 790,
+      "other_mismatched": 0,
+      "build_output_extras": 55,
+      "unexpected_extras": 0
+    }
+  },
+  "environment": {
+    "os": "Microsoft Windows NT 10.0.26200.0",
+    "architecture": "x64",
+    "rid": "win-x64",
+    "dotnet_sdk": "10.0.401",
+    "dotnet_runtime": "10.0.12",
+    "msbuild": "18.9.11+e34a38d2a",
+    "latticedb_package": "LatticeDbSharp 0.2.0",
+    "scratch_root": "C:\\Windows\\Temp\\opencode\\qual04"
+  },
+  "independence": {
+    "reviewer_session_id": "ses_e1257f799ffefw0spAJ9UdV67w",
+    "basis": [
+      "fresh reviewer session separate from R3 implementation and producer verification",
+      "reviewer-owned harness and independent Python checkers",
+      "independent expectations derived from governing contracts",
+      "pinned R2 negative baseline and bounded mutation controls"
+    ],
+    "organizational_independence": "not established; no employment or reporting-line evidence was supplied",
+    "producer_session_id": "not recorded in the R3 evidence package"
+  },
+  "network": {
+    "fetch_performed": false,
+    "push_performed": false,
+    "remote_ci_execution": false
+  }
+}

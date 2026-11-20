@@ -1,0 +1,96 @@
+{
+  "case": "review-refusal-publish",
+  "processId": 32236,
+  "database": "C:\\Users\\Laszlos\\source\\repos\\Solo\\andirit-qual03\\stores\\corrected/review-refusal.ltdb",
+  "sources": {
+    "Caller/Caller.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CPropertyGroup Condition=\u0022\u0027x\u0027==\u0027x\u0027\u0022\u003E\u003CTargetFramework\u003Enet10.0\u003C/TargetFramework\u003E\u003C/PropertyGroup\u003E\u003CItemGroup\u003E\u003CProjectReference Include=\u0022../Dependency/Dependency.csproj\u0022/\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E",
+    "Caller/Fixture1.cs": "namespace QualifierCaller;\npublic static class Work1\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        _ = string.Concat(\u0022left\u0022, \u0022right\u0022);\n    }\n}\n",
+    "Caller/Fixture10.cs": "namespace QualifierCaller;\npublic static class Work10\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture2.cs": "namespace QualifierCaller;\npublic static class Work2\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture3.cs": "namespace QualifierCaller;\npublic static class Work3\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture4.cs": "namespace QualifierCaller;\npublic static class Work4\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture5.cs": "namespace QualifierCaller;\npublic static class Work5\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture6.cs": "namespace QualifierCaller;\npublic static class Work6\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture7.cs": "namespace QualifierCaller;\npublic static class Work7\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture8.cs": "namespace QualifierCaller;\npublic static class Work8\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture9.cs": "namespace QualifierCaller;\npublic static class Work9\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Dependency/Api.cs": "namespace QualifierDependency;\npublic static class Api\n{\n    public static int Mark() =\u003E 7;\n}\r\n",
+    "Dependency/Dependency.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CPropertyGroup\u003E\u003CTargetFramework\u003Enet10.0\u003C/TargetFramework\u003E\u003C/PropertyGroup\u003E\u003C/Project\u003E\r\n",
+    "Review.slnx": "\u003CSolution\u003E\u003CProject Path=\u0022Caller/Caller.csproj\u0022/\u003E\u003CProject Path=\u0022Dependency/Dependency.csproj\u0022/\u003E\u003CProject Path=\u0022Gone/Gone.csproj\u0022/\u003E\u003C/Solution\u003E"
+  },
+  "membership": {
+    "declared": [
+      {
+        "ProjectUnitId": "csharp:project:28778c4583d8a473d948dd759cecc81691a344f491523ed96f034667e438925e",
+        "ProjectPath": "Gone/Gone.csproj",
+        "SourcePaths": []
+      },
+      {
+        "ProjectUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "ProjectPath": "Caller/Caller.csproj",
+        "SourcePaths": [
+          "Caller/Fixture1.cs",
+          "Caller/Fixture10.cs",
+          "Caller/Fixture2.cs",
+          "Caller/Fixture3.cs",
+          "Caller/Fixture4.cs",
+          "Caller/Fixture5.cs",
+          "Caller/Fixture6.cs",
+          "Caller/Fixture7.cs",
+          "Caller/Fixture8.cs",
+          "Caller/Fixture9.cs"
+        ]
+      },
+      {
+        "ProjectUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "ProjectPath": "Dependency/Dependency.csproj",
+        "SourcePaths": [
+          "Dependency/Api.cs"
+        ]
+      }
+    ],
+    "verified": [
+      "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8"
+    ],
+    "Refusals": [
+      "MissingDeclaredProject",
+      "MissingDeclaredProject:Gone/Gone.csproj",
+      "UnsupportedProjectEvaluation:Caller/Caller.csproj"
+    ],
+    "IsComplete": false
+  },
+  "result": {
+    "Availability": 1,
+    "Publication": {
+      "RepositoryId": {
+        "Value": "review:qual03:refusal"
+      },
+      "IndexRunId": {
+        "Value": "after"
+      },
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "aca16af561f40782d9cf916b9a89f3e022fc08547b32a906e9f89cb9184fd503"
+      }
+    },
+    "Occurrences": [],
+    "TotalMatches": 0,
+    "Examined": 0,
+    "RefusalReason": "Occurrence analysis is unavailable for this publication; reindex required.",
+    "Coverage": null,
+    "NextContinuationToken": null,
+    "Continuation": 0,
+    "CoverageBreakdown": null,
+    "UnitCoverage": [],
+    "Truncated": false,
+    "IsComplete": false
+  },
+  "native": {
+    "AndiritOccurrenceMeta": [],
+    "AndiritOccurrencePage": [],
+    "AndiritOccurrenceUnit": []
+  },
+  "decodedUnits": [],
+  "failures": []
+}

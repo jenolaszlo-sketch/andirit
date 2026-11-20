@@ -1,0 +1,240 @@
+commit 25bc6e3b4305c7ce088deb36cfb000138dc76648
+Author:     jenol <jenolaszlo-sketch@users.noreply.github.com>
+AuthorDate: Mon Nov 16 16:34:50 2026 +0800
+Commit:     jenol <jenolaszlo-sketch@users.noreply.github.com>
+CommitDate: Mon Nov 16 16:34:50 2026 +0800
+
+    fix(analysis): distinguish incomplete declared analysis (F-S254-03)
+
+diff --git a/src/Andirit.CSharp/CSharpCodeGraphPlugin.Compilation.cs b/src/Andirit.CSharp/CSharpCodeGraphPlugin.Compilation.cs
+index cfe078c..aa140dd 100644
+--- a/src/Andirit.CSharp/CSharpCodeGraphPlugin.Compilation.cs
++++ b/src/Andirit.CSharp/CSharpCodeGraphPlugin.Compilation.cs
+@@ -95,6 +95,7 @@ public sealed partial class CSharpCodeGraphPlugin
+         // A solution referencing an absent accepted project cannot claim scope completeness.
+         if (discovery.Warnings.Contains("csharp.solution.missing-project"))
+             allRefusals.Add("MissingDeclaredProject");
++        var missingProjects = new HashSet<string>(CSharpProjectDiscovery.PathComparer);
+         foreach (var solution in sources.Where(s => s.Path.EndsWith(".slnx", StringComparison.OrdinalIgnoreCase) ||
+                      s.Path.EndsWith(".sln", StringComparison.OrdinalIgnoreCase)))
+         {
+@@ -105,7 +106,10 @@ public sealed partial class CSharpCodeGraphPlugin
+             }
+             foreach (var declared in CSharpProjectDiscovery.DeclaredSolutionProjects(solution.Path, solution.Text.ToString()))
+                 if (!content.Keys.Contains(declared, CSharpProjectDiscovery.PathComparer))
++                {
++                    missingProjects.Add(declared);
+                     allRefusals.Add("MissingDeclaredProject:" + declared);
++                }
+         }
+         var ordered = OrderProjects(discovery.Projects, byProject, warnings);
+         foreach (var project in ordered)
+@@ -172,7 +176,8 @@ public sealed partial class CSharpCodeGraphPlugin
+             prepared.Add(project.Path, new(project, compilation, available, verified, refusals.ToImmutableArray()));
+         }
+         var scope = VerifiedCSharpScope.Declare(context.RepositoryId.Value, discovery.Projects.Select(p =>
+-            new CSharpScopeUnit(CSharpProjectDiscovery.IndexUnitId(p.Path), p.Path, p.SourcePaths.ToImmutableArray())));
++                new CSharpScopeUnit(CSharpProjectDiscovery.IndexUnitId(p.Path), p.Path, p.SourcePaths.ToImmutableArray()))
++            .Concat(missingProjects.Select(path => new CSharpScopeUnit(CSharpProjectDiscovery.IndexUnitId(path), path, []))));
+         var universe = VerifiedCSharpUniverse.Create(context.RepositoryId.Value, scope,
+             prepared.Values.Where(p => p.Verified is not null).Select(p => p.Verified!), allRefusals);
+         cancellationToken.ThrowIfCancellationRequested();
+diff --git a/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs b/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
+index b97cd00..1d4befe 100644
+--- a/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
++++ b/src/Andirit.CSharp/CSharpCodeGraphPlugin.Session.cs
+@@ -33,6 +33,17 @@ public sealed partial class CSharpCodeGraphPlugin
+             var relationshipTotals = new Dictionary<string, RelationshipCounters>(
+                 StringComparer.Ordinal);
+             var indexUnitCoverage = new List<CodeIndexUnitCoverage>();
++            var missingScopeUnitCount = analysis.Universe.MissingScopeUnits.Length;
++            // Coverage alone can describe a partially analyzed declared scope.
++            // Preserve graph-only behavior if there is no usable source analysis
++            // or the universe also has an unrelated provenance refusal.
++            int? unreportedMissingUnits = missingScopeUnitCount > 0 &&
++                analysis.Universe.Entries.Any(entry => !entry.Sources.IsEmpty) &&
++                analysis.Universe.Refusals.All(reason => reason == "MissingDeclaredProject" ||
++                    reason.StartsWith("MissingDeclaredProject:", StringComparison.Ordinal) ||
++                    reason.StartsWith("MissingDeclaredSource:", StringComparison.Ordinal))
++                ? missingScopeUnitCount
++                : null;
+             foreach (var prepared in analysis.Projects)
+             {
+                 var project = prepared.Project;
+@@ -71,7 +82,10 @@ public sealed partial class CSharpCodeGraphPlugin
+                         CSharpProjectDiscovery.IndexUnitId(project.Path),
+                         analysis.Universe,
+                         prepared.Verified,
++                        unreportedMissingUnits,
+                         cancellationToken).ConfigureAwait(false);
++                    if (unreportedMissingUnits is not null)
++                        unreportedMissingUnits = 0;
+                 }
+ 
+                 await builder.WriteAsync(sink, cancellationToken).ConfigureAwait(false);
+@@ -401,6 +415,7 @@ public sealed partial class CSharpCodeGraphPlugin
+         string unitId,
+         VerifiedCSharpUniverse universe,
+         VerifiedCSharpCompilation source,
++        int? missingDeclaredUnits,
+         CancellationToken cancellationToken)
+     {
+         if (sink is not ICodeOccurrenceAuthoritySink authoritySink)
+@@ -410,11 +425,34 @@ public sealed partial class CSharpCodeGraphPlugin
+             new VerifiedOccurrenceExtractionRequest(repositoryId, pluginId, source,
+                 OccurrenceIdentifierDigest, OccurrenceDeclarationDigest, OccurrenceShapeDigest,
+                 OccurrenceTargetDocumentId, pluginVersion));
++        var origin = new CodeFactOrigin(repositoryId, pluginId, pluginVersion, runId,
++            new CodeIndexUnitId(unitId));
+         if (extraction.Authority is null)
++        {
++            if (missingDeclaredUnits is not { } missing || !extraction.Facts.IsEmpty)
++                return;
++
++            // Partial units contribute disjoint membership counts. Assign all
++            // missing units to the first verified unit so aggregation adds them
++            // exactly once, while each scanned unit preserves its diagnostics.
++            var observed = extraction.Coverage;
++            var partial = new CodeOccurrenceCoverage(
++                unsupportedCategories: observed.UnsupportedCategories,
++                state: CodeRelationshipCoverageState.Partial,
++                scopeId: observed.ScopeId,
++                universeId: observed.UniverseId,
++                declaredUnitCount: 1 + missing,
++                verifiedUnitCount: 1,
++                external: observed.External,
++                ambiguous: observed.Ambiguous,
++                unresolved: observed.Unresolved,
++                unsupported: observed.Unsupported,
++                conditionalInactive: observed.ConditionalInactive);
++            await sink.WriteBatchAsync(new CodeGraphBatch(origin, occurrenceCoverage: partial), cancellationToken)
++                .ConfigureAwait(false);
+             return;
++        }
+ 
+-        var origin = new CodeFactOrigin(repositoryId, pluginId, pluginVersion, runId,
+-            new CodeIndexUnitId(unitId));
+         await authoritySink.SetOccurrenceAuthorityAsync(origin, extraction.Authority, cancellationToken)
+             .ConfigureAwait(false);
+         await sink.WriteBatchAsync(new CodeGraphBatch(origin,
+diff --git a/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs b/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs
+index c069b5d..dc2daa1 100644
+--- a/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs
++++ b/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs
+@@ -369,6 +369,116 @@ public sealed class S23PublicationIntegrationTests : IDisposable
+         Assert.Empty(F.Rows(_path, "AndiritOccurrenceUnit"));
+     }
+ 
++    [Theory]
++    [InlineData(false)]
++    [InlineData(true)]
++    public async Task MissingDeclaredUnit_ReportsIncompleteAcrossNativeReopen(bool projectIsPresent)
++    {
++        const string firstRun = "run:full-before-missing";
++        const string secondRun = "run:missing-declared-unit";
++        var files = new Dictionary<string, string>(CrossProjectFixture(), StringComparer.Ordinal);
++        var completeContext = Context(Repo, firstRun, files);
++        var (complete, app, lib) = await LiveCrossProjectAsync(completeContext);
++        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
++        var boundComplete = VerifiedCSharpOccurrenceAuthority.Bind(new(Repo, target), complete.Universe, app.Compilation);
++        CodeGraphPublication previous;
++        using (var store = await PublishAsync(_path, firstRun, completeContext))
++        {
++            var result = await store.FindOccurrencesAsync(boundComplete);
++            Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
++            Assert.True(result.IsComplete);
++            Assert.Single(result.Occurrences);
++            previous = Assert.IsType<CodeGraphPublication>(result.Publication);
++        }
++
++        const string missing = "Missing/Missing.csproj";
++        files["Repository.slnx"] = """
++            <Solution>
++              <Project Path="App/App.csproj" />
++              <Project Path="Lib/Lib.csproj" />
++              <Project Path="Missing/Missing.csproj" />
++            </Solution>
++            """;
++        if (projectIsPresent)
++            files[missing] = """<Project><ItemGroup><Compile Include="Uncaptured.cs" /></ItemGroup></Project>""";
++
++        var context = Context(Repo, secondRun, files);
++        var incomplete = await CSharpCodeGraphPlugin.PrepareAnalysisAsync(context);
++        var missingUnit = CSharpProjectDiscovery.IndexUnitId(missing);
++        Assert.Equal(missingUnit, Assert.Single(incomplete.Universe.MissingScopeUnits));
++        Assert.Equal(3, incomplete.Universe.Scope.Units.Length);
++        Assert.Equal(2, incomplete.Universe.Entries.Length);
++        Assert.False(incomplete.Universe.IsComplete);
++
++        async Task VerifyAsync(LatticeCodeGraphStore store)
++        {
++            var result = await store.FindOccurrencesAsync(new CodeOccurrenceQuery(Repo, target));
++            Assert.Equal(CodeOccurrenceAvailability.IncompleteAnalysis, result.Availability);
++            Assert.Equal(secondRun, result.Publication!.IndexRunId.Value);
++            Assert.False(result.IsComplete);
++            Assert.Empty(result.Occurrences);
++            Assert.Equal(CodeRelationshipCoverageState.Partial, result.Coverage!.State);
++            Assert.Equal(3, result.Coverage.DeclaredUnitCount);
++            Assert.Equal(2, result.Coverage.VerifiedUnitCount);
++            Assert.Equal(incomplete.Universe.Scope.Identity, result.Coverage.ScopeId);
++            Assert.Equal(incomplete.Universe.Identity, result.Coverage.UniverseId);
++            Assert.Equal(0, result.Coverage.InvocationFacts);
++
++            var stale = await store.FindOccurrencesAsync(new CodeOccurrenceQuery(Repo, target, previous));
++            Assert.Equal(CodeOccurrenceAvailability.StalePublication, stale.Availability);
++            Assert.Empty(stale.Occurrences);
++            Assert.False(stale.IsComplete);
++
++            var obsoleteAuthority = await store.FindOccurrencesAsync(boundComplete);
++            Assert.Equal(CodeOccurrenceAvailability.AnalysisUnavailable, obsoleteAuthority.Availability);
++            Assert.Empty(obsoleteAuthority.Occurrences);
++        }
++
++        using (var store = await PublishAsync(_path, secondRun, context))
++            await VerifyAsync(store);
++        var rows = F.Rows(_path, "AndiritOccurrenceUnit");
++        Assert.Equal(2, rows.Count);
++        Assert.All(rows.Values, row =>
++        {
++            Assert.Null(row["Authority"]);
++            Assert.False(row["RequiresAuthority"]!.GetValue<bool>());
++            Assert.Empty(row["Facts"]!.AsArray());
++        });
++        using var reopened = Open(_path);
++        await VerifyAsync(reopened);
++    }
++
++    [Fact]
++    public async Task MissingDeclaredUnitWithUnrelatedProvenanceRefusal_PreservesUnavailableAnalysis()
++    {
++        var files = new Dictionary<string, string>(CrossProjectFixture(), StringComparer.Ordinal)
++        {
++            ["Repository.slnx"] = """
++                <Solution>
++                  <Project Path="App/App.csproj" />
++                  <Project Path="Lib/Lib.csproj" />
++                  <Project Path="Missing/Missing.csproj" />
++                </Solution>
++                """,
++            ["Missing/Missing.csproj"] = """<Project><Import Project="Unknown.props" /></Project>"""
++        };
++        const string run = "run:malformed-scope";
++        var context = Context(Repo, run, files);
++        var (analysis, _, lib) = await LiveCrossProjectAsync(context);
++        Assert.Equal(2, analysis.Universe.Entries.Length);
++        Assert.Single(analysis.Universe.MissingScopeUnits);
++        Assert.Contains("UnsupportedProjectEvaluation:Missing/Missing.csproj", analysis.Universe.Refusals);
++        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
++        (await PublishAsync(_path, run, context)).Dispose();
++
++        using var reopened = Open(_path);
++        var result = await reopened.FindOccurrencesAsync(new CodeOccurrenceQuery(Repo, target));
++        Assert.Equal(CodeOccurrenceAvailability.AnalysisUnavailable, result.Availability);
++        Assert.Empty(result.Occurrences);
++        Assert.False(result.IsComplete);
++        Assert.Null(result.Coverage);
++    }
++
+     // WP-S23-3A R1: the previously pinned blocker (durable reopen of a
+     // multi-unit cross-project publication failed with
+     // graph.edge.endpoint-missing) is remediated by reconstructing the

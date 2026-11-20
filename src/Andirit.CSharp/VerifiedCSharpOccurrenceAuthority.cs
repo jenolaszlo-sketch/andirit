@@ -32,8 +32,12 @@ internal sealed class VerifiedCSharpOccurrenceAuthority : ICodeOccurrenceAuthori
             authority.IndexUnitId != indexUnitId || authority.Coverage is null ||
             authority.Members is null || authority.Facts is null || string.IsNullOrWhiteSpace(authority.SourceUnitId))
             return Corrupt("Occurrence authority ownership or required fields are inconsistent.");
-        if (coverage is null || JsonSerializer.Serialize(authority.Coverage) != JsonSerializer.Serialize(coverage) ||
-            authority.ScopeId != coverage.ScopeId || authority.UniverseId != coverage.UniverseId)
+        if (coverage is null || authority.ScopeId != coverage.ScopeId || authority.UniverseId != coverage.UniverseId)
+            return Corrupt("Occurrence authority is not bound to the stored coverage.");
+        var storedCoverage = JsonSerializer.Serialize(coverage);
+        if (JsonSerializer.Serialize(authority.Coverage) != storedCoverage &&
+            (authority.SourceUnitId != indexUnitId || !authority.Coverage.IsComplete ||
+             JsonSerializer.Serialize(CodeOccurrenceAuthority.SourceContribution(authority.Coverage)) != storedCoverage))
             return Corrupt("Occurrence authority is not bound to the stored coverage.");
         if (authority.Members.Any(m => m is null || !CanonicalContext(m.Compctx2)))
             return Corrupt("Malformed recorded compilation-universe membership.");
@@ -47,7 +51,8 @@ internal sealed class VerifiedCSharpOccurrenceAuthority : ICodeOccurrenceAuthori
         if (!authority.Members.SequenceEqual(members) || !members.Any(m => m.ProjectUnitId == authority.SourceUnitId))
             return Stale("Recorded members do not equal the current verified compilation membership.");
         if (!coverage.AnalysisPerformed || coverage.InvocationFacts != facts.Count ||
-            coverage.DeclaredUnitCount != _universe.Scope.Units.Length || coverage.VerifiedUnitCount != members.Length)
+            authority.Coverage.DeclaredUnitCount != _universe.Scope.Units.Length ||
+            authority.Coverage.VerifiedUnitCount != members.Length)
             return Corrupt("Coverage accounting does not match the verified scope and stored facts.");
         if (authority.Facts.Count != facts.Count || authority.Facts.Any(f => f is null) ||
             authority.Facts.Select(f => f.OccurrenceId).Distinct(StringComparer.Ordinal).Count() != facts.Count)

@@ -1,0 +1,171 @@
+diff --git a/src/Andirit.CSharp/VerifiedCSharpAnalysis.cs b/src/Andirit.CSharp/VerifiedCSharpAnalysis.cs
+index cc20c83..8474d08 100644
+--- a/src/Andirit.CSharp/VerifiedCSharpAnalysis.cs
++++ b/src/Andirit.CSharp/VerifiedCSharpAnalysis.cs
+@@ -107,8 +107,18 @@ internal sealed class VerifiedCSharpUniverse
+ 
+         var binding = Entries.Where(entry => BindsDefining(entry, target, caller)).ToArray();
+         if (binding.Length == 0)
++        {
++            // Verification binds the caller's PE references to captured metadata.
++            // Roslyn associates the target assembly with the actual reference.
++            if (caller is not null && target.ContainingAssembly is { } assembly &&
++                caller.GetMetadataReference(assembly) is PortableExecutableReference &&
++                Entries.Any(entry => ReferenceEquals(entry.Compilation, caller)))
++                return new(VerifiedDefiningStatus.UnsupportedExternalEvidence,
++                    "the target's defining assembly is available to the verified caller only as PE metadata");
++
+             return new(VerifiedDefiningStatus.MissingDefiningCompilation,
+                 "no verified compilation in the declared universe is the symbol's defining assembly");
++        }
+         if (binding.Length > 1)
+             return new(VerifiedDefiningStatus.Ambiguous,
+                 binding.Length + " verified compilations bind the same target symbol");
+diff --git a/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs b/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs
+index 8a0d4f8..ad3bab2 100644
+--- a/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs
++++ b/tests/Andirit.CSharp.Tests/S23PublicationIntegrationTests.cs
+@@ -182,6 +182,67 @@ public sealed class S23PublicationIntegrationTests : IDisposable
+             unit["Authority"]!["Facts"]![0]!["DefiningProjectUnitId"]!.GetValue<string>());
+     }
+ 
++    [Fact]
++    public async Task ExternalBinding_CoverageSurvivesAuthorityBoundPublicationAndReopen()
++    {
++        // The focused producer gate also runs each phase in its own test host.
++        var phase = Environment.GetEnvironmentVariable("S254_R1_EXTERNAL_PHASE");
++        var path = phase is null ? _path :
++            Environment.GetEnvironmentVariable("S254_R1_EXTERNAL_PATH") ??
++            throw new InvalidOperationException("S254_R1_EXTERNAL_PATH must name the durable store.");
++        if (phase is not null)
++            Console.WriteLine($"s254-r1-external phase={phase} pid={Environment.ProcessId} path={path}");
++
++        var files = new Dictionary<string, string>(CrossProjectFixture(), StringComparer.Ordinal)
++        {
++            [Names.AppSource] = """
++                namespace App;
++                public static class Application
++                {
++                    public static int Run() => Lib.Value.Get();
++                    public static string External() => string.Concat("left", "right");
++                }
++                """,
++        };
++        var context = Context(Repo, "run:external", files);
++        var (analysis, app, lib) = await LiveCrossProjectAsync(context);
++        var target = ExpectedTarget(lib, Method(lib, "Lib.Value", "Get"));
++        var query = VerifiedCSharpOccurrenceAuthority.Bind(new(Repo, target), analysis.Universe, app.Compilation);
++
++        if (phase != "verify")
++        {
++            using var published = await PublishAsync(path, "run:external", context);
++            CheckExternalCoverage(await published.FindOccurrencesAsync(query), target, app.Descriptor.ProjectUnitId);
++        }
++
++        if (phase != "publish")
++        {
++            using var reopened = Open(path);
++            CheckExternalCoverage(await reopened.FindOccurrencesAsync(query), target, app.Descriptor.ProjectUnitId);
++        }
++
++        var unit = PublishedUnit(path, app.Descriptor.ProjectUnitId);
++        Assert.True(unit["RequiresAuthority"]!.GetValue<bool>());
++        Assert.Single(unit["Facts"]!.AsArray());
++        Assert.Equal(lib.Descriptor.ProjectUnitId,
++            unit["Authority"]!["Facts"]![0]!["DefiningProjectUnitId"]!.GetValue<string>());
++        Assert.Equal(1, unit["Coverage"]!["External"]!.GetValue<int>());
++        Assert.Equal(0, unit["Coverage"]!["Unresolved"]!.GetValue<int>());
++    }
++
++    private static void CheckExternalCoverage(CodeOccurrenceQueryResult result, CodeOccurrenceTargetId target, string owner)
++    {
++        Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
++        Assert.True(result.IsComplete);
++        var occurrence = Assert.Single(result.Occurrences);
++        Assert.Equal(target, occurrence.TargetId);
++        Assert.Equal(owner, occurrence.SourceUnitId);
++        Assert.Equal(1, result.Coverage!.InvocationFacts);
++        Assert.Equal(1, result.Coverage.External);
++        Assert.Equal(0, result.Coverage.Unresolved);
++        Assert.Equal(0, result.Coverage.Ambiguous);
++    }
++
+     [Fact]
+     public async Task TransitiveDependencyChange_RefusesStaleRealFact()
+     {
+diff --git a/tests/Andirit.CSharp.Tests/S2_2Wp5R1AmbiguityTests.cs b/tests/Andirit.CSharp.Tests/S2_2Wp5R1AmbiguityTests.cs
+index 36eaae5..a903396 100644
+--- a/tests/Andirit.CSharp.Tests/S2_2Wp5R1AmbiguityTests.cs
++++ b/tests/Andirit.CSharp.Tests/S2_2Wp5R1AmbiguityTests.cs
+@@ -173,6 +173,57 @@ public sealed class S2_2Wp5R1AmbiguityTests
+         Assert.Equal(CodeRelationshipCoverageState.Produced, extraction.Coverage.State);
+     }
+ 
++    [Fact]
++    public async Task ExternalBinding_MixedWithCrossProjectMissingAndAmbiguousCalls()
++    {
++        var lib = await SourceUnit("Lib/Lib.csproj", "Lib",
++            "namespace N; public static class Lib { public static int Get() => 1; }");
++        var app = await SourceUnit("App/App.csproj", "App", """
++            namespace N;
++            public static class App
++            {
++                public static int Amb(int a, long b) => a;
++                public static int Amb(long a, int b) => b;
++                public static int Good() => Lib.Get();
++                public static string External() => string.Concat("left", "right");
++                public static int Missing() => Absent.Type.Invoke();
++                public static int Ambiguous() => Amb(1, 1);
++            }
++            """, lib);
++        var universe = Universe(lib, app);
++        var external = Assert.IsAssignableFrom<IMethodSymbol>(Binding(app, "Concat").Symbol);
++        Assert.Empty(external.DeclaringSyntaxReferences);
++        Assert.Same(Platform.Value.Reference, app.Compilation.GetMetadataReference(external.ContainingAssembly));
++        Assert.Equal(0, Binding(app, "Invoke").CandidateCount);
++        Assert.Null(Binding(app, "Invoke").Symbol);
++        Assert.Equal(2, Binding(app, "Amb").CandidateCount);
++        Assert.Null(Binding(app, "Amb").Symbol);
++
++        var externalResolution = universe.ResolveDefining(external, caller: app.Compilation);
++        Assert.Equal(VerifiedDefiningStatus.UnsupportedExternalEvidence, externalResolution.Status);
++        Assert.Null(externalResolution.Defining);
++        Assert.Null(externalResolution.Compctx1);
++        Assert.Equal(VerifiedDefiningStatus.MissingDefiningCompilation, universe.ResolveDefining(external).Status);
++        var substitute = app.Compilation.Clone();
++        Assert.Equal(VerifiedDefiningStatus.MissingDefiningCompilation,
++            universe.ResolveDefining(external, caller: substitute).Status);
++        var substitutedSource = Target(substitute, "N.App", "Good", parameterCount: 0);
++        Assert.Equal(VerifiedDefiningStatus.MissingDefiningCompilation,
++            universe.ResolveDefining(substitutedSource, caller: app.Compilation).Status);
++
++        var extraction = Extract(universe, app);
++        var fact = Assert.Single(extraction.Facts);
++        var method = Target(lib.Compilation, "N.Lib", "Get", parameterCount: 0);
++        Assert.Equal(ExpectedAsmctx3(lib, method), fact.TargetId.Value);
++        Assert.Equal(ExpectedUsage4(app, lib, "Get", method), fact.Id.Value);
++        Assert.Equal(app.Descriptor.ProjectUnitId, fact.SourceUnitId);
++        Assert.Equal(1, extraction.Coverage.InvocationFacts);
++        Assert.Equal(1, extraction.Coverage.External);
++        Assert.Equal(1, extraction.Coverage.Unresolved);
++        Assert.Equal(1, extraction.Coverage.Ambiguous);
++        Assert.Equal(CodeRelationshipCoverageState.Produced, extraction.Coverage.State);
++    }
++
+     // ------------------------------------------------------------ R1-T6
+ 
+     [Fact]
+diff --git a/tests/Andirit.CSharp.Tests/S2_2Wp8CorpusIntegrationTests.cs b/tests/Andirit.CSharp.Tests/S2_2Wp8CorpusIntegrationTests.cs
+index 54c8ae2..0ca69b6 100644
+--- a/tests/Andirit.CSharp.Tests/S2_2Wp8CorpusIntegrationTests.cs
++++ b/tests/Andirit.CSharp.Tests/S2_2Wp8CorpusIntegrationTests.cs
+@@ -205,7 +205,8 @@ public sealed class S2_2Wp8CorpusIntegrationTests
+         Assert.True(extraction.Coverage.Ambiguous >= 1);
+         Assert.True(extraction.Coverage.Unresolved >= 2);
+         Assert.True(extraction.Coverage.ConditionalInactive >= 1);
+-        Assert.Equal(0, extraction.Coverage.External); // F4: construction-stage refusal
++        // E01 binds to a captured external PE assembly and contributes only external coverage.
++        Assert.Equal(1, extraction.Coverage.External);
+         Assert.Equal(CodeRelationshipCoverageState.Produced, extraction.Coverage.State);
+         Console.WriteLine("WP8 negatives coverage: ambiguous=" + extraction.Coverage.Ambiguous +
+             " unresolved=" + extraction.Coverage.Unresolved +

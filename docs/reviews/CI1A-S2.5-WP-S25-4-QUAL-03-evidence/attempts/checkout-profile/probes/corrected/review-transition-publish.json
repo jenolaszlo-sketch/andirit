@@ -1,0 +1,1724 @@
+{
+  "case": "review-transition-publish",
+  "processId": 20408,
+  "database": "C:\\Users\\Laszlos\\source\\repos\\Solo\\andirit-qual03\\stores\\corrected/review-transition.ltdb",
+  "sources": {
+    "Caller/Caller.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CPropertyGroup\u003E\u003CTargetFramework\u003Enet10.0\u003C/TargetFramework\u003E\u003C/PropertyGroup\u003E\u003CItemGroup\u003E\u003CProjectReference Include=\u0022../Dependency/Dependency.csproj\u0022 /\u003E\u003C/ItemGroup\u003E\u003C/Project\u003E\r\n",
+    "Caller/Fixture1.cs": "namespace QualifierCaller;\npublic static class Work1\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        _ = string.Concat(\u0022left\u0022, \u0022right\u0022);\n    }\n}\n",
+    "Caller/Fixture10.cs": "namespace QualifierCaller;\npublic static class Work10\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture2.cs": "namespace QualifierCaller;\npublic static class Work2\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture3.cs": "namespace QualifierCaller;\npublic static class Work3\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture4.cs": "namespace QualifierCaller;\npublic static class Work4\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture5.cs": "namespace QualifierCaller;\npublic static class Work5\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture6.cs": "namespace QualifierCaller;\npublic static class Work6\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture7.cs": "namespace QualifierCaller;\npublic static class Work7\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture8.cs": "namespace QualifierCaller;\npublic static class Work8\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Caller/Fixture9.cs": "namespace QualifierCaller;\npublic static class Work9\n{\n    public static void Run()\n    {\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n        QualifierDependency.Api.Mark();\n    }\n}\n",
+    "Dependency/Api.cs": "namespace QualifierDependency;\npublic static class Api\n{\n    public static int Mark() =\u003E 7;\n}\r\n",
+    "Dependency/Dependency.csproj": "\u003CProject Sdk=\u0022Microsoft.NET.Sdk\u0022\u003E\u003CPropertyGroup\u003E\u003CTargetFramework\u003Enet10.0\u003C/TargetFramework\u003E\u003C/PropertyGroup\u003E\u003C/Project\u003E\r\n",
+    "Review.slnx": "\u003CSolution\u003E\u003CProject Path=\u0022Caller/Caller.csproj\u0022/\u003E\u003CProject Path=\u0022Dependency/Dependency.csproj\u0022/\u003E\u003CProject Path=\u0022Gone/Gone.csproj\u0022/\u003E\u003C/Solution\u003E"
+  },
+  "membership": {
+    "declared": [
+      {
+        "ProjectUnitId": "csharp:project:28778c4583d8a473d948dd759cecc81691a344f491523ed96f034667e438925e",
+        "ProjectPath": "Gone/Gone.csproj",
+        "SourcePaths": []
+      },
+      {
+        "ProjectUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "ProjectPath": "Caller/Caller.csproj",
+        "SourcePaths": [
+          "Caller/Fixture1.cs",
+          "Caller/Fixture10.cs",
+          "Caller/Fixture2.cs",
+          "Caller/Fixture3.cs",
+          "Caller/Fixture4.cs",
+          "Caller/Fixture5.cs",
+          "Caller/Fixture6.cs",
+          "Caller/Fixture7.cs",
+          "Caller/Fixture8.cs",
+          "Caller/Fixture9.cs"
+        ]
+      },
+      {
+        "ProjectUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "ProjectPath": "Dependency/Dependency.csproj",
+        "SourcePaths": [
+          "Dependency/Api.cs"
+        ]
+      }
+    ],
+    "verified": [
+      "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+      "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8"
+    ],
+    "Refusals": [
+      "MissingDeclaredProject",
+      "MissingDeclaredProject:Gone/Gone.csproj"
+    ],
+    "IsComplete": false
+  },
+  "before": {
+    "Availability": 0,
+    "Publication": {
+      "RepositoryId": {
+        "Value": "review:qual03:transition"
+      },
+      "IndexRunId": {
+        "Value": "before"
+      },
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "ed4dc8d158ba2cd8b581355c99340107cd0db9aac059cde80569e38637429645"
+      }
+    },
+    "Occurrences": [
+      {
+        "Id": {
+          "Value": "571005c347a610fa3cdd36ed7d5134bc1e7e2b2988cff4c2db9789c1681ed8dc"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture1.cs",
+          "StartLine": 6,
+          "StartColumn": 33,
+          "EndLine": 6,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "38d0f98e568003c635a67d8b49de886d40627c5f053dea74d2550950f9bf2baf"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture1.cs",
+          "StartLine": 7,
+          "StartColumn": 33,
+          "EndLine": 7,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "f91c3b9491c5f32882d44a0e924a959a3f37e1d2eef7df8510babb3cc88fdf7f"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture1.cs",
+          "StartLine": 8,
+          "StartColumn": 33,
+          "EndLine": 8,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "85df482361d5576b391af13afa3202f66975d36e8f08d101e6c7409f9ecf08fa"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture1.cs",
+          "StartLine": 9,
+          "StartColumn": 33,
+          "EndLine": 9,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "622d8b6246a39787830b9d884a5fc5660b9a9a7f9c2433e7604d7bc14c727804"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture1.cs",
+          "StartLine": 10,
+          "StartColumn": 33,
+          "EndLine": 10,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "15a88e601a1a8499b46427844383b0db425632b16f820ba327ddb52335f03989"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture10.cs",
+          "StartLine": 6,
+          "StartColumn": 33,
+          "EndLine": 6,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "ad2a39f200d7c60dea9c479dc180514df07d2a90ba8ff3f6ad895ac4e6b31425"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture10.cs",
+          "StartLine": 7,
+          "StartColumn": 33,
+          "EndLine": 7,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "50608008262e55747ec162020e0be25896bfffd2e4a37e64fc2942a567b272af"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture10.cs",
+          "StartLine": 8,
+          "StartColumn": 33,
+          "EndLine": 8,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "9cc47c5d5d8a6049b42ee628f92df30d261deef203051cdccbd5f2f1c70eae5b"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture10.cs",
+          "StartLine": 9,
+          "StartColumn": 33,
+          "EndLine": 9,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "fb4b2ed1210a116a18652094c9e97c8d9c7b3b363f631276cebdbb1ca7ac7c54"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture10.cs",
+          "StartLine": 10,
+          "StartColumn": 33,
+          "EndLine": 10,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "48ea244d92bd1cbe9d6bff2aa27184ab1eb88339de5ce14384422856c28000c1"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture2.cs",
+          "StartLine": 6,
+          "StartColumn": 33,
+          "EndLine": 6,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "93cd59003be3d16f3ed490eeaf4d2564d40eecb33d96e93e5bfc523e486c5f91"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture2.cs",
+          "StartLine": 7,
+          "StartColumn": 33,
+          "EndLine": 7,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "4d8ba637d4e2520abbdd41e87acfa32127f3a5baf31effee6f31abcfcdf3c231"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture2.cs",
+          "StartLine": 8,
+          "StartColumn": 33,
+          "EndLine": 8,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "5bca53d3df38a56bfe3d0e066a6737e3d99e848d119ff442eab881580162b26a"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture2.cs",
+          "StartLine": 9,
+          "StartColumn": 33,
+          "EndLine": 9,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "34af610a6d7f35aca8327af5f7c1f2e4111135b2fa6f57457115f4ea213aa69c"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture2.cs",
+          "StartLine": 10,
+          "StartColumn": 33,
+          "EndLine": 10,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "78fe29ea4569dfc4d0d233edd0122c2a098c99ec9796d371a927c074d52e7417"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture3.cs",
+          "StartLine": 6,
+          "StartColumn": 33,
+          "EndLine": 6,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "14e053802dbe9db618da9a14a57f93e29f7191c5250c00e3849639ae63a313f0"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture3.cs",
+          "StartLine": 7,
+          "StartColumn": 33,
+          "EndLine": 7,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "7e07ebde36fd2e96c9824f0be6b81cde7cd4fb1f525040a834d044aa14ca5815"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture3.cs",
+          "StartLine": 8,
+          "StartColumn": 33,
+          "EndLine": 8,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "094b7ef1f2a4e1008c02be6c1147fe82fab0b0d33418512d6a5d37ef7cf2e542"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture3.cs",
+          "StartLine": 9,
+          "StartColumn": 33,
+          "EndLine": 9,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "5d3293bb51e231204fbb30d474db02c96ec6acb5a8f3139ffa51102ab4025d87"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture3.cs",
+          "StartLine": 10,
+          "StartColumn": 33,
+          "EndLine": 10,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "5ea8d3afa192bc12764194ef61276dcf77f1754a7b377a7b598a692928d27fe4"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture4.cs",
+          "StartLine": 6,
+          "StartColumn": 33,
+          "EndLine": 6,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "a963dbdd2fb3af9e89fb49932b78fb4d190f760fbe80510df8abcd5bd2fd27bd"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture4.cs",
+          "StartLine": 7,
+          "StartColumn": 33,
+          "EndLine": 7,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "c0f4d4ecf5044cc5165e510142600fc11818dddfb1cbd6ff60d728ad2f60fa98"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture4.cs",
+          "StartLine": 8,
+          "StartColumn": 33,
+          "EndLine": 8,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "17105e914fffdb7bad436f32c12506c0ec5bab304f4928b4e6d8fabb6429f187"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture4.cs",
+          "StartLine": 9,
+          "StartColumn": 33,
+          "EndLine": 9,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "ae489ffd4ff40b6885d1d034eb3de685964374fbecf650a50fef09e445ce9c78"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture4.cs",
+          "StartLine": 10,
+          "StartColumn": 33,
+          "EndLine": 10,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "c5342fface8703cc68a97c8dc599b61532fa34cc728353638d906ee0a9c5bbaf"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture5.cs",
+          "StartLine": 6,
+          "StartColumn": 33,
+          "EndLine": 6,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "58f293f15951ef651f9c540fd4c1a6fcbbbff0ecb8f5380ae4ef9c70990cce7c"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture5.cs",
+          "StartLine": 7,
+          "StartColumn": 33,
+          "EndLine": 7,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "06c171f1ee5d9d656671ee3cbca62124a3f12a6bc4fcf5c4f7ec54176bfb2a74"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture5.cs",
+          "StartLine": 8,
+          "StartColumn": 33,
+          "EndLine": 8,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "c93a84972013c7a7c8a1cb5d00c73e0a4bf830613be0f77f33d537ef52570e02"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture5.cs",
+          "StartLine": 9,
+          "StartColumn": 33,
+          "EndLine": 9,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "3fc01093783d1d5520bf58051f6f4fe7a0b3c746d83bd3b428fea32c21c6e113"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture5.cs",
+          "StartLine": 10,
+          "StartColumn": 33,
+          "EndLine": 10,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "cb9f1a252e3ec4ef3defcb3104ffcc5bc8a8d8eafadec8db082bba9860a37ab7"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture6.cs",
+          "StartLine": 6,
+          "StartColumn": 33,
+          "EndLine": 6,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "c1fca5112a212faf7583edd0ed116fd69e6c4038c04a2bd400a445510c892731"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture6.cs",
+          "StartLine": 7,
+          "StartColumn": 33,
+          "EndLine": 7,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "9bebbdaba97594414b382ab5e8e58aa7bd301469b133992953cf2c9f15ebdf78"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture6.cs",
+          "StartLine": 8,
+          "StartColumn": 33,
+          "EndLine": 8,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "653682ee81f1699237cb1d1371f243567b16576eb7e914e28024660e8e0fdc16"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture6.cs",
+          "StartLine": 9,
+          "StartColumn": 33,
+          "EndLine": 9,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "4574bb763ca6e6e8cd7bd2e868785d5d6d0829f2397dc5eb1e0d2e8ba5656f57"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture6.cs",
+          "StartLine": 10,
+          "StartColumn": 33,
+          "EndLine": 10,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "1f7779882e2f765962745fcf55fd80db8a1e9a5f88ccefd8ed2cb821fc98cc91"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture7.cs",
+          "StartLine": 6,
+          "StartColumn": 33,
+          "EndLine": 6,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "df2882b5b182f92fa272d1b1a4a760bb82d168651ad96e807b1c2bf2ee0d915b"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture7.cs",
+          "StartLine": 7,
+          "StartColumn": 33,
+          "EndLine": 7,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "2eb8ce85f82609e27c1a7a62ceb477f248f99ef4616dcb3ea9a68f39a3f25caa"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture7.cs",
+          "StartLine": 8,
+          "StartColumn": 33,
+          "EndLine": 8,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "a2d4a7aede345244069f8af23919fe50f49ae4eb9964b43c5d018946174573ae"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture7.cs",
+          "StartLine": 9,
+          "StartColumn": 33,
+          "EndLine": 9,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "bbe6cb49822d1f717232effb7c11adab9d102f4d85206a65958383705aee0c91"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture7.cs",
+          "StartLine": 10,
+          "StartColumn": 33,
+          "EndLine": 10,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "5a45cadfd0f820845f3f1aa8ae8e5ea54aa31a4175a91de72ef26ca5b68ccaef"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture8.cs",
+          "StartLine": 6,
+          "StartColumn": 33,
+          "EndLine": 6,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "c10ad4b17f019154f77a304d73ca5ffbffb0c3548f604a21d6f3a9b43188937a"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture8.cs",
+          "StartLine": 7,
+          "StartColumn": 33,
+          "EndLine": 7,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "8749b093eb7d9c9443a2ff22e5e975138d3fe4988af25e92cef36dd89119c838"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture8.cs",
+          "StartLine": 8,
+          "StartColumn": 33,
+          "EndLine": 8,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "cd28b42ec41c0097dce5ca90c91298bd7f96c1917ff1db1f04b5bd98910f6fbf"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture8.cs",
+          "StartLine": 9,
+          "StartColumn": 33,
+          "EndLine": 9,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "f767094206dae3c97ab893cbd2af380fef812d608b0887120eccc786258259fe"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture8.cs",
+          "StartLine": 10,
+          "StartColumn": 33,
+          "EndLine": 10,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "e26e0469060f7c4767389d0156bce47dd6795b218c7156eaaaaf41a9a0e9afbe"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture9.cs",
+          "StartLine": 6,
+          "StartColumn": 33,
+          "EndLine": 6,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "986939edb68b5e7a77e7d93a22e411c4745721bec9e6fc5123e65406b618c7bf"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture9.cs",
+          "StartLine": 7,
+          "StartColumn": 33,
+          "EndLine": 7,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "fc1f2ec9610aabc31e8cf225ebd4c494307985c5f195c58a947d7b5dab8c0710"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture9.cs",
+          "StartLine": 8,
+          "StartColumn": 33,
+          "EndLine": 8,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "803302069ccaa5deb6e473a2123276bced913664d45ef3b41670ec7a1cac5125"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture9.cs",
+          "StartLine": 9,
+          "StartColumn": 33,
+          "EndLine": 9,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      },
+      {
+        "Id": {
+          "Value": "a44317e222fcdba9ca768311e424c883666597d03aad13eefb93d8ba6c065733"
+        },
+        "TargetId": {
+          "Value": "asmctx3:sha256:fe0e4d9a064606d6aec516fb516d1b892376bb6954e4faf2b80f1288e5a4601c"
+        },
+        "Category": 0,
+        "Span": {
+          "Path": "Caller/Fixture9.cs",
+          "StartLine": 10,
+          "StartColumn": 33,
+          "EndLine": 10,
+          "EndColumn": 37
+        },
+        "SourceUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "Contributors": [
+          {
+            "PluginId": {
+              "Value": "penghou.hetu.csharp"
+            },
+            "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77"
+          }
+        ],
+        "SemanticsVersion": 4
+      }
+    ],
+    "TotalMatches": 50,
+    "Examined": 50,
+    "RefusalReason": null,
+    "Coverage": {
+      "InvocationFacts": 50,
+      "UnsupportedCategories": 0,
+      "State": 0,
+      "ScopeId": "analysisscope1:sha256:6856bb50e0e4c844b093a62732dbc6354ca06bfef039de988dd7f08c2cde2cd3",
+      "UniverseId": "compilation-universe1:sha256:497b099681d613422fca8f502c79f00f2567768c85c6e0e12b7b9a0528ecba54",
+      "DeclaredUnitCount": 4,
+      "VerifiedUnitCount": 4,
+      "External": 1,
+      "Ambiguous": 0,
+      "Unresolved": 0,
+      "Unsupported": 0,
+      "ConditionalInactive": 0,
+      "UnavailableReasons": {},
+      "TotalFacts": 50,
+      "AnalysisPerformed": true,
+      "IsComplete": true
+    },
+    "NextContinuationToken": null,
+    "Continuation": 2,
+    "CoverageBreakdown": [
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "State": 0,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 50,
+        "UnsupportedCategories": 0,
+        "External": 1,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:6856bb50e0e4c844b093a62732dbc6354ca06bfef039de988dd7f08c2cde2cd3",
+        "UniverseId": "compilation-universe1:sha256:497b099681d613422fca8f502c79f00f2567768c85c6e0e12b7b9a0528ecba54"
+      },
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "State": 0,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:6856bb50e0e4c844b093a62732dbc6354ca06bfef039de988dd7f08c2cde2cd3",
+        "UniverseId": "compilation-universe1:sha256:497b099681d613422fca8f502c79f00f2567768c85c6e0e12b7b9a0528ecba54"
+      }
+    ],
+    "UnitCoverage": [
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "State": 0,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 50,
+        "UnsupportedCategories": 0,
+        "External": 1,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:6856bb50e0e4c844b093a62732dbc6354ca06bfef039de988dd7f08c2cde2cd3",
+        "UniverseId": "compilation-universe1:sha256:497b099681d613422fca8f502c79f00f2567768c85c6e0e12b7b9a0528ecba54"
+      },
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "State": 0,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:6856bb50e0e4c844b093a62732dbc6354ca06bfef039de988dd7f08c2cde2cd3",
+        "UniverseId": "compilation-universe1:sha256:497b099681d613422fca8f502c79f00f2567768c85c6e0e12b7b9a0528ecba54"
+      }
+    ],
+    "Truncated": false,
+    "IsComplete": true
+  },
+  "result": {
+    "Availability": 5,
+    "Publication": {
+      "RepositoryId": {
+        "Value": "review:qual03:transition"
+      },
+      "IndexRunId": {
+        "Value": "after"
+      },
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "ed4dc8d158ba2cd8b581355c99340107cd0db9aac059cde80569e38637429645"
+      }
+    },
+    "Occurrences": [],
+    "TotalMatches": 0,
+    "Examined": 0,
+    "RefusalReason": "The declared analysis scope is not proven complete; a zero-result answer is not a complete negative.",
+    "Coverage": {
+      "InvocationFacts": 0,
+      "UnsupportedCategories": 0,
+      "State": 1,
+      "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+      "UniverseId": "compilation-universe1:sha256:dde037587eb5aa8892eac7b81d5cff1d16a38602433b1dc4ef401ff1696c3e3d",
+      "DeclaredUnitCount": 3,
+      "VerifiedUnitCount": 2,
+      "External": 0,
+      "Ambiguous": 0,
+      "Unresolved": 51,
+      "Unsupported": 0,
+      "ConditionalInactive": 0,
+      "UnavailableReasons": {},
+      "TotalFacts": 0,
+      "AnalysisPerformed": true,
+      "IsComplete": false
+    },
+    "NextContinuationToken": null,
+    "Continuation": 2,
+    "CoverageBreakdown": [
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "State": 1,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 51,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:dde037587eb5aa8892eac7b81d5cff1d16a38602433b1dc4ef401ff1696c3e3d"
+      },
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "State": 1,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:dde037587eb5aa8892eac7b81d5cff1d16a38602433b1dc4ef401ff1696c3e3d"
+      }
+    ],
+    "UnitCoverage": [
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "State": 1,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 51,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:dde037587eb5aa8892eac7b81d5cff1d16a38602433b1dc4ef401ff1696c3e3d"
+      },
+      {
+        "PluginId": {
+          "Value": "penghou.hetu.csharp"
+        },
+        "IndexUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "State": 1,
+        "AnalysisPerformed": true,
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:dde037587eb5aa8892eac7b81d5cff1d16a38602433b1dc4ef401ff1696c3e3d"
+      }
+    ],
+    "Truncated": false,
+    "IsComplete": false
+  },
+  "obsoleteAuthority": {
+    "Availability": 1,
+    "Publication": {
+      "RepositoryId": {
+        "Value": "review:qual03:transition"
+      },
+      "IndexRunId": {
+        "Value": "after"
+      },
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "ed4dc8d158ba2cd8b581355c99340107cd0db9aac059cde80569e38637429645"
+      }
+    },
+    "Occurrences": [],
+    "TotalMatches": 0,
+    "Examined": 0,
+    "RefusalReason": "Missing or malformed recorded occurrence authority; re-ingestion required.",
+    "Coverage": null,
+    "NextContinuationToken": null,
+    "Continuation": 0,
+    "CoverageBreakdown": null,
+    "UnitCoverage": [],
+    "Truncated": false,
+    "IsComplete": false
+  },
+  "stale": {
+    "Availability": 3,
+    "Publication": {
+      "RepositoryId": {
+        "Value": "review:qual03:transition"
+      },
+      "IndexRunId": {
+        "Value": "after"
+      },
+      "SnapshotIdentity": null,
+      "IsConsistentSnapshot": false,
+      "IndexIdentity": {
+        "Value": "ed4dc8d158ba2cd8b581355c99340107cd0db9aac059cde80569e38637429645"
+      }
+    },
+    "Occurrences": [],
+    "TotalMatches": 0,
+    "Examined": 0,
+    "RefusalReason": "The authority is not bound to the accepted publication.",
+    "Coverage": null,
+    "NextContinuationToken": null,
+    "Continuation": 0,
+    "CoverageBreakdown": null,
+    "UnitCoverage": [],
+    "Truncated": false,
+    "IsComplete": false
+  },
+  "authorityRefusal": "IncompleteCompilationUniverse",
+  "native": {
+    "AndiritOccurrenceMeta": [
+      {
+        "key": "review:qual03:transition",
+        "payload": "eyJTY2hlbWFWZXJzaW9uIjoxLCJOYW1lc3BhY2UiOiJhbmRpcml0LW9jY3VycmVuY2UtZmFjdHMvMSIsIlJlcG9zaXRvcnlJZCI6InJldmlldzpxdWFsMDM6dHJhbnNpdGlvbiIsIlB1YmxpY2F0aW9uSW5kZXhSdW5JZCI6ImFmdGVyIiwiSW5kZXhJZGVudGl0eSI6ImVkNGRjOGQxNThiYTJjZDhiNTgxMzU1Yzk5MzQwMTA3Y2QwZGI5YWFjMDU5Y2RlODA1NjllMzg2Mzc0Mjk2NDUiLCJTbmFwc2hvdElkZW50aXR5IjpudWxsLCJJc0NvbnNpc3RlbnRTbmFwc2hvdCI6ZmFsc2UsIkZhY3RDb3VudCI6MCwiVW5pdENvdW50IjoyLCJQYWdlQ291bnQiOjAsIkFuYWx5c2lzSW5jbHVkZWQiOnRydWUsIkNvdmVyYWdlU3RhdGUiOjEsIlNjb3BlSWQiOiJhbmFseXNpc3Njb3BlMTpzaGEyNTY6ZmIwMTIwYWE2ZmRlMDU2MDQ1NTBlZjFjMmQwZmQyN2YwZTdlZGZlMTRlZWQ4NDdlMWM4YWI1MTcxYThlNmZlNSIsIlVuaXZlcnNlSWQiOiJjb21waWxhdGlvbi11bml2ZXJzZTE6c2hhMjU2OmRkZTAzNzU4N2ViNWFhODg5MmVhYzdiODFkNWNmZjFkMTZhMzg2MDI0MzNiMWRjNGVmNDAxZmYxNjk2YzNlM2QiLCJDb21wbGV0ZUNvdmVyYWdlIjpmYWxzZSwiUmVxdWlyZXNBdXRob3JpdHkiOmZhbHNlfQ=="
+      }
+    ],
+    "AndiritOccurrencePage": [],
+    "AndiritOccurrenceUnit": [
+      {
+        "key": "review:qual03:transition\npenghou.hetu.csharp\ncsharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+        "payload": "eyJSZXBvc2l0b3J5SWQiOiJyZXZpZXc6cXVhbDAzOnRyYW5zaXRpb24iLCJQbHVnaW5JZCI6InBlbmdob3UuaGV0dS5jc2hhcnAiLCJJbmRleFVuaXRJZCI6ImNzaGFycDpwcm9qZWN0Ojc1MjY3OTdjZWE3YmNmNmQ2NjRlZjAzYTZmZWM0Y2Q1MzU2NDc3MzhiYTE2OTkxMmZjZDU1Yzk5MjYxYzRmNzciLCJBbmFseXNpc0luY2x1ZGVkIjp0cnVlLCJGYWN0cyI6W10sIkNvdmVyYWdlIjp7Ikludm9jYXRpb25GYWN0cyI6MCwiVW5zdXBwb3J0ZWRDYXRlZ29yaWVzIjowLCJTdGF0ZSI6MSwiU2NvcGVJZCI6ImFuYWx5c2lzc2NvcGUxOnNoYTI1NjpmYjAxMjBhYTZmZGUwNTYwNDU1MGVmMWMyZDBmZDI3ZjBlN2VkZmUxNGVlZDg0N2UxYzhhYjUxNzFhOGU2ZmU1IiwiVW5pdmVyc2VJZCI6ImNvbXBpbGF0aW9uLXVuaXZlcnNlMTpzaGEyNTY6ZGRlMDM3NTg3ZWI1YWE4ODkyZWFjN2I4MWQ1Y2ZmMWQxNmEzODYwMjQzM2IxZGM0ZWY0MDFmZjE2OTZjM2UzZCIsIkRlY2xhcmVkVW5pdENvdW50IjoxLCJWZXJpZmllZFVuaXRDb3VudCI6MSwiRXh0ZXJuYWwiOjAsIkFtYmlndW91cyI6MCwiVW5yZXNvbHZlZCI6NTEsIlVuc3VwcG9ydGVkIjowLCJDb25kaXRpb25hbEluYWN0aXZlIjowLCJVbmF2YWlsYWJsZVJlYXNvbnMiOnt9LCJUb3RhbEZhY3RzIjowLCJBbmFseXNpc1BlcmZvcm1lZCI6dHJ1ZSwiSXNDb21wbGV0ZSI6ZmFsc2V9LCJBdXRob3JpdHkiOm51bGwsIlJlcXVpcmVzQXV0aG9yaXR5IjpmYWxzZSwiQXV0aG9yaXR5UHVibGljYXRpb25JbmRleFJ1bklkIjpudWxsfQ=="
+      },
+      {
+        "key": "review:qual03:transition\npenghou.hetu.csharp\ncsharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+        "payload": "eyJSZXBvc2l0b3J5SWQiOiJyZXZpZXc6cXVhbDAzOnRyYW5zaXRpb24iLCJQbHVnaW5JZCI6InBlbmdob3UuaGV0dS5jc2hhcnAiLCJJbmRleFVuaXRJZCI6ImNzaGFycDpwcm9qZWN0OmYwZjUyMDhjZWRmNTAyNjQ4M2RhMjAzNjVmYjE5ODU0YWQ5MzExZTI0ZDRlYjFjMzJkMjc3YTczNGM3Mzg2ZTgiLCJBbmFseXNpc0luY2x1ZGVkIjp0cnVlLCJGYWN0cyI6W10sIkNvdmVyYWdlIjp7Ikludm9jYXRpb25GYWN0cyI6MCwiVW5zdXBwb3J0ZWRDYXRlZ29yaWVzIjowLCJTdGF0ZSI6MSwiU2NvcGVJZCI6ImFuYWx5c2lzc2NvcGUxOnNoYTI1NjpmYjAxMjBhYTZmZGUwNTYwNDU1MGVmMWMyZDBmZDI3ZjBlN2VkZmUxNGVlZDg0N2UxYzhhYjUxNzFhOGU2ZmU1IiwiVW5pdmVyc2VJZCI6ImNvbXBpbGF0aW9uLXVuaXZlcnNlMTpzaGEyNTY6ZGRlMDM3NTg3ZWI1YWE4ODkyZWFjN2I4MWQ1Y2ZmMWQxNmEzODYwMjQzM2IxZGM0ZWY0MDFmZjE2OTZjM2UzZCIsIkRlY2xhcmVkVW5pdENvdW50IjoyLCJWZXJpZmllZFVuaXRDb3VudCI6MSwiRXh0ZXJuYWwiOjAsIkFtYmlndW91cyI6MCwiVW5yZXNvbHZlZCI6MCwiVW5zdXBwb3J0ZWQiOjAsIkNvbmRpdGlvbmFsSW5hY3RpdmUiOjAsIlVuYXZhaWxhYmxlUmVhc29ucyI6e30sIlRvdGFsRmFjdHMiOjAsIkFuYWx5c2lzUGVyZm9ybWVkIjp0cnVlLCJJc0NvbXBsZXRlIjpmYWxzZX0sIkF1dGhvcml0eSI6bnVsbCwiUmVxdWlyZXNBdXRob3JpdHkiOmZhbHNlLCJBdXRob3JpdHlQdWJsaWNhdGlvbkluZGV4UnVuSWQiOm51bGx9"
+      }
+    ]
+  },
+  "decodedUnits": [
+    {
+      "RepositoryId": "review:qual03:transition",
+      "PluginId": "penghou.hetu.csharp",
+      "IndexUnitId": "csharp:project:7526797cea7bcf6d664ef03a6fec4cd535647738ba169912fcd55c99261c4f77",
+      "AnalysisIncluded": true,
+      "Facts": [],
+      "Coverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 1,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:dde037587eb5aa8892eac7b81d5cff1d16a38602433b1dc4ef401ff1696c3e3d",
+        "DeclaredUnitCount": 1,
+        "VerifiedUnitCount": 1,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 51,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": false
+      },
+      "Authority": null,
+      "RequiresAuthority": false,
+      "AuthorityPublicationIndexRunId": null
+    },
+    {
+      "RepositoryId": "review:qual03:transition",
+      "PluginId": "penghou.hetu.csharp",
+      "IndexUnitId": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+      "AnalysisIncluded": true,
+      "Facts": [],
+      "Coverage": {
+        "InvocationFacts": 0,
+        "UnsupportedCategories": 0,
+        "State": 1,
+        "ScopeId": "analysisscope1:sha256:fb0120aa6fde05604550ef1c2d0fd27f0e7edfe14eed847e1c8ab5171a8e6fe5",
+        "UniverseId": "compilation-universe1:sha256:dde037587eb5aa8892eac7b81d5cff1d16a38602433b1dc4ef401ff1696c3e3d",
+        "DeclaredUnitCount": 2,
+        "VerifiedUnitCount": 1,
+        "External": 0,
+        "Ambiguous": 0,
+        "Unresolved": 0,
+        "Unsupported": 0,
+        "ConditionalInactive": 0,
+        "UnavailableReasons": {},
+        "TotalFacts": 0,
+        "AnalysisPerformed": true,
+        "IsComplete": false
+      },
+      "Authority": null,
+      "RequiresAuthority": false,
+      "AuthorityPublicationIndexRunId": null
+    }
+  ],
+  "failures": []
+}

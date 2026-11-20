@@ -240,3 +240,12 @@ This dated status update governs the completed S-01 proof entry in §7 and the W
 | F-G2-01 | **OPEN**. LatticeDb branch coverage 296/450 = 65.77%, below the 70% gate. Separate owner decision required. |
 | Full D3 corpus, D4.5, full S-02, F-02 and full platform certification | Outstanding Stage 6 obligations. F-02 crash and power-loss evidence requires separately commissioned qualification. |
 | WP-S25-4 | **Eligible for entry assessment, subject to separate owner authorization.** S2.5 completion and Stage-2 owner acceptance remain pending. |
+
+### WP-S25-4 entry assessment (2026-11-15)
+
+**WP-S25-4 — READY FOR INDEPENDENT QUALIFICATION WITH QUALIFICATIONS.** The
+[entry owner record](../reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-ENTRY-OWNER-01.md)
+and [reconciliation inventory](../planning/adr-ci1-01-ci1a-s2-5/wp-s25-4-obligation-inventory.md)
+assign the remaining integration and acceptance gates. Independent execution
+requires separate owner authorization. F-G2-01 remains open and requires its
+separate disposition before Stage-2 acceptance. S2.5 and Stage-2 remain pending.

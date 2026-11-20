@@ -1,0 +1,32 @@
+# QUAL-04 bounded mutation N2 applied to a disposable copy of the pinned R3
+# export (8b83e0558f4c757272cd60a1c81b8dbc6fd7873f) at
+# C:\Windows\Temp\opencode\qual04\mutation\N2. The pinned export and the
+# canonical repository were never modified.
+#
+# Control purpose: remove the legacy restore projection only, so a
+# matching-authority historically shaped store must aggregate every whole-universe
+# row again. Observed result (registered as N2): declared 9 / verified 9 for a
+# 3-unit scope, i.e. the historical defect is reproduced and detected.
+
+diff --git a/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs b/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
+index f877b6c..d68e299 100644
+--- a/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
++++ b/src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
+@@ -807,15 +807,8 @@ public sealed partial class LatticeCodeGraphStore :
+     {
+         if (unit.Coverage is { } coverage)
+         {
+-            // Legacy C# source rows stored the full membership in both the row
+-            // and its authority envelope. Project only the aggregation view;
+-            // the query gate still checks the original row against the envelope.
+-            if (coverage.IsComplete && coverage.DeclaredUnitCount > 1 &&
+-                coverage.DeclaredUnitCount == coverage.VerifiedUnitCount &&
+-                unit.Authority is { ValueKind: JsonValueKind.Object } authority &&
+-                authority.TryGetProperty(nameof(CodeOccurrenceAuthority.SourceUnitId), out var source) &&
+-                source.ValueKind == JsonValueKind.String && source.GetString() == unit.IndexUnitId)
+-                return CodeOccurrenceAuthority.SourceContribution(coverage);
++            // NEGATIVE CONTROL: restore projection removed; the raw persisted row
++            // coverage is used for aggregation exactly as before R3.
+             return coverage;
+         }
+         if (unit.AnalysisIncluded || unit.Facts.Count > 0)

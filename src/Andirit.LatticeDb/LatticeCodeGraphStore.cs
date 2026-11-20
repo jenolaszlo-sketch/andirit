@@ -805,8 +805,19 @@ public sealed partial class LatticeCodeGraphStore :
 
     private static CodeOccurrenceCoverage? CoverageForRestore(PersistedOccurrenceUnit unit)
     {
-        if (unit.Coverage is not null)
-            return unit.Coverage;
+        if (unit.Coverage is { } coverage)
+        {
+            // Legacy C# source rows stored the full membership in both the row
+            // and its authority envelope. Project only the aggregation view;
+            // the query gate still checks the original row against the envelope.
+            if (coverage.IsComplete && coverage.DeclaredUnitCount > 1 &&
+                coverage.DeclaredUnitCount == coverage.VerifiedUnitCount &&
+                unit.Authority is { ValueKind: JsonValueKind.Object } authority &&
+                authority.TryGetProperty(nameof(CodeOccurrenceAuthority.SourceUnitId), out var source) &&
+                source.ValueKind == JsonValueKind.String && source.GetString() == unit.IndexUnitId)
+                return CodeOccurrenceAuthority.SourceContribution(coverage);
+            return coverage;
+        }
         if (unit.AnalysisIncluded || unit.Facts.Count > 0)
         {
             return new CodeOccurrenceCoverage(

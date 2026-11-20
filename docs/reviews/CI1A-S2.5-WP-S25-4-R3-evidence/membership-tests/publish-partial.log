@@ -1,0 +1,19 @@
+Phase: publish-partial
+Command: dotnet test tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj -c Release --no-build --filter FullyQualifiedName~CompleteScopeMembership_ReplacementRestoresWithoutAccumulating --logger console;verbosity=detailed
+Test run for C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r3\production\tests\Andirit.CSharp.Tests\bin\Release\net10.0\Andirit.CSharp.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r3\production\tests\Andirit.CSharp.Tests\bin\Release\net10.0\Andirit.CSharp.Tests.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.4+50e68bbb8b (64-bit .NET 10.0.12)
+[xUnit.net 00:00:00.11]   Discovering: Andirit.CSharp.Tests
+[xUnit.net 00:00:00.20]   Discovered:  Andirit.CSharp.Tests
+[xUnit.net 00:00:00.24]   Starting:    Andirit.CSharp.Tests
+membership phase=publish-partial pid=22300 path=C:\Users\Laszlos\source\repos\Solo\.tmp\andirit-r3/stores/fresh-membership-replacement
+run:membership-partial IncompleteAnalysis 3/2 complete=False hits=0 facts=0 unresolved=2
+[xUnit.net 00:00:02.67]   Finished:    Andirit.CSharp.Tests
+  Passed Andirit.CSharp.Tests.S23PublicationIntegrationTests.CompleteScopeMembership_ReplacementRestoresWithoutAccumulating [2 s]
+
+Test Run Successful.
+Total tests: 1
+     Passed: 1
+ Total time: 3.3069 Seconds
+Exit code: 0
