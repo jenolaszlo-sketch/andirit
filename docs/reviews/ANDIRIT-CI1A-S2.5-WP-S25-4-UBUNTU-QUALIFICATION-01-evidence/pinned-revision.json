@@ -1,0 +1,53 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.5-WP-S25-4-UBUNTU-QUALIFICATION-01 (preparation)",
+  "pinnedRevision": {
+    "commit": "eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6",
+    "tree": "823e3c655f8fa8aea64b68e0935b1048bc9b6f7d",
+    "parent": "f669e107e499986c141f4bf1724b8aa93cf13fc3",
+    "note": "GATE-REMEDIATION-01 sealed commit: two comment-only production relocations + 23 LatticeDb regression test cases + producer report. Production/test/CI content is the qualification target.",
+    "ancestry": "strict ancestor of the current HEAD (GATE-OWNER-01 decision commit); local main is 14 ahead of recorded origin/main 48370711a6247b972dfc83628618924e864be374",
+    "protectedScope": "git diff eafd632 <GATE-OWNER-01 decision HEAD> -- src tests .github is empty (verified at preparation)"
+  },
+  "ciWorkflow": {
+    "path": ".github/workflows/ci.yml",
+    "blobAtPinned": "be48426f9be77eacf5dc3de925566126eedad03b",
+    "identicalToSq05QualifiedRevision": true,
+    "note": "byte-identical to the workflow blob at the WP-S25-2/SQ-05 qualified revision 7457284...; the PR run therefore executes the same gates (format + four coverage steps, Thresholds 55/75/60/70, line+branch)"
+  },
+  "latticeDb": {
+    "suiteCases": 75,
+    "staticCensus": {
+      "[Fact]": 71,
+      "[Theory]": 2,
+      "InlineData": 4,
+      "perFile": {
+        "HistoricalStorageIdentityTests.cs": 1,
+        "LatticeCodeGraphStoreTests.cs": 20,
+        "LatticeDbDurableStateRegressionTests.cs": 11,
+        "LatticeDbPublicApiContractTests.cs": 1,
+        "NativeGraphMirrorTests.cs": 15,
+        "New01RecoveryProjectionTests.cs": 7,
+        "OccurrenceRemediationNativeTests.cs": 5,
+        "OccurrenceStage1NativeTests.cs": 10,
+        "OccurrenceStage1PerformanceProbe.cs": 1,
+        "S23Wp5NamespaceRefusalTests.cs": 1,
+        "S24SurfaceRefusalMappingTests.cs": 1
+      }
+    },
+    "nativeDependency": "LatticeDbSharp 0.2.0 (src/Andirit.LatticeDb/Andirit.LatticeDb.csproj) -> runtimes/linux-x64/native/liblattice.so",
+    "windowsResultAtPinned": "75 passed / 0 failed / 0 skipped (GATE-QUALIFICATION-01, 2026-11-20)"
+  },
+  "expectedSupplementarySuites": {
+    "core": {"expect": "345 passed"},
+    "csharp": {"expect": "372 passed", "note": "grew from 353 at the SQ-05 revision"},
+    "treesitter": {"expect": "157 passed"}
+  },
+  "expectedCoverageAtPinned": {
+    "LatticeDb": {"lineRate": 0.9287, "line": "900/969", "branchRate": 0.7896, "branch": "368/466", "threshold": 70},
+    "core": {"threshold": 55},
+    "csharp": {"threshold": 75},
+    "treesitter": {"threshold": 60},
+    "note": "Windows-verified at the pinned revision by GATE-QUALIFICATION-01; the Linux run must record its own actual percentages (coverlet counts are platform-independent, but actuals are recorded, not assumed)"
+  },
+  "expectedFormatGate": "dotnet format Andirit.slnx --no-restore --verify-no-changes exit 0 (verified at the pinned revision on a byte-exact export; on the hosted checkout the CRLF profile must also pass - recorded by QUAL-04)"
+}

@@ -1,0 +1,101 @@
+# Pinned LatticeDb suite census for ANDIRIT-CI1A-S2.5-WP-S25-4-UBUNTU-QUALIFICATION-01
+# Source: GATE-QUALIFICATION-01 whole-solution TRX (pinned revision eafd632, Windows x64,
+#         2026-11-20). Preparation enumeration only; Linux execution re-derives the counts.
+# Total test cases: 75  outcomes: {'Passed': 75}
+
+## HistoricalStorageIdentityTests (1 cases)
+  - Schema2_LabelsRemainHistoricalHetuProtocolIdentities  [Passed]
+
+## LatticeCodeGraphStoreTests (20 cases)
+  - DisposeWaitsForActiveMutationAndAllReadsRejectAfterward  [Passed]
+  - FailedCommitNeverPublishesProspectiveStateToReaders  [Passed]
+  - FailedUnrelatedWritePreservesRunningRunBaseline  [Passed]
+  - Host_UseLatticeStoreBuildsHealthyHost  [Passed]
+  - IdempotentRunningRetryDoesNotRewriteOriginalBaseline  [Passed]
+  - PublicApi_IsIntentional  [Passed]
+  - Store_AcceptsTuningOptions  [Passed]
+  - Store_IsolatesMultipleRepositories  [Passed]
+  - Store_OpensAsyncAndHonorsCancellation  [Passed]
+  - Store_PassesProviderConformanceSuite  [Passed]
+  - Store_RejectsCorruptedDurablePayloadOnReopen  [Passed]
+  - Store_RejectsIncompatibleSchemaVersion  [Passed]
+  - Store_RejectsSecondOwnerOfSameFile  [Passed]
+  - Store_ReopensCompletedRunIndexStateAndGraphFacts  [Passed]
+  - Store_ReopensDurableState  [Passed]
+  - Store_ReopensHistoricalAndLatestCompletedRuns  [Passed]
+  - Store_ReopensStagedRunWithoutPublishingItAndCanResumePublication  [Passed]
+  - Store_ReportsUnhealthyAfterDispose  [Passed]
+  - Store_ResumedRunConflictsAfterNewerPublication  [Passed]
+  - Store_RollsBackInterruptedNativeTransactionAndReopensPriorUnit  [Passed]
+
+## LatticeDbDurableStateRegressionTests (13 cases)
+  - AuthorityPublicationAccountingMismatchIsRefused(field: "FactCount")  [Passed]
+  - AuthorityPublicationAccountingMismatchIsRefused(field: "UnitCount")  [Passed]
+  - AuthorityRequiredUnitRejectsAMismatchedPublicationIdentity  [Passed]
+  - AuthorityRequiredUnitRejectsAStaleExpectedPublication  [Passed]
+  - AuthorityRequiredUnitWithoutCurrentAuthorityIsUnavailable  [Passed]
+  - LegacyPersistedUnitWithoutCoverageRestoresAsPartial  [Passed]
+  - NotProducedCoverageWithFactsIsCorrectedToPartial  [Passed]
+  - OccurrenceFactsWithoutDeclaredCoverageAreRestoredAsPartial  [Passed]
+  - OccurrencePageMustRemainBoundToItsAcceptedPublication(field: "PublicationIndexRunId", value: "run:unknown-page")  [Passed]
+  - OccurrencePageMustRemainBoundToItsAcceptedPublication(field: "RepositoryId", value: "repo:unknown-page")  [Passed]
+  - OrphanedAuthorityUnitIsRefused  [Passed]
+  - PublishedGraphUnitRequiringAuthorityWithoutAnOccurrenceOwnerIsRefused  [Passed]
+  - StoreRejectsABlankDatabasePath  [Passed]
+
+## LatticeDbPublicApiContractTests (1 cases)
+  - LatticeDb_PublicTypeSnapshot_IsIntentional  [Passed]
+
+## NativeGraphMirrorTests (15 cases)
+  - EvidenceFilteredTraversalFallsBackToProjection  [Passed]
+  - MirrorManifestTreatsNullPayloadAsAnEmptyDerivedManifest  [Passed]
+  - NativeMirrorRebuildsAfterPublicationWhileTraversalIsDisabled  [Passed]
+  - NativeMirrorSurvivesReopen  [Passed]
+  - NativeTraversalMatchesProjection  [Passed]
+  - RebuildRejectsAnEdgeWhoseSourceIsNotMirrored  [Passed]
+  - RebuildRejectsAnEdgeWhoseTargetIsNotMirrored  [Passed]
+  - RebuildRejectsNullTransactionAndUnits  [Passed]
+  - StagedFactsStayOutOfNativeTraversal  [Passed]
+  - TraverseRejectsANativeEdgeMissingFromTheManifest  [Passed]
+  - TraverseRejectsANativeTargetMissingFromTheManifest  [Passed]
+  - TraverseRejectsANullNativeEdgePayload  [Passed]
+  - TraverseRejectsANullNativeNodePayload  [Passed]
+  - TraverseRejectsEvidenceFilteredQueries  [Passed]
+  - TraverseReturnsAnEmptyResultForAnUnknownStartNode  [Passed]
+
+## New01RecoveryProjectionTests (7 cases)
+  - Recovery_AfterInMemoryApplyFailure_PreservesCommittedOccurrenceProjection  [Passed]
+  - Recovery_AfterPreCommitFailure_MatchesDurableOccurrenceProjection  [Passed]
+  - Recovery_ConflictRefusalStillEffective  [Passed]
+  - Recovery_PreservesCompleteEmptyEvidence  [Passed]
+  - Recovery_PreservesPartialCoverage  [Passed]
+  - Recovery_PreservesPublishedGraphUnits  [Passed]
+  - UnknownOutcome_StillQuarantinesAndReopenSeesDurableState  [Passed]
+
+## OccurrenceRemediationNativeTests (5 cases)
+  - AfterCommitAcknowledgementLossRefusesCurrentStateAndReopenSeesDurableState  [Passed]
+  - CompleteEmptyAnalysisSurvivesReplacementAndReopen  [Passed]
+  - DeletingACompleteUnitInvalidatesCoverage  [Passed]
+  - IncompleteCoverageCannotMasqueradeAsCompleteEmpty  [Passed]
+  - NoAnalysisWithZeroFactsRemainsUnavailable  [Passed]
+
+## OccurrenceStage1NativeTests (10 cases)
+  - N1_InitialPublicationPersistsNativeFactsPagesAndMeta  [Passed]
+  - N2_BoundedQueryIsDeterministicAndDoesNotScanUnrelatedTargets  [Passed]
+  - N3_ReplacementRetiresObsoleteFactsAndPreservesOtherUnits  [Passed]
+  - N4_ContributorUnionAndScopedDeletionPreserveRemainingContributors  [Passed]
+  - N5_ReopenPreservesOccurrenceAndIndexState  [Passed]
+  - N6_FailedCompletionPreservesPriorOccurrencePublication  [Passed]
+  - N7_StalePublicationAndGraphOnlyStoresRefuseExplicitly  [Passed]
+  - N8_D3GraphNoninterferenceAcrossOccurrenceLifecycle  [Passed]
+  - Store_RejectsOccurrenceUnitsWithoutMeta  [Passed]
+  - Store_RejectsUnsupportedOccurrenceSchemaOnOpen  [Passed]
+
+## OccurrenceStage1PerformanceProbe (1 cases)
+  - Stage1WorkloadMeasurements  [Passed]
+
+## S23Wp5NamespaceRefusalTests (1 cases)
+  - Store_RejectsUnsupportedOccurrenceNamespaceOnOpen  [Passed]
+
+## S24SurfaceRefusalMappingTests (1 cases)
+  - If05_MappingMatrix_MatchesAcceptedContract  [Passed]
