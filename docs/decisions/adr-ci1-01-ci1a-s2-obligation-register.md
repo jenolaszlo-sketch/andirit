@@ -30,6 +30,22 @@ claimed. The SQ-04 and F15 rows below are preserved verbatim as the historical r
 the original requirement; the amendment supersedes their breadth for Stage-2 acceptance
 purposes only.
 
+**Current S2.5 owner updates, 2026-11-20/21.** (1) [GATE-OWNER-01](adr-ci1-01-ci1a-s2-5-wp-s25-4-gate-owner-01.md)
+closes the exact-byte formatting gate and F-G2-01 at the repository level on independently
+reproduced evidence (368/466 branches, 900/969 lines at `eafd632`). (2) [UBUNTU-OWNER-01](adr-ci1-01-ci1a-s2-5-wp-s25-4-ubuntu-owner-01.md)
+records **M11.4 / M14.1 / M14.2 ACCEPTED WITH QUALIFICATIONS** for the current scope
+(corrected-revision genuine Ubuntu 26.04.1 x64, 75-test suite, run 44746950426); the 52-test
+SQ-05 acceptance is preserved and superseded for current scope only. (3) [M54-AMEND-OWNER-01](adr-ci1-01-ci1a-s2-5-m54-amend-owner-01.md)
+approves the bounded **M5.4 contract clarification** (Option B): acceptance basis is the
+conservative-refusal guarantee — isolated refusal demonstration + integrated accounting +
+pre-mint defining-evidence validation — with the prohibited outcomes (false-available,
+false-complete, wrong reason, mint from unsupported channel) preserved verbatim; M5.4 is
+**`AMENDMENT-APPROVED — PENDING INDEPENDENT QUALIFICATION`** (`ANDIRIT-CI1A-S2.5-WP-S25-4-M54-B-QUAL-01`,
+prepared, execution not authorized). Input reachability and the exhaustive Roslyn
+symbol-association proof remain **unproven and unclaimed**; escalation to the Option A
+compiler-proof route is preserved. The historical M5.4 disposition D below/elsewhere is
+preserved verbatim; the amendment supersedes its breadth for future acceptance purposes only.
+
 ## 1. Sources and closure rules
 
 Authority keys (paths relative to the canonical repository unless external):
