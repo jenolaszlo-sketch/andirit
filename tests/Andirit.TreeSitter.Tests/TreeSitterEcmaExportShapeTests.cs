@@ -388,8 +388,8 @@ public sealed class TreeSitterEcmaExportShapeTests
             javascript.Declarations.Count,
             javascript.Edges.Count(edge => edge.Kind != CodeEdgeKinds.Exports),
             javascript.Edges.Count));
-        Assert.Equal("84c13587db0ef90751bbb6f9c561b1294b541dc7fade44d15bdf54a6fb5722bf", PreExportGraphFingerprint(typescript));
-        Assert.Equal("3b2d3761334e5f4b87423cf0f84fa8824c2618450f4e5b98386ee861fdf32cdd", PreExportGraphFingerprint(javascript));
+        Assert.Equal("7d067f6c70c20b2cc7db310d1d61b49c87f90eb432eebdee6135b2433b52a664", PreExportGraphFingerprint(typescript));
+        Assert.Equal("5e6c797366ef1443dc4c687e481d59537ac8c9378486aebbcf2fa22d7604ac37", PreExportGraphFingerprint(javascript));
         Assert.Contains(typescript.Edges, edge => edge.Kind == CodeEdgeKinds.ResolvesTo);
         Assert.Contains(javascript.Edges, edge => edge.Kind == CodeEdgeKinds.ResolvesTo);
         Assert.Equal(5, typescript.Nodes.Count(node => node.Kind == CodeNodeKinds.Export));

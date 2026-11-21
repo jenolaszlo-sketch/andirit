@@ -6,6 +6,67 @@ releases may still revise public contracts.
 
 ## Unreleased
 
+## 0.2.0-preview.7
+
+Andirit **Stage 2 baseline**: C# method-invocation occurrence extraction with
+canonical identity (`usage4`/`asmctx3`), verified-compilation binding, native
+LatticeDb persistence, authority-gated publication, bounded reader queries,
+semantic coverage, and conservative refusal. Stage 2 is **accepted with
+qualifications** and closed within its qualified boundary (2026-11-22);
+`0.2.0-preview.6` remains the previously released version.
+
+- **Occurrence extraction and identity**: supported invocation sites extract
+  as facts with exact spans; canonical identities recompute independently from
+  the frozen R2 oracle vectors (185/185); unsupported categories are counted,
+  never facts, and the conservative refusal states (External, Ambiguous,
+  Unsupported, ConditionalInactive, Incomplete, Unresolved) are operative.
+- **Authority-gated minting and publication**: `asmctx3` minting requires a
+  non-null recorded defining compilation; every non-Complete resolution
+  refuses; the unresolved classification never reaches publication without a
+  verified authority envelope.
+- **Native persistence**: atomic publication with durable reopen; schema,
+  namespace, page-binding and stale-publication refusals; authority-masking
+  refusals.
+- **Reader surface**: bounded target-index queries with continuation,
+  `Examined` accounting, and truthful availability mapping.
+- **Cross-platform**: genuine hosted Ubuntu x64 execution of the 75-case
+  native suite (Ubuntu 26.04.1, SDK 10.0.404); the corrected revision produced
+  a green full-matrix CI run (exact-byte formatting, four coverage-gated
+  suites, pack with pack-consume-load smoke).
+- **Packages**: six packages (`Andirit`, `Andirit.Abstractions`,
+  `Andirit.CSharp`, `Andirit.LatticeDb`, `Andirit.Testing`,
+  `Andirit.TreeSitter`) with Tree-sitter natives for `win-x64`, `linux-x64`
+  and `osx-arm64`; pack-consume-load smoke evidence for `win-x64` and
+  `linux-x64`.
+- Fixes since the last preview: exact-byte formatting gate passes (exit 0)
+  without configuration changes; LatticeDb branch coverage raised above the
+  repository 70% policy via focused regression tests (368/466 branches =
+  78.96%; 900/969 lines = 92.87%).
+
+### Qualified boundary (binding on this release)
+
+- Linux scope is restricted to the demonstrated hosted environment (Ubuntu
+  26.04.1 x64, SDK 10.0.404, hosted runner) and 75-case-suite behavior; other
+  generations, distributions, architectures and full platform certification are
+  not claimed.
+- Managed fault injection only; no crash/power-loss/multi-process durability
+  claim.
+- M5.4 is satisfied under an amended contract with a conservative
+  false-negative direction; constructed-control evidence does not establish
+  natural reachability; an exhaustive Roslyn symbol-association proof remains
+  unproven.
+- Preview release: public contracts may be revised.
+
+### Deferred (Stage 6, not discharged by this release)
+
+Full D3 real-fixture part (DF-1); D4.5 full native fault matrix (DF-2); full
+S-02 ten-invariant native matrix (DF-3); F-02 crash/power-loss/multi-process
+durability (DF-4); Q2-F09/Q2-F12/I-04 cancellation paths (DF-5); full platform
+certification (DF-6); WP-S24-3 optional cross-target scope, public Find Usages
+and optimization (DF-7); M9.5 cancellation path and M12.1-M12.3 full native
+matrix (DF-8).
+
+
 ECMAScript structural export-name publication (EC-6C.2; isolated implementation):
 
 - TypeScript and JavaScript advance to profile p9 and publish one module-scoped
