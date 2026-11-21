@@ -1,101 +1,115 @@
 # ANDIRIT-CI1A-S2.5-WP-S25-4-M54-B-QUAL-01
 
 **Date**: 2026-11-21
-**Class**: PREPARED COMMISSION — commission definition only. **Nothing is executed by this document.**
-**Subject**: independent qualification of M5.4 under the amended contract
-(`adr-ci1-01-ci1a-s2-5-m54-amend-owner-01.md` §6): the conservative-refusal acceptance basis.
-**Status**: **PREPARED — EXECUTION AUTHORIZATION REQUIRED** (owner issues the execution
-commission; preparation was authorized by the M5.4 amendment commission §4).
+**Gate**: M54-B-QUAL-01 — independent qualification of M5.4 under the amended contract
+(`docs/decisions/adr-ci1-01-ci1a-s2-5-m54-amend-owner-01.md` §6), executed per the prepared
+commission (`docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-M54-B-QUAL-01.md`).
+**Pinned implementation**: `eafd632b...` / tree `823e3c65…` (the gate-remediation revision).
+**Formal disposition**: **SUPPORTED** — every binding amended criterion is independently
+supported; no Option A escalation condition is triggered; no owner acceptance is granted here.
 
 ---
 
-## 1. Objective
+## 1. Role, independence and method
 
-Independently qualify M5.4 under the amended acceptance basis, distinguishing established facts
-from constructed controls, and either (a) support M5.4 as `SATISFIED UNDER AMENDED CONTRACT` with
-qualifications, or (b) report failure with escalation to Option A. The commission executes on
-Windows x64 only; no Linux re-execution is required or in scope.
+The reviewer derived all acceptance criteria from the amended contract before observing any
+production output and built a reviewer-owned harness (`harness/`) that references the pinned
+production projects under the reserved `Andirit.CSharp.Tests` assembly identity **without
+modifying production code, canonical tests, dependencies, or CI policy**. Expected values were
+computed independently (e.g. the `asmctx3` target id recomputed through
+`CodeOccurrenceIdentity.ComputeTargetId` over the mapped R2-faithful `compctx1`). The distinct-
+process reopen leg runs through the public store API plus the live authority boundary, so the
+reopen observability is the production contract, not a test seam.
 
-## 2. Pinned implementation revision and tree
+Independence is method-level (fresh harness, contract-derived expectations, independent
+derivations, primary-source receipts). Organizational independence is not established
+(no employment/reporting-line evidence) — the same recorded boundary as prior commissions.
+Same-session sequencing with the commission's preparation is disclosed; the SQ-05 G3 amendment
+precedent permits this pattern when the limitation is recorded.
+
+## 2. Execution summary
 
 | Item | Value |
 | --- | --- |
-| Revision / tree | `eafd632b...` / `823e3c65…` (the sealed gate-remediation revision; production refusal code unchanged since QUAL-02/03/04's audits — verified by `git diff`/`git log` on the refusal call sites at commission time) |
-| Preflight assertions | clean `main`; the pinned revision is an ancestor; `src`/`tests`/`.github` identical; prior evidence manifests verify |
-| Method precedent | QUAL-04 reviewer-harness pattern: a separate reviewer project using the reserved `InternalsVisibleTo` assembly identity, referencing production projects **without modifying them**; expectations derived from the amended contract, not from execution output |
+| Exercises | **11 passed / 0 failed / 0 skipped** (`qualification-run.log`, `trx/m54b-results.trx`) |
+| Refusal-path coverage | **11/11 in-process refusal branches hit** (`receipts/refusal-path-coverage.json`) |
+| Native gate / mapping paths | receipt-evidenced in the distinct reopen process (`e3b`/`e3b2`/`e3c`) |
+| Prohibited-direction outcomes | **none** |
+| Option A escalation conditions | **none triggered** |
+| Environment | Windows x64, SDK 10.0.401, pinned exact-byte export (4,555 blobs, 0/0/0 verified) |
 
-## 3. Binding amended acceptance criteria (from the amendment §6, verbatim anchors)
+## 3. Criterion-level results (full detail in `matrix.md`)
 
-1. **Isolated refusal behavior (C1)**: the `MissingDefiningCompilation` refusal
-   (`VerifiedDefiningStatus.MissingDefiningCompilation`, its `VerifiedTargetMintStatus` mapping,
-   and the `InvalidDataException("MissingDefiningCompilation")` paths in
-   `VerifiedCSharpAnalysis`/`VerifiedCSharpCompilation`) is demonstrated on a constructed
-   missing-defining case — **labeled as a constructed control; it demonstrates the refusal path,
-   not input reachability**.
-2. **Pre-mint defining-evidence validation (C2)**: the mint gate (`resolved.Status != Complete`
-   → refuse) and the exact source-reference / captured PE-reference / full verified
-   dependency-closure checks are exercised at their call sites; no fact is minted when defining
-   evidence is missing (positive control: the `Complete` path still mints).
-3. **Integrated accounting guarantees (C3)**: the unresolved classification carries through
-   publication, native persistence, query and distinct-process reopen with correct counters and
-   coverage states — incomplete, unavailable and complete-zero distinguished; no
-   false-available, false-complete, wrong-reason, or unsupported-mint outcome anywhere.
-4. **Prohibited-outcome screen (C4)**: the amended contract's prohibited outcomes never occur in
-   any executed case, positive or negative.
+**C1 Isolated refusal behavior — supported.** E1a: a deliberately absent defining compilation
+yields `MissingDefiningCompilation` at resolution, minting, and usage; no fact is emitted;
+`RequireCompilation` refuses. E1b: both construction guards (unmatched project reference;
+non-member universe dependency) refuse before minting — a complete admissible universe cannot
+carry a member depending on an unverified compilation. E1c: `Incomplete` (missing scope unit /
+empty universe) is correctly distinguished from `MissingDefiningCompilation`.
 
-## 4. Independent exercises
+**C2 Integrated accounting guarantees — supported.** E3a: unresolved/external/unsupported sites
+are counted as coverage, never minted (1 fact for the in-universe call only). A4/A4b: an
+incomplete universe records no authority envelope and `PrepareNativeUnit` refuses publication
+without one. E3b: authority-bound publication survives native persistence and a distinct-process
+reopen with the fact id and counters preserved (`Available`). E3b2: a partial coverage record
+reopens as `IncompleteAnalysis` with the truthful reason "a zero-result answer is not a complete
+negative" — never false-available. E3c: an authority-masking tamper (envelope stripped while the
+unit claims required authority) is refused `AnalysisUnavailable` with zero occurrences served.
 
-| # | Exercise | Constructed or natural | Expected outcome |
-| --- | --- | --- | --- |
-| E1 | Isolated refusal: call the defining-resolution entry with a defining compilation absent from the declared universe (reviewer-constructed universe) | **Constructed control (labeled)** | `MissingDefiningCompilation` status; zero minted facts; explicit reason string |
-| E2 | Mint-gate screen: for every non-`Complete` defining status, the mint path refuses | Constructed (status-tabulation over the `VerifiedDefiningStatus` set) | No mint without `Complete`; status-to-mint mapping exactly as production defines it |
-| E3 | Integrated accounting: publish the E1 control through the store, reopen in a distinct process, query | Natural store behavior of a constructed control (labeled) | Unresolved classification observable at query; counters/coverage states correct after reopen; no successful empty |
-| E4 | Positive control: a complete admissible case mints and survives reopen | Natural | `Complete` → minted fact with correct identity (frozen-oracle identity where applicable) |
-| E5 | Negative/adversarial: absent universe entry, empty universe, stale context, external-only defining evidence, ambiguous bindings | Constructed + natural variants | Correct refusal per status; never a false-positive outcome; never a successful empty |
+**C3 Pre-mint validation — supported.** The mint gate refuses without a non-null recorded
+defining `compctx2` (E2); every non-Complete status (MissingRecordedContext, StaleContext,
+MissingDefiningCompilation, Incomplete, UnsupportedExternalEvidence, Ambiguous) refuses with its
+own mapped status and `mintedAny: false` (E2). The natural positive control mints with a target
+id equal to the reviewer's independent computation (E2p).
 
-## 5. Positive, negative and adversarial controls (pre-registered)
+**C4 Prohibited-outcome screen — supported.** No executed case produced a minted fact without a
+Complete defining resolution, a false-available/false-complete result, an incorrect refusal
+reason, or a mint from an unsupported channel.
 
-- **Positive (P)**: P1 complete mint + reopen; P2 the four R3 probe shapes replayed as
-  expectation-registered comparisons (CS0012 gate-unreached; direct `Complete`; retargeted
-  `Complete`; forwarding → `UnsupportedExternalEvidence`) — the R3 outcomes are re-derived, and
-  any reviewer/producer disagreement is blocking.
-- **Negative (N)**: N1 isolated missing-defining refusal (E1); N2 each non-`Complete` status
-  refuses the mint (E2); N3 attempted mint with a stripped reference set.
-- **Adversarial (A)**: A1 a universe entry that *names* but does not *contain* the defining
-  compilation; A2 a tampered/extracted reference that bypasses the closure check; A3 a
-  synthesized-symbol/error-recovery shape (the specific residual risk of the amendment §8);
-  A4 a cross-unit/authority case where the unresolved classification could be masked as complete.
-  Any A-case producing a **prohibited-direction outcome** (mint, false-available, false-complete,
-  wrong reason) is a **blocking finding and an escalation trigger** (§7).
+## 4. Constructed vs natural behavior (preserved distinction)
 
-## 6. Required evidence and expected outcomes
+Constructed controls (labeled in every receipt): the isolated missing-defining case; the
+incomplete/empty universes; the six-status screen (incl. the ambiguous two-instance universe and
+the runtime-forwarded PE case); the partial-coverage store leg; the authority-masking tamper.
+Naturally reproduced behavior: the in-universe mint and its authority envelope; the complete-
+universe extraction accounting; publication → native persistence → distinct-process reopen →
+query; and the production construction gates exercised with constructed inputs. **No constructed
+control supports a natural-reachability claim**, and the four inconclusive compiler probes from
+the R3 record are not treated as positive evidence — consistent with the amendment §6/§8.
 
-| Requirement | Content |
-| --- | --- |
-| Environment record | Windows x64, SDK/runtime versions, host identity, package cache identity (toolchain log) |
-| Harness | The reviewer project, its `expected.json` (contract-derived expectations), and the harness source — all inside the sealed package |
-| Raw receipts | Per-exercise stdout/stderr logs, status/counter receipts, publication/reopen receipts, query receipts; failed attempts preserved verbatim |
-| Coverage of the refusal path | Instrumented or traced evidence that the refusal branches under test were executed (no production visibility change; tracing allowed) |
-| Manifest | Self-excluding SHA-256 manifest of exact bytes, lengths, ordinal relative paths (QUAL-04 convention); report bound by Git |
-| Disposition rule | `SUPPORTED` / `SUPPORTED WITH QUALIFICATIONS` / `REMEDIATION REQUIRED` / `BLOCKED`; any reviewer/producer disagreement on a pre-registered expectation is blocking; **constructed controls may never support an input-reachability claim** |
+## 5. Qualifications and residual limitations
 
-## 7. Escalation conditions to Option A
+- Input reachability of a true missing-defining case by an admissible production input remains
+  **unproven and unclaimed**; the exhaustive Roslyn symbol-association proof remains **unproven
+  and unclaimed** (amendment §8, restated).
+- The demonstrated guarantee is **conservative (fail-closed)**: a hypothetical false refusal
+  would suppress a legitimate fact and cannot produce a prohibited outcome.
+- Qualification is Windows-x64 (SDK 10.0.401); no cross-platform claim.
+- Managed-fault durability (F-02) and full native matrix items are outside this commission.
+- Refusal-path line coverage was collected for in-process legs only; native gate lines are
+  receipt-evidenced (coverlet does not instrument the reopen child).
 
-Escalate to the Option A pinned compiler-proof route (`35d9211b…`) — reporting immediately, with
-the finding preserved — if any of the following occurs:
+## 6. Option A escalation assessment
 
-1. Any A-case yields a prohibited-direction outcome (minted fact, false-available,
-   false-complete, wrong reason) — **blocking for the amended basis**.
-2. The isolated refusal cannot be demonstrated even on a constructed input (the path is
-   unreachable in principle) — contradicts established claim 1; investigate before disposition.
-3. The integrated accounting chain fails to carry the unresolved classification through any
-   stage.
-4. The reviewer concludes the amended basis is insufficient and the original reachability basis
-   is required (a reviewer judgment, restated for the owner).
+All four conditions of the prepared commission §7 were evaluated and **none is triggered**:
+(1) no prohibited-direction outcome; (2) the isolated refusal is demonstrable (E1a, line 119
+hit ×4); (3) the integrated accounting chain carries the unresolved classification through every
+stage; (4) the amended basis is sufficient as written. Details in `findings.md`.
 
-## 8. Scope restrictions
+## 7. Disposition and recommendation
 
-Independent qualification only: no implementation, remediation, contract change, production/test
-modification, CI execution, or owner acceptance in this commission's execution session. The
-outcome either supports M5.4 under the amended contract (owner records satisfaction) or returns
-to the owner with findings. WP-S25-4 closure, Stage-2 acceptance and Stage 6 remain separate.
+**`SUPPORTED`** — M5.4 is supported under the amended contract on the independently exercised
+criteria C1–C4.
+
+**Recommendation for the owner (separate decision, not granted here):** record M5.4
+`SATISFIED UNDER AMENDED CONTRACT`, restating the conservative false-negative limitation, the
+unproven reachability/association items, and the constructed-control labeling at every downstream
+citation.
+
+## 8. Seal
+
+This report and `ANDIRIT-CI1A-S2.5-WP-S25-4-M54-B-QUAL-01-evidence/` (self-excluding SHA-256
+`manifest.json`) are committed locally on `main`; the sealed commit identity is supplied in the
+commit record rather than embedded here, per the established anti-self-reference convention. No
+production, test, dependency, formatter, coverage or CI-policy change; no push; no owner
+acceptance; WP-S25-4 closure and Stage-2 acceptance remain separate owner decisions.

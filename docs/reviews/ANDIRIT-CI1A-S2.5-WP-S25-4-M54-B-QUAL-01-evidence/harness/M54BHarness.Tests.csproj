@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!-- M54-B-QUAL-01 reviewer harness. Built against the reserved reviewer
+         assembly identity (established reviewer pattern); it never modifies
+         real test projects or production code. -->
+    <AssemblyName>Andirit.CSharp.Tests</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <RepoRoot Condition="'$(RepoRoot)' == ''">$(MSBuildThisFileDirectory)..\..\..\..</RepoRoot>
+    <NoWarn>$(NoWarn);CS8618;CS0618</NoWarn>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="coverlet.msbuild" Version="6.0.4" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(RepoRoot)/src/Andirit/Andirit.csproj" />
+    <ProjectReference Include="$(RepoRoot)/src/Andirit.CSharp/Andirit.CSharp.csproj" />
+    <ProjectReference Include="$(RepoRoot)/src/Andirit.LatticeDb/Andirit.LatticeDb.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="UniverseFactory.cs" />
+    <Compile Include="SharedFixture.cs" />
+    <Compile Include="M54BExercises.cs" />
+    <Compile Include="M54BStoreExercises.cs" />
+  </ItemGroup>
+
+</Project>

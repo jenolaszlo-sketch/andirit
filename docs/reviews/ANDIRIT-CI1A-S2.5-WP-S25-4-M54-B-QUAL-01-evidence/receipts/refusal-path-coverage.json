@@ -1,0 +1,121 @@
+{
+  "artifact": "D:\\m54b-qual\\coverage\\coverage.cobertura.xml",
+  "targets": {
+    "src/Andirit.CSharp/VerifiedCSharpAnalysis.cs": {
+      "105": {
+        "hits": 6,
+        "description": "Incomplete classification (incomplete declared universe)",
+        "hit": true
+      },
+      "117": {
+        "hits": 6,
+        "description": "UnsupportedExternalEvidence classification (PE-only evidence)",
+        "hit": true
+      },
+      "119": {
+        "hits": 4,
+        "description": "MissingDefiningCompilation classification (no verified defining compilation)",
+        "hit": true
+      },
+      "123": {
+        "hits": 2,
+        "description": "Ambiguous classification (multiple binding entries)",
+        "hit": true
+      },
+      "134": {
+        "hits": 1,
+        "description": "StaleContext classification (recorded context mismatch)",
+        "hit": true
+      },
+      "163": {
+        "hits": 2,
+        "description": "Mint gate: MissingRecordedContext refusal",
+        "hit": true
+      },
+      "167": {
+        "hits": 13,
+        "description": "Mint gate: non-Complete resolution refuses",
+        "hit": true
+      },
+      "185": {
+        "hits": 3,
+        "description": "MapMintStatus: MissingDefiningCompilation mapping",
+        "hit": true
+      },
+      "202": {
+        "hits": 5,
+        "description": "MintUsage: non-minted mint reaches the refusal return",
+        "hit": true
+      },
+      "203": {
+        "hits": 1,
+        "description": "MintUsage: non-minted status yields no fact",
+        "hit": true
+      }
+    },
+    "src/Andirit.CSharp/VerifiedUsageMint.cs": {
+      "60": {
+        "hits": 1,
+        "description": "PrepareNativeUnit: refuses to publish without a verified authority",
+        "hit": true
+      }
+    }
+  },
+  "assemblies": {
+    "Andirit.Abstractions": {
+      "lines": "0/0",
+      "branches": "0/0",
+      "line-rate": "0.3604",
+      "branch-rate": "0.1825"
+    },
+    "Andirit.CSharp": {
+      "lines": "0/0",
+      "branches": "0/0",
+      "line-rate": "0.2522",
+      "branch-rate": "0.22949999999999998"
+    },
+    "Andirit": {
+      "lines": "0/0",
+      "branches": "0/0",
+      "line-rate": "0.10529999999999999",
+      "branch-rate": "0.0868"
+    },
+    "Andirit.LatticeDb": {
+      "lines": "0/0",
+      "branches": "0/0",
+      "line-rate": "0.3529",
+      "branch-rate": "0.2939"
+    },
+    "M54BReopen": {
+      "lines": "0/0",
+      "branches": "0/0",
+      "line-rate": "0",
+      "branch-rate": "0"
+    }
+  },
+  "allTargetsHit": true,
+  "childProcessPaths": {
+    "src/Andirit.LatticeDb/LatticeCodeGraphStore.OccurrenceAuthority.cs": [
+      {
+        "line": 66,
+        "description": "Native authority gate: AnalysisUnavailable refusal",
+        "coverage": "not collected (distinct reopen process)",
+        "receiptEvidence": "e3b/e3b2/e3c reopen receipts"
+      }
+    ],
+    "src/Andirit/InMemoryCodeGraphStore.cs": [
+      {
+        "line": 887,
+        "description": "Availability mapping: IncompleteAnalysis vs Available decision",
+        "coverage": "not collected (distinct reopen process)",
+        "receiptEvidence": "e3b/e3b2/e3c reopen receipts"
+      },
+      {
+        "line": 890,
+        "description": "Truthful refusal reason for incomplete analysis",
+        "coverage": "not collected (distinct reopen process)",
+        "receiptEvidence": "e3b/e3b2/e3c reopen receipts"
+      }
+    ]
+  }
+}
