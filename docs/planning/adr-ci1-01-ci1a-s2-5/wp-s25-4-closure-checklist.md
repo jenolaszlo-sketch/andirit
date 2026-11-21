@@ -1,6 +1,6 @@
 # WP-S25-4 closure checklist (current state)
 
-**Updated:** 2026-11-21, after the M5.4 contract clarification (`adr-ci1-01-ci1a-s2-5-m54-amend-owner-01.md`) and the M5.4 owner acceptance (`adr-ci1-01-ci1a-s2-5-wp-s25-4-m54-owner-01.md`).
+**Updated:** 2026-11-22, after the WP-S25-4 final closure (`adr-ci1-01-ci1a-s2-5-wp-s25-4-final-owner-01.md`).
 **Read with:** the [obligation inventory](wp-s25-4-obligation-inventory.md), the
 [qualification matrix](wp-s25-4-qualification-matrix.md), the
 [entry owner record](../../reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-ENTRY-OWNER-01.md), and the cited
@@ -39,8 +39,8 @@ Legend: ✅ closed/accepted · 🔄 amendment-approved, pending qualification ·
 
 ## D. Stage-2 closure prerequisites (all separate owner decisions)
 
-- [ ] **WP-S25-4 final integrated qualification closure** — the WP-S25-4 final-closure owner decision reconciling the full matrix (M5.4 satisfaction now accepted; R1/R2/R3, Q03-F-01, F-G2-01, formatting gate, M11.4/M14.1/M14.2 accepted; SQ-06 remainder open).
-- [ ] **Stage-2 final integration + Stage-2 owner acceptance** — must restate: the closed gates (format, F-G2-01), the M11.4/M14.1/M14.2 accepted qualifications and demonstrated Linux environment scope, the M5.4 amended basis + conservative false-negative limitation + unproven-reachability statement, the SQ-04 amended-contract qualifications, F-01/F-02, and the G3-F01/F02 findings. **"Reachability proven" must not be recorded.**
+- [x] **WP-S25-4 final integrated qualification closure** — CLOSED WITH QUALIFICATIONS 2026-11-22 (`adr-ci1-01-ci1a-s2-5-wp-s25-4-final-owner-01.md`). All matrix blockers discharged (M5.4 satisfied under amended contract; M11.4/M14.1/M14.2 accepted with qualifications; F-G2-01 and the exact-byte formatting gate CLOSED); SQ-06 satisfied on existing evidence (M15.1 PASS); F06/F16/I-01 qualified; required-evidence blocker not triggered; Stage 6 deferrals restated.
+- [ ] **Stage-2 final integration + Stage-2 owner acceptance** — the next bounded commission (readiness: READY WITH QUALIFICATIONS; recommended `ANDIRIT-CI1A-S2.5-STAGE2-ACCEPTANCE-01`). Must restate: the Linux demonstrated environment scope, the M5.4 amended basis + three limitations, the closed gates, the Q-L qualifications, the GH errata and the DF Stage-6 deferrals.
 - [ ] **Stage-6 items (unauthorized, unaffected)**: full D3 real-fixture part, D4.5, full S-02 native matrix, crash/power-loss durability (F-02), full platform certification.
 - [ ] Reserve: WP-S24-3 (optional, deferred, unauthorized); public Find Usages (unauthorized); optimization (unauthorized); migration/dual-write (forbidden, D5).
 
