@@ -1,0 +1,263 @@
+﻿pack	Set up job	∩╗┐2026-11-21T21:48:22.5355801Z Current runner version: '2.338.2'
+pack	Set up job	2026-11-21T21:48:22.5375731Z ##[group]Runner Image Provisioner
+pack	Set up job	2026-11-21T21:48:22.5376396Z Hosted Compute Agent
+pack	Set up job	2026-11-21T21:48:22.5376766Z Version: 20261111.635
+pack	Set up job	2026-11-21T21:48:22.5377214Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+pack	Set up job	2026-11-21T21:48:22.5377711Z Build Date: 2026-11-11T01:49:01Z
+pack	Set up job	2026-11-21T21:48:22.5378138Z Worker ID: {8cd1e2f6-c19a-4b02-ad20-9c55297dff74}
+pack	Set up job	2026-11-21T21:48:22.5378619Z Region: centralus
+pack	Set up job	2026-11-21T21:48:22.5378970Z Cloud: Azure
+pack	Set up job	2026-11-21T21:48:22.5379307Z ##[endgroup]
+pack	Set up job	2026-11-21T21:48:22.5380275Z ##[group]Operating System
+pack	Set up job	2026-11-21T21:48:22.5380646Z Ubuntu
+pack	Set up job	2026-11-21T21:48:22.5380993Z 26.04.1
+pack	Set up job	2026-11-21T21:48:22.5381319Z LTS
+pack	Set up job	2026-11-21T21:48:22.5381651Z ##[endgroup]
+pack	Set up job	2026-11-21T21:48:22.5382069Z ##[group]Runner Image
+pack	Set up job	2026-11-21T21:48:22.5382431Z Image: ubuntu-26.04
+pack	Set up job	2026-11-21T21:48:22.5382802Z Version: 20261116.202.1
+pack	Set up job	2026-11-21T21:48:22.5383751Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261116.202/images/ubuntu/Ubuntu2604-Readme.md
+pack	Set up job	2026-11-21T21:48:22.5384909Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261116.202
+pack	Set up job	2026-11-21T21:48:22.5385495Z ##[endgroup]
+pack	Set up job	2026-11-21T21:48:22.5386211Z ##[group]GITHUB_TOKEN Permissions
+pack	Set up job	2026-11-21T21:48:22.5387707Z Contents: read
+pack	Set up job	2026-11-21T21:48:22.5388131Z Metadata: read
+pack	Set up job	2026-11-21T21:48:22.5388482Z ##[endgroup]
+pack	Set up job	2026-11-21T21:48:22.5389960Z Secret source: Actions
+pack	Set up job	2026-11-21T21:48:22.5390585Z Cache mode: write
+pack	Set up job	2026-11-21T21:48:22.5391301Z Prepare workflow directory
+pack	Set up job	2026-11-21T21:48:22.5625108Z Prepare all required actions
+pack	Set up job	2026-11-21T21:48:22.5658242Z Getting action download info
+pack	Set up job	2026-11-21T21:48:22.7964979Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+pack	Set up job	2026-11-21T21:48:22.8886321Z Download action repository 'actions/setup-dotnet@v5' (SHA:26b0ec14cb23fa6904739307f278c14f94c95bf1)
+pack	Set up job	2026-11-21T21:48:23.3334480Z Complete job name: pack
+pack	Run actions/checkout@v4	∩╗┐2026-11-21T21:48:23.3933612Z ##[group]Run actions/checkout@v4
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3934162Z with:
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3934444Z   repository: jenolaszlo-sketch/andirit
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3936873Z   token: ***
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3937117Z   ssh-strict: true
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3937369Z   ssh-user: git
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3937620Z   persist-credentials: true
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3937903Z   clean: true
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3938159Z   sparse-checkout-cone-mode: true
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3938457Z   fetch-depth: 1
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3938708Z   fetch-tags: false
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3938963Z   show-progress: true
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3939220Z   lfs: false
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3939458Z   submodules: false
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3939719Z   set-safe-directory: true
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3940012Z   allow-unsafe-pr-checkout: false
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.3940386Z ##[endgroup]
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6647843Z Syncing repository: jenolaszlo-sketch/andirit
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6649564Z ##[group]Getting Git version info
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6650129Z Working directory is '/home/runner/work/andirit/andirit'
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6651068Z [command]/usr/bin/git version
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6667438Z git version 2.56.1
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6684442Z ##[endgroup]
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6692585Z Temporarily overriding HOME='/home/runner/work/_temp/e9748ffa-1301-483f-8a3d-e7d1426b552a' before making global git config changes
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6694250Z Adding repository directory to the temporary git global config as a safe directory
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6697711Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/andirit/andirit
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6766355Z Deleting the contents of '/home/runner/work/andirit/andirit'
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6770006Z ##[group]Initializing the repository
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6774999Z [command]/usr/bin/git init /home/runner/work/andirit/andirit
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6890651Z hint: Using 'master' as the name for the initial branch. This default branch name
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6892171Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6893768Z hint: to use in all of your new repositories, which will suppress this warning,
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6894582Z hint: call:
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6895747Z hint:
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6896399Z hint: 	git config --global init.defaultBranch <name>
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6897015Z hint:
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6897584Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6898610Z hint: 'development'. The just-created branch can be renamed via this command:
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6899328Z hint:
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6899744Z hint: 	git branch -m <name>
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6900210Z hint:
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6900846Z hint: Disable this message with "git config set advice.defaultBranchName false"
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6906135Z Initialized empty Git repository in /home/runner/work/andirit/andirit/.git/
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6918518Z [command]/usr/bin/git remote add origin https://github.com/jenolaszlo-sketch/andirit
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6981744Z ##[endgroup]
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6982367Z ##[group]Disabling automatic garbage collection
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.6986632Z [command]/usr/bin/git config --local gc.auto 0
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.7021532Z ##[endgroup]
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.7022033Z ##[group]Setting up auth
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.7029242Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.7067831Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.7484822Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.7515738Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.7759176Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.7792582Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.8032964Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.8071912Z ##[endgroup]
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.8072796Z ##[group]Fetching the repository
+pack	Run actions/checkout@v4	2026-11-21T21:48:23.8079841Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +68a141f67023a9a66a5d2b77c8d93cf3cecb9993:refs/remotes/origin/main
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.2470297Z From https://github.com/jenolaszlo-sketch/andirit
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.2472023Z  * [new ref]         68a141f67023a9a66a5d2b77c8d93cf3cecb9993 -> origin/main
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.2475871Z ##[endgroup]
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.2476811Z ##[group]Determining the checkout info
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.2477843Z ##[endgroup]
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.2486615Z [command]/usr/bin/git sparse-checkout disable
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.2538116Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.2571417Z ##[group]Checking out the ref
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.2572578Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4481325Z evidence: is not a valid attribute name: docs/reviews/CI1A-S2.5-S25-SQ04-Q1-evidence/.gitattributes:1
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4505619Z evidence: is not a valid attribute name: docs/reviews/CI1A-S2.5-S25-SQ05-Q1-evidence/.gitattributes:1
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4507684Z warning: Negative patterns are ignored in git attributes
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4508968Z Use '\!' for literal leading exclamation.
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4510458Z evidence: is not a valid attribute name: docs/reviews/CI1A-S2.5-WP-S25-1-BIND-01-evidence/.gitattributes:1
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4512414Z evidence: is not a valid attribute name: docs/reviews/CI1A-S2.5-WP-S25-2-G2-EXEC-evidence/.gitattributes:1
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4513986Z warning: Negative patterns are ignored in git attributes
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4515718Z Use '\!' for literal leading exclamation.
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4516721Z warning: Negative patterns are ignored in git attributes
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4517804Z Use '\!' for literal leading exclamation.
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4526023Z warning: Negative patterns are ignored in git attributes
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4527259Z Use '\!' for literal leading exclamation.
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4542757Z warning: Negative patterns are ignored in git attributes
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.4544080Z Use '\!' for literal leading exclamation.
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.6219884Z Switched to a new branch 'main'
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.6222383Z branch 'main' set up to track 'origin/main'.
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.6275976Z ##[endgroup]
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.6324707Z [command]/usr/bin/git log -1 --format=%H
+pack	Run actions/checkout@v4	2026-11-21T21:48:25.6350035Z 68a141f67023a9a66a5d2b77c8d93cf3cecb9993
+pack	Run actions/setup-dotnet@v5	∩╗┐2026-11-21T21:48:25.6613580Z ##[group]Run actions/setup-dotnet@v5
+pack	Run actions/setup-dotnet@v5	2026-11-21T21:48:25.6614296Z with:
+pack	Run actions/setup-dotnet@v5	2026-11-21T21:48:25.6614759Z   dotnet-version: 10.0.x
+pack	Run actions/setup-dotnet@v5	2026-11-21T21:48:25.6615317Z   cache: false
+pack	Run actions/setup-dotnet@v5	2026-11-21T21:48:25.6615758Z ##[endgroup]
+pack	Run actions/setup-dotnet@v5	2026-11-21T21:48:25.7688932Z [command]/home/runner/work/_actions/actions/setup-dotnet/v5/externals/install-dotnet.sh --skip-non-versioned-files --runtime dotnet --channel LTS
+pack	Run actions/setup-dotnet@v5	2026-11-21T21:48:26.1840522Z dotnet-install: .NET Core Runtime with version '10.0.15' is already installed.
+pack	Run actions/setup-dotnet@v5	2026-11-21T21:48:26.1859701Z [command]/home/runner/work/_actions/actions/setup-dotnet/v5/externals/install-dotnet.sh --skip-non-versioned-files --channel 10.0
+pack	Run actions/setup-dotnet@v5	2026-11-21T21:48:26.5950918Z dotnet-install: .NET Core SDK with version '10.0.404' is already installed.
+pack	Run dotnet restore Andirit.slnx	∩╗┐2026-11-21T21:48:26.6166045Z ##[group]Run dotnet restore Andirit.slnx
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:26.6166437Z ^[[36;1mdotnet restore Andirit.slnx^[[0m
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:26.6200139Z shell: /usr/bin/bash -e {0}
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:26.6200352Z env:
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:26.6200512Z   DOTNET_ROOT: /usr/share/dotnet
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:26.6200693Z ##[endgroup]
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:28.5499422Z   Determining projects to restore...
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:29.1415838Z   Restored /home/runner/work/andirit/andirit/src/Andirit.Testing/Andirit.Testing.csproj (in 144 ms).
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:31.2835012Z   Restored /home/runner/work/andirit/andirit/src/Andirit.CSharp/Andirit.CSharp.csproj (in 2.19 sec).
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:31.3235822Z   Restored /home/runner/work/andirit/andirit/src/Andirit/Andirit.csproj (in 2 ms).
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:31.4039598Z   Restored /home/runner/work/andirit/andirit/tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj (in 2.43 sec).
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:31.4040676Z   Restored /home/runner/work/andirit/andirit/tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj (in 2.26 sec).
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:31.4041603Z   Restored /home/runner/work/andirit/andirit/src/Andirit.LatticeDb/Andirit.LatticeDb.csproj (in 2 ms).
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:31.4042344Z   Restored /home/runner/work/andirit/andirit/src/Andirit.Abstractions/Andirit.Abstractions.csproj (in 1 ms).
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:34.7889808Z   Restored /home/runner/work/andirit/andirit/benchmarks/Andirit.Benchmarks/Andirit.Benchmarks.csproj (in 3.29 sec).
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:36.3092080Z   Restored /home/runner/work/andirit/andirit/tests/Andirit.Tests/Andirit.Tests.csproj (in 7.36 sec).
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:36.3490733Z   Restored /home/runner/work/andirit/andirit/src/Andirit.TreeSitter/Andirit.TreeSitter.csproj (in 4.92 sec).
+pack	Run dotnet restore Andirit.slnx	2026-11-21T21:48:36.3491398Z   Restored /home/runner/work/andirit/andirit/tests/Andirit.TreeSitter.Tests/Andirit.TreeSitter.Tests.csproj (in 5 sec).
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	∩╗┐2026-11-21T21:48:36.5604058Z ##[group]Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:36.5604728Z ^[[36;1mdotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages^[[0m
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:36.5642010Z shell: /usr/bin/bash -e {0}
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:36.5642199Z env:
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:36.5642327Z   DOTNET_ROOT: /usr/share/dotnet
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:36.5642490Z ##[endgroup]
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:40.0125457Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:40.2105189Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.Abstractions.0.2.0-preview.7.nupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:40.2106519Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.Abstractions.0.2.0-preview.7.snupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:42.3305973Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:42.5354898Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.0.2.0-preview.7.nupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:42.5727906Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.0.2.0-preview.7.snupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:43.2115795Z   Andirit.LatticeDb -> /home/runner/work/andirit/andirit/src/Andirit.LatticeDb/bin/Release/net10.0/Andirit.LatticeDb.dll
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:43.7323660Z   Andirit.CSharp -> /home/runner/work/andirit/andirit/src/Andirit.CSharp/bin/Release/net10.0/Andirit.CSharp.dll
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:43.8515058Z   Andirit.Testing -> /home/runner/work/andirit/andirit/src/Andirit.Testing/bin/Release/net10.0/Andirit.Testing.dll
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:43.8907188Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.Testing.0.2.0-preview.7.nupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:43.8916801Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.Testing.0.2.0-preview.7.snupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:44.0104525Z   Andirit.TreeSitter -> /home/runner/work/andirit/andirit/src/Andirit.TreeSitter/bin/Release/net10.0/Andirit.TreeSitter.dll
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:44.0504752Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.CSharp.0.2.0-preview.7.nupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:44.0534580Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.CSharp.0.2.0-preview.7.snupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:44.2504604Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.TreeSitter.0.2.0-preview.7.nupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:44.2537075Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.TreeSitter.0.2.0-preview.7.snupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:44.3719621Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.LatticeDb.0.2.0-preview.7.nupkg'.
+pack	Run dotnet pack Andirit.slnx -c Release --no-restore --output artifacts/packages	2026-11-21T21:48:44.3734500Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/packages/Andirit.LatticeDb.0.2.0-preview.7.snupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	∩╗┐2026-11-21T21:48:44.5691629Z ##[group]Run SMOKE_VERSION="0.2.0-preview.6-smoke.44953429653"
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:44.5691959Z ^[[36;1mSMOKE_VERSION="0.2.0-preview.6-smoke.44953429653"^[[0m
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:44.5692385Z ^[[36;1mdotnet pack Andirit.slnx -c Release --no-restore --output "/home/runner/work/andirit/andirit/smoke-packages" -p:Version="$SMOKE_VERSION"^[[0m
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:44.5693604Z ^[[36;1mSMOKE_FEED="/home/runner/work/andirit/andirit/smoke-packages" dotnet run --project smoke/TreeSitterPackage/TreeSitterPackage.csproj -c Release -p:SmokerPackageVersion="$SMOKE_VERSION"^[[0m
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:44.5722603Z shell: /usr/bin/bash -e {0}
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:44.5722768Z env:
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:44.5722900Z   DOTNET_ROOT: /usr/share/dotnet
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:44.5723133Z ##[endgroup]
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:45.3984923Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:45.4344779Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.Abstractions.0.2.0-preview.6-smoke.44953429653.nupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:45.4347971Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.Abstractions.0.2.0-preview.6-smoke.44953429653.snupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:47.0350104Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:47.3834939Z   Andirit.Testing -> /home/runner/work/andirit/andirit/src/Andirit.Testing/bin/Release/net10.0/Andirit.Testing.dll
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:48.3155540Z   Andirit.CSharp -> /home/runner/work/andirit/andirit/src/Andirit.CSharp/bin/Release/net10.0/Andirit.CSharp.dll
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:48.3959858Z   Andirit.TreeSitter -> /home/runner/work/andirit/andirit/src/Andirit.TreeSitter/bin/Release/net10.0/Andirit.TreeSitter.dll
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:48.4348114Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.CSharp.0.2.0-preview.6-smoke.44953429653.nupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:48.4364647Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.CSharp.0.2.0-preview.6-smoke.44953429653.snupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:48.4783027Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.TreeSitter.0.2.0-preview.6-smoke.44953429653.nupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:48.4788969Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.TreeSitter.0.2.0-preview.6-smoke.44953429653.snupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:48.4804583Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.Testing.0.2.0-preview.6-smoke.44953429653.nupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:48.4805827Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.Testing.0.2.0-preview.6-smoke.44953429653.snupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:48.5147936Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.0.2.0-preview.6-smoke.44953429653.nupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:48.5174777Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.0.2.0-preview.6-smoke.44953429653.snupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:49.8374777Z   Andirit.LatticeDb -> /home/runner/work/andirit/andirit/src/Andirit.LatticeDb/bin/Release/net10.0/Andirit.LatticeDb.dll
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:50.0743555Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.LatticeDb.0.2.0-preview.6-smoke.44953429653.nupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:50.0745511Z   Successfully created package '/home/runner/work/andirit/andirit/smoke-packages/Andirit.LatticeDb.0.2.0-preview.6-smoke.44953429653.snupkg'.
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1761396Z ok: elixir plugin identity
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1762175Z ok: elixir language
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1762550Z ok: elixir grammar id
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1763442Z ok: elixir grammar ABI
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1766284Z ok: elixir no parse diagnostics
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1766720Z ok: elixir module node
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1767095Z ok: elixir function node
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1768600Z ok: elixir structural evidence only
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1769626Z ok: elixir no resolved calls
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1769946Z ok: elixir no references
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.1770319Z elixir provider version: 0.2.0-preview.6-smoke.44953429653+v0.3.5.abi14.p2
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2620373Z ok: typescript plugin identity
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2621056Z ok: typescript language
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2621748Z ok: typescript grammar id
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2622199Z ok: typescript grammar ABI
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2622697Z ok: typescript no parse diagnostics
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2623274Z ok: typescript class node
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2623682Z ok: typescript method node
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2624099Z ok: typescript structural evidence only
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2624549Z ok: typescript no resolved calls
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2624960Z ok: typescript no references
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2625573Z typescript provider version: 0.2.0-preview.6-smoke.44953429653+v0.23.2.abi14.rem1.p10
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2717791Z ok: javascript plugin identity
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2718562Z ok: javascript language
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2719228Z ok: javascript grammar id
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2719641Z ok: javascript grammar ABI
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2720061Z ok: javascript no parse diagnostics
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2720499Z ok: javascript function node
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2720929Z ok: javascript require import
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2721358Z ok: javascript structural evidence only
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2721814Z ok: javascript no resolved calls
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2722722Z ok: javascript no references
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:48:55.2723500Z javascript provider version: 0.2.0-preview.6-smoke.44953429653+v0.25.0.abi15.p10
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.5596571Z ok: historical C# plugin identity
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.5597276Z ok: packed Roslyn extraction
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.5597828Z ok: testing package loads
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.7913657Z ok: packed host indexing
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.7961268Z ok: packed LatticeDB schema 2
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.8784119Z ok: packed durable reopen and native mirror
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.8845328Z ok: packed snapshot integrity
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.9107697Z ok: exact six standalone assembly identities
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.9110597Z ok: no old Penghou.Andirit or Hetu assembly dependencies
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.9340066Z ok: packed Testing package executes store conformance laws
+pack	Smoke-test all Andirit packages and Tree-sitter natives	2026-11-21T21:49:00.9340867Z PASS: all six packed Andirit packages, managed providers, durable store, testing conformance and Tree-sitter natives resolved.
+pack	Post Run actions/setup-dotnet@v5	∩╗┐2026-11-21T21:49:01.0418011Z Post job cleanup.
+pack	Post Run actions/checkout@v4	∩╗┐2026-11-21T21:49:01.1586460Z Post job cleanup.
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2275888Z [command]/usr/bin/git version
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2315221Z git version 2.56.1
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2344485Z Temporarily overriding HOME='/home/runner/work/_temp/856f88b4-9e7d-41a0-aa23-2a743cb83704' before making global git config changes
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2345400Z Adding repository directory to the temporary git global config as a safe directory
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2349007Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/andirit/andirit
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2395431Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2434882Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2733466Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2765460Z http.https://github.com/.extraheader
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2788913Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.2828751Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.3084439Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+pack	Post Run actions/checkout@v4	2026-11-21T21:49:01.3118186Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+pack	Complete job	∩╗┐2026-11-21T21:49:01.3527981Z Cleaning up orphan processes
+pack	Complete job	2026-11-21T21:49:01.3771476Z Terminate orphan process: pid (2392) (MSBuild)
+pack	Complete job	2026-11-21T21:49:01.3795492Z Terminate orphan process: pid (2419) (MSBuild)
+pack	Complete job	2026-11-21T21:49:01.3809427Z Terminate orphan process: pid (2421) (MSBuild)
+pack	Complete job	2026-11-21T21:49:01.3823373Z Terminate orphan process: pid (2546) (VBCSCompiler)
+pack	Complete job	2026-11-21T21:49:01.3862081Z Terminate orphan process: pid (2644) (MSBuild)
+pack	Complete job	2026-11-21T21:49:01.3980697Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
