@@ -1,0 +1,29 @@
+PUBLICATION-WORKFLOW-01 reproduction reconciliation
+Reproduced (per-project packs at PackageVersion=0.2.0-preview.7, fresh byte-exact export of 68a141f6)
+vs qualified feed (solution pack at 0.2.0-preview.7, PUBLICATION-EXEC-01 evidence):
+file	size	sha256	qualified-size	qualified-sha256	match
+Andirit.0.2.0-preview.7.nupkg	191875	0f4959925984022f	191876	fc695947593dc4be	DIFFERS
+Andirit.0.2.0-preview.7.snupkg	45356	d00832a421adf0c5	45341	57fca973bacd347b	DIFFERS
+Andirit.Abstractions.0.2.0-preview.7.nupkg	46979	40f4a776c0599aeb	46975	771b3619fef48598	DIFFERS
+Andirit.Abstractions.0.2.0-preview.7.snupkg	14186	8d228e61d29be3a6	14183	150d2d86343defaf	DIFFERS
+Andirit.CSharp.0.2.0-preview.7.nupkg	88116	e9265a8a717b656f	88102	a16f5d2bf51e5195	DIFFERS
+Andirit.CSharp.0.2.0-preview.7.snupkg	26058	6ba5ffd401ae496f	26046	1f39cef05737c799	DIFFERS
+Andirit.LatticeDb.0.2.0-preview.7.nupkg	51111	eae455cde557e733	51101	90a30d2e92fe0672	DIFFERS
+Andirit.LatticeDb.0.2.0-preview.7.snupkg	16490	1c4cdd3801de1e5d	16488	9e3f9d28e587b1fb	DIFFERS
+Andirit.Testing.0.2.0-preview.7.nupkg	29825	ec4a8ba6768b1c54	29821	24a5d9116c73760d	DIFFERS
+Andirit.Testing.0.2.0-preview.7.snupkg	10725	9764fac5e00f9051	10719	d98a845bad8582ad	DIFFERS
+Andirit.TreeSitter.0.2.0-preview.7.nupkg	613688	62fbe07f523c637a	613684	7b90374edcb5fca9	DIFFERS
+Andirit.TreeSitter.0.2.0-preview.7.snupkg	24058	a1cc3407aabc8c33	24065	1c2ff2a88a4e5e3f	DIFFERS
+
+files reproduced: 12 (qualified inventory: 12)
+byte-exact overall: False
+
+nuspec version + dependency check (reproduced):
+  Andirit.0.2.0-preview.7.nupkg: version=0.2.0-preview.7 deps=Andirit.Abstractions/0.2.0-preview.7
+  Andirit.Abstractions.0.2.0-preview.7.nupkg: version=0.2.0-preview.7 deps=(none)
+  Andirit.CSharp.0.2.0-preview.7.nupkg: version=0.2.0-preview.7 deps=Andirit.Abstractions/0.2.0-preview.7, Andirit/0.2.0-preview.7, Microsoft.CodeAnalysis.CSharp/5.9.0, Microsoft.Extensions.DependencyInjection.Abstractions/10.0.9
+  Andirit.LatticeDb.0.2.0-preview.7.nupkg: version=0.2.0-preview.7 deps=Andirit.Abstractions/0.2.0-preview.7, Andirit/0.2.0-preview.7, LatticeDbSharp/0.2.0
+  Andirit.Testing.0.2.0-preview.7.nupkg: version=0.2.0-preview.7 deps=Andirit.Abstractions/0.2.0-preview.7, Andirit/0.2.0-preview.7
+  Andirit.TreeSitter.0.2.0-preview.7.nupkg: version=0.2.0-preview.7 deps=Andirit.Abstractions/0.2.0-preview.7, Andirit/0.2.0-preview.7, TreeSitter.DotNet/1.3.0
+
+extra in qualified inventory not reproduced: none

@@ -1,0 +1,10 @@
+== case 1: tag v0.2.0-preview.7 (the intended tag) ==
+RESULT: ok-tag-matches (v0.2.0-preview.7 = v0.2.0-preview.7)
+== case 2: tag v0.2.0-preview.6 (stale version tag) ==
+RESULT: error-tag-mismatch (v0.2.0-preview.6 vs v0.2.0-preview.7)
+== case 3: tag v0.2.0-preview.8 (future version tag) ==
+RESULT: error-tag-mismatch (v0.2.0-preview.8 vs v0.2.0-preview.7)
+== case 4: workflow_dispatch on main (non-tag) ==
+RESULT: ok-non-tag (main, repo version 0.2.0-preview.7)
+== case 5: inventory gate against the reproduced artifacts ==
+RESULT: ok-inventory (6 nupkg, 6 snupkg)

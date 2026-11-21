@@ -1,0 +1,64 @@
+﻿diff --git a/.github/workflows/publish.yml b/.github/workflows/publish.yml
+index e3b09ae..1615b25 100644
+--- a/.github/workflows/publish.yml
++++ b/.github/workflows/publish.yml
+@@ -24,18 +24,35 @@ jobs:
+         with:
+           dotnet-version: 10.0.x
+ 
++      - name: Validate tag matches release version
++        shell: bash
++        run: |
++          VERSION="$(sed -n 's:.*<Version>\([^<]*\)</Version>.*:\1:p' Directory.Build.props)"
++          if [ -z "$VERSION" ]; then
++            echo "::error::Could not read <Version> from Directory.Build.props"; exit 1
++          fi
++          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
++            if [ "$GITHUB_REF_NAME" != "v$VERSION" ]; then
++              echo "::error::Tag $GITHUB_REF_NAME does not match release version $VERSION"; exit 1
++            fi
++            echo "Tag $GITHUB_REF_NAME matches release version $VERSION"
++          else
++            echo "Non-tag run ($GITHUB_REF_NAME); publishing at repository version $VERSION"
++          fi
++
+       - name: Pack
+         shell: bash
+         run: |
+           args=()
+           if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+-            args+=(--property:PackageVersion="${GITHUB_REF_NAME#v}")
++            args+=("--property:PackageVersion=${GITHUB_REF_NAME#v}")
+           fi
+           for csproj in \
+             src/Andirit.Abstractions/Andirit.Abstractions.csproj \
+             src/Andirit/Andirit.csproj \
+             src/Andirit.CSharp/Andirit.CSharp.csproj \
+             src/Andirit.LatticeDb/Andirit.LatticeDb.csproj \
++            src/Andirit.TreeSitter/Andirit.TreeSitter.csproj \
+             src/Andirit.Testing/Andirit.Testing.csproj; do
+             dotnet pack "$csproj" \
+               --configuration Release \
+@@ -43,6 +60,22 @@ jobs:
+               "${args[@]}"
+           done
+ 
++      - name: Verify complete package inventory before publishing
++        shell: bash
++        run: |
++          nupkg=$(ls -1 ./artifacts/*.nupkg 2>/dev/null | wc -l)
++          snupkg=$(ls -1 ./artifacts/*.snupkg 2>/dev/null | wc -l)
++          expected_ids="Andirit Andirit.Abstractions Andirit.CSharp Andirit.LatticeDb Andirit.Testing Andirit.TreeSitter"
++          missing=""
++          for id in $expected_ids; do
++            ls ./artifacts/"$id".*.nupkg >/dev/null 2>&1 || missing="$missing $id"
++          done
++          if [ "$nupkg" -ne 6 ] || [ "$snupkg" -ne 6 ] || [ -n "$missing" ]; then
++            echo "::error::Incomplete inventory: $nupkg nupkg, $snupkg snupkg; missing:$missing"; exit 1
++          fi
++          echo "Inventory complete: $nupkg nupkg and $snupkg snupkg"
++          ls -1 ./artifacts/*.nupkg ./artifacts/*.snupkg
++
+       - name: NuGet login (OIDC -> temp API key)
+         id: login
+         uses: NuGet/login@v1
