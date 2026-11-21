@@ -1,0 +1,24 @@
+ANDIRIT-CI1A-S2.5-PUBLICATION-01 sensitive-material scan
+Scope: all 4,708 tracked blobs at a5e861b86ef4487c46be6724e7ac7054248263eb
+       (the accepted Stage-2 head); scanned 2026-11-22 before publication preparation.
+
+Patterns scanned: GitHub tokens (gh[pousr]_...), AWS access keys (AKIA...), private key
+blocks, password assignments, secret/api-key/token assignments, NuGet API keys (oy + 43+
+base64url chars, word-boundary strict), plus binary-blob skip accounting.
+
+Result: CLEAN.
+
+- GitHub tokens: 0 hits. AWS keys: 0 hits. Private keys: 0 hits. Passwords: 0 hits.
+- NuGet API keys: 0 hits under the strict pattern. (A loose pattern produced 524 raw hits,
+  all confirmed to be base64-encoded durable-store payloads inside evidence JSON receipts,
+  e.g. decoded fragments of occurrence-unit payloads - not credentials.)
+- Secret-assignment pattern: 8 hits, all of which are the deliberate test value
+  ContinuationToken = "invalid-token" in reviewer harness sources exercising continuation
+  refusal - not credentials.
+- Config-like tracked files: exactly one, smoke/TreeSitterPackage/nuget.config, which
+  contains package sources only (a local feed from the SMOKE_FEED environment variable and
+  nuget.org); no credentials.
+- No .env, .npmrc, .netrc, or secrets files are tracked.
+
+Conclusion: the committed evidence is suitable for publication; no credential, secret, or
+unintended sensitive material is tracked at the accepted Stage-2 head.
