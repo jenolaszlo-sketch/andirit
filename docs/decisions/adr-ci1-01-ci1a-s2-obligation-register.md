@@ -46,6 +46,8 @@ symbol-association proof remain **unproven and unclaimed**; escalation to the Op
 compiler-proof route is preserved. The historical M5.4 disposition D below/elsewhere is
 preserved verbatim; the amendment supersedes its breadth for future acceptance purposes only.
 
+**Current S2.5 owner update, 2026-11-21 (M5.4 satisfaction).** [M54-OWNER-01](adr-ci1-01-ci1a-s2-5-wp-s25-4-m54-owner-01.md) (`ANDIRIT-CI1A-S2.5-WP-S25-4-M54-OWNER-01`) records **M5.4 — SATISFIED UNDER AMENDED CONTRACT** on the independent M54-B-QUAL-01 qualification (disposition **SUPPORTED**; 11/11 exercises, 11/11 targeted refusal branches exercised, no prohibited outcome, no Option A escalation trigger; pinned implementation `eafd632`). Owner-preserved limitations (binding on every downstream citation): conservative false-negative behavior; constructed-control evidence does not establish natural reachability; the exhaustive Roslyn symbol-association proof remains unproven and unclaimed. The M5.4 row elsewhere in this register remains preserved verbatim as the original requirement; this note supersedes its breadth for future acceptance purposes only. WP-S25-4 final closure and Stage-2 acceptance remain separate owner decisions.
+
 ## 1. Sources and closure rules
 
 Authority keys (paths relative to the canonical repository unless external):
