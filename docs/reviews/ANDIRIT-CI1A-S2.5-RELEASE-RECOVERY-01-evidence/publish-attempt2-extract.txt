@@ -1,0 +1,63 @@
+publish	Validate tag matches release version	∩╗┐2026-11-22T05:17:16.4959151Z ##[group]Run VERSION="$(sed -n 's:.*<Version>\([^<]*\)</Version>.*:\1:p' Directory.Build.prop
+publish	Validate tag matches release version	2026-11-22T05:17:16.4959555Z ^[[36;1mVERSION="$(sed -n 's:.*<Version>\([^<]*\)</Version>.*:\1:p' Directory.Build.props)"^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4959791Z ^[[36;1mif [ -z "$VERSION" ]; then^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4960011Z ^[[36;1m  echo "::error::Could not read <Version> from Directory.Build.props"; exit 1^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4960474Z ^[[36;1mfi^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4960623Z ^[[36;1mif [ "$GITHUB_REF_TYPE" = "tag" ]; then^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4960804Z ^[[36;1m  if [ "$GITHUB_REF_NAME" != "v$VERSION" ]; then^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4961052Z ^[[36;1m    echo "::error::Tag $GITHUB_REF_NAME does not match release version $VERSION"; exit 1
+publish	Validate tag matches release version	2026-11-22T05:17:16.4961287Z ^[[36;1m  fi^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4961447Z ^[[36;1m  echo "Tag $GITHUB_REF_NAME matches release version $VERSION"^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4961633Z ^[[36;1melse^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4961826Z ^[[36;1m  echo "Non-tag run ($GITHUB_REF_NAME); publishing at repository version $VERSION"^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4962064Z ^[[36;1mfi^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4993168Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+publish	Validate tag matches release version	2026-11-22T05:17:16.4993361Z env:
+publish	Validate tag matches release version	2026-11-22T05:17:16.4993484Z   DOTNET_ROOT: /usr/share/dotnet
+publish	Validate tag matches release version	2026-11-22T05:17:16.4993629Z ##[endgroup]
+publish	Validate tag matches release version	2026-11-22T05:17:16.5064071Z Tag v0.2.0-preview.7 matches release version 0.2.0-preview.7
+publish	Pack	2026-11-22T05:17:25.5943288Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.Abstractions.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:25.5944388Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.Abstractions.0.2.0-preview.7.snupkg'.
+publish	Pack	2026-11-22T05:17:27.8645345Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:27.8646098Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.0.2.0-preview.7.snupkg'.
+publish	Pack	2026-11-22T05:17:31.5231847Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.CSharp.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:31.5237710Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.CSharp.0.2.0-preview.7.snupkg'.
+publish	Pack	2026-11-22T05:17:33.5746792Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.LatticeDb.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:33.5747862Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.LatticeDb.0.2.0-preview.7.snupkg'.
+publish	Pack	2026-11-22T05:17:39.2986399Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.TreeSitter.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:39.2987378Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.TreeSitter.0.2.0-preview.7.snupkg'.
+publish	Pack	2026-11-22T05:17:40.1651517Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.Testing.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:40.1652367Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.Testing.0.2.0-preview.7.snupkg'.
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5638833Z ^[[36;1m  echo "::error::Incomplete inventory: $nupkg nupkg, $snupkg snupkg; miss
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5639523Z ^[[36;1mecho "Inventory complete: $nupkg nupkg and $snupkg snupkg"^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6131479Z Inventory complete: 6 nupkg and 6 snupkg
+publish	Push packages to NuGet	2026-11-22T05:17:42.3890374Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:42.9664454Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:42.9671461Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:43.0826229Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:43.0834222Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:43.6131466Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:43.6132665Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:43.7140970Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:43.7152249Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:44.2026542Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:44.2028570Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:44.2977374Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:44.2992231Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:44.7698571Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:44.7714556Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:44.8680745Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:44.8692433Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:45.3100405Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:45.3101418Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:45.4214577Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:45.4222745Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:45.8853292Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:45.8854772Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:45.9778870Z Your package was pushed.
+publish	Push symbols to NuGet	2026-11-22T05:17:46.6068459Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.7541585Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8049329Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8554654Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8974298Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.9387915Z   PUT https://www.nuget.org/api/v2/symbolpackage/

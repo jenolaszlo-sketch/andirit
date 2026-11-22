@@ -1,0 +1,402 @@
+﻿publish	Set up job	∩╗┐2026-11-22T05:17:12.2266840Z Current runner version: '2.338.2'
+publish	Set up job	2026-11-22T05:17:12.2284536Z ##[group]Runner Image Provisioner
+publish	Set up job	2026-11-22T05:17:12.2285181Z Hosted Compute Agent
+publish	Set up job	2026-11-22T05:17:12.2285518Z Version: 20261111.635
+publish	Set up job	2026-11-22T05:17:12.2285939Z Commit: b8a594ea514ff44cadb5342986c68b1eac6e22ed
+publish	Set up job	2026-11-22T05:17:12.2286360Z Build Date: 2026-11-11T01:49:01Z
+publish	Set up job	2026-11-22T05:17:12.2286798Z Worker ID: {dce10d4e-f294-434e-9244-c79ff86992b2}
+publish	Set up job	2026-11-22T05:17:12.2287274Z Region: centralus
+publish	Set up job	2026-11-22T05:17:12.2287594Z Cloud: Azure
+publish	Set up job	2026-11-22T05:17:12.2287964Z ##[endgroup]
+publish	Set up job	2026-11-22T05:17:12.2288699Z ##[group]Operating System
+publish	Set up job	2026-11-22T05:17:12.2289094Z Ubuntu
+publish	Set up job	2026-11-22T05:17:12.2289448Z 26.04.1
+publish	Set up job	2026-11-22T05:17:12.2289761Z LTS
+publish	Set up job	2026-11-22T05:17:12.2290125Z ##[endgroup]
+publish	Set up job	2026-11-22T05:17:12.2290624Z ##[group]Runner Image
+publish	Set up job	2026-11-22T05:17:12.2291264Z Image: ubuntu-26.04
+publish	Set up job	2026-11-22T05:17:12.2291615Z Version: 20261116.202.1
+publish	Set up job	2026-11-22T05:17:12.2292231Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261116.202/images/ubuntu/Ubuntu2604-Readme.md
+publish	Set up job	2026-11-22T05:17:12.2293295Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261116.202
+publish	Set up job	2026-11-22T05:17:12.2293890Z ##[endgroup]
+publish	Set up job	2026-11-22T05:17:12.2294553Z ##[group]GITHUB_TOKEN Permissions
+publish	Set up job	2026-11-22T05:17:12.2295904Z Contents: read
+publish	Set up job	2026-11-22T05:17:12.2296252Z Metadata: read
+publish	Set up job	2026-11-22T05:17:12.2296606Z ##[endgroup]
+publish	Set up job	2026-11-22T05:17:12.2297910Z Secret source: Actions
+publish	Set up job	2026-11-22T05:17:12.2298442Z Cache mode: write
+publish	Set up job	2026-11-22T05:17:12.2298905Z Prepare workflow directory
+publish	Set up job	2026-11-22T05:17:12.2502087Z Prepare all required actions
+publish	Set up job	2026-11-22T05:17:12.2532798Z Getting action download info
+publish	Set up job	2026-11-22T05:17:12.4903691Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+publish	Set up job	2026-11-22T05:17:12.5685196Z Download action repository 'actions/setup-dotnet@v5' (SHA:26b0ec14cb23fa6904739307f278c14f94c95bf1)
+publish	Set up job	2026-11-22T05:17:12.8999837Z Download action repository 'NuGet/login@v1' (SHA:8d196754b4036150537f80ac539e15c2f1028841)
+publish	Set up job	2026-11-22T05:17:13.2332037Z Complete job name: publish
+publish	Checkout	∩╗┐2026-11-22T05:17:13.2971552Z ##[group]Run actions/checkout@v6
+publish	Checkout	2026-11-22T05:17:13.2972201Z with:
+publish	Checkout	2026-11-22T05:17:13.2972587Z   repository: ***laszlo-sketch/andirit
+publish	Checkout	2026-11-22T05:17:13.2977214Z   token: ***
+publish	Checkout	2026-11-22T05:17:13.2977549Z   ssh-strict: true
+publish	Checkout	2026-11-22T05:17:13.2977840Z   ssh-user: git
+publish	Checkout	2026-11-22T05:17:13.2978176Z   persist-credentials: true
+publish	Checkout	2026-11-22T05:17:13.2978556Z   clean: true
+publish	Checkout	2026-11-22T05:17:13.2978854Z   sparse-checkout-cone-mode: true
+publish	Checkout	2026-11-22T05:17:13.2979310Z   fetch-depth: 1
+publish	Checkout	2026-11-22T05:17:13.2979602Z   fetch-tags: false
+publish	Checkout	2026-11-22T05:17:13.2979958Z   show-progress: true
+publish	Checkout	2026-11-22T05:17:13.2980447Z   lfs: false
+publish	Checkout	2026-11-22T05:17:13.2980718Z   submodules: false
+publish	Checkout	2026-11-22T05:17:13.2981086Z   set-safe-directory: true
+publish	Checkout	2026-11-22T05:17:13.2981488Z   allow-unsafe-pr-checkout: false
+publish	Checkout	2026-11-22T05:17:13.2982035Z ##[endgroup]
+publish	Checkout	2026-11-22T05:17:13.4858973Z Syncing repository: ***laszlo-sketch/andirit
+publish	Checkout	2026-11-22T05:17:13.4861376Z ##[group]Getting Git version info
+publish	Checkout	2026-11-22T05:17:13.4862199Z Working directory is '/home/runner/work/andirit/andirit'
+publish	Checkout	2026-11-22T05:17:13.4863451Z [command]/usr/bin/git version
+publish	Checkout	2026-11-22T05:17:13.4869427Z git version 2.56.1
+publish	Checkout	2026-11-22T05:17:13.4883264Z ##[endgroup]
+publish	Checkout	2026-11-22T05:17:13.4894332Z Temporarily overriding HOME='/home/runner/work/_temp/65745153-604c-4205-a7bb-6597a88ee7e1' before making global git config changes
+publish	Checkout	2026-11-22T05:17:13.4896072Z Adding repository directory to the temporary git global config as a safe directory
+publish	Checkout	2026-11-22T05:17:13.4907679Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/andirit/andirit
+publish	Checkout	2026-11-22T05:17:13.4954451Z Deleting the contents of '/home/runner/work/andirit/andirit'
+publish	Checkout	2026-11-22T05:17:13.4959303Z ##[group]Determining repository object format
+publish	Checkout	2026-11-22T05:17:13.4960694Z ##[endgroup]
+publish	Checkout	2026-11-22T05:17:13.4961568Z ##[group]Initializing the repository
+publish	Checkout	2026-11-22T05:17:13.4971766Z [command]/usr/bin/git init /home/runner/work/andirit/andirit
+publish	Checkout	2026-11-22T05:17:13.5056821Z hint: Using 'master' as the name for the initial branch. This default branch name
+publish	Checkout	2026-11-22T05:17:13.5058386Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+publish	Checkout	2026-11-22T05:17:13.5059715Z hint: to use in all of your new repositories, which will suppress this warning,
+publish	Checkout	2026-11-22T05:17:13.5060795Z hint: call:
+publish	Checkout	2026-11-22T05:17:13.5061181Z hint:
+publish	Checkout	2026-11-22T05:17:13.5061770Z hint: 	git config --global init.defaultBranch <name>
+publish	Checkout	2026-11-22T05:17:13.5062513Z hint:
+publish	Checkout	2026-11-22T05:17:13.5063192Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+publish	Checkout	2026-11-22T05:17:13.5064488Z hint: 'development'. The just-created branch can be renamed via this command:
+publish	Checkout	2026-11-22T05:17:13.5065458Z hint:
+publish	Checkout	2026-11-22T05:17:13.5065861Z hint: 	git branch -m <name>
+publish	Checkout	2026-11-22T05:17:13.5066371Z hint:
+publish	Checkout	2026-11-22T05:17:13.5067144Z hint: Disable this message with "git config set advice.defaultBranchName false"
+publish	Checkout	2026-11-22T05:17:13.5068541Z Initialized empty Git repository in /home/runner/work/andirit/andirit/.git/
+publish	Checkout	2026-11-22T05:17:13.5073183Z [command]/usr/bin/git remote add origin https://github.com/***laszlo-sketch/andirit
+publish	Checkout	2026-11-22T05:17:13.5119286Z ##[endgroup]
+publish	Checkout	2026-11-22T05:17:13.5120140Z ##[group]Disabling automatic garbage collection
+publish	Checkout	2026-11-22T05:17:13.5123023Z [command]/usr/bin/git config --local gc.auto 0
+publish	Checkout	2026-11-22T05:17:13.5153916Z ##[endgroup]
+publish	Checkout	2026-11-22T05:17:13.5154993Z ##[group]Setting up auth
+publish	Checkout	2026-11-22T05:17:13.5155480Z Removing SSH command configuration
+publish	Checkout	2026-11-22T05:17:13.5159785Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+publish	Checkout	2026-11-22T05:17:13.5191929Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+publish	Checkout	2026-11-22T05:17:13.5575543Z Removing HTTP extra header
+publish	Checkout	2026-11-22T05:17:13.5580749Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+publish	Checkout	2026-11-22T05:17:13.5609021Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+publish	Checkout	2026-11-22T05:17:13.5825088Z Removing includeIf entries pointing to credentials config files
+publish	Checkout	2026-11-22T05:17:13.5829338Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+publish	Checkout	2026-11-22T05:17:13.5858331Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+publish	Checkout	2026-11-22T05:17:13.6082066Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+publish	Checkout	2026-11-22T05:17:13.6118882Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/andirit/andirit/.git.path /home/runner/work/_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Checkout	2026-11-22T05:17:13.6147816Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/andirit/andirit/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Checkout	2026-11-22T05:17:13.6199013Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Checkout	2026-11-22T05:17:13.6225678Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Checkout	2026-11-22T05:17:13.6249324Z ##[endgroup]
+publish	Checkout	2026-11-22T05:17:13.6250137Z ##[group]Fetching the repository
+publish	Checkout	2026-11-22T05:17:13.6256202Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +refs/tags/v0.2.0-preview.7:refs/tags/v0.2.0-preview.7
+publish	Checkout	2026-11-22T05:17:15.2451199Z From https://github.com/***laszlo-sketch/andirit
+publish	Checkout	2026-11-22T05:17:15.2452307Z  * [new tag]         v0.2.0-preview.7 -> v0.2.0-preview.7
+publish	Checkout	2026-11-22T05:17:15.2459088Z [command]/usr/bin/git tag --list v0.2.0-preview.7
+publish	Checkout	2026-11-22T05:17:15.2483213Z v0.2.0-preview.7
+publish	Checkout	2026-11-22T05:17:15.2489102Z [command]/usr/bin/git rev-parse refs/tags/v0.2.0-preview.7^{commit}
+publish	Checkout	2026-11-22T05:17:15.2509888Z 6ed05964d2fcc758648b654a01ec706647e52183
+publish	Checkout	2026-11-22T05:17:15.2513710Z ##[endgroup]
+publish	Checkout	2026-11-22T05:17:15.2514067Z ##[group]Determining the checkout info
+publish	Checkout	2026-11-22T05:17:15.2514806Z ##[endgroup]
+publish	Checkout	2026-11-22T05:17:15.2517561Z [command]/usr/bin/git sparse-checkout disable
+publish	Checkout	2026-11-22T05:17:15.2557952Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+publish	Checkout	2026-11-22T05:17:15.2580873Z ##[group]Checking out the ref
+publish	Checkout	2026-11-22T05:17:15.2583564Z [command]/usr/bin/git checkout --progress --force refs/tags/v0.2.0-preview.7
+publish	Checkout	2026-11-22T05:17:15.4368506Z evidence: is not a valid attribute name: docs/reviews/CI1A-S2.5-S25-SQ04-Q1-evidence/.gitattributes:1
+publish	Checkout	2026-11-22T05:17:15.4373890Z evidence: is not a valid attribute name: docs/reviews/CI1A-S2.5-S25-SQ05-Q1-evidence/.gitattributes:1
+publish	Checkout	2026-11-22T05:17:15.4374499Z warning: Negative patterns are ignored in git attributes
+publish	Checkout	2026-11-22T05:17:15.4374725Z Use '\!' for literal leading exclamation.
+publish	Checkout	2026-11-22T05:17:15.4400941Z evidence: is not a valid attribute name: docs/reviews/CI1A-S2.5-WP-S25-1-BIND-01-evidence/.gitattributes:1
+publish	Checkout	2026-11-22T05:17:15.4401607Z evidence: is not a valid attribute name: docs/reviews/CI1A-S2.5-WP-S25-2-G2-EXEC-evidence/.gitattributes:1
+publish	Checkout	2026-11-22T05:17:15.4402004Z warning: Negative patterns are ignored in git attributes
+publish	Checkout	2026-11-22T05:17:15.4402213Z Use '\!' for literal leading exclamation.
+publish	Checkout	2026-11-22T05:17:15.4402403Z warning: Negative patterns are ignored in git attributes
+publish	Checkout	2026-11-22T05:17:15.4402585Z Use '\!' for literal leading exclamation.
+publish	Checkout	2026-11-22T05:17:15.4411003Z warning: Negative patterns are ignored in git attributes
+publish	Checkout	2026-11-22T05:17:15.4411370Z Use '\!' for literal leading exclamation.
+publish	Checkout	2026-11-22T05:17:15.4422159Z warning: Negative patterns are ignored in git attributes
+publish	Checkout	2026-11-22T05:17:15.4422530Z Use '\!' for literal leading exclamation.
+publish	Checkout	2026-11-22T05:17:15.5991119Z Note: switching to 'refs/tags/v0.2.0-preview.7'.
+publish	Checkout	2026-11-22T05:17:15.5991398Z 
+publish	Checkout	2026-11-22T05:17:15.5991622Z You are in 'detached HEAD' state. You can look around, make experimental
+publish	Checkout	2026-11-22T05:17:15.5991905Z changes and commit them, and you can discard any commits you make in this
+publish	Checkout	2026-11-22T05:17:15.5992210Z state without impacting any branches by switching back to a branch.
+publish	Checkout	2026-11-22T05:17:15.5992374Z 
+publish	Checkout	2026-11-22T05:17:15.5992526Z If you want to create a new branch to retain commits you create, you may
+publish	Checkout	2026-11-22T05:17:15.5992771Z do so (now or later) by using -c with the switch command. Example:
+publish	Checkout	2026-11-22T05:17:15.5992911Z 
+publish	Checkout	2026-11-22T05:17:15.5992976Z   git switch -c <new-branch-name>
+publish	Checkout	2026-11-22T05:17:15.5993077Z 
+publish	Checkout	2026-11-22T05:17:15.5993139Z Or undo this operation with:
+publish	Checkout	2026-11-22T05:17:15.5993231Z 
+publish	Checkout	2026-11-22T05:17:15.5993286Z   git switch -
+publish	Checkout	2026-11-22T05:17:15.5993417Z 
+publish	Checkout	2026-11-22T05:17:15.5993535Z Turn off this advice by setting config variable advice.detachedHead to false
+publish	Checkout	2026-11-22T05:17:15.5993735Z 
+publish	Checkout	2026-11-22T05:17:15.5993996Z HEAD is now at 6ed0596 ci(release): publish the complete six-package inventory with tag/version and inventory gates (ANDIRIT-CI1A-S2.5-PUBLICATION-WORKFLOW-01)
+publish	Checkout	2026-11-22T05:17:15.6049138Z ##[endgroup]
+publish	Checkout	2026-11-22T05:17:15.6097151Z [command]/usr/bin/git log -1 --format=%H
+publish	Checkout	2026-11-22T05:17:15.6121549Z 6ed05964d2fcc758648b654a01ec706647e52183
+publish	Setup .NET	∩╗┐2026-11-22T05:17:15.6373214Z ##[group]Run actions/setup-dotnet@v5
+publish	Setup .NET	2026-11-22T05:17:15.6373394Z with:
+publish	Setup .NET	2026-11-22T05:17:15.6373512Z   dotnet-version: 10.0.x
+publish	Setup .NET	2026-11-22T05:17:15.6373649Z   cache: false
+publish	Setup .NET	2026-11-22T05:17:15.6373762Z ##[endgroup]
+publish	Setup .NET	2026-11-22T05:17:15.7297040Z [command]/home/runner/work/_actions/actions/setup-dotnet/v5/externals/install-dotnet.sh --skip-non-versioned-files --runtime dotnet --channel LTS
+publish	Setup .NET	2026-11-22T05:17:16.1337785Z dotnet-install: .NET Core Runtime with version '10.0.15' is already installed.
+publish	Setup .NET	2026-11-22T05:17:16.1354948Z [command]/home/runner/work/_actions/actions/setup-dotnet/v5/externals/install-dotnet.sh --skip-non-versioned-files --channel 10.0
+publish	Setup .NET	2026-11-22T05:17:16.4828115Z dotnet-install: .NET Core SDK with version '10.0.404' is already installed.
+publish	Validate tag matches release version	∩╗┐2026-11-22T05:17:16.4959151Z ##[group]Run VERSION="$(sed -n 's:.*<Version>\([^<]*\)</Version>.*:\1:p' Directory.Build.props)"
+publish	Validate tag matches release version	2026-11-22T05:17:16.4959555Z ^[[36;1mVERSION="$(sed -n 's:.*<Version>\([^<]*\)</Version>.*:\1:p' Directory.Build.props)"^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4959791Z ^[[36;1mif [ -z "$VERSION" ]; then^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4960011Z ^[[36;1m  echo "::error::Could not read <Version> from Directory.Build.props"; exit 1^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4960474Z ^[[36;1mfi^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4960623Z ^[[36;1mif [ "$GITHUB_REF_TYPE" = "tag" ]; then^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4960804Z ^[[36;1m  if [ "$GITHUB_REF_NAME" != "v$VERSION" ]; then^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4961052Z ^[[36;1m    echo "::error::Tag $GITHUB_REF_NAME does not match release version $VERSION"; exit 1^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4961287Z ^[[36;1m  fi^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4961447Z ^[[36;1m  echo "Tag $GITHUB_REF_NAME matches release version $VERSION"^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4961633Z ^[[36;1melse^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4961826Z ^[[36;1m  echo "Non-tag run ($GITHUB_REF_NAME); publishing at repository version $VERSION"^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4962064Z ^[[36;1mfi^[[0m
+publish	Validate tag matches release version	2026-11-22T05:17:16.4993168Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+publish	Validate tag matches release version	2026-11-22T05:17:16.4993361Z env:
+publish	Validate tag matches release version	2026-11-22T05:17:16.4993484Z   DOTNET_ROOT: /usr/share/dotnet
+publish	Validate tag matches release version	2026-11-22T05:17:16.4993629Z ##[endgroup]
+publish	Validate tag matches release version	2026-11-22T05:17:16.5064071Z Tag v0.2.0-preview.7 matches release version 0.2.0-preview.7
+publish	Pack	∩╗┐2026-11-22T05:17:16.5085599Z ##[group]Run args=()
+publish	Pack	2026-11-22T05:17:16.5085750Z ^[[36;1margs=()^[[0m
+publish	Pack	2026-11-22T05:17:16.5085879Z ^[[36;1mif [ "$GITHUB_REF_TYPE" = "tag" ]; then^[[0m
+publish	Pack	2026-11-22T05:17:16.5086084Z ^[[36;1m  args+=("--property:PackageVersion=${GITHUB_REF_NAME#v}")^[[0m
+publish	Pack	2026-11-22T05:17:16.5086278Z ^[[36;1mfi^[[0m
+publish	Pack	2026-11-22T05:17:16.5086389Z ^[[36;1mfor csproj in \^[[0m
+publish	Pack	2026-11-22T05:17:16.5086564Z ^[[36;1m  src/Andirit.Abstractions/Andirit.Abstractions.csproj \^[[0m
+publish	Pack	2026-11-22T05:17:16.5086766Z ^[[36;1m  src/Andirit/Andirit.csproj \^[[0m
+publish	Pack	2026-11-22T05:17:16.5086937Z ^[[36;1m  src/Andirit.CSharp/Andirit.CSharp.csproj \^[[0m
+publish	Pack	2026-11-22T05:17:16.5087133Z ^[[36;1m  src/Andirit.LatticeDb/Andirit.LatticeDb.csproj \^[[0m
+publish	Pack	2026-11-22T05:17:16.5087344Z ^[[36;1m  src/Andirit.TreeSitter/Andirit.TreeSitter.csproj \^[[0m
+publish	Pack	2026-11-22T05:17:16.5087550Z ^[[36;1m  src/Andirit.Testing/Andirit.Testing.csproj; do^[[0m
+publish	Pack	2026-11-22T05:17:16.5087728Z ^[[36;1m  dotnet pack "$csproj" \^[[0m
+publish	Pack	2026-11-22T05:17:16.5087881Z ^[[36;1m    --configuration Release \^[[0m
+publish	Pack	2026-11-22T05:17:16.5088062Z ^[[36;1m    --output ./artifacts \^[[0m
+publish	Pack	2026-11-22T05:17:16.5088207Z ^[[36;1m    "${args[@]}"^[[0m
+publish	Pack	2026-11-22T05:17:16.5088329Z ^[[36;1mdone^[[0m
+publish	Pack	2026-11-22T05:17:16.5111813Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+publish	Pack	2026-11-22T05:17:16.5111991Z env:
+publish	Pack	2026-11-22T05:17:16.5112104Z   DOTNET_ROOT: /usr/share/dotnet
+publish	Pack	2026-11-22T05:17:16.5112243Z ##[endgroup]
+publish	Pack	2026-11-22T05:17:21.3962898Z   Determining projects to restore...
+publish	Pack	2026-11-22T05:17:21.8341732Z   Restored /home/runner/work/andirit/andirit/src/Andirit.Abstractions/Andirit.Abstractions.csproj (in 42 ms).
+publish	Pack	2026-11-22T05:17:25.3541817Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+publish	Pack	2026-11-22T05:17:25.5943288Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.Abstractions.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:25.5944388Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.Abstractions.0.2.0-preview.7.snupkg'.
+publish	Pack	2026-11-22T05:17:26.3066816Z   Determining projects to restore...
+publish	Pack	2026-11-22T05:17:26.3838993Z   Restored /home/runner/work/andirit/andirit/src/Andirit/Andirit.csproj (in 13 ms).
+publish	Pack	2026-11-22T05:17:26.3839383Z   1 of 2 projects are up-to-date for restore.
+publish	Pack	2026-11-22T05:17:26.5142792Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+publish	Pack	2026-11-22T05:17:27.8244182Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+publish	Pack	2026-11-22T05:17:27.8645345Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:27.8646098Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.0.2.0-preview.7.snupkg'.
+publish	Pack	2026-11-22T05:17:28.5669420Z   Determining projects to restore...
+publish	Pack	2026-11-22T05:17:30.0423105Z   Restored /home/runner/work/andirit/andirit/src/Andirit.CSharp/Andirit.CSharp.csproj (in 974 ms).
+publish	Pack	2026-11-22T05:17:30.0423941Z   2 of 3 projects are up-to-date for restore.
+publish	Pack	2026-11-22T05:17:30.3641851Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+publish	Pack	2026-11-22T05:17:30.4425368Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+publish	Pack	2026-11-22T05:17:31.3227076Z   Andirit.CSharp -> /home/runner/work/andirit/andirit/src/Andirit.CSharp/bin/Release/net10.0/Andirit.CSharp.dll
+publish	Pack	2026-11-22T05:17:31.5231847Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.CSharp.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:31.5237710Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.CSharp.0.2.0-preview.7.snupkg'.
+publish	Pack	2026-11-22T05:17:32.4201419Z   Determining projects to restore...
+publish	Pack	2026-11-22T05:17:32.8555524Z   Restored /home/runner/work/andirit/andirit/src/Andirit.LatticeDb/Andirit.LatticeDb.csproj (in 334 ms).
+publish	Pack	2026-11-22T05:17:32.8556604Z   2 of 3 projects are up-to-date for restore.
+publish	Pack	2026-11-22T05:17:33.0157530Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+publish	Pack	2026-11-22T05:17:33.0949487Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+publish	Pack	2026-11-22T05:17:33.5357167Z   Andirit.LatticeDb -> /home/runner/work/andirit/andirit/src/Andirit.LatticeDb/bin/Release/net10.0/Andirit.LatticeDb.dll
+publish	Pack	2026-11-22T05:17:33.5746792Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.LatticeDb.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:33.5747862Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.LatticeDb.0.2.0-preview.7.snupkg'.
+publish	Pack	2026-11-22T05:17:34.4174019Z   Determining projects to restore...
+publish	Pack	2026-11-22T05:17:38.6560043Z   Restored /home/runner/work/andirit/andirit/src/Andirit.TreeSitter/Andirit.TreeSitter.csproj (in 4.11 sec).
+publish	Pack	2026-11-22T05:17:38.6569676Z   2 of 3 projects are up-to-date for restore.
+publish	Pack	2026-11-22T05:17:38.7433366Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+publish	Pack	2026-11-22T05:17:38.7752746Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+publish	Pack	2026-11-22T05:17:39.2172076Z   Andirit.TreeSitter -> /home/runner/work/andirit/andirit/src/Andirit.TreeSitter/bin/Release/net10.0/Andirit.TreeSitter.dll
+publish	Pack	2026-11-22T05:17:39.2986399Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.TreeSitter.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:39.2987378Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.TreeSitter.0.2.0-preview.7.snupkg'.
+publish	Pack	2026-11-22T05:17:39.8111979Z   Determining projects to restore...
+publish	Pack	2026-11-22T05:17:39.8858445Z   Restored /home/runner/work/andirit/andirit/src/Andirit.Testing/Andirit.Testing.csproj (in 2 ms).
+publish	Pack	2026-11-22T05:17:39.8863577Z   2 of 3 projects are up-to-date for restore.
+publish	Pack	2026-11-22T05:17:39.9661922Z   Andirit.Abstractions -> /home/runner/work/andirit/andirit/src/Andirit.Abstractions/bin/Release/net10.0/Andirit.Abstractions.dll
+publish	Pack	2026-11-22T05:17:40.0051895Z   Andirit -> /home/runner/work/andirit/andirit/src/Andirit/bin/Release/net10.0/Andirit.dll
+publish	Pack	2026-11-22T05:17:40.1247833Z   Andirit.Testing -> /home/runner/work/andirit/andirit/src/Andirit.Testing/bin/Release/net10.0/Andirit.Testing.dll
+publish	Pack	2026-11-22T05:17:40.1651517Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.Testing.0.2.0-preview.7.nupkg'.
+publish	Pack	2026-11-22T05:17:40.1652367Z   Successfully created package '/home/runner/work/andirit/andirit/artifacts/Andirit.Testing.0.2.0-preview.7.snupkg'.
+publish	Verify complete package inventory before publishing	∩╗┐2026-11-22T05:17:40.5634952Z ##[group]Run nupkg=$(ls -1 ./artifacts/*.nupkg 2>/dev/null | wc -l)
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5635461Z ^[[36;1mnupkg=$(ls -1 ./artifacts/*.nupkg 2>/dev/null | wc -l)^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5635868Z ^[[36;1msnupkg=$(ls -1 ./artifacts/*.snupkg 2>/dev/null | wc -l)^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5636469Z ^[[36;1mexpected_ids="Andirit Andirit.Abstractions Andirit.CSharp Andirit.LatticeDb Andirit.Testing Andirit.TreeSitter"^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5637037Z ^[[36;1mmissing=""^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5637286Z ^[[36;1mfor id in $expected_ids; do^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5637676Z ^[[36;1m  ls ./artifacts/"$id".*.nupkg >/dev/null 2>&1 || missing="$missing $id"^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5638043Z ^[[36;1mdone^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5638321Z ^[[36;1mif [ "$nupkg" -ne 6 ] || [ "$snupkg" -ne 6 ] || [ -n "$missing" ]; then^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5638833Z ^[[36;1m  echo "::error::Incomplete inventory: $nupkg nupkg, $snupkg snupkg; missing:$missing"; exit 1^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5639258Z ^[[36;1mfi^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5639523Z ^[[36;1mecho "Inventory complete: $nupkg nupkg and $snupkg snupkg"^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5639965Z ^[[36;1mls -1 ./artifacts/*.nupkg ./artifacts/*.snupkg^[[0m
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5679429Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5679761Z env:
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5679953Z   DOTNET_ROOT: /usr/share/dotnet
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.5680365Z ##[endgroup]
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6131479Z Inventory complete: 6 nupkg and 6 snupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6140759Z ./artifacts/Andirit.0.2.0-preview.7.nupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6142004Z ./artifacts/Andirit.0.2.0-preview.7.snupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6144724Z ./artifacts/Andirit.Abstractions.0.2.0-preview.7.nupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6145295Z ./artifacts/Andirit.Abstractions.0.2.0-preview.7.snupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6145823Z ./artifacts/Andirit.CSharp.0.2.0-preview.7.nupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6146304Z ./artifacts/Andirit.CSharp.0.2.0-preview.7.snupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6146785Z ./artifacts/Andirit.LatticeDb.0.2.0-preview.7.nupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6147274Z ./artifacts/Andirit.LatticeDb.0.2.0-preview.7.snupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6147771Z ./artifacts/Andirit.Testing.0.2.0-preview.7.nupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6148247Z ./artifacts/Andirit.Testing.0.2.0-preview.7.snupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6148740Z ./artifacts/Andirit.TreeSitter.0.2.0-preview.7.nupkg
+publish	Verify complete package inventory before publishing	2026-11-22T05:17:40.6149241Z ./artifacts/Andirit.TreeSitter.0.2.0-preview.7.snupkg
+publish	NuGet login (OIDC -> temp API key)	∩╗┐2026-11-22T05:17:40.6202244Z ##[group]Run NuGet/login@v1
+publish	NuGet login (OIDC -> temp API key)	2026-11-22T05:17:40.6202498Z with:
+publish	NuGet login (OIDC -> temp API key)	2026-11-22T05:17:40.6203020Z   user: ***
+publish	NuGet login (OIDC -> temp API key)	2026-11-22T05:17:40.6203251Z   token-service-url: https://www.nuget.org/api/v2/token
+publish	NuGet login (OIDC -> temp API key)	2026-11-22T05:17:40.6203572Z   audience: https://www.nuget.org
+publish	NuGet login (OIDC -> temp API key)	2026-11-22T05:17:40.6203802Z env:
+publish	NuGet login (OIDC -> temp API key)	2026-11-22T05:17:40.6203982Z   DOTNET_ROOT: /usr/share/dotnet
+publish	NuGet login (OIDC -> temp API key)	2026-11-22T05:17:40.6204196Z ##[endgroup]
+publish	NuGet login (OIDC -> temp API key)	2026-11-22T05:17:41.9208400Z Successfully exchanged OIDC token for NuGet API key.
+publish	Push packages to NuGet	∩╗┐2026-11-22T05:17:41.9384112Z ##[group]Run dotnet nuget push ./artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key *** --skip-duplicate
+publish	Push packages to NuGet	2026-11-22T05:17:41.9385344Z ^[[36;1mdotnet nuget push ./artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key *** --skip-duplicate^[[0m
+publish	Push packages to NuGet	2026-11-22T05:17:41.9423597Z shell: /usr/bin/bash -e {0}
+publish	Push packages to NuGet	2026-11-22T05:17:41.9423847Z env:
+publish	Push packages to NuGet	2026-11-22T05:17:41.9424045Z   DOTNET_ROOT: /usr/share/dotnet
+publish	Push packages to NuGet	2026-11-22T05:17:41.9424278Z ##[endgroup]
+publish	Push packages to NuGet	2026-11-22T05:17:42.3801580Z Pushing Andirit.0.2.0-preview.7.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	Push packages to NuGet	2026-11-22T05:17:42.3890374Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:42.9655304Z   Created https://www.nuget.org/api/v2/package/ 575ms
+publish	Push packages to NuGet	2026-11-22T05:17:42.9664454Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:42.9669602Z Pushing Andirit.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push packages to NuGet	2026-11-22T05:17:42.9671461Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:43.0825711Z   Created https://www.nuget.org/api/v2/symbolpackage/ 114ms
+publish	Push packages to NuGet	2026-11-22T05:17:43.0826229Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:43.0830983Z Pushing Andirit.Abstractions.0.2.0-preview.7.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	Push packages to NuGet	2026-11-22T05:17:43.0834222Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:43.6130780Z   Created https://www.nuget.org/api/v2/package/ 529ms
+publish	Push packages to NuGet	2026-11-22T05:17:43.6131466Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:43.6132013Z Pushing Andirit.Abstractions.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push packages to NuGet	2026-11-22T05:17:43.6132665Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:43.7139999Z   Created https://www.nuget.org/api/v2/symbolpackage/ 100ms
+publish	Push packages to NuGet	2026-11-22T05:17:43.7140970Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:43.7147385Z Pushing Andirit.CSharp.0.2.0-preview.7.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	Push packages to NuGet	2026-11-22T05:17:43.7152249Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:44.2026142Z   Created https://www.nuget.org/api/v2/package/ 487ms
+publish	Push packages to NuGet	2026-11-22T05:17:44.2026542Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:44.2026958Z Pushing Andirit.CSharp.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push packages to NuGet	2026-11-22T05:17:44.2028570Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:44.2976827Z   Created https://www.nuget.org/api/v2/symbolpackage/ 94ms
+publish	Push packages to NuGet	2026-11-22T05:17:44.2977374Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:44.2991602Z Pushing Andirit.LatticeDb.0.2.0-preview.7.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	Push packages to NuGet	2026-11-22T05:17:44.2992231Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:44.7698148Z   Created https://www.nuget.org/api/v2/package/ 470ms
+publish	Push packages to NuGet	2026-11-22T05:17:44.7698571Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:44.7713993Z Pushing Andirit.LatticeDb.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push packages to NuGet	2026-11-22T05:17:44.7714556Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:44.8680355Z   Created https://www.nuget.org/api/v2/symbolpackage/ 96ms
+publish	Push packages to NuGet	2026-11-22T05:17:44.8680745Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:44.8686977Z Pushing Andirit.Testing.0.2.0-preview.7.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	Push packages to NuGet	2026-11-22T05:17:44.8692433Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:45.3099822Z   Created https://www.nuget.org/api/v2/package/ 440ms
+publish	Push packages to NuGet	2026-11-22T05:17:45.3100405Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:45.3100869Z Pushing Andirit.Testing.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push packages to NuGet	2026-11-22T05:17:45.3101418Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:45.4213811Z   Created https://www.nuget.org/api/v2/symbolpackage/ 111ms
+publish	Push packages to NuGet	2026-11-22T05:17:45.4214577Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:45.4218172Z Pushing Andirit.TreeSitter.0.2.0-preview.7.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	Push packages to NuGet	2026-11-22T05:17:45.4222745Z   PUT https://www.nuget.org/api/v2/package/
+publish	Push packages to NuGet	2026-11-22T05:17:45.8851833Z   Created https://www.nuget.org/api/v2/package/ 463ms
+publish	Push packages to NuGet	2026-11-22T05:17:45.8853292Z Your package was pushed.
+publish	Push packages to NuGet	2026-11-22T05:17:45.8854190Z Pushing Andirit.TreeSitter.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push packages to NuGet	2026-11-22T05:17:45.8854772Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push packages to NuGet	2026-11-22T05:17:45.9778468Z   Created https://www.nuget.org/api/v2/symbolpackage/ 92ms
+publish	Push packages to NuGet	2026-11-22T05:17:45.9778870Z Your package was pushed.
+publish	Push symbols to NuGet	∩╗┐2026-11-22T05:17:46.3426911Z ##[group]Run dotnet nuget push ./artifacts/*.snupkg --source https://api.nuget.org/v3/index.json --api-key *** --skip-duplicate
+publish	Push symbols to NuGet	2026-11-22T05:17:46.3427791Z ^[[36;1mdotnet nuget push ./artifacts/*.snupkg --source https://api.nuget.org/v3/index.json --api-key *** --skip-duplicate^[[0m
+publish	Push symbols to NuGet	2026-11-22T05:17:46.3456590Z shell: /usr/bin/bash -e {0}
+publish	Push symbols to NuGet	2026-11-22T05:17:46.3456781Z env:
+publish	Push symbols to NuGet	2026-11-22T05:17:46.3456926Z   DOTNET_ROOT: /usr/share/dotnet
+publish	Push symbols to NuGet	2026-11-22T05:17:46.3457090Z ##[endgroup]
+publish	Push symbols to NuGet	2026-11-22T05:17:46.6011702Z Pushing Andirit.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push symbols to NuGet	2026-11-22T05:17:46.6068459Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.7518938Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 144ms
+publish	Push symbols to NuGet	2026-11-22T05:17:46.7524456Z Package '/home/runner/work/andirit/andirit/./artifacts/Andirit.0.2.0-preview.7.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	Push symbols to NuGet	2026-11-22T05:17:46.7539493Z Pushing Andirit.Abstractions.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push symbols to NuGet	2026-11-22T05:17:46.7541585Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8039635Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 49ms
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8040393Z Package '/home/runner/work/andirit/andirit/./artifacts/Andirit.Abstractions.0.2.0-preview.7.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8048806Z Pushing Andirit.CSharp.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8049329Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8546763Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 49ms
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8547659Z Package '/home/runner/work/andirit/andirit/./artifacts/Andirit.CSharp.0.2.0-preview.7.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8554075Z Pushing Andirit.LatticeDb.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8554654Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8966783Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 41ms
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8967584Z Package '/home/runner/work/andirit/andirit/./artifacts/Andirit.LatticeDb.0.2.0-preview.7.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8973567Z Pushing Andirit.Testing.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push symbols to NuGet	2026-11-22T05:17:46.8974298Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.9376326Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 39ms
+publish	Push symbols to NuGet	2026-11-22T05:17:46.9376979Z Package '/home/runner/work/andirit/andirit/./artifacts/Andirit.Testing.0.2.0-preview.7.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	Push symbols to NuGet	2026-11-22T05:17:46.9387127Z Pushing Andirit.TreeSitter.0.2.0-preview.7.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	Push symbols to NuGet	2026-11-22T05:17:46.9387915Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	Push symbols to NuGet	2026-11-22T05:17:46.9804573Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 41ms
+publish	Push symbols to NuGet	2026-11-22T05:17:47.3340827Z Package '/home/runner/work/andirit/andirit/./artifacts/Andirit.TreeSitter.0.2.0-preview.7.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	Post Setup .NET	∩╗┐2026-11-22T05:17:47.3469456Z Post job cleanup.
+publish	Post Checkout	∩╗┐2026-11-22T05:17:47.4431387Z Post job cleanup.
+publish	Post Checkout	2026-11-22T05:17:47.5103784Z [command]/usr/bin/git version
+publish	Post Checkout	2026-11-22T05:17:47.5147275Z git version 2.56.1
+publish	Post Checkout	2026-11-22T05:17:47.5180079Z Temporarily overriding HOME='/home/runner/work/_temp/3a6963cb-e827-478c-a790-87a58711db1b' before making global git config changes
+publish	Post Checkout	2026-11-22T05:17:47.5181178Z Adding repository directory to the temporary git global config as a safe directory
+publish	Post Checkout	2026-11-22T05:17:47.5187669Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/andirit/andirit
+publish	Post Checkout	2026-11-22T05:17:47.5231487Z Removing SSH command configuration
+publish	Post Checkout	2026-11-22T05:17:47.5239534Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+publish	Post Checkout	2026-11-22T05:17:47.5290727Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+publish	Post Checkout	2026-11-22T05:17:47.5637744Z Removing HTTP extra header
+publish	Post Checkout	2026-11-22T05:17:47.5643091Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+publish	Post Checkout	2026-11-22T05:17:47.5692559Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+publish	Post Checkout	2026-11-22T05:17:47.5983324Z Removing includeIf entries pointing to credentials config files
+publish	Post Checkout	2026-11-22T05:17:47.5990799Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+publish	Post Checkout	2026-11-22T05:17:47.6013432Z includeif.gitdir:/home/runner/work/andirit/andirit/.git.path
+publish	Post Checkout	2026-11-22T05:17:47.6014182Z includeif.gitdir:/home/runner/work/andirit/andirit/.git/worktrees/*.path
+publish	Post Checkout	2026-11-22T05:17:47.6014825Z includeif.gitdir:/github/workspace/.git.path
+publish	Post Checkout	2026-11-22T05:17:47.6015480Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+publish	Post Checkout	2026-11-22T05:17:47.6022462Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/andirit/andirit/.git.path
+publish	Post Checkout	2026-11-22T05:17:47.6045267Z /home/runner/work/_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Post Checkout	2026-11-22T05:17:47.6055579Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/andirit/andirit/.git.path /home/runner/work/_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Post Checkout	2026-11-22T05:17:47.6089957Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/andirit/andirit/.git/worktrees/*.path
+publish	Post Checkout	2026-11-22T05:17:47.6112447Z /home/runner/work/_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Post Checkout	2026-11-22T05:17:47.6154213Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/andirit/andirit/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Post Checkout	2026-11-22T05:17:47.6191343Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+publish	Post Checkout	2026-11-22T05:17:47.6213055Z /github/runner_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Post Checkout	2026-11-22T05:17:47.6219830Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Post Checkout	2026-11-22T05:17:47.6250744Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+publish	Post Checkout	2026-11-22T05:17:47.6271694Z /github/runner_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Post Checkout	2026-11-22T05:17:47.6285834Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config
+publish	Post Checkout	2026-11-22T05:17:47.6318989Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+publish	Post Checkout	2026-11-22T05:17:47.6635465Z Removing credentials config '/home/runner/work/_temp/git-credentials-9d37cd80-8f6a-4911-a078-d7055a3472a0.config'
+publish	Complete job	∩╗┐2026-11-22T05:17:47.6855464Z Cleaning up orphan processes
+publish	Complete job	2026-11-22T05:17:47.7180433Z Terminate orphan process: pid (2412) (MSBuild)
+publish	Complete job	2026-11-22T05:17:47.7265207Z Terminate orphan process: pid (2439) (VBCSCompiler)
+publish	Complete job	2026-11-22T05:17:47.7351569Z Terminate orphan process: pid (2531) (MSBuild)
