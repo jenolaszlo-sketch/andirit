@@ -1,0 +1,401 @@
+ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01 - hosted Ubuntu x64 result, independently derived
+source: the raw job logs and coverage artifacts of the CI runs, re-derived below.
+
+[1] run identity
+  status: completed
+  conclusion: success
+  headSha: 01624943233f16447c3176b7c905c544642dfb2c
+  event: push
+  workflowName: ci
+  createdAt: 2026-11-22T15:19:11Z
+  updatedAt: 2026-11-22T15:23:39Z
+  url: https://github.com/jenolaszlo-sketch/andirit/actions/runs/45037630799
+  executed revision matches the implementation revision: true
+
+[2] runner identity (genuine hosted Linux, not a compatibility environment)
+  Image Version: (not present in the job log)
+  Image OS: (not present in the job log)
+  Runner Image: (not present in the job log)
+  Runner Environment: (not present in the job log)
+  Current runner version: ["'2.338.2'"]
+  ImageOS: (not present in the job log)
+  Operating System: (not present in the job log)
+  workspace paths observed: ['/home/runner/work/_actions/actions/setup-dotnet/v5/externals/install-dotnet.sh', "/home/runner/work/_temp/a7c9fc73-eed9-4e1b-8123-59bbb62af0b5'", "/home/runner/work/_temp/dabc2488-e90c-422c-a484-514a9063f0ed'", '/home/runner/work/andirit/andirit']
+  Windows-host indicators (C:\, /mnt/c, WSL, Docker): []
+  runner-image labels from the job API: ['ubuntu-latest']
+  runner name from the job API: GitHub Actions 1000004506
+  workflow matrix (from the committed, unmodified workflow): windows-latest, ubuntu-latest, macos-latest
+  the runner workspace layout /home/runner/work/<repo>/<repo> is the GitHub-hosted
+  Linux runner layout; a Windows process cannot produce it, and no WSL, Docker or
+  /mnt/c indicator appears in the log.
+
+[3] suite counts on the hosted runner
+  Andirit.CSharp.Tests.dll
+    baseline run 44993021436 (headSha b5a81f8): failed=0 passed=372 skipped=0 total=372
+    implementation run 45037630799 (headSha 0162494): failed=0 passed=372 skipped=0 total=372
+  Andirit.LatticeDb.Tests.dll
+    baseline run 44993021436 (headSha b5a81f8): failed=0 passed=75 skipped=0 total=75
+    implementation run 45037630799 (headSha 0162494): failed=0 passed=88 skipped=0 total=88
+  Andirit.Tests.dll
+    baseline run 44993021436 (headSha b5a81f8): failed=0 passed=345 skipped=0 total=345
+    implementation run 45037630799 (headSha 0162494): failed=0 passed=345 skipped=0 total=345
+  Andirit.TreeSitter.Tests.dll
+    baseline run 44993021436 (headSha b5a81f8): failed=0 passed=157 skipped=0 total=157
+    implementation run 45037630799 (headSha 0162494): failed=0 passed=157 skipped=0 total=157
+
+[4] did the new native cancellation tests execute on Ubuntu?
+  [Fact] methods in the committed tests/Andirit.LatticeDb.Tests/NativeCancellationPathTests.cs: 13
+  LatticeDb tests passed on ubuntu at the baseline revision: 75
+  LatticeDb tests passed on ubuntu at the implementation revision: 88
+  delta: 13
+  delta equals the number of new [Fact] methods: true
+  skipped tests in the implementation run: 0
+  CONCLUSION: the new native cancellation tests executed on the hosted Ubuntu runner;
+              none was skipped.
+
+[5] coverage gate on the hosted runner (raw Cobertura artifacts)
+  coverage-latticedb/coverage.cobertura.xml
+    bytes=218830 sha256=154b98699f7ee1e2d27da3c69482462a6be3002052bf8f886d5f8871f837bd65
+    line-rate=0.9287000000000001 branch-rate=0.7896 threshold=70 (line%2cbranch)
+    class Andirit.LatticeCodeGraphStore: line-rate=0.9427 branch-rate=0.7593000000000001
+    class Andirit.LatticeCodeGraphStore/<>c__DisplayClass45_0: line-rate=1 branch-rate=1
+    class Andirit.LatticeCodeGraphStore/<>c__DisplayClass53_0: line-rate=1 branch-rate=1
+    class Andirit.LatticeCodeGraphStore/<CheckHealthAsync>d__51: line-rate=0.8181 branch-rate=1
+    class Andirit.LatticeCodeGraphStore/<FindOccurrencesAsync>d__49: line-rate=1 branch-rate=1
+    class Andirit.LatticeCodeGraphStore/<MutateAsync>d__53: line-rate=1 branch-rate=1
+    class Andirit.LatticeCodeGraphStore/<ReadAsync>d__54`1: line-rate=1 branch-rate=1
+    class Andirit.LatticeCodeGraphStore/<RebuildInnerFromDurableStateAsync>d__56: line-rate=1 branch-rate=1
+    class Andirit.LatticeCodeGraphStore/<TraverseAsync>d__45: line-rate=1 branch-rate=1
+    class Andirit.LatticeCodeGraphSchemaException: line-rate=1 branch-rate=1
+    class Andirit.PersistedOccurrenceUnit: line-rate=1 branch-rate=1
+    class Andirit.PersistedOccurrenceMeta: line-rate=1 branch-rate=1
+    class Andirit.PersistedOccurrencePage: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphCommitOutcomeUnknownException: line-rate=1 branch-rate=1
+    class Andirit.CodeOccurrenceSchemaException: line-rate=1 branch-rate=1
+    class Andirit.CodeOccurrenceIndexException: line-rate=1 branch-rate=1
+    class Andirit.LatticeCodeGraphStore: line-rate=1 branch-rate=1
+    class Andirit.LatticeCodeGraphStore/OccurrenceAuthorityPublication: line-rate=1 branch-rate=1
+    class Andirit.LatticeCodeGraphStore/<CheckOccurrenceAuthorityAsync>d__90: line-rate=0.5454 branch-rate=0.5606
+    class Andirit.NativeGraphMirror: line-rate=0.9476 branch-rate=0.9390000000000001
+    class Andirit.NativeGraphMirror/NativeAdjacency: line-rate=1 branch-rate=1
+    class Andirit.NativeGraphMirror/MirrorManifest: line-rate=1 branch-rate=1
+    class Andirit.LatticeDb.AndiritHostBuilderExtensions: line-rate=1 branch-rate=1
+    class Andirit.LatticeDb.LatticeDbStoreOptions: line-rate=1 branch-rate=1
+  coverage/coverage.cobertura.xml
+    bytes=1418850 sha256=7b253ea9fe6ee89ba7c7739d6e649a5e96be25889aa6e886250f80616ad417b4
+    line-rate=0.8242 branch-rate=0.7073999999999999 threshold=55 (line%2cbranch)
+    class Andirit.CodeGraphStoreHealth: line-rate=0.44439999999999996 branch-rate=1
+    class Andirit.AndiritHostHealth: line-rate=1 branch-rate=1
+    class Andirit.AndiritHostBuilder: line-rate=0.5535 branch-rate=0.2777
+    class Andirit.AndiritHost: line-rate=0.8437 branch-rate=0.5
+    class Andirit.AndiritHost/<CheckHealthAsync>d__16: line-rate=1 branch-rate=0.5
+    class Andirit.AndiritHost/<DisposeAsync>d__17: line-rate=0.4 branch-rate=0.5
+    class Andirit.CodeFreshnessResult: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphBatchValidator: line-rate=0.4868 branch-rate=0.5217
+    class Andirit.CodeGraphIngestionSink: line-rate=1 branch-rate=0.9166
+    class Andirit.CodeGraphIngestionSink/Accumulator: line-rate=1 branch-rate=0.8
+    class Andirit.CodeGraphIngestionSink/<>c: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphIngestionSink/<Andirit-ICodeOccurrenceAuthoritySink-SetOccurrenceAuthorityAsync>d__13: line-rate=0 branch-rate=0
+    class Andirit.CodeGraphIngestionSink/<CompleteAsync>d__14: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphIngestionSink/<DisposeAsync>d__15: line-rate=0.8461 branch-rate=0.5
+    class Andirit.CodeGraphIngestionSink/<WriteBatchAsync>d__12: line-rate=0.7241 branch-rate=0.8571
+    class Andirit.CodeGraphPluginRegistry: line-rate=0.9333 branch-rate=0.875
+    class Andirit.CodeGraphPluginSelectionException: line-rate=0.875 branch-rate=1
+    class Andirit.AndiritBuilder: line-rate=0.2777 branch-rate=0
+    class Andirit.CodeGraphPublicationChangedException: line-rate=1 branch-rate=0.5
+    class Andirit.CodeGraphPublicationQuery: line-rate=0.6129 branch-rate=0.5
+    class Andirit.CodeGraphPublicationQuery/<FindDeclarationsAsync>d__8: line-rate=0 branch-rate=1
+    class Andirit.CodeGraphPublicationQuery/<FindSymbolAsync>d__6: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphPublicationQuery/<GetAffectedTestsAsync>d__18: line-rate=0 branch-rate=1
+    class Andirit.CodeGraphPublicationQuery/<GetDeclarationsInFileAsync>d__20: line-rate=0 branch-rate=1
+    class Andirit.CodeGraphPublicationQuery/<GetImpactSetsAsync>d__17: line-rate=0 branch-rate=1
+    class Andirit.CodeGraphPublicationQuery/<GetNeighborhoodAsync>d__9: line-rate=0 branch-rate=1
+    class Andirit.CodeGraphPublicationQuery/<GetPublicSurfaceAsync>d__19: line-rate=0 branch-rate=1
+    class Andirit.CodeGraphPublicationQuery/<ResolveSymbolsAsync>d__7: line-rate=0 branch-rate=1
+    class Andirit.CodeGraphPublicationQuery/<TraverseAsync>d__22: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryOptions: line-rate=0.85 branch-rate=0.7
+    class Andirit.CodeSymbolLookupResult: line-rate=1 branch-rate=0.5
+    class Andirit.CodeGraphQueryService: line-rate=0.6451 branch-rate=0.6739
+    class Andirit.CodeGraphQueryService/<>c__DisplayClass33_0: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<>c__DisplayClass34_0: line-rate=1 branch-rate=0.5
+    class Andirit.CodeGraphQueryService/<>c__DisplayClass35_0: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<>c__DisplayClass36_0: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<>c__DisplayClass38_0: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<>c__DisplayClass40_0: line-rate=1 branch-rate=0.3333
+    class Andirit.CodeGraphQueryService/<>c__DisplayClass48_0: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<>c__DisplayClass49_0: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<FindEnclosingSymbolAsync>d__36: line-rate=0.9047 branch-rate=0.625
+    class Andirit.CodeGraphQueryService/<FindFileNodeAsync>d__43: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<FindNodesByNamePatternAsync>d__9: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<FindProjectNodeAsync>d__44: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<FindSymbolsAsync>d__35: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<FindSymbolsByQualifiedNameAsync>d__7: line-rate=0.875 branch-rate=0.5
+    class Andirit.CodeGraphQueryService/<FindSymbolsByQualifiedNameWithProvenanceAsync>d__10: line-rate=0.9333 branch-rate=0.5
+    class Andirit.CodeGraphQueryService/<FindSymbolsInScopeAsync>d__40: line-rate=1 branch-rate=0.875
+    class Andirit.CodeGraphQueryService/<GetAffectedTestsAsync>d__50: line-rate=1 branch-rate=0.5
+    class Andirit.CodeGraphQueryService/<GetAffectedTestsWithProvenanceAsync>d__51: line-rate=0.9473 branch-rate=0.75
+    class Andirit.CodeGraphQueryService/<GetDeclarationsInFileAsync>d__33: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<GetDeclarationsInFileWithProvenanceAsync>d__34: line-rate=0.8595999999999999 branch-rate=0.6875
+    class Andirit.CodeGraphQueryService/<GetDeclarationsInProjectAsync>d__39: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<GetImpactSetsAsync>d__30: line-rate=0.5555 branch-rate=0
+    class Andirit.CodeGraphQueryService/<GetImpactSetsWithProvenanceAsync>d__49: line-rate=0.9714 branch-rate=0.8
+    class Andirit.CodeGraphQueryService/<GetInterfaceImpactV1Async>d__0: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<GetPublicSurfaceAsync>d__47: line-rate=0.9444 branch-rate=0.75
+    class Andirit.CodeGraphQueryService/<GetPublicSurfaceWithProvenanceAsync>d__48: line-rate=0.826 branch-rate=0.6
+    class Andirit.CodeGraphQueryService/<GetSymbolsInFileAsync>d__37: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<GetSymbolsInProjectAsync>d__38: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<OpenLatestPublicationAsync>d__5: line-rate=1 branch-rate=0.5
+    class Andirit.CodeGraphQueryService/<ResolveSymbolsAsync>d__31: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryService/<ResolveSymbolsWithProvenanceAsync>d__32: line-rate=0.875 branch-rate=0.625
+    class Andirit.CodeGraphStoreException: line-rate=0 branch-rate=0
+    class Andirit.CodeRepositoryManifest: line-rate=1 branch-rate=0.875
+    class Andirit.CodeIndexRunManifest: line-rate=0.8275 branch-rate=0.6111
+    class Andirit.CodeRepositoryIndexState: line-rate=0.9068999999999999 branch-rate=0.7142000000000001
+    class Andirit.CodeIndexUnitReplacement: line-rate=0.9375 branch-rate=0.8
+    class Andirit.CodeGraphTraversalQuery: line-rate=0.875 branch-rate=0.7222
+    class Andirit.CodeNamePatternResult: line-rate=0.7333 branch-rate=0.5
+    class Andirit.CodeGraphTraversalResult: line-rate=0.9285 branch-rate=0.5714
+    class Andirit.CodeGraphPublication: line-rate=1 branch-rate=0.625
+    class Andirit.CodeGraphFactProvenance: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphQueryDescriptor: line-rate=0.6666 branch-rate=1
+    class Andirit.CodeGraphQueryEnvelope`1: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphMultiTraversalResult: line-rate=1 branch-rate=1
+    class Andirit.CodeAffectedTestsResult: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphIngestionDiagnostics: line-rate=0.8 branch-rate=1
+    class Andirit.CodeSymbolDiscoveryQuery: line-rate=1 branch-rate=1
+    class Andirit.CodeSymbolDiscoveryResult: line-rate=1 branch-rate=1
+    class Andirit.CodeEnclosingSymbolResult: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphTraversalPresets: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexIdentity: line-rate=0.8571 branch-rate=0.75
+    class Andirit.CodeIndexingOptions: line-rate=0.8571 branch-rate=0.6666
+    class Andirit.ProviderFallbackPolicyExtensions: line-rate=0.7 branch-rate=0.64
+    class Andirit.CodeProviderSelection: line-rate=0.8918 branch-rate=0.75
+    class Andirit.CodeIndexingDiagnostics: line-rate=0.5 branch-rate=1
+    class Andirit.CodePluginIndexingDiagnostics: line-rate=0.7272 branch-rate=1
+    class Andirit.CodeIndexingResult: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexingService: line-rate=0.9384999999999999 branch-rate=0.9074
+    class Andirit.CodeIndexingService/PluginExecution: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexingService/MaterializedSource: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexingService/PluginScopedSink: line-rate=0.7666 branch-rate=0.8
+    class Andirit.CodeIndexingService/<>c: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexingService/<>c__DisplayClass20_0: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexingService/<>c__DisplayClass6_0: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexingService/<>c__DisplayClass6_2: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexingService/<>c__DisplayClass6_2/<<IndexAsync>b__8>d: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexingService/<>c__DisplayClass6_2/<<IndexAsync>g__DeletePluginFootprintAsync|9>d: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexingService/<>c__DisplayClass6_2/<<IndexAsync>g__ExecuteOnceAsync|6>d: line-rate=0.9615 branch-rate=0.7726999999999999
+    class Andirit.CodeIndexingService/<>c__DisplayClass6_2/<<IndexAsync>g__RunTakeoverChainAsync|10>d: line-rate=0.8461 branch-rate=0.9
+    class Andirit.CodeIndexingService/<CheckFreshnessAsync>d__5: line-rate=0.9555 branch-rate=1
+    class Andirit.CodeIndexingService/<FallbackClosureIds>d__11: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexingService/<IndexAsync>d__6: line-rate=0.9945 branch-rate=0.9782
+    class Andirit.CodeIndexingService/<MaterializeSourcesAsync>d__20: line-rate=0.8095 branch-rate=0.75
+    class Andirit.CodeIndexingService/<TryFinishFailedRunAsync>d__17: line-rate=0.8461 branch-rate=1
+    class Andirit.CodeSourceChangedDuringIndexingException: line-rate=1 branch-rate=1
+    class Andirit.CodeSourceSizeLimitException: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexPlanItem: line-rate=0.7646999999999999 branch-rate=0.5
+    class Andirit.CodeIndexPlan: line-rate=0.8529000000000001 branch-rate=0.5
+    class Andirit.CodeIndexPlanningOptions: line-rate=0.85 branch-rate=0.75
+    class Andirit.CodeIndexPlanner: line-rate=1 branch-rate=0.5
+    class Andirit.CodeIndexPlanner/<>c: line-rate=1 branch-rate=1
+    class Andirit.CodeIndexPlanner/<>c__DisplayClass2_0: line-rate=0.14279999999999998 branch-rate=0
+    class Andirit.CodeIndexPlanner/<ComputeHashAsync>d__3: line-rate=0.9444 branch-rate=0.9
+    class Andirit.CodeIndexPlanner/<CreatePlanAsync>d__2: line-rate=0.9743 branch-rate=0.9375
+    class Andirit.OwnerKey: line-rate=1 branch-rate=1
+    class Andirit.CodeJsonDefaults: line-rate=1 branch-rate=1
+    class Andirit.CodeRepositoryManifestConverter: line-rate=1 branch-rate=0.5
+    class Andirit.CodeLanguageProviderMap: line-rate=0.7187 branch-rate=0.75
+    class Andirit.CodeOccurrenceCompilationAuthority: line-rate=0 branch-rate=1
+    class Andirit.CodeOccurrenceDefiningAuthority: line-rate=0 branch-rate=1
+    class Andirit.CodeOccurrenceAuthority: line-rate=0 branch-rate=1
+    class Andirit.CodeOccurrenceAuthorityRefusal: line-rate=0 branch-rate=1
+    class Andirit.CodeOccurrenceContinuation: line-rate=0.37189999999999995 branch-rate=0
+    class Andirit.CodeOccurrenceContinuation/Envelope: line-rate=1 branch-rate=1
+    class Andirit.CodeOccurrenceUnitCoverage: line-rate=0.14279999999999998 branch-rate=1
+    class Andirit.CodeOccurrenceQuery: line-rate=0.8887999999999999 branch-rate=0.5
+    class Andirit.CodeOccurrenceHit: line-rate=0.5 branch-rate=1
+    class Andirit.CodeOccurrenceQueryResult: line-rate=0.5 branch-rate=0
+    class Andirit.CodePublicationSnapshotException: line-rate=1 branch-rate=1
+    class Andirit.CodeSnapshotOptions: line-rate=1 branch-rate=1
+    class Andirit.CodePublicationSnapshot: line-rate=0.8029999999999999 branch-rate=0.6666
+    class Andirit.CodePublicationSnapshot/<>c: line-rate=1 branch-rate=1
+    class Andirit.CodePublicationSnapshot/<ExportAsync>d__29: line-rate=0.8887999999999999 branch-rate=0.6428
+    class Andirit.CodePublicationSnapshot/<ImportAsync>d__32: line-rate=1 branch-rate=1
+    class Andirit.CodeRepositoryProviderRegistry: line-rate=0.9062 branch-rate=0.8332999999999999
+    class Andirit.CodeRepositoryProviderRegistry/<OpenAsync>d__6: line-rate=1 branch-rate=1
+    class Andirit.CodeRepositoryProviderSelectionException: line-rate=0.8332999999999999 branch-rate=1
+    class Andirit.CodeRepositoryProviderNotFoundException: line-rate=0.6666 branch-rate=1
+    class Andirit.CodeRepositoryDescriptor: line-rate=0.8636 branch-rate=0.75
+    class Andirit.CodeRepositoryEntry: line-rate=0.9 branch-rate=0.75
+    class Andirit.CodeRepositoryEnumerationOptions: line-rate=0.84 branch-rate=0.5714
+    class Andirit.FileSystemCodeRepositoryProvider: line-rate=0.6818000000000001 branch-rate=0.7
+    class Andirit.FileSystemCodeRepositorySource: line-rate=0.8974 branch-rate=0.625
+    class Andirit.FileSystemCodeRepositorySource/<EnumerateAsync>d__12: line-rate=0.9111 branch-rate=0.85
+    class Andirit.CodeRepositoryEnumerationLimitException: line-rate=1 branch-rate=1
+    class Andirit.CodeSourceManifest: line-rate=0.8571 branch-rate=0.5
+    class Andirit.DurableCommandLog: line-rate=0.9818000000000001 branch-rate=0.84
+    class Andirit.DurableCommandLog/PersistedCommand: line-rate=1 branch-rate=1
+    class Andirit.DurableCommandLog/<>c: line-rate=1 branch-rate=0.75
+    class Andirit.DurableCommandLog/<ApplyCommandAsync>d__13: line-rate=0.875 branch-rate=0.9
+    class Andirit.DurableCommandLog/<ReplayAsync>d__12: line-rate=0.5897 branch-rate=0.46659999999999996
+    class Andirit.GraphFactEquality: line-rate=0.2857 branch-rate=0.14279999999999998
+    class Andirit.InMemoryCodeGraphStore: line-rate=0.7698999999999999 branch-rate=0.6425
+    class Andirit.InMemoryCodeGraphStore/RunKey: line-rate=1 branch-rate=1
+    class Andirit.InMemoryCodeGraphStore/StagedRun: line-rate=1 branch-rate=1
+    class Andirit.InMemoryCodeGraphStore/OccurrenceTargetEntry: line-rate=0.8887999999999999 branch-rate=1
+    class Andirit.InMemoryCodeGraphStore/MaterializedGraph: line-rate=0.8887999999999999 branch-rate=1
+    class Andirit.InterfaceImpactQueryV1: line-rate=0.9684999999999999 branch-rate=0.8226
+    class Andirit.InterfaceImpactQueryV1/Fact: line-rate=1 branch-rate=0.75
+    class Andirit.InterfaceImpactOptionsV1: line-rate=1 branch-rate=1
+    class Andirit.InterfaceImpactResultV1: line-rate=1 branch-rate=0.8957999999999999
+    class Andirit.InterfaceImpactResultV1/PublicationInfo: line-rate=1 branch-rate=1
+    class Andirit.InterfaceImpactResultV1/TargetInfo: line-rate=1 branch-rate=1
+    class Andirit.InterfaceImpactResultV1/Step: line-rate=1 branch-rate=1
+    class Andirit.InterfaceImpactResultV1/Witness: line-rate=1 branch-rate=0.6666
+    class Andirit.InterfaceImpactResultV1/Implementation: line-rate=1 branch-rate=1
+    class Andirit.InterfaceImpactResultV1/Occurrence: line-rate=1 branch-rate=1
+    class Andirit.InterfaceImpactResultV1/Consumer: line-rate=1 branch-rate=1
+    class Andirit.InterfaceImpactResultV1/Unknown: line-rate=1 branch-rate=1
+    class Andirit.InterfaceImpactResultV1/CoverageInfo: line-rate=1 branch-rate=0.75
+    class Andirit.InterfaceImpactResultV1/Work: line-rate=1 branch-rate=1
+    class Andirit.InterfaceImpactResultV1/TruncationInfo: line-rate=1 branch-rate=1
+    class Andirit.PluginSourceKey: line-rate=0 branch-rate=1
+    class Andirit.EvidenceQualityExtensions: line-rate=1 branch-rate=1
+    class Andirit.CodeEvidence: line-rate=0.9285 branch-rate=0.75
+    class Andirit.CodeFactOrigin: line-rate=1 branch-rate=0.7142000000000001
+    class Andirit.CodeGraphBatch: line-rate=0.9 branch-rate=0.75
+    class Andirit.CodeGraphBatchLimits: line-rate=0.9761 branch-rate=1
+    class Andirit.CodeGraphPluginContext: line-rate=0.9137000000000001 branch-rate=0.6875
+    class Andirit.CodeGraphSourceChange: line-rate=0.826 branch-rate=0.6818000000000001
+    class Andirit.CodeRelationshipCoverage: line-rate=0.6792 branch-rate=0.5714
+    class Andirit.CodeIndexUnitCoverage: line-rate=0 branch-rate=0
+    class Andirit.CodeGraphExtractionResult: line-rate=0.8181 branch-rate=0.85
+    class Andirit.CodeGraphNode: line-rate=1 branch-rate=0.8332999999999999
+    class Andirit.CodeGraphDeclaration: line-rate=1 branch-rate=0.5
+    class Andirit.CodeGraphEdge: line-rate=1 branch-rate=0.5
+    class Andirit.CodeNodeKind: line-rate=0.75 branch-rate=1
+    class Andirit.CodeNodeKinds: line-rate=1 branch-rate=1
+    class Andirit.CodeEdgeKind: line-rate=0.75 branch-rate=1
+    class Andirit.CodeEdgeKinds: line-rate=1 branch-rate=1
+    class Andirit.CodeGraphSource: line-rate=1 branch-rate=0.5
+    class Andirit.CodeGraphSource/<OpenReadAsync>d__17: line-rate=0.5454 branch-rate=0.5
+    class Andirit.CodeGraphValidationError: line-rate=0.6 branch-rate=1
+    class Andirit.CodeGraphBatchRejectedException: line-rate=1 branch-rate=0.5
+    class Andirit.CodeRepositoryId: line-rate=0.75 branch-rate=1
+    class Andirit.CodePluginId: line-rate=0.75 branch-rate=1
+    class Andirit.CodeIndexUnitId: line-rate=0.75 branch-rate=1
+    class Andirit.CodeIndexRunId: line-rate=0.75 branch-rate=1
+    class Andirit.CodeNodeId: line-rate=0.75 branch-rate=1
+    class Andirit.CodeSymbolId: line-rate=0.75 branch-rate=1
+    class Andirit.CodeDeclarationId: line-rate=0.75 branch-rate=1
+    class Andirit.CodeEdgeId: line-rate=0.75 branch-rate=1
+    class Andirit.CodeLocation: line-rate=0.8461 branch-rate=0.5832999999999999
+    class Andirit.CodeOccurrenceId: line-rate=0.8887999999999999 branch-rate=1
+    class Andirit.CodeOccurrenceTargetId: line-rate=0.8887999999999999 branch-rate=1
+    class Andirit.CodeOccurrenceContributor: line-rate=1 branch-rate=0.5
+    class Andirit.CodeOccurrenceIdentity: line-rate=0.9587 branch-rate=0.7916
+    class Andirit.CodeOccurrenceFact: line-rate=0.9775 branch-rate=0.5555
+    class Andirit.CodeOccurrenceCoverage: line-rate=0.8632 branch-rate=0.8571
+    class Andirit.CodePluginFailureException: line-rate=0.8332999999999999 branch-rate=0.75
+    class Andirit.CodeTextProperty: line-rate=1 branch-rate=0.5
+    class Andirit.CodeIntegerProperty: line-rate=1 branch-rate=1
+    class Andirit.CodeNumberProperty: line-rate=1 branch-rate=1
+    class Andirit.CodeBooleanProperty: line-rate=1 branch-rate=1
+    class Andirit.CodeTextListProperty: line-rate=0.6666 branch-rate=0.5
+    class Andirit.ContractValue: line-rate=1 branch-rate=1
+  coverage-csharp/coverage.cobertura.xml
+    bytes=548063 sha256=b181301b541202c6b7def20bc97fc975e4ba9c0a015c6e774835a40b83f14852
+    line-rate=0.9511 branch-rate=0.8785 threshold=75 (line%2cbranch)
+    class Andirit.CompilationSourceIdentity: line-rate=1 branch-rate=1
+    class Andirit.CompilationProvenanceDescriptor: line-rate=1 branch-rate=1
+    class Andirit.ProvenanceHash: line-rate=1 branch-rate=0.8332999999999999
+    class Andirit.CSharpCodeGraphPlugin: line-rate=0.9189 branch-rate=0.75
+    class Andirit.CSharpCodeGraphPlugin/<>c: line-rate=1 branch-rate=0.9375
+    class Andirit.CSharpCodeGraphPlugin/<>c__DisplayClass5_0: line-rate=1 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin/<>c__DisplayClass5_1: line-rate=1 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin/<PrepareAnalysisAsync>d__5: line-rate=0.9076000000000001 branch-rate=0.8783
+    class Andirit.CSharpCodeGraphPlugin: line-rate=0.9736 branch-rate=0.25
+    class Andirit.CSharpCodeGraphPlugin: line-rate=1 branch-rate=0.9166
+    class Andirit.CSharpCodeGraphPlugin/Session: line-rate=1 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin/Session/<>c: line-rate=0.9375 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin/Session/<>c__DisplayClass7_0: line-rate=1 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin/Session/<ExtractAsync>d__7: line-rate=1 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin/RunSymbols: line-rate=0.9209999999999999 branch-rate=0.8181
+    class Andirit.CSharpCodeGraphPlugin/RunSymbols/Registration: line-rate=1 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin/<PublishOccurrencesAsync>d__32: line-rate=1 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin: line-rate=0.9863 branch-rate=0.9605
+    class Andirit.CSharpCodeGraphPlugin/GraphBuilder: line-rate=0.9231 branch-rate=0.8475
+    class Andirit.CSharpCodeGraphPlugin/GraphBuilder/<>c__DisplayClass28_0: line-rate=1 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin/GraphBuilder/<WriteAsync>d__28: line-rate=1 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin/GraphBuilder/<WriteChunksAsync>d__61`1: line-rate=1 branch-rate=1
+    class Andirit.CSharpCodeGraphPlugin/CSharpSymbolPropertyFactory: line-rate=0.9253 branch-rate=0.7595999999999999
+    class Andirit.CSharpPackageReference: line-rate=1 branch-rate=1
+    class Andirit.CSharpProjectModel: line-rate=1 branch-rate=0.5
+    class Andirit.CSharpDiscoveryResult: line-rate=1 branch-rate=1
+    class Andirit.CSharpProjectDiscovery: line-rate=0.9584999999999999 branch-rate=0.8714
+    class Andirit.CSharpProjectDiscovery/<ParseSolutionProjects>d__12: line-rate=1 branch-rate=1
+    class Andirit.CSharpProjectDiscovery/<ParseSolutionXmlProjects>d__13: line-rate=1 branch-rate=1
+    class Andirit.MetadataReferenceValidation: line-rate=0.9593 branch-rate=0.9190999999999999
+    class Andirit.MetadataReferenceValidation/Work: line-rate=1 branch-rate=1
+    class Andirit.CSharpScopeUnit: line-rate=1 branch-rate=1
+    class Andirit.VerifiedCSharpScope: line-rate=1 branch-rate=0.7142000000000001
+    class Andirit.VerifiedCSharpUniverse: line-rate=0.9426000000000001 branch-rate=0.8767
+    class Andirit.CSharpPreparedProject: line-rate=1 branch-rate=1
+    class Andirit.VerifiedCSharpAnalysis: line-rate=1 branch-rate=1
+    class Andirit.VerifiedMetadataReference: line-rate=0.9117000000000001 branch-rate=0.75
+    class Andirit.VerifiedCSharpCompilation: line-rate=0.9826999999999999 branch-rate=0.9375
+    class Andirit.VerifiedCSharpOccurrenceAuthority: line-rate=0.9365000000000001 branch-rate=0.9037999999999999
+    class Andirit.VerifiedOccurrenceExtractionRequest: line-rate=1 branch-rate=1
+    class Andirit.VerifiedCSharpOccurrenceExtractor: line-rate=0.9561 branch-rate=0.9347
+    class Andirit.VerifiedCSharpSource: line-rate=1 branch-rate=1
+    class Andirit.VerifiedCSharpSource/<ReadAsync>d__19: line-rate=0.9777 branch-rate=0.9687
+    class Andirit.VerifiedDefiningResolution: line-rate=1 branch-rate=0.5
+    class Andirit.VerifiedTargetMint: line-rate=1 branch-rate=1
+    class Andirit.VerifiedUsageInput: line-rate=1 branch-rate=1
+    class Andirit.VerifiedUsageMint: line-rate=0.7142000000000001 branch-rate=1
+    class Andirit.VerifiedOccurrenceExtraction: line-rate=1 branch-rate=1
+    class Andirit.CSharp.AndiritHostBuilderExtensions: line-rate=0 branch-rate=1
+  coverage-treesitter/coverage.cobertura.xml
+    bytes=615789 sha256=4c4c10e0f996bc8436be409bbc93c10c24fe7297f57c0dc14c8aae155605bbbf
+    line-rate=0.8989 branch-rate=0.7595000000000001 threshold=60 (line%2cbranch)
+    class Andirit.EcmaScriptExportGraphPublisher: line-rate=0.8946999999999999 branch-rate=0.6311
+    class Andirit.EcmaScriptExportObservation: line-rate=0.6415000000000001 branch-rate=0.2727
+    class Andirit.EcmaScriptExportObservation/NullableOrdinal: line-rate=0 branch-rate=0
+    class Andirit.EcmaScriptExportNameValidator: line-rate=1 branch-rate=1
+    class Andirit.EcmaScriptExportShapeCollector: line-rate=0.9147 branch-rate=0.7134999999999999
+    class Andirit.EcmaScriptExtractionProfile: line-rate=0.8923000000000001 branch-rate=0.8422
+    class Andirit.EcmaScriptExtractionProfile/Scope: line-rate=1 branch-rate=1
+    class Andirit.EcmaScriptExtractionProfile/<Descendants>d__26: line-rate=1 branch-rate=1
+    class Andirit.EcmaScriptInterfaceFacts: line-rate=0.9396 branch-rate=0.7464
+    class Andirit.EcmaScriptInterfaceFacts/DeclarationContext: line-rate=1 branch-rate=1
+    class Andirit.EcmaScriptInterfaceFacts/<Descendants>d__20: line-rate=1 branch-rate=1
+    class Andirit.ElixirExtractionProfile: line-rate=0.8595999999999999 branch-rate=0.6709999999999999
+    class Andirit.ElixirExtractionProfile/ElixirName: line-rate=1 branch-rate=1
+    class Andirit.ElixirExtractionProfile/ElixirScope: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterElixirPlugin: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterExtractionResult: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterExtractionSession: line-rate=0.9848 branch-rate=0.9
+    class Andirit.TreeSitterExtractionSession/<>c: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterExtractionSession/<>c__DisplayClass12_0: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterExtractionSession/<>c__DisplayClass12_1: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterExtractionSession/<>c__DisplayClass12_2: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterExtractionSession/<ExtractAsync>d__12: line-rate=1 branch-rate=0.9129999999999999
+    class Andirit.TreeSitterExtractionSession/<WriteChunksAsync>d__18`1: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterGrammarDescriptor: line-rate=0.9 branch-rate=0.5
+    class Andirit.TreeSitterGrammarRegistry: line-rate=0.8162999999999999 branch-rate=0
+    class Andirit.TreeSitterJavaScriptPlugin: line-rate=1 branch-rate=0.5
+    class Andirit.TreeSitterModuleReference: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterModuleFile: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterModuleResolutionResult: line-rate=1 branch-rate=1
+    class Andirit.EcmaScriptModuleResolver: line-rate=0.9670000000000001 branch-rate=0.9098999999999999
+    class Andirit.EcmaScriptModuleResolver/ResolutionOutcome: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterNative: line-rate=0.4347 branch-rate=0.3333
+    class Andirit.TreeSitterPluginSupport: line-rate=0.9166 branch-rate=0.5
+    class Andirit.TreeSitterSessionParser: line-rate=0.5238 branch-rate=0.5
+    class Andirit.TreeSitterDocument: line-rate=0.9 branch-rate=0.5
+    class Andirit.TreeSitterSyntaxNode: line-rate=1 branch-rate=1
+    class Andirit.TreeSitterTypeScriptPlugin: line-rate=1 branch-rate=0.75
+    class Andirit.TreeSitter.AndiritHostBuilderExtensions: line-rate=0 branch-rate=1
+
+[6] hosted environment identity artifact
+  (environment-ubuntu.txt is produced by the evidence collection step)
+

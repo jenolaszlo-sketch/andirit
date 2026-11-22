@@ -7,7 +7,7 @@ qualification.
 Q-01…Q-12, and evidence sealing. No production behaviour change, no dependency change, no public
 API change, no CI change, no publication, no tag change.
 
-**Formal disposition**: **PENDING — hosted execution in progress**
+**Formal disposition**: **IMPLEMENTED AND READY FOR INDEPENDENT QUALIFICATION**
 
 > S6.1 owner acceptance is **not** granted by this commission. The independent qualification is a
 > separate commission, `ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01`.
@@ -148,11 +148,51 @@ commit in those cases are genuine. No arbitrary-timing claim rests on a construc
 
 ## 6. Hosted execution — genuine Ubuntu x64
 
-**PENDING.** The existing unmodified `.github/workflows/ci.yml` runs
+**Result: PASS.** The existing unmodified `.github/workflows/ci.yml` runs
 `tests/Andirit.LatticeDb.Tests` on the `ubuntu-latest` matrix leg without a filter, so the new
-tests execute there without skips. No workflow, policy or threshold was modified. The hosted result
-and the raw CI artifacts are recorded here and in `evidence/hosted/` after the authorized
-fast-forward push.
+tests execute there without skips. No workflow, policy or threshold was modified.
+
+| Item | Value |
+| --- | --- |
+| CI run | `45037630799` — `completed` / `success`, event `push`, workflow `ci` |
+| Executed revision | `01624943233f16447c3176b7c905c544642dfb2c` — **the implementation revision itself** (`headSha` matches) |
+| Job | `test (ubuntu-latest)`, job id `137254795969`, `completed` / `success` |
+| Runner | GitHub Actions runner `1000004506`, labels `['ubuntu-latest']` |
+| Genuine Linux proof | workspace `/home/runner/work/andirit/andirit`, shell `/usr/bin/bash`, `DOTNET_ROOT=/usr/share/dotnet`, .NET SDK **10.0.404**, runtime **10.0.15**; **no** Windows, WSL or Docker-on-Windows indicator anywhere in the log |
+| Native dependency | `LatticeDbSharp 0.2.0`, `linux-x64` native asset — the 88 passing LatticeDb tests require the real native library to load and execute |
+| Other jobs | `test (windows-latest)` success, `test (macos-latest)` success, `pack` success (package build + Tree-sitter native smoke test) |
+
+**Independently derived from the raw CI artifacts** (`evidence/hosted/hosted-ubuntu-derived.txt`,
+generator `evidence/hosted/derive-hosted.py`):
+
+| Suite | Baseline run `44993021436` (ubuntu, `b5a81f8…`) | Implementation run `45037630799` (ubuntu, `0162494…`) |
+| --- | --- | --- |
+| `Andirit.Tests.dll` | 345 passed, 0 failed, 0 skipped | **345 passed, 0 failed, 0 skipped** (unchanged) |
+| `Andirit.CSharp.Tests.dll` | 372 passed, 0 failed, 0 skipped | **372 passed, 0 failed, 0 skipped** (unchanged) |
+| `Andirit.TreeSitter.Tests.dll` | 157 passed, 0 failed, 0 skipped | **157 passed, 0 failed, 0 skipped** (unchanged) |
+| `Andirit.LatticeDb.Tests.dll` | 75 passed, 0 failed, 0 skipped | **88 passed, 0 failed, 0 skipped** |
+
+**Did the new native cancellation tests actually execute on Ubuntu?** Yes — derived, not asserted:
+the committed `tests/Andirit.LatticeDb.Tests/NativeCancellationPathTests.cs` at `0162494…`
+contains **13** `[Fact]` methods; the hosted LatticeDb count moved from **75 → 88**, a delta of
+exactly **13**, with **0 skipped** in both runs. The other three suites are unchanged.
+
+**Coverage gates on the hosted runner** (raw Cobertura artifacts, `evidence/hosted/coverage-results-ubuntu-latest/`):
+`Andirit.LatticeDb` line-rate **92.87 %**, branch-rate **78.96 %** (threshold 70); core
+**82.42 / 70.89** (threshold 55); CSharp **95.15 / 88** (threshold 75); TreeSitter **89.85 / 75.45**
+(threshold 60). All gates met on the hosted runner.
+
+**Qualification matrix on the hosted runner.** The CI step runs the whole
+`Andirit.LatticeDb.Tests` assembly, which contains all thirteen dedicated native cancellation tests
+(Q-01…Q-12 plus the post-commit-cancellation regression guard). The per-case outcome on Ubuntu is
+therefore the same set of outcomes as the Windows receipts in §5 — every case passed, none skipped —
+but the per-case separation is a Windows-only artifact of the local per-case driver; the hosted
+evidence is the aggregate, byte-derived count above plus the raw job log. Both are preserved.
+
+**Push.** After all local gates passed, one fast-forward push of the implementation revision and the
+preceding entry commit was executed: `b5a81f8..0162494  main -> main`. The tag
+`v0.2.0-preview.7` (object `6659647527a6e0eb822a3d7a05b8283c75fd6a3e`) is unchanged and nothing was
+published.
 
 ## 7. Regression, coverage and packaging results (local, Windows x64)
 
@@ -185,6 +225,9 @@ commission.
 
 `docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence/` — sealed with a self-excluding SHA-256
 manifest over the exact bytes and lengths of every package file, with ordinal relative paths.
+**61 entries, 6 860 499 bytes, verified byte-exact against the committed Git blobs** (the manifest
+is checked against the Git objects of a revision, not against a working tree, so the verification is
+independent of `core.autocrlf` and of the checkout platform).
 
 | Artifact | Content |
 | --- | --- |
@@ -196,8 +239,13 @@ manifest over the exact bytes and lengths of every package file, with ordinal re
 | `suite-receipts/` | the four suite logs, the whole-solution log, the format, build and pack logs |
 | `coverage/` | the four Cobertura coverage reports |
 | `api-surface/` | the baseline and implementation public API dumps and their diff |
+| `dll-comparison.txt` | the compiled-program comparison (types, signatures, IL) of the three production assemblies |
+| `package-comparison.txt` | the entry-by-entry comparison of the rebuilt `Andirit.LatticeDb.0.2.0-preview.7.nupkg` |
+| `compare-assemblies.ps1`, `compare-packages.ps1` | the re-runnable drivers of the two comparisons above |
 | `hosted/` | the raw CI artifacts and the independently derived hosted results |
+| `tools/` | the `apidump` and `dllcompare` tools, with their sources |
 | `production-delta.diff` | the exact `src`/`tests`/`.github` delta against the baseline |
+| `README.md` | the package guide and the sealing/byte-preservation conventions |
 | `manifest.json` | the self-excluding SHA-256 manifest |
 
 ## 9. Qualifications carried forward
@@ -226,4 +274,52 @@ MR-1…MR-4, GH-1…GH-4 and DF-1…DF-8 remain in force.
 
 ## 11. Final disposition
 
-**PENDING** — set after the hosted Ubuntu x64 execution (§6) is complete and sealed.
+**IMPLEMENTED AND READY FOR INDEPENDENT QUALIFICATION**
+
+> The authorized change set **C-1…C-4** is implemented on the pinned baseline with **no production
+> behaviour change, no dependency change, no public API change, no CI change and no threshold
+> change**. The dedicated native cancel-path regression suite (13 tests) exists and passes, and the
+> approved qualification matrix **Q-01…Q-12** was executed against the production store over real
+> LatticeDB storage on **Windows x64** and, in the genuine hosted CI run on **`ubuntu-latest`**, on
+> **genuine hosted Ubuntu x64** — with **0 skipped** in every suite. The contract-consistency gate
+> passed: no binding requirement mandates interruption of active native work, and none was
+> weakened. The bounded limitation that **active native execution cannot be interrupted** is
+> published in the API contract (C-1, C-2) and carried forward as qualification **Q-S61-1**.
+>
+> This disposition records **implementation and execution evidence only**. It grants **no S6.1 owner
+> acceptance** and **no independent qualification**: the independent qualification is the separate
+> commission **`ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01`**, which must re-derive the expectations from the
+> contract and review the sealed evidence with a reviewer session distinct from the producer
+> session.
+
+### 11.1 Deviations from the approved implementation plan
+
+| Approved plan | Actual | Assessment |
+| --- | --- | --- |
+| C-1: class-level `<remarks>` on `LatticeCodeGraphStore` | as planned (+21 lines) | none |
+| C-2: interface documentation in `src/Andirit/ICodeGraphStore.cs` | the remarks were added to `ICodeGraphIndexStore` — the mutation interface inside that file that owns the cancellation-token contract. The file and the file count are unchanged; no interface was added or renamed. | **minor deviation, no functional effect** — the contract is published once at the API boundary as intended |
+| C-3: one new test file covering Q-01…Q-12 | as planned; the file also carries the post-commit-cancellation regression guard required by the commission (13 tests in total) | none — the regression guard was an explicit commission requirement |
+| C-4: decision record | as planned, plus an erratum to the entry commission's implementation-proposal wording about XML documentation packaging (§4) | erratum recorded, not a deviation of the change set |
+| Evidence package | sealed in two steps: the Windows seal at the implementation revision (`0162494…`, 49 entries) and the final seal including the genuine hosted Ubuntu evidence in this evidence commit | transparent and auditable; the manifest is regenerated over the final package content |
+
+### 11.2 Residual risks
+
+| Risk | Status |
+| --- | --- |
+| Active native execution is not interruptible | **bounded limitation, published** (Q-S61-1, Q-S61-2, Q-S61-3); the dependency change that would be required is named; not simulated |
+| A future regression adds a post-commit cancellation checkpoint | **guarded** by `Regression_CancellationAfterASuccessfulCommit_MustNotSurfaceAsCancelled` |
+| The managed fault injector is not crash/power-loss durability | **not discharged** — DF-4 stays open |
+| macOS native runtime evidence | **not claimed** — Q-S61-4 stays open (the pinned dependency has no supported macOS runtime) |
+| The remaining ten-invariant native matrix (M12.1, M12.3) and the full S-02 / D4.5 matrices | **not discharged** — S6.3 |
+| A pre-existing historical evidence gap in `CI1A-S2.5-WP-S25-2-G2-EXEC-evidence` (4 coverage XML files listed in its manifest but never committed, because the repository-root `.gitignore` pattern `coverage*.xml` excluded them and that package's own `.gitignore` un-ignored only `*.log`) | **recorded, not repaired** — pre-existing at the baseline and at the entry revision; outside the S6.1 lineage; no historical evidence is modified by this commission |
+| A caller assumes a cancelled token cancels native work | **mitigated** by the published contract (C-1, C-2) and the qualification suite |
+
+### 11.3 Recommended next commission
+
+**`ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01`** — independent qualification of the S6.1 native cancellation
+path against the sealed evidence of this commission: reviewer session ≠ producer session, expectations
+re-derived from the contract excerpts rather than from the producer's test code, the hosted Ubuntu
+evidence independently re-derived from the raw CI artifacts, and an explicit decision on what S6.1
+discharges (M9.5, M12.2, D4 invariant 5 native case, I-04/Q2-F09 cancellation aspect) and what
+remains deferred (M12.1, M12.3, the complete S-02/D4.5 matrices, DF-4, DF-6). S6.1 owner acceptance
+is **not** granted by this commission.

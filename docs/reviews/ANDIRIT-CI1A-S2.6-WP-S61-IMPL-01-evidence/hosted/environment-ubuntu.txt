@@ -1,0 +1,51 @@
+ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01 - genuine hosted Ubuntu x64 environment identity
+derived-from: the raw CI job log and the GitHub Actions job/artifact records
+
+[runner]
+  ci-run-id: 45037630799
+  ci-run-url: https://github.com/jenolaszlo-sketch/andirit/actions/runs/45037630799/job/137254795969
+  job-name: test (ubuntu-latest)
+  job-id: 137254795969
+  runner-name: GitHub Actions 1000004506
+  runner-labels: ['ubuntu-latest']
+  job-status: completed / success
+  job-started: 2026-11-22T15:19:13Z
+  job-completed: 2026-11-22T15:21:13Z
+
+[linux proof from the raw job log]
+  shell: ['/usr/bin/bash']
+  DOTNET_ROOT: ['/usr/share/dotnet']
+  workspace: ['/home/runner/work/andirit/andirit']
+  .NET SDK: ['10.0.404']
+  .NET Core Runtime: ['10.0.15']
+  requested dotnet-version: ['10.0.x']
+  windows-host indicators (C:\, /mnt/c, WSL, Docker): []
+  the runner workspace layout /home/runner/work/<repo>/<repo>, /usr/bin/bash and
+  /usr/share/dotnet are the GitHub-hosted Linux runner layout; no Windows, WSL or
+  Docker-on-Windows indicator appears anywhere in the log. This is a genuine hosted
+  Linux execution and is NOT a compatibility environment.
+
+[native dependency actually loaded on the hosted runner]
+  package: LatticeDbSharp 0.2.0 (pinned; not upgraded)
+  managed assembly sha256: d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46
+  native asset for this runner: runtimes/linux-x64/native/liblattice.so
+  native asset sha256 (pinned package, verified in the Stage 6 entry evidence):
+    dc5b4534... (see ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence/native-abi-scan.txt)
+  the 88 LatticeDb tests passed on this runner, which requires the real linux-x64
+  native library to load and execute; a stubbed or skipped native path could not
+  produce these results.
+
+[raw coverage artifacts of this runner]
+  artifact-name: coverage-results-ubuntu-latest
+  artifact-id: 14760203326
+  artifact-size-in-bytes: 175308
+  artifact-expired: False
+  artifact-created-at: 2026-11-22T15:21:11Z
+  coverage/coverage.cobertura.xml: bytes=1418850 sha256=7b253ea9fe6ee89ba7c7739d6e649a5e96be25889aa6e886250f80616ad417b4
+  coverage-csharp/coverage.cobertura.xml: bytes=548063 sha256=b181301b541202c6b7def20bc97fc975e4ba9c0a015c6e774835a40b83f14852
+  coverage-latticedb/coverage.cobertura.xml: bytes=218830 sha256=154b98699f7ee1e2d27da3c69482462a6be3002052bf8f886d5f8871f837bd65
+  coverage-treesitter/coverage.cobertura.xml: bytes=615789 sha256=4c4c10e0f996bc8436be409bbc93c10c24fe7297f57c0dc14c8aae155605bbbf
+
+[repository revision executed by this runner]
+  head-sha: 01624943233f16447c3176b7c905c544642dfb2c
+  tree: f8a6876ff78de06b6c8531eb9e14ac028da7baa5

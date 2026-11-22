@@ -60,21 +60,33 @@ contract is published in the source-level API documentation, not as a package ar
 
 ## 4. Qualification-matrix traceability (Q-01…Q-12)
 
+Hosted column: CI run `45037630799`, job `test (ubuntu-latest)`, job id `137254795969`,
+`headSha = 01624943233f16447c3176b7c905c544642dfb2c` (the implementation revision), runner
+labels `['ubuntu-latest']`, workspace `/home/runner/work/andirit/andirit`, .NET SDK 10.0.404. The
+hosted step runs the whole `Andirit.LatticeDb.Tests` assembly, which contains all thirteen tests
+below; the hosted LatticeDb count moved from **75 → 88** (delta exactly 13 = the 13 `[Fact]`
+methods), **0 skipped**.
+
 | Case | Test in `NativeCancellationPathTests` | Constructed / genuine | Native observation | Windows x64 | Hosted Ubuntu x64 |
 | --- | --- | --- | --- | --- | --- |
-| Q-01 | `CancellationBeforeNativeInvocation_LeavesTheDurableStateUnchanged` | constructed | `HetuStage`/`HetuUnit` empty, no publication, reopen healthy | PASS | see commission record §6 |
-| Q-02 | `CancellationRacingTheNativeWindow_NeverExposesPartialState` | **genuine** | whole staged unit present or absent, never partial | PASS | see commission record §6 |
-| Q-03 | `CancellationInsideTheOpenNativeTransaction_IsNotObservedAndCommitsAtomically` | constructed (deterministic, inside the open transaction) | complete commit, `HetuStage` = 1, reopen healthy | PASS | see commission record §6 |
-| Q-04 | `CancellationRacingWithSuccessfulCompletion_NeverReportsCancellationAfterACommit` | **genuine** | cancelled ⇒ nothing durable; completed ⇒ whole unit durable | PASS | see commission record §6 |
-| Q-05 | `CancellationAfterTheIrreversibleCommit_DoesNotReportCancellation` | constructed (after the commit) | durable write, success reported | PASS | see commission record §6 |
-| Q-06 | `ReopenAfterACancelledStaging_PreservesTheAcceptedPublication` | constructed | publication tuple and unit count preserved across reopen | PASS | see commission record §6 |
-| Q-07 | `ConcurrentCancellationAndDisposal_WaitsForTheInFlightNativeWrite` | constructed | disposal waits; the in-flight write completes; the waiting operation is cancelled | PASS | see commission record §6 |
-| Q-08 | `DisposalReleasesTheNativeHandle` | constructed | database file deletable after disposal; clean reopen | PASS | see commission record §6 |
-| Q-09 | `SuccessfulNonCancelledControl_PublishesAndReopens` | constructed control | publication, node resolution and reopen | PASS | see commission record §6 |
-| Q-10 | `AcceptedStoreSemanticsRemainIntactAcrossACancelledStaging` | constructed control | identity, health and publication semantics unchanged | PASS | see commission record §6 |
-| Q-11 | `UnknownCommitOutcome_IsReportedAndQuarantinedAndReopenCorroborates` | constructed | `CodeGraphCommitOutcomeUnknownException`, quarantine, reopen corroboration | PASS | see commission record §6 |
-| Q-12 | `PinnedNativeDependency_ExposesNoCancellationEntryPoint` | static | managed member census of the pinned assembly | PASS | see commission record §6 |
-| regression | `Regression_CancellationAfterASuccessfulCommit_MustNotSurfaceAsCancelled` | constructed | durable write reported as success, never as cancelled | PASS | see commission record §6 |
+| Q-01 | `CancellationBeforeNativeInvocation_LeavesTheDurableStateUnchanged` | constructed | `HetuStage`/`HetuUnit` empty, no publication, reopen healthy | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-02 | `CancellationRacingTheNativeWindow_NeverExposesPartialState` | **genuine** | whole staged unit present or absent, never partial | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-03 | `CancellationInsideTheOpenNativeTransaction_IsNotObservedAndCommitsAtomically` | constructed (deterministic, inside the open transaction) | complete commit, `HetuStage` = 1, reopen healthy | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-04 | `CancellationRacingWithSuccessfulCompletion_NeverReportsCancellationAfterACommit` | **genuine** | cancelled ⇒ nothing durable; completed ⇒ whole unit durable | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-05 | `CancellationAfterTheIrreversibleCommit_DoesNotReportCancellation` | constructed (after the commit) | durable write, success reported | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-06 | `ReopenAfterACancelledStaging_PreservesTheAcceptedPublication` | constructed | publication tuple and unit count preserved across reopen | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-07 | `ConcurrentCancellationAndDisposal_WaitsForTheInFlightNativeWrite` | constructed | disposal waits; the in-flight write completes; the waiting operation is cancelled | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-08 | `DisposalReleasesTheNativeHandle` | constructed | database file deletable after disposal; clean reopen | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-09 | `SuccessfulNonCancelledControl_PublishesAndReopens` | constructed control | publication, node resolution and reopen | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-10 | `AcceptedStoreSemanticsRemainIntactAcrossACancelledStaging` | constructed control | identity, health and publication semantics unchanged | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-11 | `UnknownCommitOutcome_IsReportedAndQuarantinedAndReopenCorroborates` | constructed | `CodeGraphCommitOutcomeUnknownException`, quarantine, reopen corroboration | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| Q-12 | `PinnedNativeDependency_ExposesNoCancellationEntryPoint` | static | managed member census of the pinned assembly | PASS | PASS (in the 88 / 0-skipped aggregate) |
+| regression | `Regression_CancellationAfterASuccessfulCommit_MustNotSurfaceAsCancelled` | constructed | durable write reported as success, never as cancelled | PASS | PASS (in the 88 / 0-skipped aggregate) |
+
+**Evidence-class note.** The per-case separation (one receipt per case) is produced by the local
+Windows driver `evidence/run-cases.ps1`. The hosted CI step runs the assembly as a whole, so the
+hosted per-case evidence is the aggregate count plus the raw job log — not a per-case split. Both
+are preserved; neither is presented as the other.
 
 ## 5. Protected-scope traceability
 

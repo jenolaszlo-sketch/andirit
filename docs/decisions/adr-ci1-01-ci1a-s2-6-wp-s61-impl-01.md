@@ -6,11 +6,11 @@
 (`ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01`, disposition **READY WITH QUALIFICATIONS**) as the basis for
 bounded S6.1 implementation and authorized change set **C-1…C-4**.
 
-> **Status: RECORDED — IMPLEMENTATION COMPLETE, AWAITING INDEPENDENT QUALIFICATION.**
+> **Status: RECORDED — IMPLEMENTED AND READY FOR INDEPENDENT QUALIFICATION.**
 >
-> This decision records the *implementation* of the S6.1 native cancellation path. It grants **no
-> S6.1 owner acceptance** and **no independent qualification**: the independent qualification is a
-> separate commission, `ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01`.
+> This decision records the *implementation* and the *execution evidence* of the S6.1 native
+> cancellation path. It grants **no S6.1 owner acceptance** and **no independent qualification**:
+> the independent qualification is a separate commission, `ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01`.
 
 This is an additive record. It changes no production behaviour, no dependency, no public API
 signature, no CI policy, no test threshold and no coverage exclusion; it changes no prior decision,
@@ -177,9 +177,20 @@ modified by this commission.
 
 The commission requires **genuine hosted Ubuntu x64** execution and forbids any workflow change.
 The existing unmodified `.github/workflows/ci.yml` runs `tests/Andirit.LatticeDb.Tests` on the
-`ubuntu-latest` matrix leg without a filter, so the new tests execute there without skips. The
-hosted result is recorded in `docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01.md` §6 and in
-`evidence/hosted/`, derived from the raw CI artifacts of the pushed revision.
+`ubuntu-latest` matrix leg without a filter, so the new tests execute there without skips.
+
+| Item | Value |
+| --- | --- |
+| CI run | `45037630799` — `completed` / `success`, `headSha = 01624943233f16447c3176b7c905c544642dfb2c` (the implementation revision itself) |
+| Job | `test (ubuntu-latest)`, id `137254795969`, `completed` / `success` |
+| Runner | GitHub Actions runner `1000004506`, labels `['ubuntu-latest']`; workspace `/home/runner/work/andirit/andirit`; shell `/usr/bin/bash`; .NET SDK 10.0.404, runtime 10.0.15; no Windows / WSL / Docker indicator in the log |
+| Hosted LatticeDb suite | **88 passed, 0 failed, 0 skipped** (baseline run `44993021436` on `b5a81f8…`: 75 passed, 0 skipped — delta exactly 13 = the 13 `[Fact]` methods of the new suite) |
+| Hosted coverage | `Andirit.LatticeDb` 92.87 % line / 78.96 % branch (threshold 70); core 82.42 / 70.89 (55); CSharp 95.15 / 88 (75); TreeSitter 89.85 / 75.45 (60) |
+| Other jobs | `test (windows-latest)` success, `test (macos-latest)` success, `pack` success |
+| Push | one fast-forward push after all local gates passed: `b5a81f8..0162494  main -> main`; tag `v0.2.0-preview.7` unchanged; nothing published |
+
+Raw artifacts, the baseline comparison log and the independently derived result are in
+`evidence/hosted/`. No workflow, policy or threshold was modified by this commission.
 
 ## 8. Qualifications carried forward
 
