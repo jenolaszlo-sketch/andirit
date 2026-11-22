@@ -1,0 +1,317 @@
+﻿publish	UNKNOWN STEP	∩╗┐2026-09-26T10:03:43.2889872Z Current runner version: '2.337.0'
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2919014Z ##[group]Runner Image Provisioner
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2919955Z Hosted Compute Agent
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2920692Z Version: 20260828.587
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2921412Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2922208Z Build Date: 2026-08-28T16:44:25Z
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2923015Z Worker ID: {c0cf8b0c-505b-426d-9945-33b1b4ad3630}
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2923771Z Azure Region: northcentralus
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2924483Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2926082Z ##[group]Operating System
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2926722Z Ubuntu
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2927366Z 24.04.5
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2927935Z LTS
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2928868Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2929497Z ##[group]Runner Image
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2931410Z Image: ubuntu-24.04
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2932433Z Version: 20260920.314.1
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2935360Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260920.314/images/ubuntu/Ubuntu2404-Readme.md
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2937325Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260920.314
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2938842Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2940913Z ##[group]GITHUB_TOKEN Permissions
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2943533Z Contents: read
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2944231Z Metadata: read
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2944822Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2947155Z Secret source: Actions
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2948146Z Cache mode: write
+publish	UNKNOWN STEP	2026-09-26T10:03:43.2949434Z Prepare workflow directory
+publish	UNKNOWN STEP	2026-09-26T10:03:43.3303792Z Prepare all required actions
+publish	UNKNOWN STEP	2026-09-26T10:03:43.3352801Z Getting action download info
+publish	UNKNOWN STEP	2026-09-26T10:03:43.6137950Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+publish	UNKNOWN STEP	2026-09-26T10:03:43.7045591Z Download action repository 'actions/setup-dotnet@v5' (SHA:26b0ec14cb23fa6904739307f278c14f94c95bf1)
+publish	UNKNOWN STEP	2026-09-26T10:03:44.0457470Z Download action repository 'NuGet/login@v1' (SHA:8d196754b4036150537f80ac539e15c2f1028841)
+publish	UNKNOWN STEP	2026-09-26T10:03:44.3676281Z Complete job name: publish
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4579805Z ##[group]Run actions/checkout@v6
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4580949Z with:
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4581675Z   repository: ***laszlo-sketch/penghou-hetu
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4589883Z   token: ***
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4590417Z   ssh-strict: true
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4590978Z   ssh-user: git
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4591529Z   persist-credentials: true
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4592200Z   clean: true
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4592780Z   sparse-checkout-cone-mode: true
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4593501Z   fetch-depth: 1
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4594065Z   fetch-tags: false
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4594612Z   show-progress: true
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4595203Z   lfs: false
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4595722Z   submodules: false
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4596317Z   set-safe-directory: true
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4596994Z   allow-unsafe-pr-checkout: false
+publish	UNKNOWN STEP	2026-09-26T10:03:44.4598009Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5657326Z Syncing repository: ***laszlo-sketch/penghou-hetu
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5660586Z ##[group]Getting Git version info
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5662578Z Working directory is '/home/runner/work/penghou-hetu/penghou-hetu'
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5665438Z [command]/usr/bin/git version
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5780555Z git version 2.55.0
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5809180Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5826763Z Temporarily overriding HOME='/home/runner/work/_temp/42e64476-1e39-4b50-873f-c6e6996c3c55' before making global git config changes
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5831553Z Adding repository directory to the temporary git global config as a safe directory
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5835070Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/penghou-hetu/penghou-hetu
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5899893Z Deleting the contents of '/home/runner/work/penghou-hetu/penghou-hetu'
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5914595Z ##[group]Determining repository object format
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5916857Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5918933Z ##[group]Initializing the repository
+publish	UNKNOWN STEP	2026-09-26T10:03:44.5921134Z [command]/usr/bin/git init /home/runner/work/penghou-hetu/penghou-hetu
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6035431Z hint: Using 'master' as the name for the initial branch. This default branch name
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6038612Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6041385Z hint: to use in all of your new repositories, which will suppress this warning,
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6043534Z hint: call:
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6044955Z hint:
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6046191Z hint: 	git config --global init.defaultBranch <name>
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6047717Z hint:
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6049340Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6051868Z hint: 'development'. The just-created branch can be renamed via this command:
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6053937Z hint:
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6054893Z hint: 	git branch -m <name>
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6055899Z hint:
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6057416Z hint: Disable this message with "git config set advice.defaultBranchName false"
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6060906Z Initialized empty Git repository in /home/runner/work/penghou-hetu/penghou-hetu/.git/
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6065126Z [command]/usr/bin/git remote add origin https://github.com/***laszlo-sketch/penghou-hetu
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6122895Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6124362Z ##[group]Disabling automatic garbage collection
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6127310Z [command]/usr/bin/git config --local gc.auto 0
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6166658Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6169085Z ##[group]Setting up auth
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6170536Z Removing SSH command configuration
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6175123Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6218102Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6621819Z Removing HTTP extra header
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6630315Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6672990Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6894222Z Removing includeIf entries pointing to credentials config files
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6900975Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+publish	UNKNOWN STEP	2026-09-26T10:03:44.6939897Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+publish	UNKNOWN STEP	2026-09-26T10:03:44.7176278Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+publish	UNKNOWN STEP	2026-09-26T10:03:44.7220549Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/penghou-hetu/penghou-hetu/.git.path /home/runner/work/_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:03:44.7257858Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/penghou-hetu/penghou-hetu/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:03:44.7303730Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:03:44.7339562Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:03:44.7371421Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:44.7372395Z ##[group]Fetching the repository
+publish	UNKNOWN STEP	2026-09-26T10:03:44.7380718Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +refs/tags/v0.2.0-preview.6:refs/tags/v0.2.0-preview.6
+publish	UNKNOWN STEP	2026-09-26T10:03:45.1941241Z From https://github.com/***laszlo-sketch/penghou-hetu
+publish	UNKNOWN STEP	2026-09-26T10:03:45.1943884Z  * [new tag]         v0.2.0-preview.6 -> v0.2.0-preview.6
+publish	UNKNOWN STEP	2026-09-26T10:03:45.1949367Z [command]/usr/bin/git tag --list v0.2.0-preview.6
+publish	UNKNOWN STEP	2026-09-26T10:03:45.1983437Z v0.2.0-preview.6
+publish	UNKNOWN STEP	2026-09-26T10:03:45.1993238Z [command]/usr/bin/git rev-parse refs/tags/v0.2.0-preview.6^{commit}
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2023546Z f20b77a9b9637abf825045b3f2a307d1c0253a5d
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2029172Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2030619Z ##[group]Determining the checkout info
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2032312Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2034637Z [command]/usr/bin/git sparse-checkout disable
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2090222Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2125561Z ##[group]Checking out the ref
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2127986Z [command]/usr/bin/git checkout --progress --force refs/tags/v0.2.0-preview.6
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2245202Z Note: switching to 'refs/tags/v0.2.0-preview.6'.
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2246401Z 
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2247369Z You are in 'detached HEAD' state. You can look around, make experimental
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2249515Z changes and commit them, and you can discard any commits you make in this
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2251524Z state without impacting any branches by switching back to a branch.
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2252628Z 
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2253452Z If you want to create a new branch to retain commits you create, you may
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2255289Z do so (now or later) by using -c with the switch command. Example:
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2256309Z 
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2256863Z   git switch -c <new-branch-name>
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2257646Z 
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2258348Z Or undo this operation with:
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2259090Z 
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2259594Z   git switch -
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2260197Z 
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2261089Z Turn off this advice by setting config variable advice.detachedHead to false
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2262271Z 
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2263497Z HEAD is now at f20b77a chore: release 0.2.0-preview.6 with test-to-production mapping
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2279432Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2329158Z [command]/usr/bin/git log -1 --format=%H
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2359676Z f20b77a9b9637abf825045b3f2a307d1c0253a5d
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2720259Z ##[group]Run actions/setup-dotnet@v5
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2721415Z with:
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2722289Z   dotnet-version: 10.0.x
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2723293Z   cache: false
+publish	UNKNOWN STEP	2026-09-26T10:03:45.2724192Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:45.4346314Z [command]/home/runner/work/_actions/actions/setup-dotnet/v5/externals/install-dotnet.sh --skip-non-versioned-files --runtime dotnet --channel LTS
+publish	UNKNOWN STEP	2026-09-26T10:03:45.6354796Z dotnet-install: .NET Core Runtime with version '10.0.12' is already installed.
+publish	UNKNOWN STEP	2026-09-26T10:03:45.6381174Z [command]/home/runner/work/_actions/actions/setup-dotnet/v5/externals/install-dotnet.sh --skip-non-versioned-files --channel 10.0
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8148657Z dotnet-install: .NET Core SDK with version '10.0.401' is already installed.
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8345947Z ##[group]Run args=()
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8347005Z ^[[36;1margs=()^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8348022Z ^[[36;1mif [ "$GITHUB_REF_TYPE" = "tag" ]; then^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8349836Z ^[[36;1m  args+=(--property:PackageVersion="${GITHUB_REF_NAME#v}")^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8351153Z ^[[36;1mfi^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8352029Z ^[[36;1mfor csproj in \^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8353408Z ^[[36;1m  src/Penghou.Hetu.Abstractions/Penghou.Hetu.Abstractions.csproj \^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8355020Z ^[[36;1m  src/Penghou.Hetu/Penghou.Hetu.csproj \^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8356454Z ^[[36;1m  src/Penghou.Hetu.CSharp/Penghou.Hetu.CSharp.csproj \^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8358104Z ^[[36;1m  src/Penghou.Hetu.LatticeDb/Penghou.Hetu.LatticeDb.csproj \^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8360117Z ^[[36;1m  src/Penghou.Hetu.Testing/Penghou.Hetu.Testing.csproj; do^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8361543Z ^[[36;1m  dotnet pack "$csproj" \^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8362658Z ^[[36;1m    --configuration Release \^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8363830Z ^[[36;1m    --output ./artifacts \^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8365093Z ^[[36;1m    "${args[@]}"^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8366033Z ^[[36;1mdone^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8652127Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8653471Z env:
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8654361Z   DOTNET_ROOT: /usr/share/dotnet
+publish	UNKNOWN STEP	2026-09-26T10:03:45.8655408Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:03:51.1319856Z   Determining projects to restore...
+publish	UNKNOWN STEP	2026-09-26T10:03:51.8686470Z   Restored /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.Abstractions/Penghou.Hetu.Abstractions.csproj (in 86 ms).
+publish	UNKNOWN STEP	2026-09-26T10:03:57.2764246Z   Penghou.Hetu.Abstractions -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.Abstractions/bin/Release/net10.0/Penghou.Hetu.Abstractions.dll
+publish	UNKNOWN STEP	2026-09-26T10:03:57.7404350Z   Successfully created package '/home/runner/work/penghou-hetu/penghou-hetu/artifacts/Penghou.Hetu.Abstractions.0.2.0-preview.6.nupkg'.
+publish	UNKNOWN STEP	2026-09-26T10:03:57.7448712Z   Successfully created package '/home/runner/work/penghou-hetu/penghou-hetu/artifacts/Penghou.Hetu.Abstractions.0.2.0-preview.6.snupkg'.
+publish	UNKNOWN STEP	2026-09-26T10:03:58.5843656Z   Determining projects to restore...
+publish	UNKNOWN STEP	2026-09-26T10:03:59.1094767Z   Restored /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu/Penghou.Hetu.csproj (in 97 ms).
+publish	UNKNOWN STEP	2026-09-26T10:03:59.1123159Z   1 of 2 projects are up-to-date for restore.
+publish	UNKNOWN STEP	2026-09-26T10:03:59.5616648Z   Penghou.Hetu.Abstractions -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.Abstractions/bin/Release/net10.0/Penghou.Hetu.Abstractions.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:00.9298890Z   Penghou.Hetu -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu/bin/Release/net10.0/Penghou.Hetu.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:01.3566496Z   Successfully created package '/home/runner/work/penghou-hetu/penghou-hetu/artifacts/Penghou.Hetu.0.2.0-preview.6.nupkg'.
+publish	UNKNOWN STEP	2026-09-26T10:04:01.3614552Z   Successfully created package '/home/runner/work/penghou-hetu/penghou-hetu/artifacts/Penghou.Hetu.0.2.0-preview.6.snupkg'.
+publish	UNKNOWN STEP	2026-09-26T10:04:02.2084537Z   Determining projects to restore...
+publish	UNKNOWN STEP	2026-09-26T10:04:04.3739030Z   Restored /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.CSharp/Penghou.Hetu.CSharp.csproj (in 1.18 sec).
+publish	UNKNOWN STEP	2026-09-26T10:04:04.3806760Z   2 of 3 projects are up-to-date for restore.
+publish	UNKNOWN STEP	2026-09-26T10:04:04.9714777Z   Penghou.Hetu.Abstractions -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.Abstractions/bin/Release/net10.0/Penghou.Hetu.Abstractions.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:05.1649363Z   Penghou.Hetu -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu/bin/Release/net10.0/Penghou.Hetu.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:06.0017111Z   Penghou.Hetu.CSharp -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.CSharp/bin/Release/net10.0/Penghou.Hetu.CSharp.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:06.5236790Z   Successfully created package '/home/runner/work/penghou-hetu/penghou-hetu/artifacts/Penghou.Hetu.CSharp.0.2.0-preview.6.nupkg'.
+publish	UNKNOWN STEP	2026-09-26T10:04:06.5284960Z   Successfully created package '/home/runner/work/penghou-hetu/penghou-hetu/artifacts/Penghou.Hetu.CSharp.0.2.0-preview.6.snupkg'.
+publish	UNKNOWN STEP	2026-09-26T10:04:07.4420717Z   Determining projects to restore...
+publish	UNKNOWN STEP	2026-09-26T10:04:09.1618887Z   Restored /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.LatticeDb/Penghou.Hetu.LatticeDb.csproj (in 1.07 sec).
+publish	UNKNOWN STEP	2026-09-26T10:04:09.1675587Z   2 of 3 projects are up-to-date for restore.
+publish	UNKNOWN STEP	2026-09-26T10:04:09.7296760Z   Penghou.Hetu.Abstractions -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.Abstractions/bin/Release/net10.0/Penghou.Hetu.Abstractions.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:09.8333189Z   Penghou.Hetu -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu/bin/Release/net10.0/Penghou.Hetu.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:10.2156270Z   Penghou.Hetu.LatticeDb -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.LatticeDb/bin/Release/net10.0/Penghou.Hetu.LatticeDb.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:10.4049935Z   Successfully created package '/home/runner/work/penghou-hetu/penghou-hetu/artifacts/Penghou.Hetu.LatticeDb.0.2.0-preview.6.nupkg'.
+publish	UNKNOWN STEP	2026-09-26T10:04:10.4071052Z   Successfully created package '/home/runner/work/penghou-hetu/penghou-hetu/artifacts/Penghou.Hetu.LatticeDb.0.2.0-preview.6.snupkg'.
+publish	UNKNOWN STEP	2026-09-26T10:04:11.3909727Z   Determining projects to restore...
+publish	UNKNOWN STEP	2026-09-26T10:04:11.9942714Z   Restored /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.Testing/Penghou.Hetu.Testing.csproj (in 105 ms).
+publish	UNKNOWN STEP	2026-09-26T10:04:11.9984227Z   2 of 3 projects are up-to-date for restore.
+publish	UNKNOWN STEP	2026-09-26T10:04:12.3825100Z   Penghou.Hetu.Abstractions -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.Abstractions/bin/Release/net10.0/Penghou.Hetu.Abstractions.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:12.4541930Z   Penghou.Hetu -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu/bin/Release/net10.0/Penghou.Hetu.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:12.7255336Z   Penghou.Hetu.Testing -> /home/runner/work/penghou-hetu/penghou-hetu/src/Penghou.Hetu.Testing/bin/Release/net10.0/Penghou.Hetu.Testing.dll
+publish	UNKNOWN STEP	2026-09-26T10:04:12.9156281Z   Successfully created package '/home/runner/work/penghou-hetu/penghou-hetu/artifacts/Penghou.Hetu.Testing.0.2.0-preview.6.nupkg'.
+publish	UNKNOWN STEP	2026-09-26T10:04:12.9177971Z   Successfully created package '/home/runner/work/penghou-hetu/penghou-hetu/artifacts/Penghou.Hetu.Testing.0.2.0-preview.6.snupkg'.
+publish	UNKNOWN STEP	2026-09-26T10:04:13.0000222Z ##[group]Run NuGet/login@v1
+publish	UNKNOWN STEP	2026-09-26T10:04:13.0000695Z with:
+publish	UNKNOWN STEP	2026-09-26T10:04:13.0001206Z   user: ***
+publish	UNKNOWN STEP	2026-09-26T10:04:13.0001701Z   token-service-url: https://www.nuget.org/api/v2/token
+publish	UNKNOWN STEP	2026-09-26T10:04:13.0002332Z   audience: https://www.nuget.org
+publish	UNKNOWN STEP	2026-09-26T10:04:13.0002791Z env:
+publish	UNKNOWN STEP	2026-09-26T10:04:13.0003152Z   DOTNET_ROOT: /usr/share/dotnet
+publish	UNKNOWN STEP	2026-09-26T10:04:13.0003597Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:04:15.6822664Z Successfully exchanged OIDC token for NuGet API key.
+publish	UNKNOWN STEP	2026-09-26T10:04:15.7012860Z ##[group]Run dotnet nuget push ./artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key *** --skip-duplicate
+publish	UNKNOWN STEP	2026-09-26T10:04:15.7015259Z ^[[36;1mdotnet nuget push ./artifacts/*.nupkg --source https://api.nuget.org/v3/index.json --api-key *** --skip-duplicate^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:04:15.7109989Z shell: /usr/bin/bash -e {0}
+publish	UNKNOWN STEP	2026-09-26T10:04:15.7110493Z env:
+publish	UNKNOWN STEP	2026-09-26T10:04:15.7110885Z   DOTNET_ROOT: /usr/share/dotnet
+publish	UNKNOWN STEP	2026-09-26T10:04:15.7111349Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:04:16.1660034Z Pushing Penghou.Hetu.0.2.0-preview.6.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	UNKNOWN STEP	2026-09-26T10:04:16.1794798Z   PUT https://www.nuget.org/api/v2/package/
+publish	UNKNOWN STEP	2026-09-26T10:04:16.5567191Z   Created https://www.nuget.org/api/v2/package/ 375ms
+publish	UNKNOWN STEP	2026-09-26T10:04:16.5587170Z Your package was pushed.
+publish	UNKNOWN STEP	2026-09-26T10:04:16.5591842Z Pushing Penghou.Hetu.0.2.0-preview.6.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	UNKNOWN STEP	2026-09-26T10:04:16.5593986Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	UNKNOWN STEP	2026-09-26T10:04:16.6484243Z   Created https://www.nuget.org/api/v2/symbolpackage/ 88ms
+publish	UNKNOWN STEP	2026-09-26T10:04:16.6485332Z Your package was pushed.
+publish	UNKNOWN STEP	2026-09-26T10:04:16.6499079Z Pushing Penghou.Hetu.Abstractions.0.2.0-preview.6.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	UNKNOWN STEP	2026-09-26T10:04:16.6500218Z   PUT https://www.nuget.org/api/v2/package/
+publish	UNKNOWN STEP	2026-09-26T10:04:16.8226226Z   Created https://www.nuget.org/api/v2/package/ 172ms
+publish	UNKNOWN STEP	2026-09-26T10:04:16.8227110Z Your package was pushed.
+publish	UNKNOWN STEP	2026-09-26T10:04:16.8230504Z Pushing Penghou.Hetu.Abstractions.0.2.0-preview.6.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	UNKNOWN STEP	2026-09-26T10:04:16.8231829Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	UNKNOWN STEP	2026-09-26T10:04:16.9041115Z   Created https://www.nuget.org/api/v2/symbolpackage/ 81ms
+publish	UNKNOWN STEP	2026-09-26T10:04:16.9042640Z Your package was pushed.
+publish	UNKNOWN STEP	2026-09-26T10:04:16.9052726Z Pushing Penghou.Hetu.CSharp.0.2.0-preview.6.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	UNKNOWN STEP	2026-09-26T10:04:16.9055020Z   PUT https://www.nuget.org/api/v2/package/
+publish	UNKNOWN STEP	2026-09-26T10:04:17.0796755Z   Created https://www.nuget.org/api/v2/package/ 174ms
+publish	UNKNOWN STEP	2026-09-26T10:04:17.0798033Z Your package was pushed.
+publish	UNKNOWN STEP	2026-09-26T10:04:17.0799906Z Pushing Penghou.Hetu.CSharp.0.2.0-preview.6.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	UNKNOWN STEP	2026-09-26T10:04:17.0801514Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	UNKNOWN STEP	2026-09-26T10:04:17.1631165Z   Created https://www.nuget.org/api/v2/symbolpackage/ 82ms
+publish	UNKNOWN STEP	2026-09-26T10:04:17.1632085Z Your package was pushed.
+publish	UNKNOWN STEP	2026-09-26T10:04:17.1643765Z Pushing Penghou.Hetu.LatticeDb.0.2.0-preview.6.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	UNKNOWN STEP	2026-09-26T10:04:17.1644815Z   PUT https://www.nuget.org/api/v2/package/
+publish	UNKNOWN STEP	2026-09-26T10:04:17.3254006Z   Created https://www.nuget.org/api/v2/package/ 160ms
+publish	UNKNOWN STEP	2026-09-26T10:04:17.3255157Z Your package was pushed.
+publish	UNKNOWN STEP	2026-09-26T10:04:17.3256098Z Pushing Penghou.Hetu.LatticeDb.0.2.0-preview.6.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	UNKNOWN STEP	2026-09-26T10:04:17.3257177Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	UNKNOWN STEP	2026-09-26T10:04:17.4071787Z   Created https://www.nuget.org/api/v2/symbolpackage/ 81ms
+publish	UNKNOWN STEP	2026-09-26T10:04:17.4072739Z Your package was pushed.
+publish	UNKNOWN STEP	2026-09-26T10:04:17.4077089Z Pushing Penghou.Hetu.Testing.0.2.0-preview.6.nupkg to 'https://www.nuget.org/api/v2/package'...
+publish	UNKNOWN STEP	2026-09-26T10:04:17.4078462Z   PUT https://www.nuget.org/api/v2/package/
+publish	UNKNOWN STEP	2026-09-26T10:04:17.5778951Z   Created https://www.nuget.org/api/v2/package/ 169ms
+publish	UNKNOWN STEP	2026-09-26T10:04:17.5780061Z Your package was pushed.
+publish	UNKNOWN STEP	2026-09-26T10:04:17.5781606Z Pushing Penghou.Hetu.Testing.0.2.0-preview.6.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	UNKNOWN STEP	2026-09-26T10:04:17.5783055Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	UNKNOWN STEP	2026-09-26T10:04:17.7023544Z   Created https://www.nuget.org/api/v2/symbolpackage/ 124ms
+publish	UNKNOWN STEP	2026-09-26T10:04:17.7024432Z Your package was pushed.
+publish	UNKNOWN STEP	2026-09-26T10:04:17.7404297Z ##[group]Run dotnet nuget push ./artifacts/*.snupkg --source https://api.nuget.org/v3/index.json --api-key *** --skip-duplicate
+publish	UNKNOWN STEP	2026-09-26T10:04:17.7406656Z ^[[36;1mdotnet nuget push ./artifacts/*.snupkg --source https://api.nuget.org/v3/index.json --api-key *** --skip-duplicate^[[0m
+publish	UNKNOWN STEP	2026-09-26T10:04:17.7498023Z shell: /usr/bin/bash -e {0}
+publish	UNKNOWN STEP	2026-09-26T10:04:17.7498682Z env:
+publish	UNKNOWN STEP	2026-09-26T10:04:17.7499052Z   DOTNET_ROOT: /usr/share/dotnet
+publish	UNKNOWN STEP	2026-09-26T10:04:17.7499524Z ##[endgroup]
+publish	UNKNOWN STEP	2026-09-26T10:04:18.0844196Z Pushing Penghou.Hetu.0.2.0-preview.6.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	UNKNOWN STEP	2026-09-26T10:04:18.0929181Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	UNKNOWN STEP	2026-09-26T10:04:18.2713248Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 177ms
+publish	UNKNOWN STEP	2026-09-26T10:04:18.2721849Z Package '/home/runner/work/penghou-hetu/penghou-hetu/./artifacts/Penghou.Hetu.0.2.0-preview.6.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	UNKNOWN STEP	2026-09-26T10:04:18.2744176Z Pushing Penghou.Hetu.Abstractions.0.2.0-preview.6.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	UNKNOWN STEP	2026-09-26T10:04:18.2766859Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3008790Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 26ms
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3010488Z Package '/home/runner/work/penghou-hetu/penghou-hetu/./artifacts/Penghou.Hetu.Abstractions.0.2.0-preview.6.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3016923Z Pushing Penghou.Hetu.CSharp.0.2.0-preview.6.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3018542Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3298595Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 28ms
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3300954Z Package '/home/runner/work/penghou-hetu/penghou-hetu/./artifacts/Penghou.Hetu.CSharp.0.2.0-preview.6.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3309209Z Pushing Penghou.Hetu.LatticeDb.0.2.0-preview.6.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3310361Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3646001Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 33ms
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3647221Z Package '/home/runner/work/penghou-hetu/penghou-hetu/./artifacts/Penghou.Hetu.LatticeDb.0.2.0-preview.6.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3653845Z Pushing Penghou.Hetu.Testing.0.2.0-preview.6.snupkg to 'https://www.nuget.org/api/v2/symbolpackage'...
+publish	UNKNOWN STEP	2026-09-26T10:04:18.3654977Z   PUT https://www.nuget.org/api/v2/symbolpackage/
+publish	UNKNOWN STEP	2026-09-26T10:04:18.4010567Z   Conflict https://www.nuget.org/api/v2/symbolpackage/ 35ms
+publish	UNKNOWN STEP	2026-09-26T10:04:18.4012232Z Package '/home/runner/work/penghou-hetu/penghou-hetu/./artifacts/Penghou.Hetu.Testing.0.2.0-preview.6.snupkg' already exists at feed 'https://www.nuget.org/api/v2/symbolpackage'.
+publish	UNKNOWN STEP	2026-09-26T10:04:18.4403445Z Post job cleanup.
+publish	UNKNOWN STEP	2026-09-26T10:04:18.5819439Z Post job cleanup.
+publish	UNKNOWN STEP	2026-09-26T10:04:18.6822766Z [command]/usr/bin/git version
+publish	UNKNOWN STEP	2026-09-26T10:04:18.6874775Z git version 2.55.0
+publish	UNKNOWN STEP	2026-09-26T10:04:18.6930168Z Temporarily overriding HOME='/home/runner/work/_temp/d411f394-fdd3-4a97-8f69-9c7f18877672' before making global git config changes
+publish	UNKNOWN STEP	2026-09-26T10:04:18.6932193Z Adding repository directory to the temporary git global config as a safe directory
+publish	UNKNOWN STEP	2026-09-26T10:04:18.6962226Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/penghou-hetu/penghou-hetu
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7000754Z Removing SSH command configuration
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7001656Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7045933Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7321595Z Removing HTTP extra header
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7329316Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7376798Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7740078Z Removing includeIf entries pointing to credentials config files
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7741218Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7799315Z includeif.gitdir:/home/runner/work/penghou-hetu/penghou-hetu/.git.path
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7800564Z includeif.gitdir:/home/runner/work/penghou-hetu/penghou-hetu/.git/worktrees/*.path
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7819071Z includeif.gitdir:/github/workspace/.git.path
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7819975Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7822342Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/penghou-hetu/penghou-hetu/.git.path
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7826622Z /home/runner/work/_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7847469Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/penghou-hetu/penghou-hetu/.git.path /home/runner/work/_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7911378Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/penghou-hetu/penghou-hetu/.git/worktrees/*.path
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7964603Z /home/runner/work/_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:04:18.7980688Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/penghou-hetu/penghou-hetu/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:04:18.8023262Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+publish	UNKNOWN STEP	2026-09-26T10:04:18.8049981Z /github/runner_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:04:18.8063539Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:04:18.8109984Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+publish	UNKNOWN STEP	2026-09-26T10:04:18.8146845Z /github/runner_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:04:18.8173268Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config
+publish	UNKNOWN STEP	2026-09-26T10:04:18.8221304Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+publish	UNKNOWN STEP	2026-09-26T10:04:18.8527083Z Removing credentials config '/home/runner/work/_temp/git-credentials-002b01bb-243e-46af-b76a-e5e87abb473c.config'
+publish	UNKNOWN STEP	2026-09-26T10:04:18.8716812Z Cleaning up orphan processes
+publish	UNKNOWN STEP	2026-09-26T10:04:18.9180022Z Terminate orphan process: pid (2401) (VBCSCompiler)
+publish	UNKNOWN STEP	2026-09-26T10:04:18.9419993Z Terminate orphan process: pid (2508) (dotnet)

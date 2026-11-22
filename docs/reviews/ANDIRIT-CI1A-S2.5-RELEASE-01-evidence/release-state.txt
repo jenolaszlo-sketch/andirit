@@ -1,0 +1,60 @@
+RELEASE-01 execution state — 0.2.0-preview.7 (2026-11-22)
+
+TAG (created and pushed — authorized act, completed)
+  Tag:            v0.2.0-preview.7 (annotated)
+  Tag object:     6659647527a6e0eb822a3d7a05b8283c75fd6a3e
+  Target commit:  6ed05964d2fcc758648b654a01ec706647e52183 (per owner authorization;
+                  NOT the earlier 68a141f6 release commit)
+  Push result:    * [new tag] v0.2.0-preview.7 -> v0.2.0-preview.7 (exit 0)
+  Remote tag present: yes (git ls-remote)
+
+PUBLICATION WORKFLOW RUN (tag-triggered)
+  Run:          44965409440 (Publish to NuGet, event push, head v0.2.0-preview.7 = 6ed05964)
+  Result:       completed / FAILURE
+  Step outcomes:
+    1  Set up job                                    success
+    2  Checkout                                      success
+    3  Setup .NET                                    success
+    4  Validate tag matches release version          success   <- tag/version gate PASSED
+    5  Pack (six csproj at 0.2.0-preview.7)          success   <- packaging PASSED
+    6  Verify complete package inventory             success   <- 6 nupkg + 6 snupkg gate PASSED
+    7  NuGet login (OIDC -> temp API key)             FAILURE
+    8  Push packages to NuGet                        skipped
+    9  Push symbols to NuGet                         skipped
+  Failure: Token exchange failed (HTTP 401) at https://www.nuget.org/api/v2/token.
+           "Make sure you are using the username of the policy creator, not the policy
+           owner: No matching trust policy owned by user '***' was found."
+
+PACKAGES PUBLISHED: NONE (zero). Push steps skipped; no partial publication.
+  Successful packages: none.
+  Failed packages: the login step failed, so all twelve intended packages
+  (Andirit, Andirit.Abstractions, Andirit.CSharp, Andirit.LatticeDb, Andirit.Testing,
+  Andirit.TreeSitter + six .snupkg) at 0.2.0-preview.7 are UNPUBLISHED.
+  Verified on the feed: all six IDs return no 0.2.0-preview.7 (HTTP 404 on the
+  registration), i.e. no version conflict and no duplicate push.
+
+FEED STATE AFTER (nuget.org, 2026-11-22)
+  andirit / andirit.abstractions / andirit.csharp / andirit.latticedb /
+  andirit.testing / andirit.treesitter                -> no versions exist (new IDs)
+  penghou.hetu / .abstractions / .csharp / .latticedb / .testing
+                                                      -> 0.2.0-preview.3/5/6 (pre-rename
+                                                         publications, September)
+
+ROOT CAUSE (external configuration, not a repository defect)
+  The nuget.org trusted-publishing policy was created under the pre-rename repository
+  identity. The last successful tag publication (run 36234635207, 2026-09-26, tag
+  v0.2.0-preview.6) ran when the repository was jenolaszlo-sketch/penghou-hetu
+  (runner paths /home/runner/work/penghou-hetu/... and published Penghou.Hetu.* IDs).
+  The repository rename to jenolaszlo-sketch/andirit was finalized 2026-10-29
+  (commit 63ee7a2 "docs(integration): finalize verified consolidation and rename
+  handoff"). GitHub's OIDC token now presents the post-rename repository, so the
+  existing policy no longer matches and the token exchange fails with HTTP 401.
+  The repository-side release path is correct: tag/version gate, six-package pack,
+  and inventory gate all passed in the failed run.
+
+REQUIRED OWNER ACTION (external to this repository; not performed here)
+  Update/add the nuget.org trusted-publishing policy for the CURRENT repository
+  (jenolaszlo-sketch/andirit) and workflow (.github/workflows/publish.yml) under the
+  nuget.org account that matches the NUGET_USER secret (the policy creator), then
+  re-run workflow 44965409440 (or re-push the existing tag). No version change, no
+  workflow change, and no blind retry is authorized or performed by this commission.
