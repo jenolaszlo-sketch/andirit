@@ -28,6 +28,27 @@ namespace Andirit;
 /// mismatches are rejected; see the repository ROADMAP for the migration policy
 /// (export/import; no in-place upgrades in preview).
 /// </para>
+/// <para>
+/// Cancellation contract: a cancellation request is honoured while an operation
+/// waits for the managed write gate and immediately before the native write
+/// transaction opens. It is <b>not</b> honoured inside the native transaction:
+/// the pinned native dependency exposes no cancellation or interruption entry
+/// point, so a cancellation that arrives during active native execution is not
+/// observed, the transaction commits atomically, and the operation completes.
+/// A cancelled operation therefore never exposes partial facts or index
+/// entries, and a durable mutation is never reported as cancelled.
+/// </para>
+/// <para>
+/// Cancellation outcomes are truthful and limited to three: the operation was
+/// cancelled before native invocation (an
+/// <see cref="OperationCanceledException"/> is thrown and no native write
+/// occurred); the operation completed; or the commit outcome is unknown
+/// (<see cref="CodeGraphCommitOutcomeUnknownException"/>, after which the
+/// instance refuses current-state claims until the durable state is
+/// corroborated by reopening the store). A managed timeout, an abandoned task
+/// or a disposed caller is <b>not</b> a native cancellation and must never be
+/// reported as one: callers must await the operation to learn its outcome.
+/// </para>
 /// </remarks>
 public sealed partial class LatticeCodeGraphStore :
     ICodeGraphStore,

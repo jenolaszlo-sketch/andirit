@@ -1,0 +1,119 @@
+﻿[
+    {
+        "case":  "Q-01",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.CancellationBeforeNativeInvocation_LeavesTheDurableStateUnchanged",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:01.7161695Z",
+        "finishedUtc":  "2026-11-22T11:55:03.1879422Z",
+        "log":  "Q-01.log"
+    },
+    {
+        "case":  "Q-02",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.CancellationRacingTheNativeWindow_NeverExposesPartialState",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:03.1997424Z",
+        "finishedUtc":  "2026-11-22T11:55:04.8104032Z",
+        "log":  "Q-02.log"
+    },
+    {
+        "case":  "Q-03",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.CancellationInsideTheOpenNativeTransaction_IsNotObservedAndCommitsAtomically",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:04.8246380Z",
+        "finishedUtc":  "2026-11-22T11:55:06.3017338Z",
+        "log":  "Q-03.log"
+    },
+    {
+        "case":  "Q-04",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.CancellationRacingWithSuccessfulCompletion_NeverReportsCancellationAfterACommit",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:06.3036871Z",
+        "finishedUtc":  "2026-11-22T11:55:07.9468173Z",
+        "log":  "Q-04.log"
+    },
+    {
+        "case":  "Q-05",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.CancellationAfterTheIrreversibleCommit_DoesNotReportCancellation",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:07.9497476Z",
+        "finishedUtc":  "2026-11-22T11:55:09.3696227Z",
+        "log":  "Q-05.log"
+    },
+    {
+        "case":  "Q-06",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.ReopenAfterACancelledStaging_PreservesTheAcceptedPublication",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:09.3715801Z",
+        "finishedUtc":  "2026-11-22T11:55:10.8648947Z",
+        "log":  "Q-06.log"
+    },
+    {
+        "case":  "Q-07",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.ConcurrentCancellationAndDisposal_WaitsForTheInFlightNativeWrite",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:10.8674178Z",
+        "finishedUtc":  "2026-11-22T11:55:12.6472320Z",
+        "log":  "Q-07.log"
+    },
+    {
+        "case":  "Q-08",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.DisposalReleasesTheNativeHandle",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:12.6492166Z",
+        "finishedUtc":  "2026-11-22T11:55:14.1118179Z",
+        "log":  "Q-08.log"
+    },
+    {
+        "case":  "Q-09",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.SuccessfulNonCancelledControl_PublishesAndReopens",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:14.1137712Z",
+        "finishedUtc":  "2026-11-22T11:55:15.5985850Z",
+        "log":  "Q-09.log"
+    },
+    {
+        "case":  "Q-10",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.AcceptedStoreSemanticsRemainIntactAcrossACancelledStaging",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:15.6015242Z",
+        "finishedUtc":  "2026-11-22T11:55:17.0247957Z",
+        "log":  "Q-10.log"
+    },
+    {
+        "case":  "Q-11",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.UnknownCommitOutcome_IsReportedAndQuarantinedAndReopenCorroborates",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:17.0277268Z",
+        "finishedUtc":  "2026-11-22T11:55:18.5269415Z",
+        "log":  "Q-11.log"
+    },
+    {
+        "case":  "Q-12",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.PinnedNativeDependency_ExposesNoCancellationEntryPoint",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:18.5289344Z",
+        "finishedUtc":  "2026-11-22T11:55:19.8191308Z",
+        "log":  "Q-12.log"
+    },
+    {
+        "case":  "REG",
+        "test":  "Andirit.LatticeDb.Tests.NativeCancellationPathTests.Regression_CancellationAfterASuccessfulCommit_MustNotSurfaceAsCancelled",
+        "result":  "PASS",
+        "exitCode":  0,
+        "startedUtc":  "2026-11-22T11:55:19.8210847Z",
+        "finishedUtc":  "2026-11-22T11:55:21.2452428Z",
+        "log":  "REG.log"
+    }
+]

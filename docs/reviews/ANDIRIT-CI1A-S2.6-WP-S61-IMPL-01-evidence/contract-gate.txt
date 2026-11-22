@@ -1,0 +1,170 @@
+ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01 - contract-consistency gate receipt
+repository: D:\projects\Andirit
+reviewed-commit: 2d1e8ec88e397d0c36b7f258eb1a1c0840e56157
+method: exhaustive candidate enumeration over the tracked Markdown corpus,
+        followed by an explicit adjudication table (fail closed on new wording).
+
+[1] governing excerpts
+--- D4 invariant 5 (owner decision, D.4)
+    source: docs/decisions/adr-ci1-01-owner-decision.md
+    (pattern not found at this commit)
+
+--- D4 qualification clause (owner decision, D.4)
+    source: docs/decisions/adr-ci1-01-owner-decision.md
+    297: **using actual production storage and APIs**. The previous in-process experiment
+
+--- S-02 (owner decision, G.2 / S-01 S2.5 closure)
+    source: docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-3-CLOSURE-OWNER-01.md
+    69: | D4.5 and full S-02 | **Outstanding in Stage 6.** D4.5 covers cancellation during native staging. Full S-02 requires the ten-invariant native D4 matrix. | Stage 6 owner and independent reviewer. WP-S25-4 owns the applicable Stage-2 subset, including the serialized native schedule. |
+
+--- M9.5 dedicated native cancel-path test
+    source: docs/planning/adr-ci1-01-ci1a-s2-5/wp-s25-4-qualification-matrix.md
+    90: | M9.5 / §9 | Stage 1 cancellation behavior preserved — Dedicated native cancel-path test | E4, E5, E7 | E / no | Stage 6 | Dedicated native cancellation probe under Stage 6 Receipt: Record Stage 6 referral. | Deferred with named owner; block on Claiming completion of this deferred invariant. | SQ-02/03, NEW-01, F-02; D4.5 Stage 6 |
+
+--- M12.2 native cancelled-staging case
+    source: docs/planning/adr-ci1-01-ci1a-s2-5/wp-s25-4-qualification-matrix.md
+    (pattern not found at this commit)
+
+--- I-04 / D4 heading (owner decision, D.4)
+    source: docs/decisions/adr-ci1-01-owner-decision.md
+    259: ### D.4 — Index maintenance, publication and cancellation: **D4 ACCEPTED WITH EXPLICIT INVARIANTS**
+
+--- Q2-F09 no cancellation (owner decision, G.2)
+    source: docs/decisions/adr-ci1-01-owner-decision.md
+    499: | Q2-F09 | C rebuild blocks queries; no cancellation | Selection-significant operational qualification; **addressed by D4** (maintenance policy; CI-1A must qualify a production-backed rebuild path). |
+
+[2] candidate enumeration
+documents searched: 518
+candidate lines: 33
+
+[3] adjudication of every candidate
+A-QUALIFICATION-OBLIGATION docs/decisions/adr-ci1-01-ci1a-s1-obligation-reconciliation.md:268
+    line: | **Required work** | Stage 6 native D4 matrix: all 10 invariants with native evidence, including supersession stress, true concurrent publication, cancellation path, unknown outcome. |
+    adjudication: Requires native EVIDENCE for the cancellation path and the unknown outcome; it does not require that native work be interruptible.
+D-PROCESS-LEVEL-INTERRUPTION docs/decisions/ec6a-owner-acceptance.md:177
+    line: | F02 staging/replacement ordering | Reconciled. Emission order stated as an implementation contract (steps 1–5), verified against the existing session/lifecycle/store code; staged-vs-published distinction made explicit ("ordered staging is not an atomicity guarantee"); lifecycle scenarios specified for target deletion, importer deletion, last-relationship removal, previously unresolved modules, e
+    adjudication: An application-level publication lifecycle scenario with lifecycle fixtures on both stores; no native interruption capability is required.
+E-OUT-OF-SCOPE-TRACK docs/decisions/ec6c-a29-closure.md:60
+    line: No source-level name-field conflict was found. The external native engine does not publish a smaller per-string limit in the inspected pinned API, but actual LatticeDb round-trip has not been run here. EC-6C.3 must test both JS and TS plugins, accepted and rejected boundaries, exact-name queries, both stores, and durable close/reopen. It must also verify authentic p8-to-p9 migration, existing iden
+    adjudication: EC-6C track-A closure prose: requires failure/cancellation test coverage, not an interruption capability; outside the CI-1A S6.1 boundary.
+E-OUT-OF-SCOPE-TRACK docs/decisions/ec6c-a29-closure.md:64
+    line: All required Track A contracts are specified: name validation and identity; occurrence identity and explicit collision rejection; per-occurrence type/value projection; exact source spans and UTF-16 coordinates; syntax allowlist and re-export exclusions; positive-only semantics; exact-name query compatibility; per-file publication, deletion/replacement, failure/cancellation; p8-to-p9 invalidation; 
+    adjudication: EC-6C track-A closure prose: requires failure/cancellation test coverage, not an interruption capability; outside the CI-1A S6.1 boundary.
+E-OUT-OF-SCOPE-TRACK docs/decisions/ec6c-track-a-owner-acceptance.md:186
+    line: Future qualification must seed durable state with the actual accepted p8 extractor, reindex unchanged sources with p9, compare node/declaration/structural/unchanged resolves-to IDs, verify both plugins ran, verify only supported export facts were added, test exact replacement/failure/cancellation, and close/reopen LatticeDb. EC6C-A1 has not run these tests.
+    adjudication: EC-6C future-qualification list; no native interruption requirement.
+D-PROCESS-LEVEL-INTERRUPTION docs/planning/adr-ci1-01-ci1a-s2-3/wp-s23-3-publication-integration.md:59
+    line: across a store-lifetime interruption must not silently serve stale, partial, or fabricated
+    adjudication: An interruption of the ANALYSIS/INDEXING PROCESS across a store lifetime: the store must not serve stale or partial state after it. This is a durability/reopen obligation, not a native-interruption capability.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.3-WP-S23-5-ENTRY-01.md:91
+    line: **S2.5 / Stage-2 obligations preserved (not discharged by S2.3):** expanded **Linux** native suite (SQ-05); authentic **SQ-04** historical fixtures; **S-01** integrated proof; **SQ-06** namespace test; D4.5 (cancelled staging) and full S-02 Stage-6 items. A later `S2.3-ACCEPT-OWNER` decision must record these as open Stage-2 obligations and must not treat S2.3 acceptance as cross-platform certific
+    adjudication: Records D4.5 and S-02 as open Stage-6 obligations; no interruption capability is required.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.5-ENTRY-ASSESS-01.md:39
+    line: | [stage2-acceptance-matrix.md](../planning/adr-ci1-01-ci1a-impl-01/stage2-acceptance-matrix.md) §16 + rows | "All requirements must pass independent Stage 2 review before Stage 2 owner acceptance"; S-01 S2.5 independent acceptance; semantic identity/refusal/cross-project/native/D3/D4/D5 rows; SQ-02/SQ-03 S2.3/S2.5; §13 authentic prior-writer fixtures; §14 Linux CI before S2.5 acceptance; §15 name
+    adjudication: Records invariant 5 (cancellation) as an explicit Stage-6 obligation; the subject is the qualification, not an interruption mechanism.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-3-CLOSURE-OWNER-01.md:69
+    line: | D4.5 and full S-02 | **Outstanding in Stage 6.** D4.5 covers cancellation during native staging. Full S-02 requires the ten-invariant native D4 matrix. | Stage 6 owner and independent reviewer. WP-S25-4 owns the applicable Stage-2 subset, including the serialized native schedule. |
+    adjudication: States that D4.5 (cancellation during native staging) and the ten-invariant native matrix are outstanding in Stage 6 and are owned by the Stage-6 owner and an independent reviewer.
+C-RECORDED-LIMITATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-feasibility.md:25
+    line: | Required upstream dependency changes | Only if interruption is demanded: a new LatticeDB transaction-interrupt entry point, a new qualified `LatticeDbSharp` release, and a separately authorized dependency upgrade. Not authorized here; not simulated. |
+    adjudication: Conditional upstream requirement, explicitly conditioned on a future owner demand.
+B-EXPLICIT-NEGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-feasibility.md:195
+    line: | Durability | The commit is the durability point. After it, the outcome must not be negated by a cancellation; the store already refuses to guess (unknown-outcome quarantine). A cancellation *before* the commit leaves the previous publication and index state intact. |
+    adjudication: Forbids negating a durable outcome with a cancellation.
+C-RECORDED-LIMITATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-feasibility.md:231
+    line: If the owner ever requires interruption of active native work, the dependency chain is: LatticeDB
+    adjudication: Conditional upstream chain, explicitly conditioned on a future owner requirement.
+B-EXPLICIT-NEGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-feasibility.md:259
+    line: | A future regression adds a cancellation checkpoint *after* the commit, turning a durable write into a reported cancellation | the qualification suite must assert that no `OperationCanceledException` escapes after a successful commit; a regression test is part of the proposed change set |
+    adjudication: Risk mitigation: forbids reporting a durable write as cancelled.
+C-RECORDED-LIMITATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-feasibility.md:261
+    line: | The native window is long enough that an abandoned task looks like a hang | no interruption is possible without the upstream change; the contract states that the operation must be awaited, and the unknown-outcome path covers a failed commit |
+    adjudication: States the absence of interruption as a dependency limitation.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-implementation-proposal.md:15
+    line: test*), the M12.2 native case of D4 invariant 5 (*cancelled staging must not expose partial facts
+    adjudication: The obligation being discharged: the native cancelled-staging case.
+B-EXPLICIT-NEGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-implementation-proposal.md:23
+    line: | The pinned dependency exposes no interruption mechanism (§3 of the feasibility assessment) | the design must not claim or simulate interruption of active native work |
+    adjudication: Explicit prohibition on claiming or simulating interruption.
+B-EXPLICIT-NEGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-implementation-proposal.md:25
+    line: | *"A managed timeout or abandoned task must not be represented as native cancellation"* (commission §4) | the outcome vocabulary is fixed to three values; no fourth "cancelled" outcome may be synthesized |
+    adjudication: Explicit prohibition on representing a managed timeout as native cancellation.
+C-RECORDED-LIMITATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-implementation-proposal.md:33
+    line: cancel-path test suite.** No behavioural change is required, because the production store already
+    adjudication: The design conclusion that the existing behaviour already satisfies the requirement.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-implementation-proposal.md:62
+    line: | **C-3** | Add the dedicated native cancel-path test suite (the M9.5 / M12.2 instrument). | new file `tests/Andirit.LatticeDb.Tests/NativeCancellationPathTests.cs` | test addition | the qualification instrument required by M9.5 and M12.2 |
+    adjudication: M9.5 instrument: a dedicated native cancel-path test suite.
+B-EXPLICIT-NEGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-implementation-proposal.md:113
+    line: successful commit the operation must return success even if the token was cancelled during the
+    adjudication: Forbids reporting cancellation after a successful commit.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-obligation-inventory.md:33
+    line: | **D4 invariant 5** (owner decision §D.4) | *"Cancelled staging must not expose partial facts or index entries."* | accepted as an invariant; the native case explicitly deferred (S2.5 matrix M12.2) | **in** — the native cancelled-staging case and its non-exposure proof |
+    adjudication: D4 invariant 5 verbatim: the guarantee is non-exposure of partial state, which atomicity satisfies without interruption.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-obligation-inventory.md:34
+    line: | **D4 qualification clause** (owner decision §D.4) | *"CI-1A must reproduce the applicable stale-index, cancellation, failed-publication, supersession and reopen tests using actual production storage and APIs. The previous in-process experiment does not establish native or cross-process atomicity; record those limits explicitly."* | applicable subset qualified in Stage 2; cancellation case outsta
+    adjudication: D4 qualification clause: reproduce the cancellation case against production storage.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-obligation-inventory.md:36
+    line: | **S-02 specification** (CI1A specification, line 194) | *"All ten invariants must be exercised against actual production `LatticeCodeGraphStore` storage, including failed/cancelled/superseded publication, reopen and a native concurrency/republication scenario. In-process deterministic interleaving is retained as a diagnostic only and is not accepted as native atomicity evidence."* | open | **par
+    adjudication: S-02 verbatim: exercise the invariants against production storage; no interruption required.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-traceability-matrix.md:18
+    line: | R-1 | D4 invariant 5 — owner decision §D.4 (line 274) | "Cancelled staging must not expose partial facts or index entries." | deferred native qualification requirement | accepted as an invariant; native case deferred (M12.2) | **in** | `pre-invocation.log` (no native transaction started: `HetuStage` = 0, `HetuUnit` = 0, no publication, reopen healthy); `native-window.log` (cancellation inside th
+    adjudication: R-1 traceability row for D4 invariant 5.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-traceability-matrix.md:19
+    line: | R-2 | D4 qualification clause — owner decision §D.4 (lines 295–299) | "CI-1A must reproduce the applicable … cancellation … tests **using actual production storage and APIs** … record those limits explicitly." | applicable native qualification requirement | Stage-2 applicable subset qualified; cancellation case outstanding | **in** | probe harness references the production `src/Andirit.LatticeDb
+    adjudication: R-2 traceability row for the D4 qualification clause.
+C-RECORDED-LIMITATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-traceability-matrix.md:25
+    line: | R-8 | Q2-F09 — owner decision §G.2 (line 499); register (line 227) | "C rebuild blocks queries; no cancellation"; addressed by D4 (maintenance policy; CI-1A must qualify a production-backed rebuild path) | partly in (cancellation aspect) | open — Stage 6 | **partly in** — the cancellation aspect only | `managed-wait.log` (the serialized write gate is the mechanism that makes a waiting operation 
+    adjudication: Q2-F09 residual finding: the absence of cancellation is a recorded selection-significant operational qualification addressed by D4.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-traceability-matrix.md:31
+    line: | R-14 | SQ-05 / §14 + S2.5 entry assessment §5 (lines 118–126) | Genuine hosted Linux is the Linux evidence class; WSL2/Docker-on-Windows are not native Linux evidence; no Windows result counts as Linux evidence; full platform certification remains Stage 6 | applicable native qualification requirement | Linux minimum qualified in Stage 2 | **in** for the cancel-path rows | the plan requires a gen
+    adjudication: R-14: the evidence class rule for the Linux row.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01.md:76
+    line: | S-01 obligation reconciliation §S-02 | The Stage-6 native matrix must exercise all ten D4 invariants against the actual production `LatticeCodeGraphStore`, including a cancellation path and an unknown-outcome case; Stage 2 inherits but does not close it. |
+    adjudication: Requires the Stage-6 native matrix to EXERCISE the invariants, including a cancellation path and an unknown-outcome case; no interruption capability is required.
+A-QUALIFICATION-OBLIGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01.md:77
+    line: | CI1A specification | S-02: *"All ten invariants must be exercised against actual production `LatticeCodeGraphStore` storage, including failed/cancelled/superseded publication, reopen and a native concurrency/republication scenario."* |
+    adjudication: S-02 verbatim: the ten invariants must be EXERCISED against production storage, including the cancelled-publication case. It requires native evidence, not interruption.
+B-EXPLICIT-NEGATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01.md:88
+    line: capability to interrupt active native execution, which no governing contract requires and the pinned
+    adjudication: States explicitly that no governing contract requires an interruption capability.
+C-RECORDED-LIMITATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01.md:155
+    line: | 1 | State the cancellation contract precisely on the production store: cancellation is honoured (a) while waiting for the write gate and (b) before the native write transaction begins; it is **not** honoured inside the native window; the operation must be awaited to learn its outcome; the only truthful outcomes are *cancelled before native invocation*, *completed*, or *commit outcome unknown*. |
+    adjudication: The contract statement itself: cancellation is honoured before the native window and is NOT honoured inside it; the three truthful outcomes are fixed. This is the limitation being published, not a mandate for interruption.
+C-RECORDED-LIMITATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01.md:157
+    line: | 3 | Record the cancellation policy and the non-cancellable native window in the contract record; name the upstream dependency change that would be required if interruption is ever demanded (a separate owner commission). | `docs/decisions/…` (successor commission record) | documentation |
+    adjudication: Requires the non-cancellable native window to be recorded in the contract and the upstream dependency change to be named.
+C-RECORDED-LIMITATION docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01.md:188
+    line: | **Q-S61-2** | **The native window is non-cancellable and must be awaited.** A managed timeout, an abandoned task, or a `Task.WhenAny` race must never be represented as a native cancellation. The truthful outcomes are exactly three: *cancelled before native invocation*, *completed*, or *commit outcome unknown* (existing quarantine path). Callers must await completion to learn the outcome. |
+    adjudication: Qualification Q-S61-2: the native window is non-cancellable and must be awaited; a managed timeout is not a native cancellation.
+
+category A-QUALIFICATION-OBLIGATION: 14
+category B-EXPLICIT-NEGATION: 6
+category C-RECORDED-LIMITATION: 8
+category D-PROCESS-LEVEL-INTERRUPTION: 2
+category E-OUT-OF-SCOPE-TRACK: 3
+unclassified: 0
+
+[4] demonstrated native dependency capability (pinned LatticeDbSharp 0.2.0)
+  managed public members carrying CancellationToken: 0
+  public members named cancel/interrupt/abort/terminate/shutdown: 0
+  LatticeTransaction lifecycle verbs: Commit, Rollback, Dispose, IsCompleted
+  native lattice_* cancellation exports (PE/ELF/Mach-O scan): 0
+  cancellation-like declared capability features (of 30): 0
+
+[5] conclusion
+  PASS: every candidate line in the tracked corpus that combines a
+  cancellation/interruption term, a native/transaction term and a modal verb was
+  adjudicated. None of them requires that active native work be interrupted:
+    - the binding obligations require NATIVE EVIDENCE for the cancellation path
+      (D4 invariant 5 non-exposure, the D4 qualification clause, S-02, M9.5, M12.2);
+    - the remaining candidates either forbid claiming interruption, record the
+      non-interruptible window as a dependency limitation, or use 'interruption'
+      for an analysis-process/store-lifetime interruption.
+  The existing wording therefore PERMITS qualification through atomicity,
+  non-exposure of partial state and truthful outcomes, on the pinned dependency,
+  without any interruption capability.
+  No requirement is silently weakened: the non-interruptible native window is
+  published in the API contract (C-1/C-2) and carried as qualification Q-S61-1.
+  explicit-negation candidates (mandates the opposite): 6
+

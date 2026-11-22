@@ -1,0 +1,23 @@
+﻿case: Q-04
+test: Andirit.LatticeDb.Tests.NativeCancellationPathTests.CancellationRacingWithSuccessfulCompletion_NeverReportsCancellationAfterACommit
+project: tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj
+configuration: Release
+command: dotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj -c Release --no-restore --no-build --filter "FullyQualifiedName~CancellationRacingWithSuccessfulCompletion_NeverReportsCancellationAfterACommit" --logger "console;verbosity=detailed"
+started-utc: 2026-11-22T11:55:06.3036871Z
+finished-utc: 2026-11-22T11:55:07.9468173Z
+exit-code: 0
+Test run for D:\projects\andirit\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+D:\projects\andirit\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.4+50e68bbb8b (64-bit .NET 10.0.12)
+[xUnit.net 00:00:00.07]   Discovering: Andirit.LatticeDb.Tests
+[xUnit.net 00:00:00.11]   Discovered:  Andirit.LatticeDb.Tests
+[xUnit.net 00:00:00.13]   Starting:    Andirit.LatticeDb.Tests
+[xUnit.net 00:00:00.53]   Finished:    Andirit.LatticeDb.Tests
+  Passed Andirit.LatticeDb.Tests.NativeCancellationPathTests.CancellationRacingWithSuccessfulCompletion_NeverReportsCancellationAfterACommit [367 ms]
+
+Test Run Successful.
+Total tests: 1
+     Passed: 1
+ Total time: 0.9508 Seconds
+

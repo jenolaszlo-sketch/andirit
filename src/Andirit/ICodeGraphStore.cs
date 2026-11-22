@@ -1,6 +1,27 @@
 namespace Andirit;
 
 /// <summary>Stages and atomically publishes normalized graph facts.</summary>
+/// <remarks>
+/// <para>
+/// Cancellation contract: a cancellation request is honoured while an operation
+/// waits for the managed write gate and immediately before the native write
+/// transaction opens. It is <b>not</b> honoured inside the native transaction,
+/// because the native dependency exposes no cancellation or interruption entry
+/// point: a cancellation that arrives during active native execution is not
+/// observed, the transaction commits atomically, and the operation completes.
+/// A cancelled operation never exposes partial facts or index entries, and a
+/// durable mutation is never reported as cancelled.
+/// </para>
+/// <para>
+/// The truthful outcomes are limited to three: cancelled before native
+/// invocation (an <see cref="OperationCanceledException"/> is thrown and no
+/// native write occurred), completed, or commit outcome unknown (the store
+/// refuses current-state claims until the durable state is corroborated by
+/// reopening). A managed timeout, an abandoned task or a disposed caller is
+/// <b>not</b> a native cancellation; callers must await the operation to learn
+/// its outcome.
+/// </para>
+/// </remarks>
 public interface ICodeGraphIndexStore
 {
     ValueTask UpsertRepositoryAsync(
