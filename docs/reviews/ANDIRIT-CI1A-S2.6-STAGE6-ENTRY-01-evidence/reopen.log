@@ -1,0 +1,18 @@
+﻿scenario: reopen
+work-dir: D:\m54b-stage6\work\reopen
+command: dotnet run --project Stage6Probe.csproj -c Release --no-build -- reopen <work-dir>
+
+SCENARIO|reopen|start|2026-11-22T09:11:43.4735709+00:00
+ENVIRONMENT|os|Microsoft Windows NT 10.0.26200.0|description|Microsoft Windows 10.0.26200
+ENVIRONMENT|architecture|X64
+ENVIRONMENT|runtime|10.0.12|base-directory|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\
+CHECK|reopen/healthy-after-reopen|PASS|status=Healthy
+CHECK|reopen/publication-present|PASS|publication is null
+CHECK|reopen/publication-identity-preserved|PASS|before=run:s6-entry|after=run:s6-entry
+CHECK|reopen/snapshot-identity-preserved|PASS|before=|after=
+CHECK|reopen/snapshot-consistency-preserved|PASS|before=False|after=False
+CHECK|reopen/published-unit-count-preserved|PASS|before=1|after=1
+CHECK|reopen/node-resolvable|PASS|Durable
+SCENARIO|reopen|failures|0
+
+exit-code: 0

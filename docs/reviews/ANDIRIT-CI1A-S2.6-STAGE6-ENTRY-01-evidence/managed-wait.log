@@ -1,0 +1,15 @@
+﻿scenario: managed-wait
+work-dir: D:\m54b-stage6\work\managed-wait
+command: dotnet run --project Stage6Probe.csproj -c Release --no-build -- managed-wait <work-dir>
+
+SCENARIO|managed-wait|start|2026-11-22T09:11:35.9488776+00:00
+ENVIRONMENT|os|Microsoft Windows NT 10.0.26200.0|description|Microsoft Windows 10.0.26200
+ENVIRONMENT|architecture|X64
+ENVIRONMENT|runtime|10.0.12|base-directory|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\
+CHECK|managed-wait/first-write-entered-native-window|PASS|the fault injector reached the before-commit checkpoint inside the native transaction
+CHECK|managed-wait/cancellation-observed-on-gate-wait|PASS|TaskCanceledException|A task was canceled.
+CHECK|managed-wait/in-flight-native-write-unaffected|PASS|the native write that held the write gate completed normally after the managed wait was cancelled
+CHECK|managed-wait/only-the-non-cancelled-write-is-durable|PASS|HetuStage rows=1 (expected exactly the one non-cancelled staging write)
+SCENARIO|managed-wait|failures|0
+
+exit-code: 0

@@ -1,0 +1,16 @@
+﻿scenario: native-window
+work-dir: D:\m54b-stage6\work\native-window
+command: dotnet run --project Stage6Probe.csproj -c Release --no-build -- native-window <work-dir>
+
+SCENARIO|native-window|start|2026-11-22T09:11:37.0916662+00:00
+ENVIRONMENT|os|Microsoft Windows NT 10.0.26200.0|description|Microsoft Windows 10.0.26200
+ENVIRONMENT|architecture|X64
+ENVIRONMENT|runtime|10.0.12|base-directory|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\
+CHECK|native-window/cancellation-requested-inside-native-window|PASS|the fault injector cancelled the token after the native writes and before the commit
+CHECK|native-window/cancellation-not-honoured-inside-native-window|PASS|the operation completed without a cancellation exception
+CHECK|native-window/no-publication-from-cancelled-request|PASS|publication=none
+CHECK|native-window/native-write-committed-despite-cancellation|PASS|HetuStage rows=1 (the native transaction was not interrupted and the commit proceeded)
+CHECK|native-window/reopen-healthy|PASS|status=Healthy
+SCENARIO|native-window|failures|0
+
+exit-code: 0

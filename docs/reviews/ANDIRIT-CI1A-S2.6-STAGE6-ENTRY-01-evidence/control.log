@@ -1,0 +1,16 @@
+﻿scenario: control
+work-dir: D:\m54b-stage6\work\control
+command: dotnet run --project Stage6Probe.csproj -c Release --no-build -- control <work-dir>
+
+SCENARIO|control|start|2026-11-22T09:11:42.5421522+00:00
+ENVIRONMENT|os|Microsoft Windows NT 10.0.26200.0|description|Microsoft Windows 10.0.26200
+ENVIRONMENT|architecture|X64
+ENVIRONMENT|runtime|10.0.12|base-directory|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\
+CHECK|control/publication-present|PASS|publication is null
+PROBE|control|publication|run=run:s6-entry|snapshot=|consistent=False
+CHECK|control/publication-binds-the-run|PASS|run=run:s6-entry
+CHECK|control/published-unit-count|PASS|count=1
+CHECK|control/node-resolvable|PASS|Durable
+SCENARIO|control|failures|0
+
+exit-code: 0

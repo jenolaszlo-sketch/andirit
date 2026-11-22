@@ -1,0 +1,162 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01",
+  "scheme": "SHA-256 exact bytes and lengths; ordinal relative paths; manifest self-excluded; report bound by Git",
+  "scope": "Stage 6 entry, work package S6.1: repository preflight, contract reconciliation excerpts, native cancellation feasibility probes (managed/native API census, native ABI scan, ten behavioural scenarios), and the raw receipts behind the feasibility assessment, implementation proposal and qualification plan",
+  "reviewedSubject": "ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01 (Stage 6 entry for S6.1: native cancellation path)",
+  "baselineCommit": "b5a81f81fade9807f706b4586329efe416cf1558",
+  "baselineTree": "e3c28384abe1870eb5b44dbbc693b69f371542af",
+  "qualifiedImplementation": "eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6",
+  "releaseTag": "v0.2.0-preview.7",
+  "releaseTagObject": "6659647527a6e0eb822a3d7a05b8283c75fd6a3e",
+  "releaseTagTarget": "6ed05964d2fcc758648b654a01ec706647e52183",
+  "releaseVersion": "0.2.0-preview.7",
+  "nativeDependency": "LatticeDbSharp 0.2.0",
+  "nativeDependencyAssemblySha256": "d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46",
+  "probeScenarios": 10,
+  "probeChecks": 41,
+  "disposition": "READY WITH QUALIFICATIONS",
+  "qualifications": [
+    "Q-S61-1",
+    "Q-S61-2",
+    "Q-S61-3",
+    "Q-S61-4",
+    "Q-S61-5",
+    "Q-S61-6",
+    "Q-S61-7",
+    "Q-S61-8"
+  ],
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 19,
+      "sha256": "3263e88dce175906c6c7a452a85941ffab51f9c1d3c5b8e082bdf19f525b9e46"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 10,
+      "sha256": "07b75fcb5973dffaf4c347c36f457f60e4f13b8ab3d9b4de6069b35c5aaaef77"
+    },
+    {
+      "path": "api-surface.log",
+      "bytes": 4276,
+      "sha256": "c49408b6418cc80f70c92ca9c584e7da0f8c39c66dc13b04ed3394f5705b9a97"
+    },
+    {
+      "path": "cleanup.log",
+      "bytes": 711,
+      "sha256": "db51ae53d9b6fe3966708f429292e469fda47befb7f2e9b0018a7f957a9e272d"
+    },
+    {
+      "path": "commit-unknown.log",
+      "bytes": 1120,
+      "sha256": "b88be12ad059cb4f837a2ecb7c88a51de89e8db1507894ff3ec982bfa641359f"
+    },
+    {
+      "path": "contract-reconciliation.txt",
+      "bytes": 19508,
+      "sha256": "1b402a09e2ae902d1aa291cc50d0c4d62c33b62b45e06abaecdcec5528721c4d"
+    },
+    {
+      "path": "control.log",
+      "bytes": 815,
+      "sha256": "bf0bc97d1350aab9b339cbb9767198b3c518a8cbabf64ff8d829d41749520748"
+    },
+    {
+      "path": "dispose-race.log",
+      "bytes": 1042,
+      "sha256": "9c47c586b4f3d2be7c9f2c30688a9497f17ab0a1ea19ec367df0e049c507a462"
+    },
+    {
+      "path": "environment.txt",
+      "bytes": 2193,
+      "sha256": "87b5b1e70a9b4a5bd4c10433201147acc9976930a0ba7fd0da4b1d43d2bb8bde"
+    },
+    {
+      "path": "make-manifest.py",
+      "bytes": 3241,
+      "sha256": "0717ceb5cb4c4274d2b3b19b9e0abdb6366e74ed850fe4a637e1457cef1032a3"
+    },
+    {
+      "path": "managed-wait.log",
+      "bytes": 1095,
+      "sha256": "6d6e8f21a438ab0acbcec9127044b4335da75b2a845742683dfd19bab0b1c67d"
+    },
+    {
+      "path": "native-abi-scan.txt",
+      "bytes": 5080,
+      "sha256": "f56792b8b306d71314aa167e744790196fa38b25b30ca333573e67b84fb23ff2"
+    },
+    {
+      "path": "native-window.log",
+      "bytes": 1137,
+      "sha256": "5dc4946563efb1c968fd0e3313365fb8dd73fd3566cbe51cd13909f880d35b77"
+    },
+    {
+      "path": "post-commit.log",
+      "bytes": 855,
+      "sha256": "d53d6c8f650d9ed5cf07b087994c3f76794ecc48491621367b23a1ffd02a5526"
+    },
+    {
+      "path": "pre-invocation.log",
+      "bytes": 976,
+      "sha256": "c31adba732c871bd5a05e5249599a91f1e240cd97ed372545c70301dbc224963"
+    },
+    {
+      "path": "preflight.txt",
+      "bytes": 2532,
+      "sha256": "e2b698957bd2e3a3fc1cdd35575aacb17daa3e58c97c87537aad67b0af364066"
+    },
+    {
+      "path": "probe-reproduction.md",
+      "bytes": 4343,
+      "sha256": "2631869451304348c865b844b68a4eab5c7d2433aa6c85af76b8ef589aa91c4e"
+    },
+    {
+      "path": "probe-summary.txt",
+      "bytes": 238,
+      "sha256": "c8140e5a649d45b178e552149671689290fd392da43115d92d6d7986df5b1739"
+    },
+    {
+      "path": "probe/Directory.Build.props",
+      "bytes": 392,
+      "sha256": "e2099e38539eb2228ea0bf94c1f215ed1dd4788be96a951fce095d02089361e9"
+    },
+    {
+      "path": "probe/Program.cs",
+      "bytes": 33433,
+      "sha256": "e3e374fe731a275ab515e84db8929beefe1a8e73a708c8fbef4c9cd797e7b12c"
+    },
+    {
+      "path": "probe/Stage6Probe.csproj",
+      "bytes": 1189,
+      "sha256": "5632cccfaca5aaede4e1dd85d37e42bd5ed1bc76aebf095a22e1076538cd1bcf"
+    },
+    {
+      "path": "probe/contract-receipt.py",
+      "bytes": 3928,
+      "sha256": "31f987ee7988eb1dc0815b596b70fe633afd559cc692d0a5fa8895b33f00e048"
+    },
+    {
+      "path": "probe/native-abi-scan.py",
+      "bytes": 11370,
+      "sha256": "66b40aeda2308ea33ddd37ea6ed5d82777396adaaef578b77a8c2597351c772d"
+    },
+    {
+      "path": "probe/preflight-receipt.py",
+      "bytes": 6732,
+      "sha256": "eb4597c1665c0b4bd77f02cec241dacff40077eff8dee6d9f97bf666b63a5691"
+    },
+    {
+      "path": "probe/run-probes.ps1",
+      "bytes": 2883,
+      "sha256": "3196ef70164722aa24937fc8f151e97bd95cc0f390d118079d871f54e4cfe121"
+    },
+    {
+      "path": "reopen.log",
+      "bytes": 973,
+      "sha256": "03da3ac8619a72c8531acec04b3c35b4902a984f8950ab0895659d4846773afd"
+    }
+  ],
+  "fileCount": 26,
+  "totalBytes": 110091
+}

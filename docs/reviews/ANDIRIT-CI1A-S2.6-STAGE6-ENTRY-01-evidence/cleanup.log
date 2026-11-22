@@ -1,0 +1,13 @@
+﻿scenario: cleanup
+work-dir: D:\m54b-stage6\work\cleanup
+command: dotnet run --project Stage6Probe.csproj -c Release --no-build -- cleanup <work-dir>
+
+SCENARIO|cleanup|start|2026-11-22T09:11:41.5179737+00:00
+ENVIRONMENT|os|Microsoft Windows NT 10.0.26200.0|description|Microsoft Windows 10.0.26200
+ENVIRONMENT|architecture|X64
+ENVIRONMENT|runtime|10.0.12|base-directory|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\
+CHECK|cleanup/reopen-healthy|PASS|status=Healthy
+CHECK|cleanup/database-file-released-after-dispose|PASS|the native database file could be deleted, so no native handle was retained
+SCENARIO|cleanup|failures|0
+
+exit-code: 0

@@ -1,0 +1,17 @@
+﻿scenario: pre-invocation
+work-dir: D:\m54b-stage6\work\pre-invocation
+command: dotnet run --project Stage6Probe.csproj -c Release --no-build -- pre-invocation <work-dir>
+
+SCENARIO|pre-invocation|start|2026-11-22T09:11:35.0383030+00:00
+ENVIRONMENT|os|Microsoft Windows NT 10.0.26200.0|description|Microsoft Windows 10.0.26200
+ENVIRONMENT|architecture|X64
+ENVIRONMENT|runtime|10.0.12|base-directory|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\
+CHECK|pre-invocation/cancellation-observed|PASS|TaskCanceledException|A task was canceled.
+CHECK|pre-invocation/no-publication|PASS|publication=none
+CHECK|pre-invocation/no-published-units|PASS|published unit count=0
+CHECK|pre-invocation/native-stage-table-empty|PASS|HetuStage rows=0
+CHECK|pre-invocation/native-unit-table-empty|PASS|HetuUnit rows=0
+CHECK|pre-invocation/reopen-healthy|PASS|status=Healthy
+SCENARIO|pre-invocation|failures|0
+
+exit-code: 0

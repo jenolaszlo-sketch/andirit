@@ -1,0 +1,14 @@
+﻿scenario: post-commit
+work-dir: D:\m54b-stage6\work\post-commit
+command: dotnet run --project Stage6Probe.csproj -c Release --no-build -- post-commit <work-dir>
+
+SCENARIO|post-commit|start|2026-11-22T09:11:38.0464368+00:00
+ENVIRONMENT|os|Microsoft Windows NT 10.0.26200.0|description|Microsoft Windows 10.0.26200
+ENVIRONMENT|architecture|X64
+ENVIRONMENT|runtime|10.0.12|base-directory|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\
+CHECK|post-commit/cancellation-requested-after-commit|PASS|the fault injector cancelled the token after the irreversible commit
+CHECK|post-commit/cancellation-not-reported-after-commit|PASS|the operation completed without a cancellation exception
+CHECK|post-commit/write-is-durable|PASS|HetuStage rows=1
+SCENARIO|post-commit|failures|0
+
+exit-code: 0

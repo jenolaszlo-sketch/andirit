@@ -1,0 +1,75 @@
+﻿scenario: api-surface
+work-dir: D:\m54b-stage6\work\api-surface
+command: dotnet run --project Stage6Probe.csproj -c Release --no-build -- api-surface <work-dir>
+
+SCENARIO|api-surface|start|2026-11-22T09:11:34.2563911+00:00
+ENVIRONMENT|os|Microsoft Windows NT 10.0.26200.0|description|Microsoft Windows 10.0.26200
+ENVIRONMENT|architecture|X64
+ENVIRONMENT|runtime|10.0.12|base-directory|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\
+PROBE|assembly|LatticeDbSharp, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null
+PROBE|assembly-version|0.2.0.0
+PROBE|assembly-informational-version|0.2.0+40bc81ce8806602d09017037ed3e13c39d342109
+PROBE|assembly-path|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\LatticeDbSharp.dll
+PROBE|assembly-sha256|d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46
+PROBE|assembly-bytes|102400
+PROBE|public-types|23
+PROBE|public-members|270
+PROBE|cancellation-like-member-names|0
+PROBE|members-with-cancellationtoken|0
+PROBE|transaction-surface-start
+PROBE|transaction-member|Method|AddLabel
+PROBE|transaction-member|Method|BatchInsertNodes
+PROBE|transaction-member|Method|Commit
+PROBE|transaction-member|Method|CreateEdge
+PROBE|transaction-member|Method|CreateNode
+PROBE|transaction-member|Method|DeleteEdge
+PROBE|transaction-member|Method|DeleteNode
+PROBE|transaction-member|Method|Dispose
+PROBE|transaction-member|Method|FindEdgesByTypeProperty
+PROBE|transaction-member|Method|FindNodesByLabelProperty
+PROBE|transaction-member|Method|FtsSearch
+PROBE|transaction-member|Method|FtsSearchFuzzy
+PROBE|transaction-member|Method|GetAllNodes
+PROBE|transaction-member|Method|GetEdgeProperty
+PROBE|transaction-member|Method|GetIncomingEdges
+PROBE|transaction-member|Method|GetIncomingEdges
+PROBE|transaction-member|Method|GetLabels
+PROBE|transaction-member|Method|GetNodesByLabel
+PROBE|transaction-member|Method|GetOutgoingEdges
+PROBE|transaction-member|Method|GetOutgoingEdges
+PROBE|transaction-member|Method|GetProperty
+PROBE|transaction-member|Property|IsCompleted
+PROBE|transaction-member|Property|Mode
+PROBE|transaction-member|Method|NodeExists
+PROBE|transaction-member|Method|RemoveEdgeProperty
+PROBE|transaction-member|Method|RemoveLabel
+PROBE|transaction-member|Method|Rollback
+PROBE|transaction-member|Method|SetEdgeProperty
+PROBE|transaction-member|Method|SetProperty
+PROBE|transaction-member|Method|SetVector
+PROBE|transaction-member|Method|TryGetEdgeProperty
+PROBE|transaction-member|Method|TryGetProperty
+PROBE|transaction-member|Method|VectorSearch
+PROBE|transaction-member|Method|get_IsCompleted
+PROBE|transaction-member|Method|get_Mode
+PROBE|transaction-surface-end
+PROBE|database-surface-start
+PROBE|database-member|Method|BeginReadTransaction
+PROBE|database-member|Method|BeginWriteTransaction
+PROBE|database-member|Method|Close
+PROBE|database-member|Method|Dispose
+PROBE|database-member|Method|ExecuteRead
+PROBE|database-member|Method|ExecuteRead
+PROBE|database-member|Method|ExecuteWrite
+PROBE|database-member|Method|ExecuteWrite
+PROBE|database-member|Property|IsClosed
+PROBE|database-member|Method|get_IsClosed
+PROBE|database-surface-end
+PROBE|native-asset|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\runtimes\linux-x64\native\liblattice.so|bytes=14374704|sha256=dc5b45344fb05f6db2b9c77bf8dbbc0d0dbcf937494e5d69a419d7c25321687b
+PROBE|native-asset|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\runtimes\osx-arm64\native\liblattice.dylib|bytes=2173424|sha256=8d99e8224d5ca062f12042f0a899c69bb8db21f73d917a5e67805c0b0309e660
+PROBE|native-asset|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\runtimes\win-x64\native\lattice.dll|bytes=2580992|sha256=3dec7386cf0adbf96962f89ab818a4236afc82bbf80086b30a87cecdbacfd6c1
+CHECK|api-surface/no-cancellation-member|PASS|public members whose name suggests cancellation/interruption: 0
+CHECK|api-surface/no-cancellationtoken-member|PASS|public members carrying a CancellationToken: 0
+SCENARIO|api-surface|failures|0
+
+exit-code: 0

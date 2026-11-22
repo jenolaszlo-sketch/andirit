@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Stage 6 entry probe harness for ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01.
+
+    References the production projects directly (no package substitution), so
+    the probe exercises the exact production LatticeCodeGraphStore and the
+    pinned LatticeDbSharp 0.2.0 native dependency. The harness is not part
+    of Andirit.slnx and is never packed.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>Stage6Probe</AssemblyName>
+    <RootNamespace>Stage6Probe</RootNamespace>
+    <EnableDefaultItems>true</EnableDefaultItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)../../../../src/Andirit.Abstractions/Andirit.Abstractions.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)../../../../src/Andirit/Andirit.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)../../../../src/Andirit.LatticeDb/Andirit.LatticeDb.csproj" />
+  </ItemGroup>
+
+</Project>

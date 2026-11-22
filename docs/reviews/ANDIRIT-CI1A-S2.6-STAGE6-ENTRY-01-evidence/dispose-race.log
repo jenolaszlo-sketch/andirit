@@ -1,0 +1,16 @@
+﻿scenario: dispose-race
+work-dir: D:\m54b-stage6\work\dispose-race
+command: dotnet run --project Stage6Probe.csproj -c Release --no-build -- dispose-race <work-dir>
+
+SCENARIO|dispose-race|start|2026-11-22T09:11:39.8265505+00:00
+ENVIRONMENT|os|Microsoft Windows NT 10.0.26200.0|description|Microsoft Windows 10.0.26200
+ENVIRONMENT|architecture|X64
+ENVIRONMENT|runtime|10.0.12|base-directory|D:\projects\andirit\docs\reviews\ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence\probe\bin\Release\net10.0\
+CHECK|dispose-race/write-entered-native-window|PASS|the native write is in flight inside the native transaction
+CHECK|dispose-race/dispose-waits-for-the-in-flight-native-write|PASS|dispose completed while the native write was in flight: False
+CHECK|dispose-race/write-completed-before-disposal|PASS|the in-flight native write completed and was not aborted by disposal
+CHECK|dispose-race/durable-state-intact|PASS|HetuStage rows=1
+CHECK|dispose-race/reopen-healthy|PASS|status=Healthy
+SCENARIO|dispose-race|failures|0
+
+exit-code: 0
