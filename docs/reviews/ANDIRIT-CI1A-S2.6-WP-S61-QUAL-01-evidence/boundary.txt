@@ -1,0 +1,32 @@
+ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01 - dependency / CI / threshold boundary
+[1] package references
+  entry src/Andirit.LatticeDb/Andirit.LatticeDb.csproj: present
+  impl src/Andirit.LatticeDb/Andirit.LatticeDb.csproj: present
+  entry Directory.Packages.props: absent
+  impl Directory.Packages.props: absent
+  entry packages.lock.json: absent
+  impl packages.lock.json: absent
+[PASS] no dependency/project-file diff between the two revisions
+[2] pinned native dependency
+  managed LatticeDbSharp 0.2.0 sha256 (reviewer-measured): d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46
+  matches the identity recorded by the entry commission: True
+  native linux-x64 liblattice.so sha256 (reviewer-measured): dc5b45344fb05f6db2b9c77bf8dbbc0d0dbcf937494e5d69a419d7c25321687b
+  native osx-arm64 liblattice.dylib sha256 (reviewer-measured): 8d99e8224d5ca062f12042f0a899c69bb8db21f73d917a5e67805c0b0309e660
+  native win-x64 lattice.dll sha256 (reviewer-measured): 3dec7386cf0adbf96962f89ab818a4236afc82bbf80086b30a87cecdbacfd6c1
+  all three match the entry commission's native-abi-scan.txt: True
+[3] CI workflow and thresholds
+[PASS] ci.yml identical between entry and implementation revisions
+[PASS] ci.yml identical between implementation and evidence revisions
+[PASS] no workflow file changed at all
+  thresholds present in the workflow: ['55', '75', '60', '70']
+[PASS] thresholds are exactly 55/75/60/70 in order - ['55', '75', '60', '70']
+  coverage include filters: ["/p:Include=[Andirit]*%2c[Andirit.Abstractions]*'", "/p:Include=[Andirit.CSharp]*'", "/p:Include=[Andirit.TreeSitter]*'", "/p:Include=[Andirit.LatticeDb]*'"]
+[PASS] no coverage exclusion added (no Exclude filter present)
+  CI matrix: windows-latest, ubuntu-latest, macos-latest
+[PASS] ubuntu-latest is in the matrix
+  LatticeDb test steps: 1
+    dotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj
+[PASS] the LatticeDb suite runs with no test filter (no --filter)
+[PASS] the LatticeDb suite step is NOT conditioned on the OS
+
+RESULT: ALL BOUNDARY CHECKS PASSED

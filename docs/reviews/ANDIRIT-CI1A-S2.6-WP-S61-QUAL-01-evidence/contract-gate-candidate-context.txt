@@ -1,0 +1,273 @@
+### docs/decisions/adr-ci1-01-ci1a-s2-3-wp-s23-4-entry-owner-01.md:103
+    99: **SQ-03 native schedule coverage:** a native test must demonstrate that under the serialized `_writeGate` model a reader observes a **complete old-or-new** occurrence publication and truthful attribution, with **no partial blend** and **no MVCC/snapshot-isolation claim**.
+    100: 
+    101: **SQ-04 historical fixtures:** authentic prior-writer formats only; formats without an authentic writer remain an explicit limitation and must **not** be fabricated. SQ-04 closure is primarily an S2.5/Stage-2 obligation; WP-S23-4 must not manufacture historical fixtures.
+    102: 
+ >> 103: **Relevant D4 invariants** (from the accepted mapping): 1 accepted generation only (L1/L8); 2 stale/unverifiable refuses explicitly (L8/L13); 3 no unbounded scan on stale (L2); 4 failed staging preserves prior (L9/L10); 6 superseded cannot replace newer (L11); 7 reopen equivalent (L7/L17); 8 contributor/deletion consistent (L3/L4/L14); 9 deterministic order + limit (L2); 10 serialized concurrency (L12). D4.5 (cancelled staging exposes no partial) remains Stage 6 and is not counted.
+    104: 
+    105: ## 5. Native execution requirements
+    106: 
+    107: 1. **Genuine native runs.** Each "native" case must execute against a real `LatticeCodeGraphStore` database file on **Windows x64** with the recorded SDK/runtime; a managed simulation, a skipped test, or source inspection alone does not establish a native result.
+
+### docs/decisions/adr-ci1-01-ci1a-s2-6-wp-s61-impl-01.md:53
+    49: Adjudication summary:
+    50: 
+    51: | Category | Count | Meaning |
+    52: | --- | --- | --- |
+ >> 53: | `A-QUALIFICATION-OBLIGATION` | 13 | requires **native evidence** for the cancellation path (D4 invariant 5 non-exposure, the D4 qualification clause, S-02, M9.5, M12.2) — not an interruption mechanism |
+    54: | `B-EXPLICIT-NEGATION` | 6 | forbids claiming interruption, forbids representing a managed timeout as native cancellation, forbids negating a durable outcome |
+    55: | `C-RECORDED-LIMITATION` | 9 | records the non-interruptible native window and the conditional upstream dependency change |
+    56: | `D-PROCESS-LEVEL-INTERRUPTION` | 2 | "interruption" denotes an analysis-process / store-lifetime interruption (a durability and reopen obligation) |
+    57: | `E-OUT-OF-SCOPE-TRACK` | 3 | EC-6C track prose outside the CI-1A S6.1 boundary |
+
+### docs/decisions/adr-ci1-01-owner-decision.md:274
+    270:    status.
+    271: 3. A stale index must not silently trigger an unbounded full-store scan.
+    272: 4. Failed staging must preserve the last accepted publication and corresponding
+    273:    valid index state.
+ >> 274: 5. Cancelled staging must not expose partial facts or index entries.
+    275: 6. Superseded publication must not replace a newer accepted generation.
+    276: 7. Rebuild/reopen must produce a semantically equivalent published index.
+    277: 8. Contributor changes and scoped deletion must update publication and index
+    278:    visibility consistently.
+
+### docs/planning/adr-ci1-01-ci1a-impl-01/acceptance-matrix.md:19
+    15:    status.
+    16: 3. A stale index must not silently trigger an unbounded full-store scan.
+    17: 4. Failed staging must preserve the last accepted publication and corresponding
+    18:    valid index state.
+ >> 19: 5. Cancelled staging must not expose partial facts or index entries.
+    20: 6. Superseded publication must not replace a newer accepted generation.
+    21: 7. Rebuild/reopen must produce a semantically equivalent published index.
+    22: 8. Contributor changes and scoped deletion must update publication and index
+    23:    visibility consistently.
+
+### docs/planning/ci1-scope-01/acceptance-contract.md:85
+    81: 
+    82: Exercise successful project-unit replacement/deletion, obsolete project removal,
+    83: shared contributions, source-hash mismatch, dependency-context change, producer
+    84: version change, unchanged-index reuse and run retry idempotence.
+ >> 85: Failed/rejected/cancelled staging must retain both old occurrences and old
+    86: source state; staged data must not leak. Concurrency ordering must reject
+    87: superseded completion. Confirm source freshness states and stale-source refusal
+    88: independently of publication movement.
+    89: 
+
+### docs/rename/andirit-rename-02/durable-compatibility.md:11
+    7: Before source editing, the effective Penghou.Andirit baseline was independently compiled from canonical a579b61 and captured with the same probe. After editing, the probe was compiled against standalone Andirit. The before observations match the original Hetu observations exactly. Reopen, repeat indexing, cancellation and after-close reopen each compare exactly with those same immutable observations in both traversal profiles.
+    8: 
+    9: Equality covers repository manifests, node/declaration/edge IDs and complete canonical payloads, full published unit/origin/source/provider evidence, lookup/export query envelopes, neighborhoods, direct three-hop native traversal, publication identity, snapshot JSON and integrity hashes. Each retained old snapshot is also deserialized and integrity-verified by standalone Andirit. Both TS/JS retain 12 nodes, 4 declarations and 17 edges each. Unchanged-source repeat executes **zero plugins**, with unchanged units, publication and snapshot hashes. Cancellation is observable OperationCanceledException and does not replace the publication. Schema remains 2; no migration or expected-hash adjustment occurs.
+    10: 
+ >> 11: Compact hashes/verdicts: [qualification summary](data/qualification-summary.json). Complete original/before/reopen/repeat/cancel/after JSON reports and commands remain in the external stage-02 reports directory. New validation tooling in tools/ replays against new copies of supplied authentic seed files, with explicit original source-root and expected-report arguments; it cannot create substitute seeds or overwrite an existing workspace.
+    12: 
+    13: Qualifications retained: cross-version durable evidence is Windows-focused; hosted Linux/macOS native regressions do not constitute Linux/macOS durable migration qualification. Historical unreproducible migration hash `ff6b88345b744d05caaad9ae0a5a05d1ff4ecf3d462673c06986580561c3a12f` is not replaced. Filesystem IsConsistentSnapshot remains false; exact facts/hashes do not fabricate a consistent source snapshot. No production data, schema, protocol or representative performance qualification is changed.
+
+### docs/reviews/ANDIRIT-CI1A-S2.3-WP-S23-2-Q1.md:153
+    149: | P37 | Change occurrence meta snapshot identity/consistency while run/index identity stays equal | StalePublication. The downstream full publication comparison rejects what the outer gate's run/index checks alone would miss. |
+    150: | P38 | Empty native page occurrence-ID array; exploratory expectation CorruptedIndex | Available / 1 / complete, correctly rebuilt from verified unit facts. No wrong facts or false empty demonstrated; observation O-01. Original unmet stronger-refusal predicate retained. |
+    151: | P39 | Explicit matching Partial contribution | IncompleteAnalysis / 1 / not complete. |
+    152: | P40 | Set occurrence meta CompleteCoverage true over persisted Partial units; exploratory expectation CorruptedIndex | Still IncompleteAnalysis / 1 / not complete. No escalation of Partial authority; observation O-02. Original predicate retained. |
+ >> 153: | P41–P44 | Publish A+Empty; stage only Client, terminate, resume with Empty retained; independently reopen again | Prior A stays usable while staging; resumed/fresh queries AnalysisUnavailable due to missing Client carrier. The retained valid Empty unit cannot mask the missing authority. |
+    154: | Confirmation | Separate publisher -> graph-owner deletion process -> separate reader process | Same P36 defect; exactly one native key removed; last two snapshots identical. See `orphan-confirmation.json`. |
+    155: | Conflict control | Publish A+Empty, then attempt only B Client with retained A Empty under the identical target | Mixed-universe completion throws the original ArgumentException; B query stale, fresh A query Available / 1. Exact published graph/index-state/occurrence rows conserved; `conflict-checks.json` passes all seven checks. |
+    156: 
+    157: Raw matrix accounting is **53/56 original predicates met**. Of the three unmet
+
+### docs/reviews/ANDIRIT-CI1A-S2.3-WP-S23-3A-IMPL-01.md:54
+    50: Exact diff: `ANDIRIT-CI1A-S2.3-WP-S23-3A-IMPL-01-evidence/production-diff.txt` (+186/-13 across 4 files).
+    51: 
+    52: ## 5. Q1-Q1 containment mechanism
+    53: 
+ >> 54: The authority envelope is `[JsonIgnore]` on `CodeIndexUnitReplacement`, so a segment record cannot persist it. On a store-lifetime interruption, resuming a staged authority-requiring unit either re-runs extraction (fresh authority) or completes with the segment's marker + coverage but no authority; the query gate then refuses with `AnalysisUnavailable` (or `CorruptedIndex` if the association is absent), so graph-only resumption can never serve stale, partial, or fabricated occurrence authority. No durable envelope is added to segments. This is the fail-closed branch of the spec's "re-stage/re-verify or fail closed" requirement; a fresh-process segment test was not added because the same durable-reopen blocker (§7) interrupts it.
+    55: 
+    56: ## 6. Positive real-input publication evidence
+    57: 
+    58: `S23PublicationIntegrationTests.RealCrossProjectFact_IsPublishedWithAuthority_AndServed` drives the real C# plugin (`Lib` ← `App`) through `CodeGraphIngestionSink` into LatticeDB. A real cross-project `App → Lib.Value.Get` occurrence is published with `RequiresOccurrenceAuthority = true`; its durable receipt records `DefiningProjectUnitId = Lib` and `SourceUnitId = App`; the accepted target (recomputed independently in the test from the frozen identity helpers and the live verified compilation) returns `Available`, one hit, `IsComplete = true`, with the correct source unit. A single-unit publication survives a real durable reopen and returns `Available` (`SingleUnitRealFact_SurvivesDurableReopen`).
+
+### docs/reviews/ANDIRIT-CI1A-S2.3-WP-S23-3A-S23-PUB-Q1.md:81
+    77: 
+    78: - **Exact source:** `DurableCommandLog.ReplayAsync` step 4 — `foreach (var command in commands.Where(command => command.Kind is "stage-replace" or "stage-delete")) await ApplyCommandAsync(store, command, …)` applies persisted stage rows **one at a time in stage-key order** (`StageKey` = repository\nrun\nplugin\nunit), each via `InMemoryCodeGraphStore.StageIndexUnitAsync`, whose prospective set is `_units` + **staged-so-far** and which runs full graph validation (including cross-unit endpoints) against that partial set. Verified identical at the pre-R1 commit `f8b2b08` — **pre-existing**, same class as B-WP-S23-3A-01, in the adjacent path R1 did not modify.
+    79: - **Evidence (fresh processes, one per phase):**
+    80:   - P10→P11 (`QLib`/`QApp` fixture; referencing unit hash `2810…` < defining `2e8a…`): segments stage correctly in process A (both carry `RequiresOccurrenceAuthority = true`, no `Occurrences` property, no `Authority` property); in process B the store **refuses to open** with 4× `graph.edge.endpoint-missing` — the referencing segment is validated before the defining segment is applied.
+ >> 81:   - P12→P13: the **re-stage branch of Q1-Q1 is unreachable** in this order — the store cannot even be opened to re-stage; the interrupted run can never be completed.
+    82:   - P17→P18 (counterfactual, same logical fixture renamed so the defining unit's key sorts first): resumption completes; the run publishes 2 valid units with markers; the occurrence query fails closed with `AnalysisUnavailable` ("Missing or malformed recorded occurrence authority; re-ingestion required."). Same logical publication, only persisted key order differs.
+    83: - **Affected contract:** commission §5.9 ("reopen results do not depend on `ReadTable` key enumeration order"), §6 ordering control ("valid publications reopen consistently"), the spec's Q1-Q1 requirement (the re-stage/re-verify branch must be available after an interruption), and the accepted staged-run resumption lifecycle (`Store_ReopensStagedRunWithoutPublishingItAndCanResumePublication` pattern, single-unit only).
+    84: - **Observable consequence:** a valid multi-project real-fact run interrupted between `sink.CompleteAsync()` and `CompleteIndexRunAsync()` — precisely the Q1-Q1 window — can never be resumed or completed when the referencing unit's stage key sorts first. The fail-closed property is preserved (refusal; no stale, partial, or fabricated authority is ever served), and single-unit resumption and completed-publication reopen are unaffected.
+    85: - **Severity:** moderate. Correctness/lifecycle defect, not a data-integrity hazard. It weakens the Q1-Q1 remediation menu for cross-project runs (fail-closed only; re-stage unreachable) and violates this commission's ordering-independence requirement.
+
+### docs/reviews/ANDIRIT-CI1A-S2.3-WP-S23-3A-S23-PUB-Q1.md:83
+    79: - **Evidence (fresh processes, one per phase):**
+    80:   - P10→P11 (`QLib`/`QApp` fixture; referencing unit hash `2810…` < defining `2e8a…`): segments stage correctly in process A (both carry `RequiresOccurrenceAuthority = true`, no `Occurrences` property, no `Authority` property); in process B the store **refuses to open** with 4× `graph.edge.endpoint-missing` — the referencing segment is validated before the defining segment is applied.
+    81:   - P12→P13: the **re-stage branch of Q1-Q1 is unreachable** in this order — the store cannot even be opened to re-stage; the interrupted run can never be completed.
+    82:   - P17→P18 (counterfactual, same logical fixture renamed so the defining unit's key sorts first): resumption completes; the run publishes 2 valid units with markers; the occurrence query fails closed with `AnalysisUnavailable` ("Missing or malformed recorded occurrence authority; re-ingestion required."). Same logical publication, only persisted key order differs.
+ >> 83: - **Affected contract:** commission §5.9 ("reopen results do not depend on `ReadTable` key enumeration order"), §6 ordering control ("valid publications reopen consistently"), the spec's Q1-Q1 requirement (the re-stage/re-verify branch must be available after an interruption), and the accepted staged-run resumption lifecycle (`Store_ReopensStagedRunWithoutPublishingItAndCanResumePublication` pattern, single-unit only).
+    84: - **Observable consequence:** a valid multi-project real-fact run interrupted between `sink.CompleteAsync()` and `CompleteIndexRunAsync()` — precisely the Q1-Q1 window — can never be resumed or completed when the referencing unit's stage key sorts first. The fail-closed property is preserved (refusal; no stale, partial, or fabricated authority is ever served), and single-unit resumption and completed-publication reopen are unaffected.
+    85: - **Severity:** moderate. Correctness/lifecycle defect, not a data-integrity hazard. It weakens the Q1-Q1 remediation menu for cross-project runs (fail-closed only; re-stage unreachable) and violates this commission's ordering-independence requirement.
+    86: - **Smallest remediation boundary:** `DurableCommandLog.ReplayAsync` step 4 — apply each run's staged commands as one set (or validate the staged application once per run against the complete staged set), mirroring the authorized R1 pattern for published units. No contract, schema, or authority change is required. **This review did not implement it** (production changes are forbidden here); it requires a separate bounded authorization.
+    87: 
+
+### docs/reviews/ANDIRIT-CI1A-S2.5-ENTRY-ASSESS-01.md:138
+    134: **S-01 — proof chain.** Demonstrated: S2.1 verified acquisition (source bytes ↔ Roslyn tree, options/references, scope/universe membership); S2.2 live minting, frozen-vector reproduction and refusal; S2.3/S2.4 persisted-identity cross-checks; FINAL-Q1 probes cross-checked production primitives against frozen R2 authority values before asserting. **Not established:** the *general canonical derivation* of `identifierDigest`/`declarationDigest`/`shapeDigest` from the verified live compilation, and the full integrated chain proof. This is the S2.5 completion gate per the [canonicalization disposition](../planning/adr-ci1-01-ci1a-s2-3/s01-canonicalization-disposition.md) §5/§7 (do not reopen S2.2; do not declare it satisfied). Since S2.3 a production derivation exists (`CSharpCodeGraphPlugin.Session`: `OccurrenceIdentifierDigest` / `OccurrenceDeclarationDigest` / `OccurrenceShapeDigest` over the normalized symbol, wired into the extractor), but its canonicality for general source is unqualified. **Approach:** independent qualification first (adversarial cases: generics, nested/explicit-interface members, ref/out/params/optional parameters, operators/constructors, nullable/tuple/generic type formatting, overloads, cross-project binding, external refusal), with expected values derived independently of the implementation; if the qualification demonstrates a genuine gap, the narrowest bounded canonicalization correction becomes a prerequisite under its **own** owner authorization — no correction is presumed or authorized here. This is a **missing proof**, not a demonstrated production defect.
+    135: 
+    136: **D4.5 and full S-02.** Both are assigned to **Stage 6** by the authoritative matrix (§9 row 5: "explicitly deferred; not counted as exercised"; §12) and the register ("invariant 5 and full S-02 Stage 6"). S2.5 must **record** them and deliver the *applicable* subset: recovery/reopen evidence (SQ-02), the native serialized schedule re-verification (SQ-03), bounded `Examined`, and the D4 invariants already exercised.
+    137: 
+ >> 138: **Durability boundary.** F-02 stands: managed fault injection ≠ crash/power-loss/abrupt-kill/multi-process durability. Actual crash or power-loss testing is **not** required by S2.5, would need new instrumentation and explicit safety scoping, and remains a separately commissioned Stage 6 qualification (Q2-F12). No destructive crash testing is proposed. The managed injectors remain internal/test-only (I-05).
+    139: 
+    140: ---
+    141: 
+    142: ## 7. D3-full evidence-gap assessment (A6)
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-feasibility.md:192
+    188: ## 5. Transaction, write, publication and durability implications
+    189: 
+    190: | Aspect | Finding |
+    191: | --- | --- |
+ >> 192: | Atomicity | One native write transaction per command (`BeginWriteTransaction` → writes → `Commit`). The commit is all-or-nothing, so a cancellation in the native window cannot produce a partially applied mutation. |
+    193: | Command log | `_commands` advances only after the native write returns (`MutateAsync` line 392). A pre-native cancellation or a known native failure rebuilds the projection from the unchanged durable log (`RebuildInnerFromDurableStateAsync`). |
+    194: | Publication | Publication happens in the `complete` command inside the same native transaction (`PublishStagedRun` + `IndexState` + occurrence authority + optional mirror rebuild). A cancelled staging is therefore not published at all; a staged write that completes during a cancellation remains staged until `CompleteIndexRunAsync` publishes it. |
+    195: | Durability | The commit is the durability point. After it, the outcome must not be negated by a cancellation; the store already refuses to guess (unknown-outcome quarantine). A cancellation *before* the commit leaves the previous publication and index state intact. |
+    196: | Index state | `CodeRepositoryIndexState` is written in the same transaction as the publication, so the accepted index state is never split from the accepted publication. |
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-implementation-proposal.md:24
+    20: 
+    21: | Constraint | Consequence for the design |
+    22: | --- | --- |
+    23: | The pinned dependency exposes no interruption mechanism (§3 of the feasibility assessment) | the design must not claim or simulate interruption of active native work |
+ >> 24: | *"Cancelled staging must not expose partial facts or index entries"* (D4 invariant 5) | the guarantee to implement and prove is **non-exposure**, not interruption |
+    25: | *"A managed timeout or abandoned task must not be represented as native cancellation"* (commission §4) | the outcome vocabulary is fixed to three values; no fourth "cancelled" outcome may be synthesized |
+    26: | Stage 2 accepted behavior, refusal vocabulary and accounting semantics are preserved | no change to validation, refusal, identity, merge or accounting paths |
+    27: | No dependency upgrade is authorized | `LatticeDbSharp` stays at `0.2.0` |
+    28: | No production implementation without a separate authorization | this document proposes; the successor commission implements |
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-obligation-inventory.md:41
+    37: | **M9.5** (S2.5 qualification matrix, line 90) | Stage-1 cancellation behavior preserved — *"Dedicated native cancel-path test"*; evidence class `E / no`; owner Stage 6; receipt: record Stage 6 referral | deferred with a named owner; claiming completion is blocked | **in** — this is the primary S6.1 deliverable |
+    38: | **M12.2** (S2.5 qualification matrix, line 122) | D4 invariant 5 — *"Explicitly deferred to Stage 6"*; *"Cancel path test native"* | deferred with a named owner | **in** |
+    39: | **M12.1 / M12.3** (S2.5 qualification matrix, lines 121, 123) | D4 invariants 1–4, 6–9 and 10 (snapshot/concurrent publication) — full native matrix | deferred with a named owner | **out** — later full-matrix package |
+    40: | **I-04** (CI1A obligation register, line 216) | *"Simple publication-bound maintenance and serialized policy fixed; cancellation remains unqualified."* | open — Stage 6 | **in** — the cancellation policy is specified as part of S6.1 |
+ >> 41: | **Q2-F09** (owner decision §G.2; register line 227) | *"C rebuild blocks queries; no cancellation"* — *"addressed by D4 (maintenance policy; CI-1A must qualify a production-backed rebuild path)"* | open — Stage 6 | **partly in** — the cancellation aspect only; the rebuild-blocking aspect remains deferred |
+    42: | **Q2-F12** (owner decision §G.2; register line 230) | *"Crash/power-loss/multi-process/cross-platform not demonstrated"* | open — Stage 6 | **out** — unchanged (Q-S61-8) |
+    43: | **F-02** | Managed fault injection is not crash/power-loss/abrupt-kill/multi-process durability | open — Stage 6 | **out** — unchanged |
+    44: | **SQ-05 / §14** | Full Windows/Linux/macOS certification | Linux minimum qualified in Stage 2; full certification deferred | **out** — DF-6; but S6.1's own Linux evidence row must use genuine hosted Linux |
+    45: 
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01.md:15
+    11: > The S6.1 acceptance boundary — the dedicated native cancel-path test (M9.5), the native
+    12: > cancelled-staging case of D4 invariant 5 (M12.2), and the cancellation part of the S-02 native
+    13: > matrix — is implementable and qualifies on the pinned baseline with no dependency change and no
+    14: > production behaviour change. One capability is **not** implementable and is therefore recorded as a
+ >> 15: > bounded limitation rather than simulated: **active native execution cannot be interrupted**
+    16: > (LatticeDbSharp 0.2.0 exposes no cancellation or interruption entry point at the managed or native
+    17: > ABI level). The qualification therefore proves a *bounded* cancellation contract — cancellation
+    18: > before native invocation and cancellation of a managed wait — plus atomicity and truthfulness for
+    19: > the non-cancellable native window. No evidence in this commission represents a managed timeout or
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01.md:75
+    71: guarantee was reinterpreted. The byte-exact source excerpts are in `evidence/contract-reconciliation.txt`.
+    72: 
+    73: | Source | What it fixes for S6.1 |
+    74: | --- | --- |
+ >> 75: | `ADR-CI1-01` owner decision §D.4 | D4 invariant 5: *"Cancelled staging must not expose partial facts or index entries."* D4 qualification: CI-1A must reproduce the applicable cancellation tests *"using actual production storage and APIs"*. The requirement is **non-exposure**, not interruption. |
+    76: | S-01 obligation reconciliation §S-02 | The Stage-6 native matrix must exercise all ten D4 invariants against the actual production `LatticeCodeGraphStore`, including a cancellation path and an unknown-outcome case; Stage 2 inherits but does not close it. |
+    77: | CI1A specification | S-02: *"All ten invariants must be exercised against actual production `LatticeCodeGraphStore` storage, including failed/cancelled/superseded publication, reopen and a native concurrency/republication scenario."* |
+    78: | CI1A acceptance matrix | Row 5: *"cancelled staging exposes nothing / accepted state intact / cancel path (`complete:false`) / memory + native"*. |
+    79: | S2.5 qualification matrix | **M9.5** — Stage-1 cancellation behavior preserved; *"Dedicated native cancel-path test"*; evidence class `E / no`; owner Stage 6. **M12.2** — D4 invariant 5 *"Explicitly deferred to Stage 6"*; *"Cancel path test native"*. **M12.1 / M12.3** — the remaining full-native-matrix rows, belonging to later work packages. |
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-traceability-matrix.md:42
+    38: ## 2. Requirement traceability — what S6.1 discharges
+    39: 
+    40: | Requirement | Source | Exact wording relied on | Instrument | Evidence | Status |
+    41: | --- | --- | --- | --- | --- | --- |
+ >> 42: | **D4 invariant 5** (cancelled staging exposes no partial data) | owner decision §D.4 | *"Cancelled staging must not expose partial facts or index entries."* | Q-01, Q-02, Q-03, Q-04 (native table reads of `HetuStage` / `HetuUnit` after disposal) | `evidence/case-receipts/Q-01.log` … `Q-04.log` | **discharged for the cancellation path** — non-exposure proven natively; the guarantee is non-exposure, not interruption |
+    43: | **D4 qualification clause** (actual production storage and APIs) | owner decision §D.4 | CI-1A must reproduce the applicable cancellation tests *"using actual production storage and APIs"* | the whole suite runs against `LatticeCodeGraphStore` over real LatticeDB files; durable state read directly through `LatticeDbSharp` | `evidence/case-receipts/`, `evidence/native-dependency-identity.txt` | **discharged for the cancellation path** |
+    44: | **S-02** (native matrix includes a cancellation path and an unknown-outcome case) | CI1A specification; S-01 obligation reconciliation | *"All ten invariants must be exercised against actual production `LatticeCodeGraphStore` storage, including failed/cancelled/superseded publication, reopen and a native concurrency/republication scenario."* | Q-01…Q-12 (cancellation path, unknown outcome, reopen, concurrency with disposal) | `evidence/case-receipts/` | **partly discharged** — the cancellation and unknown-outcome rows are exercised; the remaining ten-invariant native matrix (M12.1, M12.3) stays with S6.3 |
+    45: | **M9.5** (dedicated native cancel-path test) | S2.5 qualification matrix §9 | *"Stage 1 cancellation behavior preserved — Dedicated native cancel-path test"*; evidence class `E / no`; owner Stage 6 | `NativeCancellationPathTests` — 13 dedicated native cancel-path tests | `evidence/case-receipts/case-summary.json` | **discharged as an instrument** (execution evidence produced; independent qualification is the successor commission) |
+    46: | **M12.2** (native cancelled-staging case) | S2.5 qualification matrix §12 | D4 invariant 5 *"Explicitly deferred to Stage 6"*; *"Cancel path test native"* | Q-01, Q-02, Q-03, Q-04 — native `HetuStage` / `HetuUnit` assertions | `evidence/case-receipts/Q-01.log` … `Q-04.log` | **discharged as an instrument** |
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-traceability-matrix.md:43
+    39: 
+    40: | Requirement | Source | Exact wording relied on | Instrument | Evidence | Status |
+    41: | --- | --- | --- | --- | --- | --- |
+    42: | **D4 invariant 5** (cancelled staging exposes no partial data) | owner decision §D.4 | *"Cancelled staging must not expose partial facts or index entries."* | Q-01, Q-02, Q-03, Q-04 (native table reads of `HetuStage` / `HetuUnit` after disposal) | `evidence/case-receipts/Q-01.log` … `Q-04.log` | **discharged for the cancellation path** — non-exposure proven natively; the guarantee is non-exposure, not interruption |
+ >> 43: | **D4 qualification clause** (actual production storage and APIs) | owner decision §D.4 | CI-1A must reproduce the applicable cancellation tests *"using actual production storage and APIs"* | the whole suite runs against `LatticeCodeGraphStore` over real LatticeDB files; durable state read directly through `LatticeDbSharp` | `evidence/case-receipts/`, `evidence/native-dependency-identity.txt` | **discharged for the cancellation path** |
+    44: | **S-02** (native matrix includes a cancellation path and an unknown-outcome case) | CI1A specification; S-01 obligation reconciliation | *"All ten invariants must be exercised against actual production `LatticeCodeGraphStore` storage, including failed/cancelled/superseded publication, reopen and a native concurrency/republication scenario."* | Q-01…Q-12 (cancellation path, unknown outcome, reopen, concurrency with disposal) | `evidence/case-receipts/` | **partly discharged** — the cancellation and unknown-outcome rows are exercised; the remaining ten-invariant native matrix (M12.1, M12.3) stays with S6.3 |
+    45: | **M9.5** (dedicated native cancel-path test) | S2.5 qualification matrix §9 | *"Stage 1 cancellation behavior preserved — Dedicated native cancel-path test"*; evidence class `E / no`; owner Stage 6 | `NativeCancellationPathTests` — 13 dedicated native cancel-path tests | `evidence/case-receipts/case-summary.json` | **discharged as an instrument** (execution evidence produced; independent qualification is the successor commission) |
+    46: | **M12.2** (native cancelled-staging case) | S2.5 qualification matrix §12 | D4 invariant 5 *"Explicitly deferred to Stage 6"*; *"Cancel path test native"* | Q-01, Q-02, Q-03, Q-04 — native `HetuStage` / `HetuUnit` assertions | `evidence/case-receipts/Q-01.log` … `Q-04.log` | **discharged as an instrument** |
+    47: | **I-04** (cancellation policy specified) | obligation register | cancellation remains unqualified; owner Stage 6 | C-1 and C-2 publish the policy in the API contract | `src/Andirit.LatticeDb/LatticeCodeGraphStore.cs`, `src/Andirit/ICodeGraphStore.cs`; `evidence/api-surface/api-diff.txt` | **discharged** — the policy is specified in the published contract |
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-traceability-matrix.md:44
+    40: | Requirement | Source | Exact wording relied on | Instrument | Evidence | Status |
+    41: | --- | --- | --- | --- | --- | --- |
+    42: | **D4 invariant 5** (cancelled staging exposes no partial data) | owner decision §D.4 | *"Cancelled staging must not expose partial facts or index entries."* | Q-01, Q-02, Q-03, Q-04 (native table reads of `HetuStage` / `HetuUnit` after disposal) | `evidence/case-receipts/Q-01.log` … `Q-04.log` | **discharged for the cancellation path** — non-exposure proven natively; the guarantee is non-exposure, not interruption |
+    43: | **D4 qualification clause** (actual production storage and APIs) | owner decision §D.4 | CI-1A must reproduce the applicable cancellation tests *"using actual production storage and APIs"* | the whole suite runs against `LatticeCodeGraphStore` over real LatticeDB files; durable state read directly through `LatticeDbSharp` | `evidence/case-receipts/`, `evidence/native-dependency-identity.txt` | **discharged for the cancellation path** |
+ >> 44: | **S-02** (native matrix includes a cancellation path and an unknown-outcome case) | CI1A specification; S-01 obligation reconciliation | *"All ten invariants must be exercised against actual production `LatticeCodeGraphStore` storage, including failed/cancelled/superseded publication, reopen and a native concurrency/republication scenario."* | Q-01…Q-12 (cancellation path, unknown outcome, reopen, concurrency with disposal) | `evidence/case-receipts/` | **partly discharged** — the cancellation and unknown-outcome rows are exercised; the remaining ten-invariant native matrix (M12.1, M12.3) stays with S6.3 |
+    45: | **M9.5** (dedicated native cancel-path test) | S2.5 qualification matrix §9 | *"Stage 1 cancellation behavior preserved — Dedicated native cancel-path test"*; evidence class `E / no`; owner Stage 6 | `NativeCancellationPathTests` — 13 dedicated native cancel-path tests | `evidence/case-receipts/case-summary.json` | **discharged as an instrument** (execution evidence produced; independent qualification is the successor commission) |
+    46: | **M12.2** (native cancelled-staging case) | S2.5 qualification matrix §12 | D4 invariant 5 *"Explicitly deferred to Stage 6"*; *"Cancel path test native"* | Q-01, Q-02, Q-03, Q-04 — native `HetuStage` / `HetuUnit` assertions | `evidence/case-receipts/Q-01.log` … `Q-04.log` | **discharged as an instrument** |
+    47: | **I-04** (cancellation policy specified) | obligation register | cancellation remains unqualified; owner Stage 6 | C-1 and C-2 publish the policy in the API contract | `src/Andirit.LatticeDb/LatticeCodeGraphStore.cs`, `src/Andirit/ICodeGraphStore.cs`; `evidence/api-surface/api-diff.txt` | **discharged** — the policy is specified in the published contract |
+    48: | **Q2-F09** (rebuild blocks queries; no cancellation) | owner decision §G.2 | addressed by D4 (maintenance policy; CI-1A must qualify a production-backed rebuild path) | C-1/C-2 publish the policy; Q-01…Q-12 qualify it natively | as above | **cancellation aspect addressed**; the rebuild-path aspect remains a D4/S6.3 matter |
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01.md:68
+    64: fails closed on any new wording).
+    65: 
+    66: | Adjudication category | Count | Meaning |
+    67: | --- | --- | --- |
+ >> 68: | `A-QUALIFICATION-OBLIGATION` | 13 | requires **native evidence** for the cancellation path — not an interruption mechanism |
+    69: | `B-EXPLICIT-NEGATION` | 6 | forbids claiming interruption, forbids representing a managed timeout as native cancellation |
+    70: | `C-RECORDED-LIMITATION` | 9 | records the non-interruptible native window and the conditional upstream dependency change |
+    71: | `D-PROCESS-LEVEL-INTERRUPTION` | 2 | "interruption" denotes an analysis-process / store-lifetime interruption |
+    72: | `E-OUT-OF-SCOPE-TRACK` | 3 | EC-6C track prose outside the CI-1A S6.1 boundary |
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01.md:254
+    250: 
+    251: ## 9. Qualifications carried forward
+    252: 
+    253: Q-S61-1…Q-S61-8 remain in force unchanged: Q-S61-1 (non-interruptible native window), Q-S61-2 (the
+ >> 254: native window must be awaited), Q-S61-3 (D4.5 discharged by atomicity, not interruption), Q-S61-4
+    255: (`osx-arm64` unqualified — no native runtime evidence), Q-S61-5 (genuine hosted Linux required for
+    256: the Linux row), Q-S61-6 (platform-invariant contract, platform-bounded evidence), Q-S61-7 (scope
+    257: limited to qualification of existing behaviour), Q-S61-8 (F-02 boundary untouched). Q-L1…Q-L8,
+    258: MR-1…MR-4, GH-1…GH-4 and DF-1…DF-8 remain in force.
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01.md:286
+    282: > approved qualification matrix **Q-01…Q-12** was executed against the production store over real
+    283: > LatticeDB storage on **Windows x64** and, in the genuine hosted CI run on **`ubuntu-latest`**, on
+    284: > **genuine hosted Ubuntu x64** — with **0 skipped** in every suite. The contract-consistency gate
+    285: > passed: no binding requirement mandates interruption of active native work, and none was
+ >> 286: > weakened. The bounded limitation that **active native execution cannot be interrupted** is
+    287: > published in the API contract (C-1, C-2) and carried forward as qualification **Q-S61-1**.
+    288: >
+    289: > This disposition records **implementation and execution evidence only**. It grants **no S6.1 owner
+    290: > acceptance** and **no independent qualification**: the independent qualification is the separate
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01.md:301
+    297: | Approved plan | Actual | Assessment |
+    298: | --- | --- | --- |
+    299: | C-1: class-level `<remarks>` on `LatticeCodeGraphStore` | as planned (+21 lines) | none |
+    300: | C-2: interface documentation in `src/Andirit/ICodeGraphStore.cs` | the remarks were added to `ICodeGraphIndexStore` — the mutation interface inside that file that owns the cancellation-token contract. The file and the file count are unchanged; no interface was added or renamed. | **minor deviation, no functional effect** — the contract is published once at the API boundary as intended |
+ >> 301: | C-3: one new test file covering Q-01…Q-12 | as planned; the file also carries the post-commit-cancellation regression guard required by the commission (13 tests in total) | none — the regression guard was an explicit commission requirement |
+    302: | C-4: decision record | as planned, plus an erratum to the entry commission's implementation-proposal wording about XML documentation packaging (§4) | erratum recorded, not a deviation of the change set |
+    303: | Evidence package | sealed in two steps: the Windows seal at the implementation revision (`0162494…`, 49 entries) and the final seal including the genuine hosted Ubuntu evidence in this evidence commit | transparent and auditable; the manifest is regenerated over the final package content |
+    304: 
+    305: ### 11.2 Residual risks
+
+### docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01.md:309
+    305: ### 11.2 Residual risks
+    306: 
+    307: | Risk | Status |
+    308: | --- | --- |
+ >> 309: | Active native execution is not interruptible | **bounded limitation, published** (Q-S61-1, Q-S61-2, Q-S61-3); the dependency change that would be required is named; not simulated |
+    310: | A future regression adds a post-commit cancellation checkpoint | **guarded** by `Regression_CancellationAfterASuccessfulCommit_MustNotSurfaceAsCancelled` |
+    311: | The managed fault injector is not crash/power-loss durability | **not discharged** — DF-4 stays open |
+    312: | macOS native runtime evidence | **not claimed** — Q-S61-4 stays open (the pinned dependency has no supported macOS runtime) |
+    313: | The remaining ten-invariant native matrix (M12.1, M12.3) and the full S-02 / D4.5 matrices | **not discharged** — S6.3 |
+
+### docs/reviews/ec6d-scope-q2-independent-verification.md:274
+    270: ## N. Evidence limits and validation
+    271: 
+    272: Windows x64/.NET SDK 10.0.401; TS oracle 5.9.3. No cross-platform, representative-repository, performance or release qualification. This chat built/ran the unchanged baseline, fourteen p9 corpora, one incremental-origin check and eighteen evidence assertions. Historical 388-test logs/Q1 report were examined; broad suites were not repeated for review-only edits.
+    273: 
+ >> 274: No new EC-6D query/facts, LatticeDB reopen, migration, cancellation/failure injection or consistent-provider execution was performed. A01–A20 are audited criteria, not passed future-feature tests. Original whole-machine histories, historical push absence and pre-audit worktree activity cannot be proved from present state. Source/compiler observations remain fixture-bounded.
+    275: 
+    276: Final validation checks local Markdown links, evidence hashes, `git diff --check`, exact source/review bindings, unchanged production/planning/Q1 evidence, protected tracked-file/status preservation, artifact-only change surface and clean review status. Ignored build output exists only in Q2. See [evidence README](ec6d-scope-q2-evidence/README.md) for commands and [validation](ec6d-scope-q2-evidence/validation.json) for results.
+    277: 
+    278: ## O. Review commit attestation
+

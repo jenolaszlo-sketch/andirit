@@ -1,0 +1,52 @@
+﻿ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01 - reviewer diagnostic probe
+producer assertions are NOT trusted; every claim below is observed here
+
+== PROBE A: which branch does the producer's Q-02 schedule take? ==
+producer Q-02: canceller waits 20 ms, then cancels; 300-node unit; 3 attempts.
+reviewer instrumentation: the production fault-injector seam only RECORDS that
+the native window of THE OPERATION UNDER TEST was reached (armed after Seed,
+never throws, never changes timing).
+  attempt 0: outcome=completed operationEnteredNativeWindow=True stagedRows=1 nodesInStagedRow=300
+    OBSERVED: the cancellation was observed DURING/AFTER the native window; the OPERATION UNDER TEST had the native transaction OPEN
+  attempt 1: outcome=completed operationEnteredNativeWindow=True stagedRows=1 nodesInStagedRow=300
+    OBSERVED: the cancellation was observed DURING/AFTER the native window; the OPERATION UNDER TEST had the native transaction OPEN
+  attempt 2: outcome=completed operationEnteredNativeWindow=True stagedRows=1 nodesInStagedRow=300
+    OBSERVED: the cancellation was observed DURING/AFTER the native window; the OPERATION UNDER TEST had the native transaction OPEN
+
+== PROBE B: which branch does the producer's Q-04 schedule take, over 20 repetitions? ==
+producer Q-04: operation started on a background task, canceller waits 5 ms, then cancels.
+  repetitions                                  : 20
+  outcome=completed                            : 20
+  outcome=cancelled (before native invocation) : 0
+  native transaction was actually opened       : 20
+  outcome/state disagreements (false cancels)  : 0
+  OBSERVED: the producer's Q-04 schedule reached the native window in 20/20 repetitions
+
+== PROBE C: with the native window PROVABLY open, is cancellation not observed, and is the unit committed whole? ==
+  operation outcome                 : completed
+  cancellation was requested        : True
+  cancellation observed by the store: False
+  staged native rows                : 1
+  nodes in the staged row           : 300 (expected 300)
+  OBSERVED: cancellation inside the open native transaction was NOT observed and the unit committed WHOLE
+
+== PROBE D: does a pending cancellation ever expose a staged fact to a concurrent reader? ==
+(D4 invariant 5 non-exposure; the store's reads take the same write gate)
+  concurrent reader saw published facts    : 0
+  concurrent reader saw a publication       : 0
+  concurrent reader was refused/cancelled   : 0
+  OBSERVED: no staged fact was exposed to a concurrent reader during the pending cancellation
+
+== PROBE E: is the pre-native checkpoint the LAST cancellation observation before the native transaction opens? ==
+  pre-cancelled token outcome           : cancelled
+  native transaction entered             : False
+  staged native rows after cancellation   : 0
+  OBSERVED: a pre-cancelled request is refused before any native transaction opens
+
+== PROBE F: is 'cancelled before native invocation' ever reported when a native transaction actually opened? ==
+  exception surfaced by the store        : (none)
+  durable staged rows after the call     : 1
+  OBSERVED: a native write landed and NO cancellation was reported - the outcome taxonomy is truthful
+
+
+PROBE-OUTPUT C:\Windows\TEMP\qual-s61-probe-c860b23fb6d04b46a198be03479ea635.txt

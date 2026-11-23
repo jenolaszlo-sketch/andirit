@@ -1,0 +1,143 @@
+ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01 - entry and provenance verification
+reviewer role: independent qualification (not the implementation producer)
+
+== 1. repository identities ==
+  entry baseline   2d1e8ec88e397d0c36b7f258eb1a1c0840e56157
+                   type=commit tree=82ce2b873aa17c69fe5da63deb5910fd520c8acd
+                   subject=docs(stage6): enter Stage 6 for S6.1 - native cancellation feasibility and implementation preparation
+[PASS] entry baseline object exists and is a commit - commit
+  implementation   01624943233f16447c3176b7c905c544642dfb2c
+                   type=commit tree=f8a6876ff78de06b6c8531eb9e14ac028da7baa5
+                   subject=docs(stage6): implement S6.1 native cancellation path (C-1..C-4)
+[PASS] implementation object exists and is a commit - commit
+  evidence         3eb1339304ff843336f6165575904350df56d041
+                   type=commit tree=be0d12733f0d12f7538c00f2eaf86d4e77ce49cc
+                   subject=docs(stage6): seal S6.1 implementation and execution evidence, including genuine hosted Ubuntu x64
+[PASS] evidence object exists and is a commit - commit
+
+== 2. ancestry ==
+[PASS] entry -> implementation is an ancestor relation - is-ancestor exit=0
+[PASS] implementation -> evidence is an ancestor relation - is-ancestor exit=0
+[PASS] qualified implementation eafd632 -> evidence is an ancestor relation - is-ancestor exit=0
+[PASS] remote base -> implementation is an ancestor relation - is-ancestor exit=0
+[PASS] implementation is NOT an ancestor of the entry baseline (forward direction only)
+
+== 3. working tree and branch state ==
+[PASS] working tree clean - (clean)
+[PASS] on branch main - main
+[PASS] HEAD is the pinned evidence revision - 3eb1339304ff843336f6165575904350df56d041
+  HEAD...origin/main = 1	0  (1 0 = local evidence commit is unpushed, by design)
+[PASS] origin/main is the pinned implementation revision - 01624943233f16447c3176b7c905c544642dfb2c
+[PASS] the local-only evidence revision is preserved and not pushed
+
+== 4. published state untouched ==
+[PASS] remote tag object unchanged - 6659647527a6e0eb822a3d7a05b8283c75fd6a3e
+  tag object type   = tag
+  tag peeled commit = 6ed05964d2fcc758648b654a01ec706647e52183
+[PASS] tag is an annotated tag object - tag
+[PASS] tag still peels to the same commit as at the entry baseline - 6ed05964d2fcc758648b654a01ec706647e52183
+  package version    = <Version>0.2.0-preview.7</Version>
+[PASS] release version still 0.2.0-preview.7 - <Version>0.2.0-preview.7</Version>
+[PASS] Directory.Build.props unchanged between entry and evidence
+
+== 5. change-set boundary (entry baseline -> implementation) ==
+  5a. production / test / CI scope
+     M	src/Andirit.LatticeDb/LatticeCodeGraphStore.cs
+     M	src/Andirit/ICodeGraphStore.cs
+     A	tests/Andirit.LatticeDb.Tests/NativeCancellationPathTests.cs
+[PASS] no change under .github/
+[PASS] no production project file changed
+[PASS] no test project file changed
+[PASS] exactly 3 changed paths in src/tests/.github - 3
+[PASS] src changes limited to the two contract-documentation files - ['src/Andirit.LatticeDb/LatticeCodeGraphStore.cs', 'src/Andirit/ICodeGraphStore.cs']
+  5b. full scope (entry baseline -> implementation) - documentation and evidence only
+     total changed paths: 56
+     code/CI/config paths INSIDE the evidence package (isolated tools): ['docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence/tools/apidump/Program.cs', 'docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence/tools/apidump/apidump.csproj', 'docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence/tools/dllcompare/Program.cs', 'docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence/tools/dllcompare/dllcompare.csproj']
+     code/CI/config paths outside the evidence package: ['src/Andirit.LatticeDb/LatticeCodeGraphStore.cs', 'src/Andirit/ICodeGraphStore.cs', 'tests/Andirit.LatticeDb.Tests/NativeCancellationPathTests.cs']
+[PASS] no code/CI/config file other than the two documented src files and the new test file - ['src/Andirit.LatticeDb/LatticeCodeGraphStore.cs', 'src/Andirit/ICodeGraphStore.cs', 'tests/Andirit.LatticeDb.Tests/NativeCancellationPathTests.cs']
+[PASS] the only additional code files are the two isolated evidence tools inside the evidence package - ['docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence/tools/apidump/Program.cs', 'docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence/tools/apidump/apidump.csproj', 'docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence/tools/dllcompare/Program.cs', 'docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence/tools/dllcompare/dllcompare.csproj']
+  5c. the evidence tools are not referenced by any production or test project
+[PASS] no production/test project references the evidence tools - ''
+
+== 6. independent structural check of the two src changes ==
+  src/Andirit.LatticeDb/LatticeCodeGraphStore.cs: +21 -0
+    non-comment/non-XML added lines: 0
+[PASS]   src/Andirit.LatticeDb/LatticeCodeGraphStore.cs contains no executable added line - []
+[PASS]   src/Andirit.LatticeDb/LatticeCodeGraphStore.cs contains no removed line - []
+  src/Andirit/ICodeGraphStore.cs: +21 -0
+    non-comment/non-XML added lines: 0
+[PASS]   src/Andirit/ICodeGraphStore.cs contains no executable added line - []
+[PASS]   src/Andirit/ICodeGraphStore.cs contains no removed line - []
+
+== 7. evidence package manifests, verified against committed Git blobs ==
+  repository packages with a manifest: 47
+    docs/decisions/adr-ci1-01-ci1a-s2-5-wp-s25-4-final-owner-01-evidence: 4 entries, 0 mismatches
+    docs/decisions/adr-ci1-01-ci1a-s2-5-wp-s25-4-m54-owner-01-evidence: 5 entries, 0 mismatches
+    docs/decisions/adr-ci1-01-ci1a-stage2-acceptance-owner-01-evidence: 8 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.3-WP-S23-2-IMPL-01-evidence: 38 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.3-WP-S23-2-R1-evidence: 94 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.3-WP-S23-3A-IMPL-01-evidence: 11 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-PUBLICATION-01-evidence: 12 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-PUBLICATION-EXEC-01-evidence: 20 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-PUBLICATION-WORKFLOW-01-evidence: 10 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-RELEASE-01-evidence: 8 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-RELEASE-RECOVERY-01-evidence: 14 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-GATE-QUALIFICATION-01-evidence: 40 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-M54-B-QUAL-01-evidence: 32 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-QUAL-04-evidence: 289 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-UBUNTU-QUALIFICATION-01-G2-EXEC-01-evidence: 20 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-UBUNTU-QUALIFICATION-01-G3-QUAL-01-evidence: 9 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-UBUNTU-QUALIFICATION-01-evidence: 7 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01-evidence: 26 entries, 0 mismatches
+    docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence: 61 entries, 0 mismatches
+    docs/reviews/CI1A-S2.2-Q1-evidence: 33 entries, 0 mismatches
+    docs/reviews/CI1A-S2.2-Q2-evidence: 93 entries, 0 mismatches
+    docs/reviews/CI1A-S2.2-R1-evidence: 50 entries, 0 mismatches
+    docs/reviews/CI1A-S2.3-NEW-01-Q1-evidence: 12 entries, 0 mismatches
+    docs/reviews/CI1A-S2.3-S23-LIFE-Q1-evidence: 32 entries, 0 mismatches
+    docs/reviews/CI1A-S2.3-WP-S23-2-Q1-evidence: 150 entries, 0 mismatches
+    docs/reviews/CI1A-S2.3-WP-S23-2-Q2-evidence: 196 entries, 0 mismatches
+    docs/reviews/CI1A-S2.3-WP-S23-5-QUAL-01-evidence: 32 entries, 0 mismatches
+    docs/reviews/CI1A-S2.4-S24-FINAL-Q1-evidence: 17 entries, 0 mismatches
+    docs/reviews/CI1A-S2.4-S24-READER-Q1-evidence: 27 entries, 0 mismatches
+    docs/reviews/CI1A-S2.4-S24-READER-Q2-evidence: 41 entries, 0 mismatches
+    docs/reviews/CI1A-S2.4-S24-SURFACE-Q1-evidence: 28 entries, 0 mismatches
+    docs/reviews/CI1A-S2.4-WP-S24-1-IMPL-01-evidence: 10 entries, 0 mismatches
+    docs/reviews/CI1A-S2.4-WP-S24-1-R1-IMPL-01-evidence: 19 entries, 0 mismatches
+    docs/reviews/CI1A-S2.4-WP-S24-2-QUAL-PREP-01-evidence: 21 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-S25-SQ04-Q1-evidence: 20 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-S25-SQ05-Q1-evidence: 6 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-1-BIND-01-evidence: 24 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-2-G2-EXEC-evidence: 18 entries, 4 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-3-P1-DELTA-evidence: 17 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-3-P1-PROOF-evidence: 23 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-3-P2-QUAL-evidence: 26 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-01-evidence: 126 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-02-evidence: 245 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-4-QUAL-03-evidence: 535 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-4-R1-evidence: 72 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-4-R2-evidence: 184 entries, 0 mismatches
+    docs/reviews/CI1A-S2.5-WP-S25-4-R3-evidence: 206 entries, 0 mismatches
+[PASS] all committed package manifests match their committed blobs, except the known pre-existing gap - []
+[PASS] the only mismatch anywhere is the known pre-existing 4-file gap in the S2.5 G2 EXEC package - [('docs/reviews/CI1A-S2.5-WP-S25-2-G2-EXEC-evidence', ['coverage-results-ubuntu-latest/coverage/coverage.cobertura.xml (absent)', 'coverage-results-ubuntu-latest/coverage-csharp/coverage.cobertura.xml (absent)', 'coverage-results-ubuntu-latest/coverage-latticedb/coverage.cobertura.xml (absent)', 'coverage-results-ubuntu-latest/coverage-treesitter/coverage.cobertura.xml (absent)'])]
+  total manifest entries across the repository: 2971
+  independent re-verification that the 4-file gap is PRE-EXISTING (not introduced by this lineage):
+    remote base b5a81f8: 4 of 18 manifest entries absent
+[PASS]     gap identical at remote base b5a81f8 - ['coverage-results-ubuntu-latest/coverage-csharp/coverage.cobertura.xml', 'coverage-results-ubuntu-latest/coverage-latticedb/coverage.cobertura.xml', 'coverage-results-ubuntu-latest/coverage-treesitter/coverage.cobertura.xml', 'coverage-results-ubuntu-latest/coverage/coverage.cobertura.xml']
+    entry baseline 2d1e8ec: 4 of 18 manifest entries absent
+[PASS]     gap identical at entry baseline 2d1e8ec - ['coverage-results-ubuntu-latest/coverage-csharp/coverage.cobertura.xml', 'coverage-results-ubuntu-latest/coverage-latticedb/coverage.cobertura.xml', 'coverage-results-ubuntu-latest/coverage-treesitter/coverage.cobertura.xml', 'coverage-results-ubuntu-latest/coverage/coverage.cobertura.xml']
+    evidence 3eb1339: 4 of 18 manifest entries absent
+[PASS]     gap identical at evidence 3eb1339 - ['coverage-results-ubuntu-latest/coverage-csharp/coverage.cobertura.xml', 'coverage-results-ubuntu-latest/coverage-latticedb/coverage.cobertura.xml', 'coverage-results-ubuntu-latest/coverage-treesitter/coverage.cobertura.xml', 'coverage-results-ubuntu-latest/coverage/coverage.cobertura.xml']
+
+[PASS] S6.1 evidence package manifest is complete over the committed tree - 61 listed / 61 committed
+[PASS] S6.1 evidence package manifest is self-excluding
+  S6.1 package: 61 entries, 6860499 bytes
+
+== 8. key evidence artifacts present at the pinned revisions ==
+[PASS] all required implementation/evidence artifacts exist at the evidence revision - []
+
+== 9. independent re-derivation of the implementation revision identity ==
+[PASS] implementation tree resolves consistently
+[PASS] the new test file is present in the pushed implementation revision
+
+RESULT: ALL ENTRY CHECKS PASSED

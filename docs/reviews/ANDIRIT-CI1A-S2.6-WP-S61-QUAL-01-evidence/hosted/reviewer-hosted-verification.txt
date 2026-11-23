@@ -1,0 +1,72 @@
+ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01 - independent hosted Ubuntu verification
+re-fetched from the GitHub Actions API by the reviewer
+
+[1] run identity
+  status: completed
+  conclusion: success
+  headSha: 01624943233f16447c3176b7c905c544642dfb2c
+  event: push
+  workflowName: ci
+  createdAt: 2026-11-22T15:19:11Z
+  updatedAt: 2026-11-22T15:23:39Z
+  url: https://github.com/jenolaszlo-sketch/andirit/actions/runs/45037630799
+[PASS] run conclusion is success
+[PASS] run headSha is the pinned implementation revision - 01624943233f16447c3176b7c905c544642dfb2c
+
+[2] hosted job identity
+  name: test (ubuntu-latest)
+  status: completed
+  conclusion: success
+  started_at: 2026-11-22T15:19:13Z
+  completed_at: 2026-11-22T15:21:13Z
+  runner_name: GitHub Actions 1000004506
+  runner_group: GitHub Actions
+  labels: ['ubuntu-latest']
+  url: https://github.com/jenolaszlo-sketch/andirit/actions/runs/45037630799/job/137254795969
+[PASS] job conclusion is success
+[PASS] the job ran on the ubuntu-latest hosted runner - ['ubuntu-latest']
+[PASS] the runner is a GitHub-hosted runner, not a self-hosted one - GitHub Actions
+
+[3] fresh job log fetched: 47077 bytes
+  shell                : ['/usr/bin/bash']
+  DOTNET_ROOT          : ['/usr/share/dotnet']
+  workspace            : ['/home/runner/work/andirit/andirit']
+  .NET SDK             : ['10.0.404']
+  .NET Core Runtime    : ['10.0.15']
+  requested dotnet     : ['10.0.x']
+  windows-host indicators: []
+[PASS] the log shows the GitHub-hosted Linux runner layout
+[PASS] the shell is /usr/bin/bash
+[PASS] no Windows / WSL / Docker-on-Windows indicator in the log - []
+
+[4] suite counts on the hosted runner (implementation revision)
+  Andirit.CSharp.Tests.dll: passed=372 failed=0 skipped=0 total=372
+  Andirit.LatticeDb.Tests.dll: passed=88 failed=0 skipped=0 total=88
+  Andirit.Tests.dll: passed=345 failed=0 skipped=0 total=345
+  Andirit.TreeSitter.Tests.dll: passed=157 failed=0 skipped=0 total=157
+[PASS] all four suites report 0 failed
+[PASS] all four suites report 0 skipped
+[5] baseline run comparison
+  Andirit.CSharp.Tests.dll: baseline passed=372 -> implementation passed=372 (delta 0)
+  Andirit.LatticeDb.Tests.dll: baseline passed=75 -> implementation passed=88 (delta 13)
+  Andirit.Tests.dll: baseline passed=345 -> implementation passed=345 (delta 0)
+  Andirit.TreeSitter.Tests.dll: baseline passed=157 -> implementation passed=157 (delta 0)
+  [Fact] methods in the committed new test file: 13
+  hosted LatticeDb delta: 13
+[PASS] the hosted delta equals the number of new [Fact] methods - 13 vs 13
+[PASS] the hosted LatticeDb suite has 0 skipped
+  CONCLUSION: the 13 additional passing hosted tests are exactly the S6.1 tests,
+              executed on a genuine hosted Ubuntu x64 runner with no skips.
+
+[6] hosted coverage artifacts (freshly downloaded)
+[PASS] coverage: line 82.42 / branch 70.74 >= 55 - threshold 55
+[PASS] coverage-csharp: line 95.11 / branch 87.85 >= 75 - threshold 75
+[PASS] coverage-latticedb: line 92.87 / branch 78.96 >= 70 - threshold 70
+[PASS] coverage-treesitter: line 89.89 / branch 75.95 >= 60 - threshold 60
+
+[7] no evidence substitution
+  the runner workspace /home/runner/work/<repo>/<repo>, /usr/bin/bash and the
+  GitHub-hosted runner group are inconsistent with WSL2, Docker-on-Windows or any
+  Windows-hosted compatibility environment; no such indicator appears in the log.
+
+RESULT: ALL HOSTED CHECKS PASSED
