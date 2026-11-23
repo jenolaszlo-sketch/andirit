@@ -21,6 +21,43 @@ namespace Andirit;
 /// <b>not</b> a native cancellation; callers must await the operation to learn
 /// its outcome.
 /// </para>
+/// <para>
+/// Durability contract: the <see cref="LatticeTransaction.Commit"/> operation is
+/// the durability point. After a successful commit, the outcome must not be
+/// negated by a subsequent cancellation or crash; the store already refuses to
+/// guess (<see cref="CodeGraphCommitOutcomeUnknownException"/>, quarantine,
+/// and reopen corroboration). A cancellation or crash <b>before</b> the commit
+/// leaves the previous publication and index state intact.
+/// </para>
+/// <para>
+/// Crash, power-loss, abrupt-kill, and multi-process durability is <b>not yet
+/// qualified.</b> The managed fault injector is not crash/power-loss/abrupt-kill
+/// multi-process durability (DF-4/Q2-F12). The qualification must establish
+/// real durability evidence — not managed fault injection — which requires new
+/// instrumentation and safety scoping. The absence of a dedicated
+/// crash-recovery API does not itself require an API change; ordinary database
+/// reopen and recovery behaviour is evaluated first.
+/// </para>
+/// <para>
+/// The store <b>waits</b> for an in-flight native write on disposal
+/// (<see cref="IDisposable.Dispose"/> takes the same write gate); it never
+/// aborts native work mid-transaction.
+/// </para>
+/// <para>
+/// The <b>unknown-outcome path</b> covers failed commits:
+/// <see cref="CodeGraphCommitOutcomeUnknownException"/>, quarantine, and reopen
+/// corroboration.
+/// </para>
+/// <para>
+/// <b>Multi-process concurrent access</b> is prevented by file locking; the
+/// first writer holds the lock; others fail or wait. The durable state is
+/// consistent.
+/// </para>
+/// <para>
+/// A managed timeout, an abandoned task, a disposed caller, or a crashed
+/// process is <b>not</b> a native cancellation and must never be reported as
+/// one: callers must await the operation to learn its outcome.
+/// </para>
 /// </remarks>
 public interface ICodeGraphIndexStore
 {

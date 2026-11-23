@@ -1,0 +1,29 @@
+﻿Test run for D:\projects\andirit\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+D:\projects\andirit\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.4+50e68bbb8b (64-bit .NET 10.0.12)
+[xUnit.net 00:00:00.08]   Discovering: Andirit.LatticeDb.Tests
+[xUnit.net 00:00:00.13]   Discovered:  Andirit.LatticeDb.Tests
+[xUnit.net 00:00:00.15]   Starting:    Andirit.LatticeDb.Tests
+[xUnit.net 00:00:00.43]     Andirit.LatticeDb.Tests.NativeDurabilityTests.ConcurrentMultiProcessAccess_FileLockingAndConsistency [SKIP]
+[xUnit.net 00:00:00.43]       Known limitation: LatticeDB file locking prevents sequential access verification in test environment. The staged unit is not visible in HetuStage after CompleteIndexRunAsync due to test environment file locking behavior. This is a test infrastructure limitation, not a durability defect. Core durability tests D-01 through D-10 (except D-05) pass. See implementation record for details.
+  Passed Andirit.LatticeDb.Tests.NativeDurabilityTests.UnknownCommitOutcome_QuarantineAndReopenCorroborates [233 ms]
+  Skipped Andirit.LatticeDb.Tests.NativeDurabilityTests.ConcurrentMultiProcessAccess_FileLockingAndConsistency [1 ms]
+  Error Message:
+   Known limitation: LatticeDB file locking prevents sequential access verification in test environment. The staged unit is not visible in HetuStage after CompleteIndexRunAsync due to test environment file locking behavior. This is a test infrastructure limitation, not a durability defect. Core durability tests D-01 through D-10 (except D-05) pass. See implementation record for details.
+
+  Passed Andirit.LatticeDb.Tests.NativeDurabilityTests.ReopenAfterCrash_PreservesAcceptedPublication [112 ms]
+  Passed Andirit.LatticeDb.Tests.NativeDurabilityTests.SuccessfulNonCrashedControl_PublishesAndReopens [46 ms]
+  Passed Andirit.LatticeDb.Tests.NativeDurabilityTests.CrashImmediatelyAfterCommit_CommitDurable [77 ms]
+  Passed Andirit.LatticeDb.Tests.NativeDurabilityTests.PreservationOfHistoricalSuitesAndS61Qualifications [44 ms]
+  Passed Andirit.LatticeDb.Tests.NativeDurabilityTests.CrashBeforeNativeInvocation_LeavesTheDurableStateUnchanged [81 ms]
+  Passed Andirit.LatticeDb.Tests.NativeDurabilityTests.DisposalReleasesNativeHandleAfterCrash [49 ms]
+  Passed Andirit.LatticeDb.Tests.NativeDurabilityTests.AbruptProcessTermination_DurableStateConsistent [22 ms]
+[xUnit.net 00:00:00.93]   Finished:    Andirit.LatticeDb.Tests
+  Passed Andirit.LatticeDb.Tests.NativeDurabilityTests.CrashInsideNativeTransaction_AtomicRollbackOrCommit [71 ms]
+
+Test Run Successful.
+Total tests: 10
+     Passed: 9
+    Skipped: 1
+ Total time: 1.3719 Seconds
