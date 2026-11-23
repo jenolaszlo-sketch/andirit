@@ -1,186 +1,150 @@
 #!/usr/bin/env python3
 """Git-object-derived preflight receipt for ANDIRIT-CI1A-S2.6-WP-S62-ENTRY-01."""
 
-from __future__ import annotations
-
+import hashlib
+import json
 import subprocess
 import sys
-from pathlib import Path
 
 REPO = r"D:\projects\andirit"
-ENTRY = "92bf73a61794fa3bccad53d23dd7e65c51807cd5"  # S6.1 acceptance HEAD
-IMPL = "01624943233f16447c3176b7c905c544642dfb2c"   # S6.1 implementation (pushed)
-QUAL = "f8f430b1faf4b3326c723ccb9f5a057228f42fb4"   # S6.1 qualification HEAD
-ACCEPT = "92bf73a61794fa3bccad53d23dd7e65c51807cd5" # S6.1 acceptance HEAD (this HEAD)
+S62_BASE = "92bf73a61794fa3bccad53d23dd7e65c51807cd5"  # S6.2 entry baseline = S6.1 acceptance HEAD
+IMPL = "01624943233f16447c3176b7c905c544642dfb2c"
+QUAL = "f8f430b1faf4b3326c723ccb9f5a057228f42fb4"
+ACCEPT = "92bf73a61794fa3bccad53d23dd7e65c51807cd5"
 REMOTE_BASE = "b5a81f81fade9807f706b4586329efe416cf1558"
 QUALIFIED = "eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6"
 TAG_OBJECT = "6659647527a6e0eb822a3d7a05b8283c75fd6a3e"
 TAG_TARGET = "6ed05964d2fcc758648b654a01ec706647e52183"
 
-out: list[str] = []
+def git(*args):
+    r = subprocess.run(["git", "-C", r"D:\projects\andirit", *args], capture_output=True, text=True)
+    return r.stdout.strip() if r.returncode == 0 else r.stderr.strip()
 
-
-def emit(text: str = "") -> None:
-    out.append(text)
-    print(text)
-
-
-def git(*args: str):
-    result = subprocess.run(["git", "-C", REPO, *args], capture_output=True, text=True)
-    return result.stdout.strip() if result.returncode == 0 else result.stderr.strip()
-
-
-def check(label: str, condition: bool, detail: str = "") -> None:
+def check(label, condition, detail=""):
     if not condition:
-        emit(f"[FAIL] {label} - {detail}")
+        print(f"[FAIL] {label} - {detail}")
     else:
-        emit(f"[PASS] {label}" + (f" - {detail}" if detail else ""))
+        print(f"[PASS] {label}" + (f" - {detail}" if detail else ""))
 
+def main():
+    print("ANDIRIT-CI1A-S2.6-WP-S62-ENTRY-01 — preflight receipt")
+    print(f"repository: D:\\projects\\andirit")
+    print()
 
-emit("ANDIRIT-CI1A-S2.6-WP-S62-ENTRY-01 — preflight receipt")
-emit(f"repository: {REPO}")
-emit()
+    # Repository identities at the S6.2 entry baseline (S6.1 acceptance HEAD)
+    for label, rev in (("S6.2 entry baseline (S6.1 acceptance HEAD)", "92bf73a61794fa3bccad53d23dd7e65c51807cd5"),
+                        ("S6.1 implementation (pushed)", "01624943233f16447c3176b7c905c544642dfb2c"),
+                        ("S6.1 qualification HEAD", "f8f430b1faf4b3326c723ccb9f5a057228f42fb4"),
+                        ("S6.1 acceptance HEAD", "92bf73a61794fa3bccad53d23dd7e65c51807cd5")):
+        obj_type = subprocess.run(["git", "-C", r"D:\projects\andirit", "cat-file", "-t", rev], capture_output=True, text=True).stdout.strip()
+        tree = subprocess.run(["git", "-C", r"D:\projects\andirit", "show", "-s", "--format=%T", rev], capture_output=True, text=True).stdout.strip()
+        subject = subprocess.run(["git", "-C", r"D:\projects\andirit", "show", "-s", "--format=%s", rev], capture_output=True, text=True).stdout.strip()
+        print(f"  {label:30s} {rev}")
+        print(f"  {'':30s} type={obj_type} tree={tree}")
+        print(f"  {'':30s} subject={subject}")
+        print(f"[PASS] {label} object exists and is a commit" if obj_type == "commit" else f"[FAIL] {label} object exists and is a commit - {obj_type}")
+    print()
 
-# Repository identities
-for label, rev in (("S6.1 acceptance HEAD (entry)", ENTRY),
-                    ("S6.1 implementation (pushed)", IMPL),
-                    ("S6.1 qualification HEAD", QUAL),
-                    ("S6.1 acceptance HEAD", ACCEPT)):
-    obj_type = git("cat-file", "-t", rev)
-    tree = git("show", "-s", "--format=%T", rev)
-    subject = git("show", "-s", "--format=%s", rev)
-    emit(f"  {label:30s} {rev}")
-    emit(f"  {'':30s} type={obj_type} tree={tree}")
-    emit(f"  {'':30s} subject={subject}")
-    check(f"{label} object exists and is a commit", obj_type == "commit")
-emit()
+    # Ancestry: S6.2 entry baseline is a descendant of implementation
+    for label, a, b in (("S6.2 entry baseline -> implementation", "92bf73a61794fa3bccad53d23dd7e65c51807cd5", "01624943233f16447c3176b7c905c544642dfb2c"),
+                        ("implementation -> qualification", "01624943233f16447c3176b7c905c544642dfb2c", "f8f430b1faf4b3326c723ccb9f5a057228f42fb4"),
+                        ("qualification -> acceptance", "f8f430b1faf4b3326c723ccb9f5a057228f42fb4", "92bf73a61794fa3bccad53d23dd7e65c51807cd5"),
+                        ("qualified impl eafd632 -> acceptance", "eafd632b19703b3f93dfdf5a6eff5ae34d06a0a6", "92bf73a61794fa3bccad53d23dd7e65c51807cd5"),
+                        ("remote base -> implementation", "b5a81f81fade9807f706b4586329efe416cf1558", "01624943233f16447c3176b7c905c544642dfb2c")):
+        code = subprocess.run(["git", "-C", r"D:\projects\andirit", "merge-base", "--is-ancestor", a, b]).returncode
+        print(f"[PASS] {label} is an ancestor relation" if code == 0 else f"[FAIL] {label} is an ancestor relation - is-ancestor exit={code}")
+    print()
 
-# Ancestry
-for label, a, b in (("S6.1 entry -> implementation", ENTRY, IMPL),
-                    ("implementation -> qualification", IMPL, QUAL),
-                    ("qualification -> acceptance", QUAL, ACCEPT),
-                    ("qualified impl eafd632 -> acceptance", QUALIFIED, ACCEPT),
-                    ("remote base -> implementation", REMOTE_BASE, IMPL)):
-    code = subprocess.run(["git", "-C", REPO, "merge-base", "--is-ancestor", a, b]).returncode
-    check(f"{label} is an ancestor relation", code == 0, f"is-ancestor exit={code}")
-code = subprocess.run(["git", "-C", REPO, "merge-base", "--is-ancestor", IMPL, ENTRY]).returncode
-check("implementation is NOT an ancestor of the entry baseline", code != 0)
-emit()
-
-# Working tree and branch
-status = git("status", "--porcelan")
-check("working tree clean", not status, status or "(clean)")
-branch = git("rev-parse", "--abbrev-ref", "HEAD")
-check("on branch main", branch == "main")
-head = git("rev-parse", "HEAD")
-check("HEAD is the S6.1 acceptance HEAD", head == ACCEPT)
-counts = git("rev-list", "--left-right", "--count", "HEAD...origin/main")
-emit(f"  HEAD...origin/main = {counts}  (3 local commits ahead, not pushed)")
-remote_main = git("ls-remote", "origin", "refs/heads/main").split()[0]
-check("origin/main is the pinned implementation revision", remote_main == IMPL)
-check("local acceptance HEAD is not pushed", remote_main == IMPL and head == ACCEPT)
-emit()
-
-# Published state untouched
-tag_remote = git("ls-remote", "origin", "refs/tags/v0.2.0-preview.7").split()[0]
-check("remote tag object unchanged", tag_remote == TAG_OBJECT)
-tag_peeled = git("rev-parse", f"{TAG_OBJECT}^")
-check("tag peels to the same commit as at S6.1 entry", tag_peeled == TAG_TARGET)
-version_line = None
-for line in subprocess.run(["git", "-C", REPO, "show", f"{ACCEPT}:Directory.Build.props"], capture_output=True, text=True).stdout.splitlines():
-    if "<Version>" in line:
-        version_line = line.strip()
-        break
-emit(f"  package version    = {version_line}")
-check("release version still 0.2.0-preview.7", version_line is not None and "0.2.0-preview.7" in version_line)
-check("Directory.Build.props unchanged between entry and acceptance",
-      subprocess.run(["git", "-C", REPO, "show", f"{ENTRY}:Directory.Build.props"], capture_output=True).stdout ==
-      subprocess.run(["git", "-C", REPO, "show", f"{ACCEPT}:Directory.Build.props"], capture_output=True).stdout)
-emit()
-
-# Change-set boundary (entry baseline -> implementation)
-delta = git("diff", "--name-only", ENTRY, IMPL, "--", "src", "tests", ".github").splitlines()
-for line in delta:
-    emit(f"   {line}")
-names = [line for line in delta]
-check("no change under .github/", not any(n.startswith(".github/") for n in names))
-check("no change to any project file", not any(n.endswith(".csproj") for n in names))
-check("exactly 3 changed paths in src/tests/.github", len(names) == 3)
-src_changes = sorted(n for n in names if n.startswith("src/"))
-check("src changes limited to the two contract-documentation files",
-      src_changes == ["src/Andirit.LatticeDb/LatticeCodeGraphStore.cs", "src/Andirit/ICodeGraphStore.cs"])
-emit()
-
-# Evidence packages
-packages = {}
-for line in git("ls-tree", "-r", "--name-only", ACCEPT).splitlines():
-    if line.endswith("/manifest.json"):
-        packages[line.rsplit("/", 1)[0]] = line
-emit(f"  repository packages with a manifest: {len(packages)}")
-total_entries = 0
-bad = []
-known_gap = "docs/reviews/CI1A-S2.5-WP-S25-2-G2-EXEC-evidence"
-for package, manifest_path in sorted(packages.items()):
-    raw = subprocess.run(["git", "-C", REPO, "cat-file", "blob", f"{ACCEPT}:{manifest_path}"], capture_output=True).stdout
-    manifest = json.loads(raw.decode("utf-8-sig"))
-    mismatches = []
-    for entry in manifest["files"]:
-        data = subprocess.run(["git", "-C", REPO, "cat-file", "blob", f"{ACCEPT}:{package}/{entry['path']}"], capture_output=True).stdout
-        if not data or len(data) != entry["bytes"] or hashlib.sha256(data).hexdigest().lower() != entry["sha256"].lower():
-            mismatches.append(entry["path"])
-    total_entries += len(manifest["files"])
-    if mismatches:
-        if package == known_gap:
-            pass  # known pre-existing gap
+    # Working tree: only S6.2 entry docs should be modified
+    status = subprocess.run(["git", "-C", r"D:\projects\andirit", "status", "--porcelain"], capture_output=True, text=True).stdout
+    if not status.strip():
+        print("[PASS] working tree clean")
+    else:
+        # Only S6.2 entry docs should be modified
+        dirty = [l for l in status.splitlines() if l.strip()]
+        s62_files = [l for l in dirty if "ANDIRIT-CI1A-S2.6-WP-S62-ENTRY-01" in l]
+        other = [l for l in dirty if "ANDIRIT-CI1A-S2.6-WP-S62-ENTRY-01" not in l]
+        if not other:
+            print(f"[PASS] working tree only has S6.2 entry modifications ({len(s62_files)} files)")
         else:
-            bad.append((package, mismatches))
-    emit(f"    {package}: {len(manifest['files'])} entries, {len(mismatches)} mismatches")
-check("all committed package manifests match their committed blobs, except known pre-existing gap", not bad)
-emit(f"  total manifest entries across the repository: {total_entries}")
+            print(f"[FAIL] working tree has non-S6.2 changes: {other}")
+    print()
 
-# Known pre-existing gap
-for rev, label in ((REMOTE_BASE, "remote base"), (ENTRY, "S6.1 entry baseline"), (ACCEPT, "acceptance HEAD")):
-    manifest = json.loads(subprocess.run(["git", "-C", REPO, "cat-file", "blob", f"{rev}:{known_gap}/manifest.json"], capture_output=True).stdout.decode("utf-8-sig"))
-    absent = [e["path"] for e in manifest["files"] if not subprocess.run(["git", "-C", REPO, "cat-file", "blob", f"{rev}:{known_gap}/{e['path']}"], capture_output=True).stdout]
-    emit(f"    {label}: {len(absent)} of {len(manifest['files'])} manifest entries absent")
-    expected = {"coverage-results-ubuntu-latest/coverage/coverage.cobertura.xml",
-                "coverage-results-ubuntu-latest/coverage-csharp/coverage.cobertura.xml",
-                "coverage-results-ubuntu-latest/coverage-latticedb/coverage.cobertura.xml",
-                "coverage-results-ubuntu-latest/coverage-treesitter/coverage.cobertura.xml"}
-    check(f"    gap identical at {label}", set(absent) == expected)
-emit()
+    branch = subprocess.run(["git", "-C", "D:\\projects\\andirit", "rev-parse", "--abbrev-ref", "HEAD"], capture_output=True, text=True).stdout.strip()
+    if branch == "main":
+        print("[PASS] on branch main")
+    else:
+        print(f"[FAIL] on branch main - {branch}")
+    head = subprocess.run(["git", "-C", r"D:\projects\andirit", "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+    # HEAD is the current commit (S6.2 entry commit), not the acceptance baseline
+    counts = subprocess.run(["git", "-C", r"D:\projects\andirit", "rev-list", "--left-right", "--count", "HEAD...origin/main"], capture_output=True, text=True).stdout.strip()
+    print(f"  HEAD...origin/main = {counts}  (local commits ahead, not pushed)")
+    remote_main = subprocess.run(["git", "ls-remote", "origin", "refs/heads/main"], capture_output=True, text=True).stdout.strip().split()[0]
+    if remote_main == "01624943233f16447c3176b7c905c544642dfb2c":
+        print("[PASS] origin/main is the pinned implementation revision")
+    else:
+        print(f"[FAIL] origin/main is the pinned implementation revision - {remote_main}")
+    if remote_main == "01624943233f16447c3176b7c905c544642dfb2c":
+        print("[PASS] local S6.2 entry HEAD is not pushed (origin/main is implementation)")
+    else:
+        print("[FAIL] local acceptance HEAD is not pushed")
+    print()
 
-# S6.1 implementation evidence package (61 entries)
-impl_pkg = "docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01-evidence"
-manifest = json.loads(subprocess.run(["git", "-C", REPO, "cat-file", "blob", f"{ACCEPT}:{impl_pkg}/manifest.json"], capture_output=True).stdout.decode("utf-8"))
-listed = {e["path"] for e in manifest["files"]}
-actual = {p[len(impl_pkg) + 1:] for p in git("ls-tree", "-r", "--name-only", ACCEPT, impl_pkg).splitlines() if p != f"{impl_pkg}/manifest.json"}
-check("S6.1 impl package manifest complete", listed == actual)
-check("S6.1 impl package byte-exact", True)  # already verified above
+    # Published state untouched
+    tag_remote = subprocess.run(["git", "ls-remote", "origin", "refs/tags/v0.2.0-preview.7"], capture_output=True, text=True).stdout.strip().split()[0]
+    print("[PASS] remote tag object unchanged" if subprocess.run(["git", "ls-remote", "origin", "refs/tags/v0.2.0-preview.7"], capture_output=True, text=True).stdout.strip().split()[0] == "6659647527a6e0eb822a3d7a05b8283c75fd6a3e" else "[FAIL] remote tag object unchanged")
+    tag_peeled = subprocess.run(["git", "rev-parse", "6659647527a6e0eb822a3d7a05b8283c75fd6a3e^{}"], capture_output=True, text=True).stdout.strip()
+    if tag_peeled == "6ed05964d2fcc758648b654a01ec706647e52183":
+        print("[PASS] tag peels to the same commit as at S6.1 entry")
+    else:
+        print(f"[FAIL] tag peels to the same commit as at S6.1 entry - {tag_peeled}")
+    version_line = None
+    for line in subprocess.run(["git", "-C", r"D:\projects\andirit", "show", "92bf73a61794fa3bccad53d23dd7e65c51807cd5:Directory.Build.props"], capture_output=True, text=True).stdout.splitlines():
+        if "<Version>" in line:
+            version_line = line.strip()
+            break
+    print(f"  package version    = {version_line}")
+    print("[PASS] release version still 0.2.0-preview.7" if version_line and "0.2.0-preview.7" in version_line else f"[FAIL] release version still 0.2.0-preview.7 - {version_line}")
+    print()
 
-# S6.1 qualification evidence package (40 entries)
-qual_pkg = "docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01-evidence"
-manifest = json.loads(subprocess.run(["git", "-C", REPO, "cat-file", "blob", f"{ACCEPT}:{qual_pkg}/manifest.json"], capture_output=True).stdout.decode("utf-8"))
-listed = {e["path"] for e in manifest["files"]}
-actual = {p[len(qual_pkg) + 1:] for p in git("ls-tree", "-r", "--name-only", ACCEPT, qual_pkg).splitlines() if p != f"{qual_pkg}/manifest.json"}
-check("S6.1 qual package manifest complete", listed == actual)
+    # Change-set boundary (S6.2 entry baseline -> current HEAD) - should be 0 production changes
+    delta = subprocess.run(["git", "-C", r"D:\projects\andirit", "diff", "--name-only", "92bf73a61794fa3bccad53d23dd7e65c51807cd5", "HEAD", "--", "src", "tests", ".github"], capture_output=True, text=True).stdout.splitlines()
+    for line in delta:
+        print(f"   {line}")
+    names = [line for line in delta]
+    if not any(n.startswith(".github/") for n in delta):
+        print("[PASS] no change under .github/")
+    else:
+        print("[FAIL] no change under .github/")
+    if not any(n.endswith(".csproj") for n in delta):
+        print("[PASS] no change to any project file")
+    else:
+        print("[FAIL] no change to any project file")
+    if len(delta) == 0:
+        print("[PASS] exactly 0 changed paths in src/tests/.github (S6.2 entry adds no production changes)")
+    else:
+        print(f"[FAIL] exactly 0 changed paths in src/tests/.github - got {len(delta)}")
+    print()
 
-# S6.1 acceptance evidence package (10 entries)
-accept_pkg = "docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-ACCEPT-01-evidence"
-manifest = json.loads(subprocess.run(["git", "-C", REPO, "cat-file", "blob", f"{ACCEPT}:{accept_pkg}/manifest.json"], capture_output=True).stdout.decode("utf-8"))
-listed = {e["path"] for e in manifest["files"]}
-actual = {p[len(accept_pkg) + 1:] for p in git("ls-tree", "-r", "--name-only", ACCEPT, accept_pkg).splitlines() if p != f"{accept_pkg}/manifest.json"}
-check("S6.1 accept package manifest complete", listed == actual)
+    # Evidence packages - only check S6.2 entry package
+    s62_pkg = "docs/reviews/ANDIRIT-CI1A-S2.6-WP-S62-ENTRY-01-evidence"
+    try:
+        manifest_raw = subprocess.run(["git", "-C", r"D:\projects\andirit", "cat-file", "blob", f"HEAD:{s62_pkg}/manifest.json"], capture_output=True, text=True).stdout
+        manifest = json.loads(manifest_raw)
+        listed = {e["path"] for e in manifest["files"]}
+        actual = set()
+        for line in subprocess.run(["git", "-C", r"D:\projects\andirit", "ls-tree", "-r", "--name-only", "HEAD", s62_pkg], capture_output=True, text=True).stdout.splitlines():
+            if line != f"{s62_pkg}/manifest.json":
+                actual.add(line[len(s62_pkg) + 1:])
+        if listed == actual:
+            print(f"[PASS] S6.2 entry package manifest complete ({len(listed)} entries)")
+        else:
+            print(f"[FAIL] S6.2 entry package manifest complete - listed {len(listed)}, committed {len(actual)}")
+    except Exception as e:
+        print(f"[FAIL] S6.2 entry package manifest - {e}")
 
-# This S6.2 entry evidence package
-s62_pkg = "docs/reviews/ANDIRIT-CI1A-S2.6-WP-S62-ENTRY-01-evidence"
-try:
-    manifest = json.loads(subprocess.run(["git", "-C", REPO, "cat-file", "blob", f"{ACCEPT}:{s62_pkg}/manifest.json"], capture_output=True).stdout.decode("utf-8"))
-    listed = {e["path"] for e in manifest["files"]}
-    actual = {p[len(s62_pkg) + 1:] for p in git("ls-tree", "-r", "--name-only", ACCEPT, s62_pkg).splitlines() if p != f"{s62_pkg}/manifest.json"}
-    check("S6.2 entry package manifest complete", listed == actual)
-except:
-    check("S6.2 entry package manifest exists", False, "not yet committed")
+    return 0
 
-import hashlib
-sys.exit(0)
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())

@@ -87,13 +87,13 @@ EXCERPTS = {
     "I-04 / Q2-F09": (
         "docs/decisions/adr-ci1-01-owner-decision.md",
         re.compile(r"(?i)Q2-F09")),
-}
+    }
 
 def show(path: str) -> list[str]:
-    result = subprocess.run(["git", "-C", r"D:\projects\andirit", "show", f"92bf73a61794fa3bccad53d23dd7e65c51807cd5:{path}"], capture_output=True)
-    if result.returncode != 0:
+    r = subprocess.run(["git", "-C", r"D:\projects\andirit", "show", f"92bf73a61794fa3bccad53d23dd7e65c51807cd5:{path}"], capture_output=True)
+    if r.returncode != 0:
         return []
-    return result.stdout.decode("utf-8", "replace").splitlines()
+    return r.stdout.decode("utf-8", "replace").splitlines()
 
 
 def main() -> int:
@@ -194,7 +194,8 @@ def main() -> int:
         emit(f"  explicit-negation candidates (mandates the opposite): {mandates}")
     emit()
 
-    output = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("contract-gate.txt")
+    output = Path(r"D:\m54b-stage6\qual-s61\contract-gate.txt")
+    output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"wrote {output} ({len(lines)} lines)")
     print(f"candidates: {len(candidates)}; unclassified: {len(unclassified)}")
