@@ -1,0 +1,31 @@
+ANDIRIT-CI1A-S2.6-WP-S62-QUAL-01 - reviewer-owned production equivalence
+
+Baseline:      92bf73a61794fa3bccad53d23dd7e65c51807cd5  (S6.1 acceptance)
+Implementation: 459b50c48f0ac2ef0a7bb4ca1f7d15c2a3d7e838
+Method: independent rebuild of both revisions, then a reviewer-written
+        System.Reflection.Metadata dump of every type, member, signature blob
+        and IL byte sequence. MVID and the PE debug directory are excluded
+        (a deterministic build derives them from the source hash).
+
+ASSEMBLY Andirit.Abstractions.dll
+  baseline       : 1239 lines  sha256=F5682749132A76189FCF23B5DEAF42429513EA236673FDF7EFFA8E3E4AA9B643
+  implementation : 1239 lines  sha256=F5682749132A76189FCF23B5DEAF42429513EA236673FDF7EFFA8E3E4AA9B643
+  compiled-program identical: True
+
+  public API surface identical: True  (diff lines: 0)
+
+ASSEMBLY Andirit.dll
+  baseline       : 5522 lines  sha256=2B4D10F6710BDBCD3F8E4CB1B7C026C057A06A2744A331A19DD190444A3BEA6F
+  implementation : 5522 lines  sha256=2B4D10F6710BDBCD3F8E4CB1B7C026C057A06A2744A331A19DD190444A3BEA6F
+  compiled-program identical: True
+
+  public API surface identical: True  (diff lines: 0)
+
+ASSEMBLY Andirit.LatticeDb.dll
+  baseline       : 888 lines  sha256=9920C46781BF78E073F5901A5D4B0169179F4C243FE3BB38F7A65E1B4411B2F5
+  implementation : 888 lines  sha256=9920C46781BF78E073F5901A5D4B0169179F4C243FE3BB38F7A65E1B4411B2F5
+  compiled-program identical: True
+
+  public API surface identical: True  (diff lines: 0)
+
+RESULT: 3 production assemblies compared; 0 differing.

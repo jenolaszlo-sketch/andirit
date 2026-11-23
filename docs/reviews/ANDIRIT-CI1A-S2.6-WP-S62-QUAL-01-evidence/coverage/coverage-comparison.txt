@@ -1,0 +1,21 @@
+ANDIRIT-CI1A-S2.6-WP-S62-QUAL-01 - coverage comparison
+
+== producer's committed LOCAL (Windows) coverage artifacts ==
+  coverage             line-rate= 82.42  branch-rate= 70.89
+  coverage-csharp      line-rate= 95.15  branch-rate= 88.00
+  coverage-latticedb   line-rate= 92.87  branch-rate= 78.96
+  coverage-treesitter  line-rate= 89.85  branch-rate= 75.45
+
+== reviewer's freshly derived HOSTED (ubuntu) coverage artifacts ==
+  coverage             line-rate= 82.42  branch-rate= 70.74
+  coverage-csharp      line-rate= 95.11  branch-rate= 87.85
+  coverage-latticedb   line-rate= 92.87  branch-rate= 78.96
+  coverage-treesitter  line-rate= 89.89  branch-rate= 75.95
+
+== producer's committed hosted coverage artifacts (in evidence/hosted) ==
+  coverage             line-rate= 82.42  branch-rate= 70.74
+  coverage-csharp      line-rate= 95.11  branch-rate= 87.85
+  coverage-latticedb   line-rate= 92.87  branch-rate= 78.96
+  coverage-treesitter  line-rate= 89.89  branch-rate= 75.95
+
+FINDING: The producer's §6 and ADR §7 quote the Windows coverage figures for three of the four suites under the heading "Coverage gates on the hosted runner" (core 82.42/70.89, CSharp 95.15/88.00, TreeSitter 89.85/75.45). The committed hosted artifacts actually contain 82.42/70.74, 95.11/87.85, 89.89/75.95 — which the CI's own coverlet summary confirms. LatticeDb coincidentally matches (92.87/78.96). All values clear their thresholds under both sets, so no gate conclusion changes.

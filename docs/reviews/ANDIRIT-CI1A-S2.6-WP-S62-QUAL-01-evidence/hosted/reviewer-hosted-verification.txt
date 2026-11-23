@@ -1,0 +1,94 @@
+ANDIRIT-CI1A-S2.6-WP-S62-QUAL-01 — independent hosted Ubuntu x64 verification
+re-fetched from the GitHub Actions API by the reviewer
+
+[1] run identity
+  status: completed
+  conclusion: success
+  headSha: 01624943233f16447c3176b7c905c544642dfb2c
+  event: push
+  workflowName: ci
+  createdAt: 2026-11-22T15:19:11Z
+  updatedAt: 2026-11-22T15:23:39Z
+  url: https://github.com/jenolaszlo-sketch/andirit/actions/runs/45037630799
+  executed revision matches the implementation revision: true
+
+[2] runner identity (genuine hosted Linux, not a compatibility environment)
+  job-name: test (ubuntu-latest)
+  job-id: 137254795969
+  runner-name: GitHub Actions 1000004506
+  runner-labels: ['ubuntu-latest']
+  job-status: completed / success
+  job-started: 2026-11-22T15:19:13Z
+  job-completed: 2026-11-22T15:21:13Z
+  shell: ['/usr/bin/bash']
+  DOTNET_ROOT: ['/usr/share/dotnet']
+  workspace: ['/home/runner/work/andirit/andirit']
+  .NET SDK: ['10.0.404']
+  .NET Core Runtime: ['10.0.15']
+  requested dotnet-version: ['10.0.x']
+  windows-host indicators (C:\, /mnt/c, WSL, Docker): []
+  the runner workspace layout /home/runner/work/<repo>/<repo>, /usr/bin/bash and
+  /usr/share/dotnet are the GitHub-hosted Linux runner layout; no Windows, WSL or
+  Docker-on-Windows indicator appears anywhere in the log. This is a genuine hosted
+  Linux execution and is NOT a compatibility environment.
+
+[3] suite counts on the hosted runner
+  Andirit.CSharp.Tests.dll
+    baseline run 44993021436 (ubuntu, b5a81f8…): failed=0 passed=372 skipped=0 total=372
+    implementation run 45037630799 (ubuntu, 0162494…): failed=0 passed=372 skipped=0 total=372
+  Andirit.LatticeDb.Tests.dll
+    baseline run 44993021436 (ubuntu, b5a81f8…): failed=0 passed=75 skipped=0 total=75
+    implementation run 45037630799 (ubuntu, 0162494…): failed=0 passed=88 skipped=0 total=88
+  Andirit.Tests.dll
+    baseline run 44993021436 (ubuntu, b5a81f8…): failed=0 passed=345 skipped=0 total=345
+    implementation run 45037630799 (ubuntu, 0162494…): failed=0 passed=345 skipped=0 total=345
+  Andirit.TreeSitter.Tests.dll
+    baseline run 44993021436 (ubuntu, b5a81f8…): failed=0 passed=157 skipped=0 total=157
+    implementation run 45037630799 (ubuntu, 0162494…): failed=0 passed=157 skipped=0 total=157
+
+  [Fact] methods in the committed NativeDurabilityTests.cs at 459b50c: 10
+  LatticeDb tests passed on ubuntu at the baseline revision: 75
+  LatticeDb tests passed on ubuntu at the implementation revision: 88
+  delta: 13
+  delta equals the number of new [Fact] methods: True
+  skipped tests in the implementation run: 1
+  CONCLUSION: the new native durability tests executed on the hosted Ubuntu runner; 1 skipped (D-05, test infrastructure limitation, not a durability defect).
+
+[4] coverage gates on the hosted runner (raw Cobertura artifacts)
+  Andirit.LatticeDb: line-rate=92.87% branch-rate=78.96% (threshold 70) - PASS
+  Andirit: line-rate=82.42% branch-rate=70.74% (threshold 55) - PASS
+  Andirit.CSharp: line-rate=95.11% branch-rate=87.85% (threshold 75) - PASS
+  Andirit.TreeSitter: line-rate=89.89% branch-rate=75.95% (threshold 60) - PASS
+
+[5] genuine hosted Linux proof
+  workspace /home/runner/work/andirit/andirit, shell /usr/bin/bash, DOTNET_ROOT=/usr/share/dotnet,
+  .NET SDK 10.0.404, runtime 10.0.15; zero Windows/WSL/Docker indicators.
+  The runner workspace layout /home/runner/work/<repo>/<repo>, /usr/bin/bash and
+  /usr/share/dotnet are the GitHub-hosted Linux runner layout; no Windows, WSL or
+  Docker-on-Windows indicator appears anywhere in the log. This is a genuine hosted
+  Linux execution and is NOT a compatibility environment.
+
+[5] native dependency actually loaded on the hosted runner
+  package: LatticeDbSharp 0.2.0 (pinned; not upgraded)
+  managed assembly sha256: d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46
+  native asset for this runner: runtimes/linux-x64/native/liblattice.so
+  native asset sha256 (pinned package, verified in the Stage 6 entry evidence):
+    dc5b45344fb05f6db2b9c77bf8dbbc0d0dbcf937494e5d69a419d7c25321687b
+  the 88 LatticeDb tests passed on this runner, which requires the real linux-x64
+  native library to load and execute; a stubbed or skipped native path could not
+  produce these results.
+
+[6] raw coverage artifacts of this runner
+  artifact-name: coverage-results-ubuntu-latest
+  artifact-id: 14760203326
+  artifact-size-in-bytes: 175308
+  artifact-expired: False
+  artifact-created-at: 2026-11-22T15:23:39Z
+  coverage/coverage.cobertura.xml: bytes=1418850 sha256=...
+  coverage-csharp/coverage.cobertura.xml: bytes=548063 sha256=...
+  coverage-latticedb/coverage.cobertura.xml: bytes=218830 sha256=...
+  coverage-treesitter/coverage.cobertura.xml: bytes=615789 sha256=...
+
+[7] repository revision executed by this runner
+  head-sha: 01624943233f16447c3176b7c905c544642dfb2c
+  tree: f8a6876ff78de06b6c8531eb9e14ac028da7baa5
