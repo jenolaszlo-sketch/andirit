@@ -1,0 +1,55 @@
+ANDIRIT-CI1A-S2.6-WP-S61-ACCEPT-01 — G-6 Owner Acceptance Decision
+
+DECISION: S6.1 — ACCEPTED WITH QUALIFICATIONS
+
+Basis for acceptance (G-6):
+
+1. Independent qualification evidence:
+   - Reviewer session distinct from producer session (qualification report §1)
+   - Reviewer re-derived contract from production source (not producer's test code)
+   - Reviewer did NOT reuse producer's adjudications (wider superset: 58 vs 33 candidates)
+   - Reviewer built independent probe instrument (8 probes, 3 runs, stable)
+
+2. Contract compliance (verified from source):
+   - Checkpoint 1: write-gate wait (MutateAsync:360, _writeGate.WaitAsync) — VERIFIED
+   - Checkpoint 2: pre-native ThrowIfCancellationRequested (Persist:909) — VERIFIED
+   - Native window (910-975) consults NO CancellationToken — VERIFIED
+   - Three truthful outcomes exclusive and truthful (PROBE B 20/20, PROBE F, REG) — VERIFIED
+   - Await obligation enforced (no callback/event, native window reports no cancellation) — VERIFIED
+   - D4 invariant-5 consequence (non-exposure) behaviourally confirmed (PROBE C/D/G) — VERIFIED
+
+3. Native cancellation behaviour:
+   - Honoured at write gate and pre-native (PROBE E)
+   - Native window non-cancellable (PROBE C, Q-03 PASS)
+   - Three truthful outcomes truthful (PROBE B 20/20, PROBE F, REG guard) — VERIFIED
+   - No partial exposure including to concurrent reader (PROBE D/G)
+   - Disposal waits for in-flight native write and releases handle (Q-07, Q-08)
+
+4. Platform qualification:
+   - Windows x64: 88/88 (0 failed, 0 skipped)
+   - Genuine hosted Ubuntu x64: CI run 45037630799, job 137254795969, runner GitHub Actions 1000004506, /usr/bin/bash, SDK 10.0.404, runtime 10.0.15, zero Windows/WSL/Docker indicators
+   - LatticeDb 75 -> 88 (delta = 13 = [Fact] count), 0 failed, 0 skipped
+   - Other suites unchanged (345/372/157); coverage gates met
+
+5. Production equivalence:
+   - 7 649 metadata+IL lines identical across 3 assemblies; public API identical
+   - Package differences provenance-only (MVID, PDB checksum, PE timestamp, version-resource commit, nuspec commit stamp)
+
+6. Explicitly bounded residual risks:
+   - Active native execution not interruptible (Q-S61-1, published, independently re-verified)
+   - DF-4 deferred to S6.2
+   - M12.1/M12.3 and full S-02/D4.5 deferred to S6.3
+   - osx-arm64 unqualified (Q-S61-4)
+
+S6.1 owner acceptance: GRANTED WITH QUALIFICATIONS
+  - Q-S61-1 through Q-S61-8 carried
+  - Findings F-1 through F-8 carried as non-blocking qualifications
+  - F-1: documentation erratum tracked
+  - F-2: second Q-06 scenario addition tracked as required follow-up
+  - F-3 through F-8: recorded, non-blocking
+
+S6.1 owner acceptance: **GRANTED WITH QUALIFICATIONS**
+
+Recorded: 2026-11-22
+Canonical branch: main
+Commission: ANDIRIT-CI1A-S2.6-WP-S61-ACCEPT-01

@@ -1,0 +1,124 @@
+ANDIRIT-CI1A-S2.6-WP-S61-ACCEPT-01 — G-1 through G-5 re-verification receipt
+
+All five execution gates independently re-verified from the qualification evidence
+(ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01-evidence/) — not from producer assertions.
+
+=== G-1 Implementation ===
+Requirement: C-1..C-4 applied; src/ differs only in documentation; no dependency,
+workflow, test-expectation or threshold change; whole solution builds, formats,
+tests clean.
+
+Evidence:
+  git diff 2d1e8ec88e397d0c36b7f258eb1a1c0840e56157..01624943233f16447c3176b7c905c544642dfb2c -- src tests .github
+  => 3 paths: M src/Andirit.LatticeDb/LatticeCodeGraphStore.cs, M src/Andirit/ICodeGraphStore.cs,
+  A tests/Andirit.LatticeDb.Tests/NativeCancellationPathTests.cs
+  => 0 .csproj/.props/.yml changes
+
+  Release build: dotnet build Andirit.slnx -c Release => exit 0, 0 warnings, 0 errors
+  Format: dotnet format Andirit.slnx --verify-no-changes => exit 0
+
+VERDICT: PASS
+
+=== G-2 Qualification ===
+Requirement: Q-01..Q-12 executed; genuine Linux row on genuine hosted Linux bound to
+sealed commit; Q-12 unchanged; no stop condition triggered.
+
+Windows x64 (independent re-execution at qualification HEAD):
+  dotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj -c Release
+  => 88 total, 88 passed, 0 failed, 0 skipped
+  13 NativeCancellationPathTests individually reported Passed
+
+Genuine hosted Ubuntu x64 (re-fetched from GitHub Actions API):
+  CI run: 45037630799 (completed/success, event=push, workflow=ci)
+  headSha: 01624943233f16447c3176b7c905c544642dfb2c (the implementation revision itself)
+  Job: test (ubuntu-latest), id 137254795969 (completed/success)
+  Runner: GitHub Actions 1000004506, runner group: GitHub Actions, labels: ['ubuntu-latest']
+  Shell: /usr/bin/bash; DOTNET_ROOT=/usr/share/dotnet; .NET SDK 10.0.404; runtime 10.0.15
+  Zero Windows/WSL/Docker indicators in fresh job log
+
+Suite counts:
+  Andirit.Tests.dll           : 345 passed, 0 failed, 0 skipped
+  Andirit.CSharp.Tests.dll    : 372 passed, 0 failed, 0 skipped
+  Andirit.TreeSitter.Tests.dll: 157 passed, 0 failed, 0 skipped
+  Andirit.LatticeDb.Tests.dll : 88 passed, 0 failed, 0 skipped
+
+Baseline comparison (run 44993021436 on b5a81f8 vs run 45037630799 on 0162494):
+  Andirit.LatticeDb.Tests.dll : 75 -> 88 (delta = 13 = [Fact] count in new test file)
+  Other three suites          : unchanged
+  All suites: 0 failed, 0 skipped on both runs
+
+Q-12 (managed census): PASS
+Q-12 native-ABI half: independently re-censused by reviewer (evidence/abi/reviewer-native-abi-scan.txt)
+  0 lattice-namespace cancellation entry points across win-x64, linux-x64, osx-arm64
+
+Stop conditions (qualification plan §6) — none triggered:
+  1. Dependency exposes cancellation mechanism: NO (0 managed, 0 native, 0 capability features)
+  2. Partial native application: NO (300/300 nodes whole; 0 partial in 23 reps)
+  3. Cancellation after commit: NO (20/20 completed, 0 false cancellations)
+  4. D4 invariant-5 exposure: NO (0 facts/0 publications exposed to concurrent reader)
+  5. Disposal interrupts native: NO (Q-07 waits, Q-08 deletable)
+  6. Historical suites change: NO (345/372/157/88 unchanged; thresholds 55/75/60/70)
+  6. Non-Linux as Linux evidence: NO (only ubuntu-latest; zero Windows indicators)
+
+VERDICT: PASS
+
+=== G-3 Regression ===
+Requirement: Historical suites, coverage thresholds (55/75/60/70) and CI gates
+unchanged and green on all three platforms.
+
+Windows (qualification HEAD):
+  Core 345, CSharp 372, TreeSitter 157, LatticeDb 88 — all 0 failed, 0 skipped
+
+Hosted (run 45037630799, ubuntu-latest):
+  Core 345, CSharp 372, TreeSitter 157, LatticeDb 88 — all 0 failed, 0 skipped
+  macos-latest: managed suites only — green
+  windows-latest: green
+  pack job: green
+
+Coverage gates (hosted, freshly downloaded raw Cobertura):
+  core            : 82.42 / 70.74  (threshold 55)  PASS
+  CSharp          : 95.11 / 87.85  (threshold 75)  PASS
+  TreeSitter      : 89.89 / 75.95  (threshold 60)  PASS
+  LatticeDb       : 92.87 / 78.96  (threshold 70)  PASS
+  (all match CI's own coverlet summary lines)
+
+Thresholds in workflow (ci.yml): exactly 55, 75, 60, 70 — unchanged
+
+VERDICT: PASS
+
+=== G-4 Evidence ===
+Requirement: Evidence package sealed with self-excluding SHA-256 manifest;
+production-delta receipt shows only approved changes.
+
+S6.1 implementation evidence (61 entries): manifest complete, self-excluding,
+byte-exact against committed blobs at 3eb1339...
+
+S6.1 qualification evidence (40 entries): manifest complete, self-excluding,
+byte-exact against committed blobs at f8f430b...
+
+Production delta (baseline -> implementation):
+  git diff 2d1e8ec..0162494 -- src tests .github = exactly 3 paths
+  (2 doc files + 1 new test file)
+
+VERDICT: PASS
+
+=== G-5 Independence ===
+Requirement: Reviewer session ≠ producer session; reviewer re-derived expectations
+from contract excerpts.
+
+Evidence from qualification report (ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01.md):
+  - "The reviewer re-derived the contract from the production source of the pinned
+    implementation revision, not from the producer's test code."
+  - "The reviewer did NOT reuse the producer's adjudication table."
+  - "The reviewer built an isolated instrument... and ran it three times — identical
+    results every time."
+  - The reviewer's wider superset enumeration: 58 candidates in 522 docs (producer's
+    narrower net found 33).
+  - 8 independent probes (A-H), all PASS, stable across 3 runs.
+  - Probe instrument outside repository, not part of Andirit.slnx, assembly-named to
+    reach internal fault-injector seam.
+
+VERDICT: PASS
+
+=== OVERALL ===
+All five gates G-1 through G-5 independently PASS.

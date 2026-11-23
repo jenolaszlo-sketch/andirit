@@ -1,0 +1,51 @@
+ANDIRIT-CI1A-S2.6-WP-S61-ACCEPT-01 — S6.1 obligation discharge/deferral matrix
+
+GOVERNING REQUIREMENTS (from Stage 6 entry assessment ANDIRIT-CI1A-S2.6-STAGE6-ENTRY-01):
+
+  D4 invariant 5 (owner decision §D.4):
+    "Cancelled staging must not expose partial facts or index entries."
+    D4 qualification: "CI-1A must reproduce the applicable cancellation tests using
+    actual production storage and APIs."
+
+  S-02 (CI1A specification; S-01 obligation reconciliation):
+    "All ten invariants must be exercised against actual production
+    LatticeCodeGraphStore storage, including failed/cancelled/superseded publication,
+    reopen and a native concurrency/republication scenario."
+
+  M9.5 (S2.5 qualification matrix §9):
+    "Stage 1 cancellation behavior preserved — Dedicated native cancel-path test"
+    Evidence class E / no; owner Stage 6.
+
+  M12.2 (S2.5 qualification matrix §12):
+    D4 invariant 5 "Explicitly deferred to Stage 6"; "Cancel path test native"
+
+  I-04 (CI1A obligation register):
+    "cancellation remains unqualified; owner Stage 6"
+
+  Q2-F09 (owner decision §G.2):
+    "C rebuild blocks queries; no cancellation" — "addressed by D4"
+
+=== DISCHARGED BY S6.1 ===
+
+| Obligation | Source | How discharged | Evidence |
+|------------|--------|----------------|----------|
+| M9.5 | S2.5 matrix §9 | 13 dedicated NativeCancellationPathTests against production LatticeCodeGraphStore over real LatticeDB; native HetuStage/HetuUnit assertions | 13/13 PASS Windows; 13 in hosted 88 aggregate; reviewer PROBE C 300/300 |
+| M12.2 | S2.5 matrix §12 | Q-01..Q-04 native HetuStage/HetuUnit assertions for cancellation scenarios | Q-01..Q-04 PASS both platforms; PROBE C 300/300 whole-unit |
+| D4 invariant 5 (cancellation path) | Owner decision §D.4 | Non-exposure proven by Q-01 (pre-native), Q-02/Q-04 (racing), Q-06 (reopen); PROBE D 0 facts/0 pubs exposed to concurrent reader | Windows + hosted receipts; PROBE C/D/G |
+| D4 qualification clause | Owner decision §D.4 | Whole suite runs against production LatticeCodeGraphStore over real LatticeDB; durable state read via LatticeDbSharp | Both platforms; 0 mocked paths |
+| S-02 (cancellation path + unknown outcome) | CI1A spec; S-01 | Cancellation path: Q-01..Q-04, Q-06, Q-07. Unknown outcome: Q-11 (CodeGraphCommitOutcomeUnknownException, quarantine, reopen) | All PASS both platforms |
+| I-04 / Q2-F09 (cancellation aspect) | Obligation register; owner decision §G.2 | C-1 (store) and C-2 (interface) publish policy: 2 honoured checkpoints, non-cancellable native window, 3 truthful outcomes, await obligation | src/Andirit.LatticeDb/LatticeCodeGraphStore.cs + src/Andirit/ICodeGraphStore.cs; API surface 0 diff |
+
+=== EXPLICITLY NOT DISCHARGED (DEFERRED) ===
+
+| Obligation | Why deferred | Owning package |
+|------------|--------------|----------------|
+| M12.1, M12.3 | Remaining full-native-matrix rows; S6.1 covers cancellation path only | S6.3 |
+| Complete S-02 / D4.5 matrices | S-02 requires all ten invariants natively; S6.1 = cancellation + unknown outcome | S6.3 |
+| DF-4 (crash, power-loss, multi-process) | Managed fault injection ≠ crash/power-loss/abrupt-kill durability | S6.2 |
+| DF-6 (full platform certification) | Only win-x64 + genuine hosted linux-x64 in scope; macOS native unavailable | S6.3/S6.5 |
+| I-04 aspects other than cancellation | Cancellation policy specified; remaining aspects unchanged | S6.3 |
+| Q-S61-4 (osx-arm64 unqualified) | Pinned dependency ships osx-arm64 as candidate RID only | S6.5 |
+
+NO BROADER CANCELLATION GUARANTEES CLAIMED.
+Contract limits outcomes to 3 truthful values; native window explicitly non-cancellable.

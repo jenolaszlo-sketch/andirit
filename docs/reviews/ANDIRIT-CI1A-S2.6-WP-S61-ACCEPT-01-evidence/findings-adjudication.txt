@@ -1,0 +1,241 @@
+ANDIRIT-CI1A-S2.6-WP-S61-ACCEPT-01 — F-1 through F-8 adjudication matrix
+
+Each finding from the independent qualification report (ANDIRIT-CI1A-S2.6-WP-S61-QUAL-01.md §7)
+is individually adjudicated with owner-level disposition, justification, residual risk, and
+whether corrective work is required. No finding was remediated during this commission.
+
+=== F-1 ===
+Finding: The published contract enumerates TWO honoured checkpoints (write-gate wait,
+pre-native ThrowIfCancellationRequested), but a THIRD exists in
+InMemoryCodeGraphStore.StageIndexUnitAsync (line 311, and again after validation at 347),
+driven by MutateAsync:382 before the native transaction opens.
+
+Governance: Contract precision; D4 invariant 5 (outcome taxonomy).
+
+Independent evidence: PROBE H (deterministic, stack trace to
+InMemoryCodeGraphStore.cs:311) + source-path citation (MutateAsync:382 drives the
+in-memory store before Persist opens the native transaction).
+
+Severity: LOW / non-blocking — the outcome taxonomy and D4 invariant-5 guarantee are
+unaffected: it is still "cancelled before native invocation".
+
+Owner disposition: ACCEPT WITH DOCUMENTATION FOLLOW-UP
+  The native path correctly documents its two cancellation checkpoints. The third
+  managed checkpoint is a documentation-precision finding, not a correctness defect.
+  A bounded documentation erratum should clarify: "honoured while waiting for the write
+  gate, during the managed projection apply, and immediately before the native
+  transaction opens".
+
+Required corrective work: Bounded erratum to C-1/C-2 contract text under a separate
+owner-authorized change set. No production change. Not a reason to reopen qualification.
+
+Residual risk: LOW — outcome taxonomy and non-exposure guarantee intact.
+
+=== F-2 ===
+Finding: The producer's Q-06 covers only the FIRST of the TWO scenarios the
+qualification plan requires (pre-native cancelled staging); the completed-but-cancelled-
+request staging with an existing publication is NOT covered by the committed suite.
+
+Governance: Qualification plan §2 Q-06.
+
+Independent evidence: PROBE G — the reviewer executed the second scenario and it PASSES
+(publication identity, snapshot identity, consistency flag and unit count preserved
+across reopen).
+
+Severity: MEDIUM / non-blocking — the invariant holds; the coverage gap is closed by
+reviewer evidence, not by the committed suite.
+
+Owner disposition: ACCEPT WITH REQUIRED REGRESSION FOLLOW-UP
+  The independent reviewer executed the missing second Q-06 scenario successfully.
+  The invariant holds; the coverage gap is real and must be closed in the committed
+  regression suite.
+
+  Required: permanent inclusion of this scenario in the committed regression suite
+  (NativeCancellationPathTests.cs). Track the work explicitly. It is NOT a reason to
+  reopen the completed qualification, provided the follow-up introduces no production-
+  contract change.
+
+Required corrective work: Add the second Q-06 scenario to
+NativeCancellationPathTests.cs under a future owner-authorized change set. Track
+explicitly in the S6.1 follow-up tracker.
+
+Residual risk: LOW after follow-up closure; MEDIUM until then (coverage gap in
+committed suite).
+
+=== F-3 ===
+Finding: The committed Q-12 test performs only the MANAGED census; the qualification
+plan also requires the NATIVE-ABI re-census at the sealed revision.
+
+Governance: Qualification plan §2 Q-12.
+
+Independent evidence: evidence/abi/reviewer-native-abi-scan.txt — reviewer re-censused
+the pinned LatticeDbSharp 0.2.0 native assets:
+  linux-x64: 191 dynamic symbols, 0 lattice-namespace cancellation symbols
+  win-x64: 105 exports, 0 lattice-namespace cancellation symbols
+  osx-arm64: identifier scan, 0 lattice-namespace cancellation identifiers
+  All three asset hashes match the entry commission's native-abi-scan.txt
+
+Severity: LOW / non-blocking — discharged independently by reviewer; dependency
+provably unchanged.
+
+Owner disposition: ACCEPT — DISCHARGED BY REVIEWER
+  The reviewer independently re-censused the native ABI and confirmed 0 lattice-
+  namespace cancellation entry points. The dependency is provably unchanged. The
+  qualification evidence covers it; the committed test could be extended in a future
+  change set for completeness.
+
+Required corrective work: None required. Optional: extend Q-12 test in a future
+owner-authorized change set for completeness.
+
+Residual risk: LOW — dependency provably unchanged; qualification evidence complete.
+
+=== F-4 ===
+Finding: The qualification plan's Q-02 expected outcome ("returns success, never
+OperationCanceledException") is unachievable for an untimed canceller; the producer's
+invariant framing (accept either truthful outcome, never a partial one) is the correct
+operationalization.
+
+Governance: Qualification plan §2 Q-02.
+
+Independent evidence: PROBE A — the Q-02 schedule (concurrent canceller, 20ms delay,
+300-node unit) landed in-window in some runs and pre-native in others; NO partial
+state in either branch.
+
+Severity: LOW / non-blocking — a justified deviation from the plan's literal
+expectation; recorded so the successor does not read it as a gap.
+
+Owner disposition: ACCEPT — PLAN DEVIATION JUSTIFIED
+  The producer's invariant framing is the correct operationalization: an untimed
+  canceller cannot guarantee which truthful outcome occurs; the assertion must be
+  "never partial, never false cancellation" — which holds (PROBE A: 3/3 in-window in
+  final run; 0 partial states ever).
+
+Required corrective work: None. Record the deviation in traceability for future
+readers.
+
+Residual risk: LOW — no correctness issue; traceability recorded.
+
+=== F-5 ===
+Finding: Q-10 mapping divergence — the plan's Q-10 is "preservation of the historical
+Stage-2 regressions", while the producer's Q-10 test is a store-semantics control. The
+obligation's substance is discharged by the unchanged whole-suite counts.
+
+Governance: Qualification plan §2 Q-10; M-matrix.
+
+Independent evidence: Reviewer's own 88/88 run; hosted 345/372/157/88 unchanged;
+thresholds unchanged (55/75/60/70). The substance is discharged by the suite receipts,
+not by the test named Q-10.
+
+Severity: LOW / non-blocking — traceability-labelling only; the discharge is real.
+
+Owner disposition: ACCEPT — TRACEABILITY LABELLING ONLY
+  The label mismatch does not affect the discharge. The substance is evidenced by the
+  unchanged suite counts and thresholds on both platforms.
+
+Required corrective work: None required. Future traceability matrix update could
+align labels.
+
+Residual risk: LOW — substance discharged; label mismatch documented.
+
+=== F-6 ===
+Finding: The producer's commission record §6 and ADR §7 quote the WINDOWS coverage
+figures for three of the four suites under the heading "Coverage gates on the hosted
+runner" (core 82.42/70.89, CSharp 95.15/88.00, TreeSitter 89.85/75.45). The committed
+hosted artifacts actually contain 82.42/70.74, 95.11/87.85, 89.89/75.95 — which the
+CI's own coverlet summary confirms. LatticeDb coincidentally matches (92.87/78.96).
+
+Governance: Evidence accuracy (G-4).
+
+Independent evidence: evidence/coverage-comparison.txt — producer's committed local
+vs hosted artifacts compared directly:
+  core:          Windows 82.42/70.89 vs Hosted 82.42/70.74
+  CSharp:        Windows 95.15/88.00 vs Hosted 95.11/87.85
+  TreeSitter:    Windows 89.85/75.45 vs Hosted 89.89/75.95
+  LatticeDb:     Windows 92.87/78.96 vs Hosted 92.87/78.96
+  CI coverlet summary lines match the hosted artifacts exactly.
+
+Severity: LOW / non-blocking — all values clear thresholds under both sets; no gate
+conclusion changes.
+
+Owner disposition: ACCEPT WITH ERRATUM
+  The committed hosted artifacts are correct; only the prose mis-attributes the
+  numbers. All values clear their thresholds under both sets, so no gate conclusion
+  changes. Recommend an erratum in the producer's record under a separate authorization.
+
+Required corrective work: Bounded erratum in the producer's commission record
+(ANDIRIT-CI1A-S2.6-WP-S61-IMPL-01.md §6 and ADR §7) under separate authorization.
+
+Residual risk: LOW — no gate conclusion affected.
+
+=== F-7 ===
+Finding: The producer's package and API-surface receipts were produced while the
+working tree's HEAD was still the baseline commit (2d1e8ec), so the <repository
+commit> nuspec stamp and the version-resource stamp match between the two rebuilt
+packages. Rebuilt correctly per revision (one package per revision), 2 of 6 entries
+differ — the DLL and the nuspec commit stamp.
+
+Governance: Evidence reproducibility (G-4).
+
+Independent evidence: evidence/package/package-comparison.txt, dll-pe-regions.txt,
+show-nuspec.py:
+  6 entries, 4 identical, 2 different (Andirit.LatticeDb.dll, Andirit.LatticeDb.nuspec)
+  Every differing byte is provenance metadata (MVID, PDB checksum, PE timestamp,
+  version-resource commit, nuspec <repository commit> stamp)
+  api-surface/api-diff.txt records "implementation-dump: D:\projects\andirit (working
+  tree of the implementation revision)"
+  Reviewer's independent rebuild from pinned revisions confirms 0 metadata/IL diffs.
+
+Severity: LOW / non-blocking — every differing byte is provenance metadata; the
+reviewer's independent rebuild confirms the substantive conclusion (documentation-
+only) with 0 metadata/IL differences.
+
+Owner disposition: ACCEPT — EVIDENCE REPRODUCIBILITY NOTE
+  The producer's receipts were produced at baseline HEAD so provenance stamps
+  accidentally match. Rebuilt correctly per revision, the 2/6 differing entries are
+  all provenance metadata. The reviewer's independent rebuild confirms the substantive
+  conclusion (documentation-only) with 0 metadata/IL differences. No corrective work
+  needed; recorded for transparency.
+
+Required corrective work: None.
+
+Residual risk: LOW — substantive conclusion unaffected.
+
+=== F-8 ===
+Finding: Q-08 does not assert the plan's "no native handle OR TEMPORARY ARTIFACT
+remains" — it deletes the main database file only, not the -wal/-journal sidecars.
+
+Governance: Qualification plan §2 Q-08.
+
+Independent evidence: Source review of
+NativeCancellationPathTests.DisposalReleasesTheNativeHandle — File.Delete(path) only,
+no assertion on -wal/-journal sidecars. Reviewer's probe harness deletes sidecars and
+never observed a leak.
+
+Severity: LOW / non-blocking — the handle-release property (the load-bearing one) is
+proven; the sidecar assertion is a completeness nicety.
+
+Owner disposition: ACCEPT — HANDLE-RELEASE IS LOAD-BEARING
+  The handle-release property (file deletable after disposal) is proven; the sidecar
+  assertion is a completeness nicety. The reviewer's probe harness deletes sidecars
+  and never observed a leak.
+
+Required corrective work: Could be added in a future change set for completeness.
+Not required for acceptance.
+
+Residual risk: LOW — load-bearing property proven; sidecars never observed to leak.
+
+=== SUMMARY ===
+
+| Finding | Disposition | Follow-up required | Blocking |
+|---------|-------------|-------------------|----------|
+| F-1     | Accept with doc follow-up | Bounded erratum | No |
+| F-2     | Accept with required regression follow-up | Add 2nd Q-06 scenario | No |
+| F-3     | Accept — discharged by reviewer | Optional test extension | No |
+| F-4     | Accept — plan deviation justified | Record deviation | No |
+| F-5     | Accept — traceability labelling only | None | No |
+| F-6     | Accept with erratum | Bounded erratum | No |
+| F-7     | Accept — evidence note | None | No |
+| F-8     | Accept — handle-release load-bearing | Optional completeness | No |
+
+NO FINDING REQUIRES REMEDIATION BEFORE ACCEPTANCE.
+All are non-blocking and evidence-backed.
