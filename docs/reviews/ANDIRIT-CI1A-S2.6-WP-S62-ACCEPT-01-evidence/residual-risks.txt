@@ -1,0 +1,78 @@
+ANDIRIT-CI1A-S2.6-WP-S62-ACCEPT-01 — residual-risk register (carried forward)
+
+All risks carried from the independent qualification report and explicitly preserved in the acceptance record.
+
+=== BLOCKING RISKS (none) ===
+No residual risk blocks S6.2 acceptance or S6.3 entry.
+
+=== QUALIFICATIONS CARRIED (Q-S62-1..Q-S62-9) ===
+
+Q-S62-1: Crash/power-loss/abrupt-kill/multi-process durability is not qualified.
+  Status: Bounded limitation, published in API contract (C-1/C-2) and carried as qualification.
+  Verified: Managed census (0 members), native ABI census (0 entry points), PROBE C behaviour.
+  S6.2 discharge: Contract text + D-03 + PROBE C.
+
+Q-S62-2: The native window must be awaited.
+  Status: Verified behaviourally (PROBE C/F, D-03/D-05/REG guard). Caller must await to learn outcome.
+
+Q-S62-3: D4 invariant 4 discharged by atomicity, not interruption.
+  Status: Verified behaviourally (PROBE C/F, D-03/D-04). Non-exposure via atomicity.
+
+Q-S62-4: D4 invariant 5 discharged by atomicity, not interruption.
+  Status: Verified behaviourally (PROBE C/F, D-03/D-04). Non-exposure via atomicity.
+
+Q-S62-4: osx-arm64 unqualified — no native runtime evidence.
+  Status: Preserved. Pinned dependency ships osx-arm64 as candidate RID only; no supported-capability declaration. CI macos-latest covers managed suites only. No macOS native claim.
+
+Q-S62-5: Genuine hosted Linux required for the Linux row.
+  Status: Satisfied for linux-x64 by hosted run (run 45037630799, job 137254795969, ubuntu-latest).
+
+Q-S62-6: Platform-invariant contract, platform-bounded evidence.
+  Status: Satisfied for linux-x64 by hosted run; the contract text is platform-invariant and the ABI census shows the same absence of interruption on all three assets.
+
+Q-S62-7: Scope limited to qualification of existing behaviour.
+  Status: Satisfied. No new native capability, no dependency upgrade, no interruption semantics.
+
+Q-S62-8: F-02 boundary untouched.
+  Status: Satisfied. Managed fault injection is not crash/power-loss/abrupt-kill/multi-process durability.
+
+=== STAGE-2 QUALIFICATIONS CARRIED (Q-L1..Q-L8, MR-1..MR-4, GH-1..GH-4, DF-1..DF-8) ===
+All preserved unchanged; none affected by S6.2.
+
+=== DEFERRED OBLIGATIONS (explicitly preserved) ===
+
+| Obligation | Status | Owning package | S6.2 discharge |
+|------------|--------|----------------|----------------|
+| M12.1, M12.3 | Deferred | S6.3 | Not discharged |
+| Complete S-02 / D4.5 matrices | Deferred | S6.3 | Partly (cancellation + unknown outcome) |
+| DF-4 (crash/power-loss/multi-process) | Deferred | S6.2 | Not discharged (managed fault ≠ crash) |
+| DF-6 (full platform certification) | Deferred | S6.3/S6.5 | Not discharged |
+| Q-S62-5 (osx-arm64 unqualified) | Deferred | S6.5 | Preserved |
+
+=== FINDINGS CARRIED (F-QU-1..F-QU-8) ===
+All eight findings from the independent qualification are carried as non-blocking qualifications.
+See findings-adjudication.txt for individual adjudications.
+
+| Finding | Follow-up | Blocking |
+|---------|-----------|----------|
+| F-QU-01 (3rd checkpoint doc) | Bounded erratum | No |
+| F-QU-02 (Q-06 2nd scenario) | Required suite addition | No |
+| F-QU-03 (Q-12 native-ABI) | Discharged by reviewer | No |
+| F-QU-04 (Q-02 plan deviation) | Record deviation | No |
+| F-QU-05 (Q-10 label mismatch) | None | No |
+| F-QU-06 (coverage prose erratum) | Bounded erratum | No |
+| F-QU-07 (evidence provenance) | None | No |
+| F-QU-08 (Q-08 sidecars) | Optional completeness | No |
+
+=== PRE-EXISTING HISTORICAL EVIDENCE GAP ===
+The 4 coverage XML files absent from CI1A-S2.5-WP-S25-2-G2-EXEC-evidence at the remote base,
+entry baseline, and all subsequent revisions. Recorded, not repaired (outside S6.2 lineage).
+
+=== STAGE-2 QUALIFICATIONS PRESERVED ===
+Q-L1..Q-L8, MR-1..MR-4, GH-1..GH-4, DF-1..DF-8 — all intact and unmodified by S6.2.
+No Stage-2 acceptance decision was reopened.
+
+=== NO NEW RISKS INTRODUCED BY THIS ACCEPTANCE ===
+This commission records the acceptance decision and S6.3 entry authorization only.
+No production code, test, dependency, workflow, threshold or requirement was changed.
+No finding was remediated. Nothing was published. No tag was changed. No push performed.

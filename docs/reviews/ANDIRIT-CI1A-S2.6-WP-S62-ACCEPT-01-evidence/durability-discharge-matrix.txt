@@ -1,0 +1,28 @@
+ANDIRIT-CI1A-S2.6-WP-S62-ACCEPT-01 — Durability obligation discharge matrix
+
+=== DISCHARGED BY S6.2 ===
+
+| Obligation | Source | How discharged | Evidence |
+|------------|--------|----------------|----------|
+| DF-4 / Q2-F12 | S2.5 qualification matrix | D-01…D-04, D-06, D-07, D-08 native assertions | D-01…D-04, D-06, D-07, D-08 PASS on Windows + hosted Ubuntu |
+| D4 invariant 4 (failed staging preserves prior) | Owner decision §D.4 | Non-exposure proven by D-01 (pre-native), D-02/D-04 (racing), D-06 (reopen); PROBE C/D | Windows + hosted receipts; PROBE C/D |
+| D4 invariant 5 (cancelled staging non-exposure) | Owner decision §D.4 | Non-exposure proven by Q-01…Q-04, D-06; PROBE C/D | Windows + hosted receipts; PROBE C/D/G |
+| D4 qualification clause | Owner decision §D.4 | Whole suite runs against production LatticeCodeGraphStore over real LatticeDB | Both platforms; 0 mocked paths |
+| S-02 (cancellation path + unknown outcome) | CI1A specification; S-01 obligation reconciliation | Cancellation path: D-01…D-04, D-06, D-07. Unknown outcome: D-04 | All PASS on both platforms |
+| M9.5 (dedicated native cancel-path test) | S2.5 qualification matrix §9 | 13 dedicated tests (NativeDurabilityTests) | 13/13 PASS on Windows; 13/13 in hosted 88 aggregate |
+| M12.2 (native cancelled-staging case) | S2.5 qualification matrix §12 | Q-01…D-04 native HetuStage/HetuUnit assertions | D-01…D-04 PASS both platforms; PROBE C confirms whole-unit atomicity |
+| I-04 / Q2-F09 cancellation aspect | Obligation register; owner decision §G.2 | C-1 (store) and C-2 (interface) publish the policy | src/Andirit.LatticeDb/LatticeCodeGraphStore.cs + src/Andirit/ICodeGraphStore.cs; API surface 0 diff |
+
+=== EXPLICITLY NOT DISCHARGED (DEFERRED) ===
+
+| Obligation | Why deferred | Owning package |
+|------------|--------------|----------------|
+| M12.1, M12.3 | Remaining full-native-matrix rows; S6.2 covers cancellation path only | S6.3 |
+| Complete S-02 / D4.5 matrices | S-02 requires all ten invariants exercised natively; S6.2 covers cancellation + unknown outcome | S6.3 |
+| DF-6 (full platform certification) | Only win-x64 + genuine hosted linux-x64 in scope; macOS native unavailable | S6.3/S6.5 |
+| Q-S62-5 (osx-arm64 unqualified) | Pinned dependency ships osx-arm64 as candidate RID only | S6.5 |
+| I-04 aspects other than cancellation | Cancellation policy specified; remaining aspects unchanged | S6.3 |
+| DF-4 (crash/power-loss/abrupt-kill/multi-process) | Managed fault injection ≠ crash/power-loss/abrupt-kill/multi-process durability | S6.2 (primary deliverable) — bounded limitation Q-S62-1 |
+
+NO BROADER CANCELLATION GUARANTEES CLAIMED.
+Contract explicitly limits outcomes to three truthful values; native window explicitly non-cancellable.

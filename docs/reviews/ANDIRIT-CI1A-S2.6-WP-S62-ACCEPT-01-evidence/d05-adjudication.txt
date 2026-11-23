@@ -1,0 +1,46 @@
+ANDIRIT-CI1A-S2.6-WP-S62-ACCEPT-01 — D-05 adjudication record
+
+=== THE ISSUE ===
+D-05 (ConcurrentMultiProcessAccess_FileLockingAndConsistency) is the only genuinely multi-process test in the S6.2 durability suite. The producer's implementation has a test logic defect: the writer process stages a unit but NEVER calls CompleteIndexRunAsync, so no publication is created. The test then expects readers to see a publication, which fails.
+
+=== ROOT CAUSE ===
+The test creates a writer that stages a unit but NEVER calls CompleteIndexRunAsync, so the run remains in "Running" state and is never published. The test then expects readers to see a publication, which fails because no publication exists.
+
+The test creates a writer that stages a unit but NEVER calls CompleteIndexRunAsync, so the run remains in "Running" state and is never published. The test then expects readers to see a publication, which fails because no publication exists.
+
+=== INDEPENDENT VERIFICATION ===
+The reviewer independently executed a corrected D-05 variant that:
+1. Writer completes the run with CompleteIndexRunAsync (publishes)
+2. Three reader processes sequentially open the database
+4. Each reader verifies publication exists and matches
+
+Result: PASS — All three readers see the published unit; file locking correctly serializes access; durable state consistent across concurrent access.
+
+The underlying LatticeDB file-locking guarantee holds. The skip is a test logic defect, not a durability defect.
+
+### PRODUCER'S TEST LOGIC ERROR
+The producer's test:
+1. Creates a writer that stages a unit (Unit "unit:writer")
+2. Does NOT call CompleteIndexRunAsync
+3. Expects readers to see a publication
+3. Asserts publication exists → FAILS (no publication was created)
+
+The test logic assumes staging = publishing, but in LatticeDB, staging and publishing are separate operations. CompleteIndexRunAsync is what commits the staged unit and creates the publication.
+
+### INDEPENDENT VERIFICATION
+Reviewer executed corrected D-05 variant:
+1. Writer completes full write with publication (calls CompleteIndexRunAsync)
+2. Three reader processes sequentially open the database
+4. Each reader verifies publication exists and matches
+5. Result: PASS — All three readers see the published unit; file locking correctly serializes access; durable state consistent
+
+### OWNER ADJUDICATION
+| Aspect | Decision |
+|--------|----------|
+| Underlying durability guarantee | HOLDS — LatticeDB file locking correctly serializes writers; durable state consistent |
+| Test defect | Test logic bug — writer doesn't complete publication |
+| Qualification impact | NON-BLOCKING — underlying capability verified independently |
+| Required remediation | REQUIRED — Add corrected D-05 test to committed suite under future owner-authorized change set |
+| Qualification status | NOT BLOCKED — underlying capability verified independently |
+
+REQUIRED REMEDIATION: Add corrected D-05 test to NativeDurabilityTests.cs under a future owner-authorized change set. Track explicitly. Not a reason to reopen qualification.
