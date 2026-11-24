@@ -1,0 +1,413 @@
+# Runtime and integration guide
+
+The [README](../README.md) describes the current release and platform qualification. The examples below illustrate individual APIs with host-supplied inputs and implementations. Use the `Andirit` namespace for the core and language plugins, and import `Andirit.LatticeDb` for `UseLatticeStore`.
+
+## Runtime foundation
+
+The runtime supports deterministic plugin registration, strict bounded
+batch ingestion, run-scoped atomic publication, repository and index-run
+manifests, exact symbol/declaration lookup, and bounded graph traversal:
+
+```csharp
+var store = new InMemoryCodeGraphStore();
+var repositoryId = new CodeRepositoryId("repo:my-app");
+var runId = new CodeIndexRunId("run:initial");
+var pluginId = new CSharpCodeGraphPlugin().Id;
+
+await store.UpsertRepositoryAsync(new CodeRepositoryManifest(repositoryId));
+await store.StoreIndexRunAsync(new CodeIndexRunManifest(
+    repositoryId,
+    runId,
+    DateTimeOffset.UtcNow,
+    plugins: [pluginId]));
+
+await using var sink = new CodeGraphIngestionSink(store);
+// Extraction sessions stream owned CodeGraphBatch values to the sink.
+```
+
+`Andirit.Testing` contains a reusable conformance suite that every durable
+store provider must pass.
+
+Repository discovery is provider-based. Local filesystem discovery is
+registered by default, while hosts can add a VFS, Git tree, archive, remote
+workspace, or in-memory implementation without changing language plugins:
+
+```csharp
+var sources = new AndiritBuilder()
+    .AddRepositoryProvider(new MyVirtualRepositoryProvider())
+    .BuildRepositoryProviderRegistry();
+
+await using var repository = await sources.OpenAsync(
+    new CodeRepositoryDescriptor(
+        new CodeRepositoryId("repo:my-app"),
+        "vfs://workspaces/my-app"));
+```
+
+Use `ClearRepositoryProviders()` when a host wants to replace the default
+filesystem provider rather than extend it. Ambiguous provider claims produce an
+explicit error instead of being resolved by registration order.
+
+Repository discovery can now be converted into a deterministic incremental
+index plan. The planner uses provider content hashes when available and computes
+SHA-256 hashes otherwise. It compares those inputs with prior source manifests and
+classifies each selected source as new, changed, unchanged, or deleted; changing
+a plugin version invalidates that plugin's otherwise unchanged units:
+
+```csharp
+var plugins = new AndiritBuilder()
+    .AddPlugin(new MyLanguagePlugin())
+    .BuildPluginRegistry();
+var planner = new CodeIndexPlanner(plugins);
+
+CodeIndexPlan plan = await planner.CreatePlanAsync(
+    repository,
+    previousManifests,
+    new CodeIndexPlanningOptions(pluginIds: [new("my-language")]));
+```
+
+Repository IDs remain caller-supplied and should identify the logical repository
+across checkouts and machines. A host that lacks such an identity may derive one
+from a canonical local path, but that fallback is deliberately host-local and
+must not be treated as a portable repository identity.
+
+Source manifests report changed inputs; they do not dictate extraction
+ownership. A syntax plugin may emit one index unit per file, while a semantic
+plugin may atomically own a project or solution unit. Plugin contexts therefore
+provide repeatable `CodeGraphSource` readers and only an optional provider-defined
+location hint—plugins must not assume repositories live on a local filesystem.
+
+`CodeIndexingService` now coordinates the first complete lifecycle: repository
+opening, source planning, plugin execution, bounded ingestion, obsolete-unit
+cleanup, and atomic publication of the latest successful source state. Hosts
+supply the run identity, making retries and telemetry correlation explicit:
+
+```csharp
+var indexing = new CodeIndexingService(repositoryProviders, plugins, store);
+var result = await indexing.IndexAsync(
+    new CodeRepositoryDescriptor(
+        new CodeRepositoryId("repo:my-app"),
+        repositoryLocation),
+    new CodeIndexRunId("run:2026-08-25T12:00:00Z"),
+    new CodeIndexingOptions(maxConcurrentPlugins: 2));
+```
+
+Every successful result includes both the exact published source state and a
+compact publication receipt. `IndexIdentity` is a deterministic SHA-256
+identity for the repository, provider snapshot, plugin versions, source paths,
+and source hashes; unlike `IndexRunId`, it stays the same when an unchanged
+repository is indexed again under a new run ID.
+
+Plugins see the complete current source set, exact source transitions, and their
+unit identities from the previous successful publication. They remain responsible
+for choosing atomic index units and report obsolete unit IDs after extraction.
+This lets project-aware plugins remove units whose project remains on disk but
+leaves a solution. Andirit refuses to complete a run if any streamed unit remains
+buffered or rejected.
+
+Lifecycle execution is defensive at repository boundaries. Each executing
+plugin receives a scoped sink, so it cannot accidentally emit facts under a
+different repository, run, plugin identity, or plugin version. Plugins whose
+inputs are entirely unchanged are not invoked.
+
+For providers without an immutable snapshot, Andirit hashes sources during
+planning and materializes bounded, repeatable content before extraction. A
+SHA-256 mismatch means the live source changed during the boundary and the run
+fails explicitly. `CodeIndexingOptions` limits both individual source size and
+total bytes read; defaults are 16 MiB per source and 512 MiB per run. Discovery
+diagnostics report unsupported files, excluded and depth-limited directories,
+skipped reparse points, and source bytes without recording paths or content.
+
+Language plugins return bounded, privacy-safe extraction diagnostics alongside
+obsolete unit IDs. They can report examined and contributing source counts,
+unresolved relationship counts, and stable warning codes. Lifecycle diagnostics
+add per-plugin status, version, duration, source counts, unresolved counts, and
+obsolete-unit counts, while aggregate diagnostics make repository-level health
+visible without logging source paths or content. Diagnostic callbacks remain
+failure-isolated from indexing behavior.
+
+## C# extraction
+
+`Andirit.CSharp` now provides the first useful Roslyn plugin. It consumes
+provider-neutral source readers, discovers SDK-style `.csproj` inputs without
+requiring a physical filesystem or MSBuild, creates one compilation and atomic
+index unit per project, and emits projects, files, namespaces, types,
+interfaces, delegates, callables,
+properties, fields, parameters, physical declarations, and semantic containment:
+
+```csharp
+var plugin = new CSharpCodeGraphPlugin();
+var indexing = new CodeIndexingService(
+    repositoryProviders,
+    new CodeGraphPluginRegistry([plugin]),
+    store);
+
+await indexing.IndexAsync(
+    new CodeRepositoryDescriptor(repositoryId, repositoryLocation),
+    runId);
+```
+
+Partial declarations share one semantic symbol node while retaining separate
+source declarations. Callable identities distinguish overload signatures. The
+plugin reports stable Roslyn diagnostic codes rather than compiler messages or
+source content.
+
+Project discovery supports default compile items, explicit compile includes and
+removals, linked sources, common compiler properties, project references, and
+`PackageReference` items. Package references become bounded syntax-evidence
+`package` nodes with verbatim version and unexpanded condition metadata, linked
+by `depends-on` edges; conditions are never evaluated and missing versions are
+never guessed. More than 256 package references in one project keep the first
+256 in name order and report `csharp.project.package-cap`.
+Sources outside project directories fall into a deterministic loose-source
+project. Project-reference compilations and `depends-on` edges are created in
+dependency order, while missing and cyclic references are diagnosed rather
+than guessed. When `.sln` or `.slnx` files are present, the union of their listed projects
+forms the canonical set: unlisted projects are skipped with
+`csharp.solution.unlisted-project` and listed-but-absent projects report
+`csharp.solution.missing-project`. Solution configurations are not evaluated.
+This deliberately lightweight model does not evaluate MSBuild conditions,
+imports, or custom targets; full MSBuild evaluation remains a future opt-in
+provider concern.
+
+The plugin version comes from its package informational version, so package
+updates naturally invalidate prior source manifests. Unresolved relationship
+counts use a conservative set of missing symbol, namespace, member, and assembly
+diagnostics; syntax errors remain visible as warning codes without being
+misclassified as relationship failures.
+
+The lightweight plugin currently builds Roslyn platform references from the
+host runtime's trusted platform assemblies. This keeps extraction independent
+of MSBuild, but a project targeting another framework may be analyzed against
+the host's .NET 10 reference surface. Hosts requiring exact target-framework
+semantics should treat this as a known preview limitation; a future opt-in
+reference resolver can supply targeting-pack metadata without changing Andirit's
+graph contracts.
+
+The extractor also models semantic reference edges from the smallest
+indexed owner, including local functions, attributes, explicit base types,
+interface implementation, ordinary symbol uses, implicit object creation, and
+constructor initializers. Import edges preserve alias, `static`, `global`, and
+scope metadata. Repeated references retain deterministic first evidence, and
+the extractor avoids inventing transitive inheritance or unresolved `var`
+references.
+
+## Tree-sitter structural extraction
+
+`Andirit.TreeSitter` proves Andirit can ingest non-.NET languages without
+changing the graph model. It embeds the Tree-sitter runtime through managed
+bindings and exposes one structural plugin per language: Elixir, TypeScript
+(`.ts`/`.mts`/`.cts`/`.tsx`), and JavaScript (`.js`/`.mjs`/`.cjs`/`.jsx`). All
+grammar pins, including which natives ship with the package and which come
+from the pinned `TreeSitter.DotNet` binding, are recorded in
+[grammar pins](../src/Andirit.TreeSitter/native/grammar-pins.md), so indexing stays
+offline and reproducible:
+
+```csharp
+await using var host = new AndiritHostBuilder()
+    .AddTreeSitterElixirPlugin()
+    .AddTreeSitterTypeScriptPlugin()
+    .AddTreeSitterJavaScriptPlugin()
+    .UseLatticeStore("C:/data/andirit/my-app.ltdb")
+    .Build();
+
+await host.IndexRepositoryAsync(
+    new CodeRepositoryDescriptor(
+        new CodeRepositoryId("repo:my-app"),
+        "C:/src/my-app"),
+    new CodeIndexRunId("run:initial"));
+```
+
+Profiles emit documented subsets of structural declarations, containment,
+imports, and invocation names through `invokes-name` edges that never claim a
+resolved target. TypeScript/JavaScript class extension and TypeScript interface
+heritage contribute structural `inherits`/`implements` edges. TypeScript
+interface bodies contribute identifier-named method and property signatures as
+`callable`/`property` declarations with `contains` edges and
+`readonly`/`optional` modifier metadata; computed, string, numeric, index, call,
+and construct signatures are not emitted, and overload signatures keep one
+physical declaration each. Class declarations bind their source path, and class
+methods, accessors, overload signatures, and identifier-named class fields
+become owner-derived `callable`/`property` members with written modifier and
+accessibility metadata, so unrelated same-name classes and members never merge;
+computed, string, numeric, `#private`, and auto-accessor fields are not emitted,
+and field initializer invocations attribute to the field. The common
+JavaScript prototype-inheritance idioms
+(`Object.create`, `new`, `util.inherits`, `Object.setPrototypeOf`) are
+recognized and emitted as `inherits` with `Derived` evidence — never
+structural or resolved. There are no `calls` or `references` edges. The EC-6B
+module pass adds `resolves-to` only for supported relative references within
+the owning plugin's indexed source inventory. It identifies a target file;
+it does not bind imported names to declarations or claim compiler, bundler,
+or runtime-equivalent behavior. The export pass emits a Structural occurrence edge for each supported written export. The resulting inventory provides positive evidence of those exports. Re-exports, CommonJS export assignments, and export-to-declaration attribution remain outside the supported surface. See the [relative module resolution policy](ecmascript-module-resolution.md).
+Malformed regions keep their valid facts and report
+`<language>.parse-error` with partial coverage instead of failing the run.
+Grammar identity, ABI, and capabilities are recorded on each plugin's
+`Grammar` descriptor, and the expected ABI is validated at load.
+
+## Provider-neutral queries
+
+`CodeGraphQueryService` provides exact symbol and declaration lookup plus
+bounded references, callers, callees, implementations, dependencies,
+dependents, neighborhoods, and impact sets. Exact qualified-name lookup retains
+all candidates and reports ambiguity instead of selecting one implicitly.
+Traversal limits and evidence-kind filters are applied by the store, so filtered
+queries cannot exceed their declared node, edge, or depth budgets.
+
+Provenance-aware query variants return a `CodeGraphQueryEnvelope<T>` binding
+the result to one successful publication and the exact applied query. Returned
+nodes, declarations, and edges include every contributing plugin version and
+index-unit origin. Traversal results also report the truncation reason, depth
+reached, examined counts, and omitted frontier count.
+
+For context assembled through several calls, bind the query service to one
+publication. The bound view rejects a result if another successful index is
+published between calls; it does not imply that the store retains historical
+graphs:
+
+```csharp
+var view = await host.Queries.OpenLatestPublicationAsync(repositoryId);
+if (view is not null)
+{
+    var symbols = await view.ResolveSymbolsAsync(
+        ["Example.Order", "Example.OrderService"]);
+    var impact = await view.GetImpactSetsAsync(
+        symbols.Result["Example.OrderService"].Candidates.Select(node => node.Id).ToArray());
+}
+```
+
+Handle freshness, ambiguity, and traversal limits explicitly when assembling
+consumer context:
+
+```csharp
+var freshness = await host.CheckFreshnessAsync(repository);
+if (freshness.Status is CodeFreshnessStatus.Stale or CodeFreshnessStatus.SourceConflict)
+    throw new InvalidOperationException("Reindex before assembling context.");
+
+var view = await host.OpenLatestPublicationAsync(repository.Id)
+    ?? throw new InvalidOperationException("The repository has no publication.");
+var lookup = await view.FindSymbolAsync("Example.OrderService");
+if (lookup.Result.Candidates.Count != 1)
+    throw new InvalidOperationException("The symbol is missing or ambiguous.");
+
+var neighborhood = await view.GetNeighborhoodAsync(
+    lookup.Result.Candidates[0].Id,
+    options: new CodeGraphQueryOptions(maxDepth: 3, maxNodes: 100, maxEdges: 200));
+if (neighborhood.Result.Truncated)
+    Console.WriteLine($"Context was truncated: {neighborhood.Result.TruncationReason}");
+```
+
+Batch symbol resolution is capped at 100 distinct qualified names and batch
+impact analysis at 32 distinct seeds; each impact traversal keeps its own node,
+edge, and depth bounds. Convenience queries also expose declarations in one
+file and the public symbol surface reachable from a project through containment
+and declaration edges. These operations compare exact names and paths and never
+silently choose among ambiguous symbols.
+
+`AndiritHostBuilder.WithIndexingOptions(...)` establishes host defaults that each
+indexing call may override. `UseStore(store)` transfers ownership of a supplied
+store instance to the resulting host. A builder creates one host so ownership
+cannot be transferred twice. `AndiritHost.CheckHealthAsync()` provides a
+content-free readiness result covering the graph store and the deterministically
+ordered plugin/provider composition. Stores that do not implement the optional
+`ICodeGraphStoreHealthCheck` contract report `Unknown`, not a guessed healthy
+state.
+
+## LatticeDb persistence
+
+`Andirit.LatticeDb` provides `LatticeCodeGraphStore`, an embedded durable
+implementation of the same `ICodeGraphStore` contract. It uses the community
+LatticeDbSharp 0.2.0 binding for LatticeDB (an embedded single-file
+property-graph database with Cypher, vector search, full-text search, ACID
+transactions, and durable streams), validates its schema version on open,
+persists mutations transactionally, restores state after process restart, and
+exposes a lightweight health result. The database is a single file at a
+caller-supplied file path, and the Linux x64, Windows x64, and macOS
+ARM64 native runtimes ship inside the binding package, so hosts reference no separate
+native runtime package and need no OpenSSL installation. The store keeps a
+durable command log in LatticeDB and serves queries from a materialized
+in-memory projection. Optional native traversal mirrors serve unfiltered graph
+traversals and are invalidated on every publication, including publications made
+while the option is disabled. Health details report whether queries use the
+projection or verified native mirrors.
+
+A file-backed host is one builder call away; the database is a single file,
+so each repository maps naturally to one path:
+
+```csharp
+await using var host = new AndiritHostBuilder()
+    .AddPlugin(new CSharpCodeGraphPlugin())
+    .UseLatticeStore("C:/data/andirit/my-app.ltdb")
+    .Build();
+
+await host.IndexRepositoryAsync(
+    new CodeRepositoryDescriptor(
+        new CodeRepositoryId("repo:my-app"),
+        "C:/src/my-app"),
+    new CodeIndexRunId("run:initial"));
+
+var view = await host.Queries.OpenLatestPublicationAsync(
+    new CodeRepositoryId("repo:my-app"));
+var candidates = view is null
+    ? null
+    : await host.Queries.FindNodesByNamePatternAsync(
+        new CodeRepositoryId("repo:my-app"), "OrderService");
+```
+
+Only one process may own a database file at a time; a second owner fails fast
+with the engine error instead of queuing. Name-pattern search is a bounded,
+case-insensitive substring match callers rank themselves — exact lookup and
+traversal remain the deterministic primitives.
+
+## Architectural boundaries
+
+- Core abstractions have no Roslyn, ANTLR, LatticeDB, LSP, SCIP, or AI dependency.
+- Plugins receive repository-aware extraction sessions so semantic analyzers can
+  resolve project-wide and cross-file relationships.
+- Plugins emit normalized facts; they never write directly to a graph database.
+- Andirit owns graph vocabulary, validation, physical identity, transactions,
+  incremental replacement, and query semantics.
+- Persistence providers implement Andirit's store contract without leaking their
+  query language through ordinary consumer APIs.
+- All traversals are bounded and deterministically ordered.
+- Evidence records how each relationship was discovered without overstating
+  syntax-only or heuristic information as compiler-resolved truth.
+
+## Intended use
+
+Andirit helps answer questions such as:
+
+- What does this type contain?
+- What calls this method, and what does it call?
+- Which types implement this interface?
+- What references or depends on this symbol?
+- What bounded neighborhood is likely affected by a change?
+- Which source declarations should Solo include in model context?
+
+## Relationship to the Penghou stack
+
+```text
+Baize   provider and model communication
+Nuwa    deterministic structured-output repair
+Zhinu   durable workflow execution
+Cangjie durable contextual knowledge and provenance
+Andirit    source-code structure, relationships, and impact
+Solo    software-engineering orchestration and interpretation
+```
+
+Andirit may supply graph-derived observations to Cangjie or Solo, but it does not
+become a general memory store or workflow engine.
+
+## Initial non-goals
+
+- universal compilation or exhaustive data-flow analysis;
+- runtime AI parsing or plugin generation;
+- embeddings or vector search;
+- automatic plugin or NuGet downloading;
+- LSP or SCIP integration;
+- AI-generated architectural labels or component clustering;
+- generated language plugins.
+
+The current preview indexes real C# repositories, persists a stable graph,
+survives repeat and incremental indexing, and answers bounded structural and
+dependency queries. The remaining work is semantic expansion, operational
+hardening, and integration evidence rather than proving the basic architecture.
