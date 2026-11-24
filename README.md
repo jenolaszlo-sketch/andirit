@@ -32,7 +32,7 @@ var lookup = await publication.FindSymbolAsync(args[1]);
 Console.WriteLine($"Matching symbols: {lookup.Result.Candidates.Count}");
 ```
 
-The default store is in memory. For persistence across processes, install `Andirit.LatticeDb` at the same version import `Andirit.LatticeDb`, and add `.UseLatticeStore("my-app.ltdb")` before `.Build()`. Reuse the logical repository ID across runs and supply a fresh run ID each time.
+The default store is in memory. For persistence across processes, install `Andirit.LatticeDb` at the same version, import `Andirit.LatticeDb`, and add `.UseLatticeStore("my-app.ltdb")` before `.Build()`. Reuse the logical repository ID across runs and supply a fresh run ID each time.
 
 ## What the graph can tell you
 

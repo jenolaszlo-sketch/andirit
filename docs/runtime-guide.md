@@ -1,6 +1,6 @@
 # Runtime and integration guide
 
-The [README](../README.md) describes the current release and platform qualification. The examples below illustrate individual APIs with host-supplied inputs and implementations. Use the `Andirit` namespace for the core and language plugins, and import `Andirit.LatticeDb` for `UseLatticeStore`.
+The [README](../README.md) describes the current release and platform qualification. The examples below illustrate individual APIs with host-supplied inputs and implementations. Import `Andirit` for the core and C# plugin, `Andirit.TreeSitter` for the Tree-sitter registration extensions, and `Andirit.LatticeDb` for `UseLatticeStore`.
 
 ## Runtime foundation
 
