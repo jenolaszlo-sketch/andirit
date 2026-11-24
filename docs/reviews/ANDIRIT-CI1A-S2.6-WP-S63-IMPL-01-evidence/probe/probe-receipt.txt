@@ -1,0 +1,27 @@
+PRODUCER-PREPARED probes - not independent evidence (see header).
+probe-run started 2026-11-24T22:06:31.6951336+00:00
+A 1 PASS availability=StalePublication occurrences=0
+A 2 PASS availability=StalePublication occurrences=0
+A 3 PASS availability=StalePublication occurrences=0
+B 1 PASS explicit refusal: CodeOccurrenceSchemaException: Occurrence records exist without a schema manifest.
+B 2 PASS explicit refusal: CodeOccurrenceSchemaException: Occurrence records exist without a schema manifest.
+B 3 PASS explicit refusal: CodeOccurrenceSchemaException: Occurrence records exist without a schema manifest.
+C 1 PASS preserved run=run:c1 facts=1
+C 2 PASS preserved run=run:c1 facts=1
+C 3 PASS preserved run=run:c1 facts=1
+D 1 PASS stale=StalePublication current=run:d2 nativeMeta=run:d2
+D 2 PASS stale=StalePublication current=run:d2 nativeMeta=run:d2
+D 3 PASS stale=StalePublication current=run:d2 nativeMeta=run:d2
+E 1 PASS identical after reopen
+E 2 PASS identical after reopen
+E 3 PASS identical after reopen
+F 1 PASS rebuild reproduced the accepted index
+F 2 PASS rebuild reproduced the accepted index
+F 3 PASS rebuild reproduced the accepted index
+G 1 PASS second open refused: CodeGraphStoreException
+G 2 PASS second open refused: CodeGraphStoreException
+G 3 PASS second open refused: CodeGraphStoreException
+H 1 PASS members scanned=270 offenders=0
+H 2 PASS members scanned=270 offenders=0
+H 3 PASS members scanned=270 offenders=0
+probe-run complete: all repetitions passed

@@ -1,0 +1,49 @@
+S6.3 execution environment receipt
+Commission: ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01
+Date: 2026-11-24
+
+Repository: jenolaszlo-sketch/andirit (https://github.com/jenolaszlo-sketch/andirit.git)
+Canonical checkout: D:\projects\Andirit
+Branch: main
+Entry baseline:  1cbce3b36325d445b4554443d4b715087a3d65c4
+Implementation:  local commits on main (not pushed; no push authorized)
+origin/main:     01624943233f16447c3176b7c905c544642dfb2c (unchanged)
+Tag v0.2.0-preview.7: unchanged
+
+--------------------------------------------------------------------------------
+PLATFORM (Windows x64, local execution)
+--------------------------------------------------------------------------------
+OS:            Microsoft Windows NT 10.0.26200.0 (x64)
+SDK:           10.0.401
+Command:       dotnet build Andirit.slnx -c Release
+               dotnet test ... -c Release
+
+--------------------------------------------------------------------------------
+NATIVE DEPENDENCY IDENTITY
+--------------------------------------------------------------------------------
+LatticeDbSharp:        0.2.0 (pinned)
+Managed assembly:      SHA-256 d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46
+Native win-x64:        lattice.dll       3dec7386cf0adbf96962f89ab818a4236afc82bbf80086b30a87cecdbacfd6c1
+Native linux-x64:      liblattice.so     dc5b45344fb05f6db2b9c77bf8dbbc0d0dbcf937494e5d69a419d7c25321687b
+Native osx-arm64:      liblattice.dylib  8d99e8224d5ca062f12042f0a899c69bb8db21f73d917a5e67805c0b0309e660
+
+--------------------------------------------------------------------------------
+WORKER PROCESS HARNESS (used by D-05 and P-15)
+--------------------------------------------------------------------------------
+Assembly: tests/Andirit.LatticeDb.Tests.Worker/bin/Release/net10.0/Andirit.LatticeDb.Tests.Worker.dll
+Launch:   dotnet exec <assembly> --db <path> --repo <repo> --run <run> --unit <unit>
+          --node <node> --mode hold|publish-complete [--signal <file>]
+          [--target <name>] [--occurrences <n>]
+Modes:    hold             open, seed, stage, optionally signal READY and wait for GO, exit
+          publish-complete open, seed, stage occurrence facts, COMPLETE the run (F-QU-01 fix),
+                           print "PUBLISHED|<indexRunId>|<snapshotIdentity>", exit 0
+
+--------------------------------------------------------------------------------
+PLATFORM EVIDENCE STATUS
+--------------------------------------------------------------------------------
+Windows x64 (local):      EXECUTED - all 16 P-cases + remediated D-05 + full regression
+Hosted Ubuntu x64 (CI):   NOT EXECUTED - OPEN. Requires an authorized push so a CI run is bound
+                          to the implementation commit (C-S63-4 / Q-S61-5 / Q-S62-5). Windows
+                          evidence does not substitute for Linux. This is the single open leg and
+                          it gates qualification gate G-2.
+macOS arm64:              content evidence only (C-S63-6); no runtime claim.

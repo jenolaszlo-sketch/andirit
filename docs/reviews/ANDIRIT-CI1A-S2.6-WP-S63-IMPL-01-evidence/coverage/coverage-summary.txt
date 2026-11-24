@@ -1,0 +1,25 @@
+S6.3 coverage summary
+Commission: ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01
+Date: 2026-11-24
+Source: coverage/coverage.cobertura.xml (coverlet XPlat Code Coverage, full LatticeDb suite,
+        Windows x64, Release)
+
+Raw coverage element:
+  <coverage line-rate="0.4078" branch-rate="0.3275" ... lines-covered="..." lines-valid="...">
+
+Note: the <coverage> element aggregates every module loaded by the test host (including
+Andirit.dll and Andirit.Abstractions.dll, which have their own dedicated suites). The
+per-project threshold applies to the Andirit.LatticeDb module, extracted below.
+
+Per-package rates:
+  Andirit.LatticeDb    line-rate 0.9287   branch-rate 0.7896
+  Andirit.Testing      line-rate 0.9929   branch-rate 0.5153
+  Andirit.Abstractions line-rate 0.5443   branch-rate 0.3350
+  Andirit (main)       line-rate 0.3176   branch-rate 0.2475
+
+Threshold check (S6.3 does not change any threshold):
+  Andirit.LatticeDb  92.87 % line (threshold 70 %) -> MET
+  Andirit.LatticeDb  78.96 % branch
+
+Equivalence with CI: the same module rate (92.87/78.96) was reported by CI run 45037630799 for
+the qualified implementation, so the added S6.3 tests did not dilute module coverage.

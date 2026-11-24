@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    PRODUCER-PREPARED reviewer probe harness for ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01.
+    Deliberately NOT part of Andirit.slnx: this is evidence tooling, not a product
+    or test-suite project. It references the production projects read-only and
+    never modifies them (same pattern as the Stage-6 entry probe harness).
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <AssemblyName>Andirit.S63.ReviewerProbes</AssemblyName>
+    <RootNamespace>Andirit.S63.Probe</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Andirit.LatticeDb\Andirit.LatticeDb.csproj" />
+  </ItemGroup>
+
+</Project>

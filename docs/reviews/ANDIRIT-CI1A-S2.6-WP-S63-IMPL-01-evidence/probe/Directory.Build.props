@@ -1,0 +1,13 @@
+<Project>
+  <!--
+    Opt this evidence-tooling project out of the repository-wide build properties so the
+    sealed evidence directory stays self-contained and reproducible regardless of any
+    future change to the repo-wide props. Reproducibility of the harness matters more
+    than inheriting product settings.
+  -->
+  <PropertyGroup>
+    <Deterministic>true</Deterministic>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Version>0.0.0-evidence</Version>
+  </PropertyGroup>
+</Project>

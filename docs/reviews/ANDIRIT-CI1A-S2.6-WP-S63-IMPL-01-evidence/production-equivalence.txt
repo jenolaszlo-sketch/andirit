@@ -1,0 +1,66 @@
+S6.3 production equivalence receipt
+Commission: ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01
+Date: 2026-11-24
+Entry baseline: 1cbce3b36325d445b4554443d4b715087a3d65c4
+
+================================================================================
+1. PRODUCTION SOURCE DELTA
+================================================================================
+
+Command: git diff --name-only 1cbce3b HEAD -- src/
+Result:  (empty)
+
+The production source tree is byte-identical to the S6.3 entry baseline. Therefore the public
+API surface, production metadata, IL, and package contents are unchanged by construction; the
+production runtime delta is exactly zero (not merely provenance-only).
+
+================================================================================
+2. DEPENDENCY EQUIVALENCE
+================================================================================
+
+src/Andirit.LatticeDb/Andirit.LatticeDb.csproj line 9:
+    <PackageReference Include="LatticeDbSharp" Version="0.2.0" />
+
+LatticeDbSharp remains pinned at 0.2.0 (condition C-S63-2). Managed assembly SHA-256 (recorded at
+the S6.2 qualification, unchanged): d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46
+
+================================================================================
+3. WORKFLOW / BUILD-PROPERTY DELTA
+================================================================================
+
+Command: git diff --name-only 1cbce3b HEAD -- .github/ Directory.Build.props
+Result:  (empty)
+
+No CI configuration, threshold, or coverage-exclusion change. Directory.Build.props retains
+Deterministic=true, TreatWarningsAsErrors=true, Version=0.2.0-preview.7.
+
+================================================================================
+4. BUILT PRODUCTION ASSEMBLIES AT HEAD (Windows x64, Release)
+================================================================================
+
+Andirit.LatticeDb.dll      93184 B  SHA-256 b764ca5c3f2e70b0b27c076b258d6982af323f889110a549d999ceb756df9d44
+Andirit.dll               480256 B  SHA-256 871d0e3981451c8dc8c56ef1d42e7d6a0baadfba653340d1506b62a2a36ebe84
+Andirit.Abstractions.dll  92672 B  SHA-256 398381f8d9755f0ea63ea857a67927dcabf41b92c2dda69598c22ee40695f910
+
+Because src/ is unchanged and builds are deterministic, these are the same bytes the entry
+baseline produces.
+
+================================================================================
+5. COMPLETE CHANGED-FILE DELTA VS ENTRY (this commission's own files only)
+================================================================================
+
+ M tests/Andirit.LatticeDb.Tests.Worker/Program.cs          (test infrastructure)
+ M tests/Andirit.LatticeDb.Tests/NativeDurabilityTests.cs   (D-05 remediation, F-QU-01)
+?? tests/Andirit.LatticeDb.Tests/NativePublicationCorrectnessTests.cs (new suite)
+?? docs/decisions/adr-ci1-01-ci1a-s2-6-wp-s63-impl-01.md
+?? docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01.md
+?? docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-evidence/  (this package)
+
+No production file, no workflow, no threshold, no sealed historical evidence was modified.
+
+================================================================================
+6. CONCLUSION
+================================================================================
+
+Production equivalence: EXACT (zero delta). Any unexpected difference would have required
+investigation before declaring implementation readiness; none exists.

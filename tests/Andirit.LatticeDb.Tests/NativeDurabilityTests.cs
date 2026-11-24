@@ -258,52 +258,81 @@ public sealed class NativeDurabilityTests
 
     // ------------------------------------------------------------------ D-05
 
-    [Fact(Skip = "Known limitation: LatticeDB file locking prevents sequential access verification in test environment. The staged unit is not visible in HetuStage after CompleteIndexRunAsync due to test environment file locking behavior. This is a test infrastructure limitation, not a durability defect. Core durability tests D-01 through D-10 (except D-05) pass. See implementation record for details.")]
+    [Fact]
     public async Task ConcurrentMultiProcessAccess_FileLockingAndConsistency()
     {
-        // Multi-process access: file locking prevents concurrent access.
-        // This test verifies that the database can be accessed sequentially and remains consistent.
+        // F-QU-01 remediation (S6.3): the previous version of this case asserted that one staged row
+        // remained after a completed publication, but a completion consumes its staged rows, so the
+        // case could never pass and was skipped. The remediated case uses genuine separate worker
+        // processes: the first writer owns the native file lock (any other open fails rather than
+        // queuing), an independent process then completes a real publication, and the committed
+        // durable state is corroborated by a fresh reopen.
         var path = TemporaryDatabasePath();
+        var signal = path + ".d05-signal";
         try
         {
-            // Writer process completes a full write with publication
-            var repository = new CodeRepositoryId("repo:durability-path");
-            var run = new CodeIndexRunId("run:durability-path");
-            using (var writer = new LatticeCodeGraphStore(path))
+            var worker = LocateWorkerAssembly();
+            var holdRepo = "repo:durability-hold";
+            var publishRepo = "repo:durability-pub";
+            var publishRun = "run:durability-pub";
+
+            // Phase 1: a separate process opens the database and holds the native file lock. A second
+            // open from this process must fail (never queue) - the negative control for exclusivity.
+            var hold = StartWorker(worker,
+                $"--db \"{path}\" --repo {holdRepo} --run run:durability-hold --unit unit:hold --node node:hold --mode hold --signal \"{signal}\"");
+            try
             {
-                await writer.UpsertRepositoryAsync(
-                    new CodeRepositoryManifest(repository, "Stage 6 durability repository", "repo://durability-path"));
-                await writer.StoreIndexRunAsync(
-                    new CodeIndexRunManifest(repository, run, Started, plugins: new[] { Plugin }));
-                await writer.StageIndexUnitAsync(Unit(repository, run, "unit:writer", "node:writer"));
-                await writer.CompleteIndexRunAsync(
-                    new(repository, run, Started, CodeIndexRunStatus.Completed, Started.AddSeconds(1), new[] { Plugin }),
-                    new(repository, run, new[] { new CodeSourceManifest(Plugin, "1.0.0", "src/Writer.cs", "sha256:writer") }));
+                Assert.True(WaitForFile(signal + ".ready", TimeSpan.FromSeconds(30)),
+                    "The hold worker never reported READY.");
+                Assert.ThrowsAny<Exception>(() => new LatticeCodeGraphStore(path));
+            }
+            finally
+            {
+                File.WriteAllText(signal + ".go", "GO");
+                hold.WaitForExit(30_000);
             }
 
-            // Verify the database can be accessed sequentially multiple times
-            // LatticeDB file locking prevents concurrent access, so we test sequential access with delays
-            for (int i = 0; i < 3; i++)
-            {
-                using var reader = new LatticeCodeGraphStore(path);
-                var pub = await reader.GetLatestPublicationAsync(repository);
-                Assert.NotNull(pub);
-                Assert.Equal(run.Value, pub!.IndexRunId.Value);
+            // Phase 2: an independent process publishes - it stages AND completes the run, so the
+            // publication actually commits (the F-QU-01 defect was a writer that only ever staged).
+            var publisher = StartWorker(worker,
+                $"--db \"{path}\" --repo {publishRepo} --run {publishRun} --unit unit:writer --node node:writer --mode publish-complete --target T1 --occurrences 2");
+            var publisherOutput = ReadToEnd(publisher);
+            publisher.WaitForExit(60_000);
+            Assert.True(publisher.ExitCode == 0,
+                $"The publish worker exited {publisher.ExitCode}: {publisherOutput}");
 
-                // Small delay to allow file lock to be fully released
-                await Task.Delay(50);
+            // Phase 3: recovery after lock contention - the store reopens cleanly and the committed
+            // publication is visible; the hold repository never completed, so it has no publication.
+            using (var reopened = new LatticeCodeGraphStore(path))
+            {
+                Assert.True((await reopened.CheckHealthAsync()).IsHealthy);
+                var publication = await reopened.GetLatestPublicationAsync(new CodeRepositoryId(publishRepo));
+                Assert.NotNull(publication);
+                Assert.Equal(publishRun, publication!.IndexRunId.Value);
+                Assert.Null(await reopened.GetLatestPublicationAsync(new CodeRepositoryId(holdRepo)));
             }
 
-            // Allow time for native database to flush
-            await Task.Delay(100);
-
-            // Verify native state consistency
-            var staged = NativePayloads(path, StageLabel);
-            Assert.Single(staged);
+            // Native durable state: the publisher's staged row was consumed by its completion, and the
+            // only remaining staged row belongs to the never-completed hold run (invisible to queries).
+            Assert.Single(NativePayloads(path, StageLabel));
+            Assert.Contains("unit:hold", NativePayloads(path, StageLabel)[0], StringComparison.Ordinal);
+            Assert.Single(NativePayloads(path, UnitLabel));
+            Assert.Contains("node:writer", NativePayloads(path, UnitLabel)[0], StringComparison.Ordinal);
         }
         finally
         {
             DeleteDatabase(path);
+            foreach (var signalFile in new[] { signal, signal + ".ready", signal + ".go" })
+            {
+                try
+                {
+                    if (File.Exists(signalFile))
+                        File.Delete(signalFile);
+                }
+                catch
+                {
+                }
+            }
         }
     }    // ------------------------------------------------------------------ D-06
 
@@ -680,5 +709,66 @@ public sealed class NativeDurabilityTests
             {
             }
         }
+    }
+
+    // ------------------------------------------------------- worker-process helpers (D-05)
+
+    // Duplicated from NativePublicationCorrectnessTests for suite independence, consistent with the
+    // other helpers in this file.
+
+    private static string LocateWorkerAssembly()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null &&
+               !File.Exists(Path.Combine(directory.FullName, "Andirit.slnx")))
+            directory = directory.Parent;
+        var root = directory?.FullName
+            ?? throw new InvalidOperationException("The repository root (Andirit.slnx) was not found.");
+        foreach (var configuration in new[] { "Release", "Debug" })
+        {
+            var candidate = Path.Combine(
+                root,
+                "tests",
+                "Andirit.LatticeDb.Tests.Worker",
+                "bin",
+                configuration,
+                "net10.0",
+                "Andirit.LatticeDb.Tests.Worker.dll");
+            if (File.Exists(candidate))
+                return candidate;
+        }
+
+        throw new InvalidOperationException(
+            "The Andirit.LatticeDb.Tests.Worker assembly was not built; build the solution before running the multi-process cases.");
+    }
+
+    private static Process StartWorker(string workerAssembly, string arguments) =>
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = "dotnet",
+            Arguments = $"exec \"{workerAssembly}\" {arguments}",
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            CreateNoWindow = true
+        }) ?? throw new InvalidOperationException("The worker process could not be started.");
+
+    private static bool WaitForFile(string path, TimeSpan timeout)
+    {
+        var deadline = DateTimeOffset.UtcNow + timeout;
+        while (DateTimeOffset.UtcNow < deadline)
+        {
+            if (File.Exists(path))
+                return true;
+            Thread.Sleep(25);
+        }
+        return false;
+    }
+
+    private static string ReadToEnd(Process process)
+    {
+        var standardOut = process.StandardOutput.ReadToEnd();
+        var standardError = process.StandardError.ReadToEnd();
+        return standardOut + standardError;
     }
 }

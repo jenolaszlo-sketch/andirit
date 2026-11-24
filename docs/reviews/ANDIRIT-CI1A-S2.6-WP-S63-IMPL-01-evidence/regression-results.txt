@@ -1,0 +1,49 @@
+S6.3 regression results receipt
+Commission: ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01
+Date: 2026-11-24
+
+================================================================================
+FULL SOLUTION REGRESSION (dotnet test Andirit.slnx -c Release --no-build, Windows x64)
+================================================================================
+
+Andirit.TreeSitter.Tests      157 passed / 0 failed / 0 skipped
+Andirit.LatticeDb.Tests       114 passed / 0 failed / 0 skipped
+Andirit.Tests (Core)          345 passed / 0 failed / 0 skipped
+Andirit.CSharp.Tests          372 passed / 0 failed / 0 skipped
+---------------------------------------------------------------
+TOTAL                         988 passed / 0 failed / 0 skipped
+
+Zero skipped tests anywhere in the solution. Every case executes.
+
+================================================================================
+LATTICEDB PROJECT (all historical + S6.1 + S6.2 + S6.3)
+================================================================================
+
+114 passed / 0 failed / 0 skipped
+Composition: historical suites + S6.1 NativeCancellationPathTests (12)
+             + S6.2 NativeDurabilityTests (10, D-05 now executing)
+             + S6.3 NativePublicationCorrectnessTests (16)
+Delta vs the qualified S6.1 implementation revision (88 tests): +10 (S6.2) +16 (S6.3).
+
+================================================================================
+COVERAGE (coverlet, full LatticeDb suite, Windows x64)
+================================================================================
+
+Per-module line/branch rates from coverage/coverage.cobertura.xml:
+
+  Andirit.LatticeDb   line 0.9287  branch 0.7896   <- threshold 70 % line: MET
+  Andirit.Testing     line 0.9929  branch 0.5153
+  Andirit.Abstractions line 0.5443 branch 0.3350  (measured within this project only;
+  Andirit (main)       line 0.3176 branch 0.2475   these projects have their own suites)
+
+The Andirit.LatticeDb module rate (92.87 % line / 78.96 % branch) is identical to the figures
+reported by CI run 45037630799 for the qualified implementation, confirming the new suite added
+tests without regressing module coverage.
+
+================================================================================
+HISTORICAL / STAGE-6 SUITES PRESERVED
+================================================================================
+
+S6.1 NativeCancellationPathTests:            12/12 PASS (carried, unchanged)
+S6.2 NativeDurabilityTests:                  10/10 PASS (D-05 remediated from SKIP to PASS)
+Historical durable-state/schema/lifecycle:   PASS (part of the 114)

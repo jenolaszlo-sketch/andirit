@@ -1,0 +1,69 @@
+S6.3 P-case execution results (Windows x64, local)
+Commission: ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01
+Date: 2026-11-24
+Command: dotnet test tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj -c Release
+         --filter "FullyQualifiedName~NativeDurabilityTests|FullyQualifiedName~NativePublicationCorrectnessTests"
+Result:  Passed 26 / Failed 0 / Skipped 0  (TRX: test-receipts/s63-suites.trx)
+
+Publication-correctness suite (16/16 PASS)
+--------------------------------------------------------------------
+P01_QueryPinnedToSupersededGeneration_RefusesExplicitly                     PASS
+P02_OccurrencePageNotBoundToAcceptedPublication_RefusesExplicitlyOnOpen     PASS
+P03_StaleIndexDoesNotScanTheWholeStore_AndBoundedQueryExaminesOnlyItsTarget PASS
+P04_FailedCompletion_PreservesPriorOccurrencePublicationAndIndex            PASS
+P05_OlderGenerationsSuperseded_LatestAcceptedAndDurable                     PASS
+P06_RunPlannedAgainstSupersededBaseline_CannotCompleteAndRegressGeneration  PASS
+P07_OrdinaryReopen_OccurrenceQueryResultsEquivalent                         PASS
+P08_RebuildFromDurableState_OccurrenceIndexEquivalent                       PASS
+P09_ContributorUnionAndConflictRejection_VisibilityConsistent               PASS
+P10_ScopedDeletion_RemovesOnlyAffectedContextLeavesIndexClean               PASS
+P11_BoundedQuery_DeterministicSiteOrderAndExplicitLimit                     PASS
+P12_ConcurrentReaderDuringPublication_SeesAtomicSnapshot                    PASS
+P13_RapidSequentialPublications_OnlyLatestAccepted                          PASS
+P14_UnknownCommitOutcome_QuarantineAndReopenCorroborates                    PASS
+P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPub..   PASS
+P16_InterleavingIsNotANativeEvidenceSurface                                 PASS
+
+Durability suite (10/10 PASS, D-05 no longer skipped)
+--------------------------------------------------------------------
+D01 CrashBeforeNativeInvocation_LeavesTheDurableStateUnchanged              PASS
+D02 CrashInsideNativeTransaction_AtomicRollbackOrCommit                     PASS
+D03 CrashImmediatelyAfterCommit_CommitDurable                               PASS
+D04 UnknownCommitOutcome_QuarantineAndReopenCorroborates                    PASS
+D05 ConcurrentMultiProcessAccess_FileLockingAndConsistency                  PASS  (REMEDIATED - was SKIPPED)
+D06 ReopenAfterCrash_PreservesAcceptedPublication                           PASS
+D07 AbruptProcessTermination_DurableStateConsistent                         PASS
+D08 DisposalReleasesNativeHandleAfterCrash                                  PASS
+D09 SuccessfulNonCrashedControl_PublishesAndReopens                         PASS
+D10 PreservationOfHistoricalSuitesAndS61Qualifications                      PASS
+
+Full LatticeDb project suite: 114 passed / 0 failed / 0 skipped.
+
+Observations recorded per case (abridged; full detail in the implementation record §6)
+--------------------------------------------------------------------
+P-01  superseded generation -> StalePublication, zero occurrences, refusal reason present;
+      current generation answers (run:p01:2).
+P-02  page rebound to a stale publication -> CodeOccurrenceIndexException ("not bound") at open.
+P-03  stale query refuses with Examined == 0; bounded current query examines 200 (its target
+      page) of 400 stored facts; maxResults 100 honoured; truncated.
+P-04  pre-commit completion failure preserves run:p04:1, prior facts and the native meta
+      binding; reopen corroborates.
+P-05  older generation refused; run:p05:2 retained and natively bound.
+P-06  completion of the run planned against the superseded baseline throws
+      InvalidOperationException ("superseded publication"); newest generation retained.
+P-07  ordinary reopen reproduces identical occurrence order, Examined, totals, publication id.
+P-08  native pre-commit failure triggers the durable-authority rebuild; index identical.
+P-09  identical facts union to 2 contributors; conflicting payload rejected; state queryable.
+P-10  scoped deletion leaves exactly one native occurrence unit (unit:p10:b); reopen OK.
+P-11  deterministic order (src/A.cs:2:1, src/A.cs:2:8, src/A.cs:9:2); explicit limit honoured.
+P-12  concurrent reader observes only atomic snapshots (never >2 facts, never CorruptedIndex).
+P-13  five rapid sequential publications; native meta bound to run:p13:5.
+P-14  post-commit injected failure -> CodeGraphCommitOutcomeUnknownException; quarantine;
+      reopen corroborates a consistent generation (never reported as rollback).
+P-15  hold worker owns the lock -> second open fails; independent publisher completes; fresh
+      reopen sees the committed publication and 3 occurrences; hold repo AnalysisUnavailable.
+P-16  pinned native surface exposes no interleaving/coordination/hook seam; unknown-outcome
+      vocabulary present.
+D-05  hold worker owns the lock -> second open fails (negative control); independent publisher
+      completes; reopen healthy; HetuStage = the never-completed hold run's staged row only;
+      HetuUnit = the published unit. F-QU-01 closed; F-QU-02 discharged.
