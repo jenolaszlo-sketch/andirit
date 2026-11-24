@@ -169,3 +169,6 @@ push this session did not perform: the remote now carries the full S6.1/S6.2 lin
 `origin/main` have **diverged** (merge base `359a9e8`). The owner's push authorization therefore
 needs an integration step (merge or rebase, owner's choice) before the hosted-Ubuntu CI leg can be
 produced. Recorded in full in the implementation record §15.
+
+
+**Resolution (-R1, 2026-11-25).** Owner-authorized integration rebased the unpublished S6.3 commits onto origin/main (4ef34b5) with no conflicts and no content change (every S6.3 blob identical by Git hash; the original lineage is preserved at the unpublished recovery reference refs/backups/s63-impl-original). Mapping: 1cbce3b -> 94a8c19 (entry assessment), 33b5867 -> ece6002 (implementation), 31673f5 -> 89ae722 (erratum), d9461c0 -> 7a64ab2 (formatting). Publication was a clean fast-forward. The hosted-Ubuntu evidence collected against the integrated revision is recorded in the separately identified evidence extension and in implementation record §16.

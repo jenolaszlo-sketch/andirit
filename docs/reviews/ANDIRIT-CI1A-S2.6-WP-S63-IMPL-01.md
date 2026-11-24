@@ -322,8 +322,56 @@ Implications, stated plainly:
 
 ---
 
-**Recorded**: 2026-11-24 (erratum added same day, after sealing)
+## 16. Integration reconciliation (owner-authorized rebase onto `origin/main`)
+
+Recorded by commission `ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1`, which integrated the unpublished
+S6.3 commits onto the then-current `origin/main` (`4ef34b51bdcc60bb77450270564d0e2e0dff9330`,
+which carried the S6.1/S6.2 lineage through `359a9e8` plus two owner documentation commits
+`8715ac3` "README refresh" and `4ef34b5` "integration-example package imports").
+
+### 16.1 Commit-identity mapping (original → integrated)
+
+| Original (pre-rebase, preserved) | Integrated (published) | Subject |
+| --- | --- | --- |
+| `1cbce3b36325d445b4554443d4b715087a3d65c4` | `94a8c19…` | S6.3 entry assessment |
+| `33b5867b593c7c7e43108b538bdcddad6fc4fb15` | `ece6002…` | S6.3 native publication-correctness implementation (P-01…P-16), D-05 remediation |
+| `31673f5c0476f530b4d4b1985413448b5c8c23a1` | `89ae722…` | S6.3 erratum (remote movement, §15) |
+| `d9461c06b9ba7a42b20a3ce100d28f39d1935a40` | `7a64ab2c7a855ea5b73e5742c3c99a84d64d63ad` | repository formatting final-newline correction |
+
+**Preservation.** The complete original lineage remains reachable locally at the unpublished
+recovery reference `refs/backups/s63-impl-original` → `d9461c0…` (created before the rebase, never
+published). No force push was used; publication of `main` was a clean fast-forward.
+
+### 16.2 Integration fidelity
+
+- **Conflict resolution**: none was required. The incoming owner commits touch only `README.md`
+  and `docs/runtime-guide.md`; the S6.3 commits touch only new `docs/…` files and `tests/…` files.
+- **Content verification**: every S6.3 blob is identical before and after the rebase
+  (`NativePublicationCorrectnessTests.cs`, `NativeDurabilityTests.cs`, `Program.cs`, and the
+  sealed `manifest.json` compared by Git blob hash — all SAME). `git diff d9461c0..HEAD -- docs/reviews/ tests/ docs/decisions/`
+  is empty.
+- **Historical sealed evidence**: unmodified. The manifest still records `manifest_sha256`
+  `fcab38f18554eff723e1baacd142f52e034eccc763268d3fd605a5533a056675` over 17 entries and verifies
+  byte-exact. Previous execution results are **not** represented as having been generated against
+  the integrated revision; §6 results remain bound to the original implementation revision and the
+  integrated-subject verification is recorded separately.
+- **The §15 erratum's divergence statement is now historical**: the divergence it described was
+  resolved by this rebase. After integration, `origin/main` is an ancestor of local `main` and
+  publication was a fast-forward.
+
+### 16.3 Traceability of implementation-record references
+
+References in this record use the original revision identities (`1cbce3b`, `33b5867`, `31673f5`)
+as historical provenance. All evidence packages, manifests and qualification references remain
+bound to those original subjects; the hosted evidence collected against the integrated revision is
+recorded in the separately identified evidence extension
+`docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/`.
+
+---
+
+**Recorded**: 2026-11-25 (integration reconciliation, `-R1`)
 **Canonical branch**: `main`
-**Entry baseline**: `1cbce3b36325d445b4554443d4b715087a3d65c4`
-**Implementation commit**: `33b5867b593c7c7e43108b538bdcddad6fc4fb15`
-**Push**: not performed by this commission, not authorized
+**Entry baseline (historical provenance)**: `1cbce3b36325d445b4554443d4b715087a3d65c4`
+**Implementation commit (historical provenance)**: `33b5867b593c7c7e43108b538bdcddad6fc4fb15`
+**Integrated (published) implementation revision**: `ece6002…` (final published subject: see the `-R1` record)
+**Recovery reference (unpublished)**: `refs/backups/s63-impl-original` → `d9461c0…`
