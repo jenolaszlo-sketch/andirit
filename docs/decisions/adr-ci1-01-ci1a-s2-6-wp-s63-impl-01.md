@@ -161,3 +161,11 @@ QUALIFICATION` is deliberately not claimed.
 **Next commissions:** owner push authorization → CI run bound to the implementation commit →
 `ANDIRIT-CI1A-S2.6-WP-S63-QUAL-01` (independent qualification, G-1…G-5) →
 `ANDIRIT-CI1A-S2.6-WP-S63-ACCEPT-01` (owner acceptance, G-6).
+
+**Erratum (recorded 2026-11-25, after sealing).** During this commission `origin/main` moved by a
+push this session did not perform: the remote now carries the full S6.1/S6.2 lineage through
+`359a9e8` plus two owner documentation commits (`8715ac3`, `4ef34b5`). This commission's two commits
+(`1cbce3b` entry assessment, `33b5867` implementation) remain local-only, so local `main` and
+`origin/main` have **diverged** (merge base `359a9e8`). The owner's push authorization therefore
+needs an integration step (merge or rebase, owner's choice) before the hosted-Ubuntu CI leg can be
+produced. Recorded in full in the implementation record §15.

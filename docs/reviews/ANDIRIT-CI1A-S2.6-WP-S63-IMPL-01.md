@@ -36,7 +36,7 @@ identifier.
 | Item | Value |
 | --- | --- |
 | Entry HEAD (baseline) | `1cbce3b36325d445b4554443d4b715087a3d65c4` |
-| Local commits ahead of `origin/main` | 11 at entry, preserved (this commission adds local commits only) |
+| Local commits ahead of `origin/main` | 11 at entry, preserved (this commission adds local commits only) — **see §15 erratum**: `origin/main` moved during the commission and has since diverged |
 | `origin/main` | `01624943233f16447c3176b7c905c544642dfb2c` (unchanged) |
 | Tag `v0.2.0-preview.7` | `6659647527a6e0eb822a3d7a05b8283c75fd6a3e` → `6ed05964d2fcc758648b654a01ec706647e52183` (unchanged) |
 | LatticeDbSharp | `0.2.0` pinned (`PackageReference Version="0.2.0"`; assembly SHA-256 `d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46`) |
@@ -289,7 +289,41 @@ on `ubuntu-latest` is bound to the implementation commit. **Then**:
 
 ---
 
-**Recorded**: 2026-11-24
+## 15. Erratum — remote movement observed during this commission
+
+Recorded **after** the initial sealing of this record, during final repository-identity
+verification. This commission performed **no** fetch and **no** push; the observation below comes
+from the repository's own reflogs and must be recorded because it changes the push geometry that
+the next owner action has to account for.
+
+| Item | Value |
+| --- | --- |
+| Local `main` HEAD (this commission's implementation commit) | `33b5867b593c7c7e43108b538bdcddad6fc4fb15` |
+| `origin/main` observed at record time | `4ef34b51bdcc60bb77450270564d0e2e0dff9330` |
+| Merge base | `359a9e8a8768d4cc9204e898ef76f0b4eba38d47` (S6.2 acceptance) |
+| Commits on `origin/main` absent locally | **2** — `8715ac3` (README refresh), `4ef34b5` (integration-example package imports) |
+| Commits local and **not** on `origin/main` | **2** — `1cbce3b` (S6.3 entry assessment), `33b5867` (S6.3 implementation, this commission) |
+| How `origin/main` moved | reflog: *update by push* at `2026-11-24 22:34:06 +0100`, i.e. **during** this commission and **not** by it (this session never invoked `git push` or `git fetch`) |
+| Divergence consequence | local `main` and `origin/main` have **diverged**; a plain `git push` of the S6.3 commits will be rejected as non-fast-forward |
+
+Implications, stated plainly:
+
+1. The S6.1/S6.2 lineage **is already on the remote** (through `359a9e8`), so the earlier "N
+   commits ahead of origin/main" bookkeeping in the entry records is superseded by this erratum.
+2. This commission's two commits (`1cbce3b`, `33b5867`) remain **local-only**, exactly as
+   authorized — no push was performed here.
+3. The owner's next action is therefore not a bare push: the two owner commits on the remote must
+   first be integrated (merge or rebase of the S6.3 commits onto `origin/main`, owner's choice),
+   and only then can the hosted-Ubuntu CI leg be produced for a commit that contains this
+   commission's work.
+4. The evidence manifest binds to the entry baseline `1cbce3b…` (the governing baseline identity);
+   the carrying commit is discoverable from Git and is recorded here. No packaged file changed as
+   a result of this erratum, so the sealed manifest remains valid.
+
+---
+
+**Recorded**: 2026-11-24 (erratum added same day, after sealing)
 **Canonical branch**: `main`
 **Entry baseline**: `1cbce3b36325d445b4554443d4b715087a3d65c4`
-**Push**: not performed, not authorized
+**Implementation commit**: `33b5867b593c7c7e43108b538bdcddad6fc4fb15`
+**Push**: not performed by this commission, not authorized
