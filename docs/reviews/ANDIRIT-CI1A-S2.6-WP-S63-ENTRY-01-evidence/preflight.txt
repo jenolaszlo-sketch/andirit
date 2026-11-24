@@ -1,0 +1,154 @@
+# S6.3 Entry Preflight Receipt
+# ANDIRIT-CI1A-S2.6-WP-S63-ENTRY-01
+# Date: 2026-11-24
+# Generated from Git objects at HEAD 359a9e8a8768d4cc9204e898ef76f0b4eba38d47
+
+================================================================================
+REPOSITORY IDENTITIES (PINNED)
+================================================================================
+
+Repository: jenolaszlo-sketch/andirit (https://github.com/jenolaszlo-sketch/andirit.git)
+Canonical checkout: D:\projects\Andirit
+Branch: main
+Local HEAD: 359a9e8a8768d4cc9204e898ef76f0b4eba38d47
+Remote HEAD (origin/main): 01624943233f16447c3176b7c905c544642dfb2c
+Local commits ahead of remote: 10
+Working tree: clean (only local commits)
+Tag v0.2.0-preview.7: 6659647527a6e0eb822a3d7a05b8283c75fd6a3e → 6ed05964d2fcc758648b654a01ec706647e52183 (unchanged)
+Release version: Directory.Build.props = 0.2.0-preview.7
+
+================================================================================
+ANCESTRY VERIFICATION
+================================================================================
+
+S6.1 entry: 2d1e8ec...
+S6.1 implementation: 0162494... (pushed to origin/main)
+S6.1 qualification: f8f430b...
+S6.1 acceptance: 92bf73a...
+S6.2 entry: 915f5ba...
+S6.2 implementation: ac46235...
+S6.2 qualification: 459b50c...
+S6.2 acceptance: 359a9e8... (current HEAD)
+
+All ancestor relations hold. eafd632... (S6.1 qualified implementation) is strict ancestor of all subsequent commits.
+origin/main = 0162494... (S6.1 implementation revision); local HEAD 10 commits ahead, not pushed.
+
+================================================================================
+CI VERIFICATION
+================================================================================
+
+CI Run: 45037630799
+Status: completed / success
+Event: push
+Workflow: ci
+headSha: 01624943233f16447c3176b7c905c544642dfb2c (S6.1 implementation revision)
+Jobs:
+- test (ubuntu-latest): id 137254795969, completed / success
+- test (windows-latest): success
+- test (macos-latest): success
+- pack: success
+
+Ubuntu runner proof:
+- Workspace: /home/runner/work/andirit/andirit
+- Shell: /usr/bin/bash
+- DOTNET_ROOT: /usr/share/dotnet
+- SDK: 10.0.404
+- Runtime: 10.0.15
+- Zero Windows/WSL/Docker indicators
+
+Suite counts (from CI run 45037630799):
+- Core: 345 tests
+- CSharp: 372 tests
+- TreeSitter: 157 tests
+- LatticeDb: 88 tests (75→88, delta=13 = [Fact] count)
+
+Coverage (all match CI's coverlet summary):
+- Core: 82.42% line / 70.74% branch (threshold 55)
+- CSharp: 95.11% line / 87.85% branch (threshold 75)
+- TreeSitter: 89.89% line / 75.95% branch (threshold 60)
+- LatticeDb: 92.87% line / 78.96% branch (threshold 70)
+
+================================================================================
+LATTICEDBSHARP PINNED DEPENDENCY
+================================================================================
+
+Assembly: LatticeDbSharp 0.2.0
+Managed assembly SHA-256: d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46
+Native win-x64 lattice.dll SHA-256: 3dec7386cf0adbf96962f89ab818a4236afc82bbf80086b30a87cecdbacfd6c1
+Native linux-x64 liblattice.so SHA-256: dc5b45344fb05f6db2b9c77bf8dbbc0d0dbcf937494e5d69a419d7c25321687b
+Native osx-arm64 liblattice.dylib SHA-256: 8d99e8224d5ca062f12042f0a899c69bb8db21f73d917a5e67805c0b0309e660
+
+Public API surface: 23 types / 270 members
+Cancellation-like members: 0
+CancellationToken parameters: 0
+Native cancellation exports: 0 (win-x64: 105 exports, linux-x64: 191 dynsyms, osx-arm64: identifier scan)
+Cancellation-like capability features: 0/30
+
+Upstream: latticedb v0.15.0 (9800159e22e200f2b6888c7c6be1810adb695506)
+C API: lattice_begin / lattice_commit / lattice_rollback / lattice_close only
+
+================================================================================
+EVIDENCE LINEAGE (SEALED PACKAGES)
+================================================================================
+
+Total sealed packages: 13
+Total entries: 250
+Mismatches: 0 (byte-exact, self-excluding manifests)
+
+Packages:
+1. S6.1 Implementation evidence (3eb1339) - 61 entries - byte-exact
+2. S6.1 Qualification evidence (f8f430b) - 40 entries - byte-exact
+3. S6.1 Acceptance (92bf73a) - 10 entries - byte-exact
+4. S6.2 Entry (915f5ba) - 10 entries - byte-exact
+5. S6.2 Implementation (ac46235) - 12 entries - byte-exact
+6. S6.2 Qualification (459b50c) - [sealed] - byte-exact
+7. S6.2 Acceptance (359a9e8) - [sealed] - byte-exact
+8-13. Prior Stage 2/Release packages - byte-exact
+
+Pre-existing 4-file gap: CI1A-S2.5-WP-S25-2-G2-EXEC-evidence
+- Identical at remote base (0162494), S6.1 baseline (92bf73a), S6.2 entry (915f5ba), current HEAD (359a9e8)
+- Recorded, not repaired
+
+================================================================================
+SOURCE CODE UNCHANGED SINCE QUALIFIED IMPLEMENTATION
+================================================================================
+
+src/ since eafd632... (S6.1 qualified implementation): UNCHANGED
+tests/ since eafd632...: Only NativeCancellationPathTests.cs and NativeDurabilityTests.cs added (S6.1/S6.2 test suites)
+.github/ since eafd632...: Only .github/workflows/publish.yml (authorized publication-workflow remediation)
+
+================================================================================
+STAGE-2 ACCEPTANCE DECISIONS
+================================================================================
+
+All Stage-2 acceptance decisions intact and unmodified:
+- ADR-CI1-01 architecture selection (Candidate C with qualifications)
+- D3 ACCEPTED (legacy graph compatibility)
+- D4 ACCEPTED WITH EXPLICIT INVARIANTS
+- D5 ACCEPTED — NO MIGRATION
+- ci1-scope-owner-01-acceptance (CI-1-SCOPE-R3 oracle)
+- csharp-correctness-owner-01-acceptance (P-DEF-01b, P-DEF-02)
+- ec6d-owner-01/02-contract-acceptance (EC-6D binding/contract)
+
+================================================================================
+S6.1/S6.2 QUALIFICATIONS SEALED
+================================================================================
+
+S6.1: QUALIFIED WITH QUALIFICATIONS (f8f430b)
+- G-1 through G-5 pass
+- 10 test cases (Q-01...Q-12) on Windows + genuine hosted Linux
+- Evidence package byte-exact
+
+S6.2: QUALIFIED WITH QUALIFICATIONS (459b50c)
+- G-1 through G-5 pass
+- 9/10 tests pass (D-05 skipped - test logic bug, not durability defect)
+- Evidence package byte-exact
+
+S6.1 Owner Acceptance: GRANTED WITH QUALIFICATIONS (92bf73a) - G-6 granted
+S6.2 Owner Acceptance: GRANTED WITH QUALIFICATIONS (359a9e8) - G-6 granted
+
+S6.3 Entry: AUTHORIZED WITH CONDITIONS (pending separate entry commission)
+
+================================================================================
+PREFLIGHT STATUS: ALL CONDITIONS MET — NO STOP CONDITION
+================================================================================

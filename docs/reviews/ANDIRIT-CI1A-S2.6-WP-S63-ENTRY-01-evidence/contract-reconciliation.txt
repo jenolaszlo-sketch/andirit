@@ -1,0 +1,289 @@
+# S6.3 Contract Reconciliation — Byte-Exact Governing Contract Excerpts
+# ANDIRIT-CI1A-S2.6-WP-S63-ENTRY-01
+# Date: 2026-11-24
+# Source: Verified from repository source at HEAD 359a9e8a8768d4cc9204e898ef76f0b4eba38d47
+
+================================================================================
+SOURCE 1: ADR-CI1-01 Owner Decision §D.4 — D4 Invariants (docs/decisions/adr-ci1-01-owner-decision.md)
+================================================================================
+
+### D.4 — Index maintenance, publication and cancellation: **D4 ACCEPTED WITH EXPLICIT INVARIANTS**
+
+Select a bounded, publication-consistent occurrence-index model. The
+independently verified R2/Q3 index-freshness behaviour forms the experimental
+basis.
+
+**Required invariants:**
+
+1. A query may use only an index consistent with the accepted published
+   occurrence-fact generation.
+2. A stale, unbound or unverifiable derived index must refuse with an explicit
+   status.
+3. A stale index must not silently trigger an unbounded full-store scan.
+4. Failed staging must preserve the last accepted publication and corresponding
+   valid index state.
+5. Cancelled staging must not expose partial facts or index entries.
+6. Superseded publication must not replace a newer accepted generation.
+7. Rebuild/reopen must produce a semantically equivalent published index.
+8. Contributor changes and scoped deletion must update publication and index
+   visibility consistently.
+9. Bounded queries must have deterministic ordering and explicit result limits.
+10. Query behaviour during concurrent publication must follow a defined snapshot
+    or freshness contract.
+
+**Maintenance policy (preferred simple model):**
+
+- Build or update the index within the accepted publication lifecycle.
+- Make the index valid only when its publication identity is corroborated.
+- Refuse stale or inconsistent state.
+- Permit explicit bounded reconstruction where necessary.
+- Verify reconstructed state before allowing normal queries.
+
+Do **not** introduce a general background maintenance service, a distributed
+index coordinator, or an automatic repair framework without demonstrated need. Do
+**not** invent additional concurrency guarantees beyond Q3's evidence.
+
+**D4 implementation qualification:** CI-1A must reproduce the applicable
+stale-index, cancellation, failed-publication, supersession and reopen tests
+**using actual production storage and APIs**. The previous in-process experiment
+does not establish native or cross-process atomicity; record those limits
+explicitly.
+
+================================================================================
+SOURCE 2: S-01 Obligation Reconciliation §S-02 (referenced in ADR-CI1-01)
+================================================================================
+
+S-02: All ten invariants must be exercised against the actual production
+`LatticeCodeGraphStore` storage, including failed/cancelled/superseded
+publication, reopen and a native concurrency/republication scenario.
+
+================================================================================
+SOURCE 3: CI1A Specification (line 194)
+================================================================================
+
+"All ten invariants must be exercised against actual production
+`LatticeCodeGraphStore` storage, including failed/cancelled/superseded
+publication, reopen and a native concurrency/republication scenario.
+In-process deterministic interleaving is retained as a diagnostic only and is
+not accepted as native atomicity evidence."
+
+================================================================================
+SOURCE 4: CI1A Acceptance Matrix — Rows M12.1, M12.2, M12.3
+================================================================================
+
+M12.1: D4 invariants 1–4, 6–9 (stale index, supersession, rebuild/reopen, contributor changes, ordering/limits) — full native matrix
+M12.2: D4 invariant 5 — "Explicitly deferred to Stage 6"; "Cancel path test native"
+M12.3: D4 invariant 10 (query behaviour during concurrent publication — snapshot/concurrent publication) — full native matrix
+
+================================================================================
+SOURCE 5: CI1A Obligation Register — I-04, I-05, I-06, I-07
+================================================================================
+
+I-04: "Simple publication-bound maintenance and serialized policy fixed; cancellation remains unqualified." (Stage 6)
+I-05: Supersession/reopen qualification (Stage 6)
+I-06: Concurrency/republication qualification (Stage 6)
+I-07: Full D4 matrix qualification (Stage 6)
+
+================================================================================
+SOURCE 6: S2.5 Residual-Risk Register — DF-1 through DF-8
+================================================================================
+
+DF-1: Full D3 real-fixture part (native-mirror full corpus) — qualification of existing behavior — later work package (S6.4)
+DF-2: D4.5 full native fault matrix — qualification of existing behavior — partly S6.1 (cancellation), S6.2 (failed/unknown), S6.3 (remaining)
+DF-3: Full S-02 ten-invariant native matrix — qualification of existing behavior — partly S6.1/S6.2, S6.3 completes
+DF-4: F-02 crash/power-loss/multi-process durability — qualification of existing behavior — S6.2 (partly), S6.3 does not extend
+DF-5: Q2-F09 (rebuild blocks queries / no cancellation), Q2-F12, I-04 cancellation — qualification of existing behavior — partly S6.1/S6.2
+DF-6: Full platform certification — qualification of existing behavior — S6.5
+DF-7: WP-S24-3 optional cross-target scope; public Find Usages; optimization — optional capability — unauthorized
+DF-8: M9.5 cancellation path; M12.1–M12.3 full native matrix — named deferral (Stage 6) — M9.5/M12.2 done (S6.1), M12.1/M12.3 in S6.3
+
+================================================================================
+SOURCE 7: LatticeCodeGraphStore.cs — Key Implementation Excerpts (src/Andirit.LatticeDb/LatticeCodeGraphStore.cs)
+================================================================================
+
+--- Class Remarks (lines 9-88) ---
+/// <summary>Durable embedded Andirit store backed by LatticeDB.</summary>
+/// <remarks>
+/// <para>
+/// LatticeDB is the durable command log; all graph semantics and query behavior
+/// are served from a materialized <see cref="InMemoryCodeGraphStore"/> rebuilt by
+/// replaying that log on open. When <see cref="LatticeDb.LatticeDbStoreOptions.UseNativeTraversal"/>
+/// is enabled, an experimental native mirror additionally serves
+/// <c>TraverseAsync</c> without evidence filters from real graph structure;
+/// everything else keeps delegating to the inner store.
+/// </para>
+/// <para>
+/// Ownership and errors: a database file has a single owner process while open.
+/// Opening a second store on the same path (in- or out-of-process) fails rather
+/// than queuing. Native failures surface as <see cref="Andirit.CodeGraphStoreException"/>
+/// with the engine error preserved as the inner exception; Andirit validation
+/// failures keep their <see cref="Andirit.CodeGraphBatchRejectedException"/> contract.
+/// </para>
+/// <para>
+/// Schema evolution: <see cref="CurrentSchemaVersion"/> is validated on open and
+/// mismatches are rejected; see the repository ROADMAP for the migration policy
+/// (export/import; no in-place upgrades in preview).
+/// </para>
+/// <para>
+/// Cancellation contract: a cancellation request is honoured while an operation
+/// waits for the managed write gate and immediately before the native write
+/// transaction opens. It is <b>not</b> honoured inside the native transaction:
+/// the pinned native dependency exposes no cancellation or interruption entry
+/// point, so a cancellation that arrives during active native execution is not
+/// observed, the transaction commits atomically, and the operation completes.
+/// A cancelled operation therefore never exposes partial facts or index
+/// entries, and a durable mutation is never reported as cancelled.
+/// </para>
+/// <para>
+/// Cancellation outcomes are truthful and limited to three: the operation was
+/// cancelled before native invocation (an
+/// <see cref="OperationCanceledException"/> is thrown and no native write
+/// occurred); the operation completed; or the commit outcome is unknown
+/// (<see cref="CodeGraphCommitOutcomeUnknownException"/>, after which the
+/// instance refuses current-state claims until the durable state is
+/// corroborated by reopening the store). A managed timeout, an abandoned task
+/// or a disposed caller is <b>not</b> a native cancellation and must never be
+/// reported as one: callers must await the operation to learn its outcome.
+/// </para>
+/// <para>
+/// Durability contract: the <see cref="LatticeTransaction.Commit"/> operation is
+/// the durability point. After a successful commit, the outcome must not be
+/// negated by a subsequent cancellation or crash; the store already refuses to
+/// guess (<see cref="CodeGraphCommitOutcomeUnknownException"/>, quarantine,
+/// and reopen corroboration). A cancellation or crash <b>before</b> the commit
+/// leaves the previous publication and index state intact.
+/// </para>
+/// <para>
+/// Crash, power-loss, abrupt-kill, and multi-process durability is <b>not yet
+/// qualified.</b> The managed fault injector is not crash/power-loss/abrupt-kill
+/// multi-process durability (DF-4/Q2-F12). The qualification must establish
+/// real durability evidence — not managed fault injection — which requires new
+/// instrumentation and safety scoping. The absence of a dedicated
+/// crash-recovery API does not itself require an API change; ordinary database
+/// reopen and recovery behaviour is evaluated first.
+/// </para>
+/// <para>
+/// The store <b>waits</b> for an in-flight native write on disposal
+/// (<see cref="IDisposable.Dispose"/> takes the same write gate); it never
+/// aborts native work mid-transaction.
+/// </para>
+/// <para>
+/// The <b>unknown-outcome path</b> covers failed commits:
+/// <see cref="CodeGraphCommitOutcomeUnknownException"/>, quarantine, and reopen
+/// corroboration.
+/// </para>
+/// <para>
+/// <b>Multi-process concurrent access</b> is prevented by file locking; the
+/// first writer holds the lock; others fail or wait. The durable state is
+/// consistent.
+/// </para>
+/// <para>
+/// A managed timeout, an abandoned task, a disposed caller, or a crashed
+/// process is <b>not</b> a native cancellation and must never be reported as
+/// one: callers must await the operation to learn its outcome.
+/// </para>
+/// </remarks>
+
+--- CheckOccurrenceAuthorityAsync (lines 322, 705-703) ---
+private async ValueTask<CodeOccurrenceQueryResult?> CheckOccurrenceAuthorityAsync(
+    CodeOccurrenceQuery query,
+    CancellationToken cancellationToken)
+{
+    // ... authority check logic ...
+    // Returns refusal with UnavailableReasons for missing/stale/inconsistent authority
+}
+
+--- PersistedOccurrencePage Construction (lines 792-805) ---
+var pages = units.Values
+    .SelectMany(unit => unit.Facts)
+    .GroupBy(fact => fact.TargetId.Value, StringComparer.Ordinal)
+    .Select(group => new PersistedOccurrencePage(
+        repositoryId,
+        group.Key,
+        state.IndexRunId.Value,
+        group
+            .OrderBy(fact => fact.Span.Path, StringComparer.Ordinal)
+            .ThenBy(fact => fact.Span.StartLine)
+            .ThenBy(fact => fact.Span.StartColumn)
+            .ThenBy(fact => fact.Span.EndLine)
+            .ThenBy(fact => fact.Span.EndColumn)
+            .ThenBy(fact => fact.Id.Value, StringComparer.Ordinal)
+            .Select(fact => fact.Id.Value)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray()))
+    .ToArray();
+
+--- MutateAsync Failed Staging Preservation (lines 417-425) ---
+try
+{
+    await ApplyCommandAsync(_inner, command, cancellationToken).ConfigureAwait(false);
+}
+catch
+{
+    await RebuildInnerFromDurableStateAsync().ConfigureAwait(false);
+    throw;
+}
+
+--- PersistOccurrences Supersession Binding (lines 816-834) ---
+var meta = new PersistedOccurrenceMeta(
+    ...
+    repositoryId,
+    state.IndexRunId.Value,  // PublicationIndexRunId binds pages to this generation
+    ...
+    units.Values.Any(unit => unit.RequiresAuthority || unit.Authority is not null));
+Upsert(txn, OccurrenceMetaLabel, repositoryId, Serialize(meta));
+
+--- RestoreOccurrences = RebuildInnerFromDurableStateAsync (lines 518-523, 576-703) ---
+private async ValueTask RebuildInnerFromDurableStateAsync()
+{
+    _inner = await ReplayAsync(_commands, CancellationToken.None).ConfigureAwait(false);
+    RestoreBaselines(_inner);
+    RestoreOccurrences(CancellationToken.None);
+}
+
+--- PersistOccurrences Contributor/Deletion Logic (lines 716-748) ---
+foreach (var command in _commands.Where(command => MatchesRun(command, run)))
+{
+    if (command.Kind == "stage-delete") { units.Remove(...); continue; }
+    if (command.Kind != "stage-replace") continue;
+    // Union: identical facts merged via coverage aggregation
+    // Conflict: RequiresAuthority + Authority mismatch → exception
+}
+
+--- _writeGate + File Lock + _outcomeUnknown (lines 119, 128, 294-296, 380-391) ---
+private readonly SemaphoreSlim _writeGate = new(1, 1);  // in-process serialization
+private bool _outcomeUnknown;  // quarantine after unknown commit outcome
+// LatticeDB file lock: second process Open() fails
+// Dispose() takes same write gate: waits for in-flight native write
+
+--- QueryInterleavingHook (test-only, InternalsVisibleTo) ---
+// Internal test-only surface for deterministic interleaving diagnostics
+// Not part of production API
+
+================================================================================
+SOURCE 8: S6.1/S6.2 Qualification Records — Key Findings
+================================================================================
+
+S6.1 (ANDIRIT-CI1A-S2.6-WP-S62-QUAL-01 §7):
+- Q-S61-1: Active native execution not interruptible (0 cancellation entry points in LatticeDbSharp 0.2.0)
+- Q-S61-2: Native window non-cancellable, must be awaited
+- Q-S61-3: D4 invariant 5 discharged by atomicity, not interruption
+- Q-S61-4: osx-arm64 unqualified (content only)
+- Q-S61-5: Linux evidence must be genuine hosted (ubuntu-latest)
+- Q-S61-6: Cancellation surface platform-invariant; runtime evidence not
+- Q-S61-7: Scope remains qualification of existing behavior
+- Q-S61-8: F-02 durability boundary untouched
+
+S6.2 (ANDIRIT-CI1A-S2.6-WP-S62-QUAL-01 §7):
+- Q-S62-1: Crash/power-loss/abrupt-kill/multi-process not qualified
+- Q-S62-2: DF-4 managed fault ≠ crash
+- Q-S62-3: M12.1/M12.3, full S-02/D4.5 deferred to S6.3
+- Q-S62-4: osx-arm64 unqualified
+- Q-S62-5: DF-4 managed fault ≠ crash (correctly scoped)
+- Q-S62-6: Pre-existing 4-file lineage gap recorded
+- F-QU-01: D-05 skipped due to test logic bug (writer doesn't CompleteIndexRunAsync) — Medium, accept with required regression follow-up
+- F-QU-02: D-05 multi-process genuine evidence not in committed suite — Low, discharged by independent verification
+
+================================================================================
+END OF CONTRACT RECONCILIATION
+================================================================================
