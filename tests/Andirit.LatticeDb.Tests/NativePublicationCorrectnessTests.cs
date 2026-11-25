@@ -1116,6 +1116,14 @@ namespace Andirit.LatticeDb.Tests
 
         private static string LocateWorkerAssembly()
         {
+            // Preferred: the worker assembly copied into this project's output by the project reference,
+            // which is what makes the multi-process cases work when only this project is built (the CI
+            // test steps run 'dotnet test' per project).
+            var local = Path.Combine(AppContext.BaseDirectory, "Andirit.LatticeDb.Tests.Worker.dll");
+            if (File.Exists(local))
+                return local;
+
+            // Fallback: a full solution build leaves the worker in its own bin/<config>/net10.0 folder.
             var directory = new DirectoryInfo(AppContext.BaseDirectory);
             while (directory is not null &&
                    !File.Exists(Path.Combine(directory.FullName, "Andirit.slnx")))

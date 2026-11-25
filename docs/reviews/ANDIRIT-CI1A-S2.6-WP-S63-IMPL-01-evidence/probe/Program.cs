@@ -28,6 +28,7 @@
 //   H  no interleaving/coordination seam exists on the pinned native surface
 // ============================================================================
 
+using System.Diagnostics;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -57,6 +58,7 @@ internal static class Program
             ("F", ProbeF_RebuildEquivalent),
             ("G", ProbeG_FileLockRefusesSecondOpen),
             ("H", ProbeH_NoInterleavingSeam),
+            ("I", ProbeI_PostTerminationLockReleaseTiming),
         })
         {
             for (var repetition = 1; repetition <= 3; repetition++)
@@ -368,6 +370,104 @@ internal static class Program
             throw new InvalidOperationException("interleaving-like surface: " + string.Join(",", offenders));
         return $"members scanned={members.Count} offenders=0";
     }
+
+    // I - post-termination native lock release: records how many open attempts are needed after an
+    // abrupt OS process termination, within a finite budget. This documents the observed lock race
+    // that the D-07 remediation's bounded retries handle, and it fails if the budget is exhausted
+    // (i.e. it never suppresses a persistent resource-release defect).
+    private static string ProbeI_PostTerminationLockReleaseTiming(int repetition)
+    {
+        var path = Db(repetition, "I");
+        var signal = path + ".signal";
+        try
+        {
+            var worker = StartWorkerProcess(LocateWorkerAssemblyForProbe(),
+                $"--db \"{path}\" --repo repo:probeI --run run:probeI --unit unit:i --node node:i --mode hold --signal \"{signal}\"");
+            try
+            {
+                var ready = signal + ".ready";
+                var deadline = DateTimeOffset.UtcNow.AddSeconds(30);
+                while (!File.Exists(ready) && DateTimeOffset.UtcNow < deadline)
+                    Thread.Sleep(25);
+                if (!File.Exists(ready))
+                    throw new InvalidOperationException("the hold worker never reported READY");
+
+                worker.Kill(true);
+                worker.WaitForExit(30_000);
+            }
+            finally
+            {
+                File.WriteAllText(signal + ".go", "GO");
+            }
+
+            var attempts = 0;
+            var openDeadline = DateTimeOffset.UtcNow.AddSeconds(30);
+            string? lastError = null;
+            while (true)
+            {
+                attempts++;
+                try
+                {
+                    using var database = LatticeDatabase.Open(path, new LatticeDatabaseOptions { Create = false });
+                    return $"attempts={attempts} openable=true lockRaceObserved={attempts > 1}";
+                }
+                catch (LatticeException exception) when (exception.NativeErrorCode == -16)
+                {
+                    lastError = exception.Message;
+                    if (DateTimeOffset.UtcNow >= openDeadline)
+                        throw new TimeoutException(
+                            $"the native database did not become openable within the 30s budget after {attempts} attempts: {lastError}",
+                            exception);
+                    Thread.Sleep(100);
+                }
+            }
+        }
+        finally
+        {
+            DeleteDatabase(path);
+            foreach (var signalFile in new[] { signal, signal + ".ready", signal + ".go" })
+            {
+                try
+                {
+                    if (File.Exists(signalFile))
+                        File.Delete(signalFile);
+                }
+                catch
+                {
+                }
+            }
+        }
+    }
+
+    private static string LocateWorkerAssemblyForProbe()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null &&
+               !File.Exists(Path.Combine(directory.FullName, "Andirit.slnx")))
+            directory = directory.Parent;
+        var root = directory?.FullName
+            ?? throw new InvalidOperationException("the repository root (Andirit.slnx) was not found");
+        foreach (var configuration in new[] { "Release", "Debug" })
+        {
+            var candidate = Path.Combine(root, "tests", "Andirit.LatticeDb.Tests.Worker",
+                "bin", configuration, "net10.0", "Andirit.LatticeDb.Tests.Worker.dll");
+            if (File.Exists(candidate))
+                return candidate;
+        }
+
+        throw new InvalidOperationException("the worker assembly was not built");
+    }
+
+    private static Process StartWorkerProcess(string workerAssembly, string arguments) =>
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = "dotnet",
+            Arguments = $"exec \"{workerAssembly}\" {arguments}",
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            CreateNoWindow = true
+        }) ?? throw new InvalidOperationException("the worker process could not be started");
 
     // ------------------------------------------------------------------ helpers
 

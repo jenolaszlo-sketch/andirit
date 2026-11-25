@@ -22,6 +22,14 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Andirit.LatticeDb\Andirit.LatticeDb.csproj" />
     <ProjectReference Include="..\..\src\Andirit.Testing\Andirit.Testing.csproj" />
+    <!--
+      The multi-process cases (NativeDurabilityTests D-05 and NativePublicationCorrectnessTests
+      P-15) launch the standalone worker as a separate OS process. This reference makes 'dotnet
+      test' build and copy the worker assembly into this project's output, so the cases work when
+      the test project is built on its own (for example by the per-project CI test steps), not only
+      when the whole solution is built.
+    -->
+    <ProjectReference Include="..\Andirit.LatticeDb.Tests.Worker\Andirit.LatticeDb.Tests.Worker.csproj" />
   </ItemGroup>
 
 </Project>

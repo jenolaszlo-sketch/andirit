@@ -11,8 +11,13 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <!--
+    The worker is a standalone console harness that exercises the PRODUCTION store only. It
+    intentionally does not reference the test project: the test project references the worker so
+    that 'dotnet test' on the test project builds and copies the worker assembly, which is what
+    the multi-process cases (D-05, P-15) need. The reverse dependency would be a cycle.
+  -->
   <ItemGroup>
-    <ProjectReference Include="..\Andirit.LatticeDb.Tests\Andirit.LatticeDb.Tests.csproj" />
     <ProjectReference Include="..\..\src\Andirit.LatticeDb\Andirit.LatticeDb.csproj" />
     <ProjectReference Include="..\..\src\Andirit\Andirit.csproj" />
   </ItemGroup>

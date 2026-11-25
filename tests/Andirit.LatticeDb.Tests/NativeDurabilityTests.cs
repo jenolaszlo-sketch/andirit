@@ -397,9 +397,11 @@ public sealed class NativeDurabilityTests
     [Fact]
     public async Task AbruptProcessTermination_DurableStateConsistent()
     {
-        // Genuine abrupt termination: OS-level process termination during write.
-        // The test spawns a worker process that performs a write and gets killed.
+        // Genuine abrupt termination: an OS-level process termination while the store is open.
+        // The test spawns an independent worker process that holds the store and kills it. There is
+        // no silent skip: if the worker assembly cannot be located the test fails loudly.
         var path = TemporaryDatabasePath();
+        var signal = path + ".d07signal";
         try
         {
             // First, establish a baseline publication
@@ -412,58 +414,154 @@ public sealed class NativeDurabilityTests
                     new(repository, run, new[] { new CodeSourceManifest(Plugin, "1.0.0", "src/Baseline.cs", "sha256:baseline") }));
             }
 
-            // Now spawn a worker that does a write and gets killed mid-transaction
-            var workerExe = Path.Combine(AppContext.BaseDirectory, "Andirit.LatticeDb.Tests.Worker.exe");
-            if (!File.Exists(workerExe))
-            {
-                // Worker not built, skip this test
-                return;
-            }
+            // Spawn an independent worker that opens the database, seeds a run, stages a unit and
+            // then holds the store open (waiting on the signal file) so it can be killed mid-window.
+            var worker = StartWorker(LocateWorkerAssembly(),
+                $"--db \"{path}\" --repo repo:durability --run run:durability --unit unit:abrupt --node node:abrupt --mode hold --signal \"{signal}\"");
+            Assert.True(WaitForFile(signal + ".ready", TimeSpan.FromSeconds(30)),
+                "The abrupt-termination worker never reported READY.");
+            Assert.False(worker.HasExited, "The worker exited before it could be terminated.");
 
-            var psi = new ProcessStartInfo
-            {
-                FileName = workerExe,
-                Arguments = $"--db \"{path}\" --unit unit:abrupt --node node:abrupt",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            };
+            // OS-level termination of the process tree while the store is open.
+            worker.Kill(true);
+            await worker.WaitForExitAsync();
 
-            var worker = Process.Start(psi);
-            Assert.NotNull(worker);
+            // Native durable state is read with no LatticeCodeGraphStore open, so the assertion is
+            // made against the native tables rather than a projection. The OS releases the file lock
+            // without ordering guarantees, so the raw native open is retried within a bounded deadline.
+            var stagedAfter = NativePayloadsAfterTermination(path, StageLabel, TimeSpan.FromSeconds(30));
+            // No partial staged units: the baseline publication and at most one staged row.
+            Assert.True(stagedAfter.Count == 0 || stagedAfter.Count == 1);
 
-            // Give it a moment to start the write, then kill it
-            await Task.Delay(100);
-            if (!worker.HasExited)
-            {
-                worker.Kill(true);
-                await worker.WaitForExitAsync();
-            }
-
-            // Wait a bit more for the OS to release the file lock
-            await Task.Delay(200);
-
-            // Verify the database is still consistent after abrupt termination
-            var staged = NativePayloads(path, StageLabel);
-            // The worker may or may not have committed; either way, no partial state
-            if (staged.Count > 0)
-            {
-                // If a write succeeded, it should be complete
-                // (we can't easily distinguish which unit was written without more coordination)
-            }
-
+            // The store opens cleanly after the abrupt termination; the lock is already released
+            // because the native read above succeeded.
             using var reopened = new LatticeCodeGraphStore(path);
             Assert.True((await reopened.CheckHealthAsync()).IsHealthy);
-            var stagedAfter = NativePayloads(path, StageLabel);
-            // No partial staged units
-            Assert.True(stagedAfter.Count == 0 || stagedAfter.Count == 1);
+        }
+        finally
+        {
+            DeleteDatabase(path);
+            foreach (var signalFile in new[] { signal, signal + ".ready", signal + ".go" })
+            {
+                try
+                {
+                    if (File.Exists(signalFile))
+                        File.Delete(signalFile);
+                }
+                catch
+                {
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Opens the store after another process holding the native file lock has been terminated. The OS
+    /// releases the lock without ordering guarantees, so the open is retried within a bounded deadline
+    /// rather than assumed to be immediate. Only the specific native "database is open in another
+    /// process" condition is retried; every other failure propagates unchanged so that a real defect
+    /// can never be hidden behind the retry.
+    /// </summary>
+    private static LatticeCodeGraphStore OpenAfterProcessTermination(string path, TimeSpan timeout)
+    {
+        var deadline = DateTimeOffset.UtcNow + timeout;
+        Exception? last = null;
+        while (true)
+        {
+            try
+            {
+                return new LatticeCodeGraphStore(path);
+            }
+            catch (CodeGraphStoreException exception) when (IsDatabaseStillOpenElsewhere(exception))
+            {
+                last = exception;
+                if (DateTimeOffset.UtcNow >= deadline)
+                    throw new TimeoutException(
+                        "The store did not become openable within the deadline after process termination.",
+                        last);
+                Thread.Sleep(100);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Reads the native rows for a label after another process holding the native file lock has been
+    /// terminated, retrying the raw native open within a bounded deadline because the OS releases the
+    /// lock without ordering guarantees. Only the "database is open in another process" condition is
+    /// retried; any other native failure propagates immediately.
+    /// </summary>
+    private static IReadOnlyList<string> NativePayloadsAfterTermination(string path, string label, TimeSpan timeout)
+    {
+        var deadline = DateTimeOffset.UtcNow + timeout;
+        while (true)
+        {
+            try
+            {
+                return NativePayloads(path, label);
+            }
+            catch (LatticeException exception) when (IsDatabaseStillOpenElsewhere(exception))
+            {
+                if (DateTimeOffset.UtcNow >= deadline)
+                    throw new TimeoutException(
+                        $"The native database did not become readable within the deadline after process termination: {exception.Message}",
+                        exception);
+                Thread.Sleep(100);
+            }
+        }
+    }
+
+    /// <summary>
+    /// The pinned LatticeDB native condition "database is open in another process", observed as
+    /// <c>LatticeDB operation 'database/open' failed with -16</c> after an OS-level process
+    /// termination while the file lock was held. Only this condition is a legitimate retry target.
+    /// </summary>
+    private const int NativeDatabaseOpenInAnotherProcess = -16;
+
+    // Complementary deterministic verification for F-S63-02, added without altering D-07's original
+    // abrupt-termination semantics: it establishes in-process (no OS timing) that the native
+    // "database is open in another process" condition is exactly the condition the D-07 retry filter
+    // selects, and that the same open succeeds once the first writer releases the file.
+    [Fact]
+    public async Task NativeOpenWhileAnotherStoreHoldsTheFile_FailsWithTheFilteredNativeCondition()
+    {
+        var path = TemporaryDatabasePath();
+        try
+        {
+            using var first = new LatticeCodeGraphStore(path);
+            var blocked = Assert.Throws<LatticeException>(() =>
+                LatticeDatabase.Open(path, new LatticeDatabaseOptions { Create = false }));
+            Assert.Equal(
+                NativeDatabaseOpenInAnotherProcess,
+                blocked.NativeErrorCode);
+            Assert.True(
+                IsDatabaseStillOpenElsewhere(blocked),
+                "the observed condition is not the one the D-07 retry filter selects");
         }
         finally
         {
             DeleteDatabase(path);
         }
+
+        // The same open succeeds once the holding store releases the file, which is the terminal state the
+        // D-07 bounded retry converges on. The store scope is closed before the raw native open so the
+        // file lock is actually free at that point.
+        using (var reopened = new LatticeCodeGraphStore(path))
+        {
+            Assert.True((await reopened.CheckHealthAsync()).IsHealthy);
+        }
+
+        using (var database = LatticeDatabase.Open(path, new LatticeDatabaseOptions { Create = false }))
+        {
+            Assert.NotNull(database);
+        }
     }
+
+    private static bool IsDatabaseStillOpenElsewhere(LatticeException exception) =>
+        exception.NativeErrorCode == NativeDatabaseOpenInAnotherProcess;
+
+    private static bool IsDatabaseStillOpenElsewhere(CodeGraphStoreException exception) =>
+        exception.InnerException is LatticeException inner &&
+        inner.NativeErrorCode == NativeDatabaseOpenInAnotherProcess;
 
     // ------------------------------------------------------------------ D-08
 
@@ -718,6 +816,14 @@ public sealed class NativeDurabilityTests
 
     private static string LocateWorkerAssembly()
     {
+        // Preferred: the worker assembly copied into this project's output by the project reference,
+        // which is what makes the multi-process cases work when only this project is built (the CI
+        // test steps run 'dotnet test' per project).
+        var local = Path.Combine(AppContext.BaseDirectory, "Andirit.LatticeDb.Tests.Worker.dll");
+        if (File.Exists(local))
+            return local;
+
+        // Fallback: a full solution build leaves the worker in its own bin/<config>/net10.0 folder.
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
         while (directory is not null &&
                !File.Exists(Path.Combine(directory.FullName, "Andirit.slnx")))
