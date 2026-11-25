@@ -1,0 +1,130 @@
+Windows X64 run=local-r2 attempt=1 sdk=10.0.401 commit=a96c19a844f8ea1719508198b47df23c4e203571
+  core 345 passed, 0 failed, 0 skipped | lines=5029/6101 | branches=2105/2969 | trx=0124aa9b5d96769bcb1d49fc93c48ab97f85c816dc6a550b2e4dd7f686cb212c | coverage=3aad829c63796ec9035f179ad7c6d564e3cb195727580c31fd9418109b3d1cd5
+  csharp 372 passed, 0 failed, 0 skipped | lines=2199/2311 | branches=1181/1342 | trx=04171c8518e66ea7603f9c0071aefb5a1c68912d3c06f21dd6fba3d0532e48be | coverage=2cb8d197d4d220403dd09a80d321636b28a7c9f3ee180062f8e19a1247639538
+  treesitter 157 passed, 0 failed, 0 skipped | lines=2240/2493 | branches=1442/1911 | trx=6cf8f2dc422c571082dda0b6f64099693993a96a11b6cedf7d2778044322ab60 | coverage=884c38e4496097f7bb017bc4b265792f189d1e7bd153b6c781411bddcc70c870
+  latticedb 131 passed, 0 failed, 0 skipped | lines=900/969 | branches=368/466 | trx=571ed88a2c270270bd5d50524cbf9cd1a295e0a5b8b1082856fbebc009d8dd72 | coverage=27dfb3d63e4d229f16dbf4f89dc3692e9b982c065d50ec0c65183d6770f2638f
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.AbruptProcessTermination_DurableStateConsistent Passed duration=00:00:01.5100254
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.D07_ExitBeforeReadyFailsPromptly Passed duration=00:00:00.0885507
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.ConcurrentMultiProcessAccess_FileLockingAndConsistency Passed duration=00:00:02.7818757
+    P-01 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P01_QueryPinnedToSupersededGeneration_RefusesExplicitly Passed duration=00:00:00.3794965
+    P-02 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P02_OccurrencePageNotBoundToAcceptedPublication_RefusesExplicitlyOnOpen Passed duration=00:00:00.1558140
+    P-03 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P03_StaleIndexDoesNotScanTheWholeStore_AndBoundedQueryExaminesOnlyItsTargetPage Passed duration=00:00:00.8139866
+    P-04 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P04_FailedCompletion_PreservesPriorOccurrencePublicationAndIndex Passed duration=00:00:00.1610748
+    P-05 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P05_OlderGenerationsSuperseded_LatestAcceptedAndDurable Passed duration=00:00:00.3761491
+    P-06 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P06_RunPlannedAgainstSupersededBaseline_CannotCompleteAndRegressGeneration Passed duration=00:00:00.0688054
+    P-07 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P07_OrdinaryReopen_OccurrenceQueryResultsEquivalent Passed duration=00:00:00.3735374
+    P-08 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P08_RebuildFromDurableState_OccurrenceIndexEquivalent Passed duration=00:00:00.6851368
+    P-09 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P09_ContributorUnionAndConflictRejection_VisibilityConsistent Passed duration=00:00:00.3669963
+    P-10 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P10_ScopedDeletion_RemovesOnlyAffectedContextLeavesIndexClean Passed duration=00:00:00.7466023
+    P-11 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P11_BoundedQuery_DeterministicSiteOrderAndExplicitLimit Passed duration=00:00:00.2464507
+    P-12 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P12_ConcurrentReaderDuringPublication_SeesAtomicSnapshot Passed duration=00:00:00.1730081
+    P-13 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P13_RapidSequentialPublications_OnlyLatestAccepted Passed duration=00:00:01.2807149
+    P-14 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P14_UnknownCommitOutcome_QuarantineAndReopenCorroborates Passed duration=00:00:00.6282823
+    P-15 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication Passed duration=00:00:00.9524063
+    P-16 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P16_InterleavingIsNotANativeEvidenceSurface Passed duration=00:00:00.0033291
+  all suites 1005 passed, 0 failed, 0 skipped
+local D-07 repeat 01 Passed duration=00:00:01.4653301 trx=531356073cd983091cf1f021922daad6224eba5c2dd19f6f486d00c40f11a2a9
+local D-07 repeat 02 Passed duration=00:00:01.4947306 trx=3fb2cf61e86db1fb2c8eebdd40ae893afd9828a9cd7491cef9492cc6f5c8d21e
+local D-07 repeat 03 Passed duration=00:00:01.3113652 trx=8fbdaf97a06ea72c160ce9b7035dda8656402922701783133c655b7a6d45421e
+local D-07 repeat 04 Passed duration=00:00:01.3042564 trx=b87d6e8f284969a668658e460ba08de9ab1ec4b5346d6fd8803d87e4613b9c0e
+local D-07 repeat 05 Passed duration=00:00:01.3669849 trx=eecf055a18ed2fb4aa878b5a6bb04b1b4df93fdee2ed85879e2986ad298ff910
+local D-07 repeat 06 Passed duration=00:00:01.3784715 trx=1f6fe42b22488fb41b8cffa362e0d16f7a62651f07c15ec1c615e30277f8be0c
+local D-07 repeat 07 Passed duration=00:00:01.6433751 trx=7e49ac049bfcc958fb87c1559570d9533bef028764cf4255aaac0472eaa19989
+local D-07 repeat 08 Passed duration=00:00:01.4373480 trx=4642a6d31d4540664c154d8e05244439221a5f5dbe40249f4ff90e18ff9a4762
+local D-07 repeat 09 Passed duration=00:00:01.4977840 trx=00a0afaaddb1a3c93de01514e2ed44bdd4e52e35b20ad99829a5b21c95aec722
+local D-07 repeat 10 Passed duration=00:00:01.5817943 trx=0a8e277d97917a5e554e64ea0edcb224b60ddb04c05b84f2f2feabe75b399c69
+local D-07 repeat 11 Passed duration=00:00:01.4077245 trx=b4427f1ed31a74c70b3dd8649cbdabd288b27f2722b7f4d35aba9c24cb28b917
+local D-07 repeat 12 Passed duration=00:00:01.4628144 trx=fdd75b3a1f8dc6e27f36551386c5352570300abfda7bbd7bd7a0e32cddc21808
+local D-07 repeat 13 Passed duration=00:00:01.4792247 trx=dba879e879d68eb52e960b7749f9f6da64e01739296be9c5bb212ff932a14ee8
+local D-07 repeat 14 Passed duration=00:00:01.4830765 trx=52d3d0ebf8059995b0adb0d03fe7356b135557928ec651ea698e13d699d95127
+local D-07 repeat 15 Passed duration=00:00:01.4899181 trx=4a69fe106bff3df6eeadaa7fcd0470c7c8e5c6d0f64314281dae7eeb26b23ac0
+local D-07 repeat 16 Passed duration=00:00:01.5061648 trx=d3924e9ce960cc3caaa5d9bf1168d4bbf690dadd776765db3128fadcfaa70d0e
+local D-07 repeat 17 Passed duration=00:00:01.5017231 trx=6c4f09e65165e3b85c876cbdc9363a99f57f6b0fcd837259bb135d3aa8f72817
+local D-07 repeat 18 Passed duration=00:00:01.4286319 trx=f4e5c40be6fe5c65d84a6f3858ec251b8f7bc87627aa1c8e731740577803f603
+local D-07 repeat 19 Passed duration=00:00:01.3152299 trx=309723af4ec4863eadf631bea4d8413b2592ce8119d3fe85b11baf96eb7535f2
+local D-07 repeat 20 Passed duration=00:00:01.2880677 trx=29c2da9936c4512a06712bc5a896e8182c077b0b3dccdb0a28a7a9e5ba7b2ee5
+Job pack id=139477057222 group=GitHub Actions runner=GitHub Actions 1000004850 conclusion=success
+Job test (ubuntu-latest) id=139477057628 group=GitHub Actions runner=GitHub Actions 1000004851 conclusion=success
+Job test (windows-latest) id=139477057735 group=GitHub Actions runner=GitHub Actions 1000004852 conclusion=success
+Job test (macos-latest) id=139477057969 group=GitHub Actions runner=GitHub Actions 1000004853 conclusion=success
+Artifact test-results-macos-latest id=15059770371 digest=sha256:eed2225c179e6227d93512eb723984dc8b7c09ed5eddb14834e5c286071b93a7
+Artifact test-results-windows-latest id=15059676288 digest=sha256:f12c94626717845e5b235dd638c6cd63376bf535a8b816ea6aa29bfd6082b5d0
+Artifact coverage-results-macos-latest id=15059525841 digest=sha256:fbc1b1562205471be81dd9e76c6deec7bcc9ea0c3b3a371681f42bca31e87efc
+Artifact coverage-results-ubuntu-latest id=15059321224 digest=sha256:4b0687057633358eb2708903e5393d8d03b76296254df0a4b68cb854efaf0ec5
+Artifact test-results-ubuntu-latest id=15058443202 digest=sha256:27bf91185de52fb10bdd6d0027f4d97f1957b5f9a3e94d666f1afd6c59584313
+Artifact coverage-results-windows-latest id=15058374247 digest=sha256:533d3e4a768a1c0e727ad4a5e05690661d55408fe32d39e1fc5ccb3880dc03cf
+Linux X64 run=45691273312 attempt=1 sdk=11.0.100 commit=a96c19a844f8ea1719508198b47df23c4e203571
+  core 345 passed, 0 failed, 0 skipped | lines=5029/6101 | branches=2082/2943 | trx=10ce4fc6c6085548d12af5ae77356dd0e040de3081a519271c9fbc3ba3d0e304 | coverage=d08c7aaaadeee27faf561d3b730ade46fa7d91bedb96694c35636f74ca96f529
+  csharp 372 passed, 0 failed, 0 skipped | lines=2198/2311 | branches=1172/1334 | trx=3d896608663cf952d161ab8b875d7741bba785b79911cfa5d32a07ab015ee69f | coverage=f182a056f333c43cb96148d4f1924329cc84715f27064cb268bf0e53bab69f2b
+  treesitter 157 passed, 0 failed, 0 skipped | lines=2241/2493 | branches=1406/1851 | trx=3f273e97a7f6e2b2d61fc84711d8b19aa770feef94ac697b68e1872122c2e436 | coverage=75727ff42e8729deafbd2e3c98152b207fd8913c0ff668b0a1123d657e5ff0a8
+  latticedb 131 passed, 0 failed, 0 skipped | lines=900/969 | branches=368/466 | trx=dce78644d3af5639c34c824af7ab1f45f4291564a9ff30328eb58690f5a9e2cf | coverage=42fa555f6f17043d13e446597b2b3f5711102a0e007aaeb86cd641cedbbc1497
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.D07_ExitBeforeReadyFailsPromptly Passed duration=00:00:00.0272786
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.AbruptProcessTermination_DurableStateConsistent Passed duration=00:00:02.2749681
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.ConcurrentMultiProcessAccess_FileLockingAndConsistency Passed duration=00:00:01.9231643
+    P-01 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P01_QueryPinnedToSupersededGeneration_RefusesExplicitly Passed duration=00:00:00.1171758
+    P-02 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P02_OccurrencePageNotBoundToAcceptedPublication_RefusesExplicitlyOnOpen Passed duration=00:00:00.1797912
+    P-03 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P03_StaleIndexDoesNotScanTheWholeStore_AndBoundedQueryExaminesOnlyItsTargetPage Passed duration=00:00:00.6096101
+    P-04 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P04_FailedCompletion_PreservesPriorOccurrencePublicationAndIndex Passed duration=00:00:00.1283477
+    P-05 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P05_OlderGenerationsSuperseded_LatestAcceptedAndDurable Passed duration=00:00:00.1394090
+    P-06 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P06_RunPlannedAgainstSupersededBaseline_CannotCompleteAndRegressGeneration Passed duration=00:00:00.1219266
+    P-07 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P07_OrdinaryReopen_OccurrenceQueryResultsEquivalent Passed duration=00:00:00.1951268
+    P-08 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P08_RebuildFromDurableState_OccurrenceIndexEquivalent Passed duration=00:00:00.1327703
+    P-09 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P09_ContributorUnionAndConflictRejection_VisibilityConsistent Passed duration=00:00:00.1619146
+    P-10 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P10_ScopedDeletion_RemovesOnlyAffectedContextLeavesIndexClean Passed duration=00:00:00.3262760
+    P-11 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P11_BoundedQuery_DeterministicSiteOrderAndExplicitLimit Passed duration=00:00:00.0877219
+    P-12 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P12_ConcurrentReaderDuringPublication_SeesAtomicSnapshot Passed duration=00:00:00.1624963
+    P-13 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P13_RapidSequentialPublications_OnlyLatestAccepted Passed duration=00:00:00.3352898
+    P-14 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P14_UnknownCommitOutcome_QuarantineAndReopenCorroborates Passed duration=00:00:00.2425130
+    P-15 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication Passed duration=00:00:01.1285820
+    P-16 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P16_InterleavingIsNotANativeEvidenceSurface Passed duration=00:00:00.0020117
+  all suites 1005 passed, 0 failed, 0 skipped
+Windows X64 run=45691273312 attempt=1 sdk=11.0.100 commit=a96c19a844f8ea1719508198b47df23c4e203571
+  core 345 passed, 0 failed, 0 skipped | lines=5029/6101 | branches=2082/2943 | trx=58ef8cd9aea5ab1ac52d60eb0088bd36148cdb4f60af5c8e91940de7078dc21a | coverage=ed79071cccfd9f883642e0555b67786549d26d85ce04ff1357c2ee5a5db15655
+  csharp 372 passed, 0 failed, 0 skipped | lines=2199/2311 | branches=1173/1334 | trx=21e61051192bb79e377af826da2b7a743938e55202877fd832d7c92ae16fd6af | coverage=c71cad5be5a597e8f0653497c0b2b62b1ba422d29a89517498d849681ca9dc31
+  treesitter 157 passed, 0 failed, 0 skipped | lines=2240/2493 | branches=1404/1851 | trx=a5980458a101ab7645c1904dbaea3464fed7efac69d0dfc05d0a211aa2b7809d | coverage=c6103c66f9bbfacda2dac9238e7fd297650dcc6a75d8718a7dd82e1e3e38fe2c
+  latticedb 131 passed, 0 failed, 0 skipped | lines=900/969 | branches=368/466 | trx=08fb15126786e20db0afe6076732504798b4b548949cfebe24e36a75d7f7c8ff | coverage=6aeacb8b67f9eba0fce34e39e058adebcb669cbc8a617489afd6ddd0b23425cd
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.ConcurrentMultiProcessAccess_FileLockingAndConsistency Passed duration=00:00:07.9185046
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.AbruptProcessTermination_DurableStateConsistent Passed duration=00:00:07.3257921
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.D07_ExitBeforeReadyFailsPromptly Passed duration=00:00:00.0706331
+    P-01 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P01_QueryPinnedToSupersededGeneration_RefusesExplicitly Passed duration=00:00:01.1923229
+    P-02 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P02_OccurrencePageNotBoundToAcceptedPublication_RefusesExplicitlyOnOpen Passed duration=00:00:02.4285736
+    P-03 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P03_StaleIndexDoesNotScanTheWholeStore_AndBoundedQueryExaminesOnlyItsTargetPage Passed duration=00:00:01.4813762
+    P-04 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P04_FailedCompletion_PreservesPriorOccurrencePublicationAndIndex Passed duration=00:00:01.4429977
+    P-05 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P05_OlderGenerationsSuperseded_LatestAcceptedAndDurable Passed duration=00:00:01.3607288
+    P-06 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P06_RunPlannedAgainstSupersededBaseline_CannotCompleteAndRegressGeneration Passed duration=00:00:00.9656913
+    P-07 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P07_OrdinaryReopen_OccurrenceQueryResultsEquivalent Passed duration=00:00:01.7630289
+    P-08 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P08_RebuildFromDurableState_OccurrenceIndexEquivalent Passed duration=00:00:01.0370083
+    P-09 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P09_ContributorUnionAndConflictRejection_VisibilityConsistent Passed duration=00:00:01.3166273
+    P-10 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P10_ScopedDeletion_RemovesOnlyAffectedContextLeavesIndexClean Passed duration=00:00:01.7762298
+    P-11 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P11_BoundedQuery_DeterministicSiteOrderAndExplicitLimit Passed duration=00:00:01.4221347
+    P-12 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P12_ConcurrentReaderDuringPublication_SeesAtomicSnapshot Passed duration=00:00:01.4218530
+    P-13 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P13_RapidSequentialPublications_OnlyLatestAccepted Passed duration=00:00:01.8167530
+    P-14 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P14_UnknownCommitOutcome_QuarantineAndReopenCorroborates Passed duration=00:00:02.2217954
+    P-15 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication Passed duration=00:00:03.7131146
+    P-16 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P16_InterleavingIsNotANativeEvidenceSurface Passed duration=00:00:00.0177525
+  all suites 1005 passed, 0 failed, 0 skipped
+macOS ARM64 run=45691273312 attempt=1 sdk=11.0.100 commit=a96c19a844f8ea1719508198b47df23c4e203571
+  core 345 passed, 0 failed, 0 skipped | lines=5029/6101 | branches=2082/2943 | trx=0f46eddd2845fbc1564062b5960114c304a7e5790c5077c80455e152f24d815e | coverage=8b9dfea7f3422260597e12b54de9c227ffd88cca463d007168a2023b7799b48b
+  csharp 372 passed, 0 failed, 0 skipped | lines=2198/2311 | branches=1172/1334 | trx=f46b66dd19e4af8d2345b68bfe55f14e1a26ff7bc87628046e96839df55d9904 | coverage=5d201e55a9d473f5d3a0da68a608fe771680d9cac8cdcbe9af46cfa1bb19ab74
+  treesitter 157 passed, 0 failed, 0 skipped | lines=2242/2493 | branches=1408/1851 | trx=1572efe3fa2a09e3e8e6096224265fe54776d5c4442a36dcdeb483e41bbcbd53 | coverage=8bc641c886fec3634a584286bebaac7380a9580c42c214b115aee223b10e391a
+  latticedb 131 passed, 0 failed, 0 skipped | lines=900/969 | branches=368/466 | trx=0b9c857b1ceae9b9590f367456c2f3383ffeceae9d00656295b285f158183bf0 | coverage=6ad609fe6bb01d3950a43ec83755cfa782689d9e90ca430ffd1a30572d9b7175
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.ConcurrentMultiProcessAccess_FileLockingAndConsistency Passed duration=00:00:02.6445065
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.AbruptProcessTermination_DurableStateConsistent Passed duration=00:00:00.8711814
+    Andirit.LatticeDb.Tests.NativeDurabilityTests.D07_ExitBeforeReadyFailsPromptly Passed duration=00:00:00.0948230
+    P-01 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P01_QueryPinnedToSupersededGeneration_RefusesExplicitly Passed duration=00:00:00.0219411
+    P-02 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P02_OccurrencePageNotBoundToAcceptedPublication_RefusesExplicitlyOnOpen Passed duration=00:00:00.0780796
+    P-03 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P03_StaleIndexDoesNotScanTheWholeStore_AndBoundedQueryExaminesOnlyItsTargetPage Passed duration=00:00:00.1983534
+    P-04 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P04_FailedCompletion_PreservesPriorOccurrencePublicationAndIndex Passed duration=00:00:00.0540546
+    P-05 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P05_OlderGenerationsSuperseded_LatestAcceptedAndDurable Passed duration=00:00:00.0246355
+    P-06 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P06_RunPlannedAgainstSupersededBaseline_CannotCompleteAndRegressGeneration Passed duration=00:00:00.0330684
+    P-07 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P07_OrdinaryReopen_OccurrenceQueryResultsEquivalent Passed duration=00:00:00.0267030
+    P-08 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P08_RebuildFromDurableState_OccurrenceIndexEquivalent Passed duration=00:00:00.0392226
+    P-09 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P09_ContributorUnionAndConflictRejection_VisibilityConsistent Passed duration=00:00:00.0208027
+    P-10 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P10_ScopedDeletion_RemovesOnlyAffectedContextLeavesIndexClean Passed duration=00:00:00.0358809
+    P-11 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P11_BoundedQuery_DeterministicSiteOrderAndExplicitLimit Passed duration=00:00:00.0159567
+    P-12 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P12_ConcurrentReaderDuringPublication_SeesAtomicSnapshot Passed duration=00:00:00.1970096
+    P-13 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P13_RapidSequentialPublications_OnlyLatestAccepted Passed duration=00:00:00.0737265
+    P-14 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P14_UnknownCommitOutcome_QuarantineAndReopenCorroborates Passed duration=00:00:00.0567500
+    P-15 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication Passed duration=00:00:00.6845728
+    P-16 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P16_InterleavingIsNotANativeEvidenceSurface Passed duration=00:00:00.0020628
+  all suites 1005 passed, 0 failed, 0 skipped
