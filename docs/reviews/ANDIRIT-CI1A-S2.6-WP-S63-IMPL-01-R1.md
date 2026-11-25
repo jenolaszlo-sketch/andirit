@@ -18,7 +18,7 @@ Every mandatory implementation and evidence gate is satisfied. The success is bo
 revision `d3c9359d1abd8c89a7214e37f074802e5d2fa238` (not merely to a generic green status), and the
 hosted evidence — runner identity, per-project counts, coverage and the multi-process execution
 chain — is sealed in the extension package `docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/`
-(self-excluding SHA-256 manifest, `manifest_sha256` `aa415b7a…`, 7 entries, 0 mismatches). Next
+(self-excluding SHA-256 manifest, `manifest_sha256` `b17a726d…`, 11 entries, 0 mismatches). Next
 commission: `ANDIRIT-CI1A-S2.6-WP-S63-QUAL-01` (not executed here).
 
 ---
@@ -206,7 +206,30 @@ disposed the same open succeeds. D-07's original abrupt-termination semantics ar
 
 ---
 
-## 9. Remaining work and next commission
+## 9. Sealed-evidence preservation and one recorded breach
+
+**Requirement.** Earlier sealed evidence must not be modified; additional evidence must go into a
+separately identified extension.
+
+**What happened (recorded, not hidden).** While preparing probe I I edited the producer-prepared
+probe harness **inside** the earlier sealed package
+`docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-evidence/probe/`. That package's own manifest detects
+it: two of its seventeen entries (`probe/probe-receipt.txt` and `probe/Program.cs`) no longer matched
+their recorded SHA-256 hashes. The manifest itself was never touched, so the mismatch was visible
+rather than masked.
+
+**Restoration.** Both files were restored from the sealed commit and the original package now verifies
+**17 entries, 0 mismatches, manifest_sha256 `fcab38f1…` unchanged**. The extended A–I harness now
+lives in the extension package under `probes/`, and the original package is byte-identical to what it
+was when sealed.
+
+**Net effect.** The historical sealed evidence is intact; nothing previously recorded was re-attributed,
+reinterpreted or rewritten. The breach is disclosed here so the independent reviewer can verify the
+restoration itself (`verify` of the original manifest) rather than take it on trust.
+
+---
+
+## 10. Remaining work and next commission
 
 **None for this commission.** All mandatory gates are satisfied and the disposition is selected in §1.
 
