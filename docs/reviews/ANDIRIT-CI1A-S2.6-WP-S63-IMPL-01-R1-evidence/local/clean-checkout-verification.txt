@@ -1,0 +1,71 @@
+Clean-checkout verification (mandatory check 1)
+Commission: ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1 · Date: 2026-11-25
+Revision:    d3c9359d1abd8c89a7214e37f074802e5d2fa238
+
+Method: `git worktree add --detach` created an isolated, fresh checkout of the
+revision (5063 files), removed after the run. The main checkout was not used for
+this verification.
+
+Notation: TEST-PROJ = the LatticeDb test project directory under `tests/`;
+WORKER-PROJ = the standalone worker project directory; WORKER-DLL = the worker
+assembly name `Andirit.LatticeDb.Tests.Worker.dll`.
+
+================================================================================
+1. NO RESIDUAL BUILD ARTIFACTS IN THE CLEAN CHECKOUT
+================================================================================
+
+TEST-PROJ/bin       present = False
+TEST-PROJ/obj       present = False
+WORKER-PROJ/bin     present = False
+WORKER-PROJ/obj     present = False
+
+================================================================================
+2. EXACT PER-PROJECT CI COMMAND, WITHOUT A PRIOR WHOLE-SOLUTION BUILD
+================================================================================
+
+Command executed (the LatticeDb step of ci.yml, verbatim except the output path):
+
+  dotnet test <TEST-PROJ csproj> -c Release
+      /p:CollectCoverage=true
+      /p:CoverletOutput=<worktree>/cov/
+      /p:CoverletOutputFormat=cobertura
+      '/p:Include=[Andirit.LatticeDb]*'
+      /p:Threshold=70
+      /p:ThresholdType=line%2cbranch
+
+Result: Passed! - Failed: 0, Passed: 115, Skipped: 0, Total: 115. Exit code 0.
+No `dotnet build Andirit.slnx` was performed first in this worktree.
+
+================================================================================
+3. THE WORKER IS BUILT AND CORRECTLY LOCATED THROUGH THE NEW PROJECT DEPENDENCY
+================================================================================
+
+Built by the per-project build:
+  <worktree>/WORKER-PROJ/bin/Release/net10.0/WORKER-DLL
+
+Copied into the test project output (what the locator finds first):
+  <worktree>/TEST-PROJ/bin/Release/net10.0/WORKER-DLL
+
+This is the fix for the first hosted failure: the per-project `dotnet test` now
+builds the worker because the test project references it, and the copied assembly
+is what `LocateWorkerAssembly()` finds first.
+
+================================================================================
+4. NO RELIANCE ON RESIDUAL ARTIFACTS
+================================================================================
+
+After steps 2-3 the worker project's own `bin` directory was DELETED in the clean
+worktree (confirmed: still present = False) and the two multi-process cases were
+re-run with `--no-build`:
+
+  --filter "NativePublicationCorrectnessTests.P15|NativeDurabilityTests.ConcurrentMultiProcessAccess"
+  Result: Passed! - Failed: 0, Passed: 2, Skipped: 0, Total: 2. Exit code 0.
+
+The multi-process cases therefore resolve the worker from the assembly copied into
+the test project output, not from a stale whole-solution build.
+
+================================================================================
+5. FULL SUITE IN THE CLEAN CHECKOUT
+================================================================================
+
+Passed! - Failed: 0, Passed: 115, Skipped: 0, Total: 115. Exit code 0.

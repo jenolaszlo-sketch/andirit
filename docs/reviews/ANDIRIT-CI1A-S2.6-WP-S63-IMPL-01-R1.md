@@ -12,12 +12,14 @@ nothing and rewrites nothing; it records the integration and the two defects the
 
 ## 1. Formal disposition
 
-**`IMPLEMENTED — QUALIFICATION-READY, PENDING GREEN HOSTED EVIDENCE`**
+**`A — IMPLEMENTED AND READY FOR INDEPENDENT QUALIFICATION`**
 
-To be replaced by **A — IMPLEMENTED AND READY FOR INDEPENDENT QUALIFICATION** only after the remediated
-revision produces a successful hosted CI run bound to that exact revision and its evidence is sealed in
-the extension package. If the hosted run cannot be produced the disposition becomes **B**; if
-integration or publication cannot safely proceed, **C**.
+Every mandatory implementation and evidence gate is satisfied. The success is bound to the remediated
+revision `d3c9359d1abd8c89a7214e37f074802e5d2fa238` (not merely to a generic green status), and the
+hosted evidence — runner identity, per-project counts, coverage and the multi-process execution
+chain — is sealed in the extension package `docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/`
+(self-excluding SHA-256 manifest, `manifest_sha256` `aa415b7a…`, 7 entries, 0 mismatches). Next
+commission: `ANDIRIT-CI1A-S2.6-WP-S63-QUAL-01` (not executed here).
 
 ---
 
@@ -184,15 +186,36 @@ disposed the same open succeeds. D-07's original abrupt-termination semantics ar
 
 ---
 
-## 8. Remaining work and next commission
+## 8. Hosted evidence closure (all mandatory gates)
 
-1. Publish the remediated revision (fast-forward) with the approved identity.
-2. Obtain a **successful hosted CI run bound to that exact revision** and seal its evidence in the
-   separately identified extension package `…-IMPL-01-R1-evidence/`.
-3. Hand off to `ANDIRIT-CI1A-S2.6-WP-S63-QUAL-01` (independent qualification; G-5 and G-6 not granted here).
+| Gate | Evidence |
+| --- | --- |
+| Hosted run bound to the remediated revision | **[45639342986](https://github.com/jenolaszlo-sketch/andirit/actions/runs/45639342986)**, `push` on `main`, `headSha = d3c9359d1abd8c89a7214e37f074802e5d2fa238`, conclusion **success** |
+| Jobs | `test (ubuntu-latest)` **success** (job 139293320941), `test (windows-latest)` **success**, `test (macos-latest)` **success**, `pack` **success** |
+| Runner identity (genuine hosted Linux x64) | GitHub **Hosted Compute Agent** (not self-hosted), Azure / centralus, runner 2.338.2, **Ubuntu 26.04.1 LTS**, workspace `/home/runner/work/andirit/andirit`, shell `/usr/bin/bash`, `DOTNET_ROOT=/usr/share/dotnet`, SDK 10.0.404, runtime 10.0.15 — zero Windows/WSL/Docker indicators |
+| Hosted `dotnet format --verify-no-changes` | passed |
+| Hosted counts | Core 345, CSharp 372, TreeSitter 157 — all 0 failed / 0 skipped |
+| Hosted LatticeDb | **115 passed / 0 failed / 0 skipped** |
+| Hosted LatticeDb coverage | **92.87 % line / 78.96 % branch** (900/969 lines, 368/466 branches), identical to Windows; threshold 70 met (artifact retained) |
+| Multi-process cases on hosted Ubuntu | executed — the CI step reports 0 skipped; the committed suite contains no `[Fact(Skip)]` and no early-return guard; the Ubuntu coverage is identical to Windows, which is only possible if the same case set ran |
+| D-05 / P-15 / D-07 on Windows | executed; D-07 5/5 consecutive passes; clean-checkout per-project run exit 0 |
+| Historical failure run | [45513525415](https://github.com/jenolaszlo-sketch/andirit/actions/runs/45513525415) preserved verbatim as historical failure evidence |
+| Publication | fast-forward `ed216e8..d3c9359`, no force; the evidence-only commit carrying the extension package is recorded in `commit-mapping.md` |
+| Attribution | `jenol <jenolaszlo-sketch@users.noreply.github.com>` for author and committer on every published commit in `4ef34b5..d3c9359`; no co-author trailers, no AI/agent identities |
+| Evidence extension | `…-IMPL-01-R1-evidence/` sealed, self-excluding SHA-256 manifest verified byte-exact (7 entries) |
 
 ---
 
-**Recorded**: 2026-11-25
+## 9. Remaining work and next commission
+
+**None for this commission.** All mandatory gates are satisfied and the disposition is selected in §1.
+
+Hand off to **`ANDIRIT-CI1A-S2.6-WP-S63-QUAL-01`** — independent qualification (gates G-1…G-5).
+G-5 and G-6 are **not** granted here, and no independent qualification or owner acceptance was
+performed by this producer commission.
+
+---
+
+**Recorded**: 2026-11-25 (completed; hosted evidence collected same day)
 **Canonical branch**: `main`
-**Push**: not yet performed for this remediation cycle
+**Tested and published remediation revision**: `d3c9359d1abd8c89a7214e37f074802e5d2fa238`

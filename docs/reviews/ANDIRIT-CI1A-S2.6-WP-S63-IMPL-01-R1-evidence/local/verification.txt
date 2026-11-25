@@ -1,0 +1,40 @@
+Local verification of the remediated implementation revision
+Commission: ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1 · Date: 2026-11-25
+Revision:    d3c9359d1abd8c89a7214e37f074802e5d2fa238
+
+================================================================================
+GATES
+================================================================================
+
+dotnet format Andirit.slnx --verify-no-changes --no-restore         exit 0
+dotnet build Andirit.slnx -c Release                                 0 warnings / 0 errors
+Full solution regression (Release)                                   989 passed / 0 failed / 0 skipped
+   TreeSitter 157 · LatticeDb 115 · Core 345 · CSharp 372
+CI-equivalent per-project LatticeDb run (Threshold=70 line,branch)   115 passed / 0 failed / 0 skipped, exit 0
+   dotnet test <lattice test project> -c Release /p:CollectCoverage=true ...
+LatticeDb module coverage                                            92.87% line / 78.96% branch (threshold 70)
+Reviewer probes A-I (3 repetitions each)                             27/27 PASS, exit 0
+Production delta vs integrated parent (origin/main)                  EMPTY (git diff --name-only ... -- src/)
+Production delta vs original implementation baseline (1cbce3b)       EMPTY
+LatticeDbSharp pin                                                   0.2.0 unchanged
+Original sealed evidence (…-IMPL-01-evidence/)                      17 entries, 0 mismatches,
+                                                                     manifest_sha256 fcab38f1... unchanged
+
+================================================================================
+DIFFERENCE FROM THE PRE-REMEDIATION RESULT (explained, as required)
+================================================================================
+
+LatticeDb 114 -> 115 and the solution total 988 -> 989. The only addition is the
+complementary deterministic `-16`-filter test described in F-S63-02 (one test).
+Nothing was removed, weakened, renamed or re-baselined; every previously executed
+case still executes under the same identifier with the same invariants.
+
+================================================================================
+D-07 REPETITION EVIDENCE
+================================================================================
+
+D-07 executed 5 consecutive times on the remediated revision: 5/5 passed
+(544 ms, 587 ms, 586 ms, 550 ms, 546 ms). This is not a single lucky execution.
+Explicit qualification: the retry path itself was NOT exercised during those
+successful repetitions (the lock was already released on the first attempt each
+time) — recorded as the qualification attached to F-S63-02.

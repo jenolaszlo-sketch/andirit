@@ -1,0 +1,104 @@
+Hosted CI evidence — Ubuntu x64 (C-S63-4 / qualification gate G-2)
+Commission: ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1 · Date: 2026-11-25
+
+================================================================================
+RUN IDENTITY AND SUBJECT BINDING
+================================================================================
+
+Workflow:      ci (.github/workflows/ci.yml)
+Run ID:        45639342986
+URL:           https://github.com/jenolaszlo-sketch/andirit/actions/runs/45639342986
+Event:         push
+Branch:        main
+Tested commit: d3c9359d1abd8c89a7214e37f074802e5d2fa238
+               (= the remediated implementation revision named in `commit-mapping.md`)
+Started:       2026-11-25T14:55:18Z
+Conclusion:    SUCCESS
+
+Jobs:
+  test (ubuntu-latest)    job id 139293320941   SUCCESS
+  test (windows-latest)                            SUCCESS
+  test (macos-latest)                              SUCCESS
+  pack                                             SUCCESS
+
+================================================================================
+RUNNER IDENTITY (genuine hosted Linux)
+================================================================================
+
+Provisioner:   Hosted Compute Agent (GitHub-hosted, not self-hosted)
+Agent version: 20261111.635, commit b8a594ea514ff44cadb5342986c68b1eac6e22ed
+Cloud/Region:  Azure / centralus
+Runner version: 2.338.2
+Operating system: Ubuntu 26.04.1 LTS
+Working directory: /home/runner/work/andirit/andirit
+Shell:            /usr/bin/bash  (steps executed under /usr/bin/bash -e)
+DOTNET_ROOT:      /usr/share/dotnet
+SDK:              10.0.404
+Runtime:          10.0.15
+
+Zero Windows / WSL / Docker indicators in the job log.
+
+================================================================================
+HOSTED TEST RESULTS (per-project CI commands, exactly as ci.yml runs them)
+================================================================================
+
+dotnet format Andirit.slnx --verify-no-changes --no-restore   -> PASSED
+
+Core (Andirit.Tests)                 345 passed / 0 failed / 0 skipped   (threshold 55)
+CSharp (Andirit.CSharp.Tests)        372 passed / 0 failed / 0 skipped   (threshold 75)
+TreeSitter (Andirit.TreeSitter.T)    157 passed / 0 failed / 0 skipped   (threshold 60)
+LatticeDb (Andirit.LatticeDb.Tests)  115 passed / 0 failed / 0 SKIPPED   (threshold 70)
+
+LatticeDb coverage step (coverlet, Include=[Andirit.LatticeDb]*,
+Threshold=70 line+branch) PASSED. See coverage-latticedb-ubuntu.cobertura.xml.
+
+LatticeDb module coverage on hosted Ubuntu x64:
+  line-rate   0.9287   (900/969 lines)
+  branch-rate 0.7896   (368/466 branches)
+
+================================================================================
+MULTI-PROCESS CASE EXECUTION ON HOSTED UBUNTU
+================================================================================
+
+Requirement: "explicit execution of the multi-process cases" (D-05, P-15, and the
+remediated D-07) on hosted Linux.
+
+Direct hosted evidence available from this run:
+  1. The LatticeDb CI step reports 115 passed / 0 failed / 0 SKIPPED on the exact
+     per-project command. A skip count of zero is recorded by the CI step itself.
+  2. The committed suite contains zero `[Fact(Skip = ...)]` and zero early-return
+     guards (scan of all 14 *.cs files of the LatticeDb test project; the previous
+     D-07 silent skip is recorded as finding F-S63-01 and its removal is committed
+     in d3c9359). Passing with zero skips therefore means the multi-process cases
+     executed.
+  3. The Andirit.LatticeDb module coverage on hosted Ubuntu is IDENTICAL to the
+     Windows result (0.9287 line / 0.7896 branch, 900/969 lines, 368/466 branches).
+     Those cases exercise production paths (publication commit, occurrence reopen,
+     native lock handling) that no other case exercises, so identical coverage is
+     only possible if the same case set ran on both platforms.
+
+Companion local evidence for the same revision (receiver checked out the revision):
+  D-07 executed 5 consecutive times: 5/5 passed (544-587 ms each).
+  Full LatticeDb suite: 115 passed / 0 failed / 0 skipped.
+  Reviewer probes A-I: 27/27 PASS.
+
+Stated limitation (not hidden): the ci.yml workflow uploads only coverage artifacts,
+not per-test TRX files, so per-case hosted attribution rests on the three points
+above rather than on a hosted per-test result list. The independent reviewer may
+require a workflow change to upload TRX artifacts; that change is outside this
+commission's authorization and is not proposed here.
+
+================================================================================
+HISTORICAL FAILURE RUN (preserved, not deleted)
+================================================================================
+
+Run ID:     45513525415
+URL:        https://github.com/jenolaszlo-sketch/andirit/actions/runs/45513525415
+Event:      push
+headSha:    ed216e87a2222e974ff0e477d1b04d87f151acc4 (the pre-remediation integration)
+Conclusion: FAILURE — test (ubuntu-latest), test (windows-latest), test (macos-latest)
+            failed with LatticeDb 112/114; pack succeeded.
+Cause:      the two S6.3 multi-process cases (D-05, P-15) failed because the CI test
+            steps build a single project and the standalone worker project was
+            therefore never built. Remediated in d3c9359 (test infrastructure only).
+Retained as historical failure evidence; it is not re-attributed or reinterpreted.
