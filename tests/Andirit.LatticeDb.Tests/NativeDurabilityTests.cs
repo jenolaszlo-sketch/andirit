@@ -1,10 +1,12 @@
 using System.Diagnostics;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using Andirit;
 using Andirit.LatticeDb;
 using LatticeDbSharp;
+using Xunit.Abstractions;
 
 namespace Andirit.LatticeDb.Tests;
 
@@ -24,7 +26,7 @@ namespace Andirit.LatticeDb.Tests;
 /// access use isolated worker processes and assert invariants that hold for every
 /// arrival time (no partial writes, no outcome negation after verified commit).
 /// </summary>
-public sealed class NativeDurabilityTests
+public sealed class NativeDurabilityTests(ITestOutputHelper output)
 {
     private const string StageLabel = "HetuStage";
     private const string UnitLabel = "HetuUnit";
@@ -278,51 +280,71 @@ public sealed class NativeDurabilityTests
 
             // Phase 1: a separate process opens the database and holds the native file lock. A second
             // open from this process must fail (never queue) - the negative control for exclusivity.
-            var hold = StartWorker(worker,
+            using var hold = StartWorker(worker,
                 $"--db \"{path}\" --repo {holdRepo} --run run:durability-hold --unit unit:hold --node node:hold --mode hold --signal \"{signal}\"");
             try
             {
-                Assert.True(WaitForFile(signal + ".ready", TimeSpan.FromSeconds(30)),
-                    "The hold worker never reported READY.");
-                Assert.ThrowsAny<Exception>(() => new LatticeCodeGraphStore(path));
+                await WaitForWorkerReadyAsync(hold, signal);
+                Assert.Equal(NativeOpenDeadline.DatabaseOpenInAnotherProcess,
+                    Assert.Throws<LatticeException>(() => LatticeDatabase.Open(path, new() { Create = false })).NativeErrorCode);
             }
             finally
             {
-                File.WriteAllText(signal + ".go", "GO");
-                hold.WaitForExit(30_000);
+                try
+                {
+                    File.WriteAllText(signal + ".go", "GO");
+                    await hold.WaitForExitAsync().WaitAsync(TimeSpan.FromSeconds(30));
+                }
+                finally
+                {
+                    await StopWorkerAsync(hold);
+                }
             }
+            Assert.Equal(0, hold.ExitCode);
+            var holdReceipt = $"READY|{hold.Id}|{holdRepo}|run:durability-hold|unit:hold";
+            Assert.Contains(holdReceipt, await hold.StandardOutput.ReadToEndAsync(), StringComparison.Ordinal);
+            output.WriteLine(holdReceipt);
 
-            // Phase 2: an independent process publishes - it stages AND completes the run, so the
-            // publication actually commits (the F-QU-01 defect was a writer that only ever staged).
-            var publisher = StartWorker(worker,
+            var repository = new CodeRepositoryId(publishRepo);
+            var published = await RunWorkerAsync(worker,
                 $"--db \"{path}\" --repo {publishRepo} --run {publishRun} --unit unit:writer --node node:writer --mode publish-complete --target T1 --occurrences 2");
-            var publisherOutput = ReadToEnd(publisher);
-            publisher.WaitForExit(60_000);
-            Assert.True(publisher.ExitCode == 0,
-                $"The publish worker exited {publisher.ExitCode}: {publisherOutput}");
+            Assert.Contains($"PUBLISHED|{publishRun}|", published, StringComparison.Ordinal);
 
-            // Phase 3: recovery after lock contention - the store reopens cleanly and the committed
-            // publication is visible; the hold repository never completed, so it has no publication.
+            CodeOccurrenceQueryResult beforeCancellation;
             using (var reopened = new LatticeCodeGraphStore(path))
             {
                 Assert.True((await reopened.CheckHealthAsync()).IsHealthy);
-                var publication = await reopened.GetLatestPublicationAsync(new CodeRepositoryId(publishRepo));
-                Assert.NotNull(publication);
-                Assert.Equal(publishRun, publication!.IndexRunId.Value);
+                beforeCancellation = await ReadWorkerOccurrences(reopened, repository);
+                Assert.Equal(publishRun, beforeCancellation.Publication!.IndexRunId.Value);
+                Assert.Equal(["src/Worker0.cs", "src/Worker1.cs"], OccurrencePaths(beforeCancellation));
                 Assert.Null(await reopened.GetLatestPublicationAsync(new CodeRepositoryId(holdRepo)));
             }
 
-            // Native durable state: the publisher's staged row was consumed by its completion, and the
-            // only remaining staged row belongs to the never-completed hold run (invisible to queries).
-            Assert.Single(NativePayloads(path, StageLabel));
-            Assert.Contains("unit:hold", NativePayloads(path, StageLabel)[0], StringComparison.Ordinal);
-            Assert.Single(NativePayloads(path, UnitLabel));
-            Assert.Contains("node:writer", NativePayloads(path, UnitLabel)[0], StringComparison.Ordinal);
+            var stageBefore = Assert.Single(NativePayloads(path, StageLabel));
+            Assert.Contains("unit:hold", stageBefore, StringComparison.Ordinal);
+            var unitBefore = Assert.Single(NativePayloads(path, UnitLabel));
+            Assert.Contains("node:writer", unitBefore, StringComparison.Ordinal);
+
+            var readArguments = $"--db \"{path}\" --repo {publishRepo} --run {publishRun}";
+            var index = beforeCancellation.Publication.IndexIdentity.Value;
+            AssertWorkerObservation(await RunWorkerAsync(worker, readArguments + " --mode read-publication"),
+                "READ", publishRun, index);
+            AssertWorkerObservation(await RunWorkerAsync(worker,
+                readArguments + " --mode cancel-after-complete --unit unit:cancelled --node node:cancelled"),
+                "CANCELLED", publishRun, index);
+            AssertWorkerObservation(await RunWorkerAsync(worker, readArguments + " --mode read-publication"),
+                "READ", publishRun, index);
+
+            var stageAfter = NativePayloads(path, StageLabel);
+            var unitAfter = NativePayloads(path, UnitLabel);
+            using var after = new LatticeCodeGraphStore(path);
+            AssertCancellationPreserved(beforeCancellation, await ReadWorkerOccurrences(after, repository),
+                stageBefore, stageAfter, unitBefore, unitAfter);
         }
         finally
         {
             DeleteDatabase(path);
-            foreach (var signalFile in new[] { signal, signal + ".ready", signal + ".go" })
+            foreach (var signalFile in new[] { signal, signal + ".ready", signal + ".ready.tmp", signal + ".go" })
             {
                 try
                 {
@@ -334,7 +356,9 @@ public sealed class NativeDurabilityTests
                 }
             }
         }
-    }    // ------------------------------------------------------------------ D-06
+    }
+
+    // ------------------------------------------------------------------ D-06
 
     [Fact]
     public async Task ReopenAfterCrash_PreservesAcceptedPublication()
@@ -397,171 +421,235 @@ public sealed class NativeDurabilityTests
     [Fact]
     public async Task AbruptProcessTermination_DurableStateConsistent()
     {
-        // Genuine abrupt termination: an OS-level process termination while the store is open.
-        // The test spawns an independent worker process that holds the store and kills it. There is
-        // no silent skip: if the worker assembly cannot be located the test fails loudly.
         var path = TemporaryDatabasePath();
         var signal = path + ".d07signal";
+        var repository = new CodeRepositoryId("repo:d07");
+        var heldRepository = new CodeRepositoryId("repo:d07-held");
+        const string baselineRun = "run:d07-baseline";
+        const string heldRun = "run:d07-held";
+        const string republishedRun = "run:d07-after-recovery";
+        const string heldUnit = "unit:abrupt";
         try
         {
-            // First, establish a baseline publication
+            var workerAssembly = LocateWorkerAssembly();
+            await RunWorkerAsync(workerAssembly,
+                $"--db \"{path}\" --repo {repository.Value} --run {baselineRun} --unit unit:baseline --node node:baseline --mode publish-complete --occurrences 1");
+            CodeOccurrenceQueryResult before;
             using (var store = new LatticeCodeGraphStore(path))
             {
-                var (repository, run, _, started) = Seed(store);
-                await store.StageIndexUnitAsync(Unit(repository, run, "unit:baseline", "node:baseline"));
-                await store.CompleteIndexRunAsync(
-                    new(repository, run, started, CodeIndexRunStatus.Completed, started.AddSeconds(1), new[] { Plugin }),
-                    new(repository, run, new[] { new CodeSourceManifest(Plugin, "1.0.0", "src/Baseline.cs", "sha256:baseline") }));
+                before = await ReadWorkerOccurrences(store, repository);
+                Assert.Equal(baselineRun, before.Publication!.IndexRunId.Value);
+                Assert.Equal(["src/Worker0.cs"], OccurrencePaths(before));
+                Assert.Null(await store.GetLatestPublicationAsync(heldRepository));
             }
 
-            // Spawn an independent worker that opens the database, seeds a run, stages a unit and
-            // then holds the store open (waiting on the signal file) so it can be killed mid-window.
-            var worker = StartWorker(LocateWorkerAssembly(),
-                $"--db \"{path}\" --repo repo:durability --run run:durability --unit unit:abrupt --node node:abrupt --mode hold --signal \"{signal}\"");
-            Assert.True(WaitForFile(signal + ".ready", TimeSpan.FromSeconds(30)),
-                "The abrupt-termination worker never reported READY.");
-            Assert.False(worker.HasExited, "The worker exited before it could be terminated.");
+            Assert.Empty(NativePayloads(path, StageLabel));
+            var baselineUnit = Assert.Single(NativePayloads(path, UnitLabel));
+            Assert.Contains("node:baseline", baselineUnit, StringComparison.Ordinal);
+            using (var worker = StartWorker(workerAssembly,
+                $"--db \"{path}\" --repo {heldRepository.Value} --run {heldRun} --unit {heldUnit} --node node:abrupt --mode hold --signal \"{signal}\""))
+            {
+                try
+                {
+                    await WaitForWorkerReadyAsync(worker, signal);
+                    Assert.NotEqual(Environment.ProcessId, worker.Id);
+                    Assert.Equal(NativeOpenDeadline.DatabaseOpenInAnotherProcess,
+                        Assert.Throws<LatticeException>(() => LatticeDatabase.Open(path, new() { Create = false })).NativeErrorCode);
+                    worker.Kill(entireProcessTree: true);
+                    await worker.WaitForExitAsync().WaitAsync(TimeSpan.FromSeconds(30));
+                    Assert.NotEqual(0, worker.ExitCode);
+                    var receipt = $"READY|{worker.Id}|{heldRepository.Value}|{heldRun}|{heldUnit}";
+                    Assert.Contains(receipt, await worker.StandardOutput.ReadToEndAsync(), StringComparison.Ordinal);
+                    output.WriteLine($"{receipt} KILLED exit={worker.ExitCode}");
+                }
+                finally
+                {
+                    await StopWorkerAsync(worker);
+                }
+            }
 
-            // OS-level termination of the process tree while the store is open.
-            worker.Kill(true);
-            await worker.WaitForExitAsync();
+            var staged = NativePayloadsAfterTermination(path, StageLabel, TimeSpan.FromSeconds(30));
+            Assert.Equal(baselineUnit, Assert.Single(NativePayloads(path, UnitLabel)));
+            using (var reopened = new LatticeCodeGraphStore(path))
+            {
+                Assert.True((await reopened.CheckHealthAsync()).IsHealthy);
+                AssertRecoveredPublication(before, await ReadWorkerOccurrences(reopened, repository),
+                    staged, await reopened.GetLatestPublicationAsync(heldRepository),
+                    heldRepository.Value, heldRun, heldUnit);
+                Assert.Empty((await reopened.FindOccurrencesAsync(new(
+                    heldRepository, NativePublicationCorrectnessTests.ComputeTarget(heldRepository.Value, "T1")))).Occurrences);
+            }
 
-            // Native durable state is read with no LatticeCodeGraphStore open, so the assertion is
-            // made against the native tables rather than a projection. The OS releases the file lock
-            // without ordering guarantees, so the raw native open is retried within a bounded deadline.
-            var stagedAfter = NativePayloadsAfterTermination(path, StageLabel, TimeSpan.FromSeconds(30));
-            // No partial staged units: the baseline publication and at most one staged row.
-            Assert.True(stagedAfter.Count == 0 || stagedAfter.Count == 1);
-
-            // The store opens cleanly after the abrupt termination; the lock is already released
-            // because the native read above succeeded.
-            using var reopened = new LatticeCodeGraphStore(path);
-            Assert.True((await reopened.CheckHealthAsync()).IsHealthy);
+            await RunWorkerAsync(workerAssembly,
+                $"--db \"{path}\" --repo {repository.Value} --run {republishedRun} --unit unit:baseline --node node:republication --mode publish-complete --occurrences 2");
+            using var final = new LatticeCodeGraphStore(path);
+            var republished = await ReadWorkerOccurrences(final, repository);
+            Assert.Equal(republishedRun, republished.Publication!.IndexRunId.Value);
+            Assert.NotEqual(before.Publication!.IndexIdentity, republished.Publication.IndexIdentity);
+            Assert.Equal(["src/Worker0.cs", "src/Worker1.cs"], OccurrencePaths(republished));
+            var stale = await final.FindOccurrencesAsync(new(repository,
+                NativePublicationCorrectnessTests.ComputeTarget(repository.Value, "T1"), before.Publication));
+            Assert.Equal(CodeOccurrenceAvailability.StalePublication, stale.Availability);
+            Assert.Empty(stale.Occurrences);
+            Assert.Null(await final.GetLatestPublicationAsync(heldRepository));
         }
         finally
         {
             DeleteDatabase(path);
-            foreach (var signalFile in new[] { signal, signal + ".ready", signal + ".go" })
-            {
-                try
-                {
-                    if (File.Exists(signalFile))
-                        File.Delete(signalFile);
-                }
-                catch
-                {
-                }
-            }
+            foreach (var suffix in new[] { ".ready", ".ready.tmp", ".go" })
+                File.Delete(signal + suffix);
         }
     }
 
-    /// <summary>
-    /// Opens the store after another process holding the native file lock has been terminated. The OS
-    /// releases the lock without ordering guarantees, so the open is retried within a bounded deadline
-    /// rather than assumed to be immediate. Only the specific native "database is open in another
-    /// process" condition is retried; every other failure propagates unchanged so that a real defect
-    /// can never be hidden behind the retry.
-    /// </summary>
-    private static LatticeCodeGraphStore OpenAfterProcessTermination(string path, TimeSpan timeout)
+    [Fact]
+    public async Task D07_ExitBeforeReadyFailsPromptly()
     {
-        var deadline = DateTimeOffset.UtcNow + timeout;
-        Exception? last = null;
-        while (true)
+        var path = TemporaryDatabasePath();
+        using var worker = StartWorker(LocateWorkerAssembly(), $"--db \"{path}\" --mode exit-before-ready");
+        try
         {
-            try
-            {
-                return new LatticeCodeGraphStore(path);
-            }
-            catch (CodeGraphStoreException exception) when (IsDatabaseStillOpenElsewhere(exception))
-            {
-                last = exception;
-                if (DateTimeOffset.UtcNow >= deadline)
-                    throw new TimeoutException(
-                        "The store did not become openable within the deadline after process termination.",
-                        last);
-                Thread.Sleep(100);
-            }
+            var error = await Assert.ThrowsAsync<InvalidOperationException>(() =>
+                WaitForWorkerReadyAsync(worker, path + ".signal"));
+            Assert.Contains("before READY", error.Message, StringComparison.Ordinal);
+            Assert.Equal(19, worker.ExitCode);
+        }
+        finally
+        {
+            await StopWorkerAsync(worker);
         }
     }
 
-    /// <summary>
-    /// Reads the native rows for a label after another process holding the native file lock has been
-    /// terminated, retrying the raw native open within a bounded deadline because the OS releases the
-    /// lock without ordering guarantees. Only the "database is open in another process" condition is
-    /// retried; any other native failure propagates immediately.
-    /// </summary>
+    [Theory]
+    [InlineData("missing-stage")]
+    [InlineData("wrong-stage")]
+    [InlineData("wrong-publication")]
+    [InlineData("missing-accepted-fact")]
+    [InlineData("abrupt-publication")]
+    public void D07_RecoveryOracleRejectsInvalidObservation(string fault)
+    {
+        var before = ControlSnapshot();
+        var after = fault switch
+        {
+            "wrong-publication" => before with { Publication = null },
+            "missing-accepted-fact" => before with { Occurrences = [] },
+            _ => before,
+        };
+        IReadOnlyList<string> staged = fault switch
+        {
+            "missing-stage" => [],
+            "wrong-stage" => ["repo:held run:held unit:unrelated node:abrupt"],
+            _ => ["repo:held run:held unit:held node:abrupt"],
+        };
+        var abrupt = fault == "abrupt-publication" ? before.Publication : null;
+        Assert.ThrowsAny<Xunit.Sdk.XunitException>(() =>
+            AssertRecoveredPublication(before, after, staged, abrupt, "repo:held", "run:held", "unit:held"));
+    }
+
+    [Fact]
+    public void D05_CancellationOracleRejectsLeakedStageAndLostPublication()
+    {
+        var before = ControlSnapshot();
+        Assert.ThrowsAny<Xunit.Sdk.XunitException>(() =>
+            AssertCancellationPreserved(before, before, "original-stage",
+                ["original-stage", "unit:cancelled"], "original-unit", ["original-unit"]));
+        Assert.ThrowsAny<Xunit.Sdk.XunitException>(() =>
+            AssertCancellationPreserved(before, before with { Publication = null }, "original-stage",
+                ["original-stage"], "original-unit", ["original-unit"]));
+    }
+
+    private static CodeOccurrenceQueryResult ControlSnapshot()
+    {
+        var repo = new CodeRepositoryId("repo:control");
+        var run = new CodeIndexRunId("run:control");
+        var state = new CodeRepositoryIndexState(repo, run, []);
+        var target = NativePublicationCorrectnessTests.ComputeTarget(repo.Value, "T1");
+        var location = new CodeLocation("src/Control.cs", 1, 1, 1, 4);
+        var hit = new CodeOccurrenceHit(new(new string('0', 64)), target,
+            CodeOccurrenceCategory.Invocation, location, "unit:control", [], 1);
+        return new(CodeOccurrenceAvailability.Available,
+            new(repo, run, state.SnapshotIdentity, state.IsConsistentSnapshot, state.IndexIdentity),
+            [hit], 1, 1, null);
+    }
+
+    private static async Task<CodeOccurrenceQueryResult> ReadWorkerOccurrences(
+        LatticeCodeGraphStore store, CodeRepositoryId repository)
+    {
+        var result = await store.FindOccurrencesAsync(new(
+            repository, NativePublicationCorrectnessTests.ComputeTarget(repository.Value, "T1")));
+        Assert.Equal(await store.GetLatestPublicationAsync(repository), result.Publication);
+        Assert.NotNull(result.Publication);
+        Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
+        return result;
+    }
+
+    private static string[] OccurrencePaths(CodeOccurrenceQueryResult result) =>
+        result.Occurrences.Select(hit => hit.Span.Path).ToArray();
+
+    private static void AssertSameAcceptedSnapshot(CodeOccurrenceQueryResult before, CodeOccurrenceQueryResult after)
+    {
+        Assert.Equal(before.Publication, after.Publication);
+        Assert.Equal(before.Availability, after.Availability);
+        Assert.Equivalent(before.Coverage, after.Coverage, strict: true);
+        Assert.Equal(before.TotalMatches, after.TotalMatches);
+        Assert.Equal(before.Occurrences.Select(hit => (hit.Id, hit.Span)), after.Occurrences.Select(hit => (hit.Id, hit.Span)));
+    }
+
+    private static void AssertRecoveredPublication(
+        CodeOccurrenceQueryResult before, CodeOccurrenceQueryResult after, IReadOnlyList<string> staged,
+        CodeGraphPublication? abruptPublication, string repository, string run, string unit)
+    {
+        AssertSameAcceptedSnapshot(before, after);
+        Assert.Null(abruptPublication);
+        var row = Assert.Single(staged);
+        Assert.Contains(repository, row, StringComparison.Ordinal);
+        Assert.Contains(run, row, StringComparison.Ordinal);
+        Assert.Contains(unit, row, StringComparison.Ordinal);
+        Assert.Contains("node:abrupt", row, StringComparison.Ordinal);
+    }
+
+    private static void AssertCancellationPreserved(
+        CodeOccurrenceQueryResult before, CodeOccurrenceQueryResult after,
+        string beforeStage, IReadOnlyList<string> afterStages, string beforeUnit, IReadOnlyList<string> afterUnits)
+    {
+        AssertSameAcceptedSnapshot(before, after);
+        Assert.Equal(beforeStage, Assert.Single(afterStages));
+        Assert.Equal(beforeUnit, Assert.Single(afterUnits));
+    }
+
     private static IReadOnlyList<string> NativePayloadsAfterTermination(string path, string label, TimeSpan timeout)
     {
-        var deadline = DateTimeOffset.UtcNow + timeout;
-        while (true)
-        {
-            try
-            {
-                return NativePayloads(path, label);
-            }
-            catch (LatticeException exception) when (IsDatabaseStillOpenElsewhere(exception))
-            {
-                if (DateTimeOffset.UtcNow >= deadline)
-                    throw new TimeoutException(
-                        $"The native database did not become readable within the deadline after process termination: {exception.Message}",
-                        exception);
-                Thread.Sleep(100);
-            }
-        }
+        using var database = NativeOpenDeadline.Open(
+            () => LatticeDatabase.Open(path, new() { Create = false }), timeout, TimeProvider.System, Thread.Sleep);
+        return NativePayloads(database, label);
     }
 
-    /// <summary>
-    /// The pinned LatticeDB native condition "database is open in another process", observed as
-    /// <c>LatticeDB operation 'database/open' failed with -16</c> after an OS-level process
-    /// termination while the file lock was held. Only this condition is a legitimate retry target.
-    /// </summary>
-    private const int NativeDatabaseOpenInAnotherProcess = -16;
-
-    // Complementary deterministic verification for F-S63-02, added without altering D-07's original
-    // abrupt-termination semantics: it establishes in-process (no OS timing) that the native
-    // "database is open in another process" condition is exactly the condition the D-07 retry filter
-    // selects, and that the same open succeeds once the first writer releases the file.
     [Fact]
     public async Task NativeOpenWhileAnotherStoreHoldsTheFile_FailsWithTheFilteredNativeCondition()
     {
         var path = TemporaryDatabasePath();
         try
         {
-            using var first = new LatticeCodeGraphStore(path);
-            var blocked = Assert.Throws<LatticeException>(() =>
-                LatticeDatabase.Open(path, new LatticeDatabaseOptions { Create = false }));
-            Assert.Equal(
-                NativeDatabaseOpenInAnotherProcess,
-                blocked.NativeErrorCode);
-            Assert.True(
-                IsDatabaseStillOpenElsewhere(blocked),
-                "the observed condition is not the one the D-07 retry filter selects");
+            using (var first = new LatticeCodeGraphStore(path))
+            {
+                var (repository, run, _, _) = Seed(first);
+                await first.StageIndexUnitAsync(Unit(repository, run, "unit:lock-fixture", "node:lock-fixture"));
+                var blocked = Assert.Throws<LatticeException>(() =>
+                    LatticeDatabase.Open(path, new() { Create = false }));
+                Assert.Equal(NativeOpenDeadline.DatabaseOpenInAnotherProcess, blocked.NativeErrorCode);
+            }
+
+            using (var reopened = new LatticeCodeGraphStore(path))
+                Assert.True((await reopened.CheckHealthAsync()).IsHealthy);
+
+            var staged = Assert.Single(NativePayloadsAfterTermination(path, StageLabel, TimeSpan.FromSeconds(5)));
+            Assert.Contains("node:lock-fixture", staged, StringComparison.Ordinal);
         }
         finally
         {
             DeleteDatabase(path);
         }
 
-        // The same open succeeds once the holding store releases the file, which is the terminal state the
-        // D-07 bounded retry converges on. The store scope is closed before the raw native open so the
-        // file lock is actually free at that point.
-        using (var reopened = new LatticeCodeGraphStore(path))
-        {
-            Assert.True((await reopened.CheckHealthAsync()).IsHealthy);
-        }
-
-        using (var database = LatticeDatabase.Open(path, new LatticeDatabaseOptions { Create = false }))
-        {
-            Assert.NotNull(database);
-        }
     }
-
-    private static bool IsDatabaseStillOpenElsewhere(LatticeException exception) =>
-        exception.NativeErrorCode == NativeDatabaseOpenInAnotherProcess;
-
-    private static bool IsDatabaseStillOpenElsewhere(CodeGraphStoreException exception) =>
-        exception.InnerException is LatticeException inner &&
-        inner.NativeErrorCode == NativeDatabaseOpenInAnotherProcess;
 
     // ------------------------------------------------------------------ D-08
 
@@ -767,6 +855,11 @@ public sealed class NativeDurabilityTests
     private static IReadOnlyList<string> NativePayloads(string path, string label)
     {
         using var database = LatticeDatabase.Open(path, new LatticeDatabaseOptions { Create = false });
+        return NativePayloads(database, label);
+    }
+
+    private static IReadOnlyList<string> NativePayloads(LatticeDatabase database, string label)
+    {
         using var transaction = database.BeginReadTransaction();
         using var query = database.Prepare($"MATCH (s:{label}) RETURN s.payload");
         using var result = query.Execute(transaction);
@@ -814,7 +907,7 @@ public sealed class NativeDurabilityTests
     // Duplicated from NativePublicationCorrectnessTests for suite independence, consistent with the
     // other helpers in this file.
 
-    private static string LocateWorkerAssembly()
+    internal static string LocateWorkerAssembly()
     {
         // Preferred: the worker assembly copied into this project's output by the project reference,
         // which is what makes the multi-process cases work when only this project is built (the CI
@@ -848,7 +941,7 @@ public sealed class NativeDurabilityTests
             "The Andirit.LatticeDb.Tests.Worker assembly was not built; build the solution before running the multi-process cases.");
     }
 
-    private static Process StartWorker(string workerAssembly, string arguments) =>
+    internal static Process StartWorker(string workerAssembly, string arguments) =>
         Process.Start(new ProcessStartInfo
         {
             FileName = "dotnet",
@@ -859,22 +952,67 @@ public sealed class NativeDurabilityTests
             CreateNoWindow = true
         }) ?? throw new InvalidOperationException("The worker process could not be started.");
 
-    private static bool WaitForFile(string path, TimeSpan timeout)
+    internal static async Task WaitForWorkerReadyAsync(Process process, string signal)
     {
-        var deadline = DateTimeOffset.UtcNow + timeout;
-        while (DateTimeOffset.UtcNow < deadline)
+        var timer = Stopwatch.StartNew();
+        var path = signal + ".ready";
+        while (timer.Elapsed < TimeSpan.FromSeconds(30))
         {
-            if (File.Exists(path))
-                return true;
-            Thread.Sleep(25);
+            if (process.HasExited)
+                throw new InvalidOperationException(
+                    $"Worker {process.Id} exited before READY (exit {process.ExitCode}): {await process.StandardError.ReadToEndAsync()}");
+            if (File.Exists(path) && await File.ReadAllTextAsync(path) == "READY")
+            {
+                if (process.HasExited)
+                    throw new InvalidOperationException($"Worker {process.Id} exited before it could be observed live.");
+                return;
+            }
+            await Task.Delay(25);
         }
-        return false;
+        throw new TimeoutException($"Worker {process.Id} never reported READY.");
     }
 
-    private static string ReadToEnd(Process process)
+    private Task<string> RunWorkerAsync(string assembly, string arguments) =>
+        ExecuteWorkerAsync(assembly, arguments, output);
+
+    internal static async Task<string> ExecuteWorkerAsync(string assembly, string arguments, ITestOutputHelper output)
     {
-        var standardOut = process.StandardOutput.ReadToEnd();
-        var standardError = process.StandardError.ReadToEnd();
-        return standardOut + standardError;
+        using var process = StartWorker(assembly, arguments);
+        try
+        {
+            Assert.NotEqual(Environment.ProcessId, process.Id);
+            var stdout = process.StandardOutput.ReadToEndAsync();
+            var stderr = process.StandardError.ReadToEndAsync();
+            await process.WaitForExitAsync().WaitAsync(TimeSpan.FromSeconds(30));
+            var text = await stdout;
+            output.WriteLine($"worker pid={process.Id} exit={process.ExitCode} sha256={Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(assembly)))}\n{text.Trim()}");
+            Assert.True(process.ExitCode == 0, $"Worker {process.Id} exited {process.ExitCode}: {text}{await stderr}");
+            return text;
+        }
+        finally
+        {
+            await StopWorkerAsync(process);
+        }
+    }
+
+    internal static async Task StopWorkerAsync(Process process)
+    {
+        if (!process.HasExited)
+        {
+            try { process.Kill(entireProcessTree: true); }
+            catch (InvalidOperationException) when (process.HasExited) { }
+            await process.WaitForExitAsync().WaitAsync(TimeSpan.FromSeconds(30));
+        }
+    }
+
+    private static void AssertWorkerObservation(string output, string outcome, string run, string index)
+    {
+        var receipt = Assert.Single(output.Split('\n', StringSplitOptions.RemoveEmptyEntries),
+            line => line.StartsWith(outcome + "|", StringComparison.Ordinal)).TrimEnd('\r');
+        var fields = receipt.Split('|');
+        Assert.Equal(4, fields.Length);
+        Assert.True(int.TryParse(fields[1], out var pid) && pid > 0 && pid != Environment.ProcessId);
+        Assert.Equal(run, fields[2]);
+        Assert.Equal(index, fields[3]);
     }
 }

@@ -1,6 +1,6 @@
 // Worker process for Stage 6 native durability and publication-correctness tests.
 //
-// Two roles, selected by --mode:
+// Roles, selected by --mode:
 //
 //   hold            (D-07 / S6.2) Opens the store, seeds a repository/run, stages a
 //                   graph unit and then holds the native database open. The harness
@@ -18,6 +18,8 @@
 //                   staged and never completed, so no publication was ever visible.
 //                   On success it prints "PUBLISHED|<indexRunId>|<snapshotIdentity>"
 //                   and exits 0.
+//   read-publication and cancel-after-complete observe an accepted publication
+//                   in a fresh process, with an optional pre-cancelled staging request.
 //
 // Usage:
 //   Andirit.LatticeDb.Tests.Worker.exe --db <path> --unit <unitId> --node <nodeId> [--mode hold|publish-complete] [--signal <file>] [--target <name>] [--occurrences <n>]
@@ -48,6 +50,8 @@ internal static class Program
             return options.Mode switch
             {
                 "publish-complete" => await PublishCompleteAsync(options),
+                "read-publication" or "cancel-after-complete" => await ObservePublicationAsync(options),
+                "exit-before-ready" => 19,
                 _ => await HoldAsync(options),
             };
         }
@@ -124,8 +128,42 @@ internal static class Program
         }
 
         Console.WriteLine($"PUBLISHED|{publication.IndexRunId.Value}|{publication.SnapshotIdentity ?? "<null>"}");
+        Receipt("READ", publication);
         return 0;
     }
+
+    private static async Task<int> ObservePublicationAsync(WorkerOptions options)
+    {
+        using var store = new LatticeCodeGraphStore(options.DatabasePath!);
+        var repository = new CodeRepositoryId(options.RepositoryId);
+        var before = await store.GetLatestPublicationAsync(repository);
+        if (before is null || before.IndexRunId.Value != options.RunId)
+            throw new InvalidOperationException("The worker did not observe the expected accepted run.");
+
+        if (options.Mode == "cancel-after-complete")
+        {
+            using var cancellation = new CancellationTokenSource();
+            cancellation.Cancel();
+            try
+            {
+                await store.StageIndexUnitAsync(GraphUnit(options, repository, before.IndexRunId), cancellation.Token);
+                throw new InvalidOperationException("The pre-cancelled request returned successfully.");
+            }
+            catch (OperationCanceledException error) when (error.CancellationToken == cancellation.Token)
+            {
+                if (await store.GetLatestPublicationAsync(repository) != before)
+                    throw new InvalidOperationException("The cancelled request changed the accepted run.");
+                Receipt("CANCELLED", before);
+                return 0;
+            }
+        }
+
+        Receipt("READ", before);
+        return 0;
+    }
+
+    private static void Receipt(string outcome, CodeGraphPublication publication) =>
+        Console.WriteLine($"{outcome}|{Environment.ProcessId}|{publication.IndexRunId.Value}|{publication.IndexIdentity.Value}");
 
     private static async Task<int> HoldAsync(WorkerOptions options)
     {
@@ -139,31 +177,31 @@ internal static class Program
         await store.StoreIndexRunAsync(
             new CodeIndexRunManifest(repositoryId, runId, Started, plugins: new[] { Plugin }))
             .ConfigureAwait(false);
-        await store.StageIndexUnitAsync(
-            new CodeIndexUnitReplacement(
-                new CodeFactOrigin(repositoryId, Plugin, "1.0.0", runId, new CodeIndexUnitId(options.UnitId)),
-                new[]
-                {
-                    new CodeGraphNode(
-                        new CodeNodeId(options.NodeId),
-                        CodeNodeKinds.Type,
-                        "Worker",
-                        "Example.Worker",
-                        new CodeSymbolId($"symbol:{options.NodeId}"))
-                }))
-            .ConfigureAwait(false);
+        await store.StageIndexUnitAsync(GraphUnit(options, repositoryId, runId)).ConfigureAwait(false);
 
         if (options.SignalPath is not null)
+        {
+            Console.WriteLine($"READY|{Environment.ProcessId}|{options.RepositoryId}|{options.RunId}|{options.UnitId}");
             Signal(options.SignalPath);
+        }
         // The store is disposed (and the file lock released) only when this method
         // returns; the harness decides when to signal release or to kill the process.
         return 0;
     }
 
+    private static CodeIndexUnitReplacement GraphUnit(
+        WorkerOptions options, CodeRepositoryId repositoryId, CodeIndexRunId runId) =>
+        new(
+            new CodeFactOrigin(repositoryId, Plugin, "1.0.0", runId, new CodeIndexUnitId(options.UnitId)),
+            [new CodeGraphNode(
+                new CodeNodeId(options.NodeId), CodeNodeKinds.Type, "Worker", "Example.Worker",
+                new CodeSymbolId($"symbol:{options.NodeId}"))]);
+
     private static void Signal(string signalBase)
     {
         var ready = signalBase + ".ready";
-        File.WriteAllText(ready, "READY");
+        File.WriteAllText(ready + ".tmp", "READY");
+        File.Move(ready + ".tmp", ready);
         var go = signalBase + ".go";
         var deadline = DateTimeOffset.UtcNow.AddSeconds(60);
         while (!File.Exists(go))

@@ -1,10 +1,10 @@
-using System.Diagnostics;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using Andirit;
 using Andirit.LatticeDb;
 using LatticeDbSharp;
+using Xunit.Abstractions;
 
 namespace Andirit.LatticeDb.Tests
 {
@@ -27,7 +27,7 @@ namespace Andirit.LatticeDb.Tests
     /// the production fault-injector seam; genuine cases use real publication sequences or genuine
     /// multi-process workers and OS file-locking serialization.
     /// </summary>
-    public sealed class NativePublicationCorrectnessTests
+    public sealed class NativePublicationCorrectnessTests(ITestOutputHelper output)
     {
         private const string OccurrenceUnitLabel = "AndiritOccurrenceUnit";
         private const string OccurrencePageLabel = "AndiritOccurrencePage";
@@ -431,12 +431,18 @@ namespace Andirit.LatticeDb.Tests
             var repo = new CodeRepositoryId("repo:p08");
             var target = Target(repo, "T1");
             var arm = false;
+            var checkpointHits = 0;
+            var projectionField = typeof(LatticeCodeGraphStore).GetField("_inner", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.NotNull(projectionField);
             try
             {
                 using (var store = new LatticeCodeGraphStore(path, null, point =>
                 {
                     if (arm && point == "before-commit")
+                    {
+                        checkpointHits++;
                         throw new InjectedPersistenceException();
+                    }
                 }))
                 {
                     await PublishAsync(
@@ -455,12 +461,16 @@ namespace Andirit.LatticeDb.Tests
                     // by rebuilding the projection from durable authority (RebuildInnerFromDurableState).
                     // The rebuild must reproduce the same accepted published occurrence index.
                     await store.StoreIndexRunAsync(new(repo, new CodeIndexRunId("run:p08:stage"), Later, plugins: [Plugin]));
+                    var priorProjection = projectionField.GetValue(store);
+                    Assert.NotNull(priorProjection);
                     arm = true;
                     await Assert.ThrowsAsync<InjectedPersistenceException>(async () =>
                         await store.StageIndexUnitAsync(
                             Unit(repo, "run:p08:stage", "unit:p08:stage", [Node("node:p08:stage")],
                                 [Fact(repo, "unit:p08:stage", target, "src/Extra.cs", 1, 1)])));
 
+                    Assert.Equal(1, checkpointHits);
+                    Assert.NotSame(priorProjection, projectionField.GetValue(store));
                     var after = await store.FindOccurrencesAsync(new CodeOccurrenceQuery(repo, target));
                     Assert.Equal(Describe(before), Describe(after));
                     Assert.Equal(CodeOccurrenceAvailability.Available, after.Availability);
@@ -648,69 +658,97 @@ namespace Andirit.LatticeDb.Tests
             }
         }
 
-        // ------------------------------------------------------------------ P-12 (D4-10 / S-02-6, genuine)
-        // Query behaviour during a concurrent publication follows a snapshot contract: a reader sees
-        // either the pre-publication or post-publication snapshot atomically, never a partial one.
-        // Genuine, in-process: a real background reader races a real durable publication.
+        // ------------------------------------------------------------------ P-12 (D4-10 / S-02-6, in-process diagnostic)
         [Fact]
         public async Task P12_ConcurrentReaderDuringPublication_SeesAtomicSnapshot()
         {
             var path = TemporaryDatabasePath();
             var repo = new CodeRepositoryId("repo:p12");
             var target = Target(repo, "T1");
+            var initialRun = new CodeIndexRunId("run:p12:1");
+            var nextRun = new CodeIndexRunId("run:p12:2");
+            const string unit = "unit:p12";
+            var old = Fact(repo, unit, target, "src/Before.cs", 1, 1);
+            var first = Fact(repo, unit, target, "src/AfterA.cs", 8, 2);
+            var second = Fact(repo, unit, target, "src/AfterB.cs", 2, 4);
+            using var entered = new ManualResetEventSlim();
+            using var release = new ManualResetEventSlim();
+            var armed = false;
             try
             {
-                using var store = new LatticeCodeGraphStore(path);
-                await PublishAsync(
-                    store,
-                    repo,
-                    new CodeIndexRunId("run:p12:1"),
-                    Unit(repo, "run:p12:1", "unit:p12", [Node("node:p12")],
-                        [Fact(repo, "unit:p12", target, "src/Before.cs", 1, 1)]));
-
-                using var stop = new CancellationTokenSource(1500);
-                var observations = new List<CodeOccurrenceAvailability>();
-                var reader = Task.Run(async () =>
+                using var store = new LatticeCodeGraphStore(path, null, point =>
                 {
-                    while (!stop.IsCancellationRequested)
-                    {
-                        var result = await store.FindOccurrencesAsync(new CodeOccurrenceQuery(repo, target), stop.Token)
-                            .ConfigureAwait(false);
-                        lock (observations)
-                        {
-                            observations.Add(result.Availability);
-                        }
-                        // Every observed answer is one atomic snapshot: either the pre-publication
-                        // fact or the post-publication fact, never a mix and never partial.
-                        Assert.True(
-                            result.Occurrences.Count <= 2,
-                            "A concurrent reader observed a partial/mixed occurrence snapshot.");
-                    }
+                    if (!armed || point != "before-commit")
+                        return;
+                    entered.Set();
+                    if (!release.Wait(TimeSpan.FromSeconds(30)))
+                        throw new TimeoutException("P-12 did not release the before-commit checkpoint.");
                 });
+                await PublishAsync(store, repo, initialRun, Unit(repo, initialRun.Value, unit, [Node("node:p12")], [old]));
+                var before = await store.GetLatestPublicationAsync(repo);
+                Assert.NotNull(before);
+                Assert.Equal(initialRun, before.IndexRunId);
+                var query = new CodeOccurrenceQuery(repo, target);
 
-                // Publish the superseding generation on the main thread while the reader runs.
-                await PublishAsync(
-                    store,
-                    repo,
-                    new CodeIndexRunId("run:p12:2"),
-                    Unit(repo, "run:p12:2", "unit:p12", [Node("node:p12")],
-                        [
-                            Fact(repo, "unit:p12", target, "src/Before.cs", 1, 1),
-                            Fact(repo, "unit:p12", target, "src/After.cs", 2, 1)
-                        ]));
+                await store.StoreIndexRunAsync(new(repo, nextRun, Later, plugins: [Plugin]));
+                await store.StageIndexUnitAsync(Unit(repo, nextRun.Value, unit, [Node("node:p12")], [second, first]));
+                AssertSnapshot(before, await store.FindOccurrencesAsync(query), old);
 
-                try { await reader; } catch (OperationCanceledException) { }
+                var nextState = new CodeRepositoryIndexState(repo, nextRun, []);
+                var expected = new CodeGraphPublication(repo, nextRun, nextState.SnapshotIdentity,
+                    nextState.IsConsistentSnapshot, nextState.IndexIdentity);
+                armed = true;
+                var writer = Task.Run(async () => await store.CompleteIndexRunAsync(
+                    new(repo, nextRun, Later, CodeIndexRunStatus.Completed, Later.AddSeconds(1), [Plugin]), nextState));
+                Task<CodeOccurrenceQueryResult> during;
+                try
+                {
+                    Assert.True(entered.Wait(TimeSpan.FromSeconds(20)), "P-12 writer did not reach native before-commit.");
+                    during = store.FindOccurrencesAsync(query).AsTask();
+                    Assert.False(during.IsCompleted, "P-12 reader finished while the writer held the native checkpoint.");
+                }
+                finally
+                {
+                    release.Set();
+                    await writer;
+                }
 
-                Assert.Contains(CodeOccurrenceAvailability.Available, observations);
-                Assert.DoesNotContain(CodeOccurrenceAvailability.CorruptedIndex, observations);
-                var final = await store.FindOccurrencesAsync(new CodeOccurrenceQuery(repo, target));
-                Assert.Equal("run:p12:2", final.Publication!.IndexRunId.Value);
-                Assert.Equal(2, final.Occurrences.Count);
+                var observed = await during;
+                AssertSnapshot(expected, observed, first, second);
+                AssertSnapshot(expected, await store.FindOccurrencesAsync(query), first, second);
+                var superseded = await store.FindOccurrencesAsync(new(repo, target, before));
+                Assert.Equal(CodeOccurrenceAvailability.StalePublication, superseded.Availability);
+                Assert.Empty(superseded.Occurrences);
+
+                // The earlier count-only check admitted all three of these outcomes.
+                Assert.ThrowsAny<Xunit.Sdk.XunitException>(() =>
+                    AssertSnapshot(expected, observed with { Occurrences = [observed.Occurrences[0]] }, first, second));
+                Assert.ThrowsAny<Xunit.Sdk.XunitException>(() =>
+                    AssertSnapshot(expected, observed with
+                    {
+                        Occurrences = [observed.Occurrences[0] with { Id = old.Id, Span = old.Span }, observed.Occurrences[1]],
+                    }, first, second));
+                Assert.ThrowsAny<Xunit.Sdk.XunitException>(() =>
+                    AssertSnapshot(expected, observed with { Publication = before }, first, second));
+                Assert.ThrowsAny<Xunit.Sdk.XunitException>(() =>
+                    AssertSnapshot(expected, observed with { Occurrences = observed.Occurrences.Reverse().ToArray() }, first, second));
+                output.WriteLine($"P12 before={before.IndexRunId.Value}/{before.IndexIdentity.Value} readerQueued=true after={expected.IndexRunId.Value}/{expected.IndexIdentity.Value}");
             }
             finally
             {
                 DeleteDatabase(path);
             }
+        }
+
+        private static void AssertSnapshot(
+            CodeGraphPublication expected, CodeOccurrenceQueryResult observed, params CodeOccurrenceFact[] ordered)
+        {
+            Assert.Equal(CodeOccurrenceAvailability.Available, observed.Availability);
+            Assert.Equal(expected, observed.Publication);
+            Assert.Equal(ordered.Length, observed.TotalMatches);
+            Assert.False(observed.Truncated);
+            Assert.Equal(ordered.Select(fact => (fact.Id, fact.TargetId, fact.Span)),
+                observed.Occurrences.Select(hit => (hit.Id, hit.TargetId, hit.Span)));
         }
 
         // ------------------------------------------------------------------ P-13 (S-02-4, genuine)
@@ -816,82 +854,96 @@ namespace Andirit.LatticeDb.Tests
             }
         }
 
-        // ------------------------------------------------------------------ P-15 (S-02-6 / D4-10, genuine multi-process; D-05 fix, F-QU-01)
-        // Native concurrency/republication across processes: the first writer completes and commits a
-        // real occurrence publication; other processes cannot open the database while it is held; a
-        // fresh reopen sees exactly the committed publication. This discharges F-QU-01: the writer
-        // completes the run rather than only staging, so the publication is durably visible.
+        // ------------------------------------------------------------------ P-15 (S-02 / D4-10, genuine multi-process)
         [Fact]
         public async Task P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication()
         {
             var path = TemporaryDatabasePath();
-            var holdRepo = "repo:p15-hold";
-            var holdRun = "run:p15-hold";
-            var publishRepo = "repo:p15-pub";
-            var publishRun = "run:p15-pub";
-            var targetName = "T1";
+            var signal = path + ".p15signal";
+            var holdRepo = new CodeRepositoryId("repo:p15-hold");
+            var repo = new CodeRepositoryId("repo:p15-pub");
+            const string holdRun = "run:p15-hold";
+            const string priorRun = "run:p15-prior";
+            const string publishRun = "run:p15-pub";
+            const string targetName = "T1";
+            var target = ComputeTarget(repo.Value, targetName);
+            var query = new CodeOccurrenceQuery(repo, target);
             try
             {
-                var worker = LocateWorkerAssembly();
-
-                // Phase 1: a separate process opens the database and deterministically holds the native
-                // file lock (genuine cross-process ownership). Any other process must fail to open it.
-                var signal = TemporaryDatabasePath() + ".p15signal";
-                var hold = StartWorker(worker,
-                    $"--db \"{path}\" --repo {holdRepo} --run {holdRun} --unit unit:p15-hold --node node:p15-hold --mode hold --signal \"{signal}\"");
-                try
+                CodeGraphPublication prior;
+                using (var baseline = new LatticeCodeGraphStore(path))
                 {
-                    Assert.True(
-                        WaitForFile(signal + ".ready", TimeSpan.FromSeconds(30)),
-                        "The hold worker never reported READY.");
-
-                    // The first writer holds the lock: a second open (from this process) fails rather
-                    // than queuing - genuine cross-process file-locking serialization.
-                    var blocked = Assert.Throws<CodeGraphStoreException>(() => new LatticeCodeGraphStore(path));
-                    Assert.Contains("open database", blocked.Message, StringComparison.Ordinal);
-                }
-                finally
-                {
-                    File.WriteAllText(signal + ".go", "GO");
-                    hold.WaitForExit(30_000);
+                    var fact = Fact(repo, "unit:p15-prior", target, "src/Prior.cs", 1, 1);
+                    await PublishAsync(baseline, repo, new(priorRun),
+                        Unit(repo, priorRun, "unit:p15-prior", [Node("node:p15-prior")], [fact]));
+                    var publication = await baseline.GetLatestPublicationAsync(repo);
+                    Assert.NotNull(publication);
+                    prior = publication;
+                    AssertSnapshot(prior, await baseline.FindOccurrencesAsync(query), fact);
                 }
 
-                // Phase 2: a second, independent process publishes a complete occurrence publication
-                // (the F-QU-01 fix: it actually completes the run) after the lock is released.
-                var publisher = StartWorker(worker,
-                    $"--db \"{path}\" --repo {publishRepo} --run {publishRun} --unit unit:p15-pub --node node:p15-pub --mode publish-complete --target {targetName} --occurrences 3");
-                var publisherOutput = ReadToEnd(publisher);
-                publisher.WaitForExit(60_000);
-                Assert.True(publisher.ExitCode == 0, $"The publish worker exited {publisher.ExitCode}: {publisherOutput}");
-                var published = Assert.Single(publisherOutput
-                    .Split('\n', StringSplitOptions.RemoveEmptyEntries)
-                    .Where(line => line.StartsWith("PUBLISHED|", StringComparison.Ordinal))
-                    .Select(line => line["PUBLISHED|".Length..].Split('|'))
-                    .ToArray());
-                var publishedRun = published[0];
+                var worker = NativeDurabilityTests.LocateWorkerAssembly();
+                using (var hold = NativeDurabilityTests.StartWorker(worker,
+                    $"--db \"{path}\" --repo {holdRepo.Value} --run {holdRun} --unit unit:p15-hold --node node:p15-hold --mode hold --signal \"{signal}\""))
+                {
+                    try
+                    {
+                        await NativeDurabilityTests.WaitForWorkerReadyAsync(hold, signal);
+                        Assert.NotEqual(Environment.ProcessId, hold.Id);
+                        var blocked = Assert.Throws<LatticeException>(() => LatticeDatabase.Open(path, new() { Create = false }));
+                        Assert.Equal(NativeOpenDeadline.DatabaseOpenInAnotherProcess, blocked.NativeErrorCode);
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            File.WriteAllText(signal + ".go", "GO");
+                            await hold.WaitForExitAsync().WaitAsync(TimeSpan.FromSeconds(30));
+                        }
+                        finally
+                        {
+                            await NativeDurabilityTests.StopWorkerAsync(hold);
+                        }
+                    }
+                    Assert.Equal(0, hold.ExitCode);
+                    var ready = $"READY|{hold.Id}|{holdRepo.Value}|{holdRun}|unit:p15-hold";
+                    Assert.Contains(ready, await hold.StandardOutput.ReadToEndAsync(), StringComparison.Ordinal);
+                    output.WriteLine(ready);
+                }
 
-                // Phase 3: a fresh reopen sees exactly the committed publication (not merely staged).
+                var published = await NativeDurabilityTests.ExecuteWorkerAsync(worker,
+                    $"--db \"{path}\" --repo {repo.Value} --run {publishRun} --unit unit:p15-pub --node node:p15-pub --mode publish-complete --target {targetName} --occurrences 3",
+                    output);
+                Assert.Contains($"PUBLISHED|{publishRun}|", published, StringComparison.Ordinal);
+
                 using (var reopened = new LatticeCodeGraphStore(path))
                 {
-                    var publication = await reopened.GetLatestPublicationAsync(new CodeRepositoryId(publishRepo));
+                    var publication = await reopened.GetLatestPublicationAsync(repo);
                     Assert.NotNull(publication);
-                    Assert.Equal(publishedRun, publication!.IndexRunId.Value);
-
-                    var target = ComputeTarget(publishRepo, targetName);
-                    var result = await reopened.FindOccurrencesAsync(new CodeOccurrenceQuery(new CodeRepositoryId(publishRepo), target));
+                    Assert.Equal(publishRun, publication.IndexRunId.Value);
+                    Assert.NotEqual(prior.IndexIdentity, publication.IndexIdentity);
+                    Assert.Contains($"|{publishRun}|{publication.IndexIdentity.Value}", published, StringComparison.Ordinal);
+                    var result = await reopened.FindOccurrencesAsync(query);
                     Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
-                    Assert.Equal(publishedRun, result.Publication!.IndexRunId.Value);
-                    Assert.Equal(3, result.Occurrences.Count);
+                    Assert.Equal(publication, result.Publication);
+                    Assert.Equal(["src/Prior.cs", "src/Worker0.cs", "src/Worker1.cs", "src/Worker2.cs"],
+                        result.Occurrences.Select(hit => hit.Span.Path).ToArray());
 
-                    // The graph-only hold repository never published; analysis is unavailable, not empty.
-                    var holdResult = await reopened.FindOccurrencesAsync(
-                        new CodeOccurrenceQuery(new CodeRepositoryId(holdRepo), target));
+                    var stale = await reopened.FindOccurrencesAsync(new(repo, target, prior));
+                    Assert.Equal(CodeOccurrenceAvailability.StalePublication, stale.Availability);
+                    Assert.Empty(stale.Occurrences);
+
+                    Assert.Null(await reopened.GetLatestPublicationAsync(holdRepo));
+                    var holdResult = await reopened.FindOccurrencesAsync(new(holdRepo, target));
                     Assert.Equal(CodeOccurrenceAvailability.AnalysisUnavailable, holdResult.Availability);
                 }
+                Assert.Equal(publishRun, NativeOccurrencePublicationRunId(path, repo.Value));
             }
             finally
             {
                 DeleteDatabase(path);
+                foreach (var suffix in new[] { ".ready", ".ready.tmp", ".go" })
+                    File.Delete(signal + suffix);
             }
         }
 
@@ -948,7 +1000,7 @@ namespace Andirit.LatticeDb.Tests
                 string.Join(",", result.Occurrences.Select(hit =>
                     $"{hit.Span.Path}:{hit.Span.StartLine}:{hit.Span.StartColumn}:{hit.TargetId.Value}:{hit.Id.Value}:{string.Join("&", hit.Contributors.Select(c => c.PluginId.Value + "/" + c.IndexUnitId))}")));
 
-        private static CodeOccurrenceTargetId ComputeTarget(string repositoryId, string name)
+        internal static CodeOccurrenceTargetId ComputeTarget(string repositoryId, string name)
         {
             var context = "compctx1:sha256:" + Hex(repositoryId + "|" + name);
             return CodeOccurrenceIdentity.ComputeTargetId(
@@ -1110,72 +1162,6 @@ namespace Andirit.LatticeDb.Tests
             }
 
             txn.Commit();
-        }
-
-        // ---- multi-process worker helpers (genuine native concurrency) --------------------------
-
-        private static string LocateWorkerAssembly()
-        {
-            // Preferred: the worker assembly copied into this project's output by the project reference,
-            // which is what makes the multi-process cases work when only this project is built (the CI
-            // test steps run 'dotnet test' per project).
-            var local = Path.Combine(AppContext.BaseDirectory, "Andirit.LatticeDb.Tests.Worker.dll");
-            if (File.Exists(local))
-                return local;
-
-            // Fallback: a full solution build leaves the worker in its own bin/<config>/net10.0 folder.
-            var directory = new DirectoryInfo(AppContext.BaseDirectory);
-            while (directory is not null &&
-                   !File.Exists(Path.Combine(directory.FullName, "Andirit.slnx")))
-                directory = directory.Parent;
-            var root = directory?.FullName
-                ?? throw new InvalidOperationException("The repository root (Andirit.slnx) was not found.");
-            foreach (var configuration in new[] { "Release", "Debug" })
-            {
-                var candidate = Path.Combine(
-                    root,
-                    "tests",
-                    "Andirit.LatticeDb.Tests.Worker",
-                    "bin",
-                    configuration,
-                    "net10.0",
-                    "Andirit.LatticeDb.Tests.Worker.dll");
-                if (File.Exists(candidate))
-                    return candidate;
-            }
-
-            throw new InvalidOperationException(
-                "The Andirit.LatticeDb.Tests.Worker assembly was not built; build the solution before running the multi-process cases.");
-        }
-
-        private static Process StartWorker(string workerAssembly, string arguments) =>
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "dotnet",
-                Arguments = $"exec \"{workerAssembly}\" {arguments}",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            }) ?? throw new InvalidOperationException("The worker process could not be started.");
-
-        private static bool WaitForFile(string path, TimeSpan timeout)
-        {
-            var deadline = DateTimeOffset.UtcNow + timeout;
-            while (DateTimeOffset.UtcNow < deadline)
-            {
-                if (File.Exists(path))
-                    return true;
-                Thread.Sleep(25);
-            }
-            return false;
-        }
-
-        private static string ReadToEnd(Process process)
-        {
-            var standardOut = process.StandardOutput.ReadToEnd();
-            var standardError = process.StandardError.ReadToEnd();
-            return standardOut + standardError;
         }
 
         private static string TemporaryDatabasePath() =>
