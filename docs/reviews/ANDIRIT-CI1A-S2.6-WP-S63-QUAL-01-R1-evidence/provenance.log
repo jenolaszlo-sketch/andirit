@@ -1,0 +1,52 @@
+frozen R1 d3c9359d1abd8c89a7214e37f074802e5d2fa238 6eb68de12467e95efa51c8b1a71b1c17713d9492 ed216e87a2222e974ff0e477d1b04d87f151acc4 jenol <jenolaszlo-sketch@users.noreply.github.com> | jenol <jenolaszlo-sketch@users.noreply.github.com> test(stage6): remediate S6.3 per-project build and D-07 execution integrity (F-S63-01/02)
+R1 evidence dd484af2d32ff1f5b7951a85f4f3104c4b4b5402 505511dc6404e3d38fb9f80457f909b6e2aac5ba 07ce2d97f0e15ad99ef44f90d227bdf20cb7fd30 jenol <jenolaszlo-sketch@users.noreply.github.com> | jenol <jenolaszlo-sketch@users.noreply.github.com> docs(stage6): restore the sealed S63-IMPL-01 evidence package and re-seal the extension
+R2 tested a96c19a844f8ea1719508198b47df23c4e203571 f05ded592bc82c4e0b02044c97fb1f509fdb6e8e dd484af2d32ff1f5b7951a85f4f3104c4b4b5402 jenol <jenolaszlo-sketch@users.noreply.github.com> | jenol <jenolaszlo-sketch@users.noreply.github.com> test(stage6): remediate independent S6.3 qualification findings
+R2 payload f01465cf39677536794cc30db2b2875c76912a97 f4c3b6e249e90e2d65bc18212345cec7740695f4 a96c19a844f8ea1719508198b47df23c4e203571 jenol <jenolaszlo-sketch@users.noreply.github.com> | jenol <jenolaszlo-sketch@users.noreply.github.com> docs(stage6): record S6.3 R2 evidence payloads
+R2 seal ab2bd168ab2436ffb2a07de8466b33cecd79720b b65c73eb5e8ceb3cc31c83028ccc7a03c4c1baee f01465cf39677536794cc30db2b2875c76912a97 jenol <jenolaszlo-sketch@users.noreply.github.com> | jenol <jenolaszlo-sketch@users.noreply.github.com> docs(stage6): seal S6.3 R2 evidence from committed blobs
+R2 report f4dfec468c819fb922c8dfac61d4accece95ac28 c3a191266dbb93598ba6652b2f6cb701ecfa1a4c ab2bd168ab2436ffb2a07de8466b33cecd79720b jenol <jenolaszlo-sketch@users.noreply.github.com> | jenol <jenolaszlo-sketch@users.noreply.github.com> docs(stage6): record S6.3 R2 producer handoff
+clean replay payload 00a026a6ea7565175d4c4e7e6d2c9c83ce5a94ca 76a806854c61b31123abab72e9a24e0a596b5e23 f4dfec468c819fb922c8dfac61d4accece95ac28 jenol <jenolaszlo-sketch@users.noreply.github.com> | jenol <jenolaszlo-sketch@users.noreply.github.com> docs(stage6): record clean S6.3 R2 checkout replay
+published and clean replay seal f19587b0d0c19f5877d3ccfaefb4d6a5bc6f3c60 77274fed2469e30aeef705f487442c54f0e5133d 00a026a6ea7565175d4c4e7e6d2c9c83ce5a94ca jenol <jenolaszlo-sketch@users.noreply.github.com> | jenol <jenolaszlo-sketch@users.noreply.github.com> docs(stage6): seal clean S6.3 R2 checkout replay
+Q1 review a69c13ce447839330793be2e4cbc7a1dd732d1dd a57df9a83cb692acef2c449b0c7eba657887f6d0 dd484af2d32ff1f5b7951a85f4f3104c4b4b5402 jenol <jenolaszlo-sketch@users.noreply.github.com> | jenol <jenolaszlo-sketch@users.noreply.github.com> docs(stage6): record independent S6.3 qualification disposition
+pre-breach 33b5867b593c7c7e43108b538bdcddad6fc4fb15 1bf01b4854ac42eb9dd9efb6b510047c22295bbb 1cbce3b36325d445b4554443d4b715087a3d65c4 jenol <jenolaszlo-sketch@users.noreply.github.com> | jenol <jenolaszlo-sketch@users.noreply.github.com> docs(stage6): implement S6.3 native publication correctness (P-01..P-16), remediate D-05 (F-QU-01), seal evidence
+delta dd484af2d32ff1f5b7951a85f4f3104c4b4b5402 a96c19a844f8ea1719508198b47df23c4e203571 A	.github/scripts/verify-s63-results.ps1
+M	.github/workflows/ci.yml
+M	tests/Andirit.LatticeDb.Tests.Worker/Program.cs
+M	tests/Andirit.LatticeDb.Tests/NativeDurabilityTests.cs
+A	tests/Andirit.LatticeDb.Tests/NativeOpenDeadline.cs
+A	tests/Andirit.LatticeDb.Tests/NativeOpenDeadlineTests.cs
+M	tests/Andirit.LatticeDb.Tests/NativePublicationCorrectnessTests.cs
+delta d3c9359d1abd8c89a7214e37f074802e5d2fa238 a96c19a844f8ea1719508198b47df23c4e203571 A	.github/scripts/verify-s63-results.ps1
+M	.github/workflows/ci.yml
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/attribution-verification.txt
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/commit-mapping.md
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/hosted-ci/ubuntu-x64-evidence.txt
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/local/clean-checkout-verification.txt
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/local/verification.txt
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/manifest.json
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/probes/Directory.Build.props
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/probes/Program.cs
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/probes/ReviewerProbes.csproj
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/probes/probe-receipt.txt
+A	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence/probes/probe-reproduction.md
+M	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1.md
+M	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-evidence/probe/Program.cs
+M	docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-evidence/probe/probe-receipt.txt
+M	tests/Andirit.LatticeDb.Tests.Worker/Program.cs
+M	tests/Andirit.LatticeDb.Tests/NativeDurabilityTests.cs
+A	tests/Andirit.LatticeDb.Tests/NativeOpenDeadline.cs
+A	tests/Andirit.LatticeDb.Tests/NativeOpenDeadlineTests.cs
+M	tests/Andirit.LatticeDb.Tests/NativePublicationCorrectnessTests.cs
+fast-forward parent chain ['a96c19a844f8ea1719508198b47df23c4e203571', 'f01465cf39677536794cc30db2b2875c76912a97', 'ab2bd168ab2436ffb2a07de8466b33cecd79720b', 'f4dfec468c819fb922c8dfac61d4accece95ac28', '00a026a6ea7565175d4c4e7e6d2c9c83ce5a94ca', 'f19587b0d0c19f5877d3ccfaefb4d6a5bc6f3c60']
+preserved docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-evidence 4dee055c7691351bc14fe15efbbe5db75c8d8fa4 4dee055c7691351bc14fe15efbbe5db75c8d8fa4
+preserved docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R1-evidence b61cf46a9d28c626faa5b5c904b5ea5f8b9c4565 b61cf46a9d28c626faa5b5c904b5ea5f8b9c4565
+recovery ref d9461c06b9ba7a42b20a3ce100d28f39d1935a40
+seal 33b5867b593c7c7e43108b538bdcddad6fc4fb15 docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-evidence tree 4dee055c7691351bc14fe15efbbe5db75c8d8fa4 manifest_git 9d16040beb224a3d2fffc17258e7f29e2d3df4ff manifest_bytes_sha256 c3c78d8c89f45d373ea64f18a5c81d5fb1d02560f4d042c14365d4bab8faf4cd identity fcab38f18554eff723e1baacd142f52e034eccc763268d3fd605a5533a056675 entries 17
+seal f19587b0d0c19f5877d3ccfaefb4d6a5bc6f3c60 docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-evidence tree 4dee055c7691351bc14fe15efbbe5db75c8d8fa4 manifest_git 9d16040beb224a3d2fffc17258e7f29e2d3df4ff manifest_bytes_sha256 c3c78d8c89f45d373ea64f18a5c81d5fb1d02560f4d042c14365d4bab8faf4cd identity fcab38f18554eff723e1baacd142f52e034eccc763268d3fd605a5533a056675 entries 17
+seal a69c13ce447839330793be2e4cbc7a1dd732d1dd docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-QUAL-01-evidence tree 61965422a8760e43a156a5d049dc39299ef5e8fc manifest_git 19cdb9fac8b6f81f076dbdda8bc14614634d91e0 manifest_bytes_sha256 18dd7d5af921870ac1d548211db352ea9755219ea03799c0d89b197536587172 identity 09cedb476ef53d64672151204e4f4b04bb00e4ed53fb2d055e95c046adb50e2d entries 24
+seal f19587b0d0c19f5877d3ccfaefb4d6a5bc6f3c60 docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R2-evidence tree e979fb14b3c4915fba3f654de4c0f8e612931880 manifest_git 2c72f72e52fad436e609a146c00b754b3bae1e55 manifest_bytes_sha256 c01915352860f798716df5b6559b37c95ed00e7cba97d32c131b26963ee05512 identity c81430e4b135f7c4b23bcc686eecd16517bb45530ed1a1692b000850b00c60ea entries 12
+seal f19587b0d0c19f5877d3ccfaefb4d6a5bc6f3c60 docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R2-R1-ERRATUM tree 89d880688cfa576d3cac76ecd96ce16e45c5b4aa manifest_git 4dedc37e5d9928fae07c784e80f5e60f22ff9afb manifest_bytes_sha256 30436bdb075a63b8ef4f82bcb1f564eceb1c541393c952846927620d8162bde6 identity 4052bf04b4878ea349a268cbf9dd13c3316102d5bbabffa63a190ddbb9c5f933 entries 7
+seal f19587b0d0c19f5877d3ccfaefb4d6a5bc6f3c60 docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-IMPL-01-R2-CHECKOUT-REPLAY tree ba56cef3e9377c3a389043ed0930ddb9543cfc3a manifest_git e88edddf90395aeec2d9f0c758dc8eb169d30716 manifest_bytes_sha256 8738414f7e8570fa422e258058402cdfee861daf4d7391ecd775cf39da66cd24 identity 5cda449fb05ab4d2eb19ade72a59927e15f6c2bf9946540761c584de80844fac entries 5
+historical R1 manifest 4151ae58f839e5276c60d0936f3c7e646dfba9e0 c52701c2a01c2531905138bfc05b52165c2d6835769b538dc0f1a2e60987ddb0
+recovered attribution-verification.txt previous 29f9e1bea7e7a915fcc54c2a0fd6f94a4ccee4762f3101fa786de2d179aefced preserved expected f1e6bb0e384dcf2d393b4b4c2b253fa012be7039fcd239f14e2e70aaa47a94f9 2341
+recovered hosted-ci/coverage-latticedb-ubuntu.cobertura.xml previous missing preserved expected d71c16dca4783e9de9f7ebc95131a5350cdfac8ae725ea324ed395542b7bacdd 219244
+recovered probes/probe-receipt.txt previous 44512dc8f84363ad6add27de7da589374a7a47e8d1b19a50f31aeb84c4a9128e preserved expected 71476201f453967a34025cac4d5c1a1bebf03ec85eaca3f88e01a4ed93257e6d 1682

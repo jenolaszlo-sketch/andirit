@@ -1,0 +1,89 @@
+job 139477057222 pack success GitHub Actions 1000004850 GitHub Actions ['ubuntu-latest']
+job 139477057628 test (ubuntu-latest) success GitHub Actions 1000004851 GitHub Actions ['ubuntu-latest']
+job 139477057735 test (windows-latest) success GitHub Actions 1000004852 GitHub Actions ['windows-latest']
+job 139477057969 test (macos-latest) success GitHub Actions 1000004853 GitHub Actions ['macos-latest']
+artifact test-results-macos-latest 15059770371 sha256:eed2225c179e6227d93512eb723984dc8b7c09ed5eddb14834e5c286071b93a7
+artifact test-results-windows-latest 15059676288 sha256:f12c94626717845e5b235dd638c6cd63376bf535a8b816ea6aa29bfd6082b5d0
+artifact coverage-results-macos-latest 15059525841 sha256:fbc1b1562205471be81dd9e76c6deec7bcc9ea0c3b3a371681f42bca31e87efc
+artifact coverage-results-ubuntu-latest 15059321224 sha256:4b0687057633358eb2708903e5393d8d03b76296254df0a4b68cb854efaf0ec5
+artifact test-results-ubuntu-latest 15058443202 sha256:27bf91185de52fb10bdd6d0027f4d97f1957b5f9a3e94d666f1afd6c59584313
+artifact coverage-results-windows-latest 15058374247 sha256:533d3e4a768a1c0e727ad4a5e05690661d55408fe32d39e1fc5ccb3880dc03cf
+ubuntu-latest 11.0.100 X64
+Andirit.Tests 345 lines 5029 / 6101 branches 2082 / 2943 TRX SHA 10ce4fc6c6085548d12af5ae77356dd0e040de3081a519271c9fbc3ba3d0e304 coverage SHA d08c7aaaadeee27faf561d3b730ade46fa7d91bedb96694c35636f74ca96f529
+Andirit.CSharp.Tests 372 lines 2198 / 2311 branches 1172 / 1334 TRX SHA 3d896608663cf952d161ab8b875d7741bba785b79911cfa5d32a07ab015ee69f coverage SHA f182a056f333c43cb96148d4f1924329cc84715f27064cb268bf0e53bab69f2b
+Andirit.TreeSitter.Tests 157 lines 2241 / 2493 branches 1406 / 1851 TRX SHA 3f273e97a7f6e2b2d61fc84711d8b19aa770feef94ac697b68e1872122c2e436 coverage SHA 75727ff42e8729deafbd2e3c98152b207fd8913c0ff668b0a1123d657e5ff0a8
+Andirit.LatticeDb.Tests 131 lines 900 / 969 branches 368 / 466 TRX SHA dce78644d3af5639c34c824af7ab1f45f4291564a9ff30328eb58690f5a9e2cf coverage SHA 42fa555f6f17043d13e446597b2b3f5711102a0e007aaeb86cd641cedbbc1497
+P-12 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P12_ConcurrentReaderDuringPublication_SeesAtomicSnapshot Passed 00:00:00.1624963
+P-01 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P01_QueryPinnedToSupersededGeneration_RefusesExplicitly Passed 00:00:00.1171758
+P-13 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P13_RapidSequentialPublications_OnlyLatestAccepted Passed 00:00:00.3352898
+P-06 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P06_RunPlannedAgainstSupersededBaseline_CannotCompleteAndRegressGeneration Passed 00:00:00.1219266
+P-11 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P11_BoundedQuery_DeterministicSiteOrderAndExplicitLimit Passed 00:00:00.0877219
+P-09 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P09_ContributorUnionAndConflictRejection_VisibilityConsistent Passed 00:00:00.1619146
+P-08 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P08_RebuildFromDurableState_OccurrenceIndexEquivalent Passed 00:00:00.1327703
+P-02 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P02_OccurrencePageNotBoundToAcceptedPublication_RefusesExplicitlyOnOpen Passed 00:00:00.1797912
+P-07 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P07_OrdinaryReopen_OccurrenceQueryResultsEquivalent Passed 00:00:00.1951268
+P-03 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P03_StaleIndexDoesNotScanTheWholeStore_AndBoundedQueryExaminesOnlyItsTargetPage Passed 00:00:00.6096101
+P-15 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication Passed 00:00:01.1285820
+P-10 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P10_ScopedDeletion_RemovesOnlyAffectedContextLeavesIndexClean Passed 00:00:00.3262760
+P-04 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P04_FailedCompletion_PreservesPriorOccurrencePublicationAndIndex Passed 00:00:00.1283477
+P-14 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P14_UnknownCommitOutcome_QuarantineAndReopenCorroborates Passed 00:00:00.2425130
+P-16 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P16_InterleavingIsNotANativeEvidenceSurface Passed 00:00:00.0020117
+P-05 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P05_OlderGenerationsSuperseded_LatestAcceptedAndDurable Passed 00:00:00.1394090
+Linux worker observations {'D-05': ['4530', '4540', '4549', '4558', '4567'], 'D-07': ['4640', '4615', '4654'], 'P-15': ['4584', '4598']} D-07 kill exit 137 copied worker hash 93a15057e5187ab5d60e2acd700a9be4a8383798cc2ec850bd137917562f5196
+windows-latest 11.0.100 X64
+Andirit.Tests 345 lines 5029 / 6101 branches 2082 / 2943 TRX SHA 58ef8cd9aea5ab1ac52d60eb0088bd36148cdb4f60af5c8e91940de7078dc21a coverage SHA ed79071cccfd9f883642e0555b67786549d26d85ce04ff1357c2ee5a5db15655
+Andirit.CSharp.Tests 372 lines 2199 / 2311 branches 1173 / 1334 TRX SHA 21e61051192bb79e377af826da2b7a743938e55202877fd832d7c92ae16fd6af coverage SHA c71cad5be5a597e8f0653497c0b2b62b1ba422d29a89517498d849681ca9dc31
+Andirit.TreeSitter.Tests 157 lines 2240 / 2493 branches 1404 / 1851 TRX SHA a5980458a101ab7645c1904dbaea3464fed7efac69d0dfc05d0a211aa2b7809d coverage SHA c6103c66f9bbfacda2dac9238e7fd297650dcc6a75d8718a7dd82e1e3e38fe2c
+Andirit.LatticeDb.Tests 131 lines 900 / 969 branches 368 / 466 TRX SHA 08fb15126786e20db0afe6076732504798b4b548949cfebe24e36a75d7f7c8ff coverage SHA 6aeacb8b67f9eba0fce34e39e058adebcb669cbc8a617489afd6ddd0b23425cd
+P-02 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P02_OccurrencePageNotBoundToAcceptedPublication_RefusesExplicitlyOnOpen Passed 00:00:02.4285736
+P-06 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P06_RunPlannedAgainstSupersededBaseline_CannotCompleteAndRegressGeneration Passed 00:00:00.9656913
+P-01 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P01_QueryPinnedToSupersededGeneration_RefusesExplicitly Passed 00:00:01.1923229
+P-03 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P03_StaleIndexDoesNotScanTheWholeStore_AndBoundedQueryExaminesOnlyItsTargetPage Passed 00:00:01.4813762
+P-05 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P05_OlderGenerationsSuperseded_LatestAcceptedAndDurable Passed 00:00:01.3607288
+P-12 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P12_ConcurrentReaderDuringPublication_SeesAtomicSnapshot Passed 00:00:01.4218530
+P-13 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P13_RapidSequentialPublications_OnlyLatestAccepted Passed 00:00:01.8167530
+P-10 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P10_ScopedDeletion_RemovesOnlyAffectedContextLeavesIndexClean Passed 00:00:01.7762298
+P-04 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P04_FailedCompletion_PreservesPriorOccurrencePublicationAndIndex Passed 00:00:01.4429977
+P-07 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P07_OrdinaryReopen_OccurrenceQueryResultsEquivalent Passed 00:00:01.7630289
+P-15 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication Passed 00:00:03.7131146
+P-11 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P11_BoundedQuery_DeterministicSiteOrderAndExplicitLimit Passed 00:00:01.4221347
+P-08 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P08_RebuildFromDurableState_OccurrenceIndexEquivalent Passed 00:00:01.0370083
+P-09 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P09_ContributorUnionAndConflictRejection_VisibilityConsistent Passed 00:00:01.3166273
+P-16 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P16_InterleavingIsNotANativeEvidenceSurface Passed 00:00:00.0177525
+P-14 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P14_UnknownCommitOutcome_QuarantineAndReopenCorroborates Passed 00:00:02.2217954
+Windows worker observations {'D-05': ['3020', '5016', '7368', '9112', '7268'], 'D-07': ['4708', '3188', '5360'], 'P-15': ['8944', '9000']} D-07 kill exit -1 copied worker hash 5966f31f9aa24fdee77961b70b1479fef786494ff2c1f11534de291e31a5063d
+macos-latest 11.0.100 ARM64
+Andirit.Tests 345 lines 5029 / 6101 branches 2082 / 2943 TRX SHA 0f46eddd2845fbc1564062b5960114c304a7e5790c5077c80455e152f24d815e coverage SHA 8b9dfea7f3422260597e12b54de9c227ffd88cca463d007168a2023b7799b48b
+Andirit.CSharp.Tests 372 lines 2198 / 2311 branches 1172 / 1334 TRX SHA f46b66dd19e4af8d2345b68bfe55f14e1a26ff7bc87628046e96839df55d9904 coverage SHA 5d201e55a9d473f5d3a0da68a608fe771680d9cac8cdcbe9af46cfa1bb19ab74
+Andirit.TreeSitter.Tests 157 lines 2242 / 2493 branches 1408 / 1851 TRX SHA 1572efe3fa2a09e3e8e6096224265fe54776d5c4442a36dcdeb483e41bbcbd53 coverage SHA 8bc641c886fec3634a584286bebaac7380a9580c42c214b115aee223b10e391a
+Andirit.LatticeDb.Tests 131 lines 900 / 969 branches 368 / 466 TRX SHA 0b9c857b1ceae9b9590f367456c2f3383ffeceae9d00656295b285f158183bf0 coverage SHA 6ad609fe6bb01d3950a43ec83755cfa782689d9e90ca430ffd1a30572d9b7175
+P-13 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P13_RapidSequentialPublications_OnlyLatestAccepted Passed 00:00:00.0737265
+P-04 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P04_FailedCompletion_PreservesPriorOccurrencePublicationAndIndex Passed 00:00:00.0540546
+P-11 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P11_BoundedQuery_DeterministicSiteOrderAndExplicitLimit Passed 00:00:00.0159567
+P-12 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P12_ConcurrentReaderDuringPublication_SeesAtomicSnapshot Passed 00:00:00.1970096
+P-10 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P10_ScopedDeletion_RemovesOnlyAffectedContextLeavesIndexClean Passed 00:00:00.0358809
+P-14 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P14_UnknownCommitOutcome_QuarantineAndReopenCorroborates Passed 00:00:00.0567500
+P-16 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P16_InterleavingIsNotANativeEvidenceSurface Passed 00:00:00.0020628
+P-05 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P05_OlderGenerationsSuperseded_LatestAcceptedAndDurable Passed 00:00:00.0246355
+P-08 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P08_RebuildFromDurableState_OccurrenceIndexEquivalent Passed 00:00:00.0392226
+P-03 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P03_StaleIndexDoesNotScanTheWholeStore_AndBoundedQueryExaminesOnlyItsTargetPage Passed 00:00:00.1983534
+P-09 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P09_ContributorUnionAndConflictRejection_VisibilityConsistent Passed 00:00:00.0208027
+P-06 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P06_RunPlannedAgainstSupersededBaseline_CannotCompleteAndRegressGeneration Passed 00:00:00.0330684
+P-07 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P07_OrdinaryReopen_OccurrenceQueryResultsEquivalent Passed 00:00:00.0267030
+P-02 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P02_OccurrencePageNotBoundToAcceptedPublication_RefusesExplicitlyOnOpen Passed 00:00:00.0780796
+P-01 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P01_QueryPinnedToSupersededGeneration_RefusesExplicitly Passed 00:00:00.0219411
+P-15 Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication Passed 00:00:00.6845728
+macOS worker observations {'D-05': ['2048', '2050', '2052', '2063', '2065'], 'D-07': ['2071', '2067', '2072'], 'P-15': ['2049', '2051']} D-07 kill exit 137 copied worker hash 93a15057e5187ab5d60e2acd700a9be4a8383798cc2ec850bd137917562f5196
+historical 45639342986 d3c9359d1abd8c89a7214e37f074802e5d2fa238 success
+historical 45513525415 ed216e87a2222e974ff0e477d1b04d87f151acc4 failure
+verifier original exit 0 
+verifier missing-case exit 1 ['     | (Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication) needs one Passed result. Observed: .']
+verifier duplicate-case exit 1 ['     | (Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication) needs one Passed result. Observed: Passed,Passed.']
+verifier skipped exit 1 ['     | (Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication) needs one Passed result. Observed: NotExecuted.']
+verifier failed exit 1 ['     | (Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication) needs one Passed result. Observed: Failed.']
+verifier removed-worker-output exit 1 ["     | (Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication) lacks its 'READY|' observation."]
+verifier wrong-digest exit 1 ["     | Missing or unbound result file 'latticedb/tests.trx'."]
+verifier missing-artifact exit 1 ['     | Expected exactly one bound TRX file for each of the four CI test projects.']
+verifier malformed exit 1 ['verify-s63-results.ps1: Exception calling "Load" with "1" argument(s): "Unexpected end of file while parsing Name has occurred. Line 1, position 8."']
+verifier wrong-subject exit 1 ['     | The subject receipt lacks the exact commit or required runner metadata.']
+verifier wrong-run exit 1 ['     | The subject receipt does not match the requested run, attempt or runner.']

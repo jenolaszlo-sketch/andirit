@@ -1,0 +1,52 @@
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P01_QueryPinnedToSupersededGeneration_RefusesExplicitly
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P02_OccurrencePageNotBoundToAcceptedPublication_RefusesExplicitlyOnOpen
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P03_StaleIndexDoesNotScanTheWholeStore_AndBoundedQueryExaminesOnlyItsTargetPage
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P04_FailedCompletion_PreservesPriorOccurrencePublicationAndIndex
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P05_OlderGenerationsSuperseded_LatestAcceptedAndDurable
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P06_RunPlannedAgainstSupersededBaseline_CannotCompleteAndRegressGeneration
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P07_OrdinaryReopen_OccurrenceQueryResultsEquivalent
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P08_RebuildFromDurableState_OccurrenceIndexEquivalent
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P09_ContributorUnionAndConflictRejection_VisibilityConsistent
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P10_ScopedDeletion_RemovesOnlyAffectedContextLeavesIndexClean
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P11_BoundedQuery_DeterministicSiteOrderAndExplicitLimit
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P12_ConcurrentReaderDuringPublication_SeesAtomicSnapshot
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P13_RapidSequentialPublications_OnlyLatestAccepted
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P14_UnknownCommitOutcome_QuarantineAndReopenCorroborates
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication
+local named case Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P16_InterleavingIsNotANativeEvidenceSurface
+core Andirit.Tests 345 passed, 0 failed, 0 skipped line/branch 0.8242 0.7089 threshold 55
+csharp Andirit.CSharp.Tests 372 passed, 0 failed, 0 skipped line/branch 0.9515 0.88 threshold 75
+treesitter Andirit.TreeSitter.Tests 157 passed, 0 failed, 0 skipped line/branch 0.8985 0.7545000000000001 threshold 60
+latticedb Andirit.LatticeDb.Tests 131 passed, 0 failed, 0 skipped line/branch 0.9287000000000001 0.7896 threshold 70
+deadline 9 passed ['Andirit.LatticeDb.Tests.NativeOpenDeadlineTests.LateSuccessAfterNativeLockFailurePreservesDiagnostic', 'Andirit.LatticeDb.Tests.NativeOpenDeadlineTests.UnrelatedManagedErrorPropagatesUnchanged', 'Andirit.LatticeDb.Tests.NativeOpenDeadlineTests.PersistentNativeLockStopsWithOriginalDiagnostic', 'Andirit.LatticeDb.Tests.NativeOpenDeadlineTests.NativeLockFailureRetriesAndAcceptsTimelySuccess', 'Andirit.LatticeDb.Tests.NativeOpenDeadlineTests.ExactDeadlineRejectsBothAttemptAndCompletion', 'Andirit.LatticeDb.Tests.NativeOpenDeadlineTests.RetryDelayIsClampedToTheRemainingBudget', 'Andirit.LatticeDb.Tests.NativeOpenDeadlineTests.NonRetryableNativeErrorPropagatesUnchanged', 'Andirit.LatticeDb.Tests.NativeOpenDeadlineTests.LateFirstSuccessDisposesTheResourceExactlyOnce', 'Andirit.LatticeDb.Tests.NativeOpenDeadlineTests.ImmediateSuccessTransfersOwnership']
+recovery-controls 7 passed ['Andirit.LatticeDb.Tests.NativeDurabilityTests.D07_RecoveryOracleRejectsInvalidObservation', 'Andirit.LatticeDb.Tests.NativeDurabilityTests.D07_ExitBeforeReadyFailsPromptly', 'Andirit.LatticeDb.Tests.NativeDurabilityTests.D07_RecoveryOracleRejectsInvalidObservation', 'Andirit.LatticeDb.Tests.NativeDurabilityTests.D07_RecoveryOracleRejectsInvalidObservation', 'Andirit.LatticeDb.Tests.NativeDurabilityTests.D07_RecoveryOracleRejectsInvalidObservation', 'Andirit.LatticeDb.Tests.NativeDurabilityTests.D07_RecoveryOracleRejectsInvalidObservation', 'Andirit.LatticeDb.Tests.NativeDurabilityTests.D05_CancellationOracleRejectsLeakedStageAndLostPublication']
+copied-worker 3 passed ['Andirit.LatticeDb.Tests.NativeDurabilityTests.AbruptProcessTermination_DurableStateConsistent', 'Andirit.LatticeDb.Tests.NativePublicationCorrectnessTests.P15_MultiProcessPublication_FileLockSerializesAndReopenSeesCommittedPublication', 'Andirit.LatticeDb.Tests.NativeDurabilityTests.ConcurrentMultiProcessAccess_FileLockingAndConsistency']
+early-worker expected failure Andirit.LatticeDb.Tests.NativeDurabilityTests.AbruptProcessTermination_DurableStateConsistent exited before READY (exit 19)
+missing-worker expected failure Andirit.LatticeDb.Tests.NativeDurabilityTests.AbruptProcessTermination_DurableStateConsistent Worker assembly was not built
+d07-01 passed baseline, ready/killed and later PIDs 2636 36020 31264 kill exit -1
+d07-02 passed baseline, ready/killed and later PIDs 27700 23988 4288 kill exit -1
+d07-03 passed baseline, ready/killed and later PIDs 33856 35532 9868 kill exit -1
+d07-04 passed baseline, ready/killed and later PIDs 31348 2952 31736 kill exit -1
+d07-05 passed baseline, ready/killed and later PIDs 22304 3368 27112 kill exit -1
+d07-06 passed baseline, ready/killed and later PIDs 10532 38740 37436 kill exit -1
+d07-07 passed baseline, ready/killed and later PIDs 34568 28500 23980 kill exit -1
+d07-08 passed baseline, ready/killed and later PIDs 38344 37660 28192 kill exit -1
+d07-09 passed baseline, ready/killed and later PIDs 12020 32004 36276 kill exit -1
+d07-10 passed baseline, ready/killed and later PIDs 31132 32760 33180 kill exit -1
+d07-11 passed baseline, ready/killed and later PIDs 21040 27636 31504 kill exit -1
+d07-12 passed baseline, ready/killed and later PIDs 17180 6160 23468 kill exit -1
+d07-13 passed baseline, ready/killed and later PIDs 28204 35900 14280 kill exit -1
+d07-14 passed baseline, ready/killed and later PIDs 33532 31312 32312 kill exit -1
+d07-15 passed baseline, ready/killed and later PIDs 5796 32260 14608 kill exit -1
+d07-16 passed baseline, ready/killed and later PIDs 22180 18856 12944 kill exit -1
+d07-17 passed baseline, ready/killed and later PIDs 22848 36472 876 kill exit -1
+d07-18 passed baseline, ready/killed and later PIDs 38456 34544 20672 kill exit -1
+d07-19 passed baseline, ready/killed and later PIDs 34136 18256 5548 kill exit -1
+d07-20 passed baseline, ready/killed and later PIDs 36488 26300 32160 kill exit -1
+Original reproducers, 27 prepared repetitions and all command outcomes verified
+LatticeDbSharp 0.2.0 latticedbsharp.0.2.0.nupkg 5970898 04bda0b634306bb664dd36e7cb7a33822ec45ce52061fae7baf64bf81b35ac9e
+LatticeDbSharp 0.2.0 lib/net8.0/LatticeDbSharp.dll 102400 d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46
+LatticeDbSharp 0.2.0 runtimes/linux-x64/native/liblattice.so 14374704 dc5b45344fb05f6db2b9c77bf8dbbc0d0dbcf937494e5d69a419d7c25321687b
+LatticeDbSharp 0.2.0 runtimes/osx-arm64/native/liblattice.dylib 2173424 8d99e8224d5ca062f12042f0a899c69bb8db21f73d917a5e67805c0b0309e660
+LatticeDbSharp 0.2.0 runtimes/win-x64/native/lattice.dll 2580992 3dec7386cf0adbf96962f89ab818a4236afc82bbf80086b30a87cecdbacfd6c1
+Production, build definitions, release workflow and controlling authority preserved
