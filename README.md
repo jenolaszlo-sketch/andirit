@@ -66,7 +66,7 @@ Native packages carry Windows x64, Linux x64, and macOS ARM64 assets. The publis
 
 ## Unreleased and planned
 
-The source on `main` carries the S6.1 cancellation contract and S6.2 native durability tests and evidence, accepted with qualifications. A cancellation request can be honored before native execution. Once the native write begins, callers must await its outcome. Full crash and power-loss guarantees, the remaining native publication-correctness cases, and broader platform certification remain open. See [S6.1 acceptance](docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-ACCEPT-01.md) and [S6.2 acceptance](docs/reviews/ANDIRIT-CI1A-S2.6-WP-S62-ACCEPT-01.md).
+Stage 2.6 work package S6.3 is closed with qualifications on the unreleased source. The accepted evidence covers native publication correctness, explicit stale-query refusal, deterministic current-query results and result limits. A current query can examine all entries for its target even when returning one result. The S6.1 cancellation and S6.2 durability limits still apply, including the obligation to await native execution once started. Full crash, power-loss and broader platform guarantees remain outside this scope. [S6.3 acceptance](docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-ACCEPT-01.md) · [S6.1 acceptance](docs/reviews/ANDIRIT-CI1A-S2.6-WP-S61-ACCEPT-01.md) · [S6.2 acceptance](docs/reviews/ANDIRIT-CI1A-S2.6-WP-S62-ACCEPT-01.md)
 
 The [project roadmap](ROADMAP.md) tracks operational hardening and semantic expansion. Python, Java, Go, Rust, and Kotlin are planned in the [language roadmap](docs/language-support-roadmap.md).
 

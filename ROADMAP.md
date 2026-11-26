@@ -106,6 +106,20 @@ This section is intentionally a summary rather than a historical delivery log.
 The tests, public API snapshots, README, and Git history are authoritative for
 already completed work.
 
+## Stage 2.6 native publication correctness
+
+**S6.3 is accepted with qualifications and closed.** G-1 through G-6 are satisfied
+for source revision `a96c19a844f8ea1719508198b47df23c4e203571` with LatticeDbSharp
+0.2.0. The accepted scope covers native D4 and S-02 publication correctness.
+P-03 verifies explicit stale refusal without a full-store fallback and records
+current query work separately from the result limit. Reducing current-query
+work as target cardinality grows remains an open engineering concern. Earlier
+cancellation, durability and platform qualifications remain in force.
+[S6.3 acceptance](docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-ACCEPT-01.md) · [P-03 owner decision](docs/reviews/ANDIRIT-CI1A-S2.6-WP-S63-ACCEPT-01-P03.md)
+
+The next eligible work is a separately authorized S6.4 entry assessment for the
+real-fixture D3 corpus (DF-1). S6.5 retains broader platform certification (DF-6).
+
 ## Marang Gate 0.5 / Batch 4 handoff
 
 The current `0.2.0-preview.5` baseline is usable as a bounded, provider-neutral

@@ -6,6 +6,17 @@ at reviewed `aaea1ca7f32a666bc9c6480e91c75c7dd14779d4` /
 `4012bf14e680a742da7a3785831fb578d9f92eb4`.
 No Stage 2 production implementation is authorized by this register.
 
+**Stage 2.6 owner update, 2026-11-26.** S6.3 is **accepted with qualifications**
+and formally closed, with G-1 through G-6 satisfied at
+`a96c19a844f8ea1719508198b47df23c4e203571` and LatticeDbSharp 0.2.0. This
+dispositions the historical open native D4/S-02 rows below for the accepted
+scope, including M12.1, M12.3, I-05… I-07 and DF-2, DF-3 and DF-8. S6.1/S6.2 and
+other inherited qualifications remain in force. P-03's stale refusal and result
+limits are qualified. F-S63Q-07 is accepted with erratum, and current-query work
+amplification remains an open engineering concern without a qualified numeric
+bound. DF-1/S6.4 and DF-6/S6.5 retain their subsequent gates.
+[S6.3 acceptance](../reviews/ANDIRIT-CI1A-S2.6-WP-S63-ACCEPT-01.md) · [P-03 owner decision](../reviews/ANDIRIT-CI1A-S2.6-WP-S63-ACCEPT-01-P03.md)
+
 **Owner update, 2026-11-03:** [S2.0/F12 OWNER-01](adr-ci1-01-ci1a-s2-0-corpus-01-owner-acceptance.md)
 records `F12 CLOSED — ACCEPTED WITH QUALIFICATIONS` for the source-bound R2
 corpus/reference oracle. Q3 remains `SUPPORTED WITH QUALIFICATIONS`.

@@ -88,6 +88,15 @@ and [current status/work queue](planning/adr-ci1-01-ci1a-impl-01/s2-0-owner-hand
 
 **S2.5 status (2026-11-15).** **WP-S25-3 — CLOSED WITH QUALIFICATIONS** and **S-01 — SATISFIED WITH QUALIFICATIONS**. **WP-S25-4 — READY FOR INDEPENDENT QUALIFICATION WITH QUALIFICATIONS.** Separate execution authorization remains pending. [Entry assessment](reviews/ANDIRIT-CI1A-S2.5-WP-S25-4-ENTRY-OWNER-01.md) It carries the cross-project binding, contributor union and payload conflict reconciliation to the Stage-2 gates. S2.5 and Stage-2 acceptance remain pending. [Formal closure](reviews/ANDIRIT-CI1A-S2.5-WP-S25-3-CLOSURE-OWNER-01.md) · [S2.5 work-package plan](planning/adr-ci1-01-ci1a-s2-5/work-package-plan.md)
 
+**Stage 2.6 status (2026-11-26).** **S6.3 — ACCEPTED WITH QUALIFICATIONS** and
+formally closed, with G-1 through G-6 satisfied at
+`a96c19a844f8ea1719508198b47df23c4e203571`. The accepted scope covers native D4
+and S-02 publication correctness with the inherited platform, cancellation and
+durability limits. The P-03 decision retains current-query work amplification
+as an engineering concern. Next eligible work is a separately authorized S6.4
+entry assessment for the real-fixture D3 corpus.
+[S6.3 acceptance](reviews/ANDIRIT-CI1A-S2.6-WP-S63-ACCEPT-01.md) · [P-03 owner decision](reviews/ANDIRIT-CI1A-S2.6-WP-S63-ACCEPT-01-P03.md)
+
 ## Candidate capability sequence
 
 These identifiers label **backlog candidates**, not approved scope or schedules.
