@@ -26,14 +26,22 @@ Windows x64 candidate run; hosted reruns are in `hosted-ci.md`.
 | 17 | Direct physical node and edge inventory reconciliation | `AssertGlobalCensus` in every test; `AssertCorrespondence` in the linked fixture; recovery validator | Pass |
 | — | Malformed and duplicate-valued manifests | `Recovery_RebuildsMalformedManifest_FromAuthoritativeFacts`; `Recovery_RebuildsManifestWithDuplicateNativeIdentities`; `MalformedManifest_DoesNotAffectDisabledAuthoritativeOpen` | Pass |
 | — | Negative controls | `InventoryOracle_DetectsInjectedDuplicateAndOrphan`; `InventoryOracle_DetectsManifestOnlyDeletionResidue`; baseline-worktree failures | Pass |
+| — | Manifest referencing unrelated node | `ManifestReferencingUnrelatedNode_DoesNotDeleteIt` | Pass |
+| — | Manifest referencing authoritative command-log record | `ManifestReferencingAuthoritativeCommandLogRecord_DoesNotDeleteIt` | Pass |
+| — | Manifest referencing unrelated edge | `ManifestReferencingUnrelatedEdge_DoesNotDeleteIt` | Pass |
+| — | Unrelated edge incident to mirror node | `UnrelatedEdgeIncidentToMirrorNode_IsRefusedAndPreserved` | Pass |
+| — | Cross-repository native reference | `CrossRepositoryNativeReference_DoesNotDeleteOtherRepository` | Pass |
+| — | Multiple malformed/incomplete manifests | `MalformedOrIncompleteManifests_RebuildWithoutAuthoritativeLoss` | Pass |
+| — | Inconsistent retained-edge endpoints | `InconsistentManifestEdgeWithoutEndpointNodes_DoesNotLeaveDanglingEdge` | Pass |
+| — | Sentinel identity, properties and relationships | `UnrelatedSentinelObjects_KeepIdentityPropertiesAndRelationships` | Pass |
 
 ## Totals
 
-- New tests: 20 LatticeDb + 1 CSharp.
-- LatticeDb project: 150 passed, 0 failed.
+- New tests: 28 LatticeDb + 1 CSharp.
+- LatticeDb project: 159 passed, 0 failed.
 - CSharp project: 373 passed, 0 failed.
 - Core: 345 passed. TreeSitter: 157 passed.
-- Full solution: 1024 passed, 0 failed.
+- Full solution: 1034 passed, 0 failed.
 - Formatting: `dotnet format Andirit.slnx --verify-no-changes` clean.
 
 ## Baseline negative control

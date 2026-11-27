@@ -288,7 +288,8 @@ public sealed class NativeGraphMirrorTests
                     {
                         [edge.Id.Value] = edge
                     },
-                    null));
+                    null,
+                    NativeGraphMirror.MirrorOwnership.Read(transaction)));
 
             Assert.Contains("missing mirrored node", exception.Message, StringComparison.Ordinal);
             transaction.Rollback();
@@ -324,7 +325,8 @@ public sealed class NativeGraphMirrorTests
                     {
                         [edge.Id.Value] = edge
                     },
-                    null));
+                    null,
+                    NativeGraphMirror.MirrorOwnership.Read(transaction)));
 
             Assert.Contains("missing mirrored node", exception.Message, StringComparison.Ordinal);
             transaction.Rollback();
@@ -348,12 +350,13 @@ public sealed class NativeGraphMirrorTests
 
             var noNodes = new Dictionary<string, CodeGraphNode>(StringComparer.Ordinal);
             var noEdges = new Dictionary<string, CodeGraphEdge>(StringComparer.Ordinal);
+            var ownership = NativeGraphMirror.MirrorOwnership.Read(transaction);
             Assert.Throws<ArgumentNullException>(() =>
-                NativeGraphMirror.Rebuild(null!, noNodes, noEdges, null));
+                NativeGraphMirror.Rebuild(null!, noNodes, noEdges, null, ownership));
             Assert.Throws<ArgumentNullException>(() =>
-                NativeGraphMirror.Rebuild(transaction, null!, noEdges, null));
+                NativeGraphMirror.Rebuild(transaction, null!, noEdges, null, ownership));
             Assert.Throws<ArgumentNullException>(() =>
-                NativeGraphMirror.Rebuild(transaction, noNodes, null!, null));
+                NativeGraphMirror.Rebuild(transaction, noNodes, null!, null, ownership));
             transaction.Rollback();
         }
         finally

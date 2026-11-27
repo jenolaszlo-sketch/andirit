@@ -42,7 +42,7 @@ binding; no current-query optimization was attempted.
 | Core | 55% line / branch | 82.36% line / 70.89% branch |
 | CSharp | 75% | 95.15% / 88% |
 | TreeSitter | 60% | 89.85% / 75.45% |
-| LatticeDb | 70% | 93.32% / 79.13% |
+| LatticeDb | 70% | 93.57% / 80.78% |
 
 ## Retained qualifications
 

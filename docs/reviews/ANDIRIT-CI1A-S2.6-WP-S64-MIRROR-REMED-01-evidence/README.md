@@ -16,6 +16,7 @@ physical inventories, recovery receipts and regression results to Git objects.
 | `recovery/` | Detect, recover, integrated-recover and second-recovery receipts for disposable copies of the affected stores |
 | `mirror-recovery/` | Standalone recovery observer and project |
 | `root-cause.md` | Confirmed defect mechanism and ownership |
+| `ownership-safety.md` | Trusted-manifest rule, native deletion semantics and eight adversarial controls |
 | `oracle.md` | Independent expected-graph oracle definition |
 | `findings-remediation-matrix.md` | Contract invariant → implementation → test → evidence |
 | `compatibility-recovery.md` | Affected-store detection, ownership proof and recovery boundaries |

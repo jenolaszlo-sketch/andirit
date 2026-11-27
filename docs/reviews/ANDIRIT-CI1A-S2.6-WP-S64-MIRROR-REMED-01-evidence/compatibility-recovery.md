@@ -37,10 +37,20 @@ exactly the F-S64E-02 residue plus the F-S64E-01 duplicates.
 A row is removable only if all of the following hold:
 
 1. it is a mirror-protocol row: a node labelled `HetuGraphNode` carrying the
-   `hetu_json` property, or an edge carrying `hetu_json` between such nodes;
-2. its native id is not referenced by any manifest in the database; and
-3. the operation runs in the same native transaction as the manifest update or
+   `hetu_json` property, or an edge carrying `hetu_json` beginning at such a
+   node;
+2. its native id is not referenced by any **trusted** manifest in the database;
+3. deleting it cannot strand an unrelated or retained edge (non-mirror incident
+   edges cause an explicit refusal, and retained edges protect their endpoints);
+   and
+4. the operation runs in the same native transaction as the manifest update or
    deletion that makes it unreferenced.
+
+A manifest is trusted only when every entry resolves to a protocol-marked mirror
+object and every referenced edge connects nodes named by the same manifest. A
+manifest naming an unrelated node, an authoritative command-log row, an
+unrelated edge, or an edge whose endpoint nodes it omits owns nothing and is
+never used for deletion or retention. See `ownership-safety.md`.
 
 Mirror rows are derived state. A row satisfying (1) and (2) is not part of any
 repository's served mirror view, cannot be reached by any mirror traversal, and

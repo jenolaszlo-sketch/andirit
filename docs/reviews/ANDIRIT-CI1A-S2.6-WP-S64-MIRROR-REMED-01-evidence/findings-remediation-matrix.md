@@ -16,6 +16,10 @@
 | Unchanged public graph query/traversal semantics | No public API change; materialized facts are the projection's own facts | Existing parity suite; linked fixture native/projection equality |
 | Occurrence invisibility in legacy graph surfaces | Occurrence labels untouched; mirror never contains occurrence rows | Occurrence parity test; recovery occurrence preservation |
 | Safe recovery of previously affected stores | Detect/refuse malformed manifests; sweep only unreferenced protocol rows | Four recovery tests; affected-store receipts |
+| Manifest references are ownership evidence only for protocol-marked objects | `ReadOwnedManifest` requires every node/edge to be a mirror object and every edge to connect manifest nodes | `NativeGraphMirrorOwnershipTests` cases 1, 2, 3, 7 |
+| No deletion of unrelated or authoritative objects | Untrusted manifests own nothing; cleanup checks markers before deletion | Cases 1–3, 6, 9 with content-and-identity comparison |
+| Ambiguous relationships are refused, not silently removed | Non-mirror incident edge throws `InvalidDataException`; transaction rolls back | Case 4 and case 8 |
+| Retained edges protect endpoint nodes | Sweep protects retained native ids plus endpoints of retained edges | Case 5 and case 7 |
 
 ## Findings
 
@@ -26,3 +30,5 @@
 | F-S64E-03 | Unchanged | DF-1 evidence gap remains outside this commission |
 | F-S64E-04 | Unchanged | Corpus/oracle preparation remains with S6.4 |
 | F-S64E-05 | Partially discharged here | Local Windows campaign complete; hosted Linux record in `hosted-ci.md`; independent replay still required |
+| F-S64R-01 | Remediated in producer scope | A valid-looking manifest could name an authoritative or unrelated node; now untrusted and never deleted |
+| F-S64R-02 | Remediated in producer scope | Unrelated incident edges were deleted; now explicit ownership refusal before any mutation |

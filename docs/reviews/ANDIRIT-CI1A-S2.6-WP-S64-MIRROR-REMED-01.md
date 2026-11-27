@@ -61,6 +61,33 @@ remained. A later enabled open found no manifest, rebuilt without an inventory,
 and created a second full set beside the old rows. The reproduced sequence was
 21 → 22 → 22 (manifest now 0) → 43 physical nodes.
 
+## Ownership-safety findings (same mirror scope)
+
+The mandated ownership review reproduced two further producer defects before
+sealing:
+
+- **F-S64R-01** — a structurally valid manifest could name a non-mirror native
+  node, including an authoritative `HetuUnit` command-log record. The cleanup
+  deleted it. Confirmed: authoritative row count fell from 4 to 3.
+- **F-S64R-02** — cleanup deleted any edge incident to a manifest-owned node,
+  including an unrelated edge. There was no refusal for ambiguous ownership.
+
+Both are remediated inside the authorized mirror scope:
+
+- a manifest is ownership evidence only if every entry resolves to a
+  protocol-marked mirror object and referenced edges connect nodes named by the
+  same manifest;
+- untrusted manifests own nothing and are never used for deletion or retention;
+- a non-mirror incident edge triggers an explicit ownership refusal and
+  transaction rollback;
+- retained edges protect their endpoint nodes.
+
+Native probing established that `DeleteNode` does **not** cascade: it leaves
+incident edges dangling. Cleanup therefore cannot rely on the engine to protect
+unrelated relationships; it must refuse before deleting. Full controls and
+before/after content-and-identity checks are in
+[`ownership-safety.md`](ANDIRIT-CI1A-S2.6-WP-S64-MIRROR-REMED-01-evidence/ownership-safety.md).
+
 ## Remediation
 
 ### Canonical facts, not unit re-aggregation
@@ -130,17 +157,18 @@ Affected-store recovery (the baseline-produced final store):
 
 ## Regression campaign
 
-Twenty new LatticeDb tests and one end-to-end CSharp linked-fixture test cover
-the required matrix, including direct physical node and edge inventory
-reconciliation, multi-repository isolation, transactional rollback,
-cancellation, occurrence parity, recovery and negative controls. The same tests
-were copied unmodified into a disposable worktree at the unmodified entry seal:
-10 of 19 LatticeDb tests and the linked-fixture test fail there with the original
-duplicate/accumulation symptoms. All 21 pass on the candidate.
+Twenty-eight new LatticeDb tests and one end-to-end CSharp linked-fixture test
+cover the required matrix, including direct physical node and edge inventory
+reconciliation, ownership-safety adversarial controls, multi-repository
+isolation, transactional rollback, cancellation, occurrence parity, recovery and
+negative controls. The core remediation tests were copied unmodified into a
+disposable worktree at the unmodified entry seal: 10 of 19 LatticeDb tests and
+the linked-fixture test fail there with the original duplicate/accumulation
+symptoms. All new tests pass on the candidate.
 
-Full solution: 1024 tests passed, 0 failed. Coverage floors retained:
+Full solution: 1034 tests passed, 0 failed. Coverage floors retained:
 core 82.36% line / 70.89% branch (floor 55), CSharp 95.15% / 88% (floor 75),
-TreeSitter 89.85% / 75.45% (floor 60), LatticeDb 93.32% / 79.13% (floor 70).
+TreeSitter 89.85% / 75.45% (floor 60), LatticeDb 93.57% / 80.78% (floor 70).
 Repository formatting verification passes.
 
 Hosted exact-revision CI results are recorded in

@@ -65,14 +65,16 @@ internal sealed class NativeGraphMirror
         IReadOnlyDictionary<string, CodeGraphNode> nodes,
         IReadOnlyDictionary<string, CodeGraphEdge> edges,
         MirrorManifest? existing,
+        MirrorOwnership ownership,
         IReadOnlySet<ulong>? retainedNodeIds = null,
         IReadOnlySet<ulong>? retainedEdgeIds = null)
     {
         ArgumentNullException.ThrowIfNull(transaction);
         ArgumentNullException.ThrowIfNull(nodes);
         ArgumentNullException.ThrowIfNull(edges);
+        ArgumentNullException.ThrowIfNull(ownership);
 
-        DeleteOwned(transaction, existing, retainedNodeIds, retainedEdgeIds);
+        DeleteOwned(transaction, existing, ownership, retainedNodeIds, retainedEdgeIds);
         SweepOrphans(transaction, retainedNodeIds, retainedEdgeIds);
 
         var nodeManifest = new Dictionary<string, ulong>(StringComparer.Ordinal);
@@ -111,14 +113,52 @@ internal sealed class NativeGraphMirror
     }
 
     /// <summary>
+    /// Snapshot of the physical objects that carry the mirror protocol markers.
+    /// </summary>
+    /// <remarks>
+    /// A node is a mirror object only when it has the historical mirror label and
+    /// the persisted payload property. An edge is a mirror object only when it
+    /// carries the payload property and starts at a mirror node. Manifests are
+    /// trusted only when every entry resolves to one of these objects.
+    /// </remarks>
+    internal sealed record MirrorOwnership(
+        IReadOnlySet<ulong> NodeIds,
+        IReadOnlyDictionary<ulong, LatticeEdgeInfo> Edges)
+    {
+        internal static MirrorOwnership Read(LatticeTransaction transaction)
+        {
+            ArgumentNullException.ThrowIfNull(transaction);
+            var nodeIds = transaction.GetNodesByLabel(NodeLabel)
+                .Where(node => transaction.TryGetProperty(node, JsonProperty, out _))
+                .Select(node => node.Value)
+                .ToHashSet();
+            var edges = new Dictionary<ulong, LatticeEdgeInfo>();
+            foreach (var nodeId in nodeIds)
+            {
+                foreach (var edge in transaction.GetOutgoingEdges(
+                    new LatticeNodeId(nodeId)))
+                {
+                    if (transaction.TryGetEdgeProperty(
+                        edge.Id, JsonProperty, out _))
+                    {
+                        edges[edge.Id.Value] = edge;
+                    }
+                }
+            }
+            return new MirrorOwnership(nodeIds, edges);
+        }
+    }
+
+    /// <summary>
     /// Removes every protocol-marked mirror row that no manifest in the database
     /// references. Runs inside the caller's transaction.
     /// </summary>
     /// <remarks>
     /// Mirror rows are derived state, so an untracked row is never part of any
     /// repository's served mirror; it can be reconstructed from the authoritative
-    /// command log. Rows referenced by another repository's manifest are retained
-    /// to preserve repository isolation.
+    /// command log. Rows referenced by another repository's manifest are retained,
+    /// including the endpoint nodes of a retained edge. A non-mirror edge incident
+    /// to a candidate row makes ownership ambiguous and aborts the transaction.
     /// </remarks>
     internal static void SweepOrphans(
         LatticeTransaction transaction,
@@ -126,40 +166,45 @@ internal sealed class NativeGraphMirror
         IReadOnlySet<ulong>? retainedEdgeIds)
     {
         ArgumentNullException.ThrowIfNull(transaction);
-        var mirrorNodes = transaction.GetNodesByLabel(NodeLabel)
-            .Where(node => transaction.TryGetProperty(node, JsonProperty, out _))
-            .ToArray();
-
-        var mirrorEdges = new Dictionary<ulong, LatticeEdgeInfo>();
-        foreach (var node in mirrorNodes)
+        var ownership = MirrorOwnership.Read(transaction);
+        var protectedNodes = retainedNodeIds is null
+            ? new HashSet<ulong>()
+            : new HashSet<ulong>(retainedNodeIds);
+        if (retainedEdgeIds is not null)
         {
-            foreach (var edge in transaction.GetOutgoingEdges(node))
+            foreach (var edgeId in retainedEdgeIds)
             {
-                if (transaction.TryGetEdgeProperty(edge.Id, JsonProperty, out _))
+                if (ownership.Edges.TryGetValue(edgeId, out var retainedEdge))
                 {
-                    mirrorEdges[edge.Id.Value] = edge;
+                    protectedNodes.Add(retainedEdge.Source.Value);
+                    protectedNodes.Add(retainedEdge.Target.Value);
                 }
             }
         }
 
-        foreach (var edge in mirrorEdges.Values)
+        // A mirror candidate with a non-mirror relationship cannot be removed
+        // without either deleting unrelated data or leaving a dangling endpoint.
+        // Refuse before deleting anything; the caller's transaction rolls back.
+        foreach (var nodeId in ownership.NodeIds)
+        {
+            if (protectedNodes.Contains(nodeId))
+                continue;
+            EnsureOnlyMirrorRelationships(
+                transaction, ownership, new LatticeNodeId(nodeId));
+        }
+
+        foreach (var edge in ownership.Edges.Values)
         {
             if (retainedEdgeIds?.Contains(edge.Id.Value) is true)
-            {
                 continue;
-            }
-
             transaction.DeleteEdge(edge.Source, edge.Target, edge.Type);
         }
 
-        foreach (var node in mirrorNodes)
+        foreach (var nodeId in ownership.NodeIds)
         {
-            if (retainedNodeIds?.Contains(node.Value) is true)
-            {
+            if (protectedNodes.Contains(nodeId))
                 continue;
-            }
-
-            transaction.DeleteNode(node);
+            transaction.DeleteNode(new LatticeNodeId(nodeId));
         }
     }
 
@@ -170,38 +215,57 @@ internal sealed class NativeGraphMirror
     internal static void Drop(
         LatticeTransaction transaction,
         MirrorManifest? manifest,
+        MirrorOwnership ownership,
         IReadOnlySet<ulong>? retainedNodeIds,
         IReadOnlySet<ulong>? retainedEdgeIds) =>
-        DeleteOwned(transaction, manifest, retainedNodeIds, retainedEdgeIds);
+        DeleteOwned(transaction, manifest, ownership, retainedNodeIds, retainedEdgeIds);
 
     private static void DeleteOwned(
         LatticeTransaction transaction,
         MirrorManifest? existing,
+        MirrorOwnership ownership,
         IReadOnlySet<ulong>? retainedNodeIds,
         IReadOnlySet<ulong>? retainedEdgeIds)
     {
+        ArgumentNullException.ThrowIfNull(ownership);
         if (existing is null)
         {
             return;
         }
 
+        var protectedNodes = retainedNodeIds is null
+            ? new HashSet<ulong>()
+            : new HashSet<ulong>(retainedNodeIds);
+        if (retainedEdgeIds is not null)
+        {
+            foreach (var edgeId in retainedEdgeIds)
+            {
+                if (ownership.Edges.TryGetValue(edgeId, out var retainedEdge))
+                {
+                    protectedNodes.Add(retainedEdge.Source.Value);
+                    protectedNodes.Add(retainedEdge.Target.Value);
+                }
+            }
+        }
+
         var deletedEdges = new HashSet<ulong>();
         foreach (var nativeId in existing.Nodes.Values)
         {
-            if (retainedNodeIds?.Contains(nativeId) is true)
+            if (!ownership.NodeIds.Contains(nativeId) ||
+                protectedNodes.Contains(nativeId))
             {
+                // A manifest is not ownership evidence for a non-mirror or
+                // cross-repository object.
                 continue;
             }
 
             var node = new LatticeNodeId(nativeId);
+            EnsureOnlyMirrorRelationships(transaction, ownership, node);
             foreach (var edge in transaction.GetOutgoingEdges(node)
                 .Concat(transaction.GetIncomingEdges(node)))
             {
                 if (retainedEdgeIds?.Contains(edge.Id.Value) is true)
-                {
                     continue;
-                }
-
                 if (deletedEdges.Add(edge.Id.Value))
                 {
                     transaction.DeleteEdge(edge.Source, edge.Target, edge.Type);
@@ -210,6 +274,55 @@ internal sealed class NativeGraphMirror
 
             transaction.DeleteNode(node);
         }
+    }
+
+    private static void EnsureOnlyMirrorRelationships(
+        LatticeTransaction transaction,
+        MirrorOwnership ownership,
+        LatticeNodeId node)
+    {
+        foreach (var edge in transaction.GetOutgoingEdges(node)
+            .Concat(transaction.GetIncomingEdges(node)))
+        {
+            if (!ownership.Edges.ContainsKey(edge.Id.Value))
+            {
+                throw new InvalidDataException(
+                    $"Mirror ownership is ambiguous: node {node.Value} has a " +
+                    $"non-mirror incident edge {edge.Id.Value} of type '{edge.Type}'.");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Returns a manifest only when every entry resolves to a protocol-marked
+    /// mirror object and every referenced edge connects nodes in the same
+    /// manifest. Otherwise the manifest is not ownership evidence.
+    /// </summary>
+    internal static MirrorManifest? ReadOwnedManifest(
+        string payload,
+        MirrorOwnership ownership)
+    {
+        ArgumentNullException.ThrowIfNull(ownership);
+        var manifest = ReadManifest(payload);
+        if (manifest.Nodes is null || manifest.Edges is null ||
+            manifest.Nodes.Values.Distinct().Count() != manifest.Nodes.Count ||
+            manifest.Edges.Values.Distinct().Count() != manifest.Edges.Count ||
+            !manifest.Nodes.Values.All(ownership.NodeIds.Contains))
+        {
+            return null;
+        }
+
+        var nativeNodes = manifest.Nodes.Values.ToHashSet();
+        foreach (var edgeId in manifest.Edges.Values)
+        {
+            if (!ownership.Edges.TryGetValue(edgeId, out var edge) ||
+                !nativeNodes.Contains(edge.Source.Value) ||
+                !nativeNodes.Contains(edge.Target.Value))
+            {
+                return null;
+            }
+        }
+        return manifest;
     }
 
     /// <summary>

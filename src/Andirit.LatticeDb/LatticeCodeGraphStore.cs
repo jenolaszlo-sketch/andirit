@@ -540,11 +540,14 @@ public sealed partial class LatticeCodeGraphStore :
                 // a mirror rebuilt moments earlier in this loop is protected
                 // while an orphan left by an older revision is removed.
                 var manifestRows = ReadPairsInTxn(txn, NativeGraphMirror.MirrorLabel);
-                var existing = FindManifest(manifestRows, repositoryId);
-                var (retainedNodes, retainedEdges) = RetainedMirrorIdentities(manifestRows, repositoryId);
+                var ownership = NativeGraphMirror.MirrorOwnership.Read(txn);
+                var existing = FindOwnedManifest(manifestRows, repositoryId, ownership);
+                var (retainedNodes, retainedEdges) =
+                    RetainedMirrorIdentities(manifestRows, repositoryId, ownership);
                 var mirror = TranslateNative(
                     () => NativeGraphMirror.Rebuild(
-                        txn, facts.Nodes, facts.Edges, existing, retainedNodes, retainedEdges),
+                        txn, facts.Nodes, facts.Edges, existing, ownership,
+                        retainedNodes, retainedEdges),
                     "rebuild graph mirror");
                 Upsert(txn, NativeGraphMirror.MirrorLabel, repositoryId, Serialize(NativeGraphMirror.WriteManifest(mirror.Manifest)));
                 txn.Commit();
@@ -561,33 +564,30 @@ public sealed partial class LatticeCodeGraphStore :
         _mirrors = mirrors;
     }
 
-    private static NativeGraphMirror.MirrorManifest? FindManifest(
+    private static NativeGraphMirror.MirrorManifest? FindOwnedManifest(
         IReadOnlyList<(string Key, string Payload)> manifestRows,
-        string repositoryId)
+        string repositoryId,
+        NativeGraphMirror.MirrorOwnership ownership)
     {
         foreach (var (key, payload) in manifestRows)
         {
             if (key == repositoryId)
-                return ReadManifestOrNull(payload);
+                return ReadOwnedManifest(payload, ownership);
         }
         return null;
     }
 
-    private static NativeGraphMirror.MirrorManifest? ReadManifestOrNull(string payload)
+    private static NativeGraphMirror.MirrorManifest? ReadOwnedManifest(
+        string payload,
+        NativeGraphMirror.MirrorOwnership ownership)
     {
         try
         {
-            var manifest = NativeGraphMirror.ReadManifest(
+            return NativeGraphMirror.ReadOwnedManifest(
                 JsonSerializer.Deserialize<string>(
                     Convert.FromBase64String(payload), SerializerOptions)
-                ?? throw new InvalidDataException());
-            if (manifest.Nodes is null || manifest.Edges is null ||
-                manifest.Nodes.Values.Distinct().Count() != manifest.Nodes.Count ||
-                manifest.Edges.Values.Distinct().Count() != manifest.Edges.Count)
-            {
-                throw new InvalidDataException();
-            }
-            return manifest;
+                ?? throw new InvalidDataException(),
+                ownership);
         }
         catch (Exception exception) when (exception is FormatException or JsonException or InvalidDataException)
         {
@@ -599,7 +599,8 @@ public sealed partial class LatticeCodeGraphStore :
 
     private static (HashSet<ulong> Nodes, HashSet<ulong> Edges) RetainedMirrorIdentities(
         IReadOnlyList<(string Key, string Payload)> manifestRows,
-        string? excludedRepositoryId)
+        string? excludedRepositoryId,
+        NativeGraphMirror.MirrorOwnership ownership)
     {
         var nodes = new HashSet<ulong>();
         var edges = new HashSet<ulong>();
@@ -607,7 +608,7 @@ public sealed partial class LatticeCodeGraphStore :
         {
             if (excludedRepositoryId is not null && key == excludedRepositoryId)
                 continue;
-            var manifest = ReadManifestOrNull(payload);
+            var manifest = ReadOwnedManifest(payload, ownership);
             if (manifest is null)
                 continue;
             nodes.UnionWith(manifest.Nodes.Values);
@@ -1016,9 +1017,10 @@ public sealed partial class LatticeCodeGraphStore :
                     var completed = command.Run!;
                     var repositoryId = completed.RepositoryId.Value;
                     var manifestRows = ReadPairsInTxn(txn, NativeGraphMirror.MirrorLabel);
-                    var existing = FindManifest(manifestRows, repositoryId);
+                    var ownership = NativeGraphMirror.MirrorOwnership.Read(txn);
+                    var existing = FindOwnedManifest(manifestRows, repositoryId, ownership);
                     var (retainedNodes, retainedEdges) =
-                        RetainedMirrorIdentities(manifestRows, repositoryId);
+                        RetainedMirrorIdentities(manifestRows, repositoryId, ownership);
                     if (_nativeTraversal)
                     {
                         var facts = _inner.GetMaterializedFacts(completed.RepositoryId);
@@ -1027,6 +1029,7 @@ public sealed partial class LatticeCodeGraphStore :
                             facts.Nodes,
                             facts.Edges,
                             existing,
+                            ownership,
                             retainedNodes,
                             retainedEdges);
                         Upsert(
@@ -1041,7 +1044,7 @@ public sealed partial class LatticeCodeGraphStore :
                         // objects, not only its manifest, or a later enabled
                         // rebuild has no inventory and accumulates orphans.
                         NativeGraphMirror.Drop(
-                            txn, existing, retainedNodes, retainedEdges);
+                            txn, existing, ownership, retainedNodes, retainedEdges);
                         DeleteMany(txn, NativeGraphMirror.MirrorLabel, [repositoryId]);
                         NativeGraphMirror.SweepOrphans(txn, retainedNodes, retainedEdges);
                     }
