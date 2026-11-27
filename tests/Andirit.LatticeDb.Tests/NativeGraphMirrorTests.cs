@@ -275,13 +275,21 @@ public sealed class NativeGraphMirrorTests
             using var transaction = database.BeginWriteTransaction();
             var source = Node("missing-source", "Example.MissingSource");
             var target = Node("target", "Example.Target");
-            var unit = new CodeIndexUnitReplacement(
-                Origin("unit:missing-source"),
-                [target],
-                edges: [Edge("edge:missing-source", source.Id, target.Id, CodeEdgeKinds.Calls)]);
+            var edge = Edge("edge:missing-source", source.Id, target.Id, CodeEdgeKinds.Calls);
 
             var exception = Assert.Throws<InvalidDataException>(() =>
-                NativeGraphMirror.Rebuild(transaction, [unit], null));
+                NativeGraphMirror.Rebuild(
+                    transaction,
+                    new Dictionary<string, CodeGraphNode>(StringComparer.Ordinal)
+                    {
+                        [target.Id.Value] = target
+                    },
+                    new Dictionary<string, CodeGraphEdge>(StringComparer.Ordinal)
+                    {
+                        [edge.Id.Value] = edge
+                    },
+                    null,
+                    NativeGraphMirror.MirrorOwnership.Read(transaction)));
 
             Assert.Contains("missing mirrored node", exception.Message, StringComparison.Ordinal);
             transaction.Rollback();
@@ -304,13 +312,21 @@ public sealed class NativeGraphMirrorTests
             using var transaction = database.BeginWriteTransaction();
             var source = Node("source", "Example.Source");
             var target = Node("missing-target", "Example.MissingTarget");
-            var unit = new CodeIndexUnitReplacement(
-                Origin("unit:missing-target"),
-                [source],
-                edges: [Edge("edge:missing-target", source.Id, target.Id, CodeEdgeKinds.Calls)]);
+            var edge = Edge("edge:missing-target", source.Id, target.Id, CodeEdgeKinds.Calls);
 
             var exception = Assert.Throws<InvalidDataException>(() =>
-                NativeGraphMirror.Rebuild(transaction, [unit], null));
+                NativeGraphMirror.Rebuild(
+                    transaction,
+                    new Dictionary<string, CodeGraphNode>(StringComparer.Ordinal)
+                    {
+                        [source.Id.Value] = source
+                    },
+                    new Dictionary<string, CodeGraphEdge>(StringComparer.Ordinal)
+                    {
+                        [edge.Id.Value] = edge
+                    },
+                    null,
+                    NativeGraphMirror.MirrorOwnership.Read(transaction)));
 
             Assert.Contains("missing mirrored node", exception.Message, StringComparison.Ordinal);
             transaction.Rollback();
@@ -332,10 +348,15 @@ public sealed class NativeGraphMirrorTests
                 new LatticeDatabaseOptions { Create = true });
             using var transaction = database.BeginWriteTransaction();
 
+            var noNodes = new Dictionary<string, CodeGraphNode>(StringComparer.Ordinal);
+            var noEdges = new Dictionary<string, CodeGraphEdge>(StringComparer.Ordinal);
+            var ownership = NativeGraphMirror.MirrorOwnership.Read(transaction);
             Assert.Throws<ArgumentNullException>(() =>
-                NativeGraphMirror.Rebuild(null!, [], null));
+                NativeGraphMirror.Rebuild(null!, noNodes, noEdges, null, ownership));
             Assert.Throws<ArgumentNullException>(() =>
-                NativeGraphMirror.Rebuild(transaction, null!, null));
+                NativeGraphMirror.Rebuild(transaction, null!, noEdges, null, ownership));
+            Assert.Throws<ArgumentNullException>(() =>
+                NativeGraphMirror.Rebuild(transaction, noNodes, null!, null, ownership));
             transaction.Rollback();
         }
         finally

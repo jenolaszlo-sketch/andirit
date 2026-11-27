@@ -1,0 +1,60 @@
+Baseline negative control for the S64-MIRROR-REMED-01 regression campaign.
+
+The final test files were copied unmodified into a disposable worktree at the
+unmodified entry seal dda4358bc2588368efc6ab6a7bd774857d998026. The worktree was
+removed without being committed.
+
+Files copied:
+  tests/Andirit.LatticeDb.Tests/NativeGraphMirrorRemediationTests.cs
+  tests/Andirit.LatticeDb.Tests/NativeGraphMirrorOwnershipTests.cs
+  tests/Andirit.CSharp.Tests/NativeGraphMirrorLinkedFixtureTests.cs
+
+Commands:
+  dotnet test <baseline>/tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj \
+    -c Release --no-build \
+    --filter "FullyQualifiedName~NativeGraphMirrorRemediationTests|FullyQualifiedName~NativeGraphMirrorOwnershipTests"
+  dotnet test <baseline>/tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj \
+    -c Release --no-build --filter "FullyQualifiedName~NativeGraphMirrorLinkedFixtureTests"
+
+Result on the defective baseline:
+  LatticeDb remediation + ownership tests: failed 14, passed 14, total 28
+  CSharp linked-fixture test: failed 1, passed 0, total 1
+
+Exact failing LatticeDb cases:
+  NativeGraphMirrorRemediationTests.SharedLogicalNodeIdentity_AcrossContributors_HasOnePhysicalNode
+  NativeGraphMirrorRemediationTests.SharedLogicalEdgeIdentity_AcrossContributors_HasOnePhysicalEdge
+  NativeGraphMirrorRemediationTests.RepeatedEnabledReopen_KeepsPhysicalCardinalityStable
+  NativeGraphMirrorRemediationTests.DisabledPublication_RemovesPhysicalMirrorObjects_AndReEnableRebuilds
+  NativeGraphMirrorRemediationTests.DisabledPublication_CleansLegacyOrphansWithoutManifest
+  NativeGraphMirrorRemediationTests.MultipleRepositories_WithSharedLogicalIdentity_StayIsolated
+  NativeGraphMirrorRemediationTests.InventoryOracle_DetectsInjectedDuplicateAndOrphan
+  NativeGraphMirrorRemediationTests.Recovery_RemovesUntrackedDuplicateNodesAndEdges
+  NativeGraphMirrorRemediationTests.Recovery_RemovesOrphansLeftByManifestOnlyDeletion
+  NativeGraphMirrorRemediationTests.Recovery_RebuildsMalformedManifest_FromAuthoritativeFacts
+  NativeGraphMirrorRemediationTests.Recovery_RebuildsManifestWithDuplicateNativeIdentities
+  NativeGraphMirrorOwnershipTests.ManifestReferencingUnrelatedNode_DoesNotDeleteIt
+  NativeGraphMirrorOwnershipTests.ManifestReferencingAuthoritativeCommandLogRecord_DoesNotDeleteIt
+  NativeGraphMirrorOwnershipTests.UnrelatedEdgeIncidentToMirrorNode_IsRefusedAndPreserved
+
+Representative assertion text:
+  SharedLogicalNodeIdentity_AcrossContributors_HasOnePhysicalNode
+    Expected: ["node:first", "node:second"]
+    Actual:   ["node:first", "node:first", "node:second", "node:second"]
+  RepeatedEnabledReopen_KeepsPhysicalCardinalityStable
+    Expected: ["node:a", "node:b", "node:c"]
+    Actual:   ["node:a", "node:b", "node:b", "node:b", "node:c"]
+  ManifestReferencingAuthoritativeCommandLogRecord_DoesNotDeleteIt
+    authoritative row count Expected: 4 Actual: 3
+  ManifestReferencingUnrelatedNode_DoesNotDeleteIt
+    unrelated node existence Expected: True Actual: False
+  UnrelatedEdgeIncidentToMirrorNode_IsRefusedAndPreserved
+    refusal Expected: not null Actual: null
+  LinkedFixture_HasOnePhysicalNodePerLogicalIdentity_AcrossLifecycle
+    Expected: 20 Actual: 21
+
+Fourteen of the 28 LatticeDb cases pass on the baseline by design: they are
+regression guards for scenarios the old code happened not to corrupt (for
+example, an unrelated edge that is not incident to a mapped node). The candidate
+passes all 28 plus the linked-fixture test. The failures therefore bind the
+oracle to the original duplicate/accumulation and ownership defects rather than
+to mirror output in general.

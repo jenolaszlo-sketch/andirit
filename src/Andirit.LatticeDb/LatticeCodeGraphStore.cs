@@ -525,23 +525,6 @@ public sealed partial class LatticeCodeGraphStore :
     private void RestoreMirrors(string[] repositoryIds)
     {
         var mirrors = new Dictionary<string, NativeGraphMirror>(StringComparer.Ordinal);
-        var existingMirrors = new Dictionary<string, NativeGraphMirror>(StringComparer.Ordinal);
-        foreach (var (key, payload) in ReadPairs(NativeGraphMirror.MirrorLabel))
-        {
-            try
-            {
-                existingMirrors[key] = new NativeGraphMirror(NativeGraphMirror.ReadManifest(
-                    JsonSerializer.Deserialize<string>(
-                        Convert.FromBase64String(payload), SerializerOptions)
-                    ?? throw new InvalidDataException()));
-            }
-            catch (Exception exception) when (exception is FormatException or JsonException or InvalidDataException)
-            {
-                // Derived mirror metadata is recoverable. Rebuild it from the
-                // authoritative published units below.
-            }
-        }
-
         foreach (var repositoryId in repositoryIds)
         {
             var repository = new CodeRepositoryId(repositoryId);
@@ -549,14 +532,22 @@ public sealed partial class LatticeCodeGraphStore :
                 .GetAwaiter().GetResult();
             if (publication is null)
                 continue;
-            var units = _inner.GetPublishedUnitsAsync(repository, CancellationToken.None)
-                .GetAwaiter().GetResult();
+            var facts = _inner.GetMaterializedFacts(repository);
             using var txn = _database.BeginWriteTransaction();
             try
             {
-                existingMirrors.TryGetValue(repositoryId, out var existing);
+                // Ownership is read from the same transaction that reuses it, so
+                // a mirror rebuilt moments earlier in this loop is protected
+                // while an orphan left by an older revision is removed.
+                var manifestRows = ReadPairsInTxn(txn, NativeGraphMirror.MirrorLabel);
+                var ownership = NativeGraphMirror.MirrorOwnership.Read(txn);
+                var existing = FindOwnedManifest(manifestRows, repositoryId, ownership);
+                var (retainedNodes, retainedEdges) =
+                    RetainedMirrorIdentities(manifestRows, repositoryId, ownership);
                 var mirror = TranslateNative(
-                    () => NativeGraphMirror.Rebuild(txn, units, existing?.Manifest),
+                    () => NativeGraphMirror.Rebuild(
+                        txn, facts.Nodes, facts.Edges, existing, ownership,
+                        retainedNodes, retainedEdges),
                     "rebuild graph mirror");
                 Upsert(txn, NativeGraphMirror.MirrorLabel, repositoryId, Serialize(NativeGraphMirror.WriteManifest(mirror.Manifest)));
                 txn.Commit();
@@ -571,6 +562,59 @@ public sealed partial class LatticeCodeGraphStore :
         }
 
         _mirrors = mirrors;
+    }
+
+    private static NativeGraphMirror.MirrorManifest? FindOwnedManifest(
+        IReadOnlyList<(string Key, string Payload)> manifestRows,
+        string repositoryId,
+        NativeGraphMirror.MirrorOwnership ownership)
+    {
+        foreach (var (key, payload) in manifestRows)
+        {
+            if (key == repositoryId)
+                return ReadOwnedManifest(payload, ownership);
+        }
+        return null;
+    }
+
+    private static NativeGraphMirror.MirrorManifest? ReadOwnedManifest(
+        string payload,
+        NativeGraphMirror.MirrorOwnership ownership)
+    {
+        try
+        {
+            return NativeGraphMirror.ReadOwnedManifest(
+                JsonSerializer.Deserialize<string>(
+                    Convert.FromBase64String(payload), SerializerOptions)
+                ?? throw new InvalidDataException(),
+                ownership);
+        }
+        catch (Exception exception) when (exception is FormatException or JsonException or InvalidDataException)
+        {
+            // Derived mirror metadata is recoverable; an unreadable manifest
+            // owns no provable objects and is rebuilt from authoritative facts.
+            return null;
+        }
+    }
+
+    private static (HashSet<ulong> Nodes, HashSet<ulong> Edges) RetainedMirrorIdentities(
+        IReadOnlyList<(string Key, string Payload)> manifestRows,
+        string? excludedRepositoryId,
+        NativeGraphMirror.MirrorOwnership ownership)
+    {
+        var nodes = new HashSet<ulong>();
+        var edges = new HashSet<ulong>();
+        foreach (var (key, payload) in manifestRows)
+        {
+            if (excludedRepositoryId is not null && key == excludedRepositoryId)
+                continue;
+            var manifest = ReadOwnedManifest(payload, ownership);
+            if (manifest is null)
+                continue;
+            nodes.UnionWith(manifest.Nodes.Values);
+            edges.UnionWith(manifest.Edges.Values);
+        }
+        return (nodes, edges);
     }
 
     private void RestoreOccurrences(CancellationToken cancellationToken)
@@ -970,17 +1014,24 @@ public sealed partial class LatticeCodeGraphStore :
                     Upsert(txn, IndexStateLabel, command.State!.RepositoryId.Value, Serialize(command.State));
                     DeleteMany(txn, BaselineLabel, [RunKey(command.Run!)]);
                     authority = PersistOccurrences(txn, command.Run!, command.State!);
+                    var completed = command.Run!;
+                    var repositoryId = completed.RepositoryId.Value;
+                    var manifestRows = ReadPairsInTxn(txn, NativeGraphMirror.MirrorLabel);
+                    var ownership = NativeGraphMirror.MirrorOwnership.Read(txn);
+                    var existing = FindOwnedManifest(manifestRows, repositoryId, ownership);
+                    var (retainedNodes, retainedEdges) =
+                        RetainedMirrorIdentities(manifestRows, repositoryId, ownership);
                     if (_nativeTraversal)
                     {
-                        var completed = command.Run!;
-                        var repositoryId = completed.RepositoryId.Value;
-                        var published = Apply(_commands, command)
-                            .Where(candidate => candidate.Kind == "replace" &&
-                                candidate.Replacement!.Origin.RepositoryId == completed.RepositoryId)
-                            .Select(candidate => candidate.Replacement!)
-                            .ToList();
-                        _mirrors.TryGetValue(repositoryId, out var existing);
-                        mirror = NativeGraphMirror.Rebuild(txn, published, existing?.Manifest);
+                        var facts = _inner.GetMaterializedFacts(completed.RepositoryId);
+                        mirror = NativeGraphMirror.Rebuild(
+                            txn,
+                            facts.Nodes,
+                            facts.Edges,
+                            existing,
+                            ownership,
+                            retainedNodes,
+                            retainedEdges);
                         Upsert(
                             txn,
                             NativeGraphMirror.MirrorLabel,
@@ -989,7 +1040,13 @@ public sealed partial class LatticeCodeGraphStore :
                     }
                     else
                     {
-                        DeleteMany(txn, NativeGraphMirror.MirrorLabel, [command.Run!.RepositoryId.Value]);
+                        // Disabled publication must remove the mirror's physical
+                        // objects, not only its manifest, or a later enabled
+                        // rebuild has no inventory and accumulates orphans.
+                        NativeGraphMirror.Drop(
+                            txn, existing, ownership, retainedNodes, retainedEdges);
+                        DeleteMany(txn, NativeGraphMirror.MirrorLabel, [repositoryId]);
+                        NativeGraphMirror.SweepOrphans(txn, retainedNodes, retainedEdges);
                     }
 
                     break;
