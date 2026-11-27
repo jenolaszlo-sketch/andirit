@@ -1,0 +1,26 @@
+S6.4 implementation baseline verification
+
+Accepted implementation: ec984bfe63e5fbe13047cee8920e00b634ab17b0
+Implementation tree:      8ec0eb7a5e647a171f54fa8969dadbb6c65da179
+Producer seal:            870b600acf1490337af9f483f8894a5e8166a90e
+Qualification seal:       b3951c790768ad257fb3418e5abe41cc5ecc5322
+Re-entry payload:         b7d2bf69f53155b6f083a3505a8bcc20ad0bcad7
+Re-entry seal:            1776ea8ca12ba54dc85e817484711663480569a2
+Re-entry seal SHA-256:    4f867e531d8dd0c541cff5e83391f680e5fed414b2e9dd06d706a0b4c2b54268
+
+Verification performed from the canonical clone before implementation:
+
+  python docs/reviews/ANDIRIT-CI1A-S2.6-WP-S64-ENTRY-01-R1-evidence/seal.py \
+    verify 1776ea8ca12ba54dc85e817484711663480569a2
+
+  Verified 69 re-entry evidence files
+  Payload b7d2bf69f53155b6f083a3505a8bcc20ad0bcad7 tree 50e84753d4b63d9c08abc27ddd701d6c99904b66
+  Seal 1776ea8ca12ba54dc85e817484711663480569a2 SHA-256 4f867e531d8dd0c541cff5e83391f680e5fed414b2e9dd06d706a0b4c2b54268
+
+  python docs/reviews/ANDIRIT-CI1A-S2.6-WP-S64-ENTRY-01-R1-evidence/tools/validate-corpus.py \
+    <repo-root> <temp>/validation.json
+
+  pass=true checks=27
+
+The prior producer and qualification seals are unmodified. Their content hashes
+verify; their own seal delta rule reports M rather than A (R1-06).
