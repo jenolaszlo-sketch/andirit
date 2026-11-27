@@ -44,6 +44,42 @@ Windows x64 candidate run; hosted reruns are in `hosted-ci.md`.
 - Full solution: 1034 passed, 0 failed.
 - Formatting: `dotnet format Andirit.slnx --verify-no-changes` clean.
 
+## Reconciliation with the preceding accepted inventory
+
+Published main `99b04c0…` Windows CI run `45773556513` receipts:
+
+| Project | Accepted total |
+| --- | ---: |
+| core | 345 |
+| CSharp | 372 |
+| LatticeDb | 131 |
+| TreeSitter | 157 |
+| **Total** | **1005** |
+
+Candidate:
+
+| Project | Candidate total | Delta |
+| --- | ---: | ---: |
+| core | 345 | 0 |
+| CSharp | 373 | +1 (linked fixture) |
+| LatticeDb | 159 | +28 (20 remediation + 8 ownership) |
+| TreeSitter | 157 | 0 |
+| **Total** | **1034** | **+29** |
+
+No existing test was removed or skipped. Reconciliation of the earlier producer
+summary:
+
+- At the first remediation commit `579fd6a`, LatticeDb was 150 and CSharp 373,
+  i.e. **19 remediation tests + 1 linked-fixture test = 20 new tests** and
+  **1,025 total**. The earlier report said "21 added tests" and "1,024 total";
+  both were arithmetic slips (19 + 1 = 20; 345 + 373 + 150 + 157 = 1,025).
+- The 19-test baseline negative control corresponded to the 19 remediation tests
+  that existed at that point.
+- After the mandated ownership campaign, the candidate adds 8 ownership tests
+  and one additional remediation test (legacy orphan cleanup): **+9**.
+- Final candidate: **29 new tests** (28 LatticeDb + 1 CSharp) and **1,034
+  total**. The final baseline control covers all 28 LatticeDb tests.
+
 ## Baseline negative control
 
 The same two test files copied unmodified onto the entry seal produce:

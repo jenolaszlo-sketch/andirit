@@ -11,7 +11,7 @@ EVIDENCE = f"docs/reviews/{COMMISSION}-evidence"
 BASE = "dda4358bc2588368efc6ab6a7bd774857d998026"
 MANIFEST = f"{EVIDENCE}/manifest.json"
 INPUTS = f"{EVIDENCE}/reviewed-inputs.json"
-SEAL_ADDITIONS = {INPUTS, f"{EVIDENCE}/hosted-ci.md"}
+REQUIRED_PAYLOAD_ADDITIONS = {INPUTS, f"{EVIDENCE}/hosted-ci.md"}
 IMPLEMENTATION_ROOTS = ("src/", "tests/", ".github/", "Directory.Build.props",
                         "Directory.Build.targets", "Andirit.slnx")
 
@@ -52,9 +52,9 @@ def evidence_paths(commit):
 
 
 def build_inputs(implementation):
-    parents = git("show", "-s", "--format=%P", implementation).decode().split()
-    if parents != [BASE]:
-        raise ValueError("The implementation commit is not a direct child of the entry seal")
+    ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", BASE, implementation])
+    if ancestor.returncode != 0:
+        raise ValueError("The entry seal is not an ancestor of the implementation")
     expected = set(implementation_paths(implementation))
     if not expected:
         raise ValueError("The implementation commit changes no source or test files")
@@ -73,8 +73,12 @@ def build_manifest(payload):
         raise ValueError("The payload commit must have exactly one parent")
     implementation = rev_parse(parents[0] + "^{commit}")
     additions = changed(implementation, payload)
-    if additions != SEAL_ADDITIONS:
-        raise ValueError(f"Payload additions are {sorted(additions)}, expected {sorted(SEAL_ADDITIONS)}")
+    if not REQUIRED_PAYLOAD_ADDITIONS <= additions:
+        raise ValueError(
+            f"Payload additions are {sorted(additions)}, expected at least "
+            f"{sorted(REQUIRED_PAYLOAD_ADDITIONS)}")
+    if any(path.startswith(IMPLEMENTATION_ROOTS) for path in additions):
+        raise ValueError("The payload commit must not change implementation code")
     paths = evidence_paths(payload)
     if MANIFEST in paths:
         raise ValueError("The manifest must not seal itself")
@@ -89,7 +93,7 @@ def build_manifest(payload):
         "reviewed_revision": describe(BASE),
         "implementation": describe(implementation),
         "payload": describe(payload),
-        "seal_additions": sorted(SEAL_ADDITIONS),
+        "payload_additions": sorted(additions),
         "entries": [member(payload, path) for path in paths],
     }
 
@@ -104,11 +108,11 @@ def verify(revision):
     if saved != build_manifest(payload):
         raise ValueError("Seal differs from the exact payload")
     implementation = saved["implementation"]["commit"]
-    if changed(implementation, payload) != SEAL_ADDITIONS:
+    if changed(implementation, payload) != set(saved["payload_additions"]):
         raise ValueError("Payload differs from the sealed additions")
     if saved["entries"] != [member(seal, entry["path"]) for entry in saved["entries"]]:
         raise ValueError("Evidence differs from the sealed payload")
-    inputs = json.loads(git("cat-file", "blob", f"{implementation}:{INPUTS}"))
+    inputs = json.loads(git("cat-file", "blob", f"{payload}:{INPUTS}"))
     expected = build_inputs(implementation)
     if inputs != expected or inputs["entries"] != [
             member(implementation, entry["path"]) for entry in inputs["entries"]]:

@@ -24,7 +24,8 @@ physical inventories, recovery receipts and regression results to Git objects.
 | `repository-isolation.md` | Manifest ownership and cross-repository proof |
 | `inherited-impact.md` | S6.1–S6.3 replay and coverage impact |
 | `regression-campaign.md` | Required scenario → named test mapping |
-| `hosted-ci.md` | Exact-revision hosted CI identities |
+| `hosted-ci.md` | Hosted CI run `46035752304`, named attribution, coverage and checkout-tree equivalence |
+| `hosted-verification.json`, `verify-hosted.py` | Parsed receipts and the reproducible verifier |
 | `qualification-proposal.md` | Proposed independent qualification commission |
 | `reviewed-inputs.json` | Implementation source/test/CI blobs bound to the exact implementation commit |
 | `manifest.json` | Self-excluding evidence seal |

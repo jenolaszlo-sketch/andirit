@@ -171,7 +171,13 @@ core 82.36% line / 70.89% branch (floor 55), CSharp 95.15% / 88% (floor 75),
 TreeSitter 89.85% / 75.45% (floor 60), LatticeDb 93.57% / 80.78% (floor 70).
 Repository formatting verification passes.
 
-Hosted exact-revision CI results are recorded in
+Hosted CI run **`46035752304`** (attempt 1) succeeded on Windows x64, genuine
+hosted Linux x64 and macOS ARM64, plus packaging. All 1,034 tests and all 29 new
+tests passed on every runner with zero skips, and all nineteen inherited S6.3
+named cases passed. GitHub checks out the PR merge commit
+`c549852450d950412ff7eb01f0916134f2539c2a`; its tree is byte-identical to the
+candidate tree, and its second parent is the implementation commit. Exact job,
+artifact, coverage and equivalence records are in
 [`hosted-ci.md`](ANDIRIT-CI1A-S2.6-WP-S64-MIRROR-REMED-01-evidence/hosted-ci.md).
 
 ## Retained qualifications and residual risks
