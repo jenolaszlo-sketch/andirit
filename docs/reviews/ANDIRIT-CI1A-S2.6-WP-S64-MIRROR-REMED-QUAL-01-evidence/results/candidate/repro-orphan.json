@@ -1,0 +1,98 @@
+{
+  "command": "repro-orphan",
+  "pass": true,
+  "errors": [],
+  "disabled": {
+    "nodes": 0,
+    "edges": 0,
+    "manifests": 0,
+    "nodeLogical": [],
+    "edgeLogical": [],
+    "occurrenceFacts": 0
+  },
+  "after": {
+    "Nodes": [
+      {
+        "LogicalId": "node:a",
+        "NativeId": 23
+      },
+      {
+        "LogicalId": "node:b",
+        "NativeId": 24
+      }
+    ],
+    "Edges": [
+      {
+        "LogicalId": "edge:ab",
+        "NativeId": 2,
+        "Source": 23,
+        "Target": 24
+      }
+    ],
+    "Manifests": [
+      {
+        "Repository": "repo:orphan",
+        "Nodes": {
+          "node:a": 23,
+          "node:b": 24
+        },
+        "Edges": {
+          "edge:ab": 2
+        }
+      }
+    ],
+    "Related": [],
+    "Authoritative": [
+      {
+        "Label": "HetuIndexState",
+        "NativeId": 22,
+        "Key": "repo:orphan",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOm9ycGhhbiJ9LCJJbmRleFJ1bklkIjp7IlZhbHVlIjoicnVuOnR3byJ9LCJTb3VyY2VzIjpbXSwiU25hcHNob3RJZGVudGl0eSI6bnVsbCwiSXNDb25zaXN0ZW50U25hcHNob3QiOmZhbHNlLCJJbmRleElkZW50aXR5Ijp7IlZhbHVlIjoiNjUwMTI3MDRlZmI0ZjdkZTdhYTc4Mjk0MWZhYWYxNmZkMjZmOTQ3NWMxZjlmZjJkYThhNDAwNDU3Njg3NDQ5OSJ9fQ=="
+      },
+      {
+        "Label": "HetuRepository",
+        "NativeId": 14,
+        "Key": "repo:orphan",
+        "Payload": "eyJJZCI6eyJWYWx1ZSI6InJlcG86b3JwaGFuIn0sIkRpc3BsYXlOYW1lIjpudWxsLCJTb3VyY2VVcmkiOm51bGwsIlJlZ2lzdGVyZWRBdCI6IjIwMjYtMTEtMjdUMTc6MDM6NDEuNDE0ODcyMyswMDowMCJ9"
+      },
+      {
+        "Label": "HetuRun",
+        "NativeId": 9,
+        "Key": "repo:orphan\nrun:one",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOm9ycGhhbiJ9LCJJZCI6eyJWYWx1ZSI6InJ1bjpvbmUifSwiU3RhcnRlZEF0IjoiMjAyNi0xMS0yOFQwOToyMjowMCswMDowMCIsIlN0YXR1cyI6MSwiQ29tcGxldGVkQXQiOiIyMDI2LTExLTI4VDA5OjIyOjAxKzAwOjAwIiwiUGx1Z2lucyI6W3siVmFsdWUiOiJwbHVnaW46cXVhbCJ9XX0="
+      },
+      {
+        "Label": "HetuRun",
+        "NativeId": 21,
+        "Key": "repo:orphan\nrun:two",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOm9ycGhhbiJ9LCJJZCI6eyJWYWx1ZSI6InJ1bjp0d28ifSwiU3RhcnRlZEF0IjoiMjAyNi0xMS0yOFQwMjoyNjowMCswMDowMCIsIlN0YXR1cyI6MSwiQ29tcGxldGVkQXQiOiIyMDI2LTExLTI4VDAyOjI2OjAxKzAwOjAwIiwiUGx1Z2lucyI6W3siVmFsdWUiOiJwbHVnaW46cXVhbCJ9XX0="
+      },
+      {
+        "Label": "HetuUnit",
+        "NativeId": 19,
+        "Key": "repo:orphan\nplugin:qual\nunit:one",
+        "Payload": "eyJSZXF1aXJlc09jY3VycmVuY2VBdXRob3JpdHkiOmZhbHNlLCJPcmlnaW4iOnsiUmVwb3NpdG9yeUlkIjp7IlZhbHVlIjoicmVwbzpvcnBoYW4ifSwiUGx1Z2luSWQiOnsiVmFsdWUiOiJwbHVnaW46cXVhbCJ9LCJQbHVnaW5WZXJzaW9uIjoiMS4wLjAiLCJJbmRleFJ1bklkIjp7IlZhbHVlIjoicnVuOnR3byJ9LCJJbmRleFVuaXRJZCI6eyJWYWx1ZSI6InVuaXQ6b25lIn0sIlNvdXJjZVBhdGgiOm51bGwsIlNvdXJjZUhhc2giOm51bGx9LCJOb2RlcyI6W3siSWQiOnsiVmFsdWUiOiJub2RlOmEifSwiS2luZCI6eyJWYWx1ZSI6InR5cGUifSwiTmFtZSI6ImEiLCJRdWFsaWZpZWROYW1lIjoiRXhhbXBsZS5hIiwiU3ltYm9sSWQiOnsiVmFsdWUiOiJzeW1ib2w6bm9kZTphIn0sIlByb3BlcnRpZXMiOnt9fSx7IklkIjp7IlZhbHVlIjoibm9kZTpiIn0sIktpbmQiOnsiVmFsdWUiOiJ0eXBlIn0sIk5hbWUiOiJiIiwiUXVhbGlmaWVkTmFtZSI6IkV4YW1wbGUuYiIsIlN5bWJvbElkIjp7IlZhbHVlIjoic3ltYm9sOm5vZGU6YiJ9LCJQcm9wZXJ0aWVzIjp7fX1dLCJEZWNsYXJhdGlvbnMiOltdLCJFZGdlcyI6W3siSWQiOnsiVmFsdWUiOiJlZGdlOmFiIn0sIlNvdXJjZUlkIjp7IlZhbHVlIjoibm9kZTphIn0sIlRhcmdldElkIjp7IlZhbHVlIjoibm9kZTpiIn0sIktpbmQiOnsiVmFsdWUiOiJjYWxscyJ9LCJFdmlkZW5jZSI6eyJRdWFsaXR5IjoxLCJQcm92aWRlciI6InBsdWdpbjpxdWFsIiwiUHJvdmlkZXJWZXJzaW9uIjoiMS4wLjAiLCJMb2NhdGlvbiI6bnVsbCwiQ29uZmlkZW5jZSI6bnVsbH0sIlByb3BlcnRpZXMiOnt9fV0sIk9jY3VycmVuY2VDb3ZlcmFnZSI6bnVsbH0="
+      },
+      {
+        "Label": "HetuUnit",
+        "NativeId": 20,
+        "Key": "repo:orphan\nplugin:qual\nunit:two",
+        "Payload": "eyJSZXF1aXJlc09jY3VycmVuY2VBdXRob3JpdHkiOmZhbHNlLCJPcmlnaW4iOnsiUmVwb3NpdG9yeUlkIjp7IlZhbHVlIjoicmVwbzpvcnBoYW4ifSwiUGx1Z2luSWQiOnsiVmFsdWUiOiJwbHVnaW46cXVhbCJ9LCJQbHVnaW5WZXJzaW9uIjoiMS4wLjAiLCJJbmRleFJ1bklkIjp7IlZhbHVlIjoicnVuOnR3byJ9LCJJbmRleFVuaXRJZCI6eyJWYWx1ZSI6InVuaXQ6dHdvIn0sIlNvdXJjZVBhdGgiOm51bGwsIlNvdXJjZUhhc2giOm51bGx9LCJOb2RlcyI6W3siSWQiOnsiVmFsdWUiOiJub2RlOmEifSwiS2luZCI6eyJWYWx1ZSI6InR5cGUifSwiTmFtZSI6ImEiLCJRdWFsaWZpZWROYW1lIjoiRXhhbXBsZS5hIiwiU3ltYm9sSWQiOnsiVmFsdWUiOiJzeW1ib2w6bm9kZTphIn0sIlByb3BlcnRpZXMiOnt9fSx7IklkIjp7IlZhbHVlIjoibm9kZTpiIn0sIktpbmQiOnsiVmFsdWUiOiJ0eXBlIn0sIk5hbWUiOiJiIiwiUXVhbGlmaWVkTmFtZSI6IkV4YW1wbGUuYiIsIlN5bWJvbElkIjp7IlZhbHVlIjoic3ltYm9sOm5vZGU6YiJ9LCJQcm9wZXJ0aWVzIjp7fX1dLCJEZWNsYXJhdGlvbnMiOltdLCJFZGdlcyI6W3siSWQiOnsiVmFsdWUiOiJlZGdlOmFiIn0sIlNvdXJjZUlkIjp7IlZhbHVlIjoibm9kZTphIn0sIlRhcmdldElkIjp7IlZhbHVlIjoibm9kZTpiIn0sIktpbmQiOnsiVmFsdWUiOiJjYWxscyJ9LCJFdmlkZW5jZSI6eyJRdWFsaXR5IjoxLCJQcm92aWRlciI6InBsdWdpbjpxdWFsIiwiUHJvdmlkZXJWZXJzaW9uIjoiMS4wLjAiLCJMb2NhdGlvbiI6bnVsbCwiQ29uZmlkZW5jZSI6bnVsbH0sIlByb3BlcnRpZXMiOnt9fV0sIk9jY3VycmVuY2VDb3ZlcmFnZSI6bnVsbH0="
+      }
+    ],
+    "OccurrenceFacts": 0,
+    "Summary": {
+      "nodes": 2,
+      "edges": 1,
+      "manifests": 1,
+      "nodeLogical": [
+        "node:a",
+        "node:b"
+      ],
+      "edgeLogical": [
+        "edge:ab"
+      ],
+      "occurrenceFacts": 0
+    }
+  }
+}
