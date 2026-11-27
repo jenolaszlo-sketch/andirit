@@ -288,6 +288,28 @@ public sealed class InMemoryCodeGraphStore :
         }
     }
 
+    /// <summary>
+    /// Returns the canonical graph facts of one repository exactly as public
+    /// traversal observes them: one node or edge per logical identity, with the
+    /// established contributor ordering, equivalence checks and endpoint
+    /// visibility already applied.
+    /// </summary>
+    /// <remarks>
+    /// Derived native mirrors must reproduce this view rather than re-aggregate
+    /// individual index units; aggregating units independently reintroduces
+    /// duplicate physical identities for shared nodes and edges.
+    /// </remarks>
+    internal (IReadOnlyDictionary<string, CodeGraphNode> Nodes, IReadOnlyDictionary<string, CodeGraphEdge> Edges)
+        GetMaterializedFacts(CodeRepositoryId repositoryId)
+    {
+        ArgumentNullException.ThrowIfNull(repositoryId);
+        lock (_gate)
+        {
+            var graph = Materialize(repositoryId);
+            return (graph.Nodes, graph.Edges);
+        }
+    }
+
     public ValueTask<CodeGraphStoreHealth> CheckHealthAsync(
         CancellationToken cancellationToken = default)
     {

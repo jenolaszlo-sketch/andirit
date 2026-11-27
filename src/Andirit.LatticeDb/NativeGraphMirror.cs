@@ -45,75 +45,171 @@ internal sealed class NativeGraphMirror
         ?? new(new Dictionary<string, ulong>(), new Dictionary<string, ulong>());
 
     /// <summary>
-    /// Replaces the repository's mirror with the given published units,
-    /// deleting previously mirrored facts first. Runs inside the caller's
-    /// transaction.
+    /// Replaces the repository's mirror with the canonical materialized facts,
+    /// deleting every mirror object this repository owned first. Runs inside the
+    /// caller's transaction.
     /// </summary>
+    /// <remarks>
+    /// The caller supplies the authoritative projection's node and edge
+    /// dictionaries, so one physical object exists per canonical logical
+    /// identity. A manifest that omits a native row can only come from a
+    /// defective historical rebuild or from a disabled publication that removed
+    /// the manifest first; <see cref="SweepOrphans"/> removes such untracked
+    /// rows. <paramref name="retainedNodeIds"/> and
+    /// <paramref name="retainedEdgeIds"/> carry the native identities still
+    /// referenced by every other repository's manifest in the same database, so
+    /// the sweep cannot cross repository boundaries.
+    /// </remarks>
     internal static NativeGraphMirror Rebuild(
         LatticeTransaction transaction,
-        IReadOnlyList<CodeIndexUnitReplacement> units,
-        MirrorManifest? existing)
+        IReadOnlyDictionary<string, CodeGraphNode> nodes,
+        IReadOnlyDictionary<string, CodeGraphEdge> edges,
+        MirrorManifest? existing,
+        IReadOnlySet<ulong>? retainedNodeIds = null,
+        IReadOnlySet<ulong>? retainedEdgeIds = null)
     {
         ArgumentNullException.ThrowIfNull(transaction);
-        ArgumentNullException.ThrowIfNull(units);
-        if (existing is not null)
+        ArgumentNullException.ThrowIfNull(nodes);
+        ArgumentNullException.ThrowIfNull(edges);
+
+        DeleteOwned(transaction, existing, retainedNodeIds, retainedEdgeIds);
+        SweepOrphans(transaction, retainedNodeIds, retainedEdgeIds);
+
+        var nodeManifest = new Dictionary<string, ulong>(StringComparer.Ordinal);
+        foreach (var node in nodes.Values.OrderBy(node => node.Id.Value, StringComparer.Ordinal))
         {
-            var deletedEdges = new HashSet<ulong>();
-            foreach (var nativeId in existing.Nodes.Values)
+            var id = transaction.CreateNode(NodeLabel);
+            transaction.SetProperty(
+                id,
+                JsonProperty,
+                LatticeValue.From(JsonSerializer.Serialize(node, SerializerOptions)));
+            nodeManifest.Add(node.Id.Value, id.Value);
+        }
+
+        var edgeManifest = new Dictionary<string, ulong>(StringComparer.Ordinal);
+        foreach (var edge in edges.Values.OrderBy(edge => edge.Id.Value, StringComparer.Ordinal))
+        {
+            if (!nodeManifest.TryGetValue(edge.SourceId.Value, out var source) ||
+                !nodeManifest.TryGetValue(edge.TargetId.Value, out var target))
             {
-                var node = new LatticeNodeId(nativeId);
-                foreach (var edge in transaction.GetOutgoingEdges(node)
-                    .Concat(transaction.GetIncomingEdges(node)))
+                throw new InvalidDataException(
+                    $"Published edge '{edge.Id.Value}' references a missing mirrored node.");
+            }
+
+            var id = transaction.CreateEdge(
+                new LatticeNodeId(source),
+                new LatticeNodeId(target),
+                edge.Kind.Value);
+            transaction.SetEdgeProperty(
+                id,
+                JsonProperty,
+                LatticeValue.From(JsonSerializer.Serialize(edge, SerializerOptions)));
+            edgeManifest.Add(edge.Id.Value, id.Value);
+        }
+
+        return new NativeGraphMirror(new MirrorManifest(nodeManifest, edgeManifest));
+    }
+
+    /// <summary>
+    /// Removes every protocol-marked mirror row that no manifest in the database
+    /// references. Runs inside the caller's transaction.
+    /// </summary>
+    /// <remarks>
+    /// Mirror rows are derived state, so an untracked row is never part of any
+    /// repository's served mirror; it can be reconstructed from the authoritative
+    /// command log. Rows referenced by another repository's manifest are retained
+    /// to preserve repository isolation.
+    /// </remarks>
+    internal static void SweepOrphans(
+        LatticeTransaction transaction,
+        IReadOnlySet<ulong>? retainedNodeIds,
+        IReadOnlySet<ulong>? retainedEdgeIds)
+    {
+        ArgumentNullException.ThrowIfNull(transaction);
+        var mirrorNodes = transaction.GetNodesByLabel(NodeLabel)
+            .Where(node => transaction.TryGetProperty(node, JsonProperty, out _))
+            .ToArray();
+
+        var mirrorEdges = new Dictionary<ulong, LatticeEdgeInfo>();
+        foreach (var node in mirrorNodes)
+        {
+            foreach (var edge in transaction.GetOutgoingEdges(node))
+            {
+                if (transaction.TryGetEdgeProperty(edge.Id, JsonProperty, out _))
                 {
-                    if (deletedEdges.Add(edge.Id.Value))
-                    {
-                        transaction.DeleteEdge(edge.Source, edge.Target, edge.Type);
-                    }
+                    mirrorEdges[edge.Id.Value] = edge;
+                }
+            }
+        }
+
+        foreach (var edge in mirrorEdges.Values)
+        {
+            if (retainedEdgeIds?.Contains(edge.Id.Value) is true)
+            {
+                continue;
+            }
+
+            transaction.DeleteEdge(edge.Source, edge.Target, edge.Type);
+        }
+
+        foreach (var node in mirrorNodes)
+        {
+            if (retainedNodeIds?.Contains(node.Value) is true)
+            {
+                continue;
+            }
+
+            transaction.DeleteNode(node);
+        }
+    }
+
+    /// <summary>
+    /// Removes the physical objects a manifest owns without creating a
+    /// replacement. Runs inside the caller's transaction.
+    /// </summary>
+    internal static void Drop(
+        LatticeTransaction transaction,
+        MirrorManifest? manifest,
+        IReadOnlySet<ulong>? retainedNodeIds,
+        IReadOnlySet<ulong>? retainedEdgeIds) =>
+        DeleteOwned(transaction, manifest, retainedNodeIds, retainedEdgeIds);
+
+    private static void DeleteOwned(
+        LatticeTransaction transaction,
+        MirrorManifest? existing,
+        IReadOnlySet<ulong>? retainedNodeIds,
+        IReadOnlySet<ulong>? retainedEdgeIds)
+    {
+        if (existing is null)
+        {
+            return;
+        }
+
+        var deletedEdges = new HashSet<ulong>();
+        foreach (var nativeId in existing.Nodes.Values)
+        {
+            if (retainedNodeIds?.Contains(nativeId) is true)
+            {
+                continue;
+            }
+
+            var node = new LatticeNodeId(nativeId);
+            foreach (var edge in transaction.GetOutgoingEdges(node)
+                .Concat(transaction.GetIncomingEdges(node)))
+            {
+                if (retainedEdgeIds?.Contains(edge.Id.Value) is true)
+                {
+                    continue;
                 }
 
-                transaction.DeleteNode(node);
-            }
-        }
-
-        var nodes = new Dictionary<string, ulong>(StringComparer.Ordinal);
-        var edges = new Dictionary<string, ulong>(StringComparer.Ordinal);
-        foreach (var unit in units)
-        {
-            foreach (var node in unit.Nodes)
-            {
-                var id = transaction.CreateNode(NodeLabel);
-                transaction.SetProperty(
-                    id,
-                    JsonProperty,
-                    LatticeValue.From(JsonSerializer.Serialize(node, SerializerOptions)));
-                nodes[node.Id.Value] = id.Value;
-            }
-        }
-
-        foreach (var unit in units)
-        {
-            foreach (var edge in unit.Edges)
-            {
-                if (!nodes.TryGetValue(edge.SourceId.Value, out var source) ||
-                    !nodes.TryGetValue(edge.TargetId.Value, out var target))
+                if (deletedEdges.Add(edge.Id.Value))
                 {
-                    throw new InvalidDataException(
-                        $"Published edge '{edge.Id.Value}' references a missing mirrored node.");
+                    transaction.DeleteEdge(edge.Source, edge.Target, edge.Type);
                 }
-
-                var id = transaction.CreateEdge(
-                    new LatticeNodeId(source),
-                    new LatticeNodeId(target),
-                    edge.Kind.Value);
-                transaction.SetEdgeProperty(
-                    id,
-                    JsonProperty,
-                    LatticeValue.From(JsonSerializer.Serialize(edge, SerializerOptions)));
-                edges[edge.Id.Value] = id.Value;
             }
-        }
 
-        return new NativeGraphMirror(new MirrorManifest(nodes, edges));
+            transaction.DeleteNode(node);
+        }
     }
 
     /// <summary>

@@ -1,0 +1,35 @@
+Baseline negative control for the S64-MIRROR-REMED-01 regression campaign.
+
+The two new test files were copied unmodified into a disposable worktree at the
+unmodified entry seal dda4358bc2588368efc6ab6a7bd774857d998026. The worktree was
+removed without being committed.
+
+Command:
+  dotnet test <baseline-worktree>/tests/Andirit.LatticeDb.Tests/Andirit.LatticeDb.Tests.csproj \
+    -c Release --no-build --filter "FullyQualifiedName~NativeGraphMirrorRemediationTests"
+  dotnet test <baseline-worktree>/tests/Andirit.CSharp.Tests/Andirit.CSharp.Tests.csproj \
+    -c Release --no-build --filter "FullyQualifiedName~NativeGraphMirrorLinkedFixtureTests"
+
+Result on the defective baseline:
+  LatticeDb remediation tests: failed 10, passed 9, total 19
+  CSharp linked-fixture test: failed 1, passed 0, total 1
+
+Representative observed failures (exact assertion text):
+  SharedLogicalNodeIdentity_AcrossContributors_HasOnePhysicalNode
+    Expected: ["node:first", "node:second"]
+    Actual:   ["node:first", "node:first", "node:second", "node:second"]
+  SharedLogicalEdgeIdentity_AcrossContributors_HasOnePhysicalEdge
+    Expected: ["node:source", "node:target"]
+    Actual:   ["node:source", "node:source", "node:target", "node:target"]
+  RepeatedEnabledReopen_KeepsPhysicalCardinalityStable
+    Expected: ["node:a", "node:b", "node:c"]
+    Actual:   ["node:a", "node:b", "node:b", "node:b", "node:c"]
+  MultipleRepositories_WithSharedLogicalIdentity_StayIsolated
+    Expected: ["node:only-second", "node:shared"]
+    Actual:   ["node:only-first", "node:only-second", "node:shared", "node:shared"]
+  LinkedFixture_HasOnePhysicalNodePerLogicalIdentity_AcrossLifecycle
+    Expected: 20
+    Actual:   21
+
+The same tests pass on the remediation candidate. The failures therefore bind
+the oracle to the original defects rather than to mirror output in general.
