@@ -6,17 +6,17 @@ namespace Andirit.Tests;
 
 /// <summary>
 /// REM-01 identity regressions: the production helpers must reproduce the
-/// accepted R2 usage4 tuple, not a weaker local hash.
+/// successor R2 usage5 tuple, not a weaker local hash.
 /// </summary>
 public sealed class OccurrenceIdentityRemediationTests
 {
     private static readonly CodeRepositoryId Repository = new("experiment:andirit-31c33a9");
     private static readonly CodePluginId Plugin = new("experiment.csharp.occurrences");
     private static readonly CodeOccurrenceTargetId FrozenTarget = new(
-        "asmctx3:sha256:632e7953365d1dbadbb55414b7cbcb991c9bc2653ec6cafb6f6d9d95a9c2032d");
+        "asmctx4:sha256:632e7953365d1dbadbb55414b7cbcb991c9bc2653ec6cafb6f6d9d95a9c2032d");
 
     [Fact]
-    public void Usage4_MatchesTheFrozenR2Vector()
+    public void Usage5_MatchesTheFrozenR2Vector()
     {
         var id = CodeOccurrenceIdentity.ComputeOccurrenceId(
             Repository,
@@ -30,15 +30,15 @@ public sealed class OccurrenceIdentityRemediationTests
             CodeOccurrenceCategory.Invocation);
 
         Assert.Equal(
-            "bd0487b749795a3e6b61028c7c9cf2d663530cae901ac6d9f35bc311536dc3af",
+            "4b0b01b1f20add7a59e9ca8ac04a220f932dfc0deacc0042a02efdfa3596dc48",
             id.Value);
     }
 
     [Fact]
-    public void Usage4_DistinguishesDefiningCompilationContexts()
+    public void Usage5_DistinguishesDefiningCompilationContexts()
     {
         var otherTarget = new CodeOccurrenceTargetId(
-            "asmctx3:sha256:fb3e0561272eb342a549036ecf0095c2ec2a6d5d7bc159fc943dee11fe669c26");
+            "asmctx4:sha256:fb3e0561272eb342a549036ecf0095c2ec2a6d5d7bc159fc943dee11fe669c26");
         var span = new CodeLocation("Caller.cs", 1, 72, 1, 77);
         var first = CodeOccurrenceIdentity.ComputeOccurrenceId(
             Repository, Plugin, "caller-unit", "Caller.cs",
@@ -51,12 +51,12 @@ public sealed class OccurrenceIdentityRemediationTests
 
         Assert.NotEqual(first.Value, second.Value);
         Assert.Equal(
-            "b874bdc5afa194e0e237d0b1d7d36b3fa3dd767799e0dc62f5f1399f00b90bca",
+            "c8ef6e665aafadb72d1d0f47d4de52967fd050d74af9e86f4ff8bdad095453cb",
             second.Value);
     }
 
     [Fact]
-    public void Usage4_IncludesSemanticUnitAndSourceHash()
+    public void Usage5_IncludesSemanticUnitAndSourceHash()
     {
         var span = new CodeLocation("Caller.cs", 1, 72, 1, 77);
         var baseline = CodeOccurrenceIdentity.ComputeOccurrenceId(
@@ -74,16 +74,16 @@ public sealed class OccurrenceIdentityRemediationTests
     }
 
     [Fact]
-    public void Target_UsesTheAcceptedAsmctx3ComponentsAndCanonicalFormat()
+    public void Target_UsesTheSuccessorAsmctx4ComponentsAndCanonicalFormat()
     {
-        var context = "compctx1:sha256:" + new string('a', 64);
+        var context = "compctx4:sha256:" + new string('a', 64);
         var first = CodeOccurrenceIdentity.ComputeTargetId(
             context, "N.C|0.0.0.0||", "N.C.dll", "identifier-a", "declaration-a", "shape-a");
         var second = CodeOccurrenceIdentity.ComputeTargetId(
             context, "N.C|0.0.0.0||", "N.C.dll", "identifier-a", "declaration-a", "shape-b");
 
         Assert.True(CodeOccurrenceIdentity.IsCanonicalTarget(first.Value));
-        Assert.StartsWith("asmctx3:sha256:", first.Value, StringComparison.Ordinal);
+        Assert.StartsWith("asmctx4:sha256:", first.Value, StringComparison.Ordinal);
         Assert.NotEqual(first.Value, second.Value);
         Assert.Throws<ArgumentException>(() => CodeOccurrenceIdentity.ComputeTargetId(
             "compctx:not-canonical", "meta", "module", "id", "decl", "shape"));
@@ -92,8 +92,8 @@ public sealed class OccurrenceIdentityRemediationTests
     [Fact]
     public void Target_RejectsUnavailableAndFabricatedIdentities()
     {
-        Assert.Throws<ArgumentException>(() => new CodeOccurrenceTargetId("asmctx3:unavailable"));
-        Assert.Throws<ArgumentException>(() => new CodeOccurrenceTargetId("asmctx3:sha256:abc"));
+        Assert.Throws<ArgumentException>(() => new CodeOccurrenceTargetId("asmctx4:unavailable"));
+        Assert.Throws<ArgumentException>(() => new CodeOccurrenceTargetId("asmctx4:sha256:abc"));
         Assert.Throws<ArgumentException>(() => new CodeOccurrenceId(new string('A', 64)));
     }
 
@@ -155,3 +155,4 @@ public sealed class OccurrenceIdentityRemediationTests
         Assert.Equal(0, completeEmpty.TotalFacts);
     }
 }
+

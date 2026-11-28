@@ -1,0 +1,156 @@
+{
+  "corpusRoot": "C:/Windows/Temp/opencode/s64-qual/entry-r1/results/d3-variants/c2-no-caller",
+  "runtime": ".NET 10.0.12",
+  "projects": [
+    {
+      "path": "Dependency/Dependency.csproj",
+      "assembly": "Dependency",
+      "sources": [
+        "Dependency/Api.cs"
+      ],
+      "references": [],
+      "defines": []
+    }
+  ],
+  "nodes": [
+    {
+      "Id": "csharp:file:30a3c7b4318d8f0e20154667155d2e412a5d44d2aae0bb58161f4ba80f9ca3cc",
+      "Category": "file",
+      "Canonical": "Dependency/Api.cs",
+      "Kind": "file",
+      "Project": "Dependency/Dependency.csproj",
+      "Path": "Dependency/Api.cs",
+      "Name": "Api.cs",
+      "QualifiedName": "Dependency/Api.cs"
+    },
+    {
+      "Id": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+      "Category": "project",
+      "Canonical": "Dependency/Dependency.csproj",
+      "Kind": "project",
+      "Project": "Dependency/Dependency.csproj",
+      "Path": "Dependency/Dependency.csproj",
+      "Name": "Dependency",
+      "QualifiedName": "Dependency/Dependency.csproj"
+    },
+    {
+      "Id": "csharp:symbol:045030ea6ad4dc7bf079e3ae2d38232fa7a130de15d5c666dea62c496af3b7c2",
+      "Category": "symbol",
+      "Canonical": "T:QualifierDependency.Api",
+      "Kind": "type",
+      "Project": "Dependency/Dependency.csproj",
+      "Path": "Dependency/Api.cs",
+      "Name": "Api",
+      "QualifiedName": "QualifierDependency.Api"
+    },
+    {
+      "Id": "csharp:symbol:c27864b8f7b142dee4aae1b1402cabe35b8b9e6e1ed3ffe70b3f8a1ebfb22428",
+      "Category": "symbol",
+      "Canonical": "M:QualifierDependency.Api.Mark",
+      "Kind": "callable",
+      "Project": "Dependency/Dependency.csproj",
+      "Path": "Dependency/Api.cs",
+      "Name": "Mark",
+      "QualifiedName": "QualifierDependency.Api.Mark()"
+    },
+    {
+      "Id": "csharp:symbol:fe0d3bb938e37e0d562f1987ea42586be101179e8c94c73a4b51b561715212e9",
+      "Category": "symbol",
+      "Canonical": "N:QualifierDependency",
+      "Kind": "namespace",
+      "Project": "Dependency/Dependency.csproj",
+      "Path": "Dependency/Api.cs",
+      "Name": "QualifierDependency",
+      "QualifiedName": "QualifierDependency"
+    }
+  ],
+  "edges": [
+    {
+      "Id": "csharp:3234b430d3a5fa2c1b6684083037e68089fa02ab47f109bf84e650710709cacd",
+      "Kind": "contains",
+      "Source": "csharp:symbol:fe0d3bb938e37e0d562f1987ea42586be101179e8c94c73a4b51b561715212e9",
+      "Target": "csharp:symbol:045030ea6ad4dc7bf079e3ae2d38232fa7a130de15d5c666dea62c496af3b7c2",
+      "Quality": "structural",
+      "Discriminator": null,
+      "Path": "Dependency/Api.cs",
+      "StartLine": 2,
+      "StartColumn": 1,
+      "EndLine": 5,
+      "EndColumn": 2
+    },
+    {
+      "Id": "csharp:59f087072ceef9610b0650f23c493a7e60ea03d56354a69a5287038a7cb03fc1",
+      "Kind": "declares",
+      "Source": "csharp:file:30a3c7b4318d8f0e20154667155d2e412a5d44d2aae0bb58161f4ba80f9ca3cc",
+      "Target": "csharp:symbol:fe0d3bb938e37e0d562f1987ea42586be101179e8c94c73a4b51b561715212e9",
+      "Quality": "structural",
+      "Discriminator": "csharp:3fb8d9b3fd6b4c61a09a2e905e26290c4b7c9269c8b8655d79d0aa992259ae9c",
+      "Path": "Dependency/Api.cs",
+      "StartLine": 1,
+      "StartColumn": 1,
+      "EndLine": 5,
+      "EndColumn": 2
+    },
+    {
+      "Id": "csharp:6513b03e5fe17084298b02aed05f6e0ad6412b5aaf643d727a7d85de77630fae",
+      "Kind": "declares",
+      "Source": "csharp:file:30a3c7b4318d8f0e20154667155d2e412a5d44d2aae0bb58161f4ba80f9ca3cc",
+      "Target": "csharp:symbol:c27864b8f7b142dee4aae1b1402cabe35b8b9e6e1ed3ffe70b3f8a1ebfb22428",
+      "Quality": "structural",
+      "Discriminator": "csharp:765859dfb5d4056070594f70f799c400c804550dae9dba3e816b8f2c3e3944d5",
+      "Path": "Dependency/Api.cs",
+      "StartLine": 4,
+      "StartColumn": 5,
+      "EndLine": 4,
+      "EndColumn": 35
+    },
+    {
+      "Id": "csharp:72ed7c573fc79c92f219cf1b7f03db7991d40b4764dcdbcb44195e4362d61c5d",
+      "Kind": "contains",
+      "Source": "csharp:symbol:045030ea6ad4dc7bf079e3ae2d38232fa7a130de15d5c666dea62c496af3b7c2",
+      "Target": "csharp:symbol:c27864b8f7b142dee4aae1b1402cabe35b8b9e6e1ed3ffe70b3f8a1ebfb22428",
+      "Quality": "structural",
+      "Discriminator": null,
+      "Path": "Dependency/Api.cs",
+      "StartLine": 4,
+      "StartColumn": 5,
+      "EndLine": 4,
+      "EndColumn": 35
+    },
+    {
+      "Id": "csharp:b786a0627762c42643755bd8a458fabbce54834d6a2c7cb261207c7399176285",
+      "Kind": "declares",
+      "Source": "csharp:file:30a3c7b4318d8f0e20154667155d2e412a5d44d2aae0bb58161f4ba80f9ca3cc",
+      "Target": "csharp:symbol:045030ea6ad4dc7bf079e3ae2d38232fa7a130de15d5c666dea62c496af3b7c2",
+      "Quality": "structural",
+      "Discriminator": "csharp:9c9c5d9dbdb9d741283c0cd85f596fc8ca08b76f8bcd99afd9fe0a1445b8ce8b",
+      "Path": "Dependency/Api.cs",
+      "StartLine": 2,
+      "StartColumn": 1,
+      "EndLine": 5,
+      "EndColumn": 2
+    },
+    {
+      "Id": "csharp:e94ba33e9a02d52ee9c6a8dcf25601ee5d354c548ec05298f6815db931be16e6",
+      "Kind": "contains",
+      "Source": "csharp:project:f0f5208cedf5026483da20365fb19854ad9311e24d4eb1c32d277a734c7386e8",
+      "Target": "csharp:file:30a3c7b4318d8f0e20154667155d2e412a5d44d2aae0bb58161f4ba80f9ca3cc",
+      "Quality": "structural",
+      "Discriminator": null,
+      "Path": "Dependency/Api.cs",
+      "StartLine": 1,
+      "StartColumn": 1,
+      "EndLine": 1,
+      "EndColumn": 1
+    }
+  ],
+  "counts": {
+    "projects": 1,
+    "nodes": 5,
+    "edges": 6,
+    "byKind": {
+      "contains": 3,
+      "declares": 3
+    }
+  }
+}

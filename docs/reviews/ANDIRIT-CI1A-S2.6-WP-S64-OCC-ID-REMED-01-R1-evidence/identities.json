@@ -1,0 +1,83 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-REMED-01-R1",
+  "authorization": "owner option 1; incompatible persisted-identity transition authorized",
+  "baseline": {
+    "branch": "remediation/s64-occ-id-01",
+    "payload": "b03edfeb13073d2806f085ce3c9f5a1a92be2a53",
+    "seal": "81102d21b4d6f6ed510b0555bb0d034aa1705c44",
+    "sealTree": "81bdedc2936b1bc62f57476038807bff116f102a",
+    "sealSha256": "b7a93c56809a15f5c3d39a3d3c6680bcbb1eecbe0c6ddef2c5a2a9cd9149f0dd"
+  },
+  "predecessorSeals": {
+    "implementation": "ec984bfe63e5fbe13047cee8920e00b634ab17b0",
+    "producer": "870b600acf1490337af9f483f8894a5e8166a90e",
+    "qualification": "b3951c790768ad257fb3418e5abe41cc5ecc5322",
+    "reentry": "1776ea8ca12ba54dc85e817484711663480569a2",
+    "blockedImplementation": "d79617727dcdcdbc0ed659c1c69dc0e175787806"
+  },
+  "candidate": {
+    "branch": "remediation/s64-occ-id-01-r1",
+    "implementationCommit": "77ec887368c62b404e0d9a8034d34b7f8cac8007",
+    "pullRequest": 9,
+    "hostedRun": 46132247172,
+    "hostedRunUrl": "https://github.com/jenolaszlo-sketch/andirit/actions/runs/46132247172",
+    "hostedConclusion": "success"
+  },
+  "successorContract": {
+    "referenceIdentity": "refctx1",
+    "productionContext": "compctx3",
+    "definingContext": "compctx4",
+    "targetDomain": "asmctx4",
+    "usageDomain": "usage5",
+    "semanticsVersion": "usage5-b2c-exp-r2-20261128",
+    "semanticsGeneration": 5,
+    "identityGeneration": 2,
+    "authorityVersion": 2,
+    "occurrenceSchema": 2,
+    "occurrenceNamespace": "andirit-occurrence-facts/2",
+    "payloadDomain": "occurrence-payload5"
+  },
+  "c4": {
+    "repository": "review:s64:d3-c4",
+    "target": "asmctx4:sha256:8258e165d53336f87abf3b1d1ae3f220190dfaf848eaae2906222bf49940555f",
+    "definingContext": "compctx4:sha256:476de9e8c407f13756a931f8ca285ce7d254c19309be433cdf84d022165e31be",
+    "productionDescriptor": "compctx3:sha256:f85c46768aa2a3c1c8dbda35a3e2e8f699ceea04ddf7a17d7ec590865ce313ee",
+    "cardinality": 51,
+    "distribution": {
+      "Caller": 50,
+      "Caller2": 1
+    },
+    "contributors": 2,
+    "variants": {
+      "baseline": 51,
+      "without-caller": 1,
+      "without-caller2": 50,
+      "caller2-changed": 51
+    },
+    "runtimeBinding": ".NET 10.0.12, Windows x64; exact digests bound to referenced runtime file contents"
+  },
+  "consoleHost": {
+    "target": "asmctx4:sha256:8258e165d53336f87abf3b1d1ae3f220190dfaf848eaae2906222bf49940555f",
+    "referenceCount": 172,
+    "referenceSetSha256": "d582ffc45bbb505067ac40a203b009e791c3a4e9d8785a4a4f5646bb51bb1bcf",
+    "artifact": "evidence/host-probe-console.json"
+  },
+  "verification": {
+    "localTests": 1044,
+    "localFailures": 0,
+    "csharpCoverage": {
+      "line": 94.9,
+      "branch": 87.66
+    },
+    "packageSmoke": "pass",
+    "hosted": {
+      "linux": "success",
+      "macos": "success",
+      "windows": "success"
+    }
+  },
+  "status": "A - VERSIONED IDENTITY TRANSITION IMPLEMENTED - READY FOR INDEPENDENT QUALIFICATION"
+}
+
+
+

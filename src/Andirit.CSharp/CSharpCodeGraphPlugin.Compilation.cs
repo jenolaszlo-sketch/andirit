@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Security.Cryptography;
-using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
@@ -11,9 +10,6 @@ namespace Andirit;
 
 public sealed partial class CSharpCodeGraphPlugin
 {
-    private static readonly Lazy<IReadOnlyList<VerifiedMetadataReference>> PlatformReferenceEvidence =
-        new(BuildPlatformReferenceEvidence, LazyThreadSafetyMode.ExecutionAndPublication);
-
     private static CodeLocation Location(string path, SyntaxNode syntax)
     {
         var span = syntax.GetLocation().GetLineSpan().Span;
@@ -39,6 +35,25 @@ public sealed partial class CSharpCodeGraphPlugin
             preprocessorSymbols: project.DefineConstants);
     }
 
+    private const string DefaultTargetFrameworkSetting = "csharp.targetFramework";
+
+    private static string? TargetFrameworkFor(CSharpProjectModel project, CodeGraphPluginContext context) =>
+        !string.IsNullOrWhiteSpace(project.TargetFramework)
+            ? project.TargetFramework
+            : context.Settings.TryGetValue(DefaultTargetFrameworkSetting, out var configured) &&
+              !string.IsNullOrWhiteSpace(configured)
+                ? configured.Trim()
+                : null;
+
+    private static bool IsFrameworkReferenceError(Diagnostic diagnostic)
+    {
+        if (diagnostic.Id is not ("CS0234" or "CS0246" or "CS0400" or "CS0012" or "CS0518" or "CS1069"))
+            return false;
+        var message = diagnostic.GetMessage();
+        return message.Contains("'System", StringComparison.Ordinal) ||
+               message.Contains("'Microsoft", StringComparison.Ordinal);
+    }
+
     private static CSharpCompilationOptions CreateCompilationOptions(CSharpProjectModel project)
     {
         var nullable = project.Nullable?.ToLowerInvariant() switch
@@ -53,18 +68,6 @@ public sealed partial class CSharpCodeGraphPlugin
             nullableContextOptions: nullable,
             deterministic: true,
             concurrentBuild: false);
-    }
-
-    private static IReadOnlyList<VerifiedMetadataReference> BuildPlatformReferenceEvidence()
-    {
-        var trustedAssemblies = AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string;
-        var paths = string.IsNullOrWhiteSpace(trustedAssemblies)
-            ? new[] { typeof(object).Assembly.Location }
-            : trustedAssemblies.Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries)
-                .Distinct(StringComparer.OrdinalIgnoreCase).Order(StringComparer.OrdinalIgnoreCase).ToArray();
-        if (paths.Sum(path => new FileInfo(path).Length) > 512L * 1024 * 1024)
-            throw new InvalidDataException("Platform references exceed the 512 MiB image bound.");
-        return paths.Select(path => VerifiedMetadataReference.Capture(path)).ToArray();
     }
 
     internal static async ValueTask<VerifiedCSharpAnalysis> PrepareAnalysisAsync(
@@ -119,15 +122,32 @@ public sealed partial class CSharpCodeGraphPlugin
             var trees = project.SourcePaths.Where(byPath.ContainsKey)
                 .Select(path => CSharpSyntaxTree.ParseText(byPath[path].Text, parse, path,
                     cancellationToken: cancellationToken)).ToArray();
-            var metadata = PlatformReferenceEvidence.Value;
+            FrameworkReferenceSet? framework = null;
+            string? frameworkRefusal = null;
+            var targetFramework = TargetFrameworkFor(project, context);
+            try
+            {
+                framework = FrameworkReferenceResolver.Resolve(targetFramework);
+            }
+            catch (InvalidDataException error)
+            {
+                frameworkRefusal = error.Message;
+            }
+            var metadata = framework?.References ?? ImmutableArray<VerifiedMetadataReference>.Empty;
             var available = project.ProjectReferences.Where(prepared.ContainsKey)
                 .ToDictionary(p => p, p => prepared[p].Compilation, CSharpProjectDiscovery.PathComparer);
             var refs = metadata.Select(m => (MetadataReference)m.Reference).ToList();
             refs.AddRange(available.Values.Select(c => c.ToMetadataReference()));
             var compilation = CSharpCompilation.Create(project.AssemblyName, trees, refs, CreateCompilationOptions(project));
             var refusals = new List<string>();
+            if (frameworkRefusal is not null)
+                refusals.Add(frameworkRefusal);
             if (byPath.TryGetValue(project.Path, out var projectSource) && projectSource.Refusal is not null)
                 refusals.Add(projectSource.Refusal);
+            if (project.ProjectReferences.Any(p => prepared.ContainsKey(p) &&
+                    !FrameworkReferenceResolver.IsReferenceCompatible(
+                        targetFramework, TargetFrameworkFor(prepared[p].Project, context))))
+                refusals.Add("UnsupportedProjectReferenceTargetFramework:" + project.Path);
             if (project.ProjectReferences.Any(p => !prepared.ContainsKey(p) || prepared[p].Verified is null))
                 refusals.Add("MissingOrCyclicProjectDependency:" + project.Path);
             if (project.ProjectReferences.Any(p => !byProject.ContainsKey(p)))
@@ -159,6 +179,20 @@ public sealed partial class CSharpCodeGraphPlugin
                         if (!byPath.ContainsKey(path)) refusals.Add("MissingDeclaredSource:" + path);
                     }
                 }
+            }
+            if (refusals.Count == 0)
+            {
+                var frameworkErrors = compilation.GetDiagnostics(cancellationToken)
+                    .Where(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error &&
+                        IsFrameworkReferenceError(diagnostic))
+                    .Select(diagnostic => diagnostic.Id)
+                    .Distinct(StringComparer.Ordinal)
+                    .Order(StringComparer.Ordinal)
+                    .Take(10)
+                    .ToArray();
+                if (frameworkErrors.Length != 0)
+                    refusals.Add("FrameworkReferenceErrors:" + project.Path + ":" +
+                        string.Join(",", frameworkErrors));
             }
             VerifiedCSharpCompilation? verified = null;
             if (refusals.Count == 0)

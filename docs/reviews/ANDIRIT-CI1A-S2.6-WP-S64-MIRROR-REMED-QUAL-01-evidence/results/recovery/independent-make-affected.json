@@ -1,0 +1,242 @@
+{
+  "command": "make-affected",
+  "census": {
+    "Nodes": [
+      {
+        "LogicalId": "node:a",
+        "NativeId": 14
+      },
+      {
+        "LogicalId": "node:b",
+        "NativeId": 15
+      },
+      {
+        "LogicalId": "node:a",
+        "NativeId": 19
+      },
+      {
+        "LogicalId": "node:b",
+        "NativeId": 20
+      },
+      {
+        "LogicalId": "node:a",
+        "NativeId": 21
+      },
+      {
+        "LogicalId": "node:b",
+        "NativeId": 22
+      },
+      {
+        "LogicalId": "node:a",
+        "NativeId": 36
+      },
+      {
+        "LogicalId": "node:b",
+        "NativeId": 37
+      },
+      {
+        "LogicalId": "node:a",
+        "NativeId": 38
+      },
+      {
+        "LogicalId": "node:b",
+        "NativeId": 39
+      }
+    ],
+    "Edges": [
+      {
+        "LogicalId": "edge:ab",
+        "NativeId": 3,
+        "Source": 21,
+        "Target": 22
+      },
+      {
+        "LogicalId": "edge:ab",
+        "NativeId": 4,
+        "Source": 21,
+        "Target": 22
+      },
+      {
+        "LogicalId": "edge:ab",
+        "NativeId": 5,
+        "Source": 38,
+        "Target": 39
+      },
+      {
+        "LogicalId": "edge:ab",
+        "NativeId": 6,
+        "Source": 38,
+        "Target": 39
+      }
+    ],
+    "Manifests": [
+      {
+        "Repository": "repo:affected",
+        "Nodes": {
+          "node:a": 38,
+          "node:b": 39
+        },
+        "Edges": {
+          "edge:ab": 6
+        }
+      }
+    ],
+    "Related": [
+      {
+        "NativeId": 41,
+        "Note": "sentinel-one",
+        "Number": 7,
+        "Tags": [
+          "x",
+          "y"
+        ],
+        "Outgoing": [
+          {
+            "NativeId": 7,
+            "Source": 41,
+            "Target": 42,
+            "Type": "QualSentinel",
+            "Note": "sentinel-edge"
+          }
+        ]
+      },
+      {
+        "NativeId": 42,
+        "Note": "sentinel-two",
+        "Number": 9,
+        "Tags": [],
+        "Outgoing": []
+      }
+    ],
+    "Authoritative": [
+      {
+        "Label": "AndiritOccurrenceMeta",
+        "NativeId": 35,
+        "Key": "repo:affected",
+        "Payload": "eyJTY2hlbWFWZXJzaW9uIjoxLCJOYW1lc3BhY2UiOiJhbmRpcml0LW9jY3VycmVuY2UtZmFjdHMvMSIsIlJlcG9zaXRvcnlJZCI6InJlcG86YWZmZWN0ZWQiLCJQdWJsaWNhdGlvbkluZGV4UnVuSWQiOiJydW46dHdvIiwiSW5kZXhJZGVudGl0eSI6ImVmZTY5YmEwNTQ2YjhjYTk3NDYzYjFkOWI1MjAzNzczZGJhMjdiZWFmOTE3ZWU5MjUzZTA0OTg0YTMzNmFjZjEiLCJTbmFwc2hvdElkZW50aXR5IjpudWxsLCJJc0NvbnNpc3RlbnRTbmFwc2hvdCI6ZmFsc2UsIkZhY3RDb3VudCI6MSwiVW5pdENvdW50IjoxLCJQYWdlQ291bnQiOjEsIkFuYWx5c2lzSW5jbHVkZWQiOnRydWUsIkNvdmVyYWdlU3RhdGUiOjAsIlNjb3BlSWQiOm51bGwsIlVuaXZlcnNlSWQiOm51bGwsIkNvbXBsZXRlQ292ZXJhZ2UiOnRydWUsIlJlcXVpcmVzQXV0aG9yaXR5IjpmYWxzZX0="
+      },
+      {
+        "Label": "AndiritOccurrenceUnit",
+        "NativeId": 33,
+        "Key": "repo:affected\nplugin:qual\nunit:one",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOiJyZXBvOmFmZmVjdGVkIiwiUGx1Z2luSWQiOiJwbHVnaW46cXVhbCIsIkluZGV4VW5pdElkIjoidW5pdDpvbmUiLCJBbmFseXNpc0luY2x1ZGVkIjp0cnVlLCJGYWN0cyI6W3siSWQiOnsiVmFsdWUiOiI3YjA5MWYwMTZmNTU2NTUwYmMxZjA1MTE4MTkxZTkwNTE3NjBiMzAzNmI2MGYxYzgyMDM1NjliMTQ3YWNhN2VjIn0sIlRhcmdldElkIjp7IlZhbHVlIjoiYXNtY3R4MzpzaGEyNTY6NzQ4YzczYzk1Zjk3MDRmYmQwZGFhNzQ0OTNlYmVlMjIwZDAyN2JhZDk3Y2U2MGIwODQ3YmFjNjI4NWFmYTc2NiJ9LCJUYXJnZXREb2N1bWVudElkIjoiYXNtY3R4MzpzaGEyNTY6NzQ4YzczYzk1Zjk3MDRmYmQwZGFhNzQ0OTNlYmVlMjIwZDAyN2JhZDk3Y2U2MGIwODQ3YmFjNjI4NWFmYTc2NiIsIlJlcG9zaXRvcnlJZCI6eyJWYWx1ZSI6InJlcG86YWZmZWN0ZWQifSwiQ2F0ZWdvcnkiOjAsIlNvdXJjZVVuaXRJZCI6InVuaXQ6b25lIiwiQ29udHJpYnV0b3IiOnsiUGx1Z2luSWQiOnsiVmFsdWUiOiJwbHVnaW46cXVhbCJ9LCJJbmRleFVuaXRJZCI6InVuaXQ6b25lIn0sIlNwYW4iOnsiUGF0aCI6InNyYy9RdWFsLmNzIiwiU3RhcnRMaW5lIjoxLCJTdGFydENvbHVtbiI6MSwiRW5kTGluZSI6MSwiRW5kQ29sdW1uIjo2fSwiRGVjbGFyYXRpb25TcGFuIjpudWxsLCJTb3VyY2VIYXNoIjoic2hhMjU2OnF1YWwtc291cmNlIiwiQ29udGVudEhhc2giOiJjb250ZW50OnF1YWwiLCJQbHVnaW5WZXJzaW9uIjoidW5rbm93biIsIlNlbWFudGljc1ZlcnNpb24iOjQsIlBheWxvYWRIYXNoIjoiNGZhYTVkMmNkMjhmMzZkZjQ0ZjQ1N2I2N2UxZjI3NmJmMjRiYTM4M2Q1YjY5ODFlNDQ3ZTJiZDIzNGNkODRlMSJ9XSwiQ292ZXJhZ2UiOnsiSW52b2NhdGlvbkZhY3RzIjoxLCJVbnN1cHBvcnRlZENhdGVnb3JpZXMiOjAsIlN0YXRlIjowLCJTY29wZUlkIjpudWxsLCJVbml2ZXJzZUlkIjpudWxsLCJEZWNsYXJlZFVuaXRDb3VudCI6MCwiVmVyaWZpZWRVbml0Q291bnQiOjAsIkV4dGVybmFsIjowLCJBbWJpZ3VvdXMiOjAsIlVucmVzb2x2ZWQiOjAsIlVuc3VwcG9ydGVkIjowLCJDb25kaXRpb25hbEluYWN0aXZlIjowLCJVbmF2YWlsYWJsZVJlYXNvbnMiOnt9LCJUb3RhbEZhY3RzIjoxLCJBbmFseXNpc1BlcmZvcm1lZCI6dHJ1ZSwiSXNDb21wbGV0ZSI6dHJ1ZX0sIkF1dGhvcml0eSI6bnVsbCwiUmVxdWlyZXNBdXRob3JpdHkiOmZhbHNlLCJBdXRob3JpdHlQdWJsaWNhdGlvbkluZGV4UnVuSWQiOm51bGx9"
+      },
+      {
+        "Label": "HetuIndexState",
+        "NativeId": 32,
+        "Key": "repo:affected",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOmFmZmVjdGVkIn0sIkluZGV4UnVuSWQiOnsiVmFsdWUiOiJydW46dHdvIn0sIlNvdXJjZXMiOltdLCJTbmFwc2hvdElkZW50aXR5IjpudWxsLCJJc0NvbnNpc3RlbnRTbmFwc2hvdCI6ZmFsc2UsIkluZGV4SWRlbnRpdHkiOnsiVmFsdWUiOiJlZmU2OWJhMDU0NmI4Y2E5NzQ2M2IxZDliNTIwMzc3M2RiYTI3YmVhZjkxN2VlOTI1M2UwNDk4NGEzMzZhY2YxIn19"
+      },
+      {
+        "Label": "HetuRepository",
+        "NativeId": 24,
+        "Key": "repo:affected",
+        "Payload": "eyJJZCI6eyJWYWx1ZSI6InJlcG86YWZmZWN0ZWQifSwiRGlzcGxheU5hbWUiOm51bGwsIlNvdXJjZVVyaSI6bnVsbCwiUmVnaXN0ZXJlZEF0IjoiMjAyNi0xMS0yN1QxNzowNDozOS4yNjYzMjc5KzAwOjAwIn0="
+      },
+      {
+        "Label": "HetuRun",
+        "NativeId": 9,
+        "Key": "repo:affected\nrun:one",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOmFmZmVjdGVkIn0sIklkIjp7IlZhbHVlIjoicnVuOm9uZSJ9LCJTdGFydGVkQXQiOiIyMDI2LTExLTI4VDA2OjA3OjAwKzAwOjAwIiwiU3RhdHVzIjoxLCJDb21wbGV0ZWRBdCI6IjIwMjYtMTEtMjhUMDY6MDc6MDErMDA6MDAiLCJQbHVnaW5zIjpbeyJWYWx1ZSI6InBsdWdpbjpxdWFsIn1dfQ=="
+      },
+      {
+        "Label": "HetuRun",
+        "NativeId": 31,
+        "Key": "repo:affected\nrun:two",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOmFmZmVjdGVkIn0sIklkIjp7IlZhbHVlIjoicnVuOnR3byJ9LCJTdGFydGVkQXQiOiIyMDI2LTExLTI4VDEwOjA3OjAwKzAwOjAwIiwiU3RhdHVzIjoxLCJDb21wbGV0ZWRBdCI6IjIwMjYtMTEtMjhUMTA6MDc6MDErMDA6MDAiLCJQbHVnaW5zIjpbeyJWYWx1ZSI6InBsdWdpbjpxdWFsIn1dfQ=="
+      },
+      {
+        "Label": "HetuUnit",
+        "NativeId": 29,
+        "Key": "repo:affected\nplugin:qual\nunit:one",
+        "Payload": "eyJSZXF1aXJlc09jY3VycmVuY2VBdXRob3JpdHkiOmZhbHNlLCJPcmlnaW4iOnsiUmVwb3NpdG9yeUlkIjp7IlZhbHVlIjoicmVwbzphZmZlY3RlZCJ9LCJQbHVnaW5JZCI6eyJWYWx1ZSI6InBsdWdpbjpxdWFsIn0sIlBsdWdpblZlcnNpb24iOiIxLjAuMCIsIkluZGV4UnVuSWQiOnsiVmFsdWUiOiJydW46dHdvIn0sIkluZGV4VW5pdElkIjp7IlZhbHVlIjoidW5pdDpvbmUifSwiU291cmNlUGF0aCI6bnVsbCwiU291cmNlSGFzaCI6bnVsbH0sIk5vZGVzIjpbeyJJZCI6eyJWYWx1ZSI6Im5vZGU6YSJ9LCJLaW5kIjp7IlZhbHVlIjoidHlwZSJ9LCJOYW1lIjoiYSIsIlF1YWxpZmllZE5hbWUiOiJFeGFtcGxlLmEiLCJTeW1ib2xJZCI6eyJWYWx1ZSI6InN5bWJvbDpub2RlOmEifSwiUHJvcGVydGllcyI6e319LHsiSWQiOnsiVmFsdWUiOiJub2RlOmIifSwiS2luZCI6eyJWYWx1ZSI6InR5cGUifSwiTmFtZSI6ImIiLCJRdWFsaWZpZWROYW1lIjoiRXhhbXBsZS5iIiwiU3ltYm9sSWQiOnsiVmFsdWUiOiJzeW1ib2w6bm9kZTpiIn0sIlByb3BlcnRpZXMiOnt9fV0sIkRlY2xhcmF0aW9ucyI6W10sIkVkZ2VzIjpbeyJJZCI6eyJWYWx1ZSI6ImVkZ2U6YWIifSwiU291cmNlSWQiOnsiVmFsdWUiOiJub2RlOmEifSwiVGFyZ2V0SWQiOnsiVmFsdWUiOiJub2RlOmIifSwiS2luZCI6eyJWYWx1ZSI6ImNhbGxzIn0sIkV2aWRlbmNlIjp7IlF1YWxpdHkiOjEsIlByb3ZpZGVyIjoicGx1Z2luOnF1YWwiLCJQcm92aWRlclZlcnNpb24iOiIxLjAuMCIsIkxvY2F0aW9uIjpudWxsLCJDb25maWRlbmNlIjpudWxsfSwiUHJvcGVydGllcyI6e319XSwiT2NjdXJyZW5jZUNvdmVyYWdlIjp7Ikludm9jYXRpb25GYWN0cyI6MSwiVW5zdXBwb3J0ZWRDYXRlZ29yaWVzIjowLCJTdGF0ZSI6MCwiU2NvcGVJZCI6bnVsbCwiVW5pdmVyc2VJZCI6bnVsbCwiRGVjbGFyZWRVbml0Q291bnQiOjAsIlZlcmlmaWVkVW5pdENvdW50IjowLCJFeHRlcm5hbCI6MCwiQW1iaWd1b3VzIjowLCJVbnJlc29sdmVkIjowLCJVbnN1cHBvcnRlZCI6MCwiQ29uZGl0aW9uYWxJbmFjdGl2ZSI6MCwiVW5hdmFpbGFibGVSZWFzb25zIjp7fSwiVG90YWxGYWN0cyI6MSwiQW5hbHlzaXNQZXJmb3JtZWQiOnRydWUsIklzQ29tcGxldGUiOnRydWV9fQ=="
+      },
+      {
+        "Label": "HetuUnit",
+        "NativeId": 30,
+        "Key": "repo:affected\nplugin:qual\nunit:two",
+        "Payload": "eyJSZXF1aXJlc09jY3VycmVuY2VBdXRob3JpdHkiOmZhbHNlLCJPcmlnaW4iOnsiUmVwb3NpdG9yeUlkIjp7IlZhbHVlIjoicmVwbzphZmZlY3RlZCJ9LCJQbHVnaW5JZCI6eyJWYWx1ZSI6InBsdWdpbjpxdWFsIn0sIlBsdWdpblZlcnNpb24iOiIxLjAuMCIsIkluZGV4UnVuSWQiOnsiVmFsdWUiOiJydW46dHdvIn0sIkluZGV4VW5pdElkIjp7IlZhbHVlIjoidW5pdDp0d28ifSwiU291cmNlUGF0aCI6bnVsbCwiU291cmNlSGFzaCI6bnVsbH0sIk5vZGVzIjpbeyJJZCI6eyJWYWx1ZSI6Im5vZGU6YSJ9LCJLaW5kIjp7IlZhbHVlIjoidHlwZSJ9LCJOYW1lIjoiYSIsIlF1YWxpZmllZE5hbWUiOiJFeGFtcGxlLmEiLCJTeW1ib2xJZCI6eyJWYWx1ZSI6InN5bWJvbDpub2RlOmEifSwiUHJvcGVydGllcyI6e319LHsiSWQiOnsiVmFsdWUiOiJub2RlOmIifSwiS2luZCI6eyJWYWx1ZSI6InR5cGUifSwiTmFtZSI6ImIiLCJRdWFsaWZpZWROYW1lIjoiRXhhbXBsZS5iIiwiU3ltYm9sSWQiOnsiVmFsdWUiOiJzeW1ib2w6bm9kZTpiIn0sIlByb3BlcnRpZXMiOnt9fV0sIkRlY2xhcmF0aW9ucyI6W10sIkVkZ2VzIjpbeyJJZCI6eyJWYWx1ZSI6ImVkZ2U6YWIifSwiU291cmNlSWQiOnsiVmFsdWUiOiJub2RlOmEifSwiVGFyZ2V0SWQiOnsiVmFsdWUiOiJub2RlOmIifSwiS2luZCI6eyJWYWx1ZSI6ImNhbGxzIn0sIkV2aWRlbmNlIjp7IlF1YWxpdHkiOjEsIlByb3ZpZGVyIjoicGx1Z2luOnF1YWwiLCJQcm92aWRlclZlcnNpb24iOiIxLjAuMCIsIkxvY2F0aW9uIjpudWxsLCJDb25maWRlbmNlIjpudWxsfSwiUHJvcGVydGllcyI6e319XSwiT2NjdXJyZW5jZUNvdmVyYWdlIjpudWxsfQ=="
+      }
+    ],
+    "OccurrenceFacts": 1,
+    "Summary": {
+      "nodes": 10,
+      "edges": 4,
+      "manifests": 1,
+      "nodeLogical": [
+        "node:a",
+        "node:a",
+        "node:a",
+        "node:a",
+        "node:a",
+        "node:b",
+        "node:b",
+        "node:b",
+        "node:b",
+        "node:b"
+      ],
+      "edgeLogical": [
+        "edge:ab",
+        "edge:ab",
+        "edge:ab",
+        "edge:ab"
+      ],
+      "occurrenceFacts": 1
+    }
+  },
+  "sentinel": {
+    "First": 41,
+    "Second": 42,
+    "Edge": 7
+  },
+  "authoritative": [
+    {
+      "Label": "AndiritOccurrenceMeta",
+      "NativeId": 35,
+      "Key": "repo:affected",
+      "Payload": "eyJTY2hlbWFWZXJzaW9uIjoxLCJOYW1lc3BhY2UiOiJhbmRpcml0LW9jY3VycmVuY2UtZmFjdHMvMSIsIlJlcG9zaXRvcnlJZCI6InJlcG86YWZmZWN0ZWQiLCJQdWJsaWNhdGlvbkluZGV4UnVuSWQiOiJydW46dHdvIiwiSW5kZXhJZGVudGl0eSI6ImVmZTY5YmEwNTQ2YjhjYTk3NDYzYjFkOWI1MjAzNzczZGJhMjdiZWFmOTE3ZWU5MjUzZTA0OTg0YTMzNmFjZjEiLCJTbmFwc2hvdElkZW50aXR5IjpudWxsLCJJc0NvbnNpc3RlbnRTbmFwc2hvdCI6ZmFsc2UsIkZhY3RDb3VudCI6MSwiVW5pdENvdW50IjoxLCJQYWdlQ291bnQiOjEsIkFuYWx5c2lzSW5jbHVkZWQiOnRydWUsIkNvdmVyYWdlU3RhdGUiOjAsIlNjb3BlSWQiOm51bGwsIlVuaXZlcnNlSWQiOm51bGwsIkNvbXBsZXRlQ292ZXJhZ2UiOnRydWUsIlJlcXVpcmVzQXV0aG9yaXR5IjpmYWxzZX0="
+    },
+    {
+      "Label": "AndiritOccurrenceUnit",
+      "NativeId": 33,
+      "Key": "repo:affected\nplugin:qual\nunit:one",
+      "Payload": "eyJSZXBvc2l0b3J5SWQiOiJyZXBvOmFmZmVjdGVkIiwiUGx1Z2luSWQiOiJwbHVnaW46cXVhbCIsIkluZGV4VW5pdElkIjoidW5pdDpvbmUiLCJBbmFseXNpc0luY2x1ZGVkIjp0cnVlLCJGYWN0cyI6W3siSWQiOnsiVmFsdWUiOiI3YjA5MWYwMTZmNTU2NTUwYmMxZjA1MTE4MTkxZTkwNTE3NjBiMzAzNmI2MGYxYzgyMDM1NjliMTQ3YWNhN2VjIn0sIlRhcmdldElkIjp7IlZhbHVlIjoiYXNtY3R4MzpzaGEyNTY6NzQ4YzczYzk1Zjk3MDRmYmQwZGFhNzQ0OTNlYmVlMjIwZDAyN2JhZDk3Y2U2MGIwODQ3YmFjNjI4NWFmYTc2NiJ9LCJUYXJnZXREb2N1bWVudElkIjoiYXNtY3R4MzpzaGEyNTY6NzQ4YzczYzk1Zjk3MDRmYmQwZGFhNzQ0OTNlYmVlMjIwZDAyN2JhZDk3Y2U2MGIwODQ3YmFjNjI4NWFmYTc2NiIsIlJlcG9zaXRvcnlJZCI6eyJWYWx1ZSI6InJlcG86YWZmZWN0ZWQifSwiQ2F0ZWdvcnkiOjAsIlNvdXJjZVVuaXRJZCI6InVuaXQ6b25lIiwiQ29udHJpYnV0b3IiOnsiUGx1Z2luSWQiOnsiVmFsdWUiOiJwbHVnaW46cXVhbCJ9LCJJbmRleFVuaXRJZCI6InVuaXQ6b25lIn0sIlNwYW4iOnsiUGF0aCI6InNyYy9RdWFsLmNzIiwiU3RhcnRMaW5lIjoxLCJTdGFydENvbHVtbiI6MSwiRW5kTGluZSI6MSwiRW5kQ29sdW1uIjo2fSwiRGVjbGFyYXRpb25TcGFuIjpudWxsLCJTb3VyY2VIYXNoIjoic2hhMjU2OnF1YWwtc291cmNlIiwiQ29udGVudEhhc2giOiJjb250ZW50OnF1YWwiLCJQbHVnaW5WZXJzaW9uIjoidW5rbm93biIsIlNlbWFudGljc1ZlcnNpb24iOjQsIlBheWxvYWRIYXNoIjoiNGZhYTVkMmNkMjhmMzZkZjQ0ZjQ1N2I2N2UxZjI3NmJmMjRiYTM4M2Q1YjY5ODFlNDQ3ZTJiZDIzNGNkODRlMSJ9XSwiQ292ZXJhZ2UiOnsiSW52b2NhdGlvbkZhY3RzIjoxLCJVbnN1cHBvcnRlZENhdGVnb3JpZXMiOjAsIlN0YXRlIjowLCJTY29wZUlkIjpudWxsLCJVbml2ZXJzZUlkIjpudWxsLCJEZWNsYXJlZFVuaXRDb3VudCI6MCwiVmVyaWZpZWRVbml0Q291bnQiOjAsIkV4dGVybmFsIjowLCJBbWJpZ3VvdXMiOjAsIlVucmVzb2x2ZWQiOjAsIlVuc3VwcG9ydGVkIjowLCJDb25kaXRpb25hbEluYWN0aXZlIjowLCJVbmF2YWlsYWJsZVJlYXNvbnMiOnt9LCJUb3RhbEZhY3RzIjoxLCJBbmFseXNpc1BlcmZvcm1lZCI6dHJ1ZSwiSXNDb21wbGV0ZSI6dHJ1ZX0sIkF1dGhvcml0eSI6bnVsbCwiUmVxdWlyZXNBdXRob3JpdHkiOmZhbHNlLCJBdXRob3JpdHlQdWJsaWNhdGlvbkluZGV4UnVuSWQiOm51bGx9"
+    },
+    {
+      "Label": "HetuIndexState",
+      "NativeId": 32,
+      "Key": "repo:affected",
+      "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOmFmZmVjdGVkIn0sIkluZGV4UnVuSWQiOnsiVmFsdWUiOiJydW46dHdvIn0sIlNvdXJjZXMiOltdLCJTbmFwc2hvdElkZW50aXR5IjpudWxsLCJJc0NvbnNpc3RlbnRTbmFwc2hvdCI6ZmFsc2UsIkluZGV4SWRlbnRpdHkiOnsiVmFsdWUiOiJlZmU2OWJhMDU0NmI4Y2E5NzQ2M2IxZDliNTIwMzc3M2RiYTI3YmVhZjkxN2VlOTI1M2UwNDk4NGEzMzZhY2YxIn19"
+    },
+    {
+      "Label": "HetuRepository",
+      "NativeId": 24,
+      "Key": "repo:affected",
+      "Payload": "eyJJZCI6eyJWYWx1ZSI6InJlcG86YWZmZWN0ZWQifSwiRGlzcGxheU5hbWUiOm51bGwsIlNvdXJjZVVyaSI6bnVsbCwiUmVnaXN0ZXJlZEF0IjoiMjAyNi0xMS0yN1QxNzowNDozOS4yNjYzMjc5KzAwOjAwIn0="
+    },
+    {
+      "Label": "HetuRun",
+      "NativeId": 9,
+      "Key": "repo:affected\nrun:one",
+      "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOmFmZmVjdGVkIn0sIklkIjp7IlZhbHVlIjoicnVuOm9uZSJ9LCJTdGFydGVkQXQiOiIyMDI2LTExLTI4VDA2OjA3OjAwKzAwOjAwIiwiU3RhdHVzIjoxLCJDb21wbGV0ZWRBdCI6IjIwMjYtMTEtMjhUMDY6MDc6MDErMDA6MDAiLCJQbHVnaW5zIjpbeyJWYWx1ZSI6InBsdWdpbjpxdWFsIn1dfQ=="
+    },
+    {
+      "Label": "HetuRun",
+      "NativeId": 31,
+      "Key": "repo:affected\nrun:two",
+      "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOmFmZmVjdGVkIn0sIklkIjp7IlZhbHVlIjoicnVuOnR3byJ9LCJTdGFydGVkQXQiOiIyMDI2LTExLTI4VDEwOjA3OjAwKzAwOjAwIiwiU3RhdHVzIjoxLCJDb21wbGV0ZWRBdCI6IjIwMjYtMTEtMjhUMTA6MDc6MDErMDA6MDAiLCJQbHVnaW5zIjpbeyJWYWx1ZSI6InBsdWdpbjpxdWFsIn1dfQ=="
+    },
+    {
+      "Label": "HetuUnit",
+      "NativeId": 29,
+      "Key": "repo:affected\nplugin:qual\nunit:one",
+      "Payload": "eyJSZXF1aXJlc09jY3VycmVuY2VBdXRob3JpdHkiOmZhbHNlLCJPcmlnaW4iOnsiUmVwb3NpdG9yeUlkIjp7IlZhbHVlIjoicmVwbzphZmZlY3RlZCJ9LCJQbHVnaW5JZCI6eyJWYWx1ZSI6InBsdWdpbjpxdWFsIn0sIlBsdWdpblZlcnNpb24iOiIxLjAuMCIsIkluZGV4UnVuSWQiOnsiVmFsdWUiOiJydW46dHdvIn0sIkluZGV4VW5pdElkIjp7IlZhbHVlIjoidW5pdDpvbmUifSwiU291cmNlUGF0aCI6bnVsbCwiU291cmNlSGFzaCI6bnVsbH0sIk5vZGVzIjpbeyJJZCI6eyJWYWx1ZSI6Im5vZGU6YSJ9LCJLaW5kIjp7IlZhbHVlIjoidHlwZSJ9LCJOYW1lIjoiYSIsIlF1YWxpZmllZE5hbWUiOiJFeGFtcGxlLmEiLCJTeW1ib2xJZCI6eyJWYWx1ZSI6InN5bWJvbDpub2RlOmEifSwiUHJvcGVydGllcyI6e319LHsiSWQiOnsiVmFsdWUiOiJub2RlOmIifSwiS2luZCI6eyJWYWx1ZSI6InR5cGUifSwiTmFtZSI6ImIiLCJRdWFsaWZpZWROYW1lIjoiRXhhbXBsZS5iIiwiU3ltYm9sSWQiOnsiVmFsdWUiOiJzeW1ib2w6bm9kZTpiIn0sIlByb3BlcnRpZXMiOnt9fV0sIkRlY2xhcmF0aW9ucyI6W10sIkVkZ2VzIjpbeyJJZCI6eyJWYWx1ZSI6ImVkZ2U6YWIifSwiU291cmNlSWQiOnsiVmFsdWUiOiJub2RlOmEifSwiVGFyZ2V0SWQiOnsiVmFsdWUiOiJub2RlOmIifSwiS2luZCI6eyJWYWx1ZSI6ImNhbGxzIn0sIkV2aWRlbmNlIjp7IlF1YWxpdHkiOjEsIlByb3ZpZGVyIjoicGx1Z2luOnF1YWwiLCJQcm92aWRlclZlcnNpb24iOiIxLjAuMCIsIkxvY2F0aW9uIjpudWxsLCJDb25maWRlbmNlIjpudWxsfSwiUHJvcGVydGllcyI6e319XSwiT2NjdXJyZW5jZUNvdmVyYWdlIjp7Ikludm9jYXRpb25GYWN0cyI6MSwiVW5zdXBwb3J0ZWRDYXRlZ29yaWVzIjowLCJTdGF0ZSI6MCwiU2NvcGVJZCI6bnVsbCwiVW5pdmVyc2VJZCI6bnVsbCwiRGVjbGFyZWRVbml0Q291bnQiOjAsIlZlcmlmaWVkVW5pdENvdW50IjowLCJFeHRlcm5hbCI6MCwiQW1iaWd1b3VzIjowLCJVbnJlc29sdmVkIjowLCJVbnN1cHBvcnRlZCI6MCwiQ29uZGl0aW9uYWxJbmFjdGl2ZSI6MCwiVW5hdmFpbGFibGVSZWFzb25zIjp7fSwiVG90YWxGYWN0cyI6MSwiQW5hbHlzaXNQZXJmb3JtZWQiOnRydWUsIklzQ29tcGxldGUiOnRydWV9fQ=="
+    },
+    {
+      "Label": "HetuUnit",
+      "NativeId": 30,
+      "Key": "repo:affected\nplugin:qual\nunit:two",
+      "Payload": "eyJSZXF1aXJlc09jY3VycmVuY2VBdXRob3JpdHkiOmZhbHNlLCJPcmlnaW4iOnsiUmVwb3NpdG9yeUlkIjp7IlZhbHVlIjoicmVwbzphZmZlY3RlZCJ9LCJQbHVnaW5JZCI6eyJWYWx1ZSI6InBsdWdpbjpxdWFsIn0sIlBsdWdpblZlcnNpb24iOiIxLjAuMCIsIkluZGV4UnVuSWQiOnsiVmFsdWUiOiJydW46dHdvIn0sIkluZGV4VW5pdElkIjp7IlZhbHVlIjoidW5pdDp0d28ifSwiU291cmNlUGF0aCI6bnVsbCwiU291cmNlSGFzaCI6bnVsbH0sIk5vZGVzIjpbeyJJZCI6eyJWYWx1ZSI6Im5vZGU6YSJ9LCJLaW5kIjp7IlZhbHVlIjoidHlwZSJ9LCJOYW1lIjoiYSIsIlF1YWxpZmllZE5hbWUiOiJFeGFtcGxlLmEiLCJTeW1ib2xJZCI6eyJWYWx1ZSI6InN5bWJvbDpub2RlOmEifSwiUHJvcGVydGllcyI6e319LHsiSWQiOnsiVmFsdWUiOiJub2RlOmIifSwiS2luZCI6eyJWYWx1ZSI6InR5cGUifSwiTmFtZSI6ImIiLCJRdWFsaWZpZWROYW1lIjoiRXhhbXBsZS5iIiwiU3ltYm9sSWQiOnsiVmFsdWUiOiJzeW1ib2w6bm9kZTpiIn0sIlByb3BlcnRpZXMiOnt9fV0sIkRlY2xhcmF0aW9ucyI6W10sIkVkZ2VzIjpbeyJJZCI6eyJWYWx1ZSI6ImVkZ2U6YWIifSwiU291cmNlSWQiOnsiVmFsdWUiOiJub2RlOmEifSwiVGFyZ2V0SWQiOnsiVmFsdWUiOiJub2RlOmIifSwiS2luZCI6eyJWYWx1ZSI6ImNhbGxzIn0sIkV2aWRlbmNlIjp7IlF1YWxpdHkiOjEsIlByb3ZpZGVyIjoicGx1Z2luOnF1YWwiLCJQcm92aWRlclZlcnNpb24iOiIxLjAuMCIsIkxvY2F0aW9uIjpudWxsLCJDb25maWRlbmNlIjpudWxsfSwiUHJvcGVydGllcyI6e319XSwiT2NjdXJyZW5jZUNvdmVyYWdlIjpudWxsfQ=="
+    }
+  ]
+}

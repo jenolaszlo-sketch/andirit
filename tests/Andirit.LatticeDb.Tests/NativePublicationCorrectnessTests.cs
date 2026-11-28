@@ -1002,7 +1002,7 @@ namespace Andirit.LatticeDb.Tests
 
         internal static CodeOccurrenceTargetId ComputeTarget(string repositoryId, string name)
         {
-            var context = "compctx1:sha256:" + Hex(repositoryId + "|" + name);
+            var context = "compctx4:sha256:" + Hex(repositoryId + "|" + name);
             return CodeOccurrenceIdentity.ComputeTargetId(
                 context,
                 "meta:" + name,
@@ -1189,3 +1189,4 @@ namespace Andirit.LatticeDb.Tests
         private sealed class InjectedPersistenceException : Exception;
     }
 }
+

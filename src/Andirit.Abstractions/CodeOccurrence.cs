@@ -14,7 +14,7 @@ public enum CodeOccurrenceCategory
     Invocation = 0
 }
 
-/// <summary>Identifies one usage-occurrence fact (the accepted `usage4` shape).</summary>
+/// <summary>Identifies one usage-occurrence fact (the successor `usage5` shape).</summary>
 public sealed record CodeOccurrenceId
 {
     public CodeOccurrenceId(string value)
@@ -34,7 +34,7 @@ public sealed record CodeOccurrenceId
     public override string ToString() => Value;
 }
 
-/// <summary>Identifies the exact bound declaration target (the accepted `asmctx3` shape).</summary>
+/// <summary>Identifies the exact bound declaration target (the successor `asmctx4` shape).</summary>
 public sealed record CodeOccurrenceTargetId
 {
     public CodeOccurrenceTargetId(string value)
@@ -42,7 +42,7 @@ public sealed record CodeOccurrenceTargetId
         if (!CodeOccurrenceIdentity.IsCanonicalTarget(value))
         {
             throw new ArgumentException(
-                "A target identity must be 'asmctx3:sha256:' followed by 64 lowercase hexadecimal characters.",
+                "A target identity must be 'asmctx4:sha256:' followed by 64 lowercase hexadecimal characters.",
                 nameof(value));
         }
 
@@ -69,27 +69,44 @@ public sealed record CodeOccurrenceContributor
 
 /// <summary>
 /// Domain-separated, deterministic, length-prefixed identity construction for
-/// occurrence facts. This implements the accepted R2 `usage4` / `asmctx3`
-/// contracts: big-endian part lengths, the accepted domain strings and the exact
+/// occurrence facts. This implements the successor R2 `usage5` / `asmctx4`
+/// contracts: big-endian part lengths, the successor domain strings and the exact
 /// tuple fields. It does not use documentation IDs, paths or descriptors as
 /// shortcuts.
 /// </summary>
 public static class CodeOccurrenceIdentity
 {
-    /// <summary>The accepted R2 occurrence semantics string, hashed into `usage4`.</summary>
-    public const string SemanticsVersion = "usage4-b2c-exp-r2-20261101";
+    /// <summary>
+    /// The current persisted identity generation. Predecessor records
+    /// (<c>asmctx3</c>/<c>usage4</c>) are refused rather than reinterpreted;
+    /// reconstruction requires re-ingestion into a new store.
+    /// </summary>
+    public const int Generation = 3;
 
-    /// <summary>The accepted R2 target domain and canonical prefix.</summary>
-    public const string TargetDomain = "asmctx3";
+    /// <summary>The current occurrence-authority envelope version.</summary>
+    public const int AuthorityVersion = 3;
+
+    /// <summary>The successor occurrence semantics string, hashed into `usage5`.</summary>
+    public const string SemanticsVersion = "usage5-b2c-exp-r2-20261128";
+
+    /// <summary>The numeric occurrence semantics generation stored on each fact.</summary>
+    public const int CurrentSemanticsVersion = 5;
+
+    /// <summary>The successor target domain and canonical prefix.</summary>
+    public const string TargetDomain = "asmctx4";
     public const string TargetPrefix = TargetDomain + ":sha256:";
 
-    /// <summary>The accepted R2 occurrence domain.</summary>
-    public const string UsageDomain = "usage4";
+    /// <summary>The predecessor target domain retained only for safe refusal.</summary>
+    public const string PredecessorTargetDomain = "asmctx3";
+    public const string PredecessorTargetPrefix = PredecessorTargetDomain + ":sha256:";
+
+    /// <summary>The successor occurrence domain.</summary>
+    public const string UsageDomain = "usage5";
 
     /// <summary>The accepted R2 category token for an ordinary method invocation.</summary>
     public const string InvocationCategory = "method-invocation";
 
-    private const string CompilationContractVersion = "compctx1";
+    private const string CompilationContractVersion = "compctx4";
     private const string TargetUnavailable = TargetDomain + ":unavailable";
 
     public static bool IsCanonicalOccurrence(string? value) =>
@@ -102,9 +119,20 @@ public static class CodeOccurrenceIdentity
         value.AsSpan(TargetPrefix.Length).ToString().All(char.IsAsciiHexDigitLower);
 
     /// <summary>
-    /// Computes the exact R2 `asmctx3` target identity from verified defining
-    /// compilation inputs. The compilation context must be a canonical
-    /// `compctx1:sha256:&lt;64 hex&gt;` value; a caller-supplied descriptor is not
+    /// Recognizes a predecessor-generation target. Such a value is never
+    /// canonical current authority; callers use this only to refuse it
+    /// explicitly and require re-ingestion.
+    /// </summary>
+    public static bool IsPredecessorTarget(string? value) =>
+        value is not null &&
+        value.StartsWith(PredecessorTargetPrefix, StringComparison.Ordinal) &&
+        value.Length == PredecessorTargetPrefix.Length + 64 &&
+        value.AsSpan(PredecessorTargetPrefix.Length).ToString().All(char.IsAsciiHexDigitLower);
+
+    /// <summary>
+    /// Computes the exact successor `asmctx4` target identity from verified
+    /// defining compilation inputs. The compilation context must be a canonical
+    /// `compctx4:sha256:&lt;64 hex&gt;` value; a caller-supplied descriptor is not
     /// sufficient.
     /// </summary>
     public static CodeOccurrenceTargetId ComputeTargetId(
@@ -121,7 +149,7 @@ public static class CodeOccurrenceIdentity
         if (!IsCanonicalCompilationContext(context))
         {
             throw new ArgumentException(
-                "The compilation context must be 'compctx1:sha256:' followed by 64 lowercase hexadecimal characters.",
+                "The compilation context must be 'compctx4:sha256:' followed by 64 lowercase hexadecimal characters.",
                 nameof(compilationContextId));
         }
 
@@ -149,7 +177,7 @@ public static class CodeOccurrenceIdentity
         Hash(TargetDomain + "-target", ContractValue.Required(shape, nameof(shape)));
 
     /// <summary>
-    /// Computes the exact R2 `usage4` occurrence identity. The contributing
+    /// Computes the exact successor `usage5` occurrence identity. The contributing
     /// storage unit is intentionally excluded; <paramref name="sourceUnitId"/>
     /// is the semantic source/calling unit and does participate. Identical
     /// physical occurrences of the same semantic unit can therefore union
@@ -193,7 +221,7 @@ public static class CodeOccurrenceIdentity
     }
 
     public static string ComputePayloadHash(CodeOccurrenceFact fact) => Hash(
-        "occurrence-payload4",
+        "occurrence-payload5",
         fact.RepositoryId.Value,
         fact.TargetId.Value,
         fact.TargetDocumentId,
@@ -222,9 +250,9 @@ public static class CodeOccurrenceIdentity
     };
 
     private static bool IsCanonicalCompilationContext(string value) =>
-        value.StartsWith("compctx1:sha256:", StringComparison.Ordinal) &&
-        value.Length == "compctx1:sha256:".Length + 64 &&
-        value.AsSpan("compctx1:sha256:".Length).ToString().All(char.IsAsciiHexDigitLower);
+        value.StartsWith("compctx4:sha256:", StringComparison.Ordinal) &&
+        value.Length == "compctx4:sha256:".Length + 64 &&
+        value.AsSpan("compctx4:sha256:".Length).ToString().All(char.IsAsciiHexDigitLower);
 
     private static string[] ToParts(IEnumerable<string> values)
     {
@@ -279,7 +307,7 @@ public sealed record CodeOccurrenceFact
         string sourceHash,
         string contentHash,
         CodeLocation? declarationSpan = null,
-        int semanticsVersion = 4,
+        int semanticsVersion = CodeOccurrenceIdentity.CurrentSemanticsVersion,
         string? pluginVersion = null)
     {
         Id = id ?? throw new ArgumentNullException(nameof(id));
@@ -353,7 +381,7 @@ public sealed record CodeOccurrenceFact
         string sourceHash,
         string contentHash,
         CodeLocation? declarationSpan = null,
-        int semanticsVersion = 4,
+        int semanticsVersion = CodeOccurrenceIdentity.CurrentSemanticsVersion,
         string? pluginVersion = null)
     {
         ArgumentNullException.ThrowIfNull(contributor);
@@ -548,3 +576,5 @@ public sealed record CodeOccurrenceCoverage
         return CodeRelationshipCoverageState.NotProduced;
     }
 }
+
+

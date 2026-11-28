@@ -485,7 +485,7 @@ public sealed class LatticeDbDurableStateRegressionTests
 
     private static CodeOccurrenceTargetId Target(CodeRepositoryId repository, string name)
     {
-        var context = "compctx1:sha256:" + Hex(repository.Value + "|" + name);
+        var context = "compctx4:sha256:" + Hex(repository.Value + "|" + name);
         return CodeOccurrenceIdentity.ComputeTargetId(
             context,
             "meta:" + name,
@@ -498,3 +498,4 @@ public sealed class LatticeDbDurableStateRegressionTests
     private static string Hex(string value) =>
         Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(value)));
 }
+

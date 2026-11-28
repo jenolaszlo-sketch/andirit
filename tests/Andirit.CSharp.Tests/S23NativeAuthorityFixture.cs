@@ -7,7 +7,6 @@ using Andirit;
 using LatticeDbSharp;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Frozen = AdrCi1Exp.Shared;
 
 namespace Andirit.CSharp.Tests;
 
@@ -98,19 +97,13 @@ internal sealed record S23NativeAuthorityFixture(
         await Complete(store, run);
     }
 
-    // Independent frozen R2 Describe and tuple hashing, not the new carrier or
-    // production mapper, establish expected target and usage identities.
-    internal static string ExpectedTarget(VerifiedCSharpCompilation defining, IMethodSymbol method)
-    {
-        var mapped = Frozen.CompilationProvenance.Describe(Repo.Value, defining.Descriptor.ProjectUnitId,
-            defining.Compilation, defining.Sources.Select(s => (s.Path, Encoding.UTF8.GetBytes(s.Text.ToString()))).ToArray());
-        return "asmctx3:sha256:" + Frozen.ProvenanceHashing.Hash("asmctx3-context",
-            ["compctx1", mapped.DescriptorDigest, mapped.MetadataIdentity, mapped.ModuleName, Id(method), Decl(method), Shape(method)]);
-    }
-    internal static string ExpectedUsage(CodeOccurrenceFact fact) => Frozen.ProvenanceHashing.Hash("usage4",
-        [Repo.Value, Plugin.Value, "usage4-b2c-exp-r2-20261101", fact.SourceUnitId, fact.Span.Path, fact.SourceHash,
-            fact.Span.StartLine.ToString(), fact.Span.StartColumn.ToString(), fact.Span.EndLine.ToString(),
-            fact.Span.EndColumn.ToString(), fact.TargetDocumentId, fact.TargetId.Value, "method-invocation"]);
+    // Independent successor-contract oracle, not the new carrier or production
+    // mapper, establishes expected target and usage identities.
+    internal static string ExpectedTarget(VerifiedCSharpCompilation defining, IMethodSymbol method) =>
+        SuccessorIdentityOracle.TargetId(Repo.Value, defining, method, Id, Decl, Shape);
+    internal static string ExpectedUsage(CodeOccurrenceFact fact) =>
+        SuccessorIdentityOracle.UsageId(Repo.Value, Plugin.Value, fact.SourceUnitId, fact.Span.Path,
+            fact.SourceHash, fact.Span, fact.TargetDocumentId, fact.TargetId.Value);
 
     internal static SortedDictionary<string, JsonObject> Rows(string path, params string[] labels)
     {

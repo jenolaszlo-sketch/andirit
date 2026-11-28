@@ -1,0 +1,36 @@
+ANDIRIT-CI1A-S2.6-WP-S64-ENTRY-01
+Baseline observations on 2026-11-26
+
+git ls-remote origin refs/heads/main refs/tags/v0.2.0-preview.7 refs/tags/v0.2.0-preview.7^{}
+99b04c0ebb5dfa43065581bb6489fe2468d9a5aa refs/heads/main
+6659647527a6e0eb822a3d7a05b8283c75fd6a3e refs/tags/v0.2.0-preview.7
+6ed05964d2fcc758648b654a01ec706647e52183 refs/tags/v0.2.0-preview.7^{}
+Local clean-clone HEAD and origin/main both match the exact requested commit and tree 3c0288c533db80b7caf769d40cd33a9b567024c6.
+
+GitHub Actions run and jobs queried by GitHub CLI/API.
+45773556513 ci push completed success, head 99b04c0ebb5dfa43065581bb6489fe2468d9a5aa
+139751684513 pack success at published head
+139751684612 test (ubuntu-latest) success at published head
+139751684786 test (windows-latest) success at published head
+139751684878 test (macos-latest) success at published head
+Published-head test artifact metadata, SHA-256, not downloaded for this assessment:
+15095281632 test-results-ubuntu-latest 96a3e8f7f11b73fd0156872ca533841425ac3443d9f512ba85b97624cdedb1d3
+15094963110 test-results-windows-latest f2b413d8f7e0aff51c9c8e47340a920513049850d67398dba76161ef86adb9da
+15095296278 test-results-macos-latest 7e8e8b4941e551aa69e61b20d98b1f3f4eb5ea92f5b3cd1b304aa6e5753b6b42
+45691273312 ci push completed success, qualified R2 head a96c19a844f8ea1719508198b47df23c4e203571 and tree f05ded592bc82c4e0b02044c97fb1f509fdb6e8e.
+R2 is a strict ancestor. Git diff of src, tests, .github, Directory.Build.props, Directory.Build.targets and Andirit.slnx from R2 to reviewed main is empty.
+
+LatticeDbSharp Version 0.2.0 checked in the tag, R2 and reviewed main. The exact project file SHA-256 is 943d08a943bc2ab83caa9cf58bf74651ac5a8e4851ac728b3f3e2a92042f1f53 in all three.
+44965409440 attempt 2 completed successfully for v0.2.0-preview.7 at its peeled commit. NuGet flatcontainer package HEAD returned 200 for Andirit, Andirit.Abstractions, Andirit.CSharp, Andirit.LatticeDb, Andirit.Testing and Andirit.TreeSitter at 0.2.0-preview.7. The GitHub release-object endpoint returned 404. The published boundary is the annotated tag and the NuGet packages, corroborated by the repository release record and publication workflow.
+
+Owner acceptance records and evidence checked against committed Git bytes.
+S61-ACCEPT-01 at 92bf73a61794fa3bccad53d23dd7e65c51807cd5, report blob 8ae06941f4d930dcb424c703e0361d59cfd3402a, 10/10 manifest entries, manifest bytes SHA-256 1e1c25af28a7c115831c4120ae5a937d1b893c429470a5565abe233ac47123fb.
+S62-ACCEPT-01 at 359a9e8a8768d4cc9204e898ef76f0b4eba38d47, report blob bf324d9b7270fe60a32695b51b0d805d0e755c07, 8/8 manifest entries, manifest bytes SHA-256 06bf77ad6edfa576ca7092341fdd73fb6686b454d6bbb2f1b9a4650b8f1d9ae1.
+S63-ACCEPT-01 at 99b04c0ebb5dfa43065581bb6489fe2468d9a5aa, report blob 409cd7fb492a9e6aa88659091b7711d3c5019ced, 11/11 via original seal.py, manifest bytes SHA-256 55fbbc7ca4db14e8190dee6c1d790512fb78d735746cec541df8fdd0a609b21a. The P-03 erratum is covered by this seal.
+S63-IMPL-01 original 17/17 at baseline, manifest bytes SHA-256 c3c78d8c89f45d373ea64f18a5c81d5fb1d02560f4d042c14365d4bab8faf4cd.
+Historical Q1 exact bundle verified and fetched into the isolated clone only. Ref a69c13ce447839330793be2e4cbc7a1dd732d1dd, prerequisite dd484af2d32ff1f5b7951a85f4f3104c4b4b5402, 24/24 at the historical commit, manifest bytes SHA-256 18dd7d5af921870ac1d548211db352ea9755219ea03799c0d89b197536587172.
+S63-IMPL-01-R1 historical result remains 8/11. attribution-verification.txt and probes/probe-receipt.txt differ. hosted-ci/coverage-latticedb-ubuntu.cobertura.xml is absent in that historical extension. Historical manifest bytes SHA-256 c52701c2a01c2531905138bfc05b52165c2d6835769b538dc0f1a2e60987ddb0.
+S63-IMPL-01-R2 original seal-r2.py checks: producer package 12 entries (c81430e4b135f7c4b23bcc686eecd16517bb45530ed1a1692b000850b00c60ea), R1 erratum 7 entries (4052bf04b4878ea349a268cbf9dd13c3316102d5bbabffa63a190ddbb9c5f933), checkout replay 5 entries (5cda449fb05ab4d2eb19ade72a59927e15f6c2bf9946540761c584de80844fac).
+S63-QUAL-01-R1 original seal.py verifies 19 entries and formal report from committed blobs at 329e8f775ab9fba10f61510c7f80a312525d13ff, manifest bytes SHA-256 6c534f7ef0eefccc92d971722031caeecdf37e914e7c343b1d449324eb3342ed.
+
+The new Windows entry observer built with zero errors and warnings against the above source. SHA-256 of its resolved Windows native lattice.dll is 3dec7386cf0adbf96962f89ab818a4236afc82bbf80086b30a87cecdbacfd6c1. Managed LatticeDbSharp.dll SHA-256 is d803ca19fad1c0628558b0c8f6b5387471ef72d69db67a543e5b3e7c4555cf46.

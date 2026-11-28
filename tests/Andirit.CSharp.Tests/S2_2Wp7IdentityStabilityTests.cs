@@ -59,9 +59,9 @@ public sealed class S2_2Wp7IdentityStabilityTests
         Assert.Equal(
             libA.Descriptor.Sources.Select(s => s.CanonicalForm),
             libB.Descriptor.Sources.Select(s => s.CanonicalForm));
-        Assert.Equal(ExpectedMappedCompctx1(libA), ExpectedMappedCompctx1(libB));
+        Assert.Equal(ExpectedDefiningContext(libA), ExpectedDefiningContext(libB));
 
-        // compctx2 changes at every level: Leaf itself, Mid (direct dep of Leaf),
+        // compctx3 changes at every level: Leaf itself, Mid (direct dep of Leaf),
         // Lib and the caller App.
         Assert.NotEqual(leafA.Descriptor.DescriptorDigest, leafB.Descriptor.DescriptorDigest);
         Assert.NotEqual(midA.Descriptor.DescriptorDigest, midB.Descriptor.DescriptorDigest);
@@ -85,7 +85,7 @@ public sealed class S2_2Wp7IdentityStabilityTests
         var mintA = universeA.MintTarget(targetA, libA.Descriptor.DescriptorDigest,
             IdDigest(targetA), DeclDigest(targetA), ShapeDigest(targetA));
         Assert.Equal(VerifiedTargetMintStatus.Minted, mintA.Status);
-        Assert.Equal(ExpectedAsmctx3(libA, targetA), mintA.TargetId!.Value);
+        Assert.Equal(ExpectedAsmctx4(libA, targetA), mintA.TargetId!.Value);
 
         var stale = universeB.MintTarget(targetB, libA.Descriptor.DescriptorDigest,
             IdDigest(targetB), DeclDigest(targetB), ShapeDigest(targetB));
@@ -95,7 +95,7 @@ public sealed class S2_2Wp7IdentityStabilityTests
         var fresh = universeB.MintTarget(targetB, libB.Descriptor.DescriptorDigest,
             IdDigest(targetB), DeclDigest(targetB), ShapeDigest(targetB));
         Assert.Equal(VerifiedTargetMintStatus.Minted, fresh.Status);
-        Assert.Equal(ExpectedAsmctx3(libB, targetB), fresh.TargetId!.Value);
+        Assert.Equal(ExpectedAsmctx4(libB, targetB), fresh.TargetId!.Value);
 
         // Identity is stable even though the recorded context changed.
         Assert.Equal(mintA.TargetId!.Value, fresh.TargetId!.Value);
@@ -105,7 +105,7 @@ public sealed class S2_2Wp7IdentityStabilityTests
             IdDigest(targetA), DeclDigest(targetA), ShapeDigest(targetA));
         Assert.Equal(mintA.TargetId!.Value, mintARepeat.TargetId!.Value);
 
-        // usage4: refused under the stale recorded context, accepted under the
+        // usage5: refused under the stale recorded context, accepted under the
         // current context, with the same target identity and a caller-scoped value.
         var span = new CodeLocation("Lib/Lib.cs", 1, 1, 1, 12);
         var sourceHash = libB.Sources.Single(s => s.Path == span.Path).ContentHash;
@@ -123,7 +123,7 @@ public sealed class S2_2Wp7IdentityStabilityTests
             TargetDoc(targetB), IdDigest(targetB), DeclDigest(targetB), ShapeDigest(targetB),
             libB.Compilation));
         Assert.True(freshUsage.IsMinted);
-        Assert.Equal(ExpectedUsage4(libB, libB, targetB, span), freshUsage.Fact!.Id.Value);
+        Assert.Equal(ExpectedUsage5(libB, libB, targetB, span), freshUsage.Fact!.Id.Value);
         Assert.Equal(fresh.TargetId!.Value, freshUsage.Fact.TargetId.Value);
     }
 
@@ -144,7 +144,7 @@ public sealed class S2_2Wp7IdentityStabilityTests
         var fresh = universeB.MintTarget(symbolB, libB.Descriptor.DescriptorDigest,
             IdDigest(symbolB), DeclDigest(symbolB), ShapeDigest(symbolB), appB.Compilation);
         Assert.Equal(VerifiedTargetMintStatus.Minted, fresh.Status);
-        Assert.Equal(ExpectedAsmctx3(libB, symbolB), fresh.TargetId!.Value);
+        Assert.Equal(ExpectedAsmctx4(libB, symbolB), fresh.TargetId!.Value);
 
         var universeA = Universe(leafA, midA, libA, appA);
         var replayed = universeA.MintTarget(symbolA, libA.Descriptor.DescriptorDigest,
@@ -161,10 +161,10 @@ public sealed class S2_2Wp7IdentityStabilityTests
         // The stability demonstrated above is specific to the transitive dimension.
         var (_, midA, _, _) = await ChainAsync(LeafV1);
         var (_, midB, _, _) = await ChainAsync(LeafV2);
-        Assert.NotEqual(ExpectedMappedCompctx1(midA), ExpectedMappedCompctx1(midB));
+        Assert.NotEqual(ExpectedDefiningContext(midA), ExpectedDefiningContext(midB));
         Assert.NotEqual(
-            ExpectedAsmctx3(midA, Target(midA.Compilation, "M.Mid", "V")),
-            ExpectedAsmctx3(midB, Target(midB.Compilation, "M.Mid", "V")));
+            ExpectedAsmctx4(midA, Target(midA.Compilation, "M.Mid", "V")),
+            ExpectedAsmctx4(midB, Target(midB.Compilation, "M.Mid", "V")));
         Assert.NotEqual(midA.Descriptor.DescriptorDigest, midB.Descriptor.DescriptorDigest);
     }
 
@@ -177,33 +177,33 @@ public sealed class S2_2Wp7IdentityStabilityTests
         var first = VerifiedMetadataReference.Capture(path);
         var second = VerifiedMetadataReference.Capture(path);
 
-        // Independent derivation of the production capture identity:
-        // file|<normalized actual path>|<lowercase sha256 of the captured bytes>.
-        var expectedIdentity = "file|" + Path.GetFullPath(path).Replace('\\', '/') + "|" +
-            Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path)));
+        // Independent derivation of the successor content-bound capture identity:
+        // refctx1|<assembly identity>|sha256:<lowercase hash of the captured bytes>.
+        var expectedIdentity = SuccessorIdentityOracle.DescribeReferenceIdentity(path);
         Assert.Equal(expectedIdentity, first.Identity);
         Assert.Equal(first.Identity, second.Identity);
+        Assert.DoesNotContain(Path.GetFullPath(path).Replace('\\', '/'), first.Identity);
 
         var a = await BuildWithReferenceAsync("S/S.csproj", "S", Source, first);
         var b = await BuildWithReferenceAsync("S/S.csproj", "S", Source, second);
 
-        // Independently constructed equivalent artifacts under the production
-        // profile map to the same compctx1 and the same asmctx3.
+        // Independently constructed equivalent artifacts map to the same successor
+        // defining context and the same asmctx4.
         Assert.Equal(a.Descriptor.DescriptorDigest, b.Descriptor.DescriptorDigest);
-        Assert.Equal(ExpectedMappedCompctx1(a), ExpectedMappedCompctx1(b));
+        Assert.Equal(ExpectedDefiningContext(a), ExpectedDefiningContext(b));
         var method = Target(a.Compilation, "S.X", "V");
-        Assert.Equal(ExpectedAsmctx3(a, method), ExpectedAsmctx3(b, method));
+        Assert.Equal(ExpectedAsmctx4(a, method), ExpectedAsmctx4(b, method));
         var mint = Universe(a).MintTarget(method, a.Descriptor.DescriptorDigest,
             IdDigest(method), DeclDigest(method), ShapeDigest(method));
-        Assert.Equal(ExpectedAsmctx3(a, method), mint.TargetId!.Value);
+        Assert.Equal(ExpectedAsmctx4(a, method), mint.TargetId!.Value);
     }
 
     [Fact]
-    public async Task Wp7_Test6_DifferentPath_NotSilentlyEquivalent()
+    public async Task Wp7_Test6_DifferentPath_SameContentIsEquivalent()
     {
-        // The production capture profile preserves the actual path; the same bytes
-        // at a different path are a different reference identity and a different
-        // target identity. Paths are not normalized away.
+        // The successor reference identity is content-bound: byte-identical
+        // references installed at different absolute paths are the same semantic
+        // input and cannot churn the defining context or target identity.
         var sourcePath = typeof(object).Assembly.Location;
         var copyPath = Path.Combine(Path.GetTempPath(), "wp7-ref-" + Guid.NewGuid().ToString("N") + ".dll");
         try
@@ -211,18 +211,18 @@ public sealed class S2_2Wp7IdentityStabilityTests
             File.Copy(sourcePath, copyPath, overwrite: true);
             var original = VerifiedMetadataReference.Capture(sourcePath);
             var copy = VerifiedMetadataReference.Capture(copyPath);
-            Assert.NotEqual(original.Identity, copy.Identity);
-            Assert.Equal(
-                "file|" + Path.GetFullPath(sourcePath).Replace('\\', '/') + "|",
-                original.Identity[..("file|" + Path.GetFullPath(sourcePath).Replace('\\', '/') + "|").Length]);
-            Assert.StartsWith("file|" + Path.GetFullPath(copyPath).Replace('\\', '/') + "|", copy.Identity);
+            Assert.Equal(original.Identity, copy.Identity);
+            Assert.StartsWith("refctx1|", original.Identity, StringComparison.Ordinal);
+            Assert.DoesNotContain(Path.GetFullPath(sourcePath).Replace('\\', '/'), original.Identity);
+            Assert.DoesNotContain(Path.GetFullPath(copyPath).Replace('\\', '/'), copy.Identity);
 
             var a = await BuildWithReferenceAsync("S/S.csproj", "S", Source, original);
             var b = await BuildWithReferenceAsync("S/S.csproj", "S", Source, copy);
-            Assert.NotEqual(ExpectedMappedCompctx1(a), ExpectedMappedCompctx1(b));
-            Assert.NotEqual(
-                ExpectedAsmctx3(a, Target(a.Compilation, "S.X", "V")),
-                ExpectedAsmctx3(b, Target(b.Compilation, "S.X", "V")));
+            Assert.Equal(a.Descriptor.DescriptorDigest, b.Descriptor.DescriptorDigest);
+            Assert.Equal(ExpectedDefiningContext(a), ExpectedDefiningContext(b));
+            Assert.Equal(
+                ExpectedAsmctx4(a, Target(a.Compilation, "S.X", "V")),
+                ExpectedAsmctx4(b, Target(b.Compilation, "S.X", "V")));
         }
         finally
         {
@@ -241,10 +241,10 @@ public sealed class S2_2Wp7IdentityStabilityTests
 
         var a = await BuildWithReferenceAsync("S/S.csproj", "S", Source, platform);
         var b = await BuildWithReferenceAsync("S/S.csproj", "S", Source, other);
-        Assert.NotEqual(ExpectedMappedCompctx1(a), ExpectedMappedCompctx1(b));
+        Assert.NotEqual(ExpectedDefiningContext(a), ExpectedDefiningContext(b));
         Assert.NotEqual(
-            ExpectedAsmctx3(a, Target(a.Compilation, "S.X", "V")),
-            ExpectedAsmctx3(b, Target(b.Compilation, "S.X", "V")));
+            ExpectedAsmctx4(a, Target(a.Compilation, "S.X", "V")),
+            ExpectedAsmctx4(b, Target(b.Compilation, "S.X", "V")));
     }
 
     [Fact]
@@ -259,25 +259,25 @@ public sealed class S2_2Wp7IdentityStabilityTests
             concurrentBuild: false);
         var b = await BuildWithReferenceAsync("S/S.csproj", "S", Source, Platform.Value, debug);
         Assert.NotEqual(a.Descriptor.OptionsDigest, b.Descriptor.OptionsDigest);
-        Assert.NotEqual(ExpectedMappedCompctx1(a), ExpectedMappedCompctx1(b));
+        Assert.NotEqual(ExpectedDefiningContext(a), ExpectedDefiningContext(b));
         Assert.NotEqual(
-            ExpectedAsmctx3(a, Target(a.Compilation, "S.X", "V")),
-            ExpectedAsmctx3(b, Target(b.Compilation, "S.X", "V")));
+            ExpectedAsmctx4(a, Target(a.Compilation, "S.X", "V")),
+            ExpectedAsmctx4(b, Target(b.Compilation, "S.X", "V")));
     }
 
     [Fact]
     public void Wp7_Test6_CrossProfileEqualityIsNotClaimed()
     {
-        // Two declared profiles exist. The production capture profile records the
-        // actual path and bytes; the frozen corpus fixture profile uses three
-        // fixture labels over the accepted runtime bytes and its anchors apply only
-        // under that complete fixture profile. Production must never substitute
-        // fixture labels, and no cross-profile equality is claimed.
+        // The successor production capture profile is content-bound and path-free.
+        // The historical frozen corpus fixture profile uses path/fixture labels;
+        // its anchors apply only under that complete predecessor profile, and no
+        // cross-profile or cross-generation equality is claimed.
         var production = VerifiedMetadataReference.Capture(typeof(object).Assembly.Location).Identity;
-        var fixtureLabel = "file|runtime/System.Runtime.dll|" + new string('0', 64);
+        var fixtureLabel = "refctx1|runtime/System.Runtime.dll|" + new string('0', 64);
 
-        Assert.StartsWith("file|", production);
+        Assert.StartsWith("refctx1|", production, StringComparison.Ordinal);
         Assert.DoesNotContain("runtime/", production);
+        Assert.DoesNotContain(Path.GetFullPath(typeof(object).Assembly.Location).Replace('\\', '/'), production);
         Assert.NotEqual(fixtureLabel, production);
         // The production identity contains the captured byte hash of the actual file.
         Assert.Contains(
@@ -343,7 +343,7 @@ public sealed class S2_2Wp7IdentityStabilityTests
         Assert.NotEqual(mintA.TargetId!.Value, replay.TargetId?.Value);
 
         // Fabricated canonical-shaped recorded context is refused as stale.
-        var fabricated = universeB.MintTarget(targetB, "compctx2:sha256:" + new string('a', 64),
+        var fabricated = universeB.MintTarget(targetB, "compctx3:sha256:" + new string('a', 64),
             IdDigest(targetB), DeclDigest(targetB), ShapeDigest(targetB));
         Assert.False(fabricated.IsMinted);
         Assert.Null(fabricated.TargetId);
@@ -406,9 +406,9 @@ public sealed class S2_2Wp7IdentityStabilityTests
 
         Assert.Equal(libA.Descriptor.DescriptorDigest, libB.Descriptor.DescriptorDigest);
         Assert.Equal(mintA.TargetId!.Value, mintB.TargetId!.Value);
-        Assert.Equal(ExpectedAsmctx3(libA, targetA), mintA.TargetId.Value);
-        Console.WriteLine("WP7-DIGEST|asmctx3=" + mintA.TargetId.Value +
-            "|compctx2=" + libA.Descriptor.DescriptorDigest);
+        Assert.Equal(ExpectedAsmctx4(libA, targetA), mintA.TargetId.Value);
+        Console.WriteLine("WP7-DIGEST|asmctx4=" + mintA.TargetId.Value +
+            "|compctx3=" + libA.Descriptor.DescriptorDigest);
     }
 
     // ---------------------------------------------------------------- helpers
@@ -476,71 +476,21 @@ public sealed class S2_2Wp7IdentityStabilityTests
             unit.Compilation.GetSemanticModel(tree).GetSymbolInfo(invocation).Symbol);
     }
 
-    /// <summary>Independent implementation of the accepted R2-faithful compctx1 mapping.</summary>
-    private static string ExpectedMappedCompctx1(VerifiedCSharpCompilation unit)
-    {
-        var d = unit.Descriptor;
-        var parts = new List<string>
-        {
-            "compctx1", d.RepositoryId, d.ProjectUnitId, d.AssemblyName,
-            d.MetadataIdentity, d.ModuleName, d.OptionsDigest,
-        };
-        parts.AddRange(d.Sources.Select(s => s.CanonicalForm));
-        parts.AddRange(d.References
-            .Select(reference => MapReference(unit, reference))
-            .Order(StringComparer.Ordinal));
-        return "compctx1:sha256:" + LengthPrefixedHash("compctx1-context", parts);
-    }
+    /// <summary>Independent successor defining-context value.</summary>
+    private static string ExpectedDefiningContext(VerifiedCSharpCompilation unit) =>
+        SuccessorIdentityOracle.DescribeDefiningContext(RepositoryId, unit);
 
-    private static string MapReference(VerifiedCSharpCompilation unit, string reference)
-    {
-        const string prefix = "compilation-context|";
-        if (!reference.StartsWith(prefix, StringComparison.Ordinal))
-            return reference;
-        var digest = reference[prefix.Length..];
-        var dependency = unit.Dependencies.Single(d =>
-            string.Equals(d.Descriptor.DescriptorDigest, digest, StringComparison.Ordinal));
-        var trees = string.Join(",", dependency.Compilation.SyntaxTrees
-            .OrderBy(t => t.FilePath, StringComparer.Ordinal)
-            .Select(t => t.FilePath.Replace('\\', '/') + "=" +
-                Sha256(Encoding.UTF8.GetBytes(t.GetText().ToString()))));
-        return "compilation|" + dependency.Compilation.AssemblyName + "|" +
-            Metadata(dependency) + "|" + trees;
-    }
+    private static string ExpectedAsmctx4(VerifiedCSharpCompilation definingUnit, IMethodSymbol method) =>
+        SuccessorIdentityOracle.TargetId(RepositoryId, definingUnit, method, IdDigest, DeclDigest, ShapeDigest);
 
-    private static string ExpectedAsmctx3(VerifiedCSharpCompilation definingUnit, IMethodSymbol method) =>
-        CodeOccurrenceIdentity.ComputeTargetId(
-            ExpectedMappedCompctx1(definingUnit), Metadata(definingUnit), Module(definingUnit),
-            IdDigest(method), DeclDigest(method), ShapeDigest(method)).Value;
-
-    private static string ExpectedUsage4(VerifiedCSharpCompilation callingUnit,
+    private static string ExpectedUsage5(VerifiedCSharpCompilation callingUnit,
         VerifiedCSharpCompilation definingUnit, IMethodSymbol method, CodeLocation span)
     {
         var sourceHash = callingUnit.Sources.Single(s => s.Path == span.Path).ContentHash;
-        var parts = new List<string>
-        {
-            RepositoryId, Plugin.Value, CodeOccurrenceIdentity.SemanticsVersion,
-            callingUnit.Descriptor.ProjectUnitId, span.Path, sourceHash,
-            span.StartLine.ToString(),
-            span.StartColumn.ToString(),
-            span.EndLine.ToString(),
-            span.EndColumn.ToString(),
-            TargetDoc(method), ExpectedAsmctx3(definingUnit, method), CodeOccurrenceIdentity.InvocationCategory,
-        };
-        return LengthPrefixedHash("usage4", parts);
+        return SuccessorIdentityOracle.UsageId(RepositoryId, Plugin.Value,
+            callingUnit.Descriptor.ProjectUnitId, span.Path, sourceHash, span,
+            TargetDoc(method), ExpectedAsmctx4(definingUnit, method));
     }
-
-    private static string Metadata(VerifiedCSharpCompilation unit)
-    {
-        var identity = unit.Compilation.Assembly.Identity;
-        var token = identity.PublicKeyToken.IsDefaultOrEmpty
-            ? string.Empty
-            : Convert.ToHexStringLower(identity.PublicKeyToken.AsSpan());
-        return string.Join("|", identity.Name, identity.Version.ToString(), identity.CultureName ?? string.Empty, token);
-    }
-
-    private static string Module(VerifiedCSharpCompilation unit) =>
-        unit.Compilation.Assembly.Modules.First().Name;
 
     private static async Task<CodeGraphPublication> PublishAsync(
         InMemoryCodeGraphStore store, CodeRepositoryId repo, string run,
@@ -573,22 +523,8 @@ public sealed class S2_2Wp7IdentityStabilityTests
         return (await store.GetLatestPublicationAsync(repo))!;
     }
 
-    private static string LengthPrefixedHash(string domain, IEnumerable<string> parts)
-    {
-        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
-        void Append(string value)
-        {
-            var bytes = Encoding.UTF8.GetBytes(value);
-            Span<byte> length = stackalloc byte[4];
-            System.Buffers.Binary.BinaryPrimitives.WriteInt32BigEndian(length, bytes.Length);
-            hash.AppendData(length);
-            hash.AppendData(bytes);
-        }
-
-        Append(domain);
-        foreach (var part in parts) Append(part);
-        return Convert.ToHexStringLower(hash.GetHashAndReset());
-    }
-
     private static string Sha256(byte[] bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));
 }
+
+
+

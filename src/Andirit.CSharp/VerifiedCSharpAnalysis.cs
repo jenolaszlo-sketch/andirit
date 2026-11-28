@@ -58,7 +58,7 @@ internal sealed class VerifiedCSharpUniverse
         foreach (var entry in ordered)
         {
             entry.Descriptor.Verified();
-            if (entry.Descriptor.ContractVersion != "compctx2" || entry.Descriptor.RepositoryId != repositoryId)
+            if (entry.Descriptor.ContractVersion != VerifiedCSharpCompilation.ProductionContextVersion || entry.Descriptor.RepositoryId != repositoryId)
                 throw new InvalidDataException("UniverseContextMismatch");
             var unit = scope.Units.SingleOrDefault(u => u.ProjectUnitId == entry.Descriptor.ProjectUnitId);
             if (unit is null || !unit.SourcePaths.SequenceEqual(entry.Descriptor.Sources.Select(s => s.Path)))
@@ -68,7 +68,7 @@ internal sealed class VerifiedCSharpUniverse
         }
         return new(scope, ordered, (refusals ?? []).Distinct().Order(StringComparer.Ordinal).ToImmutableArray(),
             "compilation-universe1:sha256:" + ProvenanceHash.Hash("compilation-universe1-universe",
-                [repositoryId, "compctx2", scope.Identity, .. ordered.Select(e => e.Descriptor.DescriptorDigest)]));
+                [repositoryId, VerifiedCSharpCompilation.ProductionContextVersion, scope.Identity, .. ordered.Select(e => e.Descriptor.DescriptorDigest)]));
     }
 
     internal VerifiedCSharpCompilation RequireCompilation(CSharpCompilation compilation)
@@ -136,7 +136,7 @@ internal sealed class VerifiedCSharpUniverse
 
         return new(VerifiedDefiningStatus.Complete,
             "verified defining compilation context '" + entry.Descriptor.ProjectUnitId + "'",
-            entry, entry.MapR2FaithfulCompctx1());
+            entry, entry.MapR2FaithfulDefiningContext());
     }
 
     // S2.2 / WP4: authority-gated `asmctx3` target minting (Option A §5.1(1); mapping
@@ -213,7 +213,7 @@ internal sealed class VerifiedCSharpUniverse
             input.SourceHash,
             input.ContentHash,
             input.DeclarationSpan,
-            4,
+            CodeOccurrenceIdentity.CurrentSemanticsVersion,
             input.PluginVersion);
         var defining = ResolveDefining(input.Target, input.RecordedCompctx2, input.Caller).Defining!;
         var authority = new CodeOccurrenceDefiningAuthority(
@@ -256,3 +256,4 @@ internal interface IVerifiedCSharpSession
     // Assigned only after a complete extraction returns successfully; cancellation clears it.
     VerifiedCSharpAnalysis? Provenance { get; }
 }
+

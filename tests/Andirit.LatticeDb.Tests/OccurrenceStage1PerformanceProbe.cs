@@ -70,7 +70,7 @@ public sealed class OccurrenceStage1PerformanceProbe
 
     private static CodeOccurrenceTargetId Target(CodeRepositoryId repo, string name)
     {
-        var context = "compctx1:sha256:" + Convert.ToHexStringLower(
+        var context = "compctx4:sha256:" + Convert.ToHexStringLower(
             System.Security.Cryptography.SHA256.HashData(
                 System.Text.Encoding.UTF8.GetBytes(repo.Value + "|" + name)));
         return CodeOccurrenceIdentity.ComputeTargetId(
@@ -169,3 +169,4 @@ public sealed class OccurrenceStage1PerformanceProbe
         }
     }
 }
+

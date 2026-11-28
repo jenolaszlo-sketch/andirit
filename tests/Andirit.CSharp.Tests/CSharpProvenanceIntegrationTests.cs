@@ -19,7 +19,8 @@ public sealed class CSharpProvenanceIntegrationTests
         _ => new ValueTask<Stream>(new MemoryStream(Encoding.UTF8.GetBytes(content))));
     private static CodeGraphPluginContext Context(IEnumerable<(string Path, string Text)> sources) =>
         new(new("repo:provenance"), "memory://fixture", new("run:provenance"),
-            sources.Select(s => Source(s.Path, s.Text)).ToArray());
+            sources.Select(s => Source(s.Path, s.Text)).ToArray(),
+            settings: FrameworkTestSettings.Net10);
     private static ValueTask<VerifiedCSharpAnalysis> Prepare(params (string Path, string Text)[] sources) =>
         CSharpCodeGraphPlugin.PrepareAnalysisAsync(Context(sources));
 
@@ -39,8 +40,8 @@ public sealed class CSharpProvenanceIntegrationTests
         });
         Assert.Same(entry, analysis.Universe.RequireCompilation(entry.Compilation));
         Assert.NotNull(entry.LegacyDescriptor);
-        Assert.StartsWith("compctx1:sha256:", entry.LegacyDescriptor!.DescriptorDigest);
-        Assert.StartsWith("compctx2:sha256:", entry.Descriptor.DescriptorDigest);
+        Assert.StartsWith("compctx4:sha256:", entry.LegacyDescriptor!.DescriptorDigest);
+        Assert.StartsWith("compctx3:sha256:", entry.Descriptor.DescriptorDigest);
     }
 
     [Fact]

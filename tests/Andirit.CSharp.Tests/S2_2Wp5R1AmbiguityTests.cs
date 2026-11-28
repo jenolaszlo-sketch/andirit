@@ -11,9 +11,9 @@ namespace Andirit.CSharp.Tests;
 /// <summary>
 /// S2.2 WP5-R1: producer regressions for the WP5-Q1 F1 blocking finding. An
 /// invocation that Roslyn cannot bind to a unique method must never emit a
-/// trusted `usage4`: multiple equally-applicable candidates are an `Ambiguous`
+/// trusted `usage5`: multiple equally-applicable candidates are an `Ambiguous`
 /// refusal, any other unresolved binding stays `Unresolved`, and candidate
-/// order can never influence trusted emission. Expected `usage4`/`asmctx3`
+/// order can never influence trusted emission. Expected `usage5`/`asmctx4`
 /// values are reconstructed from the accepted formulas; they never read the
 /// extractor under test.
 /// </summary>
@@ -133,8 +133,8 @@ public sealed class S2_2Wp5R1AmbiguityTests
         var fact = Assert.Single(extraction.Facts);
         var method = Target(unit.Compilation, "N.H", "Add", parameterCount: 2);
         Assert.Equal(TargetDoc(method), fact.TargetDocumentId);
-        Assert.Equal(ExpectedAsmctx3(unit, method), fact.TargetId.Value);
-        Assert.Equal(ExpectedUsage4(unit, unit, "Add", method), fact.Id.Value);
+        Assert.Equal(ExpectedAsmctx4(unit, method), fact.TargetId.Value);
+        Assert.Equal(ExpectedUsage5(unit, unit, "Add", method), fact.Id.Value);
         Assert.Equal(0, extraction.Coverage.Ambiguous);
         Assert.Equal(0, extraction.Coverage.Unresolved);
     }
@@ -152,8 +152,8 @@ public sealed class S2_2Wp5R1AmbiguityTests
         var extraction = Extract(Universe(lib, app), app);
         var fact = Assert.Single(extraction.Facts);
         var method = Target(lib.Compilation, "N.Lib", "Get", parameterCount: 0);
-        Assert.Equal(ExpectedAsmctx3(lib, method), fact.TargetId.Value);
-        Assert.Equal(ExpectedUsage4(app, lib, "Get", method), fact.Id.Value);
+        Assert.Equal(ExpectedAsmctx4(lib, method), fact.TargetId.Value);
+        Assert.Equal(ExpectedUsage5(app, lib, "Get", method), fact.Id.Value);
     }
 
     // ------------------------------------------------------------ R1-T5
@@ -167,7 +167,7 @@ public sealed class S2_2Wp5R1AmbiguityTests
         var fact = Assert.Single(extraction.Facts);
         var method = Target(unit.Compilation, "N.H", "Add", parameterCount: 2);
         // The valid neighbor keeps its exact authorized identity.
-        Assert.Equal(ExpectedUsage4(unit, unit, "Add", method), fact.Id.Value);
+        Assert.Equal(ExpectedUsage5(unit, unit, "Add", method), fact.Id.Value);
         Assert.Equal(1, extraction.Coverage.Ambiguous);
         Assert.Equal(0, extraction.Coverage.Unresolved);
         Assert.Equal(CodeRelationshipCoverageState.Produced, extraction.Coverage.State);
@@ -214,8 +214,8 @@ public sealed class S2_2Wp5R1AmbiguityTests
         var extraction = Extract(universe, app);
         var fact = Assert.Single(extraction.Facts);
         var method = Target(lib.Compilation, "N.Lib", "Get", parameterCount: 0);
-        Assert.Equal(ExpectedAsmctx3(lib, method), fact.TargetId.Value);
-        Assert.Equal(ExpectedUsage4(app, lib, "Get", method), fact.Id.Value);
+        Assert.Equal(ExpectedAsmctx4(lib, method), fact.TargetId.Value);
+        Assert.Equal(ExpectedUsage5(app, lib, "Get", method), fact.Id.Value);
         Assert.Equal(app.Descriptor.ProjectUnitId, fact.SourceUnitId);
         Assert.Equal(1, extraction.Coverage.InvocationFacts);
         Assert.Equal(1, extraction.Coverage.External);
@@ -313,12 +313,11 @@ public sealed class S2_2Wp5R1AmbiguityTests
             .Single(m => m is IMethodSymbol ms && ms.Parameters.Length == parameterCount));
     }
 
-    private static string ExpectedAsmctx3(VerifiedCSharpCompilation definingUnit, IMethodSymbol method) =>
-        CodeOccurrenceIdentity.ComputeTargetId(
-            ExpectedCompctx1(definingUnit), Metadata(definingUnit), Module(definingUnit),
-            IdDigest(method), DeclDigest(method), ShapeDigest(method)).Value;
+    private static string ExpectedAsmctx4(VerifiedCSharpCompilation definingUnit, IMethodSymbol method) =>
+        SuccessorIdentityOracle.TargetId(
+            RepositoryId, definingUnit, method, IdDigest, DeclDigest, ShapeDigest);
 
-    private static string ExpectedUsage4(
+    private static string ExpectedUsage5(
         VerifiedCSharpCompilation callingUnit, VerifiedCSharpCompilation definingUnit,
         string methodName, IMethodSymbol method)
     {
@@ -332,60 +331,15 @@ public sealed class S2_2Wp5R1AmbiguityTests
         var line = tree.GetLineSpan(token.Span);
         var path = tree.FilePath.Replace('\\', '/');
         var sourceHash = callingUnit.Sources.Single(s => s.Path == path).ContentHash;
-        var parts = new List<string>
-        {
-            RepositoryId, Plugin.Value, CodeOccurrenceIdentity.SemanticsVersion,
-            callingUnit.Descriptor.ProjectUnitId, path, sourceHash,
-            (line.StartLinePosition.Line + 1).ToString(),
-            (line.StartLinePosition.Character + 1).ToString(),
-            (line.EndLinePosition.Line + 1).ToString(),
-            (line.EndLinePosition.Character + 1).ToString(),
-            TargetDoc(method), ExpectedAsmctx3(definingUnit, method), CodeOccurrenceIdentity.InvocationCategory,
-        };
-        return LengthPrefixedHash("usage4", parts);
-    }
-
-    private static string ExpectedCompctx1(VerifiedCSharpCompilation unit)
-    {
-        var d = unit.Descriptor;
-        var parts = new List<string>
-        {
-            "compctx1", d.RepositoryId, d.ProjectUnitId, d.AssemblyName,
-            d.MetadataIdentity, d.ModuleName, d.OptionsDigest,
-        };
-        parts.AddRange(d.Sources.Select(s => s.CanonicalForm));
-        parts.AddRange(d.References.Order(StringComparer.Ordinal));
-        return "compctx1:sha256:" + LengthPrefixedHash("compctx1-context", parts);
-    }
-
-    private static string Metadata(VerifiedCSharpCompilation unit)
-    {
-        var identity = unit.Compilation.Assembly.Identity;
-        var token = identity.PublicKeyToken.IsDefaultOrEmpty
-            ? string.Empty
-            : Convert.ToHexStringLower(identity.PublicKeyToken.AsSpan());
-        return string.Join("|", identity.Name, identity.Version.ToString(), identity.CultureName ?? string.Empty, token);
-    }
-
-    private static string Module(VerifiedCSharpCompilation unit) =>
-        unit.Compilation.Assembly.Modules.First().Name;
-
-    private static string LengthPrefixedHash(string domain, IEnumerable<string> parts)
-    {
-        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
-        void Append(string value)
-        {
-            var bytes = Encoding.UTF8.GetBytes(value);
-            Span<byte> length = stackalloc byte[4];
-            System.Buffers.Binary.BinaryPrimitives.WriteInt32BigEndian(length, bytes.Length);
-            hash.AppendData(length);
-            hash.AppendData(bytes);
-        }
-
-        Append(domain);
-        foreach (var part in parts) Append(part);
-        return Convert.ToHexStringLower(hash.GetHashAndReset());
+        return SuccessorIdentityOracle.UsageId(
+            RepositoryId, Plugin.Value, callingUnit.Descriptor.ProjectUnitId, path, sourceHash,
+            new CodeLocation(path,
+                line.StartLinePosition.Line + 1, line.StartLinePosition.Character + 1,
+                line.EndLinePosition.Line + 1, line.EndLinePosition.Character + 1),
+            TargetDoc(method), ExpectedAsmctx4(definingUnit, method));
     }
 
     private static string Sha256(byte[] bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));
 }
+
+

@@ -1,0 +1,89 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-REMED-01-R2",
+  "baseline": {
+    "candidate": "77ec887368c62b404e0d9a8034d34b7f8cac8007",
+    "candidateTree": "40a2c42123e71bf65746b10198ca2af29c17d928",
+    "producerSeal": "880a888da2256608a91010026b1c3f39d0de76b6",
+    "producerSealSha256": "240c5db417b81d932af4782ed5178910b72650a29d94125368a4d276a8a77b1c",
+    "qualificationPayload": "d112fe7322cdaacbc6de7e7bd1e9608446a33c7a",
+    "qualificationSeal": "c6c2dcfd5697460318634d34d26eba6b88f6d4e1",
+    "qualificationSealSha256": "426576fe6b685948912de953cc222b1a6b6aabfb2c9e0b354f0a85a1cb08c688"
+  },
+  "candidate": {
+    "branch": "remediation/s64-occ-id-01-r2",
+    "implementationCommit": "b8a748e1f992f60f2a5e4d3bc44e7fe47e1ee83e",
+    "c4FreezeCommit": "814fe5bceb139a89b1feeb90b35c65cd6b852767",
+    "c4ComparisonCommit": "82ba813fb9eadf95042a8abf46832b31b0a6b2cf",
+    "candidateCommit": "f8c8a289d3f8a828e87a9833e32dfa13d8044708",
+    "candidateTree": "7dde06806d37f2b57f4464ee7adc7ffac14659ce",
+    "hostedRun": 46143882731,
+    "syntheticMerge": "722b7315ebf4a2004cdebf42b504612cd8ae9ad6",
+    "syntheticMergeTree": "7dde06806d37f2b57f4464ee7adc7ffac14659ce",
+    "treeEqualsCandidate": true,
+    "sealRun": 46145138043,
+    "sealSyntheticMerge": "476beeec121649fd6709c896c97464bf536ca3cf",
+    "sealSyntheticMergeTree": "73d2a8356afd54c95efe5b7e27a9f1eb87028d62"
+  },
+  "contract": {
+    "supported": [
+      "net8.0",
+      "net9.0",
+      "net10.0",
+      "netstandard2.1"
+    ],
+    "refused": [
+      "netstandard2.0",
+      "net6.0",
+      "net7.0",
+      "net10.0-windows",
+      "missing TFM"
+    ],
+    "identityDomains": [
+      "refctx1",
+      "compctx3",
+      "compctx4",
+      "asmctx4",
+      "usage5"
+    ],
+    "persistedGeneration": 3,
+    "occurrenceSchema": 3,
+    "occurrenceNamespace": "andirit-occurrence-facts/3",
+    "authorityVersion": 3,
+    "dependency": "LatticeDbSharp 0.2.0"
+  },
+  "c4": {
+    "pack": "Microsoft.NETCore.App.Ref 10.0.12 ref/net10.0",
+    "referenceCount": 167,
+    "referenceSetHash": "9973286b42c11decd9ef2bd4111e72067cb67d9f227160bd6ed4fd3969a63c82",
+    "target": "asmctx4:sha256:23ffa6444fb108132fb54e760cac76f5ffd8a3580b0aed1b9aa6709f78eeab68",
+    "definingContext": "compctx4:sha256:e7c0a28d959f075a1f5d491e3e642c44d781bb4750de2f107ad78e57a408d6b1",
+    "descriptor": "compctx3:sha256:4b88c629c25ed6c9b916d5a279304fd07cb06fa64545d3c607ce1326a232989e",
+    "cardinality": 51,
+    "distribution": {
+      "Caller": 50,
+      "Caller2": 1
+    },
+    "contributors": 2,
+    "variants": {
+      "baseline": 51,
+      "without-caller": 1,
+      "without-caller2": 50,
+      "caller2-changed": 51
+    }
+  },
+  "verification": {
+    "localTests": 1059,
+    "localFailures": 0,
+    "hostedTests": 1059,
+    "hostedFailures": 0,
+    "hostedWindows": "success",
+    "hostedLinux": "success",
+    "hostedMacOS": "success (ARM64 regression only)",
+    "packageSmoke": "pass",
+    "mirrorTests": 29,
+    "s63NamedCases": 19,
+    "localLinuxExact": "WSL Ubuntu 26.04 x86_64: 1059 passed",
+    "hostedSealRun": "success"
+  },
+  "status": "A - FRAMEWORK AND COMPATIBILITY REMEDIATION IMPLEMENTED - READY FOR INDEPENDENT REQUALIFICATION"
+}

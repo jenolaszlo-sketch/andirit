@@ -1,0 +1,103 @@
+{
+  "command": "repro-unrelated-node",
+  "pass": false,
+  "refused": false,
+  "errors": [
+    "physical node count 4 != 2",
+    "physical edge count 2 != 1",
+    "manifest node entries do not cover physical nodes",
+    "manifest edge entries do not cover physical edges",
+    "unrelated node was not preserved with its properties"
+  ],
+  "unrelated": null,
+  "after": {
+    "Nodes": [
+      {
+        "LogicalId": "node:a",
+        "NativeId": 9
+      },
+      {
+        "LogicalId": "node:b",
+        "NativeId": 10
+      },
+      {
+        "LogicalId": "node:a",
+        "NativeId": 13
+      },
+      {
+        "LogicalId": "node:b",
+        "NativeId": 14
+      }
+    ],
+    "Edges": [
+      {
+        "LogicalId": "edge:ab",
+        "NativeId": 1,
+        "Source": 9,
+        "Target": 10
+      },
+      {
+        "LogicalId": "edge:ab",
+        "NativeId": 2,
+        "Source": 13,
+        "Target": 14
+      }
+    ],
+    "Manifests": [
+      {
+        "Repository": "repo:ownership-node",
+        "Nodes": {
+          "node:a": 13,
+          "node:b": 14
+        },
+        "Edges": {
+          "edge:ab": 2
+        }
+      }
+    ],
+    "Related": [],
+    "Authoritative": [
+      {
+        "Label": "HetuIndexState",
+        "NativeId": 8,
+        "Key": "repo:ownership-node",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOm93bmVyc2hpcC1ub2RlIn0sIkluZGV4UnVuSWQiOnsiVmFsdWUiOiJydW46b25lIn0sIlNvdXJjZXMiOltdLCJTbmFwc2hvdElkZW50aXR5IjpudWxsLCJJc0NvbnNpc3RlbnRTbmFwc2hvdCI6ZmFsc2UsIkluZGV4SWRlbnRpdHkiOnsiVmFsdWUiOiIyNWQ5YTcyOTUxMTA2NmE2M2RkODhmZjVjY2Y3ZjIxODM4Y2QxZjczZDY3MjcxOGRhOTUwNmM4MzQyZDAwNWE1In19"
+      },
+      {
+        "Label": "HetuRepository",
+        "NativeId": 2,
+        "Key": "repo:ownership-node",
+        "Payload": "eyJJZCI6eyJWYWx1ZSI6InJlcG86b3duZXJzaGlwLW5vZGUifSwiRGlzcGxheU5hbWUiOm51bGwsIlNvdXJjZVVyaSI6bnVsbCwiUmVnaXN0ZXJlZEF0IjoiMjAyNi0xMS0yN1QxNzowMzo0OS4wNTUwODU4KzAwOjAwIn0="
+      },
+      {
+        "Label": "HetuRun",
+        "NativeId": 7,
+        "Key": "repo:ownership-node\nrun:one",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOm93bmVyc2hpcC1ub2RlIn0sIklkIjp7IlZhbHVlIjoicnVuOm9uZSJ9LCJTdGFydGVkQXQiOiIyMDI2LTExLTI4VDA2OjE0OjAwKzAwOjAwIiwiU3RhdHVzIjoxLCJDb21wbGV0ZWRBdCI6IjIwMjYtMTEtMjhUMDY6MTQ6MDErMDA6MDAiLCJQbHVnaW5zIjpbeyJWYWx1ZSI6InBsdWdpbjpxdWFsIn1dfQ=="
+      },
+      {
+        "Label": "HetuUnit",
+        "NativeId": 6,
+        "Key": "repo:ownership-node\nplugin:qual\nunit:one",
+        "Payload": "eyJSZXF1aXJlc09jY3VycmVuY2VBdXRob3JpdHkiOmZhbHNlLCJPcmlnaW4iOnsiUmVwb3NpdG9yeUlkIjp7IlZhbHVlIjoicmVwbzpvd25lcnNoaXAtbm9kZSJ9LCJQbHVnaW5JZCI6eyJWYWx1ZSI6InBsdWdpbjpxdWFsIn0sIlBsdWdpblZlcnNpb24iOiIxLjAuMCIsIkluZGV4UnVuSWQiOnsiVmFsdWUiOiJydW46b25lIn0sIkluZGV4VW5pdElkIjp7IlZhbHVlIjoidW5pdDpvbmUifSwiU291cmNlUGF0aCI6bnVsbCwiU291cmNlSGFzaCI6bnVsbH0sIk5vZGVzIjpbeyJJZCI6eyJWYWx1ZSI6Im5vZGU6YSJ9LCJLaW5kIjp7IlZhbHVlIjoidHlwZSJ9LCJOYW1lIjoiYSIsIlF1YWxpZmllZE5hbWUiOiJFeGFtcGxlLmEiLCJTeW1ib2xJZCI6eyJWYWx1ZSI6InN5bWJvbDpub2RlOmEifSwiUHJvcGVydGllcyI6e319LHsiSWQiOnsiVmFsdWUiOiJub2RlOmIifSwiS2luZCI6eyJWYWx1ZSI6InR5cGUifSwiTmFtZSI6ImIiLCJRdWFsaWZpZWROYW1lIjoiRXhhbXBsZS5iIiwiU3ltYm9sSWQiOnsiVmFsdWUiOiJzeW1ib2w6bm9kZTpiIn0sIlByb3BlcnRpZXMiOnt9fV0sIkRlY2xhcmF0aW9ucyI6W10sIkVkZ2VzIjpbeyJJZCI6eyJWYWx1ZSI6ImVkZ2U6YWIifSwiU291cmNlSWQiOnsiVmFsdWUiOiJub2RlOmEifSwiVGFyZ2V0SWQiOnsiVmFsdWUiOiJub2RlOmIifSwiS2luZCI6eyJWYWx1ZSI6ImNhbGxzIn0sIkV2aWRlbmNlIjp7IlF1YWxpdHkiOjEsIlByb3ZpZGVyIjoicGx1Z2luOnF1YWwiLCJQcm92aWRlclZlcnNpb24iOiIxLjAuMCIsIkxvY2F0aW9uIjpudWxsLCJDb25maWRlbmNlIjpudWxsfSwiUHJvcGVydGllcyI6e319XSwiT2NjdXJyZW5jZUNvdmVyYWdlIjpudWxsfQ=="
+      }
+    ],
+    "OccurrenceFacts": 0,
+    "Summary": {
+      "nodes": 4,
+      "edges": 2,
+      "manifests": 1,
+      "nodeLogical": [
+        "node:a",
+        "node:a",
+        "node:b",
+        "node:b"
+      ],
+      "edgeLogical": [
+        "edge:ab",
+        "edge:ab"
+      ],
+      "occurrenceFacts": 0
+    }
+  }
+}

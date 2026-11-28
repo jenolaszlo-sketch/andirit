@@ -1,0 +1,87 @@
+{
+  "command": "repro-protocol-orphan",
+  "pass": true,
+  "errors": [],
+  "orphan": 12,
+  "after": {
+    "Nodes": [
+      {
+        "LogicalId": "node:a",
+        "NativeId": 14
+      },
+      {
+        "LogicalId": "node:b",
+        "NativeId": 15
+      }
+    ],
+    "Edges": [
+      {
+        "LogicalId": "edge:ab",
+        "NativeId": 2,
+        "Source": 14,
+        "Target": 15
+      }
+    ],
+    "Manifests": [
+      {
+        "Repository": "repo:protocol-orphan",
+        "Nodes": {
+          "node:a": 14,
+          "node:b": 15
+        },
+        "Edges": {
+          "edge:ab": 2
+        }
+      }
+    ],
+    "Related": [
+      {
+        "NativeId": 13,
+        "Note": "unmarked",
+        "Number": 31,
+        "Tags": [],
+        "Outgoing": []
+      }
+    ],
+    "Authoritative": [
+      {
+        "Label": "HetuIndexState",
+        "NativeId": 8,
+        "Key": "repo:protocol-orphan",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOnByb3RvY29sLW9ycGhhbiJ9LCJJbmRleFJ1bklkIjp7IlZhbHVlIjoicnVuOm9uZSJ9LCJTb3VyY2VzIjpbXSwiU25hcHNob3RJZGVudGl0eSI6bnVsbCwiSXNDb25zaXN0ZW50U25hcHNob3QiOmZhbHNlLCJJbmRleElkZW50aXR5Ijp7IlZhbHVlIjoiZjNlMGNiZTg0OWM0MDVlOWZkNzkzMDIwYTliOTgyYWJkYTVlZTBhZWNkNTdlOTZhOTU2NmQ1ZmE0ODg5MmUyZCJ9fQ=="
+      },
+      {
+        "Label": "HetuRepository",
+        "NativeId": 2,
+        "Key": "repo:protocol-orphan",
+        "Payload": "eyJJZCI6eyJWYWx1ZSI6InJlcG86cHJvdG9jb2wtb3JwaGFuIn0sIkRpc3BsYXlOYW1lIjpudWxsLCJTb3VyY2VVcmkiOm51bGwsIlJlZ2lzdGVyZWRBdCI6IjIwMjYtMTEtMjdUMTc6MDc6NTQuNDY1MDkzKzAwOjAwIn0="
+      },
+      {
+        "Label": "HetuRun",
+        "NativeId": 7,
+        "Key": "repo:protocol-orphan\nrun:one",
+        "Payload": "eyJSZXBvc2l0b3J5SWQiOnsiVmFsdWUiOiJyZXBvOnByb3RvY29sLW9ycGhhbiJ9LCJJZCI6eyJWYWx1ZSI6InJ1bjpvbmUifSwiU3RhcnRlZEF0IjoiMjAyNi0xMS0yOFQwMjowMzowMCswMDowMCIsIlN0YXR1cyI6MSwiQ29tcGxldGVkQXQiOiIyMDI2LTExLTI4VDAyOjAzOjAxKzAwOjAwIiwiUGx1Z2lucyI6W3siVmFsdWUiOiJwbHVnaW46cXVhbCJ9XX0="
+      },
+      {
+        "Label": "HetuUnit",
+        "NativeId": 6,
+        "Key": "repo:protocol-orphan\nplugin:qual\nunit:one",
+        "Payload": "eyJSZXF1aXJlc09jY3VycmVuY2VBdXRob3JpdHkiOmZhbHNlLCJPcmlnaW4iOnsiUmVwb3NpdG9yeUlkIjp7IlZhbHVlIjoicmVwbzpwcm90b2NvbC1vcnBoYW4ifSwiUGx1Z2luSWQiOnsiVmFsdWUiOiJwbHVnaW46cXVhbCJ9LCJQbHVnaW5WZXJzaW9uIjoiMS4wLjAiLCJJbmRleFJ1bklkIjp7IlZhbHVlIjoicnVuOm9uZSJ9LCJJbmRleFVuaXRJZCI6eyJWYWx1ZSI6InVuaXQ6b25lIn0sIlNvdXJjZVBhdGgiOm51bGwsIlNvdXJjZUhhc2giOm51bGx9LCJOb2RlcyI6W3siSWQiOnsiVmFsdWUiOiJub2RlOmEifSwiS2luZCI6eyJWYWx1ZSI6InR5cGUifSwiTmFtZSI6ImEiLCJRdWFsaWZpZWROYW1lIjoiRXhhbXBsZS5hIiwiU3ltYm9sSWQiOnsiVmFsdWUiOiJzeW1ib2w6bm9kZTphIn0sIlByb3BlcnRpZXMiOnt9fSx7IklkIjp7IlZhbHVlIjoibm9kZTpiIn0sIktpbmQiOnsiVmFsdWUiOiJ0eXBlIn0sIk5hbWUiOiJiIiwiUXVhbGlmaWVkTmFtZSI6IkV4YW1wbGUuYiIsIlN5bWJvbElkIjp7IlZhbHVlIjoic3ltYm9sOm5vZGU6YiJ9LCJQcm9wZXJ0aWVzIjp7fX1dLCJEZWNsYXJhdGlvbnMiOltdLCJFZGdlcyI6W3siSWQiOnsiVmFsdWUiOiJlZGdlOmFiIn0sIlNvdXJjZUlkIjp7IlZhbHVlIjoibm9kZTphIn0sIlRhcmdldElkIjp7IlZhbHVlIjoibm9kZTpiIn0sIktpbmQiOnsiVmFsdWUiOiJjYWxscyJ9LCJFdmlkZW5jZSI6eyJRdWFsaXR5IjoxLCJQcm92aWRlciI6InBsdWdpbjpxdWFsIiwiUHJvdmlkZXJWZXJzaW9uIjoiMS4wLjAiLCJMb2NhdGlvbiI6bnVsbCwiQ29uZmlkZW5jZSI6bnVsbH0sIlByb3BlcnRpZXMiOnt9fV0sIk9jY3VycmVuY2VDb3ZlcmFnZSI6bnVsbH0="
+      }
+    ],
+    "OccurrenceFacts": 0,
+    "Summary": {
+      "nodes": 2,
+      "edges": 1,
+      "manifests": 1,
+      "nodeLogical": [
+        "node:a",
+        "node:b"
+      ],
+      "edgeLogical": [
+        "edge:ab"
+      ],
+      "occurrenceFacts": 0
+    }
+  }
+}
