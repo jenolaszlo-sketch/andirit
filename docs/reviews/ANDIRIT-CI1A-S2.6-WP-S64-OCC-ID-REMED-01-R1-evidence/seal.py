@@ -50,6 +50,18 @@ def changed(a, b):
     )
 
 
+def delta_status(a, b):
+    return text(
+        "diff-tree",
+        "--no-commit-id",
+        "--no-renames",
+        "--name-status",
+        "-r",
+        a,
+        b,
+    ).splitlines()
+
+
 def paths(commit):
     listed = text("ls-tree", "-r", "--name-only", commit, "--", EVIDENCE).splitlines()
     return sorted({REVIEW, *EXTRA, *(path for path in listed if path != MANIFEST)})
@@ -81,6 +93,8 @@ def verify(revision):
     payload = saved["payload"]["commit"]
     if changed(payload, seal) != {MANIFEST}:
         raise ValueError("seal commit must add only manifest.json")
+    if delta_status(payload, seal) != ["A\t" + MANIFEST]:
+        raise ValueError("seal commit must add (not modify) manifest.json")
     if saved != build(payload):
         raise ValueError("manifest differs from payload")
     if saved["entries"] != [member(seal, e["path"]) for e in saved["entries"]]:
