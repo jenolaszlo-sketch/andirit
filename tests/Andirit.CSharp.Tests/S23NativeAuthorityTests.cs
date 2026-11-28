@@ -106,7 +106,7 @@ public sealed class S23NativeAuthorityTests : IDisposable
     [InlineData("malformed-envelope", CodeOccurrenceAvailability.CorruptedIndex)]
     [InlineData("wrong-defining-unit", CodeOccurrenceAvailability.StalePublication)]
     [InlineData("caller-as-defining", CodeOccurrenceAvailability.CorruptedIndex)]
-    [InlineData("formatted-unverified-context", CodeOccurrenceAvailability.StalePublication)]
+    [InlineData("formatted-unverified-context", CodeOccurrenceAvailability.UnsupportedSchema)]
     [InlineData("different-membership", CodeOccurrenceAvailability.StalePublication)]
     [InlineData("duplicate-membership", CodeOccurrenceAvailability.CorruptedIndex)]
     [InlineData("missing-members", CodeOccurrenceAvailability.CorruptedIndex)]
@@ -130,7 +130,7 @@ public sealed class S23NativeAuthorityTests : IDisposable
                 case "missing-envelope": row.Remove("Authority"); break;
                 case "missing-context": fact.Remove("Compctx2"); break;
                 case "corrupt-context": fact["Compctx2"] = "not-a-context"; break;
-                case "unsupported-version": authority["Version"] = 2; break;
+                case "unsupported-version": authority["Version"] = 99; break;
                 case "corrupt-version": authority["Version"] = "one"; break;
                 case "malformed-envelope": row["Authority"] = "not-an-object"; break;
                 case "wrong-defining-unit": fact["DefiningProjectUnitId"] = "App/App.csproj"; break;
@@ -138,10 +138,10 @@ public sealed class S23NativeAuthorityTests : IDisposable
                     fact["DefiningProjectUnitId"] = "App/App.csproj";
                     fact["Compctx2"] = a.App.Descriptor.DescriptorDigest; break;
                 case "formatted-unverified-context": fact["Compctx2"] = "compctx2:sha256:" + new string('a', 64); break;
-                case "different-membership": authority["Members"]![0]!["Compctx2"] = "compctx2:sha256:" + new string('b', 64); break;
+                case "different-membership": authority["Members"]![0]!["Compctx2"] = "compctx3:sha256:" + new string('b', 64); break;
                 case "duplicate-membership": authority["Members"]!.AsArray().Add(authority["Members"]![0]!.DeepClone()); break;
                 case "missing-members": authority.Remove("Members"); break;
-                case "wrong-target": fact["TargetId"] = "asmctx3:sha256:" + new string('a', 64); break;
+                case "wrong-target": fact["TargetId"] = "asmctx4:sha256:" + new string('a', 64); break;
                 case "wrong-payload": fact["PayloadHash"] = new string('a', 64); break;
                 case "missing-receipts": authority["Facts"] = new JsonArray(); break;
                 case "duplicate-receipts": authority["Facts"]![1] = fact.DeepClone(); break;
@@ -363,3 +363,4 @@ public sealed class S23NativeAuthorityTests : IDisposable
 
     private sealed class S23FaultException : Exception;
 }
+

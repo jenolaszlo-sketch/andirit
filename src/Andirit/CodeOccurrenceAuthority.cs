@@ -12,7 +12,8 @@ internal sealed record CodeOccurrenceAuthority(
     int Version, string RepositoryId, string PluginId, string IndexUnitId, string SourceUnitId,
     string ScopeId, string UniverseId, CodeOccurrenceCoverage Coverage,
     IReadOnlyList<CodeOccurrenceCompilationAuthority> Members,
-    IReadOnlyList<CodeOccurrenceDefiningAuthority> Facts)
+    IReadOnlyList<CodeOccurrenceDefiningAuthority> Facts,
+    int IdentityGeneration = 0)
 {
     // A complete source row contributes one member to publication accounting.
     // The envelope keeps its full scope counts for independent validation.

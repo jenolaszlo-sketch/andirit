@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.CodeAnalysis;
@@ -8,6 +9,13 @@ namespace Andirit;
 
 internal sealed class VerifiedMetadataReference
 {
+    /// <summary>
+    /// Successor content-bound reference identity domain. Absolute installation
+    /// paths never participate; assembly/binding metadata plus the exact image
+    /// content do. This replaces the predecessor <c>file|path|sha256</c> form.
+    /// </summary>
+    internal const string IdentityDomain = "refctx1";
+
     private VerifiedMetadataReference(PortableExecutableReference reference, string identity)
     { Reference = reference; Identity = identity; }
     internal PortableExecutableReference Reference { get; }
@@ -32,6 +40,7 @@ internal sealed class VerifiedMetadataReference
         var image = ImmutableArray.Create(output.ToArray());
         var digest = Convert.ToHexStringLower(SHA256.HashData(image.AsSpan()));
         PortableExecutableReference reference;
+        string metadataIdentity;
         try
         {
             reference = MetadataReference.CreateFromImage(image, filePath: fullPath);
@@ -41,6 +50,7 @@ internal sealed class VerifiedMetadataReference
             using var metadata = reference.GetMetadata();
             if (metadata is not AssemblyMetadata assembly)
                 throw new InvalidDataException("UnsupportedMetadataReference");
+            metadataIdentity = string.Empty;
             foreach (var module in assembly.GetModules())
             {
                 var reader = module.GetMetadataReader();
@@ -48,21 +58,59 @@ internal sealed class VerifiedMetadataReference
                 // captured assembly identity.
                 if (!reader.IsAssembly)
                     throw new InvalidDataException("UnsupportedMetadataReference");
-                _ = reader.GetAssemblyDefinition();
+                var definition = reader.GetAssemblyDefinition();
+                metadataIdentity = AssemblyIdentity(reader, definition);
                 MetadataReferenceValidation.Validate(reader, cancellationToken);
             }
+            if (metadataIdentity.Length == 0)
+                throw new InvalidDataException("UnsupportedMetadataReference");
         }
         catch (Exception exception) when (exception is BadImageFormatException or InvalidOperationException)
         {
             throw new InvalidDataException("UnsupportedMetadataReference", exception);
         }
         cancellationToken.ThrowIfCancellationRequested();
-        return new(reference, "file|" + fullPath.Replace('\\', '/') + "|" + digest);
+        // Content-bound, path-free successor identity. The assembly/binding
+        // identity and the exact image hash are the semantic inputs; the
+        // installation path is deliberately excluded.
+        return new(reference, IdentityDomain + "|" + metadataIdentity + "|sha256:" + digest);
+    }
+
+    private static string AssemblyIdentity(MetadataReader reader, AssemblyDefinition definition)
+    {
+        var publicKeyToken = definition.PublicKey.IsNil
+            ? string.Empty
+            : Convert.ToHexStringLower(PublicKeyToken(reader.GetBlobBytes(definition.PublicKey)));
+        return string.Join("|",
+            reader.GetString(definition.Name),
+            definition.Version.ToString(),
+            definition.Culture.IsNil ? string.Empty : reader.GetString(definition.Culture),
+            publicKeyToken);
+    }
+
+    private static byte[] PublicKeyToken(byte[] publicKey)
+    {
+        var hash = SHA1.HashData(publicKey);
+        var token = hash.AsSpan(hash.Length - 8).ToArray();
+        Array.Reverse(token);
+        return token;
     }
 }
 
 internal sealed class VerifiedCSharpCompilation
 {
+    /// <summary>
+    /// Successor dependency-sensitive provenance descriptor contract. Its
+    /// reference items use the content-bound <c>refctx1</c> identity.
+    /// </summary>
+    internal const string ProductionContextVersion = "compctx3";
+
+    /// <summary>
+    /// Successor R2-faithful defining context (the target-minting input),
+    /// derived from <see cref="ProductionContextVersion"/>.
+    /// </summary>
+    internal const string DefiningContextVersion = "compctx4";
+
     private VerifiedCSharpCompilation(CSharpCompilation compilation,
         CompilationProvenanceDescriptor descriptor, ImmutableArray<VerifiedCSharpSource> sources,
         ImmutableArray<VerifiedCSharpCompilation> dependencies)
@@ -76,7 +124,7 @@ internal sealed class VerifiedCSharpCompilation
         ? Legacy(Descriptor) : null;
     private static CompilationProvenanceDescriptor Legacy(CompilationProvenanceDescriptor descriptor)
     {
-        var old = descriptor with { ContractVersion = "compctx1", DescriptorDigest = string.Empty };
+        var old = descriptor with { ContractVersion = DefiningContextVersion, DescriptorDigest = string.Empty };
         return old with { DescriptorDigest = old.ComputeDigest() };
     }
 
@@ -151,7 +199,7 @@ internal sealed class VerifiedCSharpCompilation
             {
                 var matches = dependencies.Where(d => ReferenceEquals(d.Compilation, project.Compilation)).ToArray();
                 if (matches.Length != 1 || matches[0].Descriptor.RepositoryId != repositoryId ||
-                    matches[0].Descriptor.ContractVersion != "compctx2" || matches[0].Descriptor.ProjectUnitId == projectUnitId)
+                    matches[0].Descriptor.ContractVersion != ProductionContextVersion || matches[0].Descriptor.ProjectUnitId == projectUnitId)
                     throw new InvalidDataException("MissingDefiningCompilation");
                 matches[0].Descriptor.Verified();
                 referenceIdentities.Add("compilation-context|" + matches[0].Descriptor.DescriptorDigest);
@@ -174,10 +222,10 @@ internal sealed class VerifiedCSharpCompilation
             .WithSpecificDiagnosticOptions(options.SpecificDiagnosticOptions).WithConcurrentBuild(options.ConcurrentBuild);
         if (!options.Equals(baseline) || options.SpecificDiagnosticOptions.Keys.Any(k => k.Contains(',') || k.Contains('=')))
             throw new InvalidDataException("UnsupportedCompilationConfiguration");
-        var descriptor = new CompilationProvenanceDescriptor("compctx2", repositoryId,
+        var descriptor = new CompilationProvenanceDescriptor(ProductionContextVersion, repositoryId,
             projectUnitId.Replace('\\', '/'), compilation.AssemblyName ?? throw new InvalidDataException("MissingAssemblyName"),
             ProvenanceHash.Metadata(compilation.Assembly.Identity), compilation.Assembly.Modules.First().Name,
-            ProvenanceHash.Options(options), identities.OrderBy(s => s.Path, StringComparer.Ordinal)
+            ProvenanceHash.Options(options, ProductionContextVersion), identities.OrderBy(s => s.Path, StringComparer.Ordinal)
                 .ThenBy(s => s.ContentHash, StringComparer.Ordinal).ToImmutableArray(),
             referenceIdentities.Order(StringComparer.Ordinal).ToImmutableArray(), string.Empty);
         descriptor = descriptor with { DescriptorDigest = descriptor.ComputeDigest() };
@@ -192,19 +240,21 @@ internal sealed class VerifiedCSharpCompilation
             throw new InvalidDataException("StaleOrForgedCompilationDescriptor");
     }
 
-    // S2.2 / WP3: R2-faithful `compctx1` derivation (mapping contract §2).
+    // S2.2 / WP3 successor: R2-faithful defining-context derivation.
     //
     // S2.1 intentionally exposes no legacy twin for dependency-bearing
     // compilations (`LegacyDescriptor == null`), so the defining compilation's
-    // frozen R2 `compctx1` is derived deterministically here. Every verified
-    // field already held by the `compctx2` descriptor is reused unchanged; the
-    // single substitution is that each verified project-reference item
-    // `compilation-context|<dependency compctx2>` is replaced by the frozen R2
+    // frozen R2 context is derived deterministically here under the successor
+    // `compctx4` domain. Every verified field already held by the `compctx3`
+    // descriptor is reused unchanged; the single substitution is that each
+    // verified project-reference item
+    // `compilation-context|<dependency compctx3>` is replaced by the frozen R2
     // legacy item reconstructed from the verified live dependency. This is a
     // mapping, not a redefinition, and the strong project-reference claim remains
-    // carried by `compctx2`. Actual verified PE identities are preserved verbatim;
-    // reviewer fixture-label alignment is never applied in production.
-    internal CompilationProvenanceDescriptor MapR2FaithfulCompctx1()
+    // carried by `compctx3`. Content-bound `refctx1` metadata identities are
+    // preserved verbatim; reviewer fixture-label alignment is never applied in
+    // production.
+    internal CompilationProvenanceDescriptor MapR2FaithfulDefiningContext()
     {
         var references = Descriptor.References
             .Select(MapReferenceForR2)
@@ -212,12 +262,17 @@ internal sealed class VerifiedCSharpCompilation
             .ToImmutableArray();
         var mapped = Descriptor with
         {
-            ContractVersion = "compctx1",
+            ContractVersion = DefiningContextVersion,
             References = references,
             DescriptorDigest = string.Empty,
         };
         return mapped with { DescriptorDigest = mapped.ComputeDigest() };
     }
+
+    // Historical name retained for source compatibility. It returns the
+    // successor defining context (`compctx4`), never the predecessor `compctx1`.
+    internal CompilationProvenanceDescriptor MapR2FaithfulCompctx1() =>
+        MapR2FaithfulDefiningContext();
 
     private string MapReferenceForR2(string reference)
     {

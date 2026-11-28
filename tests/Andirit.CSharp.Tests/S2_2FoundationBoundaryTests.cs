@@ -109,7 +109,7 @@ public sealed class S2_2FoundationBoundaryTests
             var valid = Path.Combine(directory, "Valid.dll");
             File.WriteAllBytes(valid, EmitLibrary());
             var captured = VerifiedMetadataReference.Capture(valid, CancellationToken.None);
-            Assert.StartsWith("file|", captured.Identity);
+            Assert.StartsWith("refctx1|", captured.Identity);
 
             // Truncated PE image.
             var full = EmitLibrary();
@@ -229,3 +229,4 @@ public sealed class S2_2FoundationBoundaryTests
         return path;
     }
 }
+

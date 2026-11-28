@@ -118,12 +118,12 @@ public sealed class CodeGraphBatchValidator
                 occurrence.Id.Value));
         }
 
-        if (occurrence.SemanticsVersion != 4)
+        if (occurrence.SemanticsVersion != CodeOccurrenceIdentity.CurrentSemanticsVersion)
         {
             errors.Add(new CodeGraphValidationError(
                 CodeGraphValidationErrorKind.InvalidProperty,
                 "occurrence.semantics.unsupported",
-                "Only occurrence semantics version 4 is supported in Stage 1.",
+                "Only occurrence semantics version " + CodeOccurrenceIdentity.CurrentSemanticsVersion + " is supported in Stage 1.",
                 occurrence.Id.Value));
         }
 
@@ -132,7 +132,7 @@ public sealed class CodeGraphBatchValidator
             errors.Add(new CodeGraphValidationError(
                 CodeGraphValidationErrorKind.InvalidIdentity,
                 "occurrence.target.canonical",
-                "The occurrence target must be a canonical asmctx3 identity.",
+                "The occurrence target must be a canonical asmctx4 identity.",
                 occurrence.Id.Value));
             return;
         }
@@ -152,7 +152,7 @@ public sealed class CodeGraphBatchValidator
             errors.Add(new CodeGraphValidationError(
                 CodeGraphValidationErrorKind.InvalidIdentity,
                 "occurrence.identity.recomputed",
-                "The occurrence identity does not match the canonical R2 usage4 tuple.",
+                "The occurrence identity does not match the canonical R2 usage5 tuple.",
                 occurrence.Id.Value));
             return;
         }

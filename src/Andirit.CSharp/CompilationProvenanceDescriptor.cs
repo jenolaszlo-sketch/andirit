@@ -23,8 +23,19 @@ internal sealed record CompilationProvenanceDescriptor(
 {
     internal string ComputeDigest()
     {
-        if (ContractVersion is not ("compctx1" or "compctx2"))
+        if (ContractVersion is not ("compctx1" or "compctx2" or "compctx3" or "compctx4"))
             throw new InvalidDataException("UnsupportedContextVersion");
+        // Successor contexts are explicit about their reference-identity
+        // generation. Predecessor path-bound items cannot be relabeled as a
+        // successor context.
+        if (ContractVersion == "compctx3" &&
+            References.Any(reference => !reference.StartsWith("refctx1|", StringComparison.Ordinal) &&
+                                        !reference.StartsWith("compilation-context|compctx3:sha256:", StringComparison.Ordinal)))
+            throw new InvalidDataException("UnsupportedReferenceIdentityGeneration");
+        if (ContractVersion == "compctx4" &&
+            References.Any(reference => !reference.StartsWith("refctx1|", StringComparison.Ordinal) &&
+                                        !reference.StartsWith("compilation|", StringComparison.Ordinal)))
+            throw new InvalidDataException("UnsupportedReferenceIdentityGeneration");
         return ContractVersion + ":sha256:" + ProvenanceHash.Hash(ContractVersion + "-context",
             [ContractVersion, RepositoryId, ProjectUnitId, AssemblyName, MetadataIdentity,
              ModuleName, OptionsDigest, .. Sources.Select(s => s.CanonicalForm), .. References]);
@@ -56,7 +67,7 @@ internal static class ProvenanceHash
     internal static string Metadata(AssemblyIdentity identity) => string.Join("|", identity.Name,
         identity.Version.ToString(), identity.CultureName ?? string.Empty,
         identity.PublicKeyToken.IsDefaultOrEmpty ? string.Empty : Convert.ToHexStringLower(identity.PublicKeyToken.AsSpan()));
-    internal static string Options(CSharpCompilationOptions options) => Hash("compctx1-options",
+    internal static string Options(CSharpCompilationOptions options, string contextVersion) => Hash(contextVersion + "-options",
         [options.OutputKind.ToString(), options.NullableContextOptions.ToString(), options.AllowUnsafe.ToString(),
          options.OptimizationLevel.ToString(), options.Platform.ToString(), options.CheckOverflow.ToString(),
          options.Deterministic.ToString(), options.WarningLevel.ToString(CultureInfo.InvariantCulture),

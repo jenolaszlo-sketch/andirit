@@ -8,8 +8,8 @@ using Microsoft.CodeAnalysis.CSharp;
 namespace Andirit.CSharp.Tests;
 
 /// <summary>
-/// S2.2 WP5: authority-gated `usage4` construction, bounded extraction, coverage and
-/// the F09 disabled-text scanner. Expected `usage4` values are reconstructed
+/// S2.2 WP5: authority-gated `usage5` construction, bounded extraction, coverage and
+/// the F09 disabled-text scanner. Expected `usage5` values are reconstructed
 /// independently from the accepted formulas; they never read the implementation
 /// under test. No persistence, no WP6 NEW-04 behavior, no WP5 `Merge` reliance.
 /// </summary>
@@ -36,10 +36,10 @@ public sealed class S2_2Wp5UsageTests
         "namespace N; public static class Site { public static int Run() { return Helper.Get(); } }\n" +
         "public static class Helper { public static int Get() => 1; }";
 
-    // -------------------------------------------------------- valid usage4
+    // -------------------------------------------------------- valid usage5
 
     [Fact]
-    public async Task Usage_ValidDirectInvocation_ProducesCanonicalUsage4()
+    public async Task Usage_ValidDirectInvocation_ProducesCanonicalUsage5()
     {
         var unit = await SourceUnit("S/S.csproj", "S", UnitSource);
         var universe = Universe(unit);
@@ -48,8 +48,8 @@ public sealed class S2_2Wp5UsageTests
         Assert.Single(extraction.Facts);
         var fact = extraction.Facts[0];
         var method = Target(unit.Compilation, "N.Helper", "Get");
-        Assert.Equal(ExpectedUsage4(unit, unit, "Get", method), fact.Id.Value);
-        Assert.Equal(ExpectedAsmctx3(unit, method), fact.TargetId.Value);
+        Assert.Equal(ExpectedUsage5(unit, unit, "Get", method), fact.Id.Value);
+        Assert.Equal(ExpectedAsmctx4(unit, method), fact.TargetId.Value);
         Assert.Equal(CodeRelationshipCoverageState.Produced, extraction.Coverage.State);
         Assert.Equal(1, extraction.Coverage.InvocationFacts);
     }
@@ -68,9 +68,9 @@ public sealed class S2_2Wp5UsageTests
         Assert.Single(extraction.Facts);
         var fact = extraction.Facts[0];
         var method = Target(lib.Compilation, "N.Lib", "Get");
-        // The target is the dependency's minted asmctx3, not a structural shortcut.
-        Assert.Equal(ExpectedAsmctx3(lib, method), fact.TargetId.Value);
-        Assert.Equal(ExpectedUsage4(app, lib, "Get", method), fact.Id.Value);
+        // The target is the dependency's minted asmctx4, not a structural shortcut.
+        Assert.Equal(ExpectedAsmctx4(lib, method), fact.TargetId.Value);
+        Assert.Equal(ExpectedUsage5(app, lib, "Get", method), fact.Id.Value);
     }
 
     [Fact]
@@ -205,7 +205,7 @@ public sealed class S2_2Wp5UsageTests
         var unit = await SourceUnit("S/S.csproj", "S", UnitSource);
         var universe = Universe(unit);
         var method = Target(unit.Compilation, "N.Helper", "Get");
-        var mint = universe.MintUsage(Input(unit, method, recorded: "compctx2:sha256:" + new string('0', 64)));
+        var mint = universe.MintUsage(Input(unit, method, recorded: "compctx3:sha256:" + new string('0', 64)));
         Assert.False(mint.IsMinted);
         Assert.Null(mint.Fact);
         Assert.Equal(VerifiedTargetMintStatus.StaleContext, mint.Status);
@@ -220,7 +220,7 @@ public sealed class S2_2Wp5UsageTests
         var mint = universe.MintUsage(Input(unit, method, recorded: unit.Descriptor.DescriptorDigest));
         Assert.True(mint.IsMinted);
         Assert.NotNull(mint.Fact);
-        Assert.Equal(ExpectedAsmctx3(unit, method), mint.Fact!.TargetId.Value);
+        Assert.Equal(ExpectedAsmctx4(unit, method), mint.Fact!.TargetId.Value);
     }
 
     [Fact]
@@ -234,7 +234,7 @@ public sealed class S2_2Wp5UsageTests
 
         // A structurally canonical id is constructible but is not authority.
         var structural = CodeOccurrenceIdentity.ComputeTargetId(
-            "compctx1:sha256:" + new string('a', 64), "N.H|0.0.0.0||", "N.H.dll", "i", "d", "s");
+            "compctx4:sha256:" + new string('a', 64), "N.H|0.0.0.0||", "N.H.dll", "i", "d", "s");
         Assert.True(CodeOccurrenceIdentity.IsCanonicalTarget(structural.Value));
 
         var unit = await SourceUnit("S/S.csproj", "S", UnitSource);
@@ -242,7 +242,7 @@ public sealed class S2_2Wp5UsageTests
         var method = Target(unit.Compilation, "N.Helper", "Get");
         // The mint derives authority from the association, not from any structural id.
         Assert.Equal(VerifiedTargetMintStatus.StaleContext,
-            universe.MintUsage(Input(unit, method, recorded: "compctx2:sha256:" + new string('1', 64))).Status);
+            universe.MintUsage(Input(unit, method, recorded: "compctx3:sha256:" + new string('1', 64))).Status);
     }
 
     [Fact]
@@ -322,12 +322,11 @@ public sealed class S2_2Wp5UsageTests
         return Assert.IsAssignableFrom<IMethodSymbol>(type.GetMembers(method).Single());
     }
 
-    private static string ExpectedAsmctx3(VerifiedCSharpCompilation definingUnit, IMethodSymbol method) =>
-        CodeOccurrenceIdentity.ComputeTargetId(
-            ExpectedCompctx1(definingUnit), Metadata(definingUnit), Module(definingUnit),
-            IdDigest(method), DeclDigest(method), ShapeDigest(method)).Value;
+    private static string ExpectedAsmctx4(VerifiedCSharpCompilation definingUnit, IMethodSymbol method) =>
+        SuccessorIdentityOracle.TargetId(
+            RepositoryId, definingUnit, method, IdDigest, DeclDigest, ShapeDigest);
 
-    private static string ExpectedUsage4(
+    private static string ExpectedUsage5(
         VerifiedCSharpCompilation callingUnit, VerifiedCSharpCompilation definingUnit,
         string methodName, IMethodSymbol method)
     {
@@ -341,60 +340,15 @@ public sealed class S2_2Wp5UsageTests
         var line = tree.GetLineSpan(token.Span);
         var path = tree.FilePath.Replace('\\', '/');
         var sourceHash = callingUnit.Sources.Single(s => s.Path == path).ContentHash;
-        var parts = new List<string>
-        {
-            RepositoryId, Plugin.Value, CodeOccurrenceIdentity.SemanticsVersion,
-            callingUnit.Descriptor.ProjectUnitId, path, sourceHash,
-            (line.StartLinePosition.Line + 1).ToString(),
-            (line.StartLinePosition.Character + 1).ToString(),
-            (line.EndLinePosition.Line + 1).ToString(),
-            (line.EndLinePosition.Character + 1).ToString(),
-            TargetDoc(method), ExpectedAsmctx3(definingUnit, method), CodeOccurrenceIdentity.InvocationCategory,
-        };
-        return LengthPrefixedHash("usage4", parts);
-    }
-
-    private static string ExpectedCompctx1(VerifiedCSharpCompilation unit)
-    {
-        var d = unit.Descriptor;
-        var parts = new List<string>
-        {
-            "compctx1", d.RepositoryId, d.ProjectUnitId, d.AssemblyName,
-            d.MetadataIdentity, d.ModuleName, d.OptionsDigest,
-        };
-        parts.AddRange(d.Sources.Select(s => s.CanonicalForm));
-        parts.AddRange(d.References.Order(StringComparer.Ordinal));
-        return "compctx1:sha256:" + LengthPrefixedHash("compctx1-context", parts);
-    }
-
-    private static string Metadata(VerifiedCSharpCompilation unit)
-    {
-        var identity = unit.Compilation.Assembly.Identity;
-        var token = identity.PublicKeyToken.IsDefaultOrEmpty
-            ? string.Empty
-            : Convert.ToHexStringLower(identity.PublicKeyToken.AsSpan());
-        return string.Join("|", identity.Name, identity.Version.ToString(), identity.CultureName ?? string.Empty, token);
-    }
-
-    private static string Module(VerifiedCSharpCompilation unit) =>
-        unit.Compilation.Assembly.Modules.First().Name;
-
-    private static string LengthPrefixedHash(string domain, IEnumerable<string> parts)
-    {
-        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
-        void Append(string value)
-        {
-            var bytes = Encoding.UTF8.GetBytes(value);
-            Span<byte> length = stackalloc byte[4];
-            System.Buffers.Binary.BinaryPrimitives.WriteInt32BigEndian(length, bytes.Length);
-            hash.AppendData(length);
-            hash.AppendData(bytes);
-        }
-
-        Append(domain);
-        foreach (var part in parts) Append(part);
-        return Convert.ToHexStringLower(hash.GetHashAndReset());
+        return SuccessorIdentityOracle.UsageId(
+            RepositoryId, Plugin.Value, callingUnit.Descriptor.ProjectUnitId, path, sourceHash,
+            new CodeLocation(path,
+                line.StartLinePosition.Line + 1, line.StartLinePosition.Character + 1,
+                line.EndLinePosition.Line + 1, line.EndLinePosition.Character + 1),
+            TargetDoc(method), ExpectedAsmctx4(definingUnit, method));
     }
 
     private static string Sha256(byte[] bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));
 }
+
+

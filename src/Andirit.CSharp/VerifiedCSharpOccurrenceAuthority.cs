@@ -28,6 +28,12 @@ internal sealed class VerifiedCSharpOccurrenceAuthority : ICodeOccurrenceAuthori
     {
         static CodeOccurrenceAuthorityRefusal Corrupt(string why) => new(CodeOccurrenceAvailability.CorruptedIndex, why);
         static CodeOccurrenceAuthorityRefusal Stale(string why) => new(CodeOccurrenceAvailability.StalePublication, why);
+        static CodeOccurrenceAuthorityRefusal Superseded(string why) => new(CodeOccurrenceAvailability.UnsupportedSchema, why);
+        if (authority.Version != CodeOccurrenceIdentity.AuthorityVersion ||
+            authority.IdentityGeneration != CodeOccurrenceIdentity.Generation)
+            return Superseded(
+                "The persisted occurrence authority belongs to a predecessor identity generation; " +
+                "re-ingestion into a new store is required.");
         if (authority.RepositoryId != repositoryId || authority.PluginId != pluginId ||
             authority.IndexUnitId != indexUnitId || authority.Coverage is null ||
             authority.Members is null || authority.Facts is null || string.IsNullOrWhiteSpace(authority.SourceUnitId))
@@ -40,7 +46,9 @@ internal sealed class VerifiedCSharpOccurrenceAuthority : ICodeOccurrenceAuthori
              JsonSerializer.Serialize(CodeOccurrenceAuthority.SourceContribution(authority.Coverage)) != storedCoverage))
             return Corrupt("Occurrence authority is not bound to the stored coverage.");
         if (authority.Members.Any(m => m is null || !CanonicalContext(m.Compctx2)))
-            return Corrupt("Malformed recorded compilation-universe membership.");
+            return authority.Members.Any(m => m is not null && IsPredecessorContext(m.Compctx2))
+                ? Superseded("Recorded compilation-universe membership belongs to a predecessor identity generation; re-ingestion required.")
+                : Corrupt("Malformed recorded compilation-universe membership.");
         if (authority.Members.Select(m => m.ProjectUnitId).Distinct(StringComparer.Ordinal).Count() != authority.Members.Count)
             return Corrupt("Duplicate recorded compilation-universe membership.");
         if (!_universe.IsComplete || _universe.Scope.RepositoryId != repositoryId ||
@@ -67,14 +75,18 @@ internal sealed class VerifiedCSharpOccurrenceAuthority : ICodeOccurrenceAuthori
                 CodeOccurrenceIdentity.ComputePayloadHash(fact) != recorded.PayloadHash)
                 return Corrupt("The defining authority is not bound to the stored occurrence evidence.");
             if (string.IsNullOrWhiteSpace(recorded.Compctx2))
-                return new(CodeOccurrenceAvailability.AnalysisUnavailable, "Missing recorded defining compctx2.");
+                return new(CodeOccurrenceAvailability.AnalysisUnavailable, "Missing recorded defining production context.");
             if (!CanonicalContext(recorded.Compctx2) || string.IsNullOrWhiteSpace(recorded.IdentifierDigest) ||
                 string.IsNullOrWhiteSpace(recorded.DeclarationDigest) || string.IsNullOrWhiteSpace(recorded.ShapeDigest))
-                return Corrupt("Malformed recorded defining authority.");
+            {
+                return IsPredecessorContext(recorded.Compctx2)
+                    ? Superseded("Recorded defining context belongs to a predecessor identity generation; re-ingestion required.")
+                    : Corrupt("Malformed recorded defining authority.");
+            }
             var defining = _universe.Entries.SingleOrDefault(e => e.Descriptor.ProjectUnitId == recorded.DefiningProjectUnitId);
             if (defining is null || defining.Descriptor.DescriptorDigest != recorded.Compctx2)
-                return Stale("Recorded defining compctx2 is not the current verified defining context.");
-            var mapped = defining.MapR2FaithfulCompctx1();
+                return Stale("Recorded defining production context is not the current verified defining context.");
+            var mapped = defining.MapR2FaithfulDefiningContext();
             var target = CodeOccurrenceIdentity.ComputeTargetId(mapped.DescriptorDigest, mapped.MetadataIdentity,
                 mapped.ModuleName, recorded.IdentifierDigest, recorded.DeclarationDigest, recorded.ShapeDigest);
             if (target != fact.TargetId)
@@ -87,6 +99,10 @@ internal sealed class VerifiedCSharpOccurrenceAuthority : ICodeOccurrenceAuthori
     }
 
     private static bool CanonicalContext(string? value) => value is not null &&
+        value.StartsWith("compctx3:sha256:", StringComparison.Ordinal) && value.Length == 80 &&
+        value.AsSpan(16).ToString().All(char.IsAsciiHexDigitLower);
+
+    private static bool IsPredecessorContext(string? value) => value is not null &&
         value.StartsWith("compctx2:sha256:", StringComparison.Ordinal) && value.Length == 80 &&
         value.AsSpan(16).ToString().All(char.IsAsciiHexDigitLower);
 }

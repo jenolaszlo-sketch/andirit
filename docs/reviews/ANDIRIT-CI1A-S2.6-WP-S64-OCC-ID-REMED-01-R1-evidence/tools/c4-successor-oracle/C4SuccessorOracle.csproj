@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- Matches the production InternalsVisibleTo grant so the tool can consume
+         the verified analysis inputs while computing identities independently. -->
+    <AssemblyName>Andirit.CSharp.Tests</AssemblyName>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../../../../src/Andirit.CSharp/Andirit.CSharp.csproj" />
+    <ProjectReference Include="../../../../../src/Andirit.LatticeDb/Andirit.LatticeDb.csproj" />
+    <Compile Include="../../../../../tests/Andirit.CSharp.Tests/SuccessorIdentityOracle.cs"
+             Link="SuccessorIdentityOracle.cs" />
+  </ItemGroup>
+</Project>

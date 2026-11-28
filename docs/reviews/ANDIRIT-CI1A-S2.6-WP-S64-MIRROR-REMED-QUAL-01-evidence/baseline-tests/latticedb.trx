@@ -1,0 +1,528 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="4dda82e2-01fe-47a8-a971-f239aea242f5" name="Laszlos@LAPTOP-KBD8D8JG 2026-11-27 18:09:10" runUser="LAPTOP-KBD8D8JG\Laszlos" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-27T18:09:10.2543677+01:00" queuing="2026-11-27T18:09:10.2543683+01:00" start="2026-11-27T18:09:08.2480031+01:00" finish="2026-11-27T18:09:12.2139152+01:00" />
+  <TestSettings name="default" id="493b56cd-20d1-4e74-a513-48311f8acc45">
+    <Deployment runDeploymentRoot="Laszlos_LAPTOP-KBD8D8JG_2026-11-27_18_09_10" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="0c52a012-1e9f-4113-abcc-c20c79995710" testId="0728c484-f242-b1ae-35a4-89e6cd7d97b2" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.UnrelatedEdgeIncidentToMirrorNode_IsRefusedAndPreserved" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.5708422" startTime="2026-11-27T18:09:09.3055224+01:00" endTime="2026-11-27T18:09:09.8802944+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0c52a012-1e9f-4113-abcc-c20c79995710">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.NotNull() Failure: Value is null</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.UnrelatedEdgeIncidentToMirrorNode_IsRefusedAndPreserved() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorOwnershipTests.cs:line 163&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="de0aeaab-6701-4713-9bb3-969a21056475" testId="13ad80f4-6b8c-bf1a-693a-5cc7b92f9be7" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.InventoryOracle_DetectsInjectedDuplicateAndOrphan" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.2299903" startTime="2026-11-27T18:09:10.0047596+01:00" endTime="2026-11-27T18:09:10.2342727+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="de0aeaab-6701-4713-9bb3-969a21056475">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Collections differ&#xD;
+                     ↓ (pos 1)&#xD;
+Expected: ["node:a", "node:b"]&#xD;
+Actual:   ["node:a", "node:a", "node:b", "node:b"]&#xD;
+                     ↑ (pos 1)</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 887&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 842&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.InventoryOracle_DetectsInjectedDuplicateAndOrphan() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 796&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="625957c5-b1ec-4470-8db3-5cdee9d5851e" testId="5905a27d-a9cc-2ba7-240c-68a7c08fbda6" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.MalformedOrIncompleteManifests_RebuildWithoutAuthoritativeLoss" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.3045527" startTime="2026-11-27T18:09:10.5990966+01:00" endTime="2026-11-27T18:09:10.9021064+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="625957c5-b1ec-4470-8db3-5cdee9d5851e" />
+    <UnitTestResult executionId="0ff103df-07d8-4978-a6d1-49a7cd61cbf8" testId="b2315e11-39bc-9954-5e13-fe6c709d6de9" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SourceUnitReplacementAndDeletion_RemoveOldPhysicalFacts" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0818788" startTime="2026-11-27T18:09:11.7010942+01:00" endTime="2026-11-27T18:09:11.7801462+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0ff103df-07d8-4978-a6d1-49a7cd61cbf8" />
+    <UnitTestResult executionId="bc273bbe-54bb-47d2-a508-ce41b7b6014f" testId="597c035e-a8f0-ce1f-fc29-36e104e258dc" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.MalformedManifest_DoesNotAffectDisabledAuthoritativeOpen" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0991181" startTime="2026-11-27T18:09:10.2352928+01:00" endTime="2026-11-27T18:09:10.3337444+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bc273bbe-54bb-47d2-a508-ce41b7b6014f" />
+    <UnitTestResult executionId="1e159580-913c-4cb9-886b-9146848e593f" testId="ab23e8d8-ff52-fd90-3414-614cbe6eab36" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.RepeatedEnabledReopen_KeepsPhysicalCardinalityStable" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1132625" startTime="2026-11-27T18:09:10.7009798+01:00" endTime="2026-11-27T18:09:10.8125383+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1e159580-913c-4cb9-886b-9146848e593f">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Collections differ&#xD;
+                               ↓ (pos 2)&#xD;
+Expected: ["node:a", "node:b", "node:c"]&#xD;
+Actual:   ["node:a", "node:b", "node:b", "node:b", "node:c"]&#xD;
+                               ↑ (pos 2)</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 887&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 842&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.RepeatedEnabledReopen_KeepsPhysicalCardinalityStable() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 159&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="67fdf110-ceaa-4fbc-a7a0-1eecbbb1ca65" testId="adeedcce-2514-0a73-af17-01b8a2014016" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.MultipleRepositories_WithSharedLogicalIdentity_StayIsolated" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1934181" startTime="2026-11-27T18:09:09.8262334+01:00" endTime="2026-11-27T18:09:10.0037875+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="67fdf110-ceaa-4fbc-a7a0-1eecbbb1ca65">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Collections differ&#xD;
+           ↓ (pos 0)&#xD;
+Expected: ["node:only-second", "node:shared"]&#xD;
+Actual:   ["node:only-first", "node:only-second", "node:shared", "node:shared"]&#xD;
+           ↑ (pos 0)</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 887&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 842&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.MultipleRepositories_WithSharedLogicalIdentity_StayIsolated() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 444&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="752dfd12-8e49-4c4e-bc4a-0d7836a099b1" testId="637c550e-da81-6253-5ac3-3f95d516734d" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.DisabledPublication_RemovesPhysicalMirrorObjects_AndReEnableRebuilds" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0689550" startTime="2026-11-27T18:09:12.0841253+01:00" endTime="2026-11-27T18:09:12.1527748+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="752dfd12-8e49-4c4e-bc4a-0d7836a099b1">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Empty() Failure: Collection was not empty&#xD;
+Collection: ["node:a", "node:b"]</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.DisabledPublication_RemovesPhysicalMirrorObjects_AndReEnableRebuilds() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 243&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="07fcc175-7681-44e2-af55-36baab964d89" testId="39255707-2f60-1b9a-d33c-4cbe27cb762d" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RebuildsMalformedManifest_FromAuthoritativeFacts" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1419926" startTime="2026-11-27T18:09:11.1953567+01:00" endTime="2026-11-27T18:09:11.3375743+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="07fcc175-7681-44e2-af55-36baab964d89">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Collections differ&#xD;
+Expected: ["node:a"]&#xD;
+Actual:   ["node:a", "node:a"]&#xD;
+                     ↑ (pos 1)</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 887&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 842&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RebuildsMalformedManifest_FromAuthoritativeFacts() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 607&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2b65ee58-3a12-4c56-9ab6-6ba446274057" testId="f0ecb28b-4f5f-9446-3f90-81cd06e22e1e" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.RecoveryFailure_RollsBackCleanup_AndSubsequentReopenSucceeds" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1894977" startTime="2026-11-27T18:09:11.3383825+01:00" endTime="2026-11-27T18:09:11.5273257+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2b65ee58-3a12-4c56-9ab6-6ba446274057" />
+    <UnitTestResult executionId="93fb2b93-dbee-4652-a978-8fb4630bacbc" testId="2f71529c-1922-f7d3-ffe9-c5d7b086c9c5" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.DisabledPublication_CleansLegacyOrphansWithoutManifest" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1545118" startTime="2026-11-27T18:09:10.4656653+01:00" endTime="2026-11-27T18:09:10.6203611+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="93fb2b93-dbee-4652-a978-8fb4630bacbc">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Empty() Failure: Collection was not empty&#xD;
+Collection: ["node:a"]</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.DisabledPublication_CleansLegacyOrphansWithoutManifest() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 568&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="5aae1a24-a5bc-4398-9289-e86e3ed7faf9" testId="42de3f4b-4958-04d1-4ef8-6d4feabb1e8c" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.OccurrencePublication_DoesNotChangeGraphMirrorCardinality" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1803315" startTime="2026-11-27T18:09:10.8133533+01:00" endTime="2026-11-27T18:09:10.9930803+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5aae1a24-a5bc-4398-9289-e86e3ed7faf9" />
+    <UnitTestResult executionId="ee2a23c8-6f42-42fe-8269-8c69b126145a" testId="b333b2af-b7cb-9572-2163-a3f442b4bd30" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.ConflictingContributors_AreRejected_AndNeverReachTheMirror" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0552271" startTime="2026-11-27T18:09:11.9271622+01:00" endTime="2026-11-27T18:09:11.9817821+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ee2a23c8-6f42-42fe-8269-8c69b126145a" />
+    <UnitTestResult executionId="cfc1c7e3-8a71-4933-a0b2-4367c6c26218" testId="0716058d-2d40-d8e4-1ed5-aa37a9643a64" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.CancelledCompletion_LeavesAcceptedMirrorIntact" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0639528" startTime="2026-11-27T18:09:10.4019060+01:00" endTime="2026-11-27T18:09:10.4653354+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cfc1c7e3-8a71-4933-a0b2-4367c6c26218" />
+    <UnitTestResult executionId="a8e1a219-4198-4c51-bfd7-ef282d53c47c" testId="9f971e3e-a203-70c7-c4ad-671af9d0dd2f" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.RepeatedDisabledPublications_LeaveNoMirrorState" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.2018445" startTime="2026-11-27T18:09:10.9934934+01:00" endTime="2026-11-27T18:09:11.1950763+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a8e1a219-4198-4c51-bfd7-ef282d53c47c" />
+    <UnitTestResult executionId="88d08344-5145-438c-baf3-a4227d9da145" testId="e17a6da2-00bf-7cdd-3f96-71729ec460d9" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingUnrelatedEdge_DoesNotDeleteIt" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.3168635" startTime="2026-11-27T18:09:11.0604582+01:00" endTime="2026-11-27T18:09:11.3753750+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="88d08344-5145-438c-baf3-a4227d9da145" />
+    <UnitTestResult executionId="a80f0959-cd52-4b53-b9e8-e7515f5cb15b" testId="3dd591b5-d67a-64f3-b531-c16856f8c0fb" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.InconsistentManifestEdgeWithoutEndpointNodes_DoesNotLeaveDanglingEdge" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.3014458" startTime="2026-11-27T18:09:10.0999881+01:00" endTime="2026-11-27T18:09:10.4002053+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a80f0959-cd52-4b53-b9e8-e7515f5cb15b" />
+    <UnitTestResult executionId="07a5e7f3-b363-4651-9575-4528a67c35de" testId="a36d751e-ea41-34a1-2b2e-1e823db5b68a" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RemovesOrphansLeftByManifestOnlyDeletion" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1695985" startTime="2026-11-27T18:09:11.5299082+01:00" endTime="2026-11-27T18:09:11.6982068+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="07a5e7f3-b363-4651-9575-4528a67c35de">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Collections differ&#xD;
+                     ↓ (pos 1)&#xD;
+Expected: ["node:a", "node:b"]&#xD;
+Actual:   ["node:a", "node:a", "node:b", "node:b"]&#xD;
+                     ↑ (pos 1)</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 887&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 842&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RemovesOrphansLeftByManifestOnlyDeletion() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 529&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="27a10575-3444-4c7b-ad9e-001c8cc9f07a" testId="216757d6-92f1-4a72-ee79-b0b154683f25" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RebuildsManifestWithDuplicateNativeIdentities" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0854179" startTime="2026-11-27T18:09:11.8407012+01:00" endTime="2026-11-27T18:09:11.9263466+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="27a10575-3444-4c7b-ad9e-001c8cc9f07a">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Collections differ&#xD;
+Expected: ["node:a"]&#xD;
+Actual:   ["node:a", "node:a"]&#xD;
+                     ↑ (pos 1)</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 887&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 842&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RebuildsManifestWithDuplicateNativeIdentities() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 637&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="158ab615-0bfe-4a25-85fa-46471665f27f" testId="2814e986-b497-c3a5-dd52-f5f4f0b400a0" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingAuthoritativeCommandLogRecord_DoesNotDeleteIt" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1552630" startTime="2026-11-27T18:09:10.9023263+01:00" endTime="2026-11-27T18:09:11.0584397+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="158ab615-0bfe-4a25-85fa-46471665f27f">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Values differ&#xD;
+Expected: 4&#xD;
+Actual:   3</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.AssertAuthoritativeRowsUnchanged(String path, IReadOnlyList`1 before) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorOwnershipTests.cs:line 527&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingAuthoritativeCommandLogRecord_DoesNotDeleteIt() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorOwnershipTests.cs:line 83&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d4742945-b01c-4f96-b731-fc648e0f63a2" testId="00c411db-15a3-969b-d838-245455528b97" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.FailedEnabledPublication_RollsBackWithoutMirrorDrift" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0783013" startTime="2026-11-27T18:09:10.6211857+01:00" endTime="2026-11-27T18:09:10.6988433+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d4742945-b01c-4f96-b731-fc648e0f63a2" />
+    <UnitTestResult executionId="12504ff4-3553-42ff-b857-17ad1d66d6de" testId="abb289d5-0f07-2d27-0f71-b419398e0bcb" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.CrossRepositoryNativeReference_DoesNotDeleteOtherRepository" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.3805301" startTime="2026-11-27T18:09:11.3759832+01:00" endTime="2026-11-27T18:09:11.7561905+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="12504ff4-3553-42ff-b857-17ad1d66d6de" />
+    <UnitTestResult executionId="34b3d43b-4fc8-4c8d-9455-20faaa705d25" testId="5c56022e-a79b-9a1d-396b-1531b862418b" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SharedLogicalNodeIdentity_AcrossContributors_HasOnePhysicalNode" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.4906915" startTime="2026-11-27T18:09:09.3041703+01:00" endTime="2026-11-27T18:09:09.8097857+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="34b3d43b-4fc8-4c8d-9455-20faaa705d25">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Collections differ&#xD;
+                         ↓ (pos 1)&#xD;
+Expected: ["node:first", "node:second"]&#xD;
+Actual:   ["node:first", "node:first", "node:second", "node:second"]&#xD;
+                         ↑ (pos 1)</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 887&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 842&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SharedLogicalNodeIdentity_AcrossContributors_HasOnePhysicalNode() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 42&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="27114eb4-bfbe-4141-914e-c0ea0224ebc8" testId="bd5d980a-8320-ea3f-3480-e6f48a2f39d1" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SharedLogicalEdgeIdentity_AcrossContributors_HasOnePhysicalEdge" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0671800" startTime="2026-11-27T18:09:10.3343830+01:00" endTime="2026-11-27T18:09:10.4011637+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="27114eb4-bfbe-4141-914e-c0ea0224ebc8">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Collections differ&#xD;
+                          ↓ (pos 1)&#xD;
+Expected: ["node:source", "node:target"]&#xD;
+Actual:   ["node:source", "node:source", "node:target", "node:target"]&#xD;
+                          ↑ (pos 1)</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 887&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 842&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SharedLogicalEdgeIdentity_AcrossContributors_HasOnePhysicalEdge() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 73&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b4ce1635-6ba9-4c50-a889-4ec0a8fbecd7" testId="5c38f12d-ee59-aaf3-9c05-7b9ec78f9504" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.InventoryOracle_DetectsManifestOnlyDeletionResidue" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.0601434" startTime="2026-11-27T18:09:11.7805683+01:00" endTime="2026-11-27T18:09:11.8404561+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b4ce1635-6ba9-4c50-a889-4ec0a8fbecd7" />
+    <UnitTestResult executionId="bf72defd-6b0f-4d3e-a918-8cb2f2ad4f57" testId="8983336b-be51-8536-d530-06162673f93f" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.UnrelatedSentinelObjects_KeepIdentityPropertiesAndRelationships" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.2181179" startTime="2026-11-27T18:09:09.8824672+01:00" endTime="2026-11-27T18:09:10.0989302+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bf72defd-6b0f-4d3e-a918-8cb2f2ad4f57" />
+    <UnitTestResult executionId="f8de53dc-ea69-48d4-937d-cd35eedcf664" testId="05393cb4-6758-8047-640e-a7e841e0a235" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingUnrelatedNode_DoesNotDeleteIt" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1964874" startTime="2026-11-27T18:09:10.4004302+01:00" endTime="2026-11-27T18:09:10.5973638+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f8de53dc-ea69-48d4-937d-cd35eedcf664">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.True() Failure&#xD;
+Expected: True&#xD;
+Actual:   False</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.AssertUnrelatedNodePreserved(String path, UnrelatedNode unrelated) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorOwnershipTests.cs:line 440&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingUnrelatedNode_DoesNotDeleteIt() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorOwnershipTests.cs:line 48&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b3593767-76cb-4233-a75c-f48b51227371" testId="e7a9f487-086f-562c-4cf8-c0974d53980b" testName="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RemovesUntrackedDuplicateNodesAndEdges" computerName="LAPTOP-KBD8D8JG" duration="00:00:00.1010912" startTime="2026-11-27T18:09:11.9820504+01:00" endTime="2026-11-27T18:09:12.0833780+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b3593767-76cb-4233-a75c-f48b51227371">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Collections differ&#xD;
+                     ↓ (pos 1)&#xD;
+Expected: ["node:a", "node:b"]&#xD;
+Actual:   ["node:a", "node:a", "node:b", "node:b"]&#xD;
+                     ↑ (pos 1)</Message>
+          <StackTrace>   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 887&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges) in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 842&#xD;
+   at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RemovesUntrackedDuplicateNodesAndEdges() in C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs:line 492&#xD;
+--- End of stack trace from previous location ---</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.RecoveryFailure_RollsBackCleanup_AndSubsequentReopenSucceeds" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="f0ecb28b-4f5f-9446-3f90-81cd06e22e1e">
+      <Execution id="2b65ee58-3a12-4c56-9ab6-6ba446274057" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="RecoveryFailure_RollsBackCleanup_AndSubsequentReopenSucceeds" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.RepeatedEnabledReopen_KeepsPhysicalCardinalityStable" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="ab23e8d8-ff52-fd90-3414-614cbe6eab36">
+      <Execution id="1e159580-913c-4cb9-886b-9146848e593f" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="RepeatedEnabledReopen_KeepsPhysicalCardinalityStable" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.InconsistentManifestEdgeWithoutEndpointNodes_DoesNotLeaveDanglingEdge" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="3dd591b5-d67a-64f3-b531-c16856f8c0fb">
+      <Execution id="a80f0959-cd52-4b53-b9e8-e7515f5cb15b" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests" name="InconsistentManifestEdgeWithoutEndpointNodes_DoesNotLeaveDanglingEdge" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SharedLogicalNodeIdentity_AcrossContributors_HasOnePhysicalNode" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="5c56022e-a79b-9a1d-396b-1531b862418b">
+      <Execution id="34b3d43b-4fc8-4c8d-9455-20faaa705d25" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="SharedLogicalNodeIdentity_AcrossContributors_HasOnePhysicalNode" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.InventoryOracle_DetectsInjectedDuplicateAndOrphan" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="13ad80f4-6b8c-bf1a-693a-5cc7b92f9be7">
+      <Execution id="de0aeaab-6701-4713-9bb3-969a21056475" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="InventoryOracle_DetectsInjectedDuplicateAndOrphan" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.OccurrencePublication_DoesNotChangeGraphMirrorCardinality" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="42de3f4b-4958-04d1-4ef8-6d4feabb1e8c">
+      <Execution id="5aae1a24-a5bc-4398-9289-e86e3ed7faf9" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="OccurrencePublication_DoesNotChangeGraphMirrorCardinality" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.UnrelatedSentinelObjects_KeepIdentityPropertiesAndRelationships" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="8983336b-be51-8536-d530-06162673f93f">
+      <Execution id="bf72defd-6b0f-4d3e-a918-8cb2f2ad4f57" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests" name="UnrelatedSentinelObjects_KeepIdentityPropertiesAndRelationships" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingUnrelatedNode_DoesNotDeleteIt" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="05393cb4-6758-8047-640e-a7e841e0a235">
+      <Execution id="f8de53dc-ea69-48d4-937d-cd35eedcf664" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests" name="ManifestReferencingUnrelatedNode_DoesNotDeleteIt" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.RepeatedDisabledPublications_LeaveNoMirrorState" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="9f971e3e-a203-70c7-c4ad-671af9d0dd2f">
+      <Execution id="a8e1a219-4198-4c51-bfd7-ef282d53c47c" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="RepeatedDisabledPublications_LeaveNoMirrorState" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.MalformedOrIncompleteManifests_RebuildWithoutAuthoritativeLoss" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="5905a27d-a9cc-2ba7-240c-68a7c08fbda6">
+      <Execution id="625957c5-b1ec-4470-8db3-5cdee9d5851e" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests" name="MalformedOrIncompleteManifests_RebuildWithoutAuthoritativeLoss" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingUnrelatedEdge_DoesNotDeleteIt" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="e17a6da2-00bf-7cdd-3f96-71729ec460d9">
+      <Execution id="88d08344-5145-438c-baf3-a4227d9da145" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests" name="ManifestReferencingUnrelatedEdge_DoesNotDeleteIt" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.DisabledPublication_RemovesPhysicalMirrorObjects_AndReEnableRebuilds" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="637c550e-da81-6253-5ac3-3f95d516734d">
+      <Execution id="752dfd12-8e49-4c4e-bc4a-0d7836a099b1" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="DisabledPublication_RemovesPhysicalMirrorObjects_AndReEnableRebuilds" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.InventoryOracle_DetectsManifestOnlyDeletionResidue" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="5c38f12d-ee59-aaf3-9c05-7b9ec78f9504">
+      <Execution id="b4ce1635-6ba9-4c50-a889-4ec0a8fbecd7" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="InventoryOracle_DetectsManifestOnlyDeletionResidue" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.FailedEnabledPublication_RollsBackWithoutMirrorDrift" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="00c411db-15a3-969b-d838-245455528b97">
+      <Execution id="d4742945-b01c-4f96-b731-fc648e0f63a2" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="FailedEnabledPublication_RollsBackWithoutMirrorDrift" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RemovesUntrackedDuplicateNodesAndEdges" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="e7a9f487-086f-562c-4cf8-c0974d53980b">
+      <Execution id="b3593767-76cb-4233-a75c-f48b51227371" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="Recovery_RemovesUntrackedDuplicateNodesAndEdges" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.MultipleRepositories_WithSharedLogicalIdentity_StayIsolated" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="adeedcce-2514-0a73-af17-01b8a2014016">
+      <Execution id="67fdf110-ceaa-4fbc-a7a0-1eecbbb1ca65" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="MultipleRepositories_WithSharedLogicalIdentity_StayIsolated" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RebuildsManifestWithDuplicateNativeIdentities" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="216757d6-92f1-4a72-ee79-b0b154683f25">
+      <Execution id="27a10575-3444-4c7b-ad9e-001c8cc9f07a" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="Recovery_RebuildsManifestWithDuplicateNativeIdentities" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.MalformedManifest_DoesNotAffectDisabledAuthoritativeOpen" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="597c035e-a8f0-ce1f-fc29-36e104e258dc">
+      <Execution id="bc273bbe-54bb-47d2-a508-ce41b7b6014f" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="MalformedManifest_DoesNotAffectDisabledAuthoritativeOpen" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RemovesOrphansLeftByManifestOnlyDeletion" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="a36d751e-ea41-34a1-2b2e-1e823db5b68a">
+      <Execution id="07a5e7f3-b363-4651-9575-4528a67c35de" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="Recovery_RemovesOrphansLeftByManifestOnlyDeletion" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.ConflictingContributors_AreRejected_AndNeverReachTheMirror" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="b333b2af-b7cb-9572-2163-a3f442b4bd30">
+      <Execution id="ee2a23c8-6f42-42fe-8269-8c69b126145a" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="ConflictingContributors_AreRejected_AndNeverReachTheMirror" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.CrossRepositoryNativeReference_DoesNotDeleteOtherRepository" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="abb289d5-0f07-2d27-0f71-b419398e0bcb">
+      <Execution id="12504ff4-3553-42ff-b857-17ad1d66d6de" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests" name="CrossRepositoryNativeReference_DoesNotDeleteOtherRepository" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SharedLogicalEdgeIdentity_AcrossContributors_HasOnePhysicalEdge" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="bd5d980a-8320-ea3f-3480-e6f48a2f39d1">
+      <Execution id="27114eb4-bfbe-4141-914e-c0ea0224ebc8" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="SharedLogicalEdgeIdentity_AcrossContributors_HasOnePhysicalEdge" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingAuthoritativeCommandLogRecord_DoesNotDeleteIt" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="2814e986-b497-c3a5-dd52-f5f4f0b400a0">
+      <Execution id="158ab615-0bfe-4a25-85fa-46471665f27f" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests" name="ManifestReferencingAuthoritativeCommandLogRecord_DoesNotDeleteIt" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RebuildsMalformedManifest_FromAuthoritativeFacts" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="39255707-2f60-1b9a-d33c-4cbe27cb762d">
+      <Execution id="07fcc175-7681-44e2-af55-36baab964d89" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="Recovery_RebuildsMalformedManifest_FromAuthoritativeFacts" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.DisabledPublication_CleansLegacyOrphansWithoutManifest" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="2f71529c-1922-f7d3-ffe9-c5d7b086c9c5">
+      <Execution id="93fb2b93-dbee-4652-a978-8fb4630bacbc" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="DisabledPublication_CleansLegacyOrphansWithoutManifest" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SourceUnitReplacementAndDeletion_RemoveOldPhysicalFacts" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="b2315e11-39bc-9954-5e13-fe6c709d6de9">
+      <Execution id="0ff103df-07d8-4978-a6d1-49a7cd61cbf8" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="SourceUnitReplacementAndDeletion_RemoveOldPhysicalFacts" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.UnrelatedEdgeIncidentToMirrorNode_IsRefusedAndPreserved" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="0728c484-f242-b1ae-35a4-89e6cd7d97b2">
+      <Execution id="0c52a012-1e9f-4113-abcc-c20c79995710" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests" name="UnrelatedEdgeIncidentToMirrorNode_IsRefusedAndPreserved" />
+    </UnitTest>
+    <UnitTest name="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.CancelledCompletion_LeavesAcceptedMirrorIntact" storage="c:\windows\temp\opencode\s64-qual\base\tests\andirit.latticedb.tests\bin\release\net10.0\andirit.latticedb.tests.dll" id="0716058d-2d40-d8e4-1ed5-aa37a9643a64">
+      <Execution id="cfc1c7e3-8a71-4933-a0b2-4367c6c26218" />
+      <TestMethod codeBase="C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\bin\Release\net10.0\Andirit.LatticeDb.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests" name="CancelledCompletion_LeavesAcceptedMirrorIntact" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="0728c484-f242-b1ae-35a4-89e6cd7d97b2" executionId="0c52a012-1e9f-4113-abcc-c20c79995710" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="13ad80f4-6b8c-bf1a-693a-5cc7b92f9be7" executionId="de0aeaab-6701-4713-9bb3-969a21056475" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5905a27d-a9cc-2ba7-240c-68a7c08fbda6" executionId="625957c5-b1ec-4470-8db3-5cdee9d5851e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b2315e11-39bc-9954-5e13-fe6c709d6de9" executionId="0ff103df-07d8-4978-a6d1-49a7cd61cbf8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="597c035e-a8f0-ce1f-fc29-36e104e258dc" executionId="bc273bbe-54bb-47d2-a508-ce41b7b6014f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ab23e8d8-ff52-fd90-3414-614cbe6eab36" executionId="1e159580-913c-4cb9-886b-9146848e593f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="adeedcce-2514-0a73-af17-01b8a2014016" executionId="67fdf110-ceaa-4fbc-a7a0-1eecbbb1ca65" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="637c550e-da81-6253-5ac3-3f95d516734d" executionId="752dfd12-8e49-4c4e-bc4a-0d7836a099b1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="39255707-2f60-1b9a-d33c-4cbe27cb762d" executionId="07fcc175-7681-44e2-af55-36baab964d89" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f0ecb28b-4f5f-9446-3f90-81cd06e22e1e" executionId="2b65ee58-3a12-4c56-9ab6-6ba446274057" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2f71529c-1922-f7d3-ffe9-c5d7b086c9c5" executionId="93fb2b93-dbee-4652-a978-8fb4630bacbc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="42de3f4b-4958-04d1-4ef8-6d4feabb1e8c" executionId="5aae1a24-a5bc-4398-9289-e86e3ed7faf9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b333b2af-b7cb-9572-2163-a3f442b4bd30" executionId="ee2a23c8-6f42-42fe-8269-8c69b126145a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0716058d-2d40-d8e4-1ed5-aa37a9643a64" executionId="cfc1c7e3-8a71-4933-a0b2-4367c6c26218" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9f971e3e-a203-70c7-c4ad-671af9d0dd2f" executionId="a8e1a219-4198-4c51-bfd7-ef282d53c47c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e17a6da2-00bf-7cdd-3f96-71729ec460d9" executionId="88d08344-5145-438c-baf3-a4227d9da145" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3dd591b5-d67a-64f3-b531-c16856f8c0fb" executionId="a80f0959-cd52-4b53-b9e8-e7515f5cb15b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a36d751e-ea41-34a1-2b2e-1e823db5b68a" executionId="07a5e7f3-b363-4651-9575-4528a67c35de" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="216757d6-92f1-4a72-ee79-b0b154683f25" executionId="27a10575-3444-4c7b-ad9e-001c8cc9f07a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2814e986-b497-c3a5-dd52-f5f4f0b400a0" executionId="158ab615-0bfe-4a25-85fa-46471665f27f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="00c411db-15a3-969b-d838-245455528b97" executionId="d4742945-b01c-4f96-b731-fc648e0f63a2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="abb289d5-0f07-2d27-0f71-b419398e0bcb" executionId="12504ff4-3553-42ff-b857-17ad1d66d6de" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5c56022e-a79b-9a1d-396b-1531b862418b" executionId="34b3d43b-4fc8-4c8d-9455-20faaa705d25" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bd5d980a-8320-ea3f-3480-e6f48a2f39d1" executionId="27114eb4-bfbe-4141-914e-c0ea0224ebc8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5c38f12d-ee59-aaf3-9c05-7b9ec78f9504" executionId="b4ce1635-6ba9-4c50-a889-4ec0a8fbecd7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8983336b-be51-8536-d530-06162673f93f" executionId="bf72defd-6b0f-4d3e-a918-8cb2f2ad4f57" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="05393cb4-6758-8047-640e-a7e841e0a235" executionId="f8de53dc-ea69-48d4-937d-cd35eedcf664" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e7a9f487-086f-562c-4cf8-c0974d53980b" executionId="b3593767-76cb-4233-a75c-f48b51227371" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="28" executed="28" passed="14" failed="14" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.4+50e68bbb8b (64-bit .NET 10.0.12)&#xD;
+[xUnit.net 00:00:00.45]   Discovering: Andirit.LatticeDb.Tests&#xD;
+[xUnit.net 00:00:00.51]   Discovered:  Andirit.LatticeDb.Tests&#xD;
+[xUnit.net 00:00:00.53]   Starting:    Andirit.LatticeDb.Tests&#xD;
+[xUnit.net 00:00:01.07]       Assert.Equal() Failure: Collections differ&#xD;
+[xUnit.net 00:00:01.07]                                ↓ (pos 1)&#xD;
+[xUnit.net 00:00:01.07]       Expected: ["node:first", "node:second"]&#xD;
+[xUnit.net 00:00:01.07]       Actual:   ["node:first", "node:first", "node:second", "node:second"]&#xD;
+[xUnit.net 00:00:01.07]                                ↑ (pos 1)&#xD;
+[xUnit.net 00:00:01.07]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.07]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(887,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:01.07]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(842,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:01.07]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(42,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SharedLogicalNodeIdentity_AcrossContributors_HasOnePhysicalNode()&#xD;
+[xUnit.net 00:00:01.07]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:01.13]       Assert.NotNull() Failure: Value is null&#xD;
+[xUnit.net 00:00:01.13]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.13]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorOwnershipTests.cs(163,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.UnrelatedEdgeIncidentToMirrorNode_IsRefusedAndPreserved()&#xD;
+[xUnit.net 00:00:01.13]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:01.26]       Assert.Equal() Failure: Collections differ&#xD;
+[xUnit.net 00:00:01.26]                  ↓ (pos 0)&#xD;
+[xUnit.net 00:00:01.26]       Expected: ["node:only-second", "node:shared"]&#xD;
+[xUnit.net 00:00:01.26]       Actual:   ["node:only-first", "node:only-second", "node:shared", "node:shared"]&#xD;
+[xUnit.net 00:00:01.26]                  ↑ (pos 0)&#xD;
+[xUnit.net 00:00:01.26]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.26]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(887,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:01.26]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(842,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:01.26]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(444,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.MultipleRepositories_WithSharedLogicalIdentity_StayIsolated()&#xD;
+[xUnit.net 00:00:01.26]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:01.49]       Assert.Equal() Failure: Collections differ&#xD;
+[xUnit.net 00:00:01.49]                            ↓ (pos 1)&#xD;
+[xUnit.net 00:00:01.49]       Expected: ["node:a", "node:b"]&#xD;
+[xUnit.net 00:00:01.49]       Actual:   ["node:a", "node:a", "node:b", "node:b"]&#xD;
+[xUnit.net 00:00:01.49]                            ↑ (pos 1)&#xD;
+[xUnit.net 00:00:01.49]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.49]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(887,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:01.49]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(842,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:01.49]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(796,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.InventoryOracle_DetectsInjectedDuplicateAndOrphan()&#xD;
+[xUnit.net 00:00:01.49]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:01.65]       Assert.Equal() Failure: Collections differ&#xD;
+[xUnit.net 00:00:01.65]                                 ↓ (pos 1)&#xD;
+[xUnit.net 00:00:01.65]       Expected: ["node:source", "node:target"]&#xD;
+[xUnit.net 00:00:01.65]       Actual:   ["node:source", "node:source", "node:target", "node:target"]&#xD;
+[xUnit.net 00:00:01.65]                                 ↑ (pos 1)&#xD;
+[xUnit.net 00:00:01.65]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.65]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(887,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:01.65]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(842,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:01.65]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(73,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SharedLogicalEdgeIdentity_AcrossContributors_HasOnePhysicalEdge()&#xD;
+[xUnit.net 00:00:01.65]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:01.85]       Assert.True() Failure&#xD;
+[xUnit.net 00:00:01.85]       Expected: True&#xD;
+[xUnit.net 00:00:01.85]       Actual:   False&#xD;
+[xUnit.net 00:00:01.85]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.85]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorOwnershipTests.cs(440,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.AssertUnrelatedNodePreserved(String path, UnrelatedNode unrelated)&#xD;
+[xUnit.net 00:00:01.85]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorOwnershipTests.cs(48,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingUnrelatedNode_DoesNotDeleteIt()&#xD;
+[xUnit.net 00:00:01.85]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:01.87]       Assert.Empty() Failure: Collection was not empty&#xD;
+[xUnit.net 00:00:01.87]       Collection: ["node:a"]&#xD;
+[xUnit.net 00:00:01.87]       Stack Trace:&#xD;
+[xUnit.net 00:00:01.87]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(568,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.DisabledPublication_CleansLegacyOrphansWithoutManifest()&#xD;
+[xUnit.net 00:00:01.87]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:02.07]       Assert.Equal() Failure: Collections differ&#xD;
+[xUnit.net 00:00:02.07]                                      ↓ (pos 2)&#xD;
+[xUnit.net 00:00:02.07]       Expected: ["node:a", "node:b", "node:c"]&#xD;
+[xUnit.net 00:00:02.07]       Actual:   ["node:a", "node:b", "node:b", "node:b", "node:c"]&#xD;
+[xUnit.net 00:00:02.07]                                      ↑ (pos 2)&#xD;
+[xUnit.net 00:00:02.07]       Stack Trace:&#xD;
+[xUnit.net 00:00:02.07]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(887,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:02.07]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(842,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:02.07]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(159,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.RepeatedEnabledReopen_KeepsPhysicalCardinalityStable()&#xD;
+[xUnit.net 00:00:02.07]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:02.31]       Assert.Equal() Failure: Values differ&#xD;
+[xUnit.net 00:00:02.31]       Expected: 4&#xD;
+[xUnit.net 00:00:02.31]       Actual:   3&#xD;
+[xUnit.net 00:00:02.31]       Stack Trace:&#xD;
+[xUnit.net 00:00:02.31]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorOwnershipTests.cs(527,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.AssertAuthoritativeRowsUnchanged(String path, IReadOnlyList`1 before)&#xD;
+[xUnit.net 00:00:02.31]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorOwnershipTests.cs(83,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingAuthoritativeCommandLogRecord_DoesNotDeleteIt()&#xD;
+[xUnit.net 00:00:02.31]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:02.59]       Assert.Equal() Failure: Collections differ&#xD;
+[xUnit.net 00:00:02.59]       Expected: ["node:a"]&#xD;
+[xUnit.net 00:00:02.59]       Actual:   ["node:a", "node:a"]&#xD;
+[xUnit.net 00:00:02.59]                            ↑ (pos 1)&#xD;
+[xUnit.net 00:00:02.59]       Stack Trace:&#xD;
+[xUnit.net 00:00:02.59]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(887,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:02.59]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(842,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:02.59]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(607,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RebuildsMalformedManifest_FromAuthoritativeFacts()&#xD;
+[xUnit.net 00:00:02.59]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:02.95]       Assert.Equal() Failure: Collections differ&#xD;
+[xUnit.net 00:00:02.95]                            ↓ (pos 1)&#xD;
+[xUnit.net 00:00:02.95]       Expected: ["node:a", "node:b"]&#xD;
+[xUnit.net 00:00:02.95]       Actual:   ["node:a", "node:a", "node:b", "node:b"]&#xD;
+[xUnit.net 00:00:02.95]                            ↑ (pos 1)&#xD;
+[xUnit.net 00:00:02.95]       Stack Trace:&#xD;
+[xUnit.net 00:00:02.95]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(887,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:02.95]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(842,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:02.95]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(529,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RemovesOrphansLeftByManifestOnlyDeletion()&#xD;
+[xUnit.net 00:00:02.95]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:03.18]       Assert.Equal() Failure: Collections differ&#xD;
+[xUnit.net 00:00:03.18]       Expected: ["node:a"]&#xD;
+[xUnit.net 00:00:03.18]       Actual:   ["node:a", "node:a"]&#xD;
+[xUnit.net 00:00:03.18]                            ↑ (pos 1)&#xD;
+[xUnit.net 00:00:03.18]       Stack Trace:&#xD;
+[xUnit.net 00:00:03.18]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(887,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:03.18]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(842,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:03.18]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(637,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RebuildsManifestWithDuplicateNativeIdentities()&#xD;
+[xUnit.net 00:00:03.18]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:03.34]       Assert.Equal() Failure: Collections differ&#xD;
+[xUnit.net 00:00:03.34]                            ↓ (pos 1)&#xD;
+[xUnit.net 00:00:03.34]       Expected: ["node:a", "node:b"]&#xD;
+[xUnit.net 00:00:03.34]       Actual:   ["node:a", "node:a", "node:b", "node:b"]&#xD;
+[xUnit.net 00:00:03.34]                            ↑ (pos 1)&#xD;
+[xUnit.net 00:00:03.34]       Stack Trace:&#xD;
+[xUnit.net 00:00:03.34]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(887,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertGlobalCensus(Inventory inventory, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:03.34]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(842,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.AssertMirrorIsCanonical(Inventory inventory, CodeRepositoryId repository, String[] expectedNodes, String[] expectedEdges)&#xD;
+[xUnit.net 00:00:03.34]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(492,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RemovesUntrackedDuplicateNodesAndEdges()&#xD;
+[xUnit.net 00:00:03.34]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:03.41]       Assert.Empty() Failure: Collection was not empty&#xD;
+[xUnit.net 00:00:03.41]       Collection: ["node:a", "node:b"]&#xD;
+[xUnit.net 00:00:03.41]       Stack Trace:&#xD;
+[xUnit.net 00:00:03.41]         C:\Windows\Temp\opencode\s64-qual\base\tests\Andirit.LatticeDb.Tests\NativeGraphMirrorRemediationTests.cs(243,0): at Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.DisabledPublication_RemovesPhysicalMirrorObjects_AndReEnableRebuilds()&#xD;
+[xUnit.net 00:00:03.41]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:03.41]   Finished:    Andirit.LatticeDb.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:09.8129044+01:00">
+        <Text>[xUnit.net 00:00:01.07]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SharedLogicalNodeIdentity_AcrossContributors_HasOnePhysicalNode [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:09.8814830+01:00">
+        <Text>[xUnit.net 00:00:01.13]     Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.UnrelatedEdgeIncidentToMirrorNode_IsRefusedAndPreserved [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:10.0044939+01:00">
+        <Text>[xUnit.net 00:00:01.26]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.MultipleRepositories_WithSharedLogicalIdentity_StayIsolated [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:10.2596590+01:00">
+        <Text>[xUnit.net 00:00:01.49]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.InventoryOracle_DetectsInjectedDuplicateAndOrphan [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:10.4016511+01:00">
+        <Text>[xUnit.net 00:00:01.65]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.SharedLogicalEdgeIdentity_AcrossContributors_HasOnePhysicalEdge [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:10.5986185+01:00">
+        <Text>[xUnit.net 00:00:01.85]     Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingUnrelatedNode_DoesNotDeleteIt [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:10.6209330+01:00">
+        <Text>[xUnit.net 00:00:01.87]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.DisabledPublication_CleansLegacyOrphansWithoutManifest [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:10.8131901+01:00">
+        <Text>[xUnit.net 00:00:02.07]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.RepeatedEnabledReopen_KeepsPhysicalCardinalityStable [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:11.0591785+01:00">
+        <Text>[xUnit.net 00:00:02.31]     Andirit.LatticeDb.Tests.NativeGraphMirrorOwnershipTests.ManifestReferencingAuthoritativeCommandLogRecord_DoesNotDeleteIt [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:11.3379964+01:00">
+        <Text>[xUnit.net 00:00:02.59]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RebuildsMalformedManifest_FromAuthoritativeFacts [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:11.6990460+01:00">
+        <Text>[xUnit.net 00:00:02.95]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RemovesOrphansLeftByManifestOnlyDeletion [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:11.9268231+01:00">
+        <Text>[xUnit.net 00:00:03.18]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RebuildsManifestWithDuplicateNativeIdentities [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:12.0837247+01:00">
+        <Text>[xUnit.net 00:00:03.34]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.Recovery_RemovesUntrackedDuplicateNodesAndEdges [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="LAPTOP-KBD8D8JG" outcome="Error" timestamp="2026-11-27T18:09:12.1531654+01:00">
+        <Text>[xUnit.net 00:00:03.41]     Andirit.LatticeDb.Tests.NativeGraphMirrorRemediationTests.DisabledPublication_RemovesPhysicalMirrorObjects_AndReEnableRebuilds [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

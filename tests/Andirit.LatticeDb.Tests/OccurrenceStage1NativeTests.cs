@@ -553,7 +553,7 @@ public sealed class OccurrenceStage1NativeTests
 
     private static CodeOccurrenceTargetId Target(CodeRepositoryId repo, string name)
     {
-        var context = "compctx1:sha256:" + Hex(repo.Value + "|" + name);
+        var context = "compctx4:sha256:" + Hex(repo.Value + "|" + name);
         return CodeOccurrenceIdentity.ComputeTargetId(
             context,
             "meta:" + name,
@@ -750,3 +750,4 @@ public sealed class OccurrenceStage1NativeTests
 
     private sealed class InjectedPersistenceException : Exception;
 }
+
