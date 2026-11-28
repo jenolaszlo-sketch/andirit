@@ -100,7 +100,7 @@ Artifacts: `expected/` and `c4-oracle.md`.
 | Two physical corpus roots | identical | 51 |
 | Framework closure | 172 managed runtime refs, no host/test/app/path items | — |
 
-The predecessor console/xUnit divergence is eliminated. Hosted run: `https://github.com/jenolaszlo-sketch/andirit/actions/runs/46132247172` on candidate `77ec887368c62b404e0d9a8034d34b7f8cac8007`; Windows, Linux, macOS and pack jobs all succeeded; the sealed candidate commit `c54ab638f51a321ef46144f50b84b356736a8cac` also passed all four jobs in run `46132997340`. Full detail:
+The predecessor console/xUnit divergence is eliminated. Hosted run: `https://github.com/jenolaszlo-sketch/andirit/actions/runs/46132247172` on candidate `77ec887368c62b404e0d9a8034d34b7f8cac8007`; Windows, Linux, macOS and pack jobs all succeeded. Full detail:
 `cross-host.md` and `evidence/host-probe-console.json`.
 
 ## 6. Persisted generation and reconstruction
@@ -152,5 +152,6 @@ Commission **`ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-QUAL-01`** for independent
 qualification of the versioned identity transition, including independent
 reproduction of the C4 ledger, cross-host/cross-path verification and the
 compatibility/re-ingestion boundary.
+
 
 

@@ -38,7 +38,7 @@ independent qualification**.
 - Independent C4 ledger: 51 facts, 50/1, two contributors; four frozen variants.
 - 1,044 local tests pass; coverage thresholds and package smoke pass.
 - Windows console/xUnit and cross-path targets agree; hosted Windows, Linux and
-  macOS jobs succeeded (runs 46132247172 and 46132997340).
+  macOS jobs succeeded (run 46132247172).
 
 ## Seal
 
@@ -47,4 +47,5 @@ python docs/reviews/ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-REMED-01-R1-evidence/seal.py
 ```
 
 The seal adds only `manifest.json`. It does not modify any historical seal.
+
 
