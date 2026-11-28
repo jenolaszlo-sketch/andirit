@@ -135,6 +135,39 @@ public sealed class FrameworkReferenceResolutionTests
     }
 
     [Fact]
+    public async Task SupportedProjectReferenceChains_RespectTargetFrameworkCompatibility()
+    {
+        var net8 = await CSharpCodeGraphPlugin.PrepareAnalysisAsync(Context(new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["Lib/Lib.csproj"] = "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net8.0</TargetFramework></PropertyGroup></Project>",
+            ["Lib/Api.cs"] = "namespace Lib; public static class Api { public static int Get() => 1; }",
+            ["App/App.csproj"] = "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net8.0</TargetFramework></PropertyGroup><ItemGroup><ProjectReference Include=\"../Lib/Lib.csproj\" /></ItemGroup></Project>",
+            ["App/A.cs"] = "namespace App; public static class A { public static int Run() => Lib.Api.Get(); }",
+        }));
+        Assert.True(net8.Universe.IsComplete, string.Join(";", net8.Universe.Refusals));
+
+        var net10ToNetStandard = await CSharpCodeGraphPlugin.PrepareAnalysisAsync(Context(new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["Lib/Lib.csproj"] = "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>netstandard2.1</TargetFramework></PropertyGroup></Project>",
+            ["Lib/Api.cs"] = "namespace Lib; public static class Api { public static int Get() => 1; }",
+            ["App/App.csproj"] = "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup><ItemGroup><ProjectReference Include=\"../Lib/Lib.csproj\" /></ItemGroup></Project>",
+            ["App/A.cs"] = "namespace App; public static class A { public static int Run() => Lib.Api.Get(); }",
+        }));
+        Assert.True(net10ToNetStandard.Universe.IsComplete, string.Join(";", net10ToNetStandard.Universe.Refusals));
+
+        var incompatible = await CSharpCodeGraphPlugin.PrepareAnalysisAsync(Context(new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["Lib/Lib.csproj"] = "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>",
+            ["Lib/Api.cs"] = "namespace Lib; public static class Api { public static int Get() => 1; }",
+            ["App/App.csproj"] = "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net8.0</TargetFramework></PropertyGroup><ItemGroup><ProjectReference Include=\"../Lib/Lib.csproj\" /></ItemGroup></Project>",
+            ["App/A.cs"] = "namespace App; public static class A { public static int Run() => Lib.Api.Get(); }",
+        }));
+        Assert.False(incompatible.Universe.IsComplete);
+        Assert.Contains(incompatible.Universe.Refusals,
+            refusal => refusal.StartsWith("UnsupportedProjectReferenceTargetFramework:App/App.csproj", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void EquivalentReferenceContentAtDifferentPaths_HasEqualIdentity()
     {
         var resolved = FrameworkReferenceResolver.Resolve("net10.0");
@@ -161,6 +194,16 @@ public sealed class FrameworkReferenceResolutionTests
             directory.Delete(recursive: true);
         }
     }
+
+    private static CodeGraphPluginContext Context(IReadOnlyDictionary<string, string> files) =>
+        new(Repository, null, new CodeIndexRunId("run:multi"),
+            files.OrderBy(pair => pair.Key, StringComparer.Ordinal).Select(pair =>
+            {
+                var bytes = Encoding.UTF8.GetBytes(pair.Value);
+                return new CodeGraphSource(pair.Key,
+                    "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes)),
+                    _ => ValueTask.FromResult<Stream>(new MemoryStream(bytes, writable: false)));
+            }).ToArray());
 
     private static CodeGraphPluginContext Context(string targetFramework, string source)
     {
