@@ -125,7 +125,7 @@ public sealed class VerifiedCompilationProvenanceTests
             await File.WriteAllBytesAsync(path, EmitLibrary("public static string Value() => \"changed\";"));
             var second = VerifiedMetadataReference.Capture(path, CancellationToken.None);
 
-            Assert.StartsWith("file|", first.Identity);
+            Assert.StartsWith("refctx1|", first.Identity);
             Assert.NotEqual(firstIdentity, second.Identity);
             Assert.Equal(firstIdentity, first.Identity);
             Assert.Equal(SpecialType.System_Int32, ReferencedValueType(ConsumerFor(first.Reference)).SpecialType);
@@ -203,7 +203,7 @@ public sealed class VerifiedCompilationProvenanceTests
             Compile("A", [Tree(source, ParseOptions("FEATURE"))], [platform.Reference], LibraryOptions),
             [source], [platform], []);
 
-        Assert.Equal("compctx2", baseline.Descriptor.ContractVersion);
+        Assert.Equal("compctx3", baseline.Descriptor.ContractVersion);
         Assert.NotEqual(baseline.Descriptor.OptionsDigest, nullable.Descriptor.OptionsDigest);
         Assert.NotEqual(baseline.Descriptor.DescriptorDigest, nullable.Descriptor.DescriptorDigest);
         Assert.Equal(source.Text.ToString(), feature.Compilation.SyntaxTrees.Single().GetText().ToString());
@@ -524,7 +524,7 @@ public sealed class VerifiedCompilationProvenanceTests
             "compctx2",
             "compilation-context|compctx2:sha256:" + new string('b', 64));
         var forged = descriptor with { DescriptorDigest = "compctx2:sha256:" + new string('0', 64) };
-        var unsupported = descriptor with { ContractVersion = "compctx3" };
+        var unsupported = descriptor with { ContractVersion = "compctx9" };
 
         Assert.Throws<InvalidDataException>(() => forged.Verified());
         Assert.Throws<InvalidDataException>(() => unsupported.Verified());
@@ -559,11 +559,11 @@ public sealed class VerifiedCompilationProvenanceTests
             [platform.Reference, dependency.Compilation.ToMetadataReference()], LibraryOptions);
         var caller = CreateVerified("App/App.csproj", callerCompilation, [callerSource], [platform], [dependency]);
 
-        Assert.Equal("compctx2", standalone.Descriptor.ContractVersion);
+        Assert.Equal("compctx3", standalone.Descriptor.ContractVersion);
         Assert.NotNull(standalone.LegacyDescriptor);
-        Assert.Equal("compctx1", standalone.LegacyDescriptor!.ContractVersion);
+        Assert.Equal("compctx4", standalone.LegacyDescriptor!.ContractVersion);
         Assert.Null(caller.LegacyDescriptor);
-        Assert.Equal("compctx2", caller.Descriptor.ContractVersion);
+        Assert.Equal("compctx3", caller.Descriptor.ContractVersion);
     }
 
     [Fact]
@@ -797,3 +797,4 @@ public sealed class VerifiedCompilationProvenanceTests
         return path;
     }
 }
+

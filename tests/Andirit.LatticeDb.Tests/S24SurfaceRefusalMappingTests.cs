@@ -291,7 +291,7 @@ public sealed class S24SurfaceRefusalMappingTests
 
     private static CodeOccurrenceTargetId Target(CodeRepositoryId repo, string name)
     {
-        var context = "compctx1:sha256:" + Hex(repo.Value + "|" + name);
+        var context = "compctx4:sha256:" + Hex(repo.Value + "|" + name);
         return CodeOccurrenceIdentity.ComputeTargetId(
             context, "meta:" + name, "module:" + name,
             CodeOccurrenceIdentity.ComputeIdentifierDigest([$"src/{name}.cs|1|2"]),
@@ -315,3 +315,4 @@ public sealed class S24SurfaceRefusalMappingTests
             if (File.Exists(path + suffix)) File.Delete(path + suffix);
     }
 }
+

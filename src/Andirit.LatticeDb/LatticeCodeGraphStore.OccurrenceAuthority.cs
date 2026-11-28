@@ -76,8 +76,9 @@ public sealed partial class LatticeCodeGraphStore
                     "Missing or malformed recorded occurrence authority; re-ingestion required.");
             if (!raw.TryGetProperty("Version", out var version) || version.ValueKind != JsonValueKind.Number || !version.TryGetInt32(out var number))
                 return Refuse(CodeOccurrenceAvailability.CorruptedIndex, "Missing or malformed authority version.");
-            if (number != 1)
-                return Refuse(CodeOccurrenceAvailability.UnsupportedSchema, "Unsupported occurrence authority version.");
+            if (number != CodeOccurrenceIdentity.AuthorityVersion)
+                return Refuse(CodeOccurrenceAvailability.UnsupportedSchema,
+                    "Unsupported occurrence authority version; re-ingestion into a new store is required.");
             if (unit.RepositoryId != query.RepositoryId.Value ||
                 unit.AuthorityPublicationIndexRunId != stored.Meta.PublicationIndexRunId)
                 return Refuse(CodeOccurrenceAvailability.StalePublication, "Occurrence authority unit/publication association differs.");

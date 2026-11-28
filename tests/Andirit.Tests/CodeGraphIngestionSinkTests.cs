@@ -215,7 +215,7 @@ public sealed class CodeGraphIngestionSinkTests
 
     private static CodeOccurrenceTargetId Target() =>
         CodeOccurrenceIdentity.ComputeTargetId(
-            "compctx1:sha256:" + new string('c', 64),
+            "compctx4:sha256:" + new string('c', 64),
             "meta:test",
             "module:test",
             CodeOccurrenceIdentity.ComputeIdentifierDigest(["src/test.cs|1|2"]),
@@ -254,3 +254,4 @@ public sealed class CodeGraphIngestionSinkTests
         CodeRepositoryId RepositoryId,
         CodeFactOrigin Origin);
 }
+

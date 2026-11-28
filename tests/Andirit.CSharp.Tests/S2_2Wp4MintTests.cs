@@ -8,10 +8,10 @@ using Microsoft.CodeAnalysis.CSharp;
 namespace Andirit.CSharp.Tests;
 
 /// <summary>
-/// S2.2 WP4: authority-gated `asmctx3` target minting. Exercises the production
+/// S2.2 WP4: authority-gated `asmctx4` target minting. Exercises the production
 /// minting path (<see cref="VerifiedCSharpUniverse.MintTarget"/>) against accepted
 /// authority (Option A §5.1(1); mapping contract §3; G-MINT owner §7) and the frozen
-/// R2 `asmctx3` tuple. Expected identities are reconstructed independently from the
+/// R2 `asmctx4` tuple. Expected identities are reconstructed independently from the
 /// accepted formula; they never read the implementation under test. No `usage4`,
 /// extraction, minting of facts or persistence.
 /// </summary>
@@ -33,7 +33,7 @@ public sealed class S2_2Wp4MintTests
     // ------------------------------------------------------------- valid minting
 
     [Fact]
-    public async Task Mint_ValidDirectAssociation_ProducesCanonicalAsmctx3()
+    public async Task Mint_ValidDirectAssociation_ProducesCanonicalAsmctx4()
     {
         var lib = await StandaloneLib("Lib/Lib.csproj", "Lib", LibSource);
         var universe = Universe(lib);
@@ -42,10 +42,10 @@ public sealed class S2_2Wp4MintTests
 
         Assert.Equal(VerifiedTargetMintStatus.Minted, mint.Status);
         Assert.True(mint.IsMinted);
-        Assert.StartsWith("asmctx3:sha256:", mint.TargetId!.Value, StringComparison.Ordinal);
-        Assert.DoesNotContain("compctx2", mint.TargetId.Value);
+        Assert.StartsWith("asmctx4:sha256:", mint.TargetId!.Value, StringComparison.Ordinal);
+        Assert.DoesNotContain("compctx3", mint.TargetId.Value);
         Assert.Equal(
-            ExpectedTargetId(ExpectedCompctx1(lib, static _ => null),
+            ExpectedTargetId(ExpectedDefiningContext(lib, static _ => null),
                 lib.Descriptor.MetadataIdentity, lib.Descriptor.ModuleName, "id-1", "decl-1", "method|0"),
             mint.TargetId.Value);
     }
@@ -58,7 +58,7 @@ public sealed class S2_2Wp4MintTests
 
         Assert.True(mint.IsMinted);
         Assert.Equal(
-            ExpectedTargetId(ExpectedCompctx1(lib, static _ => null),
+            ExpectedTargetId(ExpectedDefiningContext(lib, static _ => null),
                 lib.Descriptor.MetadataIdentity, lib.Descriptor.ModuleName, "id", "decl", "shape"),
             mint.TargetId!.Value);
     }
@@ -68,7 +68,7 @@ public sealed class S2_2Wp4MintTests
     {
         // Accepted F1/G1: a foreign, identity-equal target instance binds the universe
         // member the caller live-references. Minting must build the artifact from the
-        // defining member's mapped compctx1, not claim exact identity of the foreign
+        // defining member's mapped compctx4, not claim exact identity of the foreign
         // instance (which is neither required nor established by accepted authority).
         var (libA, libB, app) = await IdentityEqualInstances();
         var universe = Universe(libA, app);
@@ -79,7 +79,7 @@ public sealed class S2_2Wp4MintTests
 
         Assert.Equal(VerifiedTargetMintStatus.Minted, mint.Status);
         Assert.Equal(
-            ExpectedTargetId(ExpectedCompctx1(libA, static _ => null),
+            ExpectedTargetId(ExpectedDefiningContext(libA, static _ => null),
                 libA.Descriptor.MetadataIdentity, libA.Descriptor.ModuleName, "id", "decl", "shape"),
             mint.TargetId!.Value);
     }
@@ -98,7 +98,7 @@ public sealed class S2_2Wp4MintTests
         Assert.Equal(a1.TargetId!.Value, b1.TargetId!.Value);
     }
 
-    // ---------------------------------------------- mandatory recorded compctx2 (G3)
+    // ---------------------------------------------- mandatory recorded compctx3 (G3)
 
     [Fact]
     public async Task Mint_NullOrEmptyRecordedContext_RefusesWithoutArtifact()
@@ -129,9 +129,9 @@ public sealed class S2_2Wp4MintTests
     {
         var (universe, target, lib, app) = await TwoProjectExpanded();
         Assert.Equal(VerifiedTargetMintStatus.StaleContext, universe.MintTarget(
-            target, "compctx2:sha256:" + new string('0', 64), "id", "decl", "shape").Status);
+            target, "compctx3:sha256:" + new string('0', 64), "id", "decl", "shape").Status);
         Assert.Equal(VerifiedTargetMintStatus.StaleContext, universe.MintTarget(
-            target, "compctx2:sha256:" + new string('a', 64), "id", "decl", "shape").Status);
+            target, "compctx3:sha256:" + new string('a', 64), "id", "decl", "shape").Status);
         // Wrong defining compilation: the caller's own context is not the defining context.
         Assert.Equal(VerifiedTargetMintStatus.StaleContext, universe.MintTarget(
             target, app.Descriptor.DescriptorDigest, "id", "decl", "shape").Status);
@@ -213,7 +213,7 @@ public sealed class S2_2Wp4MintTests
             [Tree("src/U.cs", "namespace U; public static class U { public static int M() => 1; }")],
             Array.Empty<MetadataReference>(), LibraryOptions);
         var mint = universe.MintTarget(Target(unrelated, "U.U", "M"),
-            "compctx2:sha256:" + new string('0', 64), "id", "decl", "shape");
+            "compctx3:sha256:" + new string('0', 64), "id", "decl", "shape");
         Assert.Equal(VerifiedTargetMintStatus.MissingDefiningCompilation, mint.Status);
     }
 
@@ -230,7 +230,7 @@ public sealed class S2_2Wp4MintTests
     public async Task Mint_OverlappingFailures_NeverMint()
     {
         var (universe, target, lib, app) = await TwoProjectExpanded();
-        var stale = "compctx2:sha256:" + new string('0', 64);
+        var stale = "compctx3:sha256:" + new string('0', 64);
 
         // Ambiguous would require a second binding; use incomplete + others here.
         var incomplete = await IncompleteUniverse();
@@ -250,10 +250,10 @@ public sealed class S2_2Wp4MintTests
     // ------------------------------------------------ Option A §5.2 runtime forms
 
     [Fact]
-    public async Task Mint_ConditionalDefiningApiChange_ChangesAsmctx3()
+    public async Task Mint_ConditionalDefiningApiChange_ChangesAsmctx4()
     {
         // Option A §5.2 tests 1/3: a defining-project conditional API change alters the
-        // defining compilation's R2 material, so `asmctx3` changes (WP4 form).
+        // defining compilation's R2 material, so `asmctx4` changes (WP4 form).
         const string text = "namespace N; public static class Lib {\n#if FEATURE\n public static int Get() => 1;\n#else\n public static int Get() => 1;\n#endif\n}";
         var off = await StandaloneLib("Lib/Lib.csproj", "Lib", text, []);
         var on = await StandaloneLib("Lib/Lib.csproj", "Lib", text, ["FEATURE"]);
@@ -269,11 +269,11 @@ public sealed class S2_2Wp4MintTests
     }
 
     [Fact]
-    public async Task Mint_TransitiveOnlyChange_Asmctx3StableWhileCompctx2Changes()
+    public async Task Mint_TransitiveOnlyChange_Asmctx4StableWhileCompctx3Changes()
     {
         // Option A §5.2 test 2 (WP4 form): a dependency-context-only change leaves the
-        // defining compilation's R2-visible material unchanged, so `asmctx3` is stable
-        // while its verified `compctx2` changes.
+        // defining compilation's R2-visible material unchanged, so `asmctx4` is stable
+        // while its verified `compctx3` changes.
         var leafSource = await ReadSourceAsync("Leaf/Leaf.cs", "namespace N; public static class Leaf { public static int Value() => 1; }");
         var leaf1 = Create("Leaf/Leaf.csproj",
             Compile("Leaf", [Tree(leafSource)], [Platform.Value.Reference], LibraryOptions), [leafSource], [Platform.Value], []);
@@ -298,7 +298,7 @@ public sealed class S2_2Wp4MintTests
         Assert.NotEqual(mid1.Descriptor.DescriptorDigest, mid2.Descriptor.DescriptorDigest);
         Assert.Equal(m1.TargetId!.Value, m2.TargetId!.Value);
         Assert.Equal(
-            ExpectedTargetId(ExpectedCompctx1(mid1,
+            ExpectedTargetId(ExpectedDefiningContext(mid1,
                     r => r.StartsWith("compilation-context|", StringComparison.Ordinal)
                         ? ExpectedLegacyProjectReference(leaf1) : null),
                 mid1.Descriptor.MetadataIdentity, mid1.Descriptor.ModuleName, "id", "decl", "shape"),
@@ -306,7 +306,7 @@ public sealed class S2_2Wp4MintTests
     }
 
     [Fact]
-    public async Task Mint_RestoreInputs_ReproducesOriginalAsmctx3()
+    public async Task Mint_RestoreInputs_ReproducesOriginalAsmctx4()
     {
         // Option A §5.2 test 4: restoring the original inputs reproduces the identity.
         var first = await StandaloneLib("Lib/Lib.csproj", "Lib", LibSource);
@@ -323,7 +323,7 @@ public sealed class S2_2Wp4MintTests
     }
 
     [Fact]
-    public async Task Mint_DistinctDefiningCompilations_DistinctAsmctx3()
+    public async Task Mint_DistinctDefiningCompilations_DistinctAsmctx4()
     {
         // Option A §5.2 test 5: distinct defining compilations yield distinct targets.
         var one = await StandaloneLib("Lib/Lib.csproj", "Lib", LibSource);
@@ -334,7 +334,7 @@ public sealed class S2_2Wp4MintTests
     }
 
     [Fact]
-    public async Task Mint_EquivalentDefiningCompilations_EqualAsmctx3()
+    public async Task Mint_EquivalentDefiningCompilations_EqualAsmctx4()
     {
         // Option A §5.2 test 6 (same-inputs profile): equivalent authoritative inputs
         // yield an equal target identity. Cross-reference-profile equality is a
@@ -348,14 +348,14 @@ public sealed class S2_2Wp4MintTests
     }
 
     [Fact]
-    public void Mint_Compctx2CannotEnterAsmctx3()
+    public void Mint_Compctx3CannotEnterAsmctx4()
     {
-        // Mapping contract §6 / Option A §5.2 test 10: a `compctx2` context is
-        // structurally refused by the frozen `asmctx3` constructor.
+        // Mapping contract §6 / Option A §5.2 test 10: a `compctx3` context is
+        // structurally refused by the frozen `asmctx4` constructor.
         Assert.Throws<ArgumentException>(() => CodeOccurrenceIdentity.ComputeTargetId(
-            "compctx2:sha256:" + new string('0', 64), "meta", "module", "id", "decl", "shape"));
+            "compctx3:sha256:" + new string('0', 64), "meta", "module", "id", "decl", "shape"));
         Assert.Throws<ArgumentException>(() => CodeOccurrenceIdentity.ComputeTargetId(
-            "compctx1:sha256:short", "meta", "module", "id", "decl", "shape"));
+            "compctx4:sha256:short", "meta", "module", "id", "decl", "shape"));
     }
 
     // ------------------------------------------------------------------- helpers
@@ -432,25 +432,25 @@ public sealed class S2_2Wp4MintTests
         return Assert.IsAssignableFrom<IMethodSymbol>(type.GetMembers(method).Single());
     }
 
-    // Independent reconstruction of the frozen R2 `asmctx3` tuple.
-    private static string ExpectedTargetId(string compctx1, string metadataIdentity, string moduleName,
+    // Independent reconstruction of the frozen R2 `asmctx4` tuple.
+    private static string ExpectedTargetId(string compctx4, string metadataIdentity, string moduleName,
         string identifierDigest, string declarationDigest, string shapeDigest) =>
-        "asmctx3:sha256:" + LengthPrefixedHash("asmctx3-context",
-            ["compctx1", compctx1, metadataIdentity, moduleName, identifierDigest, declarationDigest, shapeDigest]);
+        "asmctx4:sha256:" + LengthPrefixedHash("asmctx4-context",
+            ["compctx4", compctx4, metadataIdentity, moduleName, identifierDigest, declarationDigest, shapeDigest]);
 
-    // Independent reconstruction of the R2-faithful `compctx1` from descriptor fields.
-    private static string ExpectedCompctx1(VerifiedCSharpCompilation compilation, Func<string, string?> mapProject)
+    // Independent reconstruction of the R2-faithful `compctx4` from descriptor fields.
+    private static string ExpectedDefiningContext(VerifiedCSharpCompilation compilation, Func<string, string?> mapProject)
     {
         var d = compilation.Descriptor;
         var references = d.References.Select(r => mapProject(r) ?? r).Order(StringComparer.Ordinal).ToArray();
         var parts = new List<string>
         {
-            "compctx1", d.RepositoryId, d.ProjectUnitId, d.AssemblyName,
+            "compctx4", d.RepositoryId, d.ProjectUnitId, d.AssemblyName,
             d.MetadataIdentity, d.ModuleName, d.OptionsDigest,
         };
         parts.AddRange(d.Sources.Select(s => s.CanonicalForm));
         parts.AddRange(references);
-        return "compctx1:sha256:" + LengthPrefixedHash("compctx1-context", parts);
+        return "compctx4:sha256:" + LengthPrefixedHash("compctx4-context", parts);
     }
 
     private static string ExpectedLegacyProjectReference(VerifiedCSharpCompilation dependency)
@@ -515,3 +515,5 @@ public sealed class S2_2Wp4MintTests
 
     private static string Sha256(byte[] bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));
 }
+
+

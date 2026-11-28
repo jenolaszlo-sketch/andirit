@@ -676,19 +676,12 @@ public sealed class S23LifecycleQualificationTests : IDisposable
 
     private static CodeOccurrenceTargetId ExpectedTarget(VerifiedCSharpCompilation defining, IMethodSymbol method)
     {
-        var mapped = defining.MapR2FaithfulCompctx1();
         var identifier = CodeOccurrenceIdentity.ComputeIdentifierDigest([method.Name]);
         var declaration = CodeOccurrenceIdentity.ComputeDeclarationDigest([method.GetDocumentationCommentId() ?? method.Name]);
         var shape = CodeOccurrenceIdentity.ComputeShapeDigest("method|" + method.Arity + "|" +
             string.Join(",", method.Parameters.Select(p => p.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))));
-        var viaIdentity = CodeOccurrenceIdentity.ComputeTargetId(
-            mapped.DescriptorDigest, mapped.MetadataIdentity, mapped.ModuleName, identifier, declaration, shape);
-        var frozen = Frozen.CompilationProvenance.Describe(PluginRepo.Value, defining.Descriptor.ProjectUnitId,
-            defining.Compilation, defining.Sources.Select(s => (s.Path, Encoding.UTF8.GetBytes(s.Text.ToString()))).ToArray());
-        var viaFrozen = "asmctx3:sha256:" + Frozen.ProvenanceHashing.Hash("asmctx3-context",
-            ["compctx1", frozen.DescriptorDigest, frozen.MetadataIdentity, frozen.ModuleName, identifier, declaration, shape]);
-        Assert.Equal(viaIdentity.Value, viaFrozen);
-        return viaIdentity;
+        return new CodeOccurrenceTargetId(SuccessorIdentityOracle.TargetId(
+            PluginRepo.Value, defining, method, _ => identifier, _ => declaration, _ => shape));
     }
 
     private sealed class LifeFaultException : Exception;

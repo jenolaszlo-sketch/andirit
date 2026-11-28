@@ -133,11 +133,12 @@ internal static class VerifiedCSharpOccurrenceExtractor
         var canRecord = complete && universe.Scope.RepositoryId == request.RepositoryId.Value &&
             universe.Entries.Any(e => ReferenceEquals(e, sourceUnit));
         var authority = canRecord ? new CodeOccurrenceAuthority(
-            1, request.RepositoryId.Value, request.PluginId.Value, sourceUnit.Descriptor.ProjectUnitId,
+            CodeOccurrenceIdentity.AuthorityVersion, request.RepositoryId.Value, request.PluginId.Value, sourceUnit.Descriptor.ProjectUnitId,
             sourceUnit.Descriptor.ProjectUnitId, universe.Scope.Identity, universe.Identity, coverage,
             universe.Entries.Select(e => new CodeOccurrenceCompilationAuthority(
                 e.Descriptor.ProjectUnitId, e.Descriptor.DescriptorDigest)).ToArray(),
-            authorities.ToImmutable()) : null;
+            authorities.ToImmutable(),
+            CodeOccurrenceIdentity.Generation) : null;
         return new(facts.ToImmutable(), coverage, authority);
     }
 

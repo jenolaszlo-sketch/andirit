@@ -133,7 +133,7 @@ public sealed class S2_2MetadataRemediationTests(ITestOutputHelper output)
     public void PlatformAndEmittedComplexCSharpStillCapture()
     {
         var captured = VerifiedMetadataReference.Capture(typeof(object).Assembly.Location);
-        Assert.StartsWith("file|", captured.Identity);
+        Assert.StartsWith("refctx1|", captured.Identity);
         var compilation = CSharpCompilation.Create("Complex", [CSharpSyntaxTree.ParseText("""
             public unsafe class Outer<T> {
                 public class Inner<U> {
@@ -182,7 +182,8 @@ public sealed class S2_2MetadataRemediationTests(ITestOutputHelper output)
     });
 
     private static void Captures(byte[] image) => WithFile(image, path =>
-        Assert.EndsWith("|" + Convert.ToHexStringLower(SHA256.HashData(image)), VerifiedMetadataReference.Capture(path).Identity));
+        Assert.EndsWith("|sha256:" + Convert.ToHexStringLower(SHA256.HashData(image)),
+            VerifiedMetadataReference.Capture(path).Identity));
 
     private static void WithFile(byte[] image, Action<string> action)
     {
@@ -192,3 +193,4 @@ public sealed class S2_2MetadataRemediationTests(ITestOutputHelper output)
         finally { Directory.Delete(directory, true); }
     }
 }
+

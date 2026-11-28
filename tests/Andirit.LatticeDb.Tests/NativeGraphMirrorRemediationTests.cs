@@ -1172,7 +1172,7 @@ public sealed class NativeGraphMirrorRemediationTests
         CodeGraphNode target)
     {
         var name = "target:" + target.Id.Value;
-        var context = "compctx1:sha256:" +
+        var context = "compctx4:sha256:" +
             Convert.ToHexStringLower(SHA256.HashData(
                 Encoding.UTF8.GetBytes(repository.Value + "|" + name)));
         var targetId = CodeOccurrenceIdentity.ComputeTargetId(
@@ -1210,3 +1210,4 @@ public sealed class NativeGraphMirrorRemediationTests
 
     private sealed class InjectedMirrorFault : Exception;
 }
+

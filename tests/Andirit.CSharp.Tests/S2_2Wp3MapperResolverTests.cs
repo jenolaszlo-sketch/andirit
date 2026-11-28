@@ -9,7 +9,7 @@ namespace Andirit.CSharp.Tests;
 
 /// <summary>
 /// S2.2 WP3: production mapper/resolver and pre-mint validation. Exercises the
-/// R2-faithful `compctx1` mapping and the pre-mint association resolver against
+/// successor R2-faithful `compctx4` mapping and the pre-mint association resolver against
 /// authority derived from the accepted mapping contract and the frozen R2
 /// algorithm. No extraction, target/occurrence minting, persistence or reopen.
 /// Expected values are reconstructed independently from the accepted formulas and
@@ -37,11 +37,11 @@ public sealed class S2_2Wp3MapperResolverTests
 
         var mapped = standalone.MapR2FaithfulCompctx1();
 
-        Assert.Equal("compctx1", mapped.ContractVersion);
+        Assert.Equal("compctx4", mapped.ContractVersion);
         Assert.Equal(standalone.LegacyDescriptor!.DescriptorDigest, mapped.DescriptorDigest);
         Assert.Equal(mapped.DescriptorDigest, mapped.Verified().DescriptorDigest);
         Assert.Equal(
-            IndependentCompctx1(standalone, static _ => null),
+            IndependentDefiningContext(standalone, static _ => null),
             mapped.DescriptorDigest);
     }
 
@@ -62,10 +62,10 @@ public sealed class S2_2Wp3MapperResolverTests
 
         var mapped = app.MapR2FaithfulCompctx1();
 
-        Assert.Equal("compctx1", mapped.ContractVersion);
+        Assert.Equal("compctx4", mapped.ContractVersion);
         Assert.DoesNotContain(mapped.References, r => r.StartsWith("compilation-context|", StringComparison.Ordinal));
         Assert.Contains(mapped.References, r => r.StartsWith("compilation|Lib|", StringComparison.Ordinal));
-        Assert.Equal(IndependentCompctx1(app,
+        Assert.Equal(IndependentDefiningContext(app,
             r => r.StartsWith("compilation-context|", StringComparison.Ordinal)
                 ? IndependentLegacyProjectReference(lib) : null),
             mapped.DescriptorDigest);
@@ -118,9 +118,9 @@ public sealed class S2_2Wp3MapperResolverTests
     public async Task Mapper_TransitiveOnlyDependencyContextChangeDoesNotChurnIdentity()
     {
         // Option A no-churn: the direct dependency's options change (its verified
-        // compctx2 changes) while its R2-visible legacy fields (assembly, metadata,
-        // trees) are unchanged, so the mapped defining compctx1 is stable even
-        // though the defining compilation's own compctx2 changes.
+        // compctx3 changes) while its R2-visible legacy fields (assembly, metadata,
+        // trees) are unchanged, so the mapped defining compctx4 is stable even
+        // though the defining compilation's own compctx3 changes.
         var platform = CapturePlatform();
         var leafSource = await ReadTextSourceAsync("Leaf/Leaf.cs", "namespace N; public static class Leaf { public static int Value() => 1; }");
         var leaf1 = CreateVerified("Leaf/Leaf.csproj",
@@ -184,7 +184,7 @@ public sealed class S2_2Wp3MapperResolverTests
     public async Task Mapper_PreservesActualPeIdentityAndDoesNotSubstituteFixtureLabels()
     {
         // C2: the declared comparison profiles must not be conflated. Production
-        // keeps the actual captured PE identities (`file|<actual path>|<sha256>`);
+        // keeps the actual captured content-bound PE identities (`refctx1|...|sha256:...`);
         // it never rewrites paths to the frozen `runtime/...` fixture labels.
         var platform = CapturePlatform();
         var source = await ReadTextSourceAsync("src/A.cs", "public sealed class A {}");
@@ -194,14 +194,14 @@ public sealed class S2_2Wp3MapperResolverTests
         var mapped = verified.MapR2FaithfulCompctx1();
 
         Assert.Contains(platform.Identity, mapped.References);
-        Assert.Contains(mapped.References, r => r.StartsWith("file|", StringComparison.Ordinal));
+        Assert.Contains(mapped.References, r => r.StartsWith("refctx1|", StringComparison.Ordinal));
         Assert.DoesNotContain(mapped.References, r => r.Contains("runtime/System.", StringComparison.Ordinal));
         Assert.Equal(verified.Descriptor.References.Order(StringComparer.Ordinal).ToArray(),
             mapped.References.ToArray());
     }
 
     [Fact]
-    public async Task Mapper_PreservesCompctx2Isolation()
+    public async Task Mapper_PreservesProductionContextIsolation()
     {
         var platform = CapturePlatform();
         var libSource = await ReadTextSourceAsync("Lib/Lib.cs", "namespace N; public static class Lib { public static int Get() => 1; }");
@@ -214,10 +214,10 @@ public sealed class S2_2Wp3MapperResolverTests
 
         var mapped = app.MapR2FaithfulCompctx1();
 
-        Assert.DoesNotContain("compctx2", mapped.ComputeDigest());
-        Assert.DoesNotContain(mapped.References, r => r.Contains("compctx2", StringComparison.Ordinal));
-        Assert.StartsWith("compctx1:sha256:", mapped.DescriptorDigest);
-        Assert.StartsWith("compctx2:sha256:", app.Descriptor.DescriptorDigest);
+        Assert.DoesNotContain("compctx3", mapped.ComputeDigest());
+        Assert.DoesNotContain(mapped.References, r => r.Contains("compctx3", StringComparison.Ordinal));
+        Assert.StartsWith("compctx4:sha256:", mapped.DescriptorDigest);
+        Assert.StartsWith("compctx3:sha256:", app.Descriptor.DescriptorDigest);
         Assert.NotEqual(mapped.DescriptorDigest, app.Descriptor.DescriptorDigest);
     }
 
@@ -242,8 +242,8 @@ public sealed class S2_2Wp3MapperResolverTests
     {
         var (universe, target, caller) = BuildTwoProjectUniverse();
 
-        var stale = universe.ResolveDefining(target, "compctx2:sha256:" + new string('0', 64), caller);
-        var shapeOnly = universe.ResolveDefining(target, "compctx2:sha256:" + new string('a', 64), caller);
+        var stale = universe.ResolveDefining(target, "compctx3:sha256:" + new string('0', 64), caller);
+        var shapeOnly = universe.ResolveDefining(target, "compctx3:sha256:" + new string('a', 64), caller);
 
         Assert.Equal(VerifiedDefiningStatus.StaleContext, stale.Status);
         Assert.Null(stale.Compctx1);
@@ -387,7 +387,7 @@ public sealed class S2_2Wp3MapperResolverTests
         return Assert.IsAssignableFrom<IMethodSymbol>(type.GetMembers(method).Single());
     }
 
-    private static string IndependentCompctx1(
+    private static string IndependentDefiningContext(
         VerifiedCSharpCompilation compilation, Func<string, string?> mapProjectReference)
     {
         var d = compilation.Descriptor;
@@ -397,12 +397,12 @@ public sealed class S2_2Wp3MapperResolverTests
             .ToArray();
         var parts = new List<string>
         {
-            "compctx1", d.RepositoryId, d.ProjectUnitId, d.AssemblyName,
+            "compctx4", d.RepositoryId, d.ProjectUnitId, d.AssemblyName,
             d.MetadataIdentity, d.ModuleName, d.OptionsDigest,
         };
         parts.AddRange(d.Sources.Select(s => s.CanonicalForm));
         parts.AddRange(references);
-        return "compctx1:sha256:" + LengthPrefixedHash("compctx1-context", parts);
+        return "compctx4:sha256:" + LengthPrefixedHash("compctx4-context", parts);
     }
 
     private static string IndependentLegacyProjectReference(VerifiedCSharpCompilation dependency)
@@ -479,3 +479,5 @@ public sealed class S2_2Wp3MapperResolverTests
     private static VerifiedMetadataReference CapturePlatform() =>
         VerifiedMetadataReference.Capture(typeof(object).Assembly.Location, CancellationToken.None);
 }
+
+

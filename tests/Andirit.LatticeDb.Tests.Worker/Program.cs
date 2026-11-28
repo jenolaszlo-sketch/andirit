@@ -214,7 +214,7 @@ internal static class Program
 
     private static CodeOccurrenceTargetId ComputeTarget(string repositoryId, string name)
     {
-        var context = "compctx1:sha256:" + Hex(repositoryId + "|" + name);
+        var context = "compctx4:sha256:" + Hex(repositoryId + "|" + name);
         return CodeOccurrenceIdentity.ComputeTargetId(
             context,
             "meta:" + name,
@@ -305,3 +305,4 @@ internal static class Program
         public int OccurrenceCount { get; init; } = 2;
     }
 }
+

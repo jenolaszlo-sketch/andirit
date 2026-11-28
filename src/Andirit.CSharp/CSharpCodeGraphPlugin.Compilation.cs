@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
-using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.CodeAnalysis;
@@ -55,16 +56,54 @@ public sealed partial class CSharpCodeGraphPlugin
             concurrentBuild: false);
     }
 
+    /// <summary>
+    /// Deterministic target-framework reference closure.
+    /// </summary>
+    /// <remarks>
+    /// The predecessor implementation consumed the entire process
+    /// <c>TRUSTED_PLATFORM_ASSEMBLIES</c> set. In a test or consumer host that set
+    /// also contains testhost/xunit/consumer assemblies and depends on ambient
+    /// process composition, so equivalent semantic inputs produced different
+    /// compilation identities.
+    ///
+    /// The successor closure is the managed assembly set of the running
+    /// <c>Microsoft.NETCore.App</c> shared framework directory, ordered
+    /// ordinally. It is independent of the executing host's load context and of
+    /// absolute installation paths: reference identities are content-bound.
+    /// Application, test-host and consumer assemblies are never part of this
+    /// closure; project references remain live compilation references and
+    /// package/external references remain refused by the existing project model.
+    /// </remarks>
     private static IReadOnlyList<VerifiedMetadataReference> BuildPlatformReferenceEvidence()
     {
-        var trustedAssemblies = AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string;
-        var paths = string.IsNullOrWhiteSpace(trustedAssemblies)
-            ? new[] { typeof(object).Assembly.Location }
-            : trustedAssemblies.Split(Path.PathSeparator, StringSplitOptions.RemoveEmptyEntries)
-                .Distinct(StringComparer.OrdinalIgnoreCase).Order(StringComparer.OrdinalIgnoreCase).ToArray();
+        var runtimeDirectory = Path.TrimEndingDirectorySeparator(
+            System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory());
+        var paths = Directory
+            .EnumerateFiles(runtimeDirectory, "*.dll", SearchOption.TopDirectoryOnly)
+            .Where(IsManagedAssembly)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
+        if (paths.Length == 0)
+            throw new InvalidDataException("The target-framework reference closure is empty.");
         if (paths.Sum(path => new FileInfo(path).Length) > 512L * 1024 * 1024)
             throw new InvalidDataException("Platform references exceed the 512 MiB image bound.");
         return paths.Select(path => VerifiedMetadataReference.Capture(path)).ToArray();
+    }
+
+    private static bool IsManagedAssembly(string path)
+    {
+        try
+        {
+            using var stream = File.OpenRead(path);
+            using var pe = new PEReader(stream);
+            if (!pe.HasMetadata)
+                return false;
+            return pe.GetMetadataReader().IsAssembly;
+        }
+        catch (Exception exception) when (exception is BadImageFormatException or IOException or UnauthorizedAccessException)
+        {
+            return false;
+        }
     }
 
     internal static async ValueTask<VerifiedCSharpAnalysis> PrepareAnalysisAsync(

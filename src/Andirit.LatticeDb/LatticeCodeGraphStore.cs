@@ -96,9 +96,15 @@ public sealed partial class LatticeCodeGraphStore :
     public const int CurrentSchemaVersion = 2;
 
     /// <summary>Schema version of the additive production occurrence tables.</summary>
-    public const int CurrentOccurrenceSchemaVersion = 1;
+    /// <remarks>
+    /// Version 2 is the successor occurrence identity generation
+    /// (<c>asmctx4</c>/<c>usage5</c>). Predecessor generation-1 records are
+    /// refused on open; there is no in-place migration. Reconstruct by
+    /// re-ingesting sources into a new store.
+    /// </remarks>
+    public const int CurrentOccurrenceSchemaVersion = 2;
 
-    internal const string OccurrenceNamespace = "andirit-occurrence-facts/1";
+    internal const string OccurrenceNamespace = "andirit-occurrence-facts/2";
 
     // Schema-2 protocol identities survive the Andirit product rename.
     private const string MetadataLabel = "HetuMetadata";
@@ -641,12 +647,15 @@ public sealed partial class LatticeCodeGraphStore :
         {
             var meta = DeserializeOccurrence<PersistedOccurrenceMeta>(pair.Payload);
             if (meta.SchemaVersion != CurrentOccurrenceSchemaVersion ||
-                !string.Equals(meta.Namespace, OccurrenceNamespace, StringComparison.Ordinal))
+                !string.Equals(meta.Namespace, OccurrenceNamespace, StringComparison.Ordinal) ||
+                meta.IdentityGeneration != CodeOccurrenceIdentity.Generation)
             {
                 throw new CodeOccurrenceSchemaException(
                     meta.SchemaVersion,
                     CurrentOccurrenceSchemaVersion,
-                    "The occurrence schema version or namespace is unsupported.");
+                    "The occurrence schema version, namespace or identity generation is unsupported. " +
+                    "Predecessor-generation occurrence records cannot be reinterpreted; " +
+                    "re-ingestion into a new store is required.");
             }
             metas[meta.RepositoryId] = meta;
         }
@@ -873,7 +882,8 @@ public sealed partial class LatticeCodeGraphStore :
             repositoryCoverage?.ScopeId,
             repositoryCoverage?.UniverseId,
             repositoryCoverage?.IsComplete == true,
-            units.Values.Any(unit => unit.RequiresAuthority || unit.Authority is not null));
+            units.Values.Any(unit => unit.RequiresAuthority || unit.Authority is not null),
+            CodeOccurrenceIdentity.Generation);
         Upsert(txn, OccurrenceMetaLabel, repositoryId, Serialize(meta));
         return new OccurrenceAuthorityPublication(meta, units.Values.ToArray());
     }
@@ -1374,7 +1384,8 @@ internal sealed record PersistedOccurrenceMeta(
     string? ScopeId = null,
     string? UniverseId = null,
     bool CompleteCoverage = false,
-    bool RequiresAuthority = false);
+    bool RequiresAuthority = false,
+    int IdentityGeneration = 0);
 
 /// <summary>Internal durable record: one target-index page.</summary>
 internal sealed record PersistedOccurrencePage(

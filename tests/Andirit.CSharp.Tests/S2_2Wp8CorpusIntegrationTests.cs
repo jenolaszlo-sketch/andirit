@@ -13,10 +13,10 @@ namespace Andirit.CSharp.Tests;
 /// <summary>
 /// S2.2 WP8: integration/comparison harness over the accepted frozen S2.0/R2
 /// corpus. It runs the real production chain (verified sources and references,
-/// verified compilations, compctx1/compctx2, defining resolution, asmctx3,
-/// usage4, extraction, coverage) over the corpus and compares the applicable
+/// verified compilations, compctx3/compctx4, defining resolution, asmctx4,
+/// usage5, extraction, coverage) over the corpus and compares the applicable
 /// frozen expectations. Semantics and relations are compared; exact frozen
-/// compctx1/asmctx3/usage4 values are fixture-profile values and are explicitly
+/// compctx1/asmctx3/usage4 historical fixture-profile values are explicitly
 /// NOT compared cross-profile (WP7-OWNER).
 /// </summary>
 public sealed class S2_2Wp8CorpusIntegrationTests
@@ -225,20 +225,20 @@ public sealed class S2_2Wp8CorpusIntegrationTests
         var s01 = FactAt(appExtraction, "App/Sites.cs", 15, 30);
         Assert.NotNull(s01);
 
-        // Independent expected asmctx3: frozen R2 Describe over the production
+        // Independent expected asmctx4: successor-contract oracle over the production
         // inputs, then the frozen target tuple.
         var core = corpus.Core;
         var direct = Target(core.Compilation, "Corpus.Core.Methods", "Direct", 1);
-        var expectedAsmctx3 = ExpectedAsmctx3(core, direct);
-        Assert.Equal(expectedAsmctx3, s01!.TargetId.Value);
+        var expectedAsmctx4 = ExpectedAsmctx4(core, direct);
+        Assert.Equal(expectedAsmctx4, s01!.TargetId.Value);
 
-        // Independent expected usage4 from the frozen occurrence formula.
-        var expectedUsage4 = ExpectedUsage4(corpus.App, s01.Span.Path,
+        // Independent expected usage5 from the successor occurrence formula.
+        var expectedUsage5 = ExpectedUsage5(corpus.App, s01.Span.Path,
             s01.Span.StartLine, s01.Span.StartColumn, s01.Span.EndLine, s01.Span.EndColumn,
             s01.TargetDocumentId);
-        Assert.Equal(expectedUsage4, s01.Id.Value);
-        Console.WriteLine("WP8 s01 asmctx3=" + s01.TargetId.Value);
-        Console.WriteLine("WP8 s01 usage4=" + s01.Id.Value);
+        Assert.Equal(expectedUsage5, s01.Id.Value);
+        Console.WriteLine("WP8 s01 asmctx4=" + s01.TargetId.Value);
+        Console.WriteLine("WP8 s01 usage5=" + s01.Id.Value);
 
         // The frozen exact identity values are fixture-profile values; the
         // production profile (actual captured paths) must not be compared to them.
@@ -246,7 +246,7 @@ public sealed class S2_2Wp8CorpusIntegrationTests
         var frozenCore = expected.RootElement.GetProperty("identities")
             .GetProperty("compctx1").GetProperty("Core/Core.csproj").GetString();
         Assert.NotEqual(frozenCore, FrozenCompctx1(core));
-        Assert.Contains("file|", core.Descriptor.References.First(r => r.StartsWith("file|", StringComparison.Ordinal)));
+        Assert.Contains("refctx1|", core.Descriptor.References.First(r => r.StartsWith("refctx1|", StringComparison.Ordinal)));
         Console.WriteLine("WP8 production-profile compctx1(Core)=" + FrozenCompctx1(core));
         Console.WriteLine("WP8 frozen-fixture-profile compctx1(Core)=" + frozenCore);
     }
@@ -267,9 +267,9 @@ public sealed class S2_2Wp8CorpusIntegrationTests
             sourceChanged.App.Descriptor.Sources.Single(s => s.Path == "App/Sites.cs").ContentHash);
         Assert.NotEqual(FrozenCompctx1(baseline.App), FrozenCompctx1(sourceChanged.App));
         Assert.Equal(FrozenCompctx1(baseline.Core), FrozenCompctx1(sourceChanged.Core));
-        var baselineTarget = ExpectedAsmctx3(baseline.Core,
+        var baselineTarget = ExpectedAsmctx4(baseline.Core,
             Target(baseline.Core.Compilation, "Corpus.Core.Methods", "Direct", 1));
-        var variantTarget = ExpectedAsmctx3(sourceChanged.Core,
+        var variantTarget = ExpectedAsmctx4(sourceChanged.Core,
             Target(sourceChanged.Core.Compilation, "Corpus.Core.Methods", "Direct", 1));
         Assert.Equal(baselineTarget, variantTarget);
 
@@ -283,15 +283,15 @@ public sealed class S2_2Wp8CorpusIntegrationTests
         Assert.NotEqual(baseline.Leaf.Descriptor.DescriptorDigest, symbolsLeaf.Leaf.Descriptor.DescriptorDigest);
         Assert.NotEqual(baseline.Core.Descriptor.DescriptorDigest, symbolsLeaf.Core.Descriptor.DescriptorDigest);
         Assert.NotEqual(baseline.App.Descriptor.DescriptorDigest, symbolsLeaf.App.Descriptor.DescriptorDigest);
-        Assert.Equal(baselineTarget, ExpectedAsmctx3(symbolsLeaf.Core,
+        Assert.Equal(baselineTarget, ExpectedAsmctx4(symbolsLeaf.Core,
             Target(symbolsLeaf.Core.Compilation, "Corpus.Core.Methods", "Direct", 1)));
 
         // symbols-core-changed: Core's own identity and the conditional target change.
         var symbolsCore = await CorpusAsync(CorpusVariant.SymbolsCoreChanged);
         Assert.NotEqual(FrozenCompctx1(baseline.Core), FrozenCompctx1(symbolsCore.Core));
         Assert.NotEqual(
-            ExpectedAsmctx3(baseline.Core, Target(baseline.Core.Compilation, "Corpus.Core.ConditionalApi", "Value", 0)),
-            ExpectedAsmctx3(symbolsCore.Core, Target(symbolsCore.Core.Compilation, "Corpus.Core.ConditionalApi", "Value", 0)));
+            ExpectedAsmctx4(baseline.Core, Target(baseline.Core.Compilation, "Corpus.Core.ConditionalApi", "Value", 0)),
+            ExpectedAsmctx4(symbolsCore.Core, Target(symbolsCore.Core.Compilation, "Corpus.Core.ConditionalApi", "Value", 0)));
         Assert.Equal(
             baseline.App.Descriptor.Sources.Single(s => s.Path == "App/Sites.cs").ContentHash,
             symbolsCore.App.Descriptor.Sources.Single(s => s.Path == "App/Sites.cs").ContentHash);
@@ -593,31 +593,25 @@ public sealed class S2_2Wp8CorpusIntegrationTests
             unit.Sources.Select(s => (s.Path, Encoding.UTF8.GetBytes(s.Text.ToString()))).ToArray())
         .DescriptorDigest;
 
-    private static string ExpectedAsmctx3(VerifiedCSharpCompilation unit, IMethodSymbol method) =>
-        CodeOccurrenceIdentity.ComputeTargetId(FrozenCompctx1(unit), Metadata(unit), Module(unit),
-            IdDigest(method), DeclDigest(method), ShapeDigest(method)).Value;
+    private static string ExpectedAsmctx4(VerifiedCSharpCompilation unit, IMethodSymbol method) =>
+        SuccessorIdentityOracle.TargetId(Repo, unit, method, IdDigest, DeclDigest, ShapeDigest);
 
-    private static string ExpectedUsage4(VerifiedCSharpCompilation calling, string path,
+    private static string ExpectedUsage5(VerifiedCSharpCompilation calling, string path,
         int startLine, int startColumn, int endLine, int endColumn, string targetDocumentId)
     {
         var sourceHash = calling.Sources.Single(s => s.Path == path).ContentHash;
-        var parts = new List<string>
-        {
-            Repo, Plugin.Value, CodeOccurrenceIdentity.SemanticsVersion,
-            calling.Descriptor.ProjectUnitId, path, sourceHash,
-            startLine.ToString(), startColumn.ToString(), endLine.ToString(), endColumn.ToString(),
-            targetDocumentId, ExpectedAsmctx3Core(calling, targetDocumentId), CodeOccurrenceIdentity.InvocationCategory,
-        };
-        return LengthPrefixedHash("usage4", parts);
+        return SuccessorIdentityOracle.UsageId(Repo, Plugin.Value, calling.Descriptor.ProjectUnitId, path,
+            sourceHash, new CodeLocation(path, startLine, startColumn, endLine, endColumn),
+            targetDocumentId, ExpectedAsmctx4Core(calling, targetDocumentId));
     }
 
-    private static string ExpectedAsmctx3Core(VerifiedCSharpCompilation calling, string targetDocumentId)
+    private static string ExpectedAsmctx4Core(VerifiedCSharpCompilation calling, string targetDocumentId)
     {
         // The S01 site targets Corpus.Core.Methods.Direct; resolve its defining unit.
         var core = calling.Dependencies.Single(d => d.Descriptor.ProjectUnitId == "Core/Core.csproj");
         var method = core.Compilation.GetTypeByMetadataName("Corpus.Core.Methods")!
             .GetMembers("Direct").OfType<IMethodSymbol>().Single(m => m.Parameters.Length == 1);
-        return ExpectedAsmctx3(core, method);
+        return ExpectedAsmctx4(core, method);
     }
 
     private static string Metadata(VerifiedCSharpCompilation unit)
@@ -692,3 +686,5 @@ public sealed class S2_2Wp8CorpusIntegrationTests
         throw new InvalidOperationException("Repository root not found.");
     }
 }
+
+

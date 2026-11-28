@@ -39,8 +39,8 @@ public sealed class CSharpProvenanceIntegrationTests
         });
         Assert.Same(entry, analysis.Universe.RequireCompilation(entry.Compilation));
         Assert.NotNull(entry.LegacyDescriptor);
-        Assert.StartsWith("compctx1:sha256:", entry.LegacyDescriptor!.DescriptorDigest);
-        Assert.StartsWith("compctx2:sha256:", entry.Descriptor.DescriptorDigest);
+        Assert.StartsWith("compctx4:sha256:", entry.LegacyDescriptor!.DescriptorDigest);
+        Assert.StartsWith("compctx3:sha256:", entry.Descriptor.DescriptorDigest);
     }
 
     [Fact]
