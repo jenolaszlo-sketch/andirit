@@ -1,0 +1,87 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-QUAL-01",
+  "predecessorStore": {
+    "generatedBy": "81102d21b4d6f6ed510b0555bb0d034aa1705c44 code over the frozen C4 corpus",
+    "sha256": "c020f2a58e3d5ed6f1d8a95583a15abe54229da27c213b6140d154bf3a44a57f",
+    "meta": {
+      "SchemaVersion": 1,
+      "Namespace": "andirit-occurrence-facts/1",
+      "FactCount": 51,
+      "UnitCount": 3,
+      "IdentityGeneration": "absent"
+    },
+    "authorityVersion": 1,
+    "authorityGeneration": "absent",
+    "factsUseAsmctx3": true,
+    "semanticsVersion": 4
+  },
+  "successorOpenRefusal": {
+    "exception": "Andirit.CodeOccurrenceSchemaException",
+    "messageIncludesReingestion": true,
+    "logicalSnapshotBefore": "3e2dd06fdf18dc86f2cab6068e3d4bb3e35fa91fd0e1b3750551384a6c2009b4",
+    "logicalSnapshotAfter": "3e2dd06fdf18dc86f2cab6068e3d4bb3e35fa91fd0e1b3750551384a6c2009b4",
+    "logicalRecordsPreserved": true,
+    "fileShaBeforeOpen": "e181aa7b4225d47920cf8a098ec855e3cb45b380e79b3d06b2209bcfc69ba976",
+    "fileShaAfterRefusedOpen": "f820c411e1bff51e6c608fa4e652be8dcdf65ea3367cf8fcc03fb36ae6b31138",
+    "walFileCreatedBytes": 4096,
+    "physicalFileInterpretation": "The main database file hash changed and a WAL file appeared when the native engine opened the store. The logical occurrence records and generation-1 metadata were unchanged. This is an engine-level open/checkpoint effect, not an Andirit migration.",
+    "detectionOrder": "InitializeSchema and command-log replay run before occurrence-generation detection. Schema initialization is read-only for an existing graph schema; occurrence rows are not mutated before refusal. Detection is not literally the first operation on the database."
+  },
+  "successorStore": {
+    "meta": {
+      "SchemaVersion": 2,
+      "Namespace": "andirit-occurrence-facts/2",
+      "IdentityGeneration": 2,
+      "FactCount": 51,
+      "UnitCount": 3
+    },
+    "authorityVersion": 2,
+    "authorityGeneration": 2,
+    "semanticsVersion": 5,
+    "factsUseAsmctx4": true,
+    "open": "success",
+    "query": "Available, complete, 51 facts, 2 contributors"
+  },
+  "adversarialControls": [
+    {
+      "case": "successor authority Version=1",
+      "open": "success",
+      "query": "UnsupportedSchema",
+      "facts": 0,
+      "failClosed": true
+    },
+    {
+      "case": "successor authority IdentityGeneration removed",
+      "open": "success",
+      "query": "UnsupportedSchema",
+      "facts": 0,
+      "failClosed": true
+    },
+    {
+      "case": "successor meta IdentityGeneration=1",
+      "open": "CodeOccurrenceSchemaException",
+      "failClosed": true
+    },
+    {
+      "case": "successor meta SchemaVersion=1",
+      "open": "CodeOccurrenceSchemaException",
+      "failClosed": true
+    },
+    {
+      "case": "successor meta Namespace=/1",
+      "open": "CodeOccurrenceSchemaException",
+      "failClosed": true
+    },
+    {
+      "case": "successor fact target relabeled asmctx3",
+      "open": "CodeOccurrenceSchemaException",
+      "failClosed": true
+    },
+    {
+      "case": "predecessor facts relabeled as schema 2 / namespace 2 / generation 2",
+      "open": "CodeOccurrenceSchemaException",
+      "failClosed": true
+    }
+  ],
+  "adjudication": "Generation-2 enforcement is consistent across open and query paths and fails closed for missing, malformed, contradictory and mixed-generation metadata. Historical logical records are preserved and never reinterpreted. Physical file mutation by the native engine and detection after schema/replay are recorded qualifications."
+}

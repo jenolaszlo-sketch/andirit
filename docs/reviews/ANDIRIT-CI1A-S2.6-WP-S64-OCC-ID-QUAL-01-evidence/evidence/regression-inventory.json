@@ -1,0 +1,93 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-QUAL-01",
+  "predecessor": {
+    "commit": "81102d21b4d6f6ed510b0555bb0d034aa1705c44",
+    "inventory": 1034,
+    "perProject": {
+      "core": 345,
+      "csharp": 373,
+      "treesitter": 157,
+      "latticedb": 159
+    }
+  },
+  "successor": {
+    "commit": "880a888da2256608a91010026b1c3f39d0de76b6",
+    "inventory": 1044,
+    "perProject": {
+      "core": 345,
+      "csharp": 383,
+      "treesitter": 157,
+      "latticedb": 159
+    },
+    "independentLocalRun": "1044 passed, 0 failed",
+    "hostedRuns": "1044 passed on Windows x64, Linux x64 and macOS ARM64"
+  },
+  "delta": {
+    "net": 10,
+    "newCSharpTests": [
+      "OccurrenceIdentityTransitionTests.SuccessorDomains_AreExplicitAndPredecessorsAreNotCanonical",
+      "OccurrenceIdentityTransitionTests.SuccessorContexts_RefusePredecessorReferenceItems",
+      "OccurrenceIdentityTransitionTests.FrameworkClosure_ExcludesHostAndTestAssembliesAndAbsolutePaths",
+      "OccurrenceIdentityTransitionTests.SameCorpusAtDifferentPhysicalPaths_ProducesIdenticalTargetAndFacts",
+      "OccurrenceIdentityTransitionTests.DifferentSemanticReferenceContent_StillChangesIdentity",
+      "OccurrenceIdentityTransitionTests.PredecessorGenerationStore_IsRefusedAndReingestionBuildsSuccessorStore",
+      "S64D3C4SuccessorTests.C4SuccessorLedger_MatchesProductionAndIndependentOracle (4 variants)"
+    ],
+    "renamedTests": [
+      "S2_2Wp3 Mapper_PreservesCompctx2Isolation -> Mapper_PreservesProductionContextIsolation",
+      "S2_2Wp4 asmctx3/compctx2 test names -> asmctx4/compctx3 names",
+      "S2_2Wp5 Usage4 -> Usage5",
+      "S2_2Wp7 DifferentPath_NotSilentlyEquivalent -> DifferentPath_SameContentIsEquivalent"
+    ],
+    "removedWithoutReplacement": [],
+    "modifiedAssertions": "32 test files changed. Changes are identity-domain/version expectations, replacement of path-bound expectations with content-bound expectations, predecessor-refusal expectations, and independent-oracle helper replacement. No semantic guarantee was removed."
+  },
+  "mirrorTests": {
+    "expected": 29,
+    "presentInCandidate": 29,
+    "passedHosted": 29
+  },
+  "s63NamedCases": {
+    "expected": 19,
+    "categories": [
+      "P-01..P-16",
+      "D-05",
+      "D-07",
+      "D-07-early-exit"
+    ],
+    "presentInCandidate": true,
+    "passedHosted": true
+  },
+  "coverage": {
+    "core": {
+      "line": 0.8229,
+      "branch": 0.706,
+      "floor": 0.55
+    },
+    "csharp": {
+      "line": 0.9436,
+      "branch": 0.875,
+      "floor": 0.75
+    },
+    "treesitter": {
+      "line": 0.8985,
+      "branch": 0.7585,
+      "floor": 0.6
+    },
+    "latticedb": {
+      "line": 0.9351,
+      "branch": 0.8085,
+      "floor": 0.7
+    },
+    "allFloorsMet": true
+  },
+  "packageSmoke": {
+    "pack": "pass",
+    "consumeLoad": "pass",
+    "sixPackages": true,
+    "packedRoslynExtraction": "pass",
+    "durableStoreReopen": "pass",
+    "testingLaws": "pass"
+  },
+  "adjudication": "The 1,034 -> 1,044 reconciliation is fully accounted for by 10 new transition/C4 tests. Ten predecessor tests were renamed to successor domains with their semantic guarantees preserved. No test was removed without replacement. All 29 mirror tests and 19 inherited S6.3 named categories passed."
+}

@@ -1,0 +1,53 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-QUAL-01",
+  "method": "Successor ingestion into a new store from the frozen C4 corpus; raw store inspection; current-authority query; fresh-store repetition; cancellation before session.",
+  "successorStore": {
+    "target": "asmctx4:sha256:8258e165d53336f87abf3b1d1ae3f220190dfaf848eaae2906222bf49940555f",
+    "facts": 51,
+    "distribution": {
+      "Caller": 50,
+      "Caller2": 1
+    },
+    "contributors": 2,
+    "queryAvailability": "Available",
+    "queryComplete": true,
+    "queryFacts": 51,
+    "coverage": {
+      "State": "Produced",
+      "InvocationFacts": 51,
+      "DeclaredUnitCount": 3,
+      "VerifiedUnitCount": 3
+    },
+    "idsMatchFrozenLedger": true,
+    "durableReopenQuery": "pass"
+  },
+  "repetition": {
+    "secondFreshStoreLogicalSha": "fb6019b772b1cd3d80a2f1a42638a67a806727c8503a3883529b38c0551bb77b",
+    "firstStoreLogicalSha": "fb6019b772b1cd3d80a2f1a42638a67a806727c8503a3883529b38c0551bb77b",
+    "logicalIdentity": "equal",
+    "physicalFileIdentity": "not equal (native engine page/WAL allocation)",
+    "conclusion": "Repeated reconstruction is logically deterministic; physical container bytes are not claimed stable."
+  },
+  "cancellation": {
+    "canceledBeforeSession": true,
+    "exception": "OperationCanceledException",
+    "databaseCreated": false,
+    "partialPublication": false
+  },
+  "historicalPreservation": {
+    "predecessorStoreLogicalShaBefore": "3e2dd06fdf18dc86f2cab6068e3d4bb3e35fa91fd0e1b3750551384a6c2009b4",
+    "predecessorStoreLogicalShaAfter": "3e2dd06fdf18dc86f2cab6068e3d4bb3e35fa91fd0e1b3750551384a6c2009b4",
+    "preserved": true
+  },
+  "lossLimits": {
+    "reconstructibleWithAuthoritativeInputs": "graph and occurrence facts within the available source/reference scope",
+    "notReconstructibleWithoutInputs": [
+      "source bytes not retained anywhere",
+      "reference images not available or not byte-identical",
+      "historical publication/run metadata not present in the source scope",
+      "deleted or never-published prior states"
+    ],
+    "universallyLossless": false
+  },
+  "adjudication": "Reconstruction into a new store is supported for the frozen corpus and preserves contributor ownership, target identity, durability and repeated logical identity. No automatic destructive rebuild or in-place migration exists. The strategy is not universally lossless."
+}

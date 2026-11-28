@@ -1,0 +1,71 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-QUAL-01",
+  "method": "Independent C# oracle using Roslyn and System.Reflection.Metadata only; it does not call production identity helpers or the producer SuccessorIdentityOracle. It reads the frozen corpus and the host runtime reference files.",
+  "runtime": ".NET 10.0.12, Windows x64",
+  "baseline": {
+    "target": "asmctx4:sha256:8258e165d53336f87abf3b1d1ae3f220190dfaf848eaae2906222bf49940555f",
+    "definingContext": "compctx4:sha256:476de9e8c407f13756a931f8ca285ce7d254c19309be433cdf84d022165e31be",
+    "productionDescriptor": "compctx3:sha256:f85c46768aa2a3c1c8dbda35a3e2e8f699ceea04ddf7a17d7ec590865ce313ee",
+    "optionsDigest": "7593d3dbda8c812bb91c5cd74372ad4d5407218eae33f8aac8092ab4935566d0",
+    "referenceCount": 172,
+    "referenceSetHash": "d582ffc45bbb505067ac40a203b009e791c3a4e9d8785a4a4f5646bb51bb1bcf",
+    "cardinality": 51,
+    "distribution": {
+      "Caller": 50,
+      "Caller2": 1
+    },
+    "contributors": 2,
+    "allUsage5IdsMatchFrozenLedger": true,
+    "producerLedgerMatchesProduction": true
+  },
+  "variants": {
+    "without-caller": {
+      "cardinality": 1,
+      "contributors": 1,
+      "targetStable": true,
+      "idsMatch": true
+    },
+    "without-caller2": {
+      "cardinality": 50,
+      "contributors": 1,
+      "targetStable": true,
+      "idsMatch": true
+    },
+    "caller2-changed": {
+      "cardinality": 51,
+      "contributors": 2,
+      "targetStable": true,
+      "idsMatch": true
+    }
+  },
+  "referenceClosureComparison": {
+    "s2_0ThreeReferenceClosure": {
+      "references": [
+        "System.Runtime",
+        "System.Private.CoreLib",
+        "Microsoft.CSharp"
+      ],
+      "target": "asmctx4:sha256:1d2ece61530b19b25a73ab273ae9b3b97a4bf9291b201d938278e52bc22ef28e",
+      "definingContext": "compctx4:sha256:318c55e32f411ae2d01d8201646a520b082d51ac19d60b1756ec543cdf21c6a9"
+    },
+    "producerRuntimeDirectoryClosure": {
+      "references": 172,
+      "target": "asmctx4:sha256:8258e165d53336f87abf3b1d1ae3f220190dfaf848eaae2906222bf49940555f",
+      "definingContext": "compctx4:sha256:476de9e8c407f13756a931f8ca285ce7d254c19309be433cdf84d022165e31be"
+    },
+    "conclusion": "The successor C4 ledger is internally consistent and independently reproducible, but it is bound to the expanded 172-reference runtime implementation closure, not the S2.0/F12 three-reference frozen oracle. The two closures produce different targets and contexts. The owner must decide whether the expanded closure is the authorized reference manifest."
+  },
+  "freezeChronology": {
+    "ledgerAddedIn": "77ec887368c62b404e0d9a8034d34b7f8cac8007",
+    "separatePreComparisonFreezeCommit": false,
+    "independentReproduction": true,
+    "conclusion": "The ledger is independently reproducible from the documented recipe and frozen corpus, so it is not candidate-derived. A separate pre-comparison freeze commit is not demonstrated."
+  },
+  "priorArtifacts": {
+    "c1ToC4GraphOracleChanged": false,
+    "frozenCorpusChanged": false,
+    "s2_0OracleChanged": false,
+    "newSuccessorOccurrenceLedger": true
+  },
+  "adjudication": "Exact C4 target/context and all 51 usage5 IDs reconciled on the producer's 10.0.12 runtime closure. Reference-closure scope and freeze chronology remain qualifications; the S2.0 three-reference oracle is not reproduced by the frozen successor ledger."
+}

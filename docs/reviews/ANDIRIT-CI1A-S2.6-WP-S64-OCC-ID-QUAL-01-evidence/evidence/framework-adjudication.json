@@ -1,0 +1,64 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-QUAL-01",
+  "question": "Does the managed Microsoft.NETCore.App runtime-directory closure satisfy the authorized deterministic target-framework reference-resolution contract?",
+  "probe": {
+    "runtimeDirectory": "C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App\\10.0.12\\",
+    "frameworkDescription": ".NET 10.0.12",
+    "referenceCount": 172,
+    "compilationReferenceCount": 172,
+    "cases": [
+      {
+        "targetFramework": "net10.0",
+        "complete": true,
+        "descriptor": "compctx3:sha256:1c1a6ffbe9acc51fb5d72651f7c3e5a2fd25e8c67891387aaefe2a9c26b9335c",
+        "options": "7593d3dbda8c812bb91c5cd74372ad4d5407218eae33f8aac8092ab4935566d0",
+        "referenceCount": 172
+      },
+      {
+        "targetFramework": "net8.0",
+        "complete": true,
+        "descriptor": "compctx3:sha256:1c1a6ffbe9acc51fb5d72651f7c3e5a2fd25e8c67891387aaefe2a9c26b9335c",
+        "options": "7593d3dbda8c812bb91c5cd74372ad4d5407218eae33f8aac8092ab4935566d0",
+        "referenceCount": 172
+      },
+      {
+        "targetFramework": "netstandard2.0",
+        "complete": true,
+        "descriptor": "compctx3:sha256:1c1a6ffbe9acc51fb5d72651f7c3e5a2fd25e8c67891387aaefe2a9c26b9335c",
+        "options": "7593d3dbda8c812bb91c5cd74372ad4d5407218eae33f8aac8092ab4935566d0",
+        "referenceCount": 172
+      }
+    ],
+    "probeSource": "namespace Probe; public static class P { public static System.Type T = typeof(object); public static string S = string.Empty; public static System.Half H = (System.Half)1.0; public static System.Range R = 0..1; }",
+    "observation": "All three declared target frameworks compile successfully against the same 172 .NET 10 implementation assemblies and produce the same compilation descriptor. System.Half and System.Range are not part of the netstandard2.0 reference surface."
+  },
+  "codeInspection": {
+    "targetFrameworkUsage": [
+      "CSharpProjectDiscovery.cs: TargetFramework is parsed and stored on CSharpProjectModel",
+      "CSharpCodeGraphPlugin.GraphBuilder.cs: TargetFramework is emitted as a graph text property only",
+      "CSharpCodeGraphPlugin.Compilation.cs: CreateCompilationOptions and BuildPlatformReferenceEvidence do not read TargetFramework",
+      "VerifiedCSharpCompilation.Create: the descriptor contains no target-framework field"
+    ],
+    "closureSelection": "RuntimeEnvironment.GetRuntimeDirectory(), followed by managed *.dll enumeration, independent of the project's declared TargetFramework.",
+    "descriptorMatchesActualCompilation": true,
+    "ambientDiscoveryRemains": true,
+    "implementationAssembliesUsed": true,
+    "targetFrameworkReferenceAssembliesUsed": false
+  },
+  "contractAnalysis": {
+    "ownerAuthorization": "deterministic target-framework reference closure (or a declared runtime reference manifest), not process TPA",
+    "s2_0_referenceContract": "the runtime's System.Runtime.dll, System.Private.CoreLib.dll and Microsoft.CSharp.dll, content-bound and host-independent",
+    "finding": "The selected closure is the host process's implementation-assembly directory, not a target-framework reference closure or a declared manifest. It ignores the declared target framework and silently accepts projects whose reference surface does not match the host runtime."
+  },
+  "adjudication": {
+    "actualCompilationReferencesMatchDescriptor": "PASS",
+    "targetFrameworkRespected": "FAIL",
+    "referenceAssembliesRatherThanImplementationAssemblies": "FAIL",
+    "deterministicForOneHostRuntime": "PASS",
+    "deterministicAcrossConsumerRuntimesOrDeclaredTargets": "FAIL",
+    "unsupportedTargetFrameworkRefused": "FAIL",
+    "gate": "Framework reference-resolution gate WITHHELD",
+    "severity": "BLOCKING",
+    "requiredCorrection": "Resolve the reference closure from the declared target framework's reference pack (or a declared, target-keyed manifest), or explicitly refuse unsupported target frameworks before minting. Do not treat a successful host-runtime compilation as target-framework proof."
+  }
+}

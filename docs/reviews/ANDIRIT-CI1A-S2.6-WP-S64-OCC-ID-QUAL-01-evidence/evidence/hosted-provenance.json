@@ -1,0 +1,130 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-QUAL-01",
+  "candidate": {
+    "commit": "77ec887368c62b404e0d9a8034d34b7f8cac8007",
+    "tree": "40a2c42123e71bf65746b10198ca2af29c17d928",
+    "hostedRun": 46132247172
+  },
+  "seal": {
+    "commit": "880a888da2256608a91010026b1c3f39d0de76b6",
+    "tree": "cf55faa07a76a07b76594881d25994a796875491",
+    "hostedRun": 46134305730
+  },
+  "workflow": {
+    "path": ".github/workflows/ci.yml",
+    "blob": "83c8b57872c1000511034821139d317ec10ded5d",
+    "dependency": "LatticeDbSharp 0.2.0",
+    "latticeDbProjectBlob": "bfcfcf8dd130a6498c0e55b73253b6a2dde73036"
+  },
+  "candidateRun": {
+    "headShaReceivedByApi": "77ec887368c62b404e0d9a8034d34b7f8cac8007",
+    "syntheticMergeShaInTestSubjects": "1ec6b9d95c01afdc45ce29c85a3cf2b63d30f485",
+    "syntheticMergeTree": "40a2c42123e71bf65746b10198ca2af29c17d928",
+    "treeEqualsCandidate": true,
+    "mergeParents": [
+      "99b04c0ebb5dfa43065581bb6489fe2468d9a5aa",
+      "77ec887368c62b404e0d9a8034d34b7f8cac8007"
+    ],
+    "jobs": {
+      "windows": {
+        "id": 140939754018,
+        "os": "Windows",
+        "arch": "X64",
+        "conclusion": "success"
+      },
+      "linux": {
+        "id": 140939753793,
+        "os": "Linux",
+        "arch": "X64",
+        "conclusion": "success"
+      },
+      "macos": {
+        "id": 140939754002,
+        "os": "macOS",
+        "arch": "ARM64",
+        "conclusion": "success"
+      },
+      "pack": {
+        "id": 140939753964,
+        "os": "Linux",
+        "arch": "X64",
+        "conclusion": "success"
+      }
+    },
+    "testCounts": {
+      "core": 345,
+      "csharp": 383,
+      "treesitter": 157,
+      "latticedb": 159,
+      "total": 1044
+    },
+    "trxHashesMatchSubjects": true,
+    "coverage": {
+      "core": {
+        "line": 0.8229,
+        "branch": 0.706
+      },
+      "csharp": {
+        "line": 0.9436,
+        "branch": 0.875
+      },
+      "treesitter": {
+        "line": 0.8985,
+        "branch": 0.7585
+      },
+      "latticedb": {
+        "line": 0.9351,
+        "branch": 0.8085
+      }
+    },
+    "artifacts": [
+      "test-results-windows-latest",
+      "test-results-ubuntu-latest",
+      "test-results-macos-latest",
+      "coverage-results-windows-latest",
+      "coverage-results-ubuntu-latest",
+      "coverage-results-macos-latest"
+    ]
+  },
+  "sealRun": {
+    "headShaReceivedByApi": "880a888da2256608a91010026b1c3f39d0de76b6",
+    "syntheticMergeShaInTestSubjects": "bb2ac74dda0bf55d526c692678b84b53c94084b0",
+    "syntheticMergeTree": "cf55faa07a76a07b76594881d25994a796875491",
+    "treeEqualsSeal": true,
+    "jobs": {
+      "windows": {
+        "id": 140946073815,
+        "os": "Windows",
+        "arch": "X64",
+        "conclusion": "success"
+      },
+      "linux": {
+        "id": 140946073777,
+        "os": "Linux",
+        "arch": "X64",
+        "conclusion": "success"
+      },
+      "macos": {
+        "id": 140946073854,
+        "os": "macOS",
+        "arch": "ARM64",
+        "conclusion": "success"
+      },
+      "pack": {
+        "id": 140946073546,
+        "os": "Linux",
+        "arch": "X64",
+        "conclusion": "success"
+      }
+    }
+  },
+  "adjudication": {
+    "hostedTreeExecutedMatchesCandidate": true,
+    "hostedCommitAttributionMatchesCandidate": false,
+    "syntheticMergeDecisionRequired": true,
+    "producerReportedMacOSX64": true,
+    "actualMacOSArchitecture": "ARM64",
+    "inheritedMacOSGate": "bounded macOS arm64 regression evidence; no S6.5 certification",
+    "disposition": "QUALIFIED - tests executed the exact candidate tree, but the hosted receipts attribute a GitHub synthetic merge commit, not the candidate commit object. The prior synthetic-merge exception is not extended silently."
+  }
+}
