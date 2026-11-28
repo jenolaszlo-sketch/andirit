@@ -61,7 +61,7 @@ it consumed process TPA and absolute paths.
 | GitHub Actions `ubuntu-latest` x64 | genuine Linux regression + coverage | **success** (job `140939753793`) |
 | GitHub Actions `macos-latest` x64 | regression only; no S6.5 claim | **success** (job `140939754002`) |
 
-Hosted run: `https://github.com/jenolaszlo-sketch/andirit/actions/runs/46132247172` on candidate `77ec887368c62b404e0d9a8034d34b7f8cac8007`; all four jobs (Windows, Linux, macOS, pack) succeeded. Local Windows x64 exact-candidate results are recorded in
+Hosted run: `https://github.com/jenolaszlo-sketch/andirit/actions/runs/46132247172` on candidate `77ec887368c62b404e0d9a8034d34b7f8cac8007`; all four jobs (Windows, Linux, macOS, pack) succeeded. The sealed candidate commit `c54ab638f51a321ef46144f50b84b356736a8cac` also passed all four jobs in run `46132997340`. Local Windows x64 exact-candidate results are recorded in
 `evidence/local-release-tests.log`, `evidence/local-csharp-coverage.log` and
 `evidence/local-package-smoke.log`.
 
@@ -73,4 +73,5 @@ versus Linux `System.Private.CoreLib.dll`) have identical bytes. Exact digests
 are bound to the referenced runtime file contents per the accepted S2.0 §5 rule;
 the semantic relations, domains, cardinality and contributor union are portable
 and are verified on each host.
+
 
