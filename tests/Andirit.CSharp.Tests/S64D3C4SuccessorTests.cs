@@ -22,7 +22,7 @@ public sealed class S64D3C4SuccessorTests
         new(2026, 11, 28, 12, 0, 0, TimeSpan.Zero);
 
     [Theory]
-    [InlineData("baseline", "c4-occurrences.json")]
+    [InlineData("baseline", "c4-occurrences-target-framework.json")]
     [InlineData("without-caller", "c4-oracle-variants/c4-occurrences-without-caller.json")]
     [InlineData("without-caller2", "c4-oracle-variants/c4-occurrences-without-caller2.json")]
     [InlineData("caller2-changed", "c4-oracle-variants/c4-occurrences-caller2-changed.json")]
@@ -33,7 +33,7 @@ public sealed class S64D3C4SuccessorTests
         var corpus = Path.Combine(root,
             "docs/reviews/ANDIRIT-CI1A-S2.6-WP-S64-ENTRY-01-R1-evidence/corpus/c4-contributors");
         var ledgerPath = Path.Combine(root,
-            "docs/reviews/ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-REMED-01-R1-evidence/expected", ledgerName);
+            "docs/reviews/ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-REMED-01-R2-evidence/expected", ledgerName);
         var expected = JsonSerializer.Deserialize<Ledger>(
             await File.ReadAllTextAsync(ledgerPath),
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
@@ -58,19 +58,23 @@ public sealed class S64D3C4SuccessorTests
             SuccessorIdentityOracle.IdentifierDigest,
             SuccessorIdentityOracle.DeclarationDigest,
             SuccessorIdentityOracle.ShapeDigest);
-        var exactHost = string.Equals(currentContext, expected.Target.Context, StringComparison.Ordinal);
+        var currentRefHash = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(
+            string.Join("\n", dependency.Descriptor.References))));
+        var exactHost = string.Equals(currentContext, expected.Compctx4, StringComparison.Ordinal) &&
+            string.Equals(currentRefHash, expected.RefHash, StringComparison.Ordinal);
         if (exactHost)
         {
-            Assert.Equal(expected.Target.Value, currentTarget);
-            Assert.Equal(expected.Target.Metadata,
+            Assert.Equal(expected.Target, currentTarget);
+            Assert.Equal(expected.Compctx3, dependency.Descriptor.DescriptorDigest);
+            Assert.Equal(expected.Metadata,
                 SuccessorIdentityOracle.Metadata(dependency.Compilation.Assembly.Identity));
-            Assert.Equal(expected.Target.Module,
+            Assert.Equal(expected.Module,
                 dependency.Compilation.Assembly.Modules.First().Name);
         }
         else
         {
             Console.WriteLine("C4 successor ledger host differs from the frozen Windows anchor: " +
-                "ledger=" + expected.Target.Value + " current=" + currentTarget +
+                "ledger=" + expected.Target + " current=" + currentTarget +
                 " context=" + currentContext);
         }
         Assert.Equal(CodeOccurrenceIdentity.TargetDomain, currentTarget.Split(':')[0]);
@@ -78,18 +82,18 @@ public sealed class S64D3C4SuccessorTests
         // Independently recompute every expected fact from the live analysis.
         var oracleFacts = OracleFacts(analysis, currentTarget);
         Assert.Equal(expected.Cardinality, oracleFacts.Count);
-        Assert.Equal(expected.Occurrences.Length, oracleFacts.Count);
+        Assert.Equal(expected.Facts.Length, oracleFacts.Count);
         Assert.Equal(
-            expected.Occurrences.Select(item => item.Unit).Distinct(StringComparer.Ordinal)
+            expected.Facts.Select(item => item.Unit).Distinct(StringComparer.Ordinal)
                 .Order(StringComparer.Ordinal),
             oracleFacts.Select(item => item.Unit).Distinct(StringComparer.Ordinal)
                 .Order(StringComparer.Ordinal));
-        Assert.Equal(expected.TargetContributorCount,
+        Assert.Equal(expected.Facts.Select(item => item.Unit).Distinct(StringComparer.Ordinal).Count(),
             oracleFacts.Select(item => item.Unit).Distinct(StringComparer.Ordinal).Count());
         if (exactHost)
         {
             Assert.Equal(
-                expected.Occurrences.OrderBy(item => item.Id, StringComparer.Ordinal).Select(item => item.Id),
+                expected.Facts.OrderBy(item => item.Id, StringComparer.Ordinal).Select(item => item.Id),
                 oracleFacts.OrderBy(item => item.Id, StringComparer.Ordinal).Select(item => item.Id));
         }
 
@@ -114,13 +118,13 @@ public sealed class S64D3C4SuccessorTests
             Assert.Equal(CodeOccurrenceAvailability.Available, result.Availability);
             Assert.Equal(expected.Cardinality, result.Occurrences.Count);
             Assert.Equal(
-                (exactHost ? expected.Occurrences.Select(item => item.Id) :
+                (exactHost ? expected.Facts.Select(item => item.Id) :
                     oracleFacts.Select(item => item.Id))
                     .Order(StringComparer.Ordinal),
                 result.Occurrences.OrderBy(item => item.Id.Value, StringComparer.Ordinal)
                     .Select(item => item.Id.Value));
             Assert.Equal(
-                expected.Occurrences.Select(item => item.Unit).Distinct(StringComparer.Ordinal)
+                expected.Facts.Select(item => item.Unit).Distinct(StringComparer.Ordinal)
                     .Order(StringComparer.Ordinal),
                 result.Occurrences.Select(item => item.SourceUnitId).Distinct(StringComparer.Ordinal)
                     .Order(StringComparer.Ordinal));
@@ -260,16 +264,14 @@ public sealed class S64D3C4SuccessorTests
     private sealed record OracleFact(string Id, string Unit);
 
     private sealed record Ledger(
-        string Variant, string Repository, string Plugin, string PluginVersion, string Started,
-        LedgerTarget Target, LedgerOccurrence[] Occurrences, int Cardinality, int TargetContributorCount);
+        string Target, string Compctx3, string Compctx4, string Options, string Unit,
+        string Metadata, string Module, string SourceHash, string RefHash, int ReferenceCount,
+        int Cardinality, IndependentFact[] Facts);
 
-    private sealed record LedgerTarget(
-        string Value, string Document, string Context, string Metadata, string Module,
-        string[] Contributors);
-
-    private sealed record LedgerOccurrence(
+    private sealed record IndependentFact(
         string Id, string Unit, string Path, string SourceHash,
-        int StartLine, int StartColumn, int EndLine, int EndColumn,
-        string TargetDocument, string TargetId, string Category);
+        string StartLine, string StartColumn, string EndLine, string EndColumn);
 }
+
+
 
