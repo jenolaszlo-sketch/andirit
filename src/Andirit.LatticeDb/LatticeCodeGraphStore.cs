@@ -102,9 +102,9 @@ public sealed partial class LatticeCodeGraphStore :
     /// refused on open; there is no in-place migration. Reconstruct by
     /// re-ingesting sources into a new store.
     /// </remarks>
-    public const int CurrentOccurrenceSchemaVersion = 2;
+    public const int CurrentOccurrenceSchemaVersion = 3;
 
-    internal const string OccurrenceNamespace = "andirit-occurrence-facts/2";
+    internal const string OccurrenceNamespace = "andirit-occurrence-facts/3";
 
     // Schema-2 protocol identities survive the Andirit product rename.
     private const string MetadataLabel = "HetuMetadata";
@@ -159,6 +159,8 @@ public sealed partial class LatticeCodeGraphStore :
     {
         if (string.IsNullOrWhiteSpace(databasePath))
             throw new ArgumentException("A LatticeDB database file path is required.", nameof(databasePath));
+        TranslateNative(() => PreflightOccurrenceCompatibilityCore(databasePath),
+            "preflight occurrence compatibility");
         _database = TranslateNative(
             () => LatticeDatabase.Open(databasePath, ToNativeOptions(options)),
             "open database");
@@ -621,6 +623,54 @@ public sealed partial class LatticeCodeGraphStore :
             edges.UnionWith(manifest.Edges.Values);
         }
         return (nodes, edges);
+    }
+
+    /// <summary>
+    /// Compatibility preflight before any writable open, schema initialization,
+    /// command-log replay, mirror cleanup or recovery write. Uses a read-only
+    /// native connection with WAL disabled (verified non-mutating for the pinned
+    /// LatticeDbSharp 0.2.0).
+    /// </summary>
+    private static void PreflightOccurrenceCompatibilityCore(string databasePath)
+    {
+        if (!File.Exists(databasePath))
+            return;
+        using var database = LatticeDatabase.Open(databasePath,
+            new LatticeDatabaseOptions { Create = false, ReadOnly = true, EnableWal = false });
+        using var transaction = database.BeginReadTransaction();
+        var metas = ReadPreflightPairs(database, transaction, OccurrenceMetaLabel);
+        var units = ReadPreflightPairs(database, transaction, OccurrenceUnitLabel);
+        transaction.Commit();
+        if (metas.Count == 0)
+        {
+            if (units.Count != 0)
+                throw new CodeOccurrenceSchemaException(0, CurrentOccurrenceSchemaVersion,
+                    "Occurrence records exist without a schema manifest. " +
+                    "Predecessor-generation occurrence records cannot be reinterpreted; " +
+                    "re-ingestion into a new store is required.");
+            return;
+        }
+        foreach (var (_, payload) in metas)
+        {
+            var meta = DeserializeOccurrence<PersistedOccurrenceMeta>(payload);
+            if (meta.SchemaVersion != CurrentOccurrenceSchemaVersion ||
+                !string.Equals(meta.Namespace, OccurrenceNamespace, StringComparison.Ordinal) ||
+                meta.IdentityGeneration != CodeOccurrenceIdentity.Generation)
+                throw new CodeOccurrenceSchemaException(meta.SchemaVersion, CurrentOccurrenceSchemaVersion,
+                    "The occurrence schema version, namespace or identity generation is unsupported. " +
+                    "Predecessor-generation occurrence records cannot be reinterpreted; " +
+                    "re-ingestion into a new store is required.");
+        }
+    }
+
+    private static List<(string Key, string Payload)> ReadPreflightPairs(
+        LatticeDatabase database, LatticeTransaction transaction, string label)
+    {
+        using var query = database.Prepare($"MATCH (s:{label}) RETURN s.key, s.payload");
+        using var result = query.Execute(transaction);
+        return result.ReadAll()
+            .Select(row => (row.GetValue(0).AsString(), row.GetValue(1).AsString()))
+            .ToList();
     }
 
     private void RestoreOccurrences(CancellationToken cancellationToken)

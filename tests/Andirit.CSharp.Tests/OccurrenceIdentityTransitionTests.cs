@@ -34,8 +34,8 @@ public sealed class OccurrenceIdentityTransitionTests
             context, "N.C|0.0.0.0||", "N.C.dll", "id", "decl", "shape");
         Assert.StartsWith("asmctx4:sha256:", target.Value, StringComparison.Ordinal);
         Assert.Equal("usage5", CodeOccurrenceIdentity.UsageDomain);
-        Assert.Equal(2, CodeOccurrenceIdentity.Generation);
-        Assert.Equal(2, CodeOccurrenceIdentity.AuthorityVersion);
+        Assert.Equal(3, CodeOccurrenceIdentity.Generation);
+        Assert.Equal(3, CodeOccurrenceIdentity.AuthorityVersion);
         Assert.Equal(5, CodeOccurrenceIdentity.CurrentSemanticsVersion);
         Assert.Contains("usage5", CodeOccurrenceIdentity.SemanticsVersion);
 
@@ -92,20 +92,14 @@ public sealed class OccurrenceIdentityTransitionTests
             Assert.DoesNotContain("Microsoft.TestPlatform", reference, StringComparison.OrdinalIgnoreCase);
         });
 
-        // The closure is exactly the managed assemblies of the running
-        // Microsoft.NETCore.App shared framework directory, never the ambient
-        // process TPA composition.
-        var runtimeDirectory = RuntimeEnvironment.GetRuntimeDirectory();
-        var managedNames = Directory.EnumerateFiles(runtimeDirectory, "*.dll")
-            .Where(IsManagedAssembly)
-            .Select(Path.GetFileNameWithoutExtension)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        var referenceNames = references
-            .Select(reference => reference.Split('|')[1])
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        Assert.Equal(managedNames, referenceNames);
+        // The closure is exactly the selected target-framework reference pack,
+        // never the ambient process TPA or the consumer runtime directory.
+        var resolved = FrameworkReferenceResolver.Resolve("net10.0");
+        Assert.Equal("Microsoft.NETCore.App.Ref", resolved.PackFamily);
+        Assert.Equal("net10.0", resolved.TargetFramework);
+        Assert.Equal(resolved.References.Select(reference => reference.Identity).ToArray(),
+            references.ToArray());
+        Assert.NotEmpty(resolved.PackVersion);
 
         // Repeated analysis is deterministic and host-composition independent.
         var again = await CSharpCodeGraphPlugin.PrepareAnalysisAsync(context);
@@ -191,6 +185,7 @@ public sealed class OccurrenceIdentityTransitionTests
             Assert.Equal(tamperedRows, LogicalSnapshot(predecessorDatabase));
             Assert.Contains("\"IdentityGeneration\":1", LogicalSnapshot(predecessorDatabase),
                 StringComparison.Ordinal);
+            Assert.Equal(tampered, Snapshot(predecessorDatabase));
             Assert.NotEqual(before, tampered);
 
             // Reconstruction is re-ingestion into a new store, never in-place
@@ -220,6 +215,34 @@ public sealed class OccurrenceIdentityTransitionTests
             Delete(sourceRoot);
             Delete(predecessorDatabase);
             Delete(successorDatabase);
+        }
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    public async Task IncompatibleGenerationStore_IsRefusedWithoutPersistentMutation(int generation)
+    {
+        var sourceRoot = CopyCorpus(Path.Combine(RepositoryRoot(),
+            "docs/reviews/ANDIRIT-CI1A-S2.6-WP-S64-ENTRY-01-R1-evidence/corpus/c4-contributors"));
+        var database = Path.Combine(Path.GetTempPath(),
+            $"andirit-occ-incompatible-{generation}-{Guid.NewGuid():N}.ltdb");
+        try
+        {
+            await PublishAsync("run:incompatible", sourceRoot, database);
+            TamperPredecessorMeta(database, generation, $"andirit-occurrence-facts/{generation}", generation);
+            var before = StoreSignature(database);
+            var error = Assert.Throws<CodeOccurrenceSchemaException>(() =>
+                new LatticeCodeGraphStore(database));
+            Assert.Contains("re-ingestion", error.Message, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(before, StoreSignature(database));
+            Assert.Contains($"\"IdentityGeneration\":{generation}", LogicalSnapshot(database),
+                StringComparison.Ordinal);
+        }
+        finally
+        {
+            Delete(sourceRoot);
+            Delete(database);
         }
     }
 
@@ -332,7 +355,8 @@ public sealed class OccurrenceIdentityTransitionTests
             compilation, [source], [reference], []);
     }
 
-    private static void TamperPredecessorMeta(string database)
+    private static void TamperPredecessorMeta(string database, int schemaVersion = 1,
+        string occurrenceNamespace = "andirit-occurrence-facts/1", int generation = 1)
     {
         using var db = LatticeDatabase.Open(database, new LatticeDatabaseOptions { Create = false });
         using var txn = db.BeginWriteTransaction();
@@ -346,9 +370,9 @@ public sealed class OccurrenceIdentityTransitionTests
             row = JsonNode.Parse(Convert.FromBase64String(
                 result.ReadAll()[0].GetValue(0).AsString()))!.AsObject();
         }
-        row["SchemaVersion"] = 1;
-        row["Namespace"] = "andirit-occurrence-facts/1";
-        row["IdentityGeneration"] = 1;
+        row["SchemaVersion"] = schemaVersion;
+        row["Namespace"] = occurrenceNamespace;
+        row["IdentityGeneration"] = generation;
         using (var query = db.Prepare(
                    "MATCH (s:AndiritOccurrenceMeta) WHERE s.key = $k SET s.payload = $p"))
         {
@@ -361,6 +385,10 @@ public sealed class OccurrenceIdentityTransitionTests
         txn.Commit();
     }
 
+    private static string StoreSignature(string database) =>
+        Snapshot(database) + "|" +
+        (File.Exists(database + "-wal") ? Snapshot(database + "-wal") : "no-wal");
+
     private static string Snapshot(string database)
     {
         using var stream = File.OpenRead(database);
@@ -369,7 +397,7 @@ public sealed class OccurrenceIdentityTransitionTests
 
     private static string LogicalSnapshot(string database)
     {
-        using var db = LatticeDatabase.Open(database, new LatticeDatabaseOptions { Create = false });
+        using var db = LatticeDatabase.Open(database, new LatticeDatabaseOptions { Create = false, ReadOnly = true, EnableWal = false });
         using var txn = db.BeginReadTransaction();
         var rows = new List<string>();
         foreach (var label in new[] { "AndiritOccurrenceMeta", "AndiritOccurrenceUnit", "AndiritOccurrencePage" })
@@ -443,3 +471,6 @@ public sealed class OccurrenceIdentityTransitionTests
         CodeOccurrenceTargetId Target, string DependencyDescriptor,
         string DependencyContext, string[] FactIds, string[] Units);
 }
+
+
+

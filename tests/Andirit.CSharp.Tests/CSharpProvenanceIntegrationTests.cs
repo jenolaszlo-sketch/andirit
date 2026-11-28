@@ -19,7 +19,8 @@ public sealed class CSharpProvenanceIntegrationTests
         _ => new ValueTask<Stream>(new MemoryStream(Encoding.UTF8.GetBytes(content))));
     private static CodeGraphPluginContext Context(IEnumerable<(string Path, string Text)> sources) =>
         new(new("repo:provenance"), "memory://fixture", new("run:provenance"),
-            sources.Select(s => Source(s.Path, s.Text)).ToArray());
+            sources.Select(s => Source(s.Path, s.Text)).ToArray(),
+            settings: FrameworkTestSettings.Net10);
     private static ValueTask<VerifiedCSharpAnalysis> Prepare(params (string Path, string Text)[] sources) =>
         CSharpCodeGraphPlugin.PrepareAnalysisAsync(Context(sources));
 

@@ -84,7 +84,8 @@ public sealed class S23PublicationIntegrationTests : IDisposable
                 return new CodeGraphSource(pair.Key,
                     "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes)),
                     _ => ValueTask.FromResult<Stream>(new MemoryStream(bytes, writable: false)));
-            }).ToArray());
+            }).ToArray(),
+            settings: FrameworkTestSettings.Net10);
 
     private static async Task<LatticeCodeGraphStore> PublishAsync(string path, string run,
         CodeGraphPluginContext context)

@@ -13,9 +13,13 @@ public sealed class CSharpProvenanceLifecycleTests
         try
         {
             var path = Path.Combine(directory.FullName, "Source.cs");
+            var projectPath = Path.Combine(directory.FullName, "Source.csproj");
             const string first = "public class Source { public int Value() => 1; }";
             const string second = "public class Source { public int Value() => 2; }";
             await File.WriteAllTextAsync(path, first, new UTF8Encoding(false));
+            await File.WriteAllTextAsync(projectPath,
+                "<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup></Project>",
+                new UTF8Encoding(false));
             var observer = new ObservingPlugin();
             var service = new CodeIndexingService(
                 new CodeRepositoryProviderRegistry([new FileSystemCodeRepositoryProvider()]),

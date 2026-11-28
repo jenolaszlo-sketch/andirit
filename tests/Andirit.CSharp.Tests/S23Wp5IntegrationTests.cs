@@ -253,7 +253,8 @@ public sealed class S23Wp5IntegrationTests : IDisposable
                 return new CodeGraphSource(pair.Key,
                     "sha256:" + Convert.ToHexStringLower(SHA256.HashData(bytes)),
                     _ => ValueTask.FromResult<Stream>(new MemoryStream(bytes, writable: false)));
-            }).ToArray());
+            }).ToArray(),
+            settings: FrameworkTestSettings.Net10);
 
     private static async Task PublishRealAsync(
         LatticeCodeGraphStore store, string run, CodeGraphPluginContext context)

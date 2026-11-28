@@ -81,10 +81,10 @@ public static class CodeOccurrenceIdentity
     /// (<c>asmctx3</c>/<c>usage4</c>) are refused rather than reinterpreted;
     /// reconstruction requires re-ingestion into a new store.
     /// </summary>
-    public const int Generation = 2;
+    public const int Generation = 3;
 
     /// <summary>The current occurrence-authority envelope version.</summary>
-    public const int AuthorityVersion = 2;
+    public const int AuthorityVersion = 3;
 
     /// <summary>The successor occurrence semantics string, hashed into `usage5`.</summary>
     public const string SemanticsVersion = "usage5-b2c-exp-r2-20261128";

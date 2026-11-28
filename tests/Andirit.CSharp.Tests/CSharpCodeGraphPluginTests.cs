@@ -1917,7 +1917,11 @@ public sealed partial class CSharpCodeGraphPluginTests
             new CodeRepositoryId("repo:test"),
             "memory://test",
             new CodeIndexRunId("run:test"),
-            sources);
+            sources,
+            settings: new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["csharp.targetFramework"] = "net10.0",
+            });
         var plugin = new CSharpCodeGraphPlugin();
         var sink = new RecordingSink(limits);
 
