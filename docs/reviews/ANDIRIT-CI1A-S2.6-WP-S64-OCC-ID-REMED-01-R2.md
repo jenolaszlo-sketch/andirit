@@ -130,6 +130,7 @@ inputs are absent.
 | Campaign | Result |
 | --- | --- |
 | Local Release suite | **1,059 passed, 0 failed** |
+| WSL Linux x64 exact candidate | **1,059 passed, 0 failed** |
 | R1 inventory | 1,044; +15 new controls |
 | Mirror tests | 29/29 |
 | Inherited S6.3 named cases | 19/19 |
@@ -143,14 +144,17 @@ non-mutation controls. No accepted test was removed or weakened.
 
 ## 9. Cross-host and hosted campaign
 
-Local Windows x64 exact execution and the framework matrix controls pass. The R2
-hosted run `46143882731` succeeded on Windows x64, Linux x64 and macOS ARM64. It
-executed synthetic PR merge `722b7315…`, whose tree is byte-identical to
-candidate `f8c8a28…` and whose parents include the candidate. The R1 hosted runs
-are accepted only under the owner's narrow tree-equivalence exception and are not
-characterized as exact candidate checkouts. Exact commit-object execution for R2
-still requires an owner decision or workflow change; none was made. macOS is
-ARM64/`osx-arm64` regression only; no macOS x64 or S6.5 claim is made.
+Local Windows x64 exact execution, an exact-candidate WSL Ubuntu x86_64 run
+(1,059 passed) and the framework matrix controls pass. The R2 hosted run
+`46143882731` succeeded on Windows x64, Linux x64 and macOS ARM64. The seal run
+`46145138043` also succeeded on all four jobs. Both executed synthetic PR merge
+commits (`722b7315…` candidate tree `7dde068…`; `476beeec…` seal tree
+`73d2a83…`) whose trees are byte-identical to the candidate/seal trees and whose
+parents include them. The R1 hosted runs are accepted only under the owner's
+narrow tree-equivalence exception and are not characterized as exact candidate
+checkouts. Exact commit-object hosted execution for R2 still requires an owner
+decision or workflow change; none was made. macOS is ARM64/`osx-arm64`
+regression only; no macOS x64 or S6.5 claim is made.
 
 ## 10. Findings
 

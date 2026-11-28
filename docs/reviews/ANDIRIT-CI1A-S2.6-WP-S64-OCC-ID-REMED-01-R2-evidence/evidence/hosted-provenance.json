@@ -74,5 +74,20 @@
     "producerR1ReportWasX64": true,
     "claim": "bounded inherited ARM64 regression only; no macOS x64 or S6.5"
   },
-  "adjudication": "All hosted jobs succeeded on a tree byte-identical to the R2 candidate. The receipt head is a synthetic PR merge commit, not the candidate object. Exact commit-object execution requires an owner decision or a workflow change; none was made."
+  "adjudication": "All hosted jobs succeeded on a tree byte-identical to the R2 candidate. The receipt head is a synthetic PR merge commit, not the candidate object. Exact commit-object execution requires an owner decision or a workflow change; none was made.",
+  "sealRun": {
+    "run": 46145138043,
+    "candidate": "bea32ec354b698cc47fdac2cb21832001c7d8d1b",
+    "syntheticMerge": "476beeec121649fd6709c896c97464bf536ca3cf",
+    "syntheticMergeTree": "73d2a8356afd54c95efe5b7e27a9f1eb87028d62",
+    "treeEqualsSeal": true,
+    "conclusion": "success"
+  },
+  "localLinuxExact": {
+    "environment": "WSL Ubuntu 26.04 x86_64, .NET 10.0.114",
+    "commit": "f8c8a289d3f8a828e87a9833e32dfa13d8044708",
+    "tests": 1059,
+    "failures": 0,
+    "nativeLibraryOverride": "LATTICEDBSHARP_NATIVE_LIBRARY=linux-x64 liblattice.so for WSL RID"
+  }
 }

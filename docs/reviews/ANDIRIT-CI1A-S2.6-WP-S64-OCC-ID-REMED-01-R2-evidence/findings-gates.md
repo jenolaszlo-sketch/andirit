@@ -37,9 +37,9 @@
 | R2-G8 | Historical oracle preservation | **Pass** |
 | R2-G9 | Non-mutating compatibility detection | **Pass** (main/WAL unchanged) |
 | R2-G10 | Reconstruction and preservation | **Pass with loss limits** |
-| R2-G11 | Cross-host/cross-platform determinism | **Pass within equal-reference scope; hosted attribution qualified** |
+| R2-G11 | Cross-host/cross-platform determinism | **Pass within equal-reference scope; Windows exact, WSL Linux exact, hosted Windows/Linux/macOS ARM64 tree-equivalent** |
 | R2-G12 | Regression/named cases/coverage/package | **Pass** (1,059; 29/19; floors; smoke) |
-| R2-G13 | Hosted provenance and macOS record | **Pass with synthetic-merge qualification; ARM64 corrected** |
+| R2-G13 | Hosted provenance and macOS record | **Pass with synthetic-merge qualification; candidate and seal runs succeeded; ARM64 corrected** |
 | R2-G14 | Sealed producer evidence | **Pass after seal** |
 
 ## Disposition
@@ -51,3 +51,4 @@ The hosted receipts executed the exact candidate **tree** via a synthetic PR
 merge commit. If exact candidate-commit attribution is mandatory, another owner
 decision or workflow change is required; this is recorded, not waived. DF-1 and
 S6.4 remain open; D3 remains suspended.
+
