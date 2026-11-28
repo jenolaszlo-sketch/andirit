@@ -1,0 +1,38 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-REMED-01-R2",
+  "supportedMatrix": [
+    {
+      "targetFramework": "net8.0",
+      "packFamily": "Microsoft.NETCore.App.Ref",
+      "selection": "highest installed 8.0 patch with ref/net8.0"
+    },
+    {
+      "targetFramework": "net9.0",
+      "packFamily": "Microsoft.NETCore.App.Ref",
+      "selection": "highest installed 9.0 patch with ref/net9.0"
+    },
+    {
+      "targetFramework": "net10.0",
+      "packFamily": "Microsoft.NETCore.App.Ref",
+      "selection": "highest installed 10.0 patch with ref/net10.0"
+    },
+    {
+      "targetFramework": "netstandard2.1",
+      "packFamily": "NETStandard.Library.Ref",
+      "selection": "highest installed 2.1 patch with ref/netstandard2.1"
+    }
+  ],
+  "refused": [
+    "netstandard2.0 (no installed 2.0 reference pack; not silently mapped to 2.1)",
+    "net6.0 / net7.0 (no installed reference pack)",
+    "net10.0-windows and other platform-specific TFMs (outside supported scope)",
+    "missing/empty TargetFramework without explicit caller configuration"
+  ],
+  "explicitCallerConfiguration": "csharp.targetFramework for loose/synthetic sources without a project TargetFramework; no ambient runtime fallback",
+  "referenceIdentity": "refctx1|assembly|version|culture|public-key-token|sha256:<file content>",
+  "contentVerification": "Managed PE validation via VerifiedMetadataReference; data/FrameworkList.xml listed managed files must exist; actual Roslyn references are the selected pack files.",
+  "pathIndependence": "Reference identities contain no installation path; equivalent pack content at different paths has equal identity.",
+  "projectReferences": "Same TFM allowed; net8/net9/net10 may consume netstandard2.1; incompatible caller/dependency TFM refuses UnsupportedProjectReferenceTargetFramework.",
+  "frameworkReferenceErrors": "CS0234/CS0246/CS0400/CS0012/CS0518/CS1069 naming System/Microsoft cause FrameworkReferenceErrors refusal and no authoritative complete occurrence publication.",
+  "probe": "evidence/framework-probe.json"
+}

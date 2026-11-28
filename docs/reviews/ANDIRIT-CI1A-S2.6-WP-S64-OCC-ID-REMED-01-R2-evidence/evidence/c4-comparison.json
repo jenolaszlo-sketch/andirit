@@ -1,0 +1,69 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-REMED-01-R2",
+  "production": {
+    "target": "asmctx4:sha256:23ffa6444fb108132fb54e760cac76f5ffd8a3580b0aed1b9aa6709f78eeab68",
+    "descriptor": "compctx3:sha256:4b88c629c25ed6c9b916d5a279304fd07cb06fa64545d3c607ce1326a232989e",
+    "definingContext": "compctx4:sha256:e7c0a28d959f075a1f5d491e3e642c44d781bb4750de2f107ad78e57a408d6b1",
+    "referenceCount": 167,
+    "referenceSetHash": "9973286b42c11decd9ef2bd4111e72067cb67d9f227160bd6ed4fd3969a63c82",
+    "cardinality": 51,
+    "distribution": {
+      "Caller": 50,
+      "Caller2": 1
+    },
+    "contributors": 2
+  },
+  "independentOracle": {
+    "target": "asmctx4:sha256:23ffa6444fb108132fb54e760cac76f5ffd8a3580b0aed1b9aa6709f78eeab68",
+    "descriptor": "compctx3:sha256:4b88c629c25ed6c9b916d5a279304fd07cb06fa64545d3c607ce1326a232989e",
+    "definingContext": "compctx4:sha256:e7c0a28d959f075a1f5d491e3e642c44d781bb4750de2f107ad78e57a408d6b1",
+    "referenceSetHash": "9973286b42c11decd9ef2bd4111e72067cb67d9f227160bd6ed4fd3969a63c82",
+    "cardinality": 51,
+    "all50Plus1IdsMatch": true
+  },
+  "variants": {
+    "baseline": {
+      "cardinality": 51,
+      "contributors": 2,
+      "targetStable": true,
+      "idsMatch": true
+    },
+    "without-caller": {
+      "cardinality": 1,
+      "contributors": 1,
+      "targetStable": true,
+      "idsMatch": true
+    },
+    "without-caller2": {
+      "cardinality": 50,
+      "contributors": 1,
+      "targetStable": true,
+      "idsMatch": true
+    },
+    "caller2-changed": {
+      "cardinality": 51,
+      "contributors": 2,
+      "targetStable": true,
+      "idsMatch": true
+    }
+  },
+  "historicalPreservation": {
+    "s2_0ThreeReferenceOracle": {
+      "target": "asmctx4:sha256:1d2ece61530b19b25a73ab273ae9b3b97a4bf9291b201d938278e52bc22ef28e",
+      "definingContext": "compctx4:sha256:318c55e32f411ae2d01d8201646a520b082d51ac19d60b1756ec543cdf21c6a9",
+      "changed": false
+    },
+    "r1ExpandedRuntimeLedger": {
+      "target": "asmctx4:sha256:8258e165d53336f87abf3b1d1ae3f220190dfaf848eaae2906222bf49940555f",
+      "changed": false
+    },
+    "c1ToC4GraphArtifacts": "byte-identical",
+    "corpus": "byte-identical"
+  },
+  "freezeChronology": {
+    "freezeCommit": "814fe5bceb139a89b1feeb90b35c65cd6b852767",
+    "implementationCommit": "b8a748e1f992f60f2a5e4d3bc44e7fe47e1ee83e",
+    "comparisonCommit": "82ba813fb9eadf95042a8abf46832b31b0a6b2cf",
+    "ledgerCommittedBeforeComparison": true
+  }
+}

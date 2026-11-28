@@ -1,0 +1,78 @@
+{
+  "commission": "ANDIRIT-CI1A-S2.6-WP-S64-OCC-ID-REMED-01-R2",
+  "branch": "remediation/s64-occ-id-01-r2",
+  "candidate": {
+    "commit": "f8c8a289d3f8a828e87a9833e32dfa13d8044708",
+    "tree": "7dde06806d37f2b57f4464ee7adc7ffac14659ce",
+    "hostedRun": 46143882731
+  },
+  "syntheticMerge": {
+    "commit": "722b7315ebf4a2004cdebf42b504612cd8ae9ad6",
+    "tree": "7dde06806d37f2b57f4464ee7adc7ffac14659ce",
+    "treeEqualsCandidate": true,
+    "parents": [
+      "99b04c0ebb5dfa43065581bb6489fe2468d9a5aa",
+      "f8c8a289d3f8a828e87a9833e32dfa13d8044708"
+    ],
+    "attribution": "GitHub PR merge commit, not an exact candidate-commit checkout"
+  },
+  "jobs": {
+    "windows": {
+      "id": 140975578215,
+      "os": "Windows",
+      "arch": "X64",
+      "conclusion": "success"
+    },
+    "linux": {
+      "id": 140975578235,
+      "os": "Linux",
+      "arch": "X64",
+      "conclusion": "success"
+    },
+    "macos": {
+      "id": 140975578269,
+      "os": "macOS",
+      "arch": "ARM64",
+      "conclusion": "success"
+    },
+    "pack": {
+      "id": 140975578022,
+      "os": "Linux",
+      "arch": "X64",
+      "conclusion": "success"
+    }
+  },
+  "testCounts": {
+    "core": 345,
+    "csharp": 398,
+    "treesitter": 157,
+    "latticedb": 159,
+    "total": 1059
+  },
+  "trxHashesMatchSubjects": true,
+  "coverage": {
+    "core": {
+      "line": 0.8229,
+      "branch": 0.706
+    },
+    "csharp": {
+      "line": 0.94,
+      "branch": 0.871
+    },
+    "treesitter": {
+      "line": 0.8985,
+      "branch": 0.7585
+    },
+    "latticedb": {
+      "line": 0.9281,
+      "branch": 0.8043
+    }
+  },
+  "macOS": {
+    "actualArchitecture": "ARM64",
+    "rid": "osx-arm64",
+    "producerR1ReportWasX64": true,
+    "claim": "bounded inherited ARM64 regression only; no macOS x64 or S6.5"
+  },
+  "adjudication": "All hosted jobs succeeded on a tree byte-identical to the R2 candidate. The receipt head is a synthetic PR merge commit, not the candidate object. Exact commit-object execution requires an owner decision or a workflow change; none was made."
+}
